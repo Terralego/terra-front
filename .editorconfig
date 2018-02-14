@@ -1,0 +1,26 @@
+# http://editorconfig.org
+
+root = true
+
+[*]
+charset = utf-8
+indent_size = 2
+indent_style = space
+
+
+[*.{js,jsx,css,scss,less}]
+insert_final_newline = true
+trim_trailing_whitespace = true
+
+[*.{md,markdown}]
+insert_final_newline = true
+trim_trailing_whitespace = false
+
+[*.json]
+max_line_length = off
+
+# Minified JavaScript files shouldn't be changed
+[**.min.js]
+indent_style = ignore
+trim_trailing_whitespace = ignore
+insert_final_newline = ignore

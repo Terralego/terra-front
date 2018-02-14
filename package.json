@@ -1,0 +1,26 @@
+{
+  "name": "terra-front",
+  "version": "0.1.0",
+  "description": "",
+  "private": true,
+  "repository": {
+    "type": "git",
+    "url": "git@gitlab.makina-corpus.net:Terralego/Core/terra-front.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "devDependencies": {
+    "eslint": "~4.17.0",
+    "eslint-config-airbnb": "~16.1.0",
+    "eslint-plugin-import": "~2.8.0",
+    "eslint-plugin-jsx-a11y": "~6.0.3",
+    "eslint-plugin-react": "~7.6.1"
+  },
+  "dependencies": {
+
+  },
+  "scripts": {
+
+  }
+}
