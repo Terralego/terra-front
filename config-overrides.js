@@ -8,9 +8,11 @@ const rewireLess   = require('react-app-rewire-less');
 const rewireSass   = require('react-app-rewire-sass-modules');
 
 module.exports = function override (config, env) {
-  config = rewireEslint(config, env);
+  config = rewireEslint(config, env, options => {
+    options.emitWarning = process.env.NODE_ENV !== 'production' || process.env.REACT_APP_FORCE_BUILD;
+    return options;
+  });
   config = rewireLess(config, env);
   config = rewireSass(config, env);
-
   return config;
 };

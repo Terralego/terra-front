@@ -32,6 +32,7 @@
   "scripts": {
     "start": "react-app-rewired start",
     "build": "react-app-rewired build",
+    "build:force": "REACT_APP_FORCE_BUILD=true npm run build",
     "test": "react-app-rewired test --env=jsdom",
     "eject": "react-scripts eject"
   }
