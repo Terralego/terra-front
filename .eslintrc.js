@@ -20,6 +20,8 @@ module.exports = {
     'import/no-extraneous-dependencies': [warn],
     'import/no-unresolved':              [warn],
 
+    'jsx-a11y/anchor-is-valid':          [error, { specialLink: ['to'] }],
+
     'react/prefer-stateless-function':   [warn],
     'react/jsx-filename-extension':      [warn, { 'extensions': ['.js', '.jsx'] }],
 
