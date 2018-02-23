@@ -1,0 +1,52 @@
+image: node:8.9.4 # Should match .nvmrc content
+
+stages:
+  - install
+  - tests
+  - build
+  - deploy
+
+# Instal stage
+
+npm_install:
+  stage: install
+  script:
+    - npm install --silent
+  artifacts:
+    name: "node_modules_${CI_COMMIT_SHA}"
+    paths:
+      - node_modules
+
+# Tests stage
+
+npm_test:
+  stage: tests
+  script:
+    - npm test
+
+npm_run_lint:
+  stage: tests
+  script:
+    - npm run lint
+
+# Build stage
+
+npm_run_build:
+  stage: build
+  when: always
+  script:
+    - npm run build
+  artifacts:
+    name: "build_${CI_COMMIT_SHA}"
+    paths:
+      - build
+
+# Deploy stage
+
+npm_run_deploy:
+  stage: deploy
+  when: manual
+  script:
+    - echo 'Hello World' # TODO
+  dependencies:
+    - npm_run_build
