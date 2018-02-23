@@ -7,6 +7,7 @@ const rewireEslint = require('react-app-rewire-eslint');
 const rewireLess   = require('react-app-rewire-less');
 const rewireSass   = require('react-app-rewire-sass-modules');
 const rewireImport = require('react-app-rewire-import');
+const rewireRHL    = require('react-app-rewire-hot-loader');
 
 const lessOptions  = require('./less-overrides');
 
@@ -18,6 +19,7 @@ module.exports = function override (config, env) {
   config = rewireImport(config, env, { libraryName: 'antd', libraryDirectory: 'es', style: true });
   config = rewireLess.withLoaderOptions(lessOptions)(config, env);
   config = rewireSass(config, env);
+  config = rewireRHL(config, env);
 
   return config;
 };
