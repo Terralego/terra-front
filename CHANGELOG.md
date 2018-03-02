@@ -1,4 +1,14 @@
 
+0.3.0 / 2018-03-02
+==================
+
+  * Define CI basic workflow for Gitlab CI
+  * Upgrade default version of `eslint-config-makina`
+  * Add a lint script to `package.json`
+  * Add `build` & `node_modules` directories to eslint ignore list
+  * Remove eject script from `package.json`
+  * Add explicitely moment.js to dependency
+
 0.2.0 / 2018-02-23
 ==================
 
