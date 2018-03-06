@@ -17,7 +17,7 @@ const rewireModulesIncludes = (config, env, paths) => {
     obj.forEach(rule => {
       if (rule.oneOf) {
         crawl(rule.oneOf);
-      } else if (rule.include && rule.include === path.resolve(__dirname, 'src')) {
+      } else if (rule.include && rule.include === path.resolve(__dirname, '../src')) {
         rule.include = paths;
       }
     });
@@ -35,9 +35,9 @@ const eslintOptions = options => {
   return options;
 };
 const modulesPaths = [
-  path.resolve(__dirname, 'custom_modules'),
-  path.resolve(__dirname, 'src'),
-  path.resolve(__dirname, 'core_modules'),
+  path.resolve(__dirname, '../custom_modules'),
+  path.resolve(__dirname, '../src'),
+  path.resolve(__dirname, '../core_modules'),
 ];
 
 const webpack = function overrideWebpack (config, env) {
