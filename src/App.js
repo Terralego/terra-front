@@ -19,10 +19,10 @@ import { Provider } from 'react-redux';
 import { ConnectedRouter } from 'react-router-redux';
 import { store, history } from './store';
 
-const { Header, Content, Footer } = Layout;
+import Home from './components/Home/Home';
+import About from './components/About/About';
 
-const Home  = () => <div>Home content</div>;
-const About = () => <div>About content</div>;
+const { Header, Content, Footer } = Layout;
 
 class Main extends Component {
   componentDidMount () {
