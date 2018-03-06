@@ -1,6 +1,8 @@
 import React, { Component } from 'react';
 import { Route, Link } from 'react-router-dom';
 
+import settings from 'front-settings';
+
 import {
   Breadcrumb,
   Icon,
@@ -63,6 +65,7 @@ class Main extends Component {
             <Breadcrumb.Item>Home</Breadcrumb.Item>
             <Breadcrumb.Item>List</Breadcrumb.Item>
             <Breadcrumb.Item>App</Breadcrumb.Item>
+            <Breadcrumb.Item>{settings.foo}</Breadcrumb.Item>
           </Breadcrumb>
 
           <Route exact path="/" component={Home} />
