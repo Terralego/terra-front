@@ -1,4 +1,9 @@
 
+0.4.1 / 2018-03-07
+==================
+
+  * Upgrade npm dependencies (moment, react-app-rewire-less, react-app-rewired, react-hot-loader)
+
 0.4.0 / 2018-03-07
 ==================
 
