@@ -2,6 +2,7 @@ npm-debug.log*
 
 # Dependency directories
 /node_modules
+/custom_modules
 
 # testing
 /coverage
