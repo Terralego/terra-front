@@ -5,8 +5,14 @@ module.exports = {
   },
   settings: {
     'import/resolver': {
-      node:    { paths: [ 'core_modules' ] },
-      webpack: { paths: [ 'core_modules' ] },
+      node:    { paths: [
+        'src',
+        'core_modules',
+      ] },
+      webpack: { paths: [
+        'src',
+        'core_modules',
+      ] },
     },
   },
 };

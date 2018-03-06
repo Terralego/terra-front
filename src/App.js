@@ -15,12 +15,13 @@ import {
 import fr from 'antd/lib/locale-provider/fr_FR';
 import 'moment/locale/fr';
 
+import Home from 'components/Home/Home';
+import About from 'components/About/About';
+
 import { Provider } from 'react-redux';
 import { ConnectedRouter } from 'react-router-redux';
 import { store, history } from './store';
 
-import Home from './components/Home/Home';
-import About from './components/About/About';
 
 const { Header, Content, Footer } = Layout;
 
