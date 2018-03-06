@@ -1,4 +1,20 @@
 
+0.4.0 / 2018-03-07
+==================
+
+  * Add README file for `config-overrides`
+  * Upgrade default version of `eslint-config-makina`
+  * Explain Webpack overrides through `config-overrides`
+  * Split up `config-overrides` in subfiles
+  * Move `config-overrides` to a dedicated directory
+  * Extend Webpack includes dir for modules rules
+  * Add `custom_modules` for imports lookup directory
+  * Offer the ability to load components with absolute imports
+  * Push dummy components About & Home to dedicated files
+  * Create basic `settings` module in `core_modules`
+  * Add `core_modules` for imports lookup directory
+  * Enable rewiring for Jest config
+
 0.3.0 / 2018-03-02
 ==================
 
