@@ -4,6 +4,8 @@
   no-param-reassign: off,
 */
 
+const path = require('path');
+
 const rewireEslint = require('react-app-rewire-eslint');
 const rewireLess   = require('react-app-rewire-less');
 const rewireSass   = require('react-app-rewire-sass-modules');
@@ -16,6 +18,9 @@ const eslintOptions = options => {
   options.emitWarning = process.env.NODE_ENV !== 'production' || process.env.REACT_APP_FORCE_BUILD;
   return options;
 };
+const modulesPaths = [
+  path.resolve(__dirname, 'core_modules'),
+];
 
 const webpack = function overrideWebpack (config, env) {
   config = rewireEslint(config, env, eslintOptions);
@@ -24,10 +29,24 @@ const webpack = function overrideWebpack (config, env) {
   config = rewireSass(config, env);
   config = rewireRHL(config, env);
 
+  config.resolve.modules.unshift(...modulesPaths);
+
+  return config;
+};
+
+const rewireJestModules = config => {
+  if (!config.modulePaths) {
+    config.modulePaths = [];
+  }
+
+  config.modulePaths.unshift(...modulesPaths);
+
   return config;
 };
 
 const jest = function overrideJest (config, env) {
+  config = rewireJestModules(config, env);
+
   return config;
 };
 
