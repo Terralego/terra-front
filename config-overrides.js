@@ -17,7 +17,7 @@ const eslintOptions = options => {
   return options;
 };
 
-module.exports = function override (config, env) {
+const webpack = function overrideWebpack (config, env) {
   config = rewireEslint(config, env, eslintOptions);
   config = rewireImport(config, env, importOptions);
   config = rewireLess.withLoaderOptions(lessOptions)(config, env);
@@ -25,4 +25,13 @@ module.exports = function override (config, env) {
   config = rewireRHL(config, env);
 
   return config;
+};
+
+const jest = function overrideJest (config, env) {
+  return config;
+};
+
+module.exports = {
+  webpack,
+  jest,
 };
