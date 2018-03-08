@@ -13,6 +13,7 @@ npm_install:
   script:
     - npm install --silent
   artifacts:
+    expire_in: 1 day
     name: "node_modules_${CI_COMMIT_SHA}"
     paths:
       - node_modules
@@ -37,6 +38,7 @@ npm_run_build:
   script:
     - npm run build
   artifacts:
+    expire_in: 1 week
     name: "build_${CI_COMMIT_SHA}"
     paths:
       - build
