@@ -9,7 +9,7 @@ const settings = require('./settings.js');
 
 const rewireEslint = require('react-app-rewire-eslint');
 const rewireLess   = require('react-app-rewire-less');
-const rewireSass   = require('react-app-rewire-sass-modules');
+const rewireCssModules = require('react-app-rewire-css-modules');
 const rewireImport = require('react-app-rewire-import');
 const rewireRHL    = require('react-app-rewire-hot-loader');
 
@@ -56,10 +56,10 @@ module.exports = function overrideWebpack (config, env) {
   config = rewireLess.withLoaderOptions(lessOptions)(config, env);
 
   /**
-   * Add SCSS files loader
-   * https://github.com/buzhanguo/react-app-rewire-sass-modules
+   * Add (S)CSS files (module) loader
+   *https://github.com/codebandits/react-app-rewire-css-modules
    */
-  config = rewireSass(config, env);
+  config = rewireCssModules(config, env);
 
   /**
    * Enable Hot Loader
