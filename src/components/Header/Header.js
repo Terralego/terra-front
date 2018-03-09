@@ -8,34 +8,41 @@ import {
   Popconfirm,
 } from 'antd';
 
-const Header = () => {
-  return (
-    <Layout.Header>
+import styles from './Header.module.scss';
 
-      <Menu theme="dark" mode="horizontal" style={{ lineHeight: '64px' }} >
-        <Menu.Item>
-          <Link to="/">
-            <Icon type="home" />Home
-          </Link>
-        </Menu.Item>
+const HeaderBrand = () => (
+  <div className={styles.brand}>
+    Terralego
+  </div>
+);
 
-        <Menu.Item>
-          <Link to="/about">
-            <Icon type="paper-clip" />About
-          </Link>
-        </Menu.Item>
+const Header = () => (
+  <Layout.Header className={styles.header}>
 
-        <Menu.Item>
-          <Popconfirm title="Êtes-vous sûr ?" okText="Oui" cancelText="Non">
-            <Link to="/logout">
-              <Icon type="logout" />Se déconnecter
-            </Link>
-          </Popconfirm>
-        </Menu.Item>
-      </Menu>
+    <HeaderBrand />
 
-    </Layout.Header>
-  );
-};
+    <Menu
+      theme="dark"
+      className={styles.menu}
+      mode="horizontal"
+      style={{ lineHeight: '64px' }}
+    >
+
+      <Menu.SubMenu title={<span><Icon type="user" />Mon compte</span>}>
+        <Menu.ItemGroup title="Prénom Nom">
+          <Menu.Item key="account">Account</Menu.Item>
+          <Menu.Item key="settings">Settings</Menu.Item>
+        </Menu.ItemGroup>
+      </Menu.SubMenu>
+
+      <Menu.Item>
+        <Popconfirm title="Êtes-vous sûr ?" okText="Oui" cancelText="Non">
+          <Link to="/logout"><Icon type="logout" />Se déconnecter</Link>
+        </Popconfirm>
+      </Menu.Item>
+    </Menu>
+
+  </Layout.Header>
+);
 
 export default Header;

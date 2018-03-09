@@ -1,5 +1,4 @@
 import React, { Component } from 'react';
-import { Route } from 'react-router-dom';
 
 import settings from 'front-settings';
 
@@ -13,58 +12,63 @@ import fr from 'antd/lib/locale-provider/fr_FR';
 import 'moment/locale/fr';
 
 import Header from 'components/Header/Header';
-import Home from 'components/Home/Home';
-import About from 'components/About/About';
+import SideMenu from 'components/SideMenu/SideMenu';
+import Main from 'components/Main/Main';
 
 import { Provider } from 'react-redux';
 import { ConnectedRouter } from 'react-router-redux';
 import { store, history } from './store';
 
-
-const { Content, Footer } = Layout;
-
-class Main extends Component {
+class App extends Component {
   componentDidMount () {
     // componentDidMount
   }
 
   render () {
     return (
-      <Layout>
+      <Layout style={{ height: '100vh' }}>
 
         <Header />
 
-        <Content style={{ padding: '0 50px' }}>
+        <Layout>
+          <Layout.Sider
+            breakpoint="md"
+            collapsedWidth="0"
+            style={{ background: 'white' }}
+          >
+            <SideMenu />
+          </Layout.Sider>
 
-          <Breadcrumb style={{ margin: '16px 0' }}>
-            <Breadcrumb.Item>Home</Breadcrumb.Item>
-            <Breadcrumb.Item>List</Breadcrumb.Item>
-            <Breadcrumb.Item>App</Breadcrumb.Item>
-            <Breadcrumb.Item>{settings.foo}</Breadcrumb.Item>
-          </Breadcrumb>
+          <Layout>
 
-          <Route exact path="/" component={Home} />
-          <Route exact path="/about" component={About} />
+            <Breadcrumb style={{ margin: '20px' }}>
+              <Breadcrumb.Item>Home</Breadcrumb.Item>
+              <Breadcrumb.Item>List</Breadcrumb.Item>
+              <Breadcrumb.Item>App</Breadcrumb.Item>
+              <Breadcrumb.Item>{settings.foo}</Breadcrumb.Item>
+            </Breadcrumb>
 
-        </Content>
+            <Main />
 
-        <Footer>
-          Footer text
-        </Footer>
+          </Layout>
+
+        </Layout>
+
+        <Layout.Footer>Footer content</Layout.Footer>
 
       </Layout>
     );
   }
 }
 
-const App = () => (
+const AppWrapper = () => (
   <LocaleProvider locale={fr}>
     <Provider store={store}>
       <ConnectedRouter history={history}>
-        <Main />
+        <App />
       </ConnectedRouter>
     </Provider>
   </LocaleProvider>
 );
 
-export default App;
+export default AppWrapper;
