@@ -24,11 +24,15 @@ npm_test:
   stage: tests
   script:
     - npm test
+  dependencies:
+    - npm_install
 
 npm_run_lint:
   stage: tests
   script:
     - npm run lint
+  dependencies:
+    - npm_install
 
 # Build stage
 
@@ -42,6 +46,8 @@ npm_run_build:
     name: "build_${CI_COMMIT_SHA}"
     paths:
       - build
+  dependencies:
+    - npm_install
 
 # Deploy stage
 
