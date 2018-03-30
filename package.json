@@ -17,7 +17,7 @@
     "history": "~4.7.2",
     "moment": "~2.21.0",
     "node-sass": "~4.7.2",
-    "react": "~16.2.0",
+    "react": "~16.3.0",
     "react-app-rewire-css-modules": "github:codebandits/react-app-rewire-css-modules#956a2330c2eb70cb5bc0795c0e83604e271d4a03",
     "react-app-rewire-eslint": "~0.2.3",
     "react-app-rewire-hot-loader": "~1.0.0",
