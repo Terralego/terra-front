@@ -6,7 +6,6 @@ import { Layout, Breadcrumb } from 'antd';
 import Home from 'components/Home/Home';
 import About from 'components/About/About';
 
-<<<<<<< HEAD
 import Header from 'components/Header/Header';
 import SideMenu from 'components/SideMenu/SideMenu';
 import Form from 'components/Form/Form';
@@ -55,9 +54,6 @@ class Main extends Component {
 }
 
 const ComponentName = () => (
-=======
-const Main = () => (
->>>>>>> e1ea63c11ae82d24fe42f0ae06dbfb06591a2f99
   <Layout.Content style={{ margin: '0 20px', padding: '20px', background: 'white' }}>
     <Route exact path="/" component={Home} />
     <Route exact path="/about" component={About} />
