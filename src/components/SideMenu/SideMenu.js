@@ -9,7 +9,7 @@ const SideMenu = () => (
     <Menu.SubMenu key="sub1" title={<span><Icon type="user" />subnav 1</span>}>
       <Menu.Item key="1"><Link to="/"><Icon type="home" />Home</Link></Menu.Item>
       <Menu.Item key="2"><Link to="/about"><Icon type="paper-clip" />About</Link></Menu.Item>
-      <Menu.Item key="3">option3</Menu.Item>
+      <Menu.Item key="3"><Link to="/form"><Icon type="form" />Form</Link></Menu.Item>
       <Menu.Item key="4">option4</Menu.Item>
     </Menu.SubMenu>
 

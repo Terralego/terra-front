@@ -8,6 +8,7 @@ import About from 'components/About/About';
 
 import Header from 'components/Header/Header';
 import SideMenu from 'components/SideMenu/SideMenu';
+import Form from 'components/Form/Form';
 import settings from 'front-settings';
 
 class Main extends Component {
@@ -56,6 +57,7 @@ const ComponentName = () => (
   <Layout.Content style={{ margin: '0 20px', padding: '20px', background: 'white' }}>
     <Route exact path="/" component={Home} />
     <Route exact path="/about" component={About} />
+    <Route exact path="/form" component={Form} />
   </Layout.Content>
 );
 
