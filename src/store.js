@@ -14,6 +14,11 @@ const middleware = [
   routerMiddleware(history),
 ];
 
+/**
+ * Add dev tools extension to enhancers
+ * only if available in `window` scope
+ * and if current ENV `is development`
+ */
 if (process.env.NODE_ENV === 'development') {
   const { devToolsExtension } = window;
 
@@ -22,6 +27,9 @@ if (process.env.NODE_ENV === 'development') {
   }
 }
 
+/**
+ * Compose the enhancers
+ */
 const composedEnhancers = compose(
   applyMiddleware(...middleware),
   ...enhancers,
