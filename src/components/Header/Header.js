@@ -1,5 +1,6 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
+import settings from 'front-settings';
 
 import {
   Icon,
@@ -12,7 +13,7 @@ import styles from './Header.module.scss';
 
 const HeaderBrand = () => (
   <div className={styles.brand}>
-    Terralego
+    {settings.title}
   </div>
 );
 
