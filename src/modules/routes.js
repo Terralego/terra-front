@@ -21,13 +21,15 @@ export const routes = [{
 }, {
   path: '/sub1',
   name: 'Subnav 1',
+  exact: true,
+  component: Form,
   routes: [
     {
-      path: '/option1',
+      path: '/sub1/option1',
       name: 'Option 1',
       component: Form,
     }, {
-      path: '/option2',
+      path: '/sub1/option2',
       name: 'Option 2',
       component: Form,
     },

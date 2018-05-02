@@ -1,34 +1,52 @@
-import { getCurrentRoutes } from './Breadcrumb';
+import { getBreadcrumbRoutes } from './Breadcrumb';
 
 const routes = [{
-  path: '/form',
-  name: 'Formulaire',
-  icon: 'form',
+  path: '/home',
+  name: 'Home',
 }, {
   path: '/sub1',
   name: 'Subnav 1',
   routes: [
     {
-      path: '/option1',
+      path: '/sub1/option1',
       name: 'Option 1',
     }, {
-      path: '/option2',
+      path: '/sub1/option2',
       name: 'Option 2',
     },
   ],
 }];
 
-const location = {
-  pathname: '/sub1',
-  search: '',
-  hash: '',
-  key: 't55thq',
-};
-
 describe('Breadcrumb', () => {
   it('should have a valid router object', () => {
-    const currentRoutes = getCurrentRoutes(routes, location);
-    expect(currentRoutes).toEqual(routes);
+
+    const expected = [{
+      path: '/sub1',
+      name: 'Subnav 1',
+    }, {
+      path: '/sub1/option1',
+      name: 'Option 1',
+    }];
+
+    const currentRoutes = getBreadcrumbRoutes(routes, '/sub1/option1');
+    expect(currentRoutes).toEqual(expected);
+  });
+
+  it('should have a valid router object', () => {
+
+    const expected = [{
+      path: '/home',
+      name: 'Home',
+    }, {
+      path: '/sub1',
+      name: 'Subnav 1',
+    }, {
+      path: '/sub1/option1',
+      name: 'Option 1',
+    }];
+
+    const currentRoutes = getBreadcrumbRoutes(routes, '/sub1/option1', routes[0]);
+    expect(currentRoutes).toEqual(expected);
   });
 });
 
