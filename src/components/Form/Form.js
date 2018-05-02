@@ -7,14 +7,20 @@ import { addRequest } from '../../modules/base';
 const FormItem = Form.Item;
 
 class NormalForm extends React.Component {
-  handleSubmit = e => {
+  constructor (props) {
+    super(props);
+    this.handleSubmit = this.handleSubmit.bind(this);
+  }
+
+  handleSubmit (e) {
     e.preventDefault();
     this.props.form.validateFields((err, values) => {
       if (!err) {
         this.props.addRequest(values.name, values.activity);
       }
     });
-  };
+  }
+
   render () {
     const { getFieldDecorator } = this.props.form;
     if (!this.props.request.name.length) {
