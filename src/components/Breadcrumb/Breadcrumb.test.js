@@ -19,7 +19,6 @@ const routes = [{
 
 describe('Breadcrumb', () => {
   it('should have a valid router object', () => {
-
     const expected = [{
       path: '/sub1',
       name: 'Subnav 1',
@@ -33,7 +32,6 @@ describe('Breadcrumb', () => {
   });
 
   it('should have a valid router object', () => {
-
     const expected = [{
       path: '/home',
       name: 'Home',
