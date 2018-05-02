@@ -2,6 +2,8 @@
   import/no-extraneous-dependencies: off,
   import/newline-after-import: off,
   no-param-reassign: off,
+  import/no-unresolved: off,
+  global-require: off,
 */
 
 const path = require('path');
@@ -29,7 +31,13 @@ const rewireModulesIncludes = (config, env, paths) => {
   return config;
 };
 
-const lessOptions   = require('./less-overrides');
+let lessOptions = {};
+try {
+  lessOptions = require('../custom_modules/less-overrides');
+} catch (error) {
+  lessOptions = require('./less-overrides');
+}
+
 const importOptions = { libraryName: 'antd', libraryDirectory: 'es', style: true };
 const eslintOptions = options => {
   options.emitWarning = process.env.NODE_ENV !== 'production' || process.env.REACT_APP_FORCE_BUILD;
