@@ -13,10 +13,10 @@ export default props => (
     width="20px"
     height="20px"
   >
-    <g fill={props.color || '#000000'}>
+    <g fill={props.color || 'red'}>
       <line
-        fill={props.color || '#000000'}
-        stroke={props.color || '#000000'}
+        fill={props.color || 'red'}
+        stroke={props.color || 'red'}
         strokeWidth="8"
         strokeLinecap="round"
         strokeMiterlimit="10"
@@ -26,8 +26,8 @@ export default props => (
         y2="16.034"
       />
       <line
-        fill={props.color || '#000000'}
-        stroke={props.color || '#000000'}
+        fill={props.color || 'red'}
+        stroke={props.color || 'red'}
         strokeWidth="8"
         strokeLinecap="round"
         strokeMiterlimit="10"
@@ -37,8 +37,8 @@ export default props => (
         y2="126.299"
       />
       <line
-        fill={props.color || '#000000'}
-        stroke={props.color || '#000000'}
+        fill={props.color || 'red'}
+        stroke={props.color || 'red'}
         strokeWidth="8"
         strokeLinecap="round"
         strokeMiterlimit="10"
@@ -48,8 +48,8 @@ export default props => (
         y2="105.985"
       />
       <line
-        fill={props.color || '#000000'}
-        stroke={props.color || '#000000'}
+        fill={props.color || 'red'}
+        stroke={props.color || 'red'}
         strokeWidth="8"
         strokeLinecap="round"
         strokeMiterlimit="10"
@@ -60,11 +60,11 @@ export default props => (
       />
     </g>
     <g>
-      <g fill={props.color || '#000000'}>
+      <g fill={props.color || 'red'}>
         <rect
           x="110.198"
           y="109.037"
-          stroke={props.color || '#000000'}
+          stroke={props.color || 'red'}
           strokeWidth="2"
           strokeLinejoin="bevel"
           strokeMiterlimit="10"
@@ -74,8 +74,8 @@ export default props => (
         <rect
           x="115.967"
           y="113.892"
-          fill={props.color || '#000000'}
-          stroke={props.color || '#000000'}
+          fill={props.color || 'red'}
+          stroke={props.color || 'red'}
           strokeWidth="2"
           strokeLinejoin="bevel"
           strokeMiterlimit="10"
@@ -83,11 +83,11 @@ export default props => (
           height="16.052"
         />
       </g>
-      <g fill={props.color || '#000000'}>
+      <g fill={props.color || 'red'}>
         <rect
           x="94.409"
           y="3.821"
-          stroke={props.color || '#000000'}
+          stroke={props.color || 'red'}
           strokeWidth="2"
           strokeLinejoin="bevel"
           strokeMiterlimit="10"
@@ -97,8 +97,8 @@ export default props => (
         <rect
           x="100.178"
           y="8.675"
-          fill={props.color || '#000000'}
-          stroke={props.color || '#000000'}
+          fill={props.color || 'red'}
+          stroke={props.color || 'red'}
           strokeWidth="2"
           strokeLinejoin="bevel"
           strokeMiterlimit="10"
@@ -106,11 +106,11 @@ export default props => (
           height="16.052"
         />
       </g>
-      <g fill={props.color || '#000000'}>
+      <g fill={props.color || 'red'}>
         <rect
           x="13.297"
           y="92.061"
-          stroke={props.color || '#000000'}
+          stroke={props.color || 'red'}
           strokeWidth="2"
           strokeLinejoin="bevel"
           strokeMiterlimit="10"
@@ -120,8 +120,8 @@ export default props => (
         <rect
           x="19.065"
           y="96.915"
-          fill={props.color || '#000000'}
-          stroke={props.color || '#000000'}
+          fill={props.color || 'red'}
+          stroke={props.color || 'red'}
           strokeWidth="2"
           strokeLinejoin="bevel"
           strokeMiterlimit="10"
@@ -129,11 +129,11 @@ export default props => (
           height="16.052"
         />
       </g>
-      <g fill={props.color || '#000000'}>
+      <g fill={props.color || 'red'}>
         <rect
           x="12.97"
           y="25.139"
-          stroke={props.color || '#000000'}
+          stroke={props.color || 'red'}
           strokeWidth="2"
           strokeLinejoin="bevel"
           strokeMiterlimit="10"
@@ -143,8 +143,8 @@ export default props => (
         <rect
           x="18.738"
           y="29.994"
-          fill={props.color || '#000000'}
-          stroke={props.color || '#000000'}
+          fill={props.color || 'red'}
+          stroke={props.color || 'red'}
           strokeWidth="2"
           strokeLinejoin="bevel"
           strokeMiterlimit="10"

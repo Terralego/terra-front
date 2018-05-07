@@ -5,7 +5,7 @@ const initialState = {
 };
 
 /**
- * request reducer
+ * drawMode reducer
  */
 const drawMode = (state = initialState, action) => {
   switch (action.type) {

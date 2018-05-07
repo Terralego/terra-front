@@ -5,12 +5,17 @@ import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
 import { changeMode } from 'modules/drawMode';
 
+import Pointer from './Pointer';
 import Polygon from './Polygon';
 import Line from './Line';
 
 const RadioButton = Radio.Button;
 const RadioGroup = Radio.Group;
 
+/**
+ * Group of map control for drawing
+ * Need to load drawMode module
+ */
 const DrawButtons = props => {
   const style = {
     lineHeight: '38px',
@@ -25,7 +30,10 @@ const DrawButtons = props => {
   return (
     <div style={{ position: 'absolute', top: '8px', right: '20px', zIndex: 10 }}>
       <RadioGroup onChange={handleChange} defaultValue="polygon">
-        <RadioButton value="polygon" style={{ ...style, borderRadius: '4px 4px 0 0' }}>
+        <RadioButton value="pointer" style={{ ...style, borderRadius: '4px 4px 0 0' }}>
+          <Pointer color={getColor('pointer')} />
+        </RadioButton>
+        <RadioButton value="polygon" style={{ ...style, borderRadius: '0' }}>
           <Polygon color={getColor('polygon')} />
         </RadioButton>
         <RadioButton value="line" style={{ ...style, borderRadius: '0 0 4px 4px' }}>
