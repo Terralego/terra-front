@@ -15,13 +15,14 @@ class AutocompleteTags extends React.Component {
   }
 
   handleChange = value => {
-    const options = [].concat(...this.props.options.map(option => option.children));
-    const noResult = options
-      .filter(child => child.label.toUpperCase().indexOf(value.toUpperCase()) !== -1);
-
-    if (noResult.length > 0) {
-      this.setState({ value, alert: true });
-    }
+    this.props.options.forEach(option => {
+      option.children.find(child => {
+        if (child.label.toUpperCase().indexOf(value.toUpperCase()) !== -1) {
+          this.setState({ value, alert: true });
+        }
+        return child;
+      });
+    });
   }
 
   handleFilter = (inputValue, option) => option.props.children
