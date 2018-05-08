@@ -1,8 +1,6 @@
 export const CHANGE_MODE = 'drawMode/CHANGE_MODE';
 
-const initialState = {
-  mode: 'polygon',
-};
+const initialState = 'pointer';
 
 /**
  * drawMode reducer
@@ -10,10 +8,7 @@ const initialState = {
 const drawMode = (state = initialState, action) => {
   switch (action.type) {
     case CHANGE_MODE:
-      return {
-        ...state,
-        mode: action.value,
-      };
+      return action.value;
     default:
       return state;
   }

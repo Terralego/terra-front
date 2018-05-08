@@ -29,7 +29,7 @@ const DrawButtons = props => {
 
   return (
     <div style={{ position: 'absolute', top: '8px', right: '20px', zIndex: 10 }}>
-      <RadioGroup onChange={handleChange} defaultValue="polygon">
+      <RadioGroup onChange={handleChange} defaultValue={props.mode}>
         <RadioButton value="pointer" style={{ ...style, borderRadius: '4px 4px 0 0' }}>
           <Pointer color={getColor('pointer')} />
         </RadioButton>
@@ -55,7 +55,7 @@ DrawButtons.defaultProps = {
 };
 
 const StateToProps = state => ({
-  mode: state.drawMode.mode,
+  mode: state.drawMode,
 });
 
 const DispatchToProps = dispatch =>
