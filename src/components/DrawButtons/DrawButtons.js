@@ -1,10 +1,8 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { Radio } from 'antd';
-import { bindActionCreators } from 'redux';
-import { connect } from 'react-redux';
-import { changeMode } from 'modules/drawMode';
 
+import HandCursor from './HandCursor';
 import Pointer from './Pointer';
 import Polygon from './Polygon';
 import Line from './Line';
@@ -23,14 +21,17 @@ const DrawButtons = props => {
     display: 'block',
   };
 
-  const handleChange = e => props.changeMode(e.target.value);
+  const handleChange = e => props.handleChange(e.target.value);
 
   const getColor = mode => (props.mode === mode ? props.selectedColor : props.color);
 
   return (
     <div style={{ position: 'absolute', top: '8px', right: '20px', zIndex: 10 }}>
       <RadioGroup onChange={handleChange} defaultValue={props.mode}>
-        <RadioButton value="pointer" style={{ ...style, borderRadius: '4px 4px 0 0' }}>
+        <RadioButton value="select" style={{ ...style, borderRadius: '4px 4px 0 0' }}>
+          <HandCursor color={getColor('select')} />
+        </RadioButton>
+        <RadioButton value="pointer" style={{ ...style, borderRadius: '0' }}>
           <Pointer color={getColor('pointer')} />
         </RadioButton>
         <RadioButton value="polygon" style={{ ...style, borderRadius: '0' }}>
@@ -47,23 +48,13 @@ const DrawButtons = props => {
 DrawButtons.propTypes = {
   color: PropTypes.string,
   selectedColor: PropTypes.string,
+  mode: PropTypes.string,
 };
 
 DrawButtons.defaultProps = {
   color: '#999',
   selectedColor: '#000',
+  mode: 'select',
 };
 
-const StateToProps = state => ({
-  mode: state.drawMode,
-});
-
-const DispatchToProps = dispatch =>
-  bindActionCreators(
-    {
-      changeMode,
-    },
-    dispatch,
-  );
-
-export default connect(StateToProps, DispatchToProps)(DrawButtons);
+export default DrawButtons;
