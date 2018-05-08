@@ -85,9 +85,9 @@ class TerraDrawMap extends Component {
       view,
     });
 
-    this.modify = new ol.interaction.Modify({ source: this.sourceDraw });
+    // this.modify = new ol.interaction.Modify({ source: this.sourceDraw });
     this.select = new ol.interaction.Select({ source: this.sourceDraw });
-    this.snap = new ol.interaction.Snap({ source: this.sourceDraw });
+    // this.snap = new ol.interaction.Snap({ source: this.sourceDraw });
 
     if (this.props.getDataOnHover) {
       this.map.on('pointermove', e => this.onHover(e));
@@ -139,15 +139,15 @@ class TerraDrawMap extends Component {
 
   setSelectionMode () {
     this.stopDraw();
-    this.map.addInteraction(this.modify);
+    // this.map.addInteraction(this.modify);
     this.map.addInteraction(this.select);
-    this.map.addInteraction(this.snap);
+    // this.map.addInteraction(this.snap);
   }
 
   unsetSectionMode () {
     this.map.removeInteraction(this.select);
-    this.map.removeInteraction(this.modify);
-    this.map.removeInteraction(this.snap);
+    // this.map.removeInteraction(this.modify);
+    // this.map.removeInteraction(this.snap);
   }
 
   stopDraw () {
