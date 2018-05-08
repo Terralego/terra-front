@@ -76,6 +76,9 @@ class TerraDrawMap extends Component {
       view,
     });
 
+    const modify = new ol.interaction.Modify({ source: this.sourceDraw });
+    this.map.addInteraction(modify);
+
     if (this.props.getDataOnHover) {
       this.map.on('pointermove', e => this.onHover(e));
     }
@@ -132,6 +135,8 @@ class TerraDrawMap extends Component {
     });
 
     this.map.addInteraction(this.draw);
+    this.snap = new ol.interaction.Snap({ source: this.sourceDraw });
+    this.map.addInteraction(this.snap);
   }
 
   startDrawLine () {
@@ -143,6 +148,8 @@ class TerraDrawMap extends Component {
     });
 
     this.map.addInteraction(this.draw);
+    this.snap = new ol.interaction.Snap({ source: this.sourceDraw });
+    this.map.addInteraction(this.snap);
   }
 
   render () {
