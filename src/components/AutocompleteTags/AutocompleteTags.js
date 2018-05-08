@@ -4,6 +4,9 @@ import { Icon, Input, AutoComplete, Tag, Alert } from 'antd';
 
 const { Option, OptGroup } = AutoComplete;
 
+const handleFilter = (inputValue, option) => option.props.children
+  .toUpperCase().indexOf(inputValue.toUpperCase()) !== -1;
+
 class AutocompleteTags extends React.Component {
   constructor (props) {
     super(props);
@@ -12,9 +15,12 @@ class AutocompleteTags extends React.Component {
       value: '',
       alert: false,
     };
+    this.handleChange = this.handleChange.bind(this);
+    this.handleSelect = this.handleSelect.bind(this);
+    this.handleClose = this.handleClose.bind(this);
   }
 
-  handleChange = value => {
+  handleChange (value) {
     this.props.options.forEach(option => {
       option.children.find(child => {
         if (child.label.toUpperCase().indexOf(value.toUpperCase()) !== -1) {
@@ -25,10 +31,7 @@ class AutocompleteTags extends React.Component {
     });
   }
 
-  handleFilter = (inputValue, option) => option.props.children
-    .toUpperCase().indexOf(inputValue.toUpperCase()) !== -1;
-
-  handleSelect = (value, option) => {
+  handleSelect (value, option) {
     // New tag added
     if (!this.state.tags.find(tag => option.props.value === tag.value)) {
       const tags = [...this.state.tags, option.props];
@@ -38,7 +41,7 @@ class AutocompleteTags extends React.Component {
     this.setState({ value: '', alert: false });
   }
 
-  handleClose = removedTag => {
+  handleClose (removedTag) {
     const tags = this.state.tags.filter(tag => tag.value !== removedTag.value);
     this.setState({ tags });
     this.props.onSelect(tags.map(tag => [tag.value, tag.group]));
@@ -60,9 +63,6 @@ class AutocompleteTags extends React.Component {
       </OptGroup>
     ));
 
-    const onFilter = (inputValue, option) => option.props.children
-      .toUpperCase().indexOf(inputValue.toUpperCase()) !== -1;
-
     return (
       <div>
         {this.state.tags.map(tag => (
@@ -81,7 +81,7 @@ class AutocompleteTags extends React.Component {
           size={this.props.size}
           style={{ width: '100%' }}
           dataSource={options}
-          filterOption={onFilter}
+          filterOption={handleFilter}
           onChange={this.handleChange}
           onSelect={this.handleSelect}
           value={this.state.value}
