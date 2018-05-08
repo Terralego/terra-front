@@ -3,6 +3,15 @@ import PropTypes from 'prop-types';
 import ol from 'openlayers';
 import 'openlayers/dist/ol.css';
 
+function guid () {
+  function s4 () {
+    return Math.floor((1 + Math.random()) * 0x10000)
+      .toString(16)
+      .substring(1);
+  }
+  return `${s4()}${s4()}-${s4()}-${s4()}-${s4()}-${s4()}${s4()}${s4()}`;
+}
+
 class TerraDrawMap extends Component {
   componentDidMount () {
     const sourceLayer = new ol.layer.Tile({
@@ -11,7 +20,7 @@ class TerraDrawMap extends Component {
       }),
     });
     this.sourceDraw = new ol.source.Vector({ wrapX: false });
-    const vectorDraw = new ol.layer.Vector({
+    this.vectorDraw = new ol.layer.Vector({
       source: this.sourceDraw,
       zIndex: 100,
     });
@@ -72,7 +81,7 @@ class TerraDrawMap extends Component {
         })
         .extend([]),
       target: this.mapContainer,
-      layers: [sourceLayer, vectorDraw, ...vectorLayers],
+      layers: [sourceLayer, this.vectorDraw, ...vectorLayers],
       view,
     });
 
@@ -88,8 +97,15 @@ class TerraDrawMap extends Component {
     }
 
     this.sourceDraw.on('addfeature', event => {
+      event.feature.setProperties({
+        id: guid(),
+        name: '',
+      });
       if (this.props.getGeometryOnDrawEnd) {
-        this.props.getGeometryOnDrawEnd(event.feature.getGeometry().getCoordinates());
+        this.props.getGeometryOnDrawEnd({
+          geometry: event.feature.getGeometry().getCoordinates(),
+          properties: event.feature.getProperties(),
+        });
       }
     });
   }
@@ -150,6 +166,14 @@ class TerraDrawMap extends Component {
     this.map.addInteraction(this.draw);
     this.snap = new ol.interaction.Snap({ source: this.sourceDraw });
     this.map.addInteraction(this.snap);
+  }
+
+  removeFeatureById (id) {
+    this.sourceDraw.forEachFeature(feature => {
+      if (feature.N.id === id) {
+        this.sourceDraw.removeFeature(feature);
+      }
+    });
   }
 
   render () {
