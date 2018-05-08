@@ -85,8 +85,9 @@ class TerraDrawMap extends Component {
       view,
     });
 
-    const modify = new ol.interaction.Modify({ source: this.sourceDraw });
-    this.map.addInteraction(modify);
+    this.modify = new ol.interaction.Modify({ source: this.sourceDraw });
+    this.select = new ol.interaction.Select({ source: this.sourceDraw });
+    this.snap = new ol.interaction.Snap({ source: this.sourceDraw });
 
     if (this.props.getDataOnHover) {
       this.map.on('pointermove', e => this.onHover(e));
@@ -136,6 +137,19 @@ class TerraDrawMap extends Component {
     }
   }
 
+  setSelectionMode () {
+    this.stopDraw();
+    this.map.addInteraction(this.modify);
+    this.map.addInteraction(this.select);
+    this.map.addInteraction(this.snap);
+  }
+
+  unsetSectionMode () {
+    this.map.removeInteraction(this.select);
+    this.map.removeInteraction(this.modify);
+    this.map.removeInteraction(this.snap);
+  }
+
   stopDraw () {
     if (this.draw) {
       this.map.removeInteraction(this.draw);
@@ -144,6 +158,7 @@ class TerraDrawMap extends Component {
 
   startDrawPolygon () {
     this.stopDraw();
+    this.unsetSectionMode();
 
     this.draw = new ol.interaction.Draw({
       source: this.sourceDraw,
@@ -151,12 +166,11 @@ class TerraDrawMap extends Component {
     });
 
     this.map.addInteraction(this.draw);
-    this.snap = new ol.interaction.Snap({ source: this.sourceDraw });
-    this.map.addInteraction(this.snap);
   }
 
   startDrawLine () {
     this.stopDraw();
+    this.unsetSectionMode();
 
     this.draw = new ol.interaction.Draw({
       source: this.sourceDraw,
@@ -164,8 +178,6 @@ class TerraDrawMap extends Component {
     });
 
     this.map.addInteraction(this.draw);
-    this.snap = new ol.interaction.Snap({ source: this.sourceDraw });
-    this.map.addInteraction(this.snap);
   }
 
   removeFeatureById (id) {
