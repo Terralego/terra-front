@@ -11,13 +11,30 @@ class AutocompleteTags extends React.Component {
   constructor (props) {
     super(props);
     this.state = {
-      tags: [],
+      tags: this.initTagValue(),
       value: '',
       alert: false,
     };
     this.handleChange = this.handleChange.bind(this);
     this.handleSelect = this.handleSelect.bind(this);
     this.handleClose = this.handleClose.bind(this);
+  }
+
+  initTagValue () {
+    const activities = this.props.value;
+    if (activities) {
+      return activities.map(item => {
+        const category = this.props.options.find(option => option.value === item.category);
+        const activityLabel = category ? category.children.find(child => child.value === item.type).label : '';
+
+        return {
+          value: item.type,
+          label: activityLabel,
+          category: item.category,
+        };
+      });
+    }
+    return [];
   }
 
   handleChange (value) {
@@ -36,7 +53,7 @@ class AutocompleteTags extends React.Component {
     if (!this.state.tags.find(tag => option.props.value === tag.value)) {
       const tags = [...this.state.tags, option.props];
       this.setState({ tags });
-      this.props.onSelect(tags.map(tag => [tag.value, tag.group]));
+      this.props.onSelect(tags.map(tag => [tag.value, tag.category]));
     }
     this.setState({ value: '', alert: false });
   }
@@ -44,18 +61,18 @@ class AutocompleteTags extends React.Component {
   handleClose (removedTag) {
     const tags = this.state.tags.filter(tag => tag.value !== removedTag.value);
     this.setState({ tags });
-    this.props.onSelect(tags.map(tag => [tag.value, tag.group]));
+    this.props.onSelect(tags.map(tag => [tag.value, tag.category]));
   }
 
   render () {
-    const options = this.props.options.map(group => (
-      <OptGroup key={group.value} label={group.label}>
-        {group.children.map(opt => (
+    const options = this.props.options.map(category => (
+      <OptGroup key={category.value} label={category.label}>
+        {category.children.map(opt => (
           <Option
-            key={opt.label}
+            key={opt.value}
             value={opt.value}
             label={opt.label}
-            group={group.value}
+            category={category.value}
           >
             {opt.label}
           </Option>
@@ -71,7 +88,7 @@ class AutocompleteTags extends React.Component {
             key={`tag_${tag.value}`}
             afterClose={() => this.handleClose(tag)}
             color={this.props.tagColor}
-          >{tag.children}
+          >{tag.label}
           </Tag>))}
         <AutoComplete
           className={this.props.className}
