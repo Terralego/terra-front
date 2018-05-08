@@ -18,6 +18,7 @@
     "leaflet": "~1.3.1",
     "moment": "~2.21.0",
     "node-sass": "~4.8.3",
+    "openlayers": "~4.6.5",
     "prop-types": "~15.6.1",
     "react": "~16.3.0",
     "react-app-rewire-css-modules": "github:codebandits/react-app-rewire-css-modules#956a2330c2eb70cb5bc0795c0e83604e271d4a03",
@@ -34,8 +35,7 @@
     "react-scripts": "1.1.1",
     "redux": "~3.7.2",
     "redux-thunk": "~2.2.0",
-    "sass-loader": "~6.0.6",
-    "terra-draw-map": "git+https://github.com/makinacorpus/terra-draw-map.git"
+    "sass-loader": "~6.0.6"
   },
   "scripts": {
     "start": "react-app-rewired start",
