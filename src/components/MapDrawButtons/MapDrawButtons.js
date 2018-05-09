@@ -13,7 +13,7 @@ const RadioGroup = Radio.Group;
  * Group of map control for drawing
  * Need to load drawMode module
  */
-const DrawButtons = props => {
+const MapDrawButtons = props => {
   const style = {
     lineHeight: '38px',
     padding: '0 4px',
@@ -41,16 +41,16 @@ const DrawButtons = props => {
   );
 };
 
-DrawButtons.propTypes = {
+MapDrawButtons.propTypes = {
   color: PropTypes.string,
   selectedColor: PropTypes.string,
   mode: PropTypes.string,
 };
 
-DrawButtons.defaultProps = {
+MapDrawButtons.defaultProps = {
   color: '#999',
   selectedColor: '#000',
   mode: 'select',
 };
 
-export default DrawButtons;
+export default MapDrawButtons;
