@@ -50,7 +50,7 @@ MapDrawButtons.propTypes = {
 MapDrawButtons.defaultProps = {
   color: '#999',
   selectedColor: '#000',
-  mode: 'select',
+  mode: 'pointer',
 };
 
 export default MapDrawButtons;
