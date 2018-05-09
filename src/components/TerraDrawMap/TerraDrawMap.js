@@ -102,10 +102,14 @@ class TerraDrawMap extends Component {
         id: guid(),
         name: '',
       });
+
       if (this.props.getGeometryOnDrawEnd) {
+        const properties = event.feature.getProperties();
         this.props.getGeometryOnDrawEnd({
           geometry: event.feature.getGeometry().getCoordinates(),
-          properties: event.feature.getProperties(),
+          properties: {
+            name: properties.name,
+          },
         });
       }
     });
