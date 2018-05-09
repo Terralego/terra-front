@@ -2,7 +2,7 @@ import React from 'react';
 import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
 import { Form, Icon, Input, Button } from 'antd';
-import { updateRequestProperties } from 'modules/request';
+import { updateRequestProperties } from 'modules/userRequest';
 
 const FormItem = Form.Item;
 
@@ -64,7 +64,7 @@ class NormalForm extends React.Component {
 const WrappedNormalLoginForm = Form.create()(NormalForm);
 
 const StateToProps = state => ({
-  request: state.request,
+  properties: state.userRequest.properties,
 });
 
 const DispatchToProps = dispatch =>

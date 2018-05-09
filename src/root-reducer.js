@@ -1,9 +1,9 @@
 import { combineReducers } from 'redux';
 import { routerReducer } from 'react-router-redux';
-import request from 'modules/request';
+import userRequest from 'modules/userRequest';
 
 export default combineReducers({
   routing: routerReducer,
-  request,
+  userRequest,
   // ...otherReducers
 });
