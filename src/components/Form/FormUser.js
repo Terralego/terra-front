@@ -12,12 +12,17 @@ function hasErrors (fieldsError) {
 }
 
 class Activity extends Component {
+  constructor (props) {
+    super(props);
+    this.handleSubmit = this.handleSubmit.bind(this);
+  }
+
   componentDidMount () {
     // To disabled submit button at the beginning.
     this.props.form.validateFields();
   }
 
-  handleSubmit = e => {
+  handleSubmit (e) {
     e.preventDefault();
     this.props.form.validateFields((err, values) => {
       if (!err) {
