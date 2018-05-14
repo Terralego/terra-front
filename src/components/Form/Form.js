@@ -1,78 +1,56 @@
 import React from 'react';
 import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
-import { Form, Icon, Input, Button } from 'antd';
-import { updateRequestProperties } from 'modules/userRequest';
+import { Row, Col, Steps } from 'antd';
 
-const FormItem = Form.Item;
+import { updateRequestValue } from 'modules/userRequest';
+import steps from 'components/Form/Form-steps';
 
-class NormalForm extends React.Component {
-  constructor (props) {
-    super(props);
-    this.handleSubmit = this.handleSubmit.bind(this);
-  }
+const { Step } = Steps;
 
-  handleSubmit (e) {
-    e.preventDefault();
-    this.props.form.validateFields((err, values) => {
-      if (!err) {
-        this.props.updateRequestProperties(values);
-      }
-    });
-  }
+const FormApp = props => {
+  const { currentStep } = props;
 
-  render () {
-    const { getFieldDecorator } = this.props.form;
-    return (
-      <Form onSubmit={this.handleSubmit} className="login-form">
-        <FormItem>
-          {getFieldDecorator('name', {
-            rules: [
-              { required: true, message: 'Veuillez saisir votre demande !' },
-            ],
-          })(<Input
-            prefix={<Icon type="user" style={{ color: 'rgba(0,0,0,.25)' }} />}
-            placeholder="Nom de la demande"
-          />)}
-        </FormItem>
-        <FormItem>
-          {getFieldDecorator('activity', {
-            rules: [
-              { required: true, message: "Veuillez saisir votre type d'actitivé !" },
-            ],
-          })(<Input
-            prefix={
-              <Icon type="lock" style={{ color: 'rgba(0,0,0,.25)' }} />
-            }
-            placeholder="Type d'activité"
-          />)}
-        </FormItem>
-        <FormItem>
-          <Button
-            type="primary"
-            htmlType="submit"
-            className="login-form-button"
-          >
-            Valider
-          </Button>
-        </FormItem>
-      </Form>
-    );
-  }
-}
+  const handleClick = step => {
+    if (step < currentStep) {
+      props.updateRequestValue('step', step);
+    }
+  };
 
-const WrappedNormalLoginForm = Form.create()(NormalForm);
+  const stepStyle = step => ({
+    cursor: step < currentStep ? 'pointer' : 'default',
+  });
+
+  return (
+    <Row gutter={24}>
+      <Col span={24}>
+        <div>
+          <Steps className="steps" size="small" current={currentStep} style={{ margin: '10px 0 36px' }}>
+            {steps.map(step => (
+              <Step key={`step_${step.index}`} title={step.title} onClick={() => handleClick(step.index)} style={stepStyle(step.index)} />
+            ))}
+          </Steps>
+        </div>
+      </Col>
+      <Col span={24}>
+        <div>
+          { steps[currentStep].component }
+        </div>
+      </Col>
+    </Row>
+  );
+};
 
 const StateToProps = state => ({
-  properties: state.userRequest.properties,
+  currentStep: state.userRequest.step,
 });
 
 const DispatchToProps = dispatch =>
   bindActionCreators(
     {
-      updateRequestProperties,
+      updateRequestValue,
     },
     dispatch,
   );
 
-export default connect(StateToProps, DispatchToProps)(WrappedNormalLoginForm);
+export default connect(StateToProps, DispatchToProps)(FormApp);
