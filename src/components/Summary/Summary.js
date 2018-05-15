@@ -16,12 +16,12 @@ const Summary = props => {
       <h2>Demande</h2>
       <Divider />
 
-      <Card style={{ marginTop: 16 }} title="Nom" extra={<Button icon="edit" onClick={() => gotToStep(0)}>Modifier</Button>}>
-        <p><strong>Nom</strong></p>
-        <p>{properties.name}</p>
+      <Card style={{ marginTop: 16 }} title="Titre" extra={<Button icon="edit" onClick={() => gotToStep(0)}>Modifier</Button>}>
+        <p><strong>Titre</strong></p>
+        <p>{properties.title}</p>
 
-        <p><strong>Prénom</strong></p>
-        <p>{properties.firstName}</p>
+        <p><strong>Description</strong></p>
+        <p>{properties.description}</p>
       </Card>
     </div>
   );

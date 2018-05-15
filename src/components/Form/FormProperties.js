@@ -11,7 +11,7 @@ function hasErrors (fieldsError) {
   return Object.keys(fieldsError).some(field => fieldsError[field]);
 }
 
-class Activity extends Component {
+class Properties extends Component {
   constructor (props) {
     super(props);
     this.handleSubmit = this.handleSubmit.bind(this);
@@ -47,34 +47,34 @@ class Activity extends Component {
     const { properties } = this.props;
 
     // Only show error after a field is touched.
-    const nameError = isFieldTouched('name') && getFieldError('name');
-    const firstNameError = isFieldTouched('firstName') && getFieldError('firstName');
+    const titleError = isFieldTouched('title') && getFieldError('title');
+    const descriptionError = isFieldTouched('description') && getFieldError('description');
 
     return (
       <Form onSubmit={this.handleSubmit}>
 
-        <h2>Identification</h2>
+        <h2>Projet</h2>
 
         <FormItem
-          label="Nom"
-          validateStatus={nameError ? 'error' : ''}
-          help={nameError || ''}
+          label="Titre"
+          validateStatus={titleError ? 'error' : ''}
+          help={titleError || ''}
         >
-          {getFieldDecorator('name', {
-            rules: [{ required: true, message: 'Veuillez saisir le nom' }],
-            initialValue: properties.name,
-          })(<Input placeholder="Votre nom" />)}
+          {getFieldDecorator('title', {
+            rules: [{ required: true, message: 'Veuillez saisir un titre' }],
+            initialValue: properties.title,
+          })(<Input placeholder="Donnez un titre à votre projet" />)}
         </FormItem>
 
         <FormItem
-          label="Prénom"
-          validateStatus={firstNameError ? 'error' : ''}
-          help={firstNameError || ''}
+          label="Description"
+          validateStatus={descriptionError ? 'error' : ''}
+          help={descriptionError || ''}
         >
-          {getFieldDecorator('firstName', {
-            rules: [{ required: true, message: 'Veuillez saisir le prénom' }],
-            initialValue: properties.firstName,
-          })(<Input placeholder="Votre prénom" autosize={{ minRows: 3 }} />)}
+          {getFieldDecorator('description', {
+            rules: [{ required: true, message: 'Veuillez saisir une description' }],
+            initialValue: properties.description,
+          })(<Input placeholder="Décrivez votre projet" autosize={{ minRows: 3 }} />)}
         </FormItem>
 
         <FormItem>
@@ -92,7 +92,7 @@ class Activity extends Component {
   }
 }
 
-const FormActivity = Form.create()(Activity);
+const FormProperties = Form.create()(Properties);
 
 const StateToProps = state => ({
   properties: state.userRequest.properties,
@@ -107,4 +107,4 @@ const DispatchToProps = dispatch =>
     dispatch,
   );
 
-export default connect(StateToProps, DispatchToProps)(FormActivity);
+export default connect(StateToProps, DispatchToProps)(FormProperties);
