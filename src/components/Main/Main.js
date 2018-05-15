@@ -1,5 +1,6 @@
 import React,  { Component } from 'react';
 import { Layout } from 'antd';
+import { connect } from 'react-redux';
 
 import routes from 'modules/routes';
 import Header from 'components/Header/Header';
@@ -13,6 +14,14 @@ class Main extends Component {
   }
 
   render () {
+    // Concatenate all routes for child views
+    const routesViews = [...routes];
+    routes.forEach(route => {
+      if (route.routes) {
+        routesViews.push(...route.routes);
+      }
+    });
+
     return (
       <Layout style={{ height: '100vh' }}>
 
@@ -31,7 +40,9 @@ class Main extends Component {
 
             <Breadcrumb />
 
-            <ComponentName />
+            <Layout.Content style={{ margin: '0 20px', padding: '20px', background: 'white' }}>
+              {routesViews.map(route => <RouteWithSubRoutes key={`route_${route.path}`} {...route} />)}
+            </Layout.Content>
 
           </Layout>
 
@@ -44,10 +55,8 @@ class Main extends Component {
   }
 }
 
-const ComponentName = () => (
-  <Layout.Content style={{ margin: '0 20px', padding: '20px', background: 'white' }}>
-    {routes.map(route => <RouteWithSubRoutes key={`route_${route.path}`} {...route} />)}
-  </Layout.Content>
-);
+const StateToProps = state => ({
+  location: state.routing.location,
+});
 
-export default Main;
+export default connect(StateToProps, {})(Main);
