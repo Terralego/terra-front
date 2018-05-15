@@ -1,6 +1,7 @@
 import Home from 'components/Home/Home';
 import About from 'components/About/About';
 import Form from 'components/Form/Form';
+import ManageRequests from 'components/ManageRequests/ManageRequests';
 
 export const routes = [{
   path: '/accueil',
@@ -14,9 +15,14 @@ export const routes = [{
   component: About,
   icon: 'paper-clip',
 }, {
-  path: '/form',
-  name: 'Formulaire',
+  path: '/demande',
+  name: 'Demande',
   component: Form,
+  icon: 'form',
+}, {
+  path: '/gestion-demandes',
+  name: 'Gestion des demandes',
+  component: ManageRequests,
   icon: 'form',
 }, {
   path: '/sub1',
