@@ -7,7 +7,7 @@ import { Icon, Menu } from 'antd';
 const SideMenu = () => (
   <Menu mode="inline" defaultSelectedKeys={['1']} >
     {routes.map(route => {
-      if (route.routes) {
+      if (route.routes && route.submenu) {
         return (
           <Menu.SubMenu key={`nav_sub_${route.path}`} title={<span>{route.icon && <Icon type={route.icon} />}{route.name}</span>}>
             {route.routes.map(subroute => (

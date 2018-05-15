@@ -2,6 +2,7 @@ import Home from 'components/Home/Home';
 import About from 'components/About/About';
 import Form from 'components/Form/Form';
 import ManageRequests from 'components/ManageRequests/ManageRequests';
+import Summary from 'components/Summary/Summary';
 
 export const routes = [{
   path: '/accueil',
@@ -24,20 +25,12 @@ export const routes = [{
   name: 'Gestion des demandes',
   component: ManageRequests,
   icon: 'form',
-}, {
-  path: '/sub1',
-  name: 'Subnav 1',
   exact: true,
-  component: Form,
   routes: [
     {
-      path: '/sub1/option1',
-      name: 'Option 1',
-      component: Form,
-    }, {
-      path: '/sub1/option2',
-      name: 'Option 2',
-      component: Form,
+      path: '/gestion-demandes/detail/:id',
+      name: 'Détail de la demande',
+      component: Summary,
     },
   ],
 }];

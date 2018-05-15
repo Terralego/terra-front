@@ -38,8 +38,8 @@ export const getBreadcrumbRoutes = (allRoutes, currentPath, defaultRoute) => {
 };
 
 const BreadcrumbItem = route => {
-  const last = routes.indexOf(route) === routes.length - 1;
-  return last ? <span>{route.name}</span> : <Link to={route.path}>{route.name}</Link>;
+  const link = routes.find(r => r.path === route.path);
+  return !link ? <span>{route.name}</span> : <Link to={route.path}>{route.name}</Link>;
 };
 
 
