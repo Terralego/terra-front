@@ -25,7 +25,7 @@ describe('userRequest reducer', () => {
           company: 'Makina',
         },
       };
-      expect(userRequest({}, updateRequestAction)).toEqual({
+      expect(userRequest({ data: {} }, updateRequestAction)).toEqual({
         data: { properties: { name: 'Alex', company: 'Makina' } },
       });
     });

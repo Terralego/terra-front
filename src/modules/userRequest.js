@@ -22,7 +22,7 @@ const userRequest = (state = initialState, action) => {
         data: {
           ...state.data,
           properties: {
-            ...state.properties,
+            ...state.data.properties,
             ...action.properties,
           },
         },
