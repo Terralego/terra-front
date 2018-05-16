@@ -1,11 +1,11 @@
 const initialState = {
   formStep: 0,
-  editabled: false,
+  submitted: false,
+  error: null,
   data: {
-    feature: null,
-    organization: null,
-    owner: null,
     state: 0,
+    feature: 1,
+    organization: [1],
     properties: {
     },
   },

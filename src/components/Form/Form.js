@@ -35,7 +35,7 @@ const FormApp = props => {
         </div>
       </Col>
       <Col span={24}>
-        <Component />
+        <Component {...props} />
       </Col>
     </Row>
   );

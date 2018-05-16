@@ -17,7 +17,9 @@ function parseJSON (response) {
 const userRequestService = {
   post: data => fetch(`${settings.api_url}/userrequest/`, {
     method: 'POST',
-    header: {},
+    headers: {
+      'Content-Type': 'application/json',
+    },
     body: JSON.stringify(data),
   })
     .then(checkStatus)
@@ -25,7 +27,7 @@ const userRequestService = {
 
   put: (id, data) => fetch(`${settings.api_url}/userrequest/${id}`, {
     method: 'PUT',
-    header: {},
+    headers: {},
     body: JSON.stringify(data),
   })
     .then(checkStatus)
@@ -33,14 +35,14 @@ const userRequestService = {
 
   getAll: () => fetch(`${settings.api_url}/userrequest/`, {
     method: 'GET',
-    header: {},
+    headers: {},
   })
     .then(checkStatus)
     .then(parseJSON),
 
   get: id => fetch(`${settings.api_url}/userrequest/${id}`, {
     method: 'GET',
-    header: {},
+    headers: {},
   }).then(checkStatus)
     .then(parseJSON),
 };

@@ -10,10 +10,7 @@ const FormConfig = {
     submitButton: 'Envoyer ma demande',
     modal: {
       title: 'Demande envoyée',
-      actions: {
-        cancel: 'Fermer',
-        submit: 'Accéder au suivi de ma demande',
-      },
+      actions: 'Accéder au suivi de ma demande',
       text: 'Votre demande a été envoyé avec succès. Suivez le status de votre demande via votre interface de suivi.',
     },
   },
