@@ -4,7 +4,7 @@ export const FETCH = 'userRequestList/FETCH';
 export const FETCHED = 'userRequestList/FETCHED';
 
 const initialState = {
-  items: [],
+  items: {},
   loading: false,
 };
 
@@ -32,22 +32,35 @@ const userRequestList = (state = initialState, action) => {
 export default userRequestList;
 
 /**
+ * updateItems action : update items object
+ * @param  {object} items : object contains all userrequests, ordered by ids
+ */
+export const updateItems = items => dispatch => {
+  dispatch({
+    type: FETCHED,
+    items,
+  });
+};
+
+
+/**
  * userRequestList action : fetch userrequest list if not loaded
  */
 export const getUserRequestList = () => (dispatch, getState) => {
   const state = getState();
 
-  if (state.userRequestList.items.length < 1) {
+  if (Object.keys(state.userRequestList.items).length < 1) {
     dispatch({ type: FETCH });
 
-    return userRequestService.getAll().then(items => dispatch({
-      type: FETCHED,
-      items,
-    }));
+    return userRequestService.getAll().then(response => {
+      const items = {};
+      response.forEach(userrequest => {
+        items[userrequest.id] = userrequest;
+      });
+
+      return dispatch(updateItems(items));
+    });
   }
 
-  return dispatch({
-    type: FETCHED,
-    items: state.userRequestList.items,
-  });
+  return dispatch(updateItems(state.userRequestList.items));
 };
