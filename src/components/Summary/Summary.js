@@ -8,7 +8,7 @@ const Summary = props => {
   const { data } = props;
 
   const gotToStep = step => {
-    props.updateRequestValue('step', step);
+    props.updateRequestValue('formStep', step);
   };
 
   return (

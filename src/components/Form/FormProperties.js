@@ -26,7 +26,7 @@ class Properties extends Component {
     e.preventDefault();
     this.props.form.validateFields((err, values) => {
       if (!err) {
-        this.props.updateRequestValue('step', 1);
+        this.props.updateRequestValue('formStep', 1);
         this.props.updateRequestProperties(values);
       }
     });
@@ -95,7 +95,7 @@ class Properties extends Component {
 const FormProperties = Form.create()(Properties);
 
 const StateToProps = state => ({
-  properties: state.userRequest.properties,
+  properties: state.userRequest.data.properties,
 });
 
 const DispatchToProps = dispatch =>
