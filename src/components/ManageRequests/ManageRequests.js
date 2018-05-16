@@ -7,7 +7,7 @@ import moment from 'moment';
 
 import { getUserRequestList } from 'modules/userRequestList';
 
-class ManageRequest extends React.Component {
+class ManageRequests extends React.Component {
   componentDidMount () {
     this.props.getUserRequestList();
   }
@@ -51,7 +51,8 @@ class ManageRequest extends React.Component {
 }
 
 const StateToProps = state => ({
-  items: state.userRequestList.items,
+  // TODO: use Reselect for increase performances
+  items: Object.keys(state.userRequestList.items).map(key => state.userRequestList.items[key]),
   loading: state.userRequestList.loading,
 });
 
@@ -63,4 +64,4 @@ const DispatchToProps = dispatch =>
     dispatch,
   );
 
-export default connect(StateToProps, DispatchToProps)(ManageRequest);
+export default connect(StateToProps, DispatchToProps)(ManageRequests);

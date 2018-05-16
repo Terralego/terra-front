@@ -2,7 +2,7 @@ import Home from 'components/Home/Home';
 import About from 'components/About/About';
 import Form from 'components/Form/Form';
 import ManageRequests from 'components/ManageRequests/ManageRequests';
-import Summary from 'components/Summary/Summary';
+import ManageRequestDetail from 'components/ManageRequests/ManageRequestDetail';
 
 export const routes = [{
   path: '/accueil',
@@ -30,7 +30,7 @@ export const routes = [{
     {
       path: '/gestion-demandes/detail/:id',
       name: 'Détail de la demande',
-      component: Summary,
+      component: ManageRequestDetail,
     },
   ],
 }];

@@ -1,7 +1,8 @@
 import initialState from 'modules/userRequest-initial';
 
 export const UPDATE_VALUE = 'userRequest/UPDATE_VALUE';
-export const UPDATE_PROPERTIES = 'userRequest/UPDATE_PROPERTIES';
+export const UPDATE_DATA_PROPERTIES = 'userRequest/UPDATE_DATA_PROPERTIES';
+export const INIT_DATA = 'userRequest/INIT_DATA';
 
 /**
  * userRequest reducer
@@ -13,12 +14,20 @@ const userRequest = (state = initialState, action) => {
         ...state,
         [action.key]: action.value,
       };
-    case UPDATE_PROPERTIES:
+    case INIT_DATA:
       return {
         ...state,
-        properties: {
-          ...state.properties,
-          ...action.properties,
+        data: action.data,
+      };
+    case UPDATE_DATA_PROPERTIES:
+      return {
+        ...state,
+        data: {
+          ...state.data,
+          properties: {
+            ...state.properties,
+            ...action.properties,
+          },
         },
       };
     default:
@@ -45,9 +54,20 @@ export const updateRequestValue = (key, value) => dispatch => {
  * userRequest action : add or update an object of properties
  * @param  {object} properties : object of properties to add / update in userRequest object
  */
+export const initData = data => dispatch => {
+  dispatch({
+    type: INIT_DATA,
+    data,
+  });
+};
+
+/**
+ * userRequest action : add or update an object of properties
+ * @param  {object} properties : object of properties to add / update in userRequest object
+ */
 export const updateRequestProperties = properties => dispatch => {
   dispatch({
-    type: UPDATE_PROPERTIES,
+    type: UPDATE_DATA_PROPERTIES,
     properties,
   });
 };

@@ -5,7 +5,7 @@ import { Divider, Card, Button } from 'antd';
 import { updateRequestValue } from 'modules/userRequest';
 
 const Summary = props => {
-  const { properties } = props;
+  const { data } = props;
 
   const gotToStep = step => {
     props.updateRequestValue('step', step);
@@ -18,18 +18,14 @@ const Summary = props => {
 
       <Card style={{ marginTop: 16 }} title="Titre" extra={<Button icon="edit" onClick={() => gotToStep(0)}>Modifier</Button>}>
         <p><strong>Titre</strong></p>
-        <p>{properties.title}</p>
+        <p>{data.title}</p>
 
         <p><strong>Description</strong></p>
-        <p>{properties.description}</p>
+        <p>{data.description}</p>
       </Card>
     </div>
   );
 };
-
-const StateToProps = state => ({
-  properties: state.userRequest.properties,
-});
 
 const DispatchToProps = dispatch =>
   bindActionCreators(
@@ -39,5 +35,5 @@ const DispatchToProps = dispatch =>
     dispatch,
   );
 
-export default connect(StateToProps, DispatchToProps)(Summary);
+export default connect(null, DispatchToProps)(Summary);
 
