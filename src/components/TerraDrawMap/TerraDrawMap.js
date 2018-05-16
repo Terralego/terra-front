@@ -20,6 +20,13 @@ class TerraDrawMap extends Component {
       }),
     });
     this.sourceDraw = new ol.source.Vector({ wrapX: false });
+    if (this.props.features.length) {
+      this.sourceDraw
+        .addFeatures((new ol.format.GeoJSON()).readFeatures({
+          type: 'FeatureCollection',
+          features: this.props.features,
+        }));
+    }
     this.vectorDraw = new ol.layer.Vector({
       source: this.sourceDraw,
       zIndex: 100,
