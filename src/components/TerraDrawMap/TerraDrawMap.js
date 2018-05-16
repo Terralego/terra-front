@@ -98,19 +98,21 @@ class TerraDrawMap extends Component {
     }
 
     this.sourceDraw.on('addfeature', event => {
-      event.feature.setProperties({
-        id: guid(),
-        name: '',
-      });
-
       if (this.props.getGeometryOnDrawEnd) {
         const properties = event.feature.getProperties();
+        const id = guid();
         this.props.getGeometryOnDrawEnd({
-          geometry: event.feature.getGeometry().getCoordinates(),
+          id,
+          type: 'Feature',
+          geometry: {
+            type: event.feature.getGeometry().getType(),
+            coordinates: event.feature.getGeometry().getCoordinates(),
+          },
           properties: {
             name: properties.name,
           },
         });
+        event.feature.setId(id);
       }
     });
   }
@@ -186,7 +188,7 @@ class TerraDrawMap extends Component {
 
   removeFeatureById (id) {
     this.sourceDraw.forEachFeature(feature => {
-      if (feature.N.id === id) {
+      if (feature.getId() === id) {
         this.sourceDraw.removeFeature(feature);
       }
     });
