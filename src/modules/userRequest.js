@@ -1,9 +1,11 @@
+import userRequestService from 'services/userRequestService';
 import initialState from 'modules/userRequest-initial';
 
 export const UPDATE_VALUE = 'userRequest/UPDATE_VALUE';
 export const UPDATE_DATA_PROPERTIES = 'userRequest/UPDATE_DATA_PROPERTIES';
-export const INIT_DATA = 'userRequest/INIT_DATA';
-
+export const SUBMIT_DATA = 'userRequest/SUBMIT_DATA';
+export const SUBMIT_DATA_SUCCESS = 'userRequest/SUBMIT_DATA_SUCCESS';
+export const API_ERROR = 'userRequest/API_ERROR';
 /**
  * userRequest reducer
  */
@@ -13,11 +15,6 @@ const userRequest = (state = initialState, action) => {
       return {
         ...state,
         [action.key]: action.value,
-      };
-    case INIT_DATA:
-      return {
-        ...state,
-        data: action.data,
       };
     case UPDATE_DATA_PROPERTIES:
       return {
@@ -29,6 +26,16 @@ const userRequest = (state = initialState, action) => {
             ...action.properties,
           },
         },
+      };
+    case SUBMIT_DATA:
+      return {
+        ...state,
+        submitted: true,
+      };
+    case API_ERROR:
+      return {
+        ...state,
+        error: action.error,
       };
     default:
       return state;
@@ -54,20 +61,39 @@ export const updateRequestValue = (key, value) => dispatch => {
  * userRequest action : add or update an object of properties
  * @param  {object} properties : object of properties to add / update in userRequest object
  */
-export const initData = data => dispatch => {
-  dispatch({
-    type: INIT_DATA,
-    data,
-  });
-};
-
-/**
- * userRequest action : add or update an object of properties
- * @param  {object} properties : object of properties to add / update in userRequest object
- */
 export const updateRequestProperties = properties => dispatch => {
   dispatch({
     type: UPDATE_DATA_PROPERTIES,
     properties,
   });
+};
+
+/**
+ * handleError action : handle error api while submit
+ * @param  {object} error
+ */
+export const handleError = error => dispatch => {
+  dispatch({
+    type: API_ERROR,
+    error,
+  });
+};
+
+
+/**
+ * userRequest action : submit data object
+ * @param  {object} data : data that will be send to the server
+ */
+export const submitData = data => dispatch => {
+  dispatch({
+    type: SUBMIT_DATA,
+    data,
+  });
+
+  userRequestService.post(data).then(response => {
+    dispatch({
+      type: SUBMIT_DATA_SUCCESS,
+      response,
+    });
+  }).catch(err => dispatch(handleError(err.toString())));
 };

@@ -1,65 +1,49 @@
 import React from 'react';
 import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
+
 import { Button, Modal } from 'antd';
 import Summary from 'components/Summary/Summary';
 import FormConfig from 'components/Form/Form.config';
+import { submitData } from 'modules/userRequest';
+
+const handleAction = () => {
+  window.location.pathname = '/gestion-demandes';
+};
 
 class FormProperties extends React.Component {
   constructor (props) {
     super(props);
-    this.state = {
-      visible: false,
-    };
-
-    this.showModal = this.showModal.bind(this);
-    this.handleOk = this.handleOk.bind(this);
-    this.handleCancel = this.handleCancel.bind(this);
+    this.submitForm = this.submitForm.bind(this);
   }
 
-  showModal () {
-    this.setState({
-      visible: true,
-    });
-  }
-
-  handleOk () {
-    setTimeout(() => {
-      this.setState({ visible: false });
-    }, 3000);
-  }
-
-  handleCancel () {
-    this.setState({ visible: false });
+  submitForm () {
+    this.props.submitData(this.props.data);
   }
 
   render () {
     return (
       <div>
-        <Summary data={this.props.properties} />
+        <Summary data={this.props.data.properties} />
 
         <div style={{ margin: '24px 0', textAlign: 'right' }}>
           <Button
             type="primary"
             icon="arrow-right"
             size="large"
-            onClick={this.showModal}
+            onClick={this.submitForm}
           >
             {FormConfig.confirmation.submitButton}
           </Button>
         </div>
 
         <Modal
-          visible={this.state.visible}
+          visible={this.props.submitted}
           title={FormConfig.confirmation.modal.title}
-          onOk={this.handleOk}
-          onCancel={this.handleCancel}
+          closable={false}
           footer={[
-            <Button key="back" onClick={this.handleCancel}>
-              {FormConfig.confirmation.modal.actions.cancel}
-            </Button>,
-            <Button key="submit" type="primary" onClick={this.handleOk}>
-              {FormConfig.confirmation.modal.actions.submit}
+            <Button key="submit" type="primary" onClick={handleAction}>
+              {FormConfig.confirmation.modal.actions}
             </Button>,
           ]}
         >
@@ -71,14 +55,11 @@ class FormProperties extends React.Component {
 }
 
 const StateToProps = state => ({
-  properties: state.userRequest.data.properties,
+  data: state.userRequest.data,
+  submitted: state.userRequest.submitted,
+  error: state.userRequest.error,
 });
 
-const DispatchToProps = dispatch =>
-  bindActionCreators(
-    {
-    },
-    dispatch,
-  );
+const DispatchToProps = dispatch => bindActionCreators({ submitData }, dispatch);
 
 export default connect(StateToProps, DispatchToProps)(FormProperties);
