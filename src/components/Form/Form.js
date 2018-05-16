@@ -13,7 +13,7 @@ const FormApp = props => {
 
   const handleClick = step => {
     if (step < currentStep) {
-      props.updateRequestValue('step', step);
+      props.updateRequestValue('formStep', step);
     }
   };
 
@@ -42,7 +42,7 @@ const FormApp = props => {
 };
 
 const StateToProps = state => ({
-  currentStep: state.userRequest.step,
+  currentStep: state.userRequest.formStep,
 });
 
 const DispatchToProps = dispatch =>
