@@ -43,7 +43,7 @@ class FormProperties extends React.Component {
           closable={false}
           footer={[
             <Button key="submit" type="primary" onClick={handleAction}>
-              {FormConfig.confirmation.modal.actions}
+              {FormConfig.confirmation.modal.action}
             </Button>,
           ]}
         >
