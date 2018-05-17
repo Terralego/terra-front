@@ -18,11 +18,6 @@ const StateToProps = (state, ownProps) => ({
 });
 
 const DispatchToProps = dispatch =>
-  bindActionCreators(
-    {
-      getUserRequestList,
-    },
-    dispatch,
-  );
+  bindActionCreators({ getUserRequestList }, dispatch);
 
 export default connect(StateToProps, DispatchToProps)(ManageRequestDetail);

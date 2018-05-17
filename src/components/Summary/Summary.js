@@ -28,12 +28,7 @@ const Summary = props => {
 };
 
 const DispatchToProps = dispatch =>
-  bindActionCreators(
-    {
-      updateRequestValue,
-    },
-    dispatch,
-  );
+  bindActionCreators({ updateRequestValue }, dispatch);
 
 export default connect(null, DispatchToProps)(Summary);
 
