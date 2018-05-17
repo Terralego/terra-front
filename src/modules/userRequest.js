@@ -6,6 +6,7 @@ export const UPDATE_DATA_PROPERTIES = 'userRequest/UPDATE_DATA_PROPERTIES';
 export const SUBMIT_DATA = 'userRequest/SUBMIT_DATA';
 export const SUBMIT_DATA_SUCCESS = 'userRequest/SUBMIT_DATA_SUCCESS';
 export const API_ERROR = 'userRequest/API_ERROR';
+
 /**
  * userRequest reducer
  */
@@ -45,7 +46,8 @@ const userRequest = (state = initialState, action) => {
 export default userRequest;
 
 /**
- * userRequest action : create or update a value of userRequest key
+ * userRequest action
+ * updateRequestValue create or update a value of userRequest key
  * @param  {string} key : the key of the new userRequest value
  * @param  {any} value : the new value
  */
@@ -58,7 +60,8 @@ export const updateRequestValue = (key, value) => dispatch => {
 };
 
 /**
- * userRequest action : add or update an object of properties
+ * userRequest action
+ * updateRequestProperties add or update an object of properties
  * @param  {object} properties : object of properties to add / update in userRequest object
  */
 export const updateRequestProperties = properties => dispatch => {
@@ -69,7 +72,8 @@ export const updateRequestProperties = properties => dispatch => {
 };
 
 /**
- * handleError action : handle error api while submit
+ * userRequest action
+ * handleError handle error api while submit
  * @param  {object} error
  */
 export const handleError = error => dispatch => {
