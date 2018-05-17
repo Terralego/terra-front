@@ -106,17 +106,16 @@ class TerraDrawMap extends Component {
 
     this.sourceDraw.on('addfeature', event => {
       if (this.props.getGeometryOnDrawEnd) {
-        const properties = event.feature.getProperties();
         const id = guid();
         this.props.getGeometryOnDrawEnd({
-          id,
           type: 'Feature',
           geometry: {
             type: event.feature.getGeometry().getType(),
             coordinates: event.feature.getGeometry().getCoordinates(),
           },
           properties: {
-            name: properties.name,
+            id,
+            name: event.feature.getGeometry().getType(),
           },
         });
         event.feature.setId(id);
