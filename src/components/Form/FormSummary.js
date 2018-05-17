@@ -24,7 +24,7 @@ class FormProperties extends React.Component {
   render () {
     return (
       <div>
-        <Summary data={this.props.data.properties} />
+        <Summary data={this.props.data.properties} editabled />
 
         <div style={{ margin: '24px 0', textAlign: 'right' }}>
           <Button
