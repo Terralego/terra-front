@@ -14,13 +14,6 @@ import initialState from './userRequest-initial';
 const middlewares = [thunk];
 const mockStore = configureMockStore(middlewares);
 
-const mockResponse = (status, statusText, response) => new window.Response(response, {
-  status: 200,
-  headers: {
-    'Content-type': 'application/json',
-  },
-});
-
 describe('userRequest reducer', () => {
   it('should have initial value equal to {}', () => {
     expect(userRequest({}, {})).toEqual({});
@@ -66,7 +59,7 @@ describe('userRequest async action', () => {
         expect(expectedActions.length).toBe(2);
         expect(expectedActions).toContainEqual({ type: POST_DATA });
         expect(expectedActions).toContainEqual({
-          type: 'userRequest/SUBMIT_DATA_SUCCESS',
+          type: SUBMIT_DATA_SUCCESS,
           response: { id: 0 },
         });
       });
