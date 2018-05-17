@@ -148,7 +148,7 @@ class TerraDrawMap extends Component {
     // this.map.addInteraction(this.snap);
   }
 
-  unsetSectionMode () {
+  unsetSelectionMode () {
     this.map.removeInteraction(this.select);
     // this.map.removeInteraction(this.modify);
     // this.map.removeInteraction(this.snap);
@@ -162,7 +162,7 @@ class TerraDrawMap extends Component {
 
   startDrawPolygon () {
     this.stopDraw();
-    this.unsetSectionMode();
+    this.unsetSelectionMode();
 
     this.draw = new ol.interaction.Draw({
       source: this.sourceDraw,
@@ -174,7 +174,7 @@ class TerraDrawMap extends Component {
 
   startDrawLine () {
     this.stopDraw();
-    this.unsetSectionMode();
+    this.unsetSelectionMode();
 
     this.draw = new ol.interaction.Draw({
       source: this.sourceDraw,
