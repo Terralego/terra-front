@@ -50,7 +50,6 @@ describe('userRequest async action', () => {
   it('should POST_DATA, then if success SUBMIT_DATA_SUCCESS', () => {
     const store = mockStore(initialState);
 
-    // Success response
     FetchMock.post('*', { id: 0 });
 
     return store.dispatch(submitData(1))
@@ -68,7 +67,6 @@ describe('userRequest async action', () => {
   it('should POST_DATA, then if failed SUBMIT_DATA_FAILED', () => {
     const store = mockStore(initialState);
 
-    // Success response
     FetchMock.post('*', 400, { overwriteRoutes: true });
 
     return store.dispatch(submitData(1))
