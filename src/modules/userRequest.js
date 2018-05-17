@@ -3,9 +3,9 @@ import initialState from 'modules/userRequest-initial';
 
 export const UPDATE_VALUE = 'userRequest/UPDATE_VALUE';
 export const UPDATE_DATA_PROPERTIES = 'userRequest/UPDATE_DATA_PROPERTIES';
-export const SUBMIT_DATA = 'userRequest/SUBMIT_DATA';
+export const POST_DATA = 'userRequest/POST_DATA';
 export const SUBMIT_DATA_SUCCESS = 'userRequest/SUBMIT_DATA_SUCCESS';
-export const API_ERROR = 'userRequest/API_ERROR';
+export const SUBMIT_DATA_FAILED = 'userRequest/SUBMIT_DATA_FAILED';
 
 /**
  * userRequest reducer
@@ -28,12 +28,12 @@ const userRequest = (state = initialState, action) => {
           },
         },
       };
-    case SUBMIT_DATA:
+    case POST_DATA:
       return {
         ...state,
         submitted: true,
       };
-    case API_ERROR:
+    case SUBMIT_DATA_FAILED:
       return {
         ...state,
         error: action.error,
@@ -78,7 +78,7 @@ export const updateRequestProperties = properties => dispatch => {
  */
 export const handleError = error => dispatch => {
   dispatch({
-    type: API_ERROR,
+    type: SUBMIT_DATA_FAILED,
     error,
   });
 };
@@ -90,11 +90,10 @@ export const handleError = error => dispatch => {
  */
 export const submitData = data => dispatch => {
   dispatch({
-    type: SUBMIT_DATA,
-    data,
+    type: POST_DATA,
   });
 
-  userRequestService.post(data).then(response => {
+  return userRequestService.post(data).then(response => {
     dispatch({
       type: SUBMIT_DATA_SUCCESS,
       response,

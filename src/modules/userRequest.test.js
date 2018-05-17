@@ -1,4 +1,25 @@
-import userRequest, { UPDATE_VALUE, UPDATE_DATA_PROPERTIES } from './userRequest';
+import configureMockStore from 'redux-mock-store';
+import thunk from 'redux-thunk';
+import FetchMock from 'fetch-mock';
+import userRequest, {
+  UPDATE_VALUE,
+  UPDATE_DATA_PROPERTIES,
+  POST_DATA,
+  SUBMIT_DATA_SUCCESS,
+  SUBMIT_DATA_FAILED,
+  submitData,
+} from './userRequest';
+import initialState from './userRequest-initial';
+
+const middlewares = [thunk];
+const mockStore = configureMockStore(middlewares);
+
+const mockResponse = (status, statusText, response) => new window.Response(response, {
+  status: 200,
+  headers: {
+    'Content-type': 'application/json',
+  },
+});
 
 describe('userRequest reducer', () => {
   it('should have initial value equal to {}', () => {
@@ -32,3 +53,40 @@ describe('userRequest reducer', () => {
   });
 });
 
+describe('userRequest async action', () => {
+  it('should POST_DATA, then if success SUBMIT_DATA_SUCCESS', () => {
+    const store = mockStore(initialState);
+
+    // Success response
+    FetchMock.post('*', { id: 0 });
+
+    return store.dispatch(submitData(1))
+      .then(() => {
+        const expectedActions = store.getActions();
+        expect(expectedActions.length).toBe(2);
+        expect(expectedActions).toContainEqual({ type: POST_DATA });
+        expect(expectedActions).toContainEqual({
+          type: 'userRequest/SUBMIT_DATA_SUCCESS',
+          response: { id: 0 },
+        });
+      });
+  });
+
+  it('should POST_DATA, then if failed SUBMIT_DATA_FAILED', () => {
+    const store = mockStore(initialState);
+
+    // Success response
+    FetchMock.post('*', 400, { overwriteRoutes: true });
+
+    return store.dispatch(submitData(1))
+      .then(() => {
+        const expectedActions = store.getActions();
+        expect(expectedActions.length).toBe(2);
+        expect(expectedActions).toContainEqual({ type: POST_DATA });
+        expect(expectedActions).toContainEqual({
+          type: SUBMIT_DATA_FAILED,
+          error: 'Error: Bad Request',
+        });
+      });
+  });
+});
