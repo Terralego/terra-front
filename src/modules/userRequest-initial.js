@@ -1,6 +1,13 @@
 const initialState = {
-  step: 0,
-  properties: {
+  formStep: 0,
+  submitted: false,
+  error: null,
+  data: {
+    state: 0,
+    feature: 1,
+    organization: [1],
+    properties: {
+    },
   },
 };
 export default initialState;

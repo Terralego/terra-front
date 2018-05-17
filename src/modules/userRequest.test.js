@@ -1,4 +1,4 @@
-import userRequest, { UPDATE_VALUE, UPDATE_PROPERTIES } from './userRequest';
+import userRequest, { UPDATE_VALUE, UPDATE_DATA_PROPERTIES } from './userRequest';
 
 describe('userRequest reducer', () => {
   it('should have initial value equal to {}', () => {
@@ -16,17 +16,17 @@ describe('userRequest reducer', () => {
     });
   });
 
-  describe('UPDATE_PROPERTIES', () => {
+  describe('UPDATE_DATA_PROPERTIES', () => {
     it('should add a properties object in userRequest', () => {
       const updateRequestAction = {
-        type: UPDATE_PROPERTIES,
+        type: UPDATE_DATA_PROPERTIES,
         properties: {
           name: 'Alex',
           company: 'Makina',
         },
       };
-      expect(userRequest({}, updateRequestAction)).toEqual({
-        properties: { name: 'Alex', company: 'Makina' },
+      expect(userRequest({ data: {} }, updateRequestAction)).toEqual({
+        data: { properties: { name: 'Alex', company: 'Makina' } },
       });
     });
   });
