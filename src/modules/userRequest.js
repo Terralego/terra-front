@@ -33,6 +33,12 @@ const userRequest = (state = initialState, action) => {
         ...state,
         submitted: true,
       };
+    case SUBMIT_DATA_SUCCESS:
+      return {
+        ...state,
+        sent: true,
+        error: null,
+      };
     case SUBMIT_DATA_FAILED:
       return {
         ...state,

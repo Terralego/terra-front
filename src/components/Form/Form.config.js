@@ -8,6 +8,7 @@ const FormConfig = {
   ],
   confirmation: {
     submitButton: 'Envoyer ma demande',
+    errorText: 'Une erreur est survenue, merci de retenter l\'envoi. Si l\'erreur persiste, vous pouvez nous contacter.',
     modal: {
       title: 'Demande envoyée',
       action: 'Accéder au suivi de ma demande',

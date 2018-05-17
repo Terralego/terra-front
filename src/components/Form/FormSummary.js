@@ -2,7 +2,7 @@ import React from 'react';
 import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
 
-import { Button, Modal } from 'antd';
+import { Button, Modal, Alert } from 'antd';
 import Summary from 'components/Summary/Summary';
 import FormConfig from 'components/Form/Form.config';
 import { submitData } from 'modules/userRequest';
@@ -22,23 +22,32 @@ class FormProperties extends React.Component {
   }
 
   render () {
+    const { data, submitted, sent, error } = this.props;
     return (
       <div>
-        <Summary data={this.props.data.properties} editabled />
+        <Summary data={data.properties} editabled />
 
+        {error && <Alert
+          style={{ marginTop: 16 }}
+          message={error}
+          description={FormConfig.confirmation.errorText}
+          type="error"
+          showIcon
+        />}
         <div style={{ margin: '24px 0', textAlign: 'right' }}>
           <Button
             type="primary"
             icon="arrow-right"
             size="large"
             onClick={this.submitForm}
+            loading={submitted && !sent && !error}
           >
             {FormConfig.confirmation.submitButton}
           </Button>
         </div>
 
         <Modal
-          visible={this.props.submitted}
+          visible={submitted && sent}
           title={FormConfig.confirmation.modal.title}
           closable={false}
           footer={[
@@ -58,6 +67,7 @@ const StateToProps = state => ({
   data: state.userRequest.data,
   submitted: state.userRequest.submitted,
   error: state.userRequest.error,
+  sent: state.userRequest.sent,
 });
 
 const DispatchToProps = dispatch => bindActionCreators({ submitData }, dispatch);
