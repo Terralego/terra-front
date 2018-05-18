@@ -39,24 +39,28 @@ class Comments extends React.Component {
     return (
       <Form onSubmit={this.handleSubmit}>
         <FormItem
+          style={{ marginBottom: 12 }}
           validateStatus=""
         >
           {getFieldDecorator('comment', {
             rules: [{ required: true, message: 'Veuillez écrire un message' }],
           })(<TextArea rows={4} placeholder="Entrez votre message..." />)}
         </FormItem>
-        <Button
-          type="primary"
-          htmlType="submit"
-          disabled={getFieldError('comment') || !isFieldTouched('comment')}
-          icon="arrow-right"
-        >
-          Envoyer
-        </Button>
+        <div style={{ textAlign: 'right' }}>
+          <Button
+            type="primary"
+            htmlType="submit"
+            disabled={getFieldError('comment') || !isFieldTouched('comment')}
+            icon="arrow-right"
+          >
+            Envoyer
+          </Button>
+        </div>
 
         {loading
         ? <Spin style={{ margin: '24px auto', width: '100%' }} />
         : <List
+          style={{ marginTop: 24 }}
           dataSource={comments}
           renderItem={comment => (
             <List.Item key={`comment_${comment.content}`}>
@@ -65,7 +69,14 @@ class Comments extends React.Component {
                 description={comment.content}
                 style={{ marginBottom: 16 }}
               />
-              {moment(comment.date).format('DD/MM/YYYY à hh:mm')}
+              <div style={{ textAlign: 'right' }}>
+                <span style={{ display: 'block', color: 'rgba(0, 0, 0, 0.45)' }}>
+                  {moment(comment.date).format('DD/MM/YY')}
+                </span>
+                <span style={{ display: 'block', color: 'rgba(0, 0, 0, 0.45)', fontSize: 12 }}>
+                  {moment(comment.date).format('HH[h]mm')}
+                </span>
+              </div>
             </List.Item>
           )}
         />}
