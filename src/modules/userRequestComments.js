@@ -3,6 +3,9 @@ import userRequestService from 'services/userRequestService';
 
 export const FETCH = 'userRequestComments/FETCH';
 export const FETCHED = 'userRequestComments/FETCHED';
+export const POST_DATA = 'userRequestComments/POST_DATA';
+export const SUBMIT_DATA_SUCCESS = 'userRequestComments/SUBMIT_DATA_SUCCESS';
+export const SUBMIT_DATA_FAILED = 'userRequestComments/SUBMIT_DATA_FAILED';
 
 const initialState = {
   comments: {}, // comments by userrequestId
@@ -70,29 +73,49 @@ export const updateItems = (userrequestId, comments) => dispatch => {
   });
 };
 
-
 /**
  * fetchUserRequestComments async action : fetch userrequest list if not loaded
+ * @param {number} userrequestId
  */
 export const fetchUserRequestComments = userrequestId => (dispatch, getState) => {
   const state = getState();
-  const comments = getCommentsByUserrequest(state, userrequestId);
+  const loadedComments = getCommentsByUserrequest(state, userrequestId);
 
-  if (!comments.length > 0) {
+  if (!loadedComments.length > 0) {
     dispatch({ type: FETCH });
 
     return userRequestService.getComments(userrequestId).then(response => {
-      const newComments = {};
+      const comments = {};
       response.forEach(userrequest => {
-        newComments[userrequest.id] = {
+        comments[userrequest.id] = {
           content: userrequest.properties.comment,
           date: userrequest.created_at,
         };
       });
 
-      return dispatch(updateItems(userrequestId, newComments));
+      return dispatch(updateItems(userrequestId, comments));
     });
   }
 
-  return dispatch(updateItems(userrequestId, comments));
+  return dispatch(updateItems(userrequestId, loadedComments));
 };
+
+/**
+ * submitComment async action : post userrequest comment
+ * @param {number} userRequestId
+ * @param {string} new comment text
+ */
+export const submitComment = (userRequestId, comment) => dispatch => {
+  dispatch({
+    type: POST_DATA,
+  });
+
+  return userRequestService.post(userRequestId, {
+    properties: { comment },
+  })
+    .then(response =>
+      dispatch({ type: SUBMIT_DATA_SUCCESS, response }))
+    .catch(error =>
+      dispatch({ type: SUBMIT_DATA_FAILED, error }));
+};
+

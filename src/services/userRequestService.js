@@ -51,6 +51,15 @@ const userRequestService = {
     headers: {},
   }).then(checkStatus)
     .then(parseJSON),
+
+  postComment: (userRequestId, comment) => fetch(`${settings.api_url}/userrequest/${userRequestId}/comment`, {
+    method: 'POST',
+    headers: {
+      'Content-Type': 'application/json',
+    },
+    body: JSON.stringify(comment),
+  }).then(checkStatus)
+    .then(parseJSON),
 };
 
 export default userRequestService;
