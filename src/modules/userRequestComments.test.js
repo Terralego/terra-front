@@ -1,7 +1,7 @@
 import { getCommentsByUserrequest } from './userRequestComments';
 
-describe('userRequest reducer', () => {
-  it('should have initial value equal to {}', () => {
+describe('userRequestComments selector', () => {
+  it('should return an array of selected ids objects', () => {
     const state = {
       userRequestComments: {
         comments: {
