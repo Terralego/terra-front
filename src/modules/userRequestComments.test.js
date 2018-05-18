@@ -9,12 +9,33 @@ describe('userRequestComments selector', () => {
       userRequestComments: {
         comments: {
           15: {},
-          20: { 6: 'a', 7: 'b', 8: 'c' },
+          20: { 6: 'a' },
         },
       },
     };
 
-    expect(getCommentsByUserrequest(state, 20)).toEqual(['a', 'b', 'c']);
+    expect(getCommentsByUserrequest(state, 20)).toEqual(['a']);
+  });
+
+  it('should return an array ordered by date', () => {
+    const state = {
+      userRequestComments: {
+        comments: {
+          15: {},
+          20: {
+            6: { content: 'a', date: '2018-02-18T16:48:09.299906+02:00' },
+            7: { content: 'b', date: '2016-05-18T16:48:09.299906+02:00' },
+            8: { content: 'c', date: '2018-05-18T16:48:09.299906+02:00' },
+          },
+        },
+      },
+    };
+
+    expect(getCommentsByUserrequest(state, 20)).toEqual([
+      { content: 'c', date: '2018-05-18T16:48:09.299906+02:00' },
+      { content: 'a', date: '2018-02-18T16:48:09.299906+02:00' },
+      { content: 'b', date: '2016-05-18T16:48:09.299906+02:00' },
+    ]);
   });
 });
 

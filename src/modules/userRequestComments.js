@@ -1,4 +1,5 @@
 import { createSelector } from 'reselect';
+import moment from 'moment';
 import userRequestService from 'services/userRequestService';
 
 export const FETCH = 'userRequestComments/FETCH';
@@ -58,6 +59,8 @@ export default userRequestComments;
  * --------------------------------------------------------- *
  */
 
+const sortByDate = (a, b) => moment(a.date).isBefore(b.date);
+
 /**
  * getCommentsByUserrequest selector
  * @param {object} state
@@ -66,7 +69,7 @@ export default userRequestComments;
  */
 export const getCommentsByUserrequest = createSelector(
   (state, userrequestId) => state.userRequestComments.comments[userrequestId] || {},
-  items => Object.keys(items).map(key => items[key]),
+  items => Object.keys(items).map(key => items[key]).sort(sortByDate),
 );
 
 
