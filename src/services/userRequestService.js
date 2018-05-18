@@ -45,6 +45,12 @@ const userRequestService = {
     headers: {},
   }).then(checkStatus)
     .then(parseJSON),
+
+  getComments: userRequestId => fetch(`${settings.api_url}/userrequest/${userRequestId}/comment`, {
+    method: 'GET',
+    headers: {},
+  }).then(checkStatus)
+    .then(parseJSON),
 };
 
 export default userRequestService;

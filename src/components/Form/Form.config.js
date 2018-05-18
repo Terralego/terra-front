@@ -15,6 +15,10 @@ const FormConfig = {
       text: 'Votre demande a été envoyé avec succès. Suivez le status de votre demande via votre interface de suivi.',
     },
   },
+  status: [
+    { id: 0, title: 'Approuvée' },
+    { id: 1, title: 'Refusée' },
+  ],
 };
 
 export default FormConfig;
