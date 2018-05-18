@@ -116,6 +116,6 @@ export const submitComment = (userRequestId, comment) => dispatch => {
     .then(response =>
       dispatch({ type: SUBMIT_DATA_SUCCESS, response }))
     .catch(error =>
-      dispatch({ type: SUBMIT_DATA_FAILED, error }));
+      dispatch({ type: SUBMIT_DATA_FAILED, error: error.toString() }));
 };
 

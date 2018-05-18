@@ -78,19 +78,6 @@ export const updateRequestProperties = properties => dispatch => {
 };
 
 /**
- * userRequest action
- * handleError handle error api while submit
- * @param  {object} error
- */
-export const handleError = error => dispatch => {
-  dispatch({
-    type: SUBMIT_DATA_FAILED,
-    error,
-  });
-};
-
-
-/**
  * userRequest action : submit data object
  * @param  {object} data : data that will be send to the server
  */
@@ -99,10 +86,9 @@ export const submitData = data => dispatch => {
     type: POST_DATA,
   });
 
-  return userRequestService.post(data).then(response => {
-    dispatch({
-      type: SUBMIT_DATA_SUCCESS,
-      response,
-    });
-  }).catch(err => dispatch(handleError(err.toString())));
+  return userRequestService.post(data)
+    .then(response =>
+      dispatch({ type: SUBMIT_DATA_SUCCESS, response }))
+    .catch(error =>
+      dispatch({ type: SUBMIT_DATA_FAILED, error: error.toString() }));
 };
