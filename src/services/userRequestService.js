@@ -52,7 +52,7 @@ const userRequestService = {
   }).then(checkStatus)
     .then(parseJSON),
 
-  postComment: (userRequestId, comment) => fetch(`${settings.api_url}/userrequest/${userRequestId}/comment`, {
+  postComment: (userRequestId, comment) => fetch(`${settings.api_url}/userrequest/${userRequestId}/comment/`, {
     method: 'POST',
     headers: {
       'Content-Type': 'application/json',

@@ -32,6 +32,20 @@ const userRequestComments = (state = initialState, action) => {
           [action.userrequestId]: action.comments,
         },
       };
+    case SUBMIT_DATA_SUCCESS:
+      return {
+        ...state,
+        comments: {
+          ...state.comments,
+          [action.response.userrequest]: {
+            ...state.comments[action.response.userrequest],
+            [action.response.id]: {
+              content: action.response.properties.comment,
+              date: action.response.created_at,
+            },
+          },
+        },
+      };
     default:
       return state;
   }
@@ -108,9 +122,12 @@ export const fetchUserRequestComments = userrequestId => (dispatch, getState) =>
 export const submitComment = (userRequestId, comment) => dispatch => {
   dispatch({
     type: POST_DATA,
+    payload: {
+      properties: { comment },
+    },
   });
 
-  return userRequestService.post(userRequestId, {
+  return userRequestService.postComment(userRequestId, {
     properties: { comment },
   })
     .then(response =>
