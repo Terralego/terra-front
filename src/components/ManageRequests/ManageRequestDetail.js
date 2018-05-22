@@ -9,8 +9,8 @@ import Comments from 'components/Comments/Comments';
 
 const { Option } = Select;
 
-const handleChange = e => {
-  console.log(e);
+const handleChange = () => {
+  // console.log(e);
 };
 
 const ManageRequestDetail = props => (
