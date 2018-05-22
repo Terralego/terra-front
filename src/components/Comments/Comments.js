@@ -65,7 +65,7 @@ class Comments extends React.Component {
           renderItem={comment => (
             <List.Item key={`comment_${comment.content}`}>
               <List.Item.Meta
-                title="Administrateur ONF"
+                title="Administrateur"
                 description={comment.content}
                 style={{ marginBottom: 16 }}
               />
