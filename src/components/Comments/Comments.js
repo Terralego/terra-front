@@ -23,6 +23,13 @@ class Comments extends React.Component {
     this.props.fetchUserRequestComments(this.props.userrequestId);
   }
 
+  componentWillReceiveProps (nextProps) {
+    // Clear field when comment sent
+    if (nextProps.sent && this.props.form.getFieldValue('comment') !== '') {
+      this.props.form.setFieldsValue({ comment: '' });
+    }
+  }
+
   handleSubmit (e) {
     e.preventDefault();
     this.props.form.validateFields((err, values) => {
@@ -33,7 +40,7 @@ class Comments extends React.Component {
   }
 
   render () {
-    const { comments, loading } = this.props;
+    const { comments, loading, submitted, sent, error } = this.props;
     const { getFieldDecorator, getFieldError, isFieldTouched } = this.props.form;
 
     return (
@@ -52,6 +59,7 @@ class Comments extends React.Component {
             htmlType="submit"
             disabled={getFieldError('comment') || !isFieldTouched('comment')}
             icon="arrow-right"
+            loading={submitted && !sent && !error}
           >
             Envoyer
           </Button>
@@ -94,6 +102,9 @@ const FormComments = Form.create()(Comments);
 const StateToProps = (state, props) => ({
   comments: getCommentsByUserrequest(state, props.userrequestId),
   loading: state.userRequestComments.loading,
+  submitted: state.userRequestComments.submitted,
+  sent: state.userRequestComments.sent,
+  error: state.userRequestComments.error,
 });
 
 const DispatchToProps = dispatch =>

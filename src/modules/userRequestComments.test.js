@@ -64,6 +64,8 @@ describe('SUBMIT_DATA_SUCCESS action', () => {
     };
 
     const expectedState = {
+      sent: true,
+      error: null,
       comments: {
         15: { 1: { content: 'ok', date: '01/02/18' } },
         20: { 6: { content: 'a', date: '01/02/18' }, 7: { content: 'b', date: '01/02/18' } },

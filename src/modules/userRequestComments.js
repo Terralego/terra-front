@@ -10,7 +10,10 @@ export const SUBMIT_DATA_FAILED = 'userRequestComments/SUBMIT_DATA_FAILED';
 
 const initialState = {
   comments: {}, // comments by userrequestId
-  loading: false,
+  submitted: false,
+  sent: false,
+  error: null,
+  loading: false, // loading comments list
 };
 
 /**
@@ -33,9 +36,18 @@ const userRequestComments = (state = initialState, action) => {
           [action.userrequestId]: action.comments,
         },
       };
+    case POST_DATA:
+      return {
+        ...state,
+        submitted: true,
+        sent: false,
+        error: null,
+      };
     case SUBMIT_DATA_SUCCESS:
       return {
         ...state,
+        sent: true,
+        error: null,
         comments: {
           ...state.comments,
           [action.response.userrequest]: {
@@ -46,6 +58,11 @@ const userRequestComments = (state = initialState, action) => {
             },
           },
         },
+      };
+    case SUBMIT_DATA_FAILED:
+      return {
+        ...state,
+        error: action.error,
       };
     default:
       return state;
