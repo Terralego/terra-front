@@ -5,7 +5,10 @@ const initialState = {
   error: null,
   data: {
     state: 0,
-    feature: 1,
+    geojson: {
+      type: 'FeatureCollection',
+      features: [],
+    },
     organization: [1],
     properties: {
     },

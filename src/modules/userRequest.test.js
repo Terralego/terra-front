@@ -8,6 +8,10 @@ import userRequest, {
   SUBMIT_DATA_SUCCESS,
   SUBMIT_DATA_FAILED,
   submitData,
+  addRequestFeature,
+  ADD_GEOSJON_FEATURE,
+  removeRequestFeature,
+  REMOVE_GEOSJON_FEATURE,
 } from './userRequest';
 import initialState from './userRequest-initial';
 
@@ -79,5 +83,81 @@ describe('userRequest async action', () => {
           error: 'Error: Bad Request',
         });
       });
+  });
+});
+
+describe('addRequestFeature action', () => {
+  const store = mockStore(initialState);
+
+  const feature = {
+    type: 'Feature',
+    geometry: {
+      type: 'Polygon',
+      coordinates: [
+        [
+          [296901.1534161276, 6177142.792006604],
+          [293682.1807408809, 6172947.158817668],
+          [298797.40476574795, 6172191.693898978],
+          [296901.1534161276, 6177142.792006604],
+        ],
+      ],
+    },
+    properties: {
+      id: '3bc46e07-cc4f-1d1c-a16d-c32df381faba',
+      name: 'Polygon',
+    },
+  };
+
+  it('should dispatch a ADD_GEOSJON_FEATURE action type', () => {
+    store.dispatch(addRequestFeature(feature));
+    const actions = store.getActions();
+    expect(actions[0].type).toEqual(ADD_GEOSJON_FEATURE);
+  });
+
+  it('should add a feature in geojson', () => {
+    store.dispatch(addRequestFeature(feature));
+    const actions = store.getActions();
+
+    expect(userRequest(initialState, actions[0]).data.geojson).toEqual({
+      type: 'FeatureCollection',
+      features: [feature],
+    });
+  });
+});
+
+describe('removeRequestFeature action', () => {
+  const store = mockStore({
+    data: {
+      geojson: {
+        type: 'FeatureCollection',
+        features: [{
+          properties: { id: 'a', name: 'Polygon' },
+        }, {
+          properties: { id: 'b', name: 'Polygon' },
+        }, {
+          properties: { id: 'c', name: 'Polygon' },
+        }],
+      },
+    },
+  });
+
+  it('should dispatch a REMOVE_GEOSJON_FEATURE action type', () => {
+    store.dispatch(removeRequestFeature('b'));
+    const actions = store.getActions();
+    expect(actions[0].type).toEqual(REMOVE_GEOSJON_FEATURE);
+  });
+
+  it('should add a feature in geojson', () => {
+    store.dispatch(removeRequestFeature('b'));
+    const actions = store.getActions();
+
+    expect(userRequest(store.getState(), actions[0]).data.geojson).toEqual({
+      type: 'FeatureCollection',
+      features: [{
+        properties: { id: 'a', name: 'Polygon' },
+      }, {
+        properties: { id: 'c', name: 'Polygon' },
+      }],
+    });
   });
 });
