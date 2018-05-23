@@ -13,7 +13,8 @@ class ManageRequests extends React.Component {
   }
 
   render () {
-    // Bad but didn't find any better solution
+    // TODO : find a better solution
+    // Here all requests are always loaded, even on detail page
     if (this.props.location.pathname.indexOf('detail') !== -1) {
       return null;
     }
