@@ -27,7 +27,7 @@ class ManageRequests extends React.Component {
           renderItem={item => (
             <List.Item key={`userrequest_${item.id}`}>
               <List.Item.Meta
-                title={<Link to={`/gestion-demandes/detail/${item.id}`}>{item.properties.title}</Link>}
+                title={<Link to={`/manage-request/detail/${item.id}`}>{item.properties.title}</Link>}
                 description={item.properties.description}
               />
               <div>

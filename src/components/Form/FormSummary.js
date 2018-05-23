@@ -9,7 +9,7 @@ import { submitData } from 'modules/userRequest';
 
 const handleAction = () => {
   // TODO: find better way with react router
-  window.location.pathname = '/gestion-demandes';
+  window.location.pathname = '/manage-request';
 };
 
 class FormProperties extends React.Component {
@@ -26,7 +26,7 @@ class FormProperties extends React.Component {
     const { data, submitted, sent, error } = this.props;
     return (
       <div>
-        <Summary data={data.properties} editabled />
+        <Summary data={data.properties} features={data.geojson.features} editabled />
 
         {error && <Alert
           style={{ marginTop: 16 }}
