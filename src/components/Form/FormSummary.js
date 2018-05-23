@@ -8,6 +8,7 @@ import FormConfig from 'components/Form/Form.config';
 import { submitData } from 'modules/userRequest';
 
 const handleAction = () => {
+  // TODO: find better way with react router
   window.location.pathname = '/gestion-demandes';
 };
 
