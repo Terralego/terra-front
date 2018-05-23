@@ -5,31 +5,31 @@ import ManageRequests from 'components/ManageRequests/ManageRequests';
 import ManageRequestDetail from 'components/ManageRequests/ManageRequestDetail';
 
 export const routes = [{
-  path: '/accueil',
-  name: 'Accueil',
+  path: '/home',
+  name: 'Home',
   component: Home,
   icon: 'home',
   exact: true,
 }, {
-  path: '/a-propos',
-  name: 'À propos',
+  path: '/about',
+  name: 'About',
   component: About,
   icon: 'paper-clip',
 }, {
-  path: '/demande',
-  name: 'Demande',
+  path: '/request',
+  name: 'Request',
   component: Form,
   icon: 'form',
 }, {
-  path: '/gestion-demandes',
-  name: 'Gestion des demandes',
+  path: '/manage-request',
+  name: 'Manage requests',
   component: ManageRequests,
   icon: 'form',
   exact: true,
   routes: [
     {
-      path: '/gestion-demandes/detail/:id',
-      name: 'Détail de la demande',
+      path: '/manage-request/detail/:id',
+      name: 'Manage request detail',
       component: ManageRequestDetail,
     },
   ],
