@@ -30,6 +30,12 @@ class TerraDrawMap extends Component {
     this.vectorDraw = new ol.layer.Vector({
       source: this.sourceDraw,
       zIndex: 100,
+      style: new ol.style.Style({
+        stroke: new ol.style.Stroke({
+          color: '#0084ff',
+          width: 1.8
+        }),
+      }),
     });
     const vectorLayers = [];
     const vectorSourceLayer = new ol.source.VectorTile({
