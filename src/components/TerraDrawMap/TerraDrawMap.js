@@ -31,6 +31,9 @@ class TerraDrawMap extends Component {
       source: this.sourceDraw,
       zIndex: 100,
       style: new ol.style.Style({
+        fill: new ol.style.Fill({
+          color: 'rgba(0,132,255,0.25)',
+        }),
         stroke: new ol.style.Stroke({
           color: '#0084ff',
           width: 1.8,
