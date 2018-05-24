@@ -33,7 +33,7 @@ class TerraDrawMap extends Component {
       style: new ol.style.Style({
         stroke: new ol.style.Stroke({
           color: '#0084ff',
-          width: 1.8
+          width: 1.8,
         }),
       }),
     });
