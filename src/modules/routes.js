@@ -6,27 +6,31 @@ import ManageRequestDetail from 'components/ManageRequests/ManageRequestDetail';
 import Login from 'components/Login/Login';
 
 export const routes = [{
-  path: '/home',
+  path: '/',
   name: 'Home',
   component: Home,
   icon: 'home',
   exact: true,
+  protected: false,
 }, {
   path: '/about',
   name: 'About',
   component: About,
   icon: 'paper-clip',
+  protected: false,
 }, {
   path: '/request',
   name: 'Request',
   component: Form,
   icon: 'form',
+  protected: false,
 }, {
   path: '/manage-request',
   name: 'Manage requests',
   component: ManageRequests,
   icon: 'form',
   exact: true,
+  protected: true,
   routes: [
     {
       path: '/manage-request/detail/:id',

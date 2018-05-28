@@ -17,7 +17,6 @@ class Login extends Component {
     event.preventDefault();
     this.props.form.validateFields((err, values) => {
       if (!err) {
-        console.log(values);
         this.props.loginUser(values);
       }
     });
@@ -31,27 +30,19 @@ class Login extends Component {
 
         <h2>Login</h2>
 
-        <FormItem
-          label="Email"
-        >
+        <FormItem label="Email" >
           {getFieldDecorator('email', {
             rules: [{ required: true, message: 'Veuillez saisir un titre' }],
           })(<Input />)}
         </FormItem>
 
-        <FormItem
-          label="Password"
-        >
+        <FormItem label="Password">
           {getFieldDecorator('password', {
-          })(<Input />)}
+          })(<Input type="password" />)}
         </FormItem>
 
         <FormItem>
-          <Button
-            type="primary"
-            htmlType="submit"
-            icon="arrow-right"
-          >
+          <Button type="primary" htmlType="submit" icon="arrow-right">
             Login
           </Button>
         </FormItem>
