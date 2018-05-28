@@ -21,19 +21,6 @@ const userRequestService = {
     .then(checkStatus)
     .then(parseJSON),
 
-  getAll: () => fetch(`${settings.api_url}/userrequest/`, {
-    method: 'GET',
-    headers: {},
-  })
-    .then(checkStatus)
-    .then(parseJSON),
-
-  get: id => fetch(`${settings.api_url}/userrequest/${id}`, {
-    method: 'GET',
-    headers: {},
-  }).then(checkStatus)
-    .then(parseJSON),
-
   getComments: userRequestId => fetch(`${settings.api_url}/userrequest/${userRequestId}/comment`, {
     method: 'GET',
     headers: {},

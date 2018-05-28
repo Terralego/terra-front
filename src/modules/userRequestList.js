@@ -1,11 +1,20 @@
-import userRequestService from 'services/userRequestService';
+import { CALL_API } from 'middlewares/api';
 
-export const FETCH = 'userRequestList/FETCH';
-export const FETCHED = 'userRequestList/FETCHED';
+export const REQUEST = 'userRequestList/REQUEST';
+export const SUCCESS = 'userRequestList/SUCCESS';
+export const FAILURE = 'userRequestList/FAILURE';
 
 const initialState = {
   items: {},
   loading: false,
+};
+
+const getItemsFromResponse = response => {
+  const items = {};
+  response.forEach(userrequest => {
+    items[userrequest.id] = userrequest;
+  });
+  return items;
 };
 
 /**
@@ -13,16 +22,16 @@ const initialState = {
  */
 const userRequestList = (state = initialState, action) => {
   switch (action.type) {
-    case FETCH:
+    case REQUEST:
       return {
         ...state,
         loading: true,
       };
-    case FETCHED:
+    case SUCCESS:
       return {
         ...state,
         loading: false,
-        items: action.items,
+        items: getItemsFromResponse(action.response),
       };
     default:
       return state;
@@ -30,17 +39,6 @@ const userRequestList = (state = initialState, action) => {
 };
 
 export default userRequestList;
-
-/**
- * updateItems action : update items object
- * @param  {object} items : object contains all userrequests, ordered by ids
- */
-export const updateItems = items => dispatch => {
-  dispatch({
-    type: FETCHED,
-    items,
-  });
-};
 
 
 /**
@@ -50,17 +48,13 @@ export const getUserRequestList = () => (dispatch, getState) => {
   const state = getState();
 
   if (Object.keys(state.userRequestList.items).length < 1) {
-    dispatch({ type: FETCH });
-
-    return userRequestService.getAll().then(response => {
-      const items = {};
-      response.forEach(userrequest => {
-        items[userrequest.id] = userrequest;
-      });
-
-      return dispatch(updateItems(items));
+    dispatch({
+      [CALL_API]: {
+        endpoint: '/userrequest/',
+        authenticated: true,
+        types: [REQUEST, SUCCESS, FAILURE],
+        config: { method: 'GET' },
+      },
     });
   }
-
-  return dispatch(updateItems(state.userRequestList.items));
 };

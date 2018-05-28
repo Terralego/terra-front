@@ -3,6 +3,7 @@ import About from 'components/About/About';
 import Form from 'components/Form/Form';
 import ManageRequests from 'components/ManageRequests/ManageRequests';
 import ManageRequestDetail from 'components/ManageRequests/ManageRequestDetail';
+import Login from 'components/Login/Login';
 
 export const routes = [{
   path: '/home',
@@ -33,6 +34,11 @@ export const routes = [{
       component: ManageRequestDetail,
     },
   ],
+}, {
+  path: '/login',
+  name: 'Login',
+  component: Login,
+  icon: 'form',
 }];
 
 export default routes;
