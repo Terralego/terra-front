@@ -1,7 +1,9 @@
 import React from 'react';
 import { Layout } from 'antd';
+import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
 
+import { logoutUser } from 'modules/authentication';
 import Header from 'components/Header/Header';
 import Breadcrumb from 'components/Breadcrumb/Breadcrumb';
 import SideMenu from 'components/SideMenu/SideMenu';
@@ -9,7 +11,7 @@ import RouteViews from 'components/RouteViews/RouteViews';
 
 const Main = props => (
   <Layout style={{ height: '100vh' }}>
-    <Header />
+    <Header {...this.props} />
     <Layout>
       <Layout.Sider
         breakpoint="md"
@@ -36,4 +38,7 @@ const StateToProps = state => ({
   isAuthenticated: state.authentication.isAuthenticated,
 });
 
-export default connect(StateToProps, {})(Main);
+const DispatchToProps = dispatch =>
+  bindActionCreators({ logoutUser }, dispatch);
+
+export default connect(StateToProps, DispatchToProps)(Main);

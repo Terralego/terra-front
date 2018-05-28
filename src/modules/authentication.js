@@ -81,20 +81,20 @@ export const loginError = message => ({
  * LOGOUT ACTIONS
  * --------------------------------------------------------- *
  */
-export const requestLogout = ({
+export const requestLogout = () => ({
   type: LOGOUT_REQUEST,
   isFetching: true,
   isAuthenticated: true,
 });
 
-export const receiveLogout = ({
+export const receiveLogout = () => ({
   type: LOGOUT_SUCCESS,
   isFetching: false,
   isAuthenticated: false,
 });
 
 // Logs the user out
-export const logoutUser = dispatch => {
+export const logoutUser = () => dispatch => {
   dispatch(requestLogout());
   localStorage.removeItem('token');
   localStorage.removeItem('access_token');

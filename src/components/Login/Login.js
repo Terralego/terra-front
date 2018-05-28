@@ -58,11 +58,6 @@ const StateToProps = state => ({
 });
 
 const DispatchToProps = dispatch =>
-  bindActionCreators(
-    {
-      loginUser,
-    },
-    dispatch,
-  );
+  bindActionCreators({ loginUser }, dispatch);
 
 export default connect(StateToProps, DispatchToProps)(FormLogin);
