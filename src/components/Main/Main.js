@@ -2,6 +2,7 @@ import React from 'react';
 import { Layout } from 'antd';
 import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
+import { withRouter } from 'react-router-dom';
 
 import { logoutUser } from 'modules/authentication';
 import Header from 'components/Header/Header';
@@ -34,11 +35,10 @@ const Main = props => (
 );
 
 const StateToProps = state => ({
-  location: state.routing.location,
   isAuthenticated: state.authentication.isAuthenticated,
 });
 
 const DispatchToProps = dispatch =>
   bindActionCreators({ logoutUser }, dispatch);
 
-export default connect(StateToProps, DispatchToProps)(Main);
+export default withRouter(connect(StateToProps, DispatchToProps)(Main));

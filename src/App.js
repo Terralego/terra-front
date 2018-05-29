@@ -10,15 +10,15 @@ import 'moment/locale/fr';
 import Main from 'components/Main/Main';
 
 import { Provider } from 'react-redux';
-import { ConnectedRouter } from 'react-router-redux';
-import { store, history } from './store';
+import { BrowserRouter as Router } from 'react-router-dom';
+import { store } from './store';
 
 const AppWrapper = () => (
   <LocaleProvider locale={fr}>
     <Provider store={store}>
-      <ConnectedRouter history={history}>
+      <Router>
         <Main />
-      </ConnectedRouter>
+      </Router>
     </Provider>
   </LocaleProvider>
 );
