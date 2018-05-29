@@ -1,4 +1,4 @@
-import userRequestService from 'services/userRequestService';
+import { CALL_API } from 'middlewares/api';
 import initialState from 'modules/userRequest-initial';
 
 export const UPDATE_VALUE = 'userRequest/UPDATE_VALUE';
@@ -129,17 +129,17 @@ export const removeRequestFeature = featureId => ({
 });
 
 /**
- * userRequest action : submit data object
+ * Submit data object
  * @param  {object} data : data that will be send to the server
  */
-export const submitData = data => dispatch => {
-  dispatch({
-    type: POST_DATA,
-  });
-
-  return userRequestService.post(data)
-    .then(response =>
-      dispatch({ type: SUBMIT_DATA_SUCCESS, response }))
-    .catch(error =>
-      dispatch({ type: SUBMIT_DATA_FAILED, error: error.toString() }));
-};
+export const submitData = data => ({
+  [CALL_API]: {
+    endpoint: '/userrequest/',
+    authenticated: true,
+    types: [POST_DATA, SUBMIT_DATA_SUCCESS, SUBMIT_DATA_FAILED],
+    config: {
+      method: 'POST',
+      body: JSON.stringify(data),
+    },
+  },
+});

@@ -72,6 +72,7 @@ export const getUserRequestList = () => ({
 
 /**
  * userRequest action : fetch userrequest
+ * @param {string} id
  */
 export const getUserRequest = id => ({
   [CALL_API]: {

@@ -1,6 +1,6 @@
 import { createSelector } from 'reselect';
 import moment from 'moment';
-import userRequestService from 'services/userRequestService';
+import { CALL_API } from 'middlewares/api';
 
 export const FETCH = 'userRequestComments/FETCH';
 export const FETCHED = 'userRequestComments/FETCHED';
@@ -14,6 +14,19 @@ const initialState = {
   sent: false,
   error: null,
   loading: false, // loading comments list
+};
+
+const parseCommentsByUserrequest = items => {
+  const comments = {};
+  const userrequestId = items[0].userrequest;
+  items.forEach(userrequest => {
+    comments[userrequest.id] = {
+      content: userrequest.properties.comment,
+      date: userrequest.created_at,
+    };
+  });
+
+  return { [userrequestId]: comments };
 };
 
 /**
@@ -33,7 +46,7 @@ const userRequestComments = (state = initialState, action) => {
         loading: false,
         comments: {
           ...state.comments,
-          [action.userrequestId]: action.comments,
+          ...parseCommentsByUserrequest(action.response),
         },
       };
     case POST_DATA:
@@ -111,48 +124,32 @@ export const updateItems = (userrequestId, comments) => dispatch => {
  * fetchUserRequestComments async action : fetch userrequest list if not loaded
  * @param {number} userrequestId
  */
-export const fetchUserRequestComments = userrequestId => (dispatch, getState) => {
-  const state = getState();
-  const loadedComments = getCommentsByUserrequest(state, userrequestId);
-
-  if (!loadedComments.length > 0) {
-    dispatch({ type: FETCH });
-
-    return userRequestService.getComments(userrequestId).then(response => {
-      const comments = {};
-      response.forEach(userrequest => {
-        comments[userrequest.id] = {
-          content: userrequest.properties.comment,
-          date: userrequest.created_at,
-        };
-      });
-
-      return dispatch(updateItems(userrequestId, comments));
-    });
-  }
-
-  return dispatch(updateItems(userrequestId, loadedComments));
-};
+export const fetchUserRequestComments = userrequestId => ({
+  [CALL_API]: {
+    endpoint: `/userrequest/${userrequestId}/comment`,
+    authenticated: true,
+    types: [FETCH, FETCHED, SUBMIT_DATA_FAILED],
+    config: {
+      method: 'GET',
+    },
+  },
+});
 
 /**
  * submitComment async action : post userrequest comment
  * @param {number} userRequestId
  * @param {string} new comment text
  */
-export const submitComment = (userRequestId, comment) => dispatch => {
-  dispatch({
-    type: POST_DATA,
-    payload: {
-      properties: { comment },
+export const submitComment = (userrequestId, comment) => ({
+  [CALL_API]: {
+    endpoint: `/userrequest/${userrequestId}/comment/`,
+    authenticated: true,
+    types: [POST_DATA, SUBMIT_DATA_SUCCESS, SUBMIT_DATA_FAILED],
+    config: {
+      method: 'POST',
+      body: JSON.stringify({
+        properties: { comment },
+      }),
     },
-  });
-
-  return userRequestService.postComment(userRequestId, {
-    properties: { comment },
-  })
-    .then(response =>
-      dispatch({ type: SUBMIT_DATA_SUCCESS, response }))
-    .catch(error =>
-      dispatch({ type: SUBMIT_DATA_FAILED, error: error.toString() }));
-};
-
+  },
+});

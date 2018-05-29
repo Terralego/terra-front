@@ -1,18 +1,19 @@
 import settings from 'front-settings';
+import { checkStatus, parseJSON } from 'helpers/fetchHelpers';
+import tokenService from 'services/tokenService';
 
 function callApi (endpoint, authenticated, config) {
-  const token = localStorage.getItem('token') || null;
-  let options = { ...config };
+  const token = tokenService.getToken();
 
-  if (authenticated) {
-    if (token) {
-      options = { headers: { Authorization: `JWT ${token}` } };
-    } else {
-      throw new Error('No token saved!');
-    }
-  }
-
-  return fetch(settings.api_url + endpoint, options).then(response => response.json());
+  return fetch(settings.api_url + endpoint, {
+    headers: {
+      Authorization: `JWT ${token}`,
+      'Content-Type': 'application/json',
+    },
+    ...config,
+  })
+    .then(checkStatus)
+    .then(parseJSON);
 }
 
 export const CALL_API = Symbol('Call API');

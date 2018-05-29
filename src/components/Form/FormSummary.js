@@ -8,14 +8,16 @@ import Summary from 'components/Summary/Summary';
 import FormConfig from 'components/Form/Form.config';
 import { submitData } from 'modules/userRequest';
 
-const handleAction = () => {
-  this.props.location.pathname = '/manage-request';
-};
 
 class FormProperties extends React.Component {
   constructor (props) {
     super(props);
     this.submitForm = this.submitForm.bind(this);
+    this.handleAction = this.handleAction.bind(this);
+  }
+
+  handleAction () {
+    this.props.history.push('/manage-request');
   }
 
   submitForm () {
@@ -52,7 +54,7 @@ class FormProperties extends React.Component {
           title={FormConfig.confirmation.modal.title}
           closable={false}
           footer={[
-            <Button key="submit" type="primary" onClick={handleAction}>
+            <Button key="submit" type="primary" onClick={this.handleAction}>
               {FormConfig.confirmation.modal.action}
             </Button>,
           ]}
