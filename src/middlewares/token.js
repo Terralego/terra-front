@@ -1,4 +1,5 @@
 import settings from 'front-settings';
+import { checkStatus, parseJSON } from 'helpers/fetchHelpers';
 import tokenService from 'services/tokenService';
 import { RECEIVE_TOKEN, SET_ERROR_MESSAGE } from 'modules/authentication';
 
@@ -22,7 +23,9 @@ function tokenApi (endpoint, body) {
     method: 'POST',
     headers: { 'Content-Type': 'application/json' },
     body: JSON.stringify(body),
-  }).then(response => response.json());
+  })
+    .then(checkStatus)
+    .then(parseJSON);
 }
 
 export const TOKEN_API = Symbol('Token API');
@@ -44,15 +47,17 @@ export default () => next => action => {
     .then(
       response => {
         tokenService.setToken(response.token);
+        const user = parseJwt(response.token);
+
         return next({
           type: RECEIVE_TOKEN,
-          response,
+          user,
           isAuthenticated: !!response.token,
           receivedAt: Date.now(),
         });
       },
       error => next({
-        error: error.message || 'There was an error.',
+        error: error || 'There was an error.',
         type: SET_ERROR_MESSAGE,
       }),
     );

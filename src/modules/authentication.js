@@ -14,6 +14,7 @@ const initialState = {
   isAuthenticated: !!localStorage.getItem('token'),
   receivedAt: null,
   errorMessage: null,
+  user: null,
 };
 
 /**
@@ -36,6 +37,7 @@ const authentication = (state = initialState, action) => {
         isFetching: false,
         isAuthenticated: action.isAuthenticated,
         receivedAt: action.receivedAt,
+        user: action.user,
       };
     case RESET_TOKEN:
     case SET_AUTHENTICATION:
