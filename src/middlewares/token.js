@@ -1,6 +1,6 @@
 import settings from 'front-settings';
 import tokenService from 'services/tokenService';
-import { REQUEST_TOKEN, RECEIVE_TOKEN, SET_ERROR_MESSAGE } from 'modules/authentication';
+import { RECEIVE_TOKEN, SET_ERROR_MESSAGE } from 'modules/authentication';
 
 /**
  * Deserialize JSON Web Token

@@ -1,9 +1,9 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
 import { AppContainer } from 'react-hot-loader';
+import { setAuthentication, refreshToken } from 'modules/authentication';
 
 import './index.css';
-import { setAuthentication, refreshToken } from 'modules/authentication';
 import store from './store';
 import App from './App';
 import registerServiceWorker from './registerServiceWorker';
