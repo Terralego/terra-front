@@ -1,15 +1,19 @@
-import authService from '../services/authService';
+import tokenService from 'services/tokenService';
+import { TOKEN_API } from 'middlewares/token';
 
-export const LOGIN_REQUEST = 'authentication/LOGIN_REQUEST';
-export const LOGIN_SUCCESS = 'authentication/LOGIN_SUCCESS';
-export const LOGIN_FAILURE = 'authentication/LOGIN_FAILURE';
-
-export const LOGOUT_REQUEST = 'authentication/LOGOUT_REQUEST';
-export const LOGOUT_SUCCESS = 'authentication/LOGOUT_SUCCESS';
+export const OBTAIN_TOKEN = 'authentication/OBTAIN_TOKEN';
+export const REFRESH_TOKEN = 'authentication/REFRESH_TOKEN';
+export const RECEIVE_TOKEN = 'authentication/RECEIVE_TOKEN';
+export const RESET_TOKEN = 'authentication/RESET_TOKEN';
+export const SET_AUTHENTICATION = 'authentication/SET_AUTHENTICATION';
+export const REQUEST_LOG_OUT = 'authentication/REQUEST_LOG_OUT';
+export const SET_ERROR_MESSAGE = 'authentication/SET_ERROR_MESSAGE';
 
 const initialState = {
   isFetching: false,
   isAuthenticated: !!localStorage.getItem('token'),
+  receivedAt: null,
+  errorMessage: null,
 };
 
 /**
@@ -18,32 +22,31 @@ const initialState = {
  */
 const authentication = (state = initialState, action) => {
   switch (action.type) {
-    case LOGIN_REQUEST:
+    case OBTAIN_TOKEN:
+    case REFRESH_TOKEN:
+    case REQUEST_LOG_OUT:
       return {
         ...state,
         isFetching: true,
         isAuthenticated: false,
-        user: action.creds,
       };
-    case LOGIN_SUCCESS:
+    case RECEIVE_TOKEN:
       return {
         ...state,
         isFetching: false,
-        isAuthenticated: true,
-        errorMessage: '',
+        isAuthenticated: action.isAuthenticated,
+        receivedAt: action.receivedAt,
       };
-    case LOGIN_FAILURE:
+    case RESET_TOKEN:
+    case SET_AUTHENTICATION:
       return {
         ...state,
-        isFetching: false,
-        isAuthenticated: false,
+        isAuthenticated: action.isAuthenticated,
+      };
+    case SET_ERROR_MESSAGE:
+      return {
+        ...state,
         errorMessage: action.message,
-      };
-    case LOGOUT_SUCCESS:
-      return {
-        ...state,
-        isFetching: true,
-        isAuthenticated: false,
       };
     default:
       return state;
@@ -53,64 +56,64 @@ const authentication = (state = initialState, action) => {
 export default authentication;
 
 /**
- * LOGIN ACTIONS
+ * ACTIONS
  * --------------------------------------------------------- *
  */
-export const requestLogin = creds => ({
-  type: LOGIN_REQUEST,
-  isFetching: true,
-  isAuthenticated: false,
-  creds,
-});
 
-export const receiveLogin = user => ({
-  type: LOGIN_SUCCESS,
-  isFetching: false,
-  isAuthenticated: true,
-  token: user.token,
-});
+/**
+ * Action handle when fetch token failed
+ * @param  {string} errorMessage
+ */
+export function setErrorMessage (errorMessage) {
+  return {
+    type: SET_ERROR_MESSAGE,
+    errorMessage,
+  };
+}
 
-export const loginError = message => ({
-  type: LOGIN_FAILURE,
-  isFetching: false,
-  isAuthenticated: false,
-  message,
+/**
+ * Set authorization status
+ */
+export function setAuthentication () {
+  return {
+    type: SET_AUTHENTICATION,
+    isAuthenticated: tokenService.isAuthenticated(),
+  };
+}
+
+/**
+ * Handle when user log out : delete token and restore authorization status
+ */
+export const logoutUser = () => dispatch => {
+  tokenService.removeToken();
+  dispatch({ type: REQUEST_LOG_OUT });
+};
+
+/**
+ * Make a refresh request to the API.
+ *
+ * Allow the user to not relog if the current token
+ * is still in the period of 'refresh token allowed'.
+ *
+ */
+export const refreshToken = () => ({
+  [TOKEN_API]: {
+    type: REFRESH_TOKEN,
+    endpoint: '/auth/refresh-token/',
+    body: { token: tokenService.getToken() },
+  },
 });
 
 /**
- * LOGOUT ACTIONS
- * --------------------------------------------------------- *
+ * Handle when user log in
+ * @param {object} creds : credentials object
+ * @param {string} creds.email
+ * @param {string} creds.password
  */
-export const requestLogout = () => ({
-  type: LOGOUT_REQUEST,
-  isFetching: true,
-  isAuthenticated: true,
+export const loginUser = creds => ({
+  [TOKEN_API]: {
+    type: OBTAIN_TOKEN,
+    endpoint: '/auth/obtain-token/',
+    body: creds,
+  },
 });
-
-export const receiveLogout = () => ({
-  type: LOGOUT_SUCCESS,
-  isFetching: false,
-  isAuthenticated: false,
-});
-
-// Logs the user out
-export const logoutUser = () => dispatch => {
-  dispatch(requestLogout());
-  localStorage.removeItem('token');
-  localStorage.removeItem('access_token');
-  dispatch(receiveLogout());
-};
-
-// Calls the API to get a token and
-// dispatches actions along the way
-export const loginUser = creds => dispatch => {
-  // We dispatch requestLogin to kickoff the call to the API
-  dispatch(requestLogin(creds));
-  return authService.getToken(creds)
-    .then(response => {
-      // If login was successful, set the token in local storage
-      localStorage.setItem('token', response.token);
-      // Dispatch the success action
-      return dispatch(receiveLogin({ ...creds, token: response.token }));
-    }).catch(err => dispatch(loginError(err.message)));
-};

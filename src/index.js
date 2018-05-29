@@ -3,6 +3,8 @@ import ReactDOM from 'react-dom';
 import { AppContainer } from 'react-hot-loader';
 
 import './index.css';
+import { setAuthentication, refreshToken } from 'modules/authentication';
+import store from './store';
 import App from './App';
 import registerServiceWorker from './registerServiceWorker';
 
@@ -18,6 +20,11 @@ const render = Component => {
 if (module.hot) {
   module.hot.accept('./App', () => render(App));
 }
+
+// init the store with the localStorage / sessionStorage data
+store.dispatch(setAuthentication());
+// enabling refresh token if user already authenticated
+store.getState().authentication.isAuthenticated && store.dispatch(refreshToken());
 
 /**
  * Initial rendering

@@ -2,6 +2,7 @@ import { createStore, applyMiddleware, compose } from 'redux';
 import thunk from 'redux-thunk';
 import createHistory from 'history/createBrowserHistory';
 import api from 'middlewares/api';
+import token from 'middlewares/token';
 import rootReducer from 'root-reducer';
 
 export const history = createHistory();
@@ -10,6 +11,7 @@ const enhancers = [];
 const middleware = [
   thunk,
   api,
+  token,
 ];
 
 /**
