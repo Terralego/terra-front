@@ -3,7 +3,7 @@ import { Form, Button, Input } from 'antd';
 import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
 
-import { updateRequestValue, updateRequestProperties } from 'modules/userRequest';
+import { updateRequestValue, updateRequestProperties } from 'modules/userrequest';
 
 const FormItem = Form.Item;
 
@@ -95,7 +95,7 @@ class Properties extends Component {
 const FormProperties = Form.create()(Properties);
 
 const StateToProps = state => ({
-  properties: state.userRequest.data.properties,
+  properties: state.userrequest.data.properties,
 });
 
 const DispatchToProps = dispatch =>

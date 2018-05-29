@@ -1,11 +1,11 @@
 import { CALL_API } from 'middlewares/api';
 
-export const REQUEST_ALL = 'userRequestList/REQUEST_ALL';
-export const SUCCESS_ALL = 'userRequestList/SUCCESS_ALL';
-export const FAILURE_ALL = 'userRequestList/FAILURE_ALL';
-export const REQUEST_DETAIL = 'userRequestList/REQUEST_DETAIL';
-export const SUCCESS_DETAIL = 'userRequestList/SUCCESS_DETAIL';
-export const FAILURE_DETAIL = 'userRequestList/FAILURE_DETAIL';
+export const REQUEST_ALL = 'userrequestList/REQUEST_ALL';
+export const SUCCESS_ALL = 'userrequestList/SUCCESS_ALL';
+export const FAILURE_ALL = 'userrequestList/FAILURE_ALL';
+export const REQUEST_DETAIL = 'userrequestList/REQUEST_DETAIL';
+export const SUCCESS_DETAIL = 'userrequestList/SUCCESS_DETAIL';
+export const FAILURE_DETAIL = 'userrequestList/FAILURE_DETAIL';
 
 const initialState = {
   items: {},
@@ -21,9 +21,9 @@ const getItemsFromResponse = response => {
 };
 
 /**
- * userRequestList reducer
+ * userrequestList reducer
  */
-const userRequestList = (state = initialState, action) => {
+const userrequestList = (state = initialState, action) => {
   switch (action.type) {
     case REQUEST_ALL:
       return {
@@ -55,13 +55,13 @@ const userRequestList = (state = initialState, action) => {
   }
 };
 
-export default userRequestList;
+export default userrequestList;
 
 
 /**
- * userRequestList action : fetch userrequest list
+ * userrequestList action : fetch userrequest list
  */
-export const getUserRequestList = () => ({
+export const getUserrequestList = () => ({
   [CALL_API]: {
     endpoint: '/userrequest/',
     authenticated: true,
@@ -71,10 +71,10 @@ export const getUserRequestList = () => ({
 });
 
 /**
- * userRequest action : fetch userrequest
+ * userrequest action : fetch userrequest
  * @param {string} id
  */
-export const getUserRequest = id => ({
+export const getUserrequest = id => ({
   [CALL_API]: {
     endpoint: `/userrequest/${id}`,
     authenticated: true,

@@ -1,7 +1,7 @@
 import configureMockStore from 'redux-mock-store';
 import thunk from 'redux-thunk';
 import FetchMock from 'fetch-mock';
-import userRequest, {
+import userrequest, {
   UPDATE_VALUE,
   UPDATE_DATA_PROPERTIES,
   POST_DATA,
@@ -12,30 +12,30 @@ import userRequest, {
   ADD_GEOSJON_FEATURE,
   removeRequestFeature,
   REMOVE_GEOSJON_FEATURE,
-} from './userRequest';
-import initialState from './userRequest-initial';
+} from './userrequest';
+import initialState from './userrequest-initial';
 
 const middlewares = [thunk];
 const mockStore = configureMockStore(middlewares);
 
-describe('userRequest reducer', () => {
+describe('userrequest reducer', () => {
   it('should have initial value equal to {}', () => {
-    expect(userRequest({}, {})).toEqual({});
+    expect(userrequest({}, {})).toEqual({});
   });
 
   describe('UPDATE_VALUE', () => {
-    it('should add a key / value in userRequest object', () => {
+    it('should add a key / value in userrequest object', () => {
       const updateRequestAction = {
         type: UPDATE_VALUE,
         key: 'error',
         value: false,
       };
-      expect(userRequest({}, updateRequestAction)).toEqual({ error: false });
+      expect(userrequest({}, updateRequestAction)).toEqual({ error: false });
     });
   });
 
   describe('UPDATE_DATA_PROPERTIES', () => {
-    it('should add a properties object in userRequest', () => {
+    it('should add a properties object in userrequest', () => {
       const updateRequestAction = {
         type: UPDATE_DATA_PROPERTIES,
         properties: {
@@ -43,14 +43,14 @@ describe('userRequest reducer', () => {
           company: 'Makina',
         },
       };
-      expect(userRequest({ data: {} }, updateRequestAction)).toEqual({
+      expect(userrequest({ data: {} }, updateRequestAction)).toEqual({
         data: { properties: { name: 'Alex', company: 'Makina' } },
       });
     });
   });
 });
 
-describe('userRequest async action', () => {
+describe('userrequest async action', () => {
   it('should POST_DATA, then if success SUBMIT_DATA_SUCCESS', () => {
     const store = mockStore(initialState);
 
@@ -118,7 +118,7 @@ describe('addRequestFeature action', () => {
     store.dispatch(addRequestFeature(feature));
     const actions = store.getActions();
 
-    expect(userRequest(initialState, actions[0]).data.geojson).toEqual({
+    expect(userrequest(initialState, actions[0]).data.geojson).toEqual({
       type: 'FeatureCollection',
       features: [feature],
     });
@@ -151,7 +151,7 @@ describe('removeRequestFeature action', () => {
     store.dispatch(removeRequestFeature('b'));
     const actions = store.getActions();
 
-    expect(userRequest(store.getState(), actions[0]).data.geojson).toEqual({
+    expect(userrequest(store.getState(), actions[0]).data.geojson).toEqual({
       type: 'FeatureCollection',
       features: [{
         properties: { id: 'a', name: 'Polygon' },

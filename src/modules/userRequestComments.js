@@ -2,11 +2,12 @@ import { createSelector } from 'reselect';
 import moment from 'moment';
 import { CALL_API } from 'middlewares/api';
 
-export const FETCH = 'userRequestComments/FETCH';
-export const FETCHED = 'userRequestComments/FETCHED';
-export const POST_DATA = 'userRequestComments/POST_DATA';
-export const SUBMIT_DATA_SUCCESS = 'userRequestComments/SUBMIT_DATA_SUCCESS';
-export const SUBMIT_DATA_FAILED = 'userRequestComments/SUBMIT_DATA_FAILED';
+export const REQUEST_ALL = 'userrequestComments/REQUEST_ALL';
+export const SUCCESS_ALL = 'userrequestComments/SUCCESS_ALL';
+export const FAILURE_ALL = 'userrequestComments/FAILURE_ALL';
+export const SUBMIT = 'userrequestComments/SUBMIT';
+export const SUBMIT_SUCCESS = 'userrequestComments/SUBMIT_SUCCESS';
+export const SUBMIT_FAILED = 'userrequestComments/SUBMIT_FAILED';
 
 const initialState = {
   comments: {}, // comments by userrequestId
@@ -18,6 +19,9 @@ const initialState = {
 
 const parseCommentsByUserrequest = items => {
   const comments = {};
+  if (items.length < 1) {
+    return null;
+  }
   const userrequestId = items[0].userrequest;
   items.forEach(userrequest => {
     comments[userrequest.id] = {
@@ -33,14 +37,14 @@ const parseCommentsByUserrequest = items => {
  * REDUCER
  * --------------------------------------------------------- *
  */
-const userRequestComments = (state = initialState, action) => {
+const userrequestComments = (state = initialState, action) => {
   switch (action.type) {
-    case FETCH:
+    case REQUEST_ALL:
       return {
         ...state,
         loading: true,
       };
-    case FETCHED:
+    case SUCCESS_ALL:
       return {
         ...state,
         loading: false,
@@ -49,14 +53,14 @@ const userRequestComments = (state = initialState, action) => {
           ...parseCommentsByUserrequest(action.response),
         },
       };
-    case POST_DATA:
+    case SUBMIT:
       return {
         ...state,
         submitted: true,
         sent: false,
         error: null,
       };
-    case SUBMIT_DATA_SUCCESS:
+    case SUBMIT_SUCCESS:
       return {
         ...state,
         sent: true,
@@ -72,7 +76,7 @@ const userRequestComments = (state = initialState, action) => {
           },
         },
       };
-    case SUBMIT_DATA_FAILED:
+    case SUBMIT_FAILED:
       return {
         ...state,
         error: action.error,
@@ -82,7 +86,7 @@ const userRequestComments = (state = initialState, action) => {
   }
 };
 
-export default userRequestComments;
+export default userrequestComments;
 
 /**
  * SELECTORS
@@ -98,7 +102,7 @@ const sortByDate = (a, b) => moment(a.date).isBefore(b.date);
  * @returns {array} array of comments
  */
 export const getCommentsByUserrequest = createSelector(
-  (state, userrequestId) => state.userRequestComments.comments[userrequestId] || {},
+  (state, userrequestId) => state.userrequestComments.comments[userrequestId] || {},
   items => Object.keys(items).map(key => items[key]).sort(sortByDate),
 );
 
@@ -114,21 +118,21 @@ export const getCommentsByUserrequest = createSelector(
  */
 export const updateItems = (userrequestId, comments) => dispatch => {
   dispatch({
-    type: FETCHED,
+    type: SUCCESS_ALL,
     comments,
     userrequestId,
   });
 };
 
 /**
- * fetchUserRequestComments async action : fetch userrequest list if not loaded
+ * fetchUserrequestComments async action : fetch userrequest list if not loaded
  * @param {number} userrequestId
  */
-export const fetchUserRequestComments = userrequestId => ({
+export const fetchUserrequestComments = userrequestId => ({
   [CALL_API]: {
     endpoint: `/userrequest/${userrequestId}/comment`,
     authenticated: true,
-    types: [FETCH, FETCHED, SUBMIT_DATA_FAILED],
+    types: [REQUEST_ALL, SUCCESS_ALL, FAILURE_ALL],
     config: {
       method: 'GET',
     },
@@ -137,14 +141,14 @@ export const fetchUserRequestComments = userrequestId => ({
 
 /**
  * submitComment async action : post userrequest comment
- * @param {number} userRequestId
+ * @param {number} userrequestId
  * @param {string} new comment text
  */
 export const submitComment = (userrequestId, comment) => ({
   [CALL_API]: {
     endpoint: `/userrequest/${userrequestId}/comment/`,
     authenticated: true,
-    types: [POST_DATA, SUBMIT_DATA_SUCCESS, SUBMIT_DATA_FAILED],
+    types: [SUBMIT, SUBMIT_SUCCESS, SUBMIT_FAILED],
     config: {
       method: 'POST',
       body: JSON.stringify({

@@ -1,12 +1,12 @@
-import userRequestComments, {
+import userrequestComments, {
   getCommentsByUserrequest,
   SUBMIT_DATA_SUCCESS,
-} from './userRequestComments';
+} from './userrequestComments';
 
-describe('userRequestComments selector', () => {
+describe('userrequestComments selector', () => {
   it('should return an array of selected ids objects', () => {
     const state = {
-      userRequestComments: {
+      userrequestComments: {
         comments: {
           15: {},
           20: { 6: 'a' },
@@ -19,7 +19,7 @@ describe('userRequestComments selector', () => {
 
   it('should return an array ordered by date', () => {
     const state = {
-      userRequestComments: {
+      userrequestComments: {
         comments: {
           15: {},
           20: {
@@ -72,6 +72,6 @@ describe('SUBMIT_DATA_SUCCESS action', () => {
         21: { 5: { content: 'blabla', date: '2018-05-18T16:48:09.299906+02:00' } },
       },
     };
-    expect(userRequestComments(state, action)).toEqual(expectedState);
+    expect(userrequestComments(state, action)).toEqual(expectedState);
   });
 });

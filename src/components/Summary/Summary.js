@@ -3,7 +3,7 @@ import PropTypes from 'prop-types';
 import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
 import { Divider, Card, Button } from 'antd';
-import { updateRequestValue } from 'modules/userRequest';
+import { updateRequestValue } from 'modules/userrequest';
 
 const Summary = props => {
   const { data, editabled } = props;

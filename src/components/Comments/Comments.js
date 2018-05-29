@@ -5,10 +5,10 @@ import { connect } from 'react-redux';
 import { Spin, Input, Form, List, Button } from 'antd';
 import moment from 'moment';
 import {
-  fetchUserRequestComments,
+  fetchUserrequestComments,
   getCommentsByUserrequest,
   submitComment,
-} from 'modules/userRequestComments';
+} from 'modules/userrequestComments';
 
 const { TextArea } = Input;
 const FormItem = Form.Item;
@@ -20,7 +20,7 @@ class Comments extends React.Component {
   }
 
   componentDidMount () {
-    this.props.fetchUserRequestComments(this.props.userrequestId);
+    this.props.fetchUserrequestComments(this.props.userrequestId);
   }
 
   componentWillReceiveProps (nextProps) {
@@ -101,13 +101,13 @@ const FormComments = Form.create()(Comments);
 
 const StateToProps = (state, props) => ({
   comments: getCommentsByUserrequest(state, props.userrequestId),
-  loading: state.userRequestComments.loading,
-  submitted: state.userRequestComments.submitted,
-  sent: state.userRequestComments.sent,
-  error: state.userRequestComments.error,
+  loading: state.userrequestComments.loading,
+  submitted: state.userrequestComments.submitted,
+  sent: state.userrequestComments.sent,
+  error: state.userrequestComments.error,
 });
 
 const DispatchToProps = dispatch =>
-  bindActionCreators({ fetchUserRequestComments, submitComment }, dispatch);
+  bindActionCreators({ fetchUserrequestComments, submitComment }, dispatch);
 
 export default connect(StateToProps, DispatchToProps)(FormComments);

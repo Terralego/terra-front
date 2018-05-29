@@ -3,7 +3,7 @@ import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
 import { Row, Col, Steps } from 'antd';
 
-import { updateRequestValue } from 'modules/userRequest';
+import { updateRequestValue } from 'modules/userrequest';
 import FormConfig from 'components/Form/Form.config';
 
 const { Step } = Steps;
@@ -42,7 +42,7 @@ const FormApp = props => {
 };
 
 const StateToProps = state => ({
-  ...state.userRequest,
+  ...state.userrequest,
 });
 
 const DispatchToProps = dispatch =>

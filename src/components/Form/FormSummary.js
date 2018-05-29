@@ -6,7 +6,7 @@ import { withRouter } from 'react-router-dom';
 import { Button, Modal, Alert } from 'antd';
 import Summary from 'components/Summary/Summary';
 import FormConfig from 'components/Form/Form.config';
-import { submitData } from 'modules/userRequest';
+import { submitData } from 'modules/userrequest';
 
 
 class FormProperties extends React.Component {
@@ -67,10 +67,10 @@ class FormProperties extends React.Component {
 }
 
 const StateToProps = state => ({
-  data: state.userRequest.data,
-  submitted: state.userRequest.submitted,
-  error: state.userRequest.error,
-  sent: state.userRequest.sent,
+  data: state.userrequest.data,
+  submitted: state.userrequest.submitted,
+  error: state.userrequest.error,
+  sent: state.userrequest.sent,
 });
 
 const DispatchToProps = dispatch => bindActionCreators({ submitData }, dispatch);

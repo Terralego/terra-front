@@ -5,11 +5,11 @@ import { Link, withRouter } from 'react-router-dom';
 import { List, Spin } from 'antd';
 import moment from 'moment';
 
-import { getUserRequestList } from 'modules/userRequestList';
+import { getUserrequestList } from 'modules/userrequestList';
 
 class ManageRequests extends React.Component {
   componentDidMount () {
-    this.props.getUserRequestList();
+    this.props.getUserrequestList();
   }
 
   render () {
@@ -53,14 +53,14 @@ class ManageRequests extends React.Component {
 
 const StateToProps = state => ({
   // TODO: use Reselect for increase performances
-  items: Object.keys(state.userRequestList.items).map(key => state.userRequestList.items[key]),
-  loading: state.userRequestList.loading,
+  items: Object.keys(state.userrequestList.items).map(key => state.userrequestList.items[key]),
+  loading: state.userrequestList.loading,
 });
 
 const DispatchToProps = dispatch =>
   bindActionCreators(
     {
-      getUserRequestList,
+      getUserrequestList,
     },
     dispatch,
   );

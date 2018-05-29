@@ -5,7 +5,7 @@ import { withRouter } from 'react-router-dom';
 import { Spin, Row, Col, Card, Select } from 'antd';
 
 import Summary from 'components/Summary/Summary';
-import { getUserRequest } from 'modules/userRequestList';
+import { getUserrequest } from 'modules/userrequestList';
 import FormConfig from 'components/Form/Form.config';
 import Comments from 'components/Comments/Comments';
 
@@ -18,7 +18,7 @@ const handleChange = () => {
 class ManageRequestDetail extends React.Component {
   componentDidMount () {
     if (!this.props.data) {
-      this.props.getUserRequest(this.props.match.params.id);
+      this.props.getUserrequest(this.props.match.params.id);
     }
   }
 
@@ -51,10 +51,10 @@ class ManageRequestDetail extends React.Component {
 
 const StateToProps = (state, ownProps) => ({
   // TODO: use Reselect for increase performances
-  data: state.userRequestList.items[ownProps.match.params.id],
+  data: state.userrequestList.items[ownProps.match.params.id],
 });
 
 const DispatchToProps = dispatch =>
-  bindActionCreators({ getUserRequest }, dispatch);
+  bindActionCreators({ getUserrequest }, dispatch);
 
 export default withRouter(connect(StateToProps, DispatchToProps)(ManageRequestDetail));

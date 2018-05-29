@@ -1,12 +1,12 @@
 import { combineReducers } from 'redux';
-import userRequest from 'modules/userRequest';
-import userRequestList from 'modules/userRequestList';
-import userRequestComments from 'modules/userRequestComments';
+import userrequest from 'modules/userrequest';
+import userrequestList from 'modules/userrequestList';
+import userrequestComments from 'modules/userrequestComments';
 import authentication from 'modules/authentication';
 
 export default combineReducers({
-  userRequest,
-  userRequestList,
-  userRequestComments,
+  userrequest,
+  userrequestList,
+  userrequestComments,
   authentication,
 });

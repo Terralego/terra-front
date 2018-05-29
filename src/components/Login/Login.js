@@ -57,7 +57,7 @@ class Login extends Component {
 const FormLogin = Form.create()(Login);
 
 const StateToProps = state => ({
-  properties: state.userRequest.data.properties,
+  properties: state.userrequest.data.properties,
 });
 
 const DispatchToProps = dispatch =>

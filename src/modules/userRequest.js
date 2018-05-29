@@ -1,19 +1,19 @@
 import { CALL_API } from 'middlewares/api';
-import initialState from 'modules/userRequest-initial';
+import initialState from 'modules/userrequest-initial';
 
-export const UPDATE_VALUE = 'userRequest/UPDATE_VALUE';
-export const UPDATE_DATA_PROPERTIES = 'userRequest/UPDATE_DATA_PROPERTIES';
-export const ADD_GEOSJON_FEATURE = 'userRequest/ADD_GEOSJON_FEATURE';
-export const REMOVE_GEOSJON_FEATURE = 'userRequest/REMOVE_GEOSJON_FEATURE';
-export const POST_DATA = 'userRequest/POST_DATA';
-export const SUBMIT_DATA_SUCCESS = 'userRequest/SUBMIT_DATA_SUCCESS';
-export const SUBMIT_DATA_FAILED = 'userRequest/SUBMIT_DATA_FAILED';
+export const UPDATE_VALUE = 'userrequest/UPDATE_VALUE';
+export const UPDATE_DATA_PROPERTIES = 'userrequest/UPDATE_DATA_PROPERTIES';
+export const ADD_GEOSJON_FEATURE = 'userrequest/ADD_GEOSJON_FEATURE';
+export const REMOVE_GEOSJON_FEATURE = 'userrequest/REMOVE_GEOSJON_FEATURE';
+export const POST_DATA = 'userrequest/POST_DATA';
+export const SUBMIT_DATA_SUCCESS = 'userrequest/SUBMIT_DATA_SUCCESS';
+export const SUBMIT_DATA_FAILED = 'userrequest/SUBMIT_DATA_FAILED';
 
 /**
  * REDUCER
  * --------------------------------------------------------- *
  */
-const userRequest = (state = initialState, action) => {
+const userrequest = (state = initialState, action) => {
   switch (action.type) {
     case UPDATE_VALUE:
       return {
@@ -78,7 +78,7 @@ const userRequest = (state = initialState, action) => {
   }
 };
 
-export default userRequest;
+export default userrequest;
 
 
 /**
@@ -87,9 +87,9 @@ export default userRequest;
  */
 
 /**
- * userRequest action
- * updateRequestValue create or update a value of userRequest key
- * @param  {string} key : the key of the new userRequest value
+ * userrequest action
+ * updateRequestValue create or update a value of userrequest key
+ * @param  {string} key : the key of the new userrequest value
  * @param  {any} value : the new value
  */
 export const updateRequestValue = (key, value) => ({
@@ -99,9 +99,9 @@ export const updateRequestValue = (key, value) => ({
 });
 
 /**
- * userRequest action
+ * userrequest action
  * updateRequestProperties add or update an object of properties
- * @param  {object} properties : object of properties to add / update in userRequest object
+ * @param  {object} properties : object of properties to add / update in userrequest object
  */
 export const updateRequestProperties = properties => ({
   type: UPDATE_DATA_PROPERTIES,
@@ -109,9 +109,9 @@ export const updateRequestProperties = properties => ({
 });
 
 /**
- * userRequest action
+ * userrequest action
  * addRequestFeature add or update an object of properties
- * @param  {object} properties : object of properties to add / update in userRequest object
+ * @param  {object} properties : object of properties to add / update in userrequest object
  */
 export const addRequestFeature = feature => ({
   type: ADD_GEOSJON_FEATURE,
@@ -119,9 +119,9 @@ export const addRequestFeature = feature => ({
 });
 
 /**
- * userRequest action
+ * userrequest action
  * removeRequestFeature remove or update an object of properties
- * @param  {object} properties : object of properties to remove / update in userRequest object
+ * @param  {object} properties : object of properties to remove / update in userrequest object
  */
 export const removeRequestFeature = featureId => ({
   type: REMOVE_GEOSJON_FEATURE,
