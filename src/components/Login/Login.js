@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import { Form, Button, Input } from 'antd';
 import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
+import { Redirect } from 'react-router-dom';
 
 import { loginUser } from 'modules/authentication';
 
@@ -24,29 +25,31 @@ class Login extends Component {
 
   render () {
     const { getFieldDecorator } = this.props.form;
+    const { isAuthenticated, location } = this.props;
 
     return (
-      <Form onSubmit={this.handleSubmit}>
+      isAuthenticated && location.state ?
+        <Redirect to={location.state.from} />
+        :
+        <Form onSubmit={this.handleSubmit}>
+          <h2>Login</h2>
+          <FormItem label="Email" >
+            {getFieldDecorator('email', {
+              rules: [{ required: true, message: 'Veuillez saisir un titre' }],
+            })(<Input />)}
+          </FormItem>
 
-        <h2>Login</h2>
+          <FormItem label="Password">
+            {getFieldDecorator('password', {
+            })(<Input type="password" />)}
+          </FormItem>
 
-        <FormItem label="Email" >
-          {getFieldDecorator('email', {
-            rules: [{ required: true, message: 'Veuillez saisir un titre' }],
-          })(<Input />)}
-        </FormItem>
-
-        <FormItem label="Password">
-          {getFieldDecorator('password', {
-          })(<Input type="password" />)}
-        </FormItem>
-
-        <FormItem>
-          <Button type="primary" htmlType="submit" icon="arrow-right">
-            Login
-          </Button>
-        </FormItem>
-      </Form>
+          <FormItem>
+            <Button type="primary" htmlType="submit" icon="arrow-right">
+              Login
+            </Button>
+          </FormItem>
+        </Form>
     );
   }
 }

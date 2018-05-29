@@ -1,7 +1,7 @@
 import React from 'react';
 import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
-import { Link } from 'react-router-dom';
+import { Link, withRouter } from 'react-router-dom';
 
 import { Breadcrumb as BreadcrumbAnt } from 'antd';
 import routes from 'modules/routes';
@@ -51,14 +51,10 @@ const Breadcrumb = ({ location }) => (
   />
 );
 
-const StateToProps = state => ({
-  location: state.routing.location,
-});
-
 const DispatchToProps = dispatch =>
   bindActionCreators(
     {},
     dispatch,
   );
 
-export default connect(StateToProps, DispatchToProps)(Breadcrumb);
+export default withRouter(connect(null, DispatchToProps)(Breadcrumb));

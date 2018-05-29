@@ -1,6 +1,7 @@
 import React from 'react';
 import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
+import { withRouter } from 'react-router-dom';
 
 import { Button, Modal, Alert } from 'antd';
 import Summary from 'components/Summary/Summary';
@@ -8,8 +9,7 @@ import FormConfig from 'components/Form/Form.config';
 import { submitData } from 'modules/userRequest';
 
 const handleAction = () => {
-  // TODO: find better way with react router
-  window.location.pathname = '/manage-request';
+  this.props.location.pathname = '/manage-request';
 };
 
 class FormProperties extends React.Component {
@@ -73,4 +73,4 @@ const StateToProps = state => ({
 
 const DispatchToProps = dispatch => bindActionCreators({ submitData }, dispatch);
 
-export default connect(StateToProps, DispatchToProps)(FormProperties);
+export default withRouter(connect(StateToProps, DispatchToProps)(FormProperties));

@@ -1,7 +1,7 @@
 import React from 'react';
 import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
-import { Link } from 'react-router-dom';
+import { Link, withRouter } from 'react-router-dom';
 import { List, Spin } from 'antd';
 import moment from 'moment';
 
@@ -65,4 +65,4 @@ const DispatchToProps = dispatch =>
     dispatch,
   );
 
-export default connect(StateToProps, DispatchToProps)(ManageRequests);
+export default withRouter(connect(StateToProps, DispatchToProps)(ManageRequests));

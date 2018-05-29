@@ -9,7 +9,7 @@ export const LOGOUT_SUCCESS = 'authentication/LOGOUT_SUCCESS';
 
 const initialState = {
   isFetching: false,
-  isAuthenticated: localStorage.getItem('token') || false,
+  isAuthenticated: !!localStorage.getItem('token'),
 };
 
 /**
