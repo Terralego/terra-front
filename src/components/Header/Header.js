@@ -15,7 +15,7 @@ import styles from './Header.module.scss';
 const HeaderBrand = () => (
   <div className={styles.brand}>
     <img src={Logo} alt="Logo" style={{ height: '70%', width: 'auto', marginRight: 10 }} />
-    {settings.title}
+    {settings.TITLE}
   </div>
 );
 
