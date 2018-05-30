@@ -7,7 +7,9 @@ export const SIGNATURE_HAS_EXPIRED = 'Signature has expired.';
 
 function addTokenToHeader (config) {
   const token = tokenService.getToken();
-  if (token !== null) config.headers.Authorization = 'JWT ' + token;
+  if (token !== null) {
+    return { ...config, headers: { ...config.headers, Authorization: `JWT ${token}` } };
+  }
   return config;
 }
 

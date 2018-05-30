@@ -46,9 +46,8 @@ export const store = createStore(
  * Useful to redirect on login page if a 403 is detected
  */
 apiService.setErrorHandler(error => {
-  console.warn(error);
   if (error.response
-    && error.response.status === 403
+    && (error.response.status === 401 || error.response.status === 403)
     && error.response.data
     && ((error.response.data.detail && error.response.data.detail === SIGNATURE_HAS_EXPIRED) ||
       (error.response.data.non_field_errors
@@ -67,7 +66,7 @@ apiService.setErrorHandler(error => {
   )) {
     // store.dispatch(setError(error.message));
   } else {
-    console.warn('Nothing to be done for this error... Too bad.');
+    // console.warn('Nothing to be done for this error... Too bad.');
   }
 });
 

@@ -4,7 +4,7 @@ import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
 import { withRouter } from 'react-router-dom';
 
-import { logoutUser } from 'modules/authentication';
+import { logout } from 'modules/authentication';
 import Header from 'components/Header/Header';
 import Breadcrumb from 'components/Breadcrumb/Breadcrumb';
 import SideMenu from 'components/SideMenu/SideMenu';
@@ -39,6 +39,6 @@ const StateToProps = state => ({
 });
 
 const DispatchToProps = dispatch =>
-  bindActionCreators({ logoutUser }, dispatch);
+  bindActionCreators({ logout }, dispatch);
 
 export default withRouter(connect(StateToProps, DispatchToProps)(Main));

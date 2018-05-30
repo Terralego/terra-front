@@ -1,6 +1,6 @@
 import tokenService from 'services/tokenService';
 import apiService from 'services/apiService';
-import { enableTimerRefreshToken } from 'modules/authenticationTimer';
+import { enableTimerRefreshToken, disableTimerRefreshToken } from 'modules/authenticationTimer';
 
 export const REQUEST_TOKEN = 'authentication/REQUEST_TOKEN';
 export const REFRESH_TOKEN = 'authentication/REFRESH_TOKEN';
@@ -31,6 +31,12 @@ const handleTokenErrors = error => {
   return errorMessage;
 };
 
+function parseJwt (token) {
+  const base64Url = token.split('.')[1];
+  const base64 = base64Url.replace('-', '+').replace('_', '/');
+  return JSON.parse(window.atob(base64));
+}
+
 const initialState = {
   isFetching: false,
   isAuthenticated: !!localStorage.getItem('token'),
@@ -56,15 +62,14 @@ const authentication = (state = initialState, action) => {
       return {
         ...state,
         isFetching: false,
-        isAuthenticated: action.isAuthenticated,
         receivedAt: action.receivedAt,
-        user: action.user,
       };
     case RESET_TOKEN:
     case SET_AUTHENTICATION:
       return {
         ...state,
         isAuthenticated: action.isAuthenticated,
+        user: action.user,
       };
     case SET_ERROR_MESSAGE:
       return {
@@ -89,6 +94,12 @@ export function requestToken () {
   };
 }
 
+export function requestLogOut () {
+  return {
+    type: REQUEST_LOG_OUT,
+  };
+}
+
 /**
  * Action handle when fetch token failed
  * @param  {string} errorMessage
@@ -107,6 +118,7 @@ export function setAuthentication () {
   return {
     type: SET_AUTHENTICATION,
     isAuthenticated: tokenService.isAuthenticated(),
+    user: tokenService.isAuthenticated() && parseJwt(tokenService.getToken()),
   };
 }
 
@@ -145,6 +157,7 @@ export const refreshToken = () => dispatch => {
   return apiService.refreshToken(token)
     .then(response => {
       dispatch(receiveToken());
+
       if (response.data && response.data.token) {
         tokenService.setToken(response.data.token);
         dispatch(setAuthentication());
@@ -170,9 +183,8 @@ export const loginUser = ({ email, password }) => dispatch => {
     .login(email, password)
     .then(response => {
       dispatch(receiveToken());
-
-      if (response && response.token) {
-        tokenService.setToken(response.token);
+      if (response && response.data.token) {
+        tokenService.setToken(response.data.token);
         dispatch(setAuthentication());
         dispatch(enableTimerRefreshToken());
       }
@@ -184,9 +196,8 @@ export const loginUser = ({ email, password }) => dispatch => {
     });
 };
 
-/**
- * Handle when user log out : delete token and restore authorization status
- */
-export const logoutUser = ({
-  type: REQUEST_LOG_OUT,
-});
+export const logout = () => dispatch => {
+  dispatch(requestLogOut());
+  dispatch(disableTimerRefreshToken());
+  dispatch(resetToken());
+};
