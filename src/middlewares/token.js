@@ -1,5 +1,5 @@
 import settings from 'front-settings';
-import { checkStatus, parseJSON } from 'helpers/fetchHelpers';
+import { parseJSON } from 'helpers/fetchHelpers';
 import tokenService from 'services/tokenService';
 import { RECEIVE_TOKEN, SET_ERROR_MESSAGE } from 'modules/authentication';
 
@@ -24,8 +24,24 @@ function tokenApi (endpoint, body) {
     headers: { 'Content-Type': 'application/json' },
     body: JSON.stringify(body),
   })
-    .then(checkStatus)
+    // .then(checkStatus)
     .then(parseJSON);
+}
+
+function interceptTokenError (response) {
+  let errorMessage = '';
+
+  if (response.password) {
+    errorMessage += 'Password : ' + response.password[0];
+  }
+  if (response.username) {
+    errorMessage += 'Login : ' + response.username[0];
+  }
+  if (response.non_field_errors) {
+    errorMessage += response.non_field_errors[0];
+  }
+
+  return errorMessage;
 }
 
 export const TOKEN_API = Symbol('Token API');
@@ -46,9 +62,17 @@ export default () => next => action => {
   return tokenApi(endpoint, body)
     .then(
       response => {
+        const errors = interceptTokenError(response);
+        console.log(errors);
+        if (errors) {
+          return next({
+            error: errors,
+            type: SET_ERROR_MESSAGE,
+          });
+        }
+
         tokenService.setToken(response.token);
         const user = parseJwt(response.token);
-
         return next({
           type: RECEIVE_TOKEN,
           user,
