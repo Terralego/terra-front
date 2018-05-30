@@ -36,6 +36,7 @@ export const routes = [{
       path: '/manage-request/detail/:id',
       name: 'Manage request detail',
       component: ManageRequestDetail,
+      protected: true,
     },
   ],
 }, {

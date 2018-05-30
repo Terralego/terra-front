@@ -20,7 +20,9 @@ class Comments extends React.Component {
   }
 
   componentDidMount () {
-    this.props.fetchUserrequestComments(this.props.userrequestId);
+    if (!this.props.comments && !this.props.loading) {
+      this.props.fetchUserrequestComments(this.props.userrequestId);
+    }
   }
 
   componentWillReceiveProps (nextProps) {

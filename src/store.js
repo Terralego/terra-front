@@ -55,7 +55,7 @@ apiService.setErrorHandler(error => {
   ) {
     store.dispatch(resetToken());
     store.dispatch(disableTimerRefreshToken());
-    window.location = '#/login';
+    // window.location = '#/login';
   } else if (!(
     error.response
     && error.response.request

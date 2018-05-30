@@ -17,9 +17,16 @@ const handleChange = () => {
 
 class ManageRequestDetail extends React.Component {
   componentDidMount () {
-    if (!this.props.data) {
+    if (!this.props.data && !this.props.loading) {
       this.props.getUserrequest(this.props.match.params.id);
     }
+  }
+
+  shouldComponentUpdate (nextProps) {
+    if (nextProps.data !== this.props.data) {
+      return true;
+    }
+    return false;
   }
 
   render () {
@@ -52,6 +59,7 @@ class ManageRequestDetail extends React.Component {
 const StateToProps = (state, ownProps) => ({
   // TODO: use Reselect for increase performances
   data: state.userrequestList.items[ownProps.match.params.id],
+  loading: state.userrequestList.loading,
 });
 
 const DispatchToProps = dispatch =>
