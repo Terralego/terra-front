@@ -19,31 +19,48 @@ const HeaderBrand = () => (
   </div>
 );
 
-const Header = () => (
+const Header = props => (
   <Layout.Header className={styles.header}>
 
     <HeaderBrand />
 
-    <Menu
-      theme="dark"
-      className={styles.menu}
-      mode="horizontal"
-      style={{ lineHeight: '64px' }}
-    >
-
-      <Menu.SubMenu title={<span><Icon type="user" />Mon compte</span>}>
-        <Menu.ItemGroup title="Prénom Nom">
-          <Menu.Item key="account">Account</Menu.Item>
-          <Menu.Item key="settings">Settings</Menu.Item>
-        </Menu.ItemGroup>
-      </Menu.SubMenu>
-
-      <Menu.Item>
-        <Popconfirm title="Êtes-vous sûr ?" okText="Oui" cancelText="Non">
-          <Link to="/logout"><Icon type="logout" />Se déconnecter</Link>
-        </Popconfirm>
-      </Menu.Item>
-    </Menu>
+    {props.isAuthenticated ?
+      <Menu
+        theme="dark"
+        className={styles.menu}
+        mode="horizontal"
+        style={{ lineHeight: '64px' }}
+      >
+        <Menu.SubMenu title={<span><Icon type="user" />Mon compte</span>}>
+          <Menu.ItemGroup title="Prénom Nom">
+            <Menu.Item key="account"><Icon type="setting" /> Profil</Menu.Item>
+            <Menu.Item key="manage-request"><Link to="/manage-request"><Icon type="file-text" />Mes demandes</Link></Menu.Item>
+            <Menu.Item key="request"><Link to="/request"><Icon type="file-add" /> Créer une demande</Link></Menu.Item>
+          </Menu.ItemGroup>
+        </Menu.SubMenu>
+        <Menu.Item>
+          <Popconfirm
+            title="Êtes-vous sûr ?"
+            okText="Oui"
+            cancelText="Non"
+            onConfirm={props.logout}
+          >
+            <Icon type="logout" />Se déconnecter
+          </Popconfirm>
+        </Menu.Item>
+      </Menu>
+      :
+      <Menu
+        theme="dark"
+        className={styles.menu}
+        mode="horizontal"
+        style={{ lineHeight: '64px' }}
+      >
+        <Menu.Item>
+          <Link to="/login"><Icon type="login" />Se connecter</Link>
+        </Menu.Item>
+      </Menu>
+    }
 
   </Layout.Header>
 );

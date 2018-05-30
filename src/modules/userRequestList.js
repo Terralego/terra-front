@@ -76,7 +76,6 @@ export const getUserrequestList = () => ({
 export const getUserrequest = id => ({
   [CALL_API]: {
     endpoint: `/userrequest/${id}`,
-    authenticated: true,
     types: [REQUEST_DETAIL, SUCCESS_DETAIL, FAILURE_DETAIL],
     config: { method: 'GET' },
   },

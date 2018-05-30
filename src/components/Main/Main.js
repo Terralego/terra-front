@@ -12,7 +12,7 @@ import RouteViews from 'components/RouteViews/RouteViews';
 
 const Main = props => (
   <Layout style={{ height: '100vh' }}>
-    <Header {...this.props} />
+    <Header {...props} />
     <Layout>
       <Layout.Sider
         breakpoint="md"

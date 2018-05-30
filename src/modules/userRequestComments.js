@@ -131,7 +131,6 @@ export const updateItems = (userrequestId, comments) => dispatch => {
 export const fetchUserrequestComments = userrequestId => ({
   [CALL_API]: {
     endpoint: `/userrequest/${userrequestId}/comment`,
-    authenticated: true,
     types: [REQUEST_ALL, SUCCESS_ALL, FAILURE_ALL],
     config: {
       method: 'GET',
@@ -147,7 +146,6 @@ export const fetchUserrequestComments = userrequestId => ({
 export const submitComment = (userrequestId, comment) => ({
   [CALL_API]: {
     endpoint: `/userrequest/${userrequestId}/comment/`,
-    authenticated: true,
     types: [SUBMIT, SUBMIT_SUCCESS, SUBMIT_FAILED],
     config: {
       method: 'POST',
