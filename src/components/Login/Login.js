@@ -28,8 +28,8 @@ class Login extends Component {
     const { isAuthenticated, location } = this.props;
 
     return (
-      isAuthenticated && location.state ?
-        <Redirect to={location.state.from} />
+      isAuthenticated ?
+        <Redirect to={location.state ? location.state.from : '/'} />
         :
         <Form onSubmit={this.handleSubmit}>
           <h2>Login</h2>
