@@ -135,11 +135,10 @@ export const removeRequestFeature = featureId => ({
 export const submitData = data => ({
   [CALL_API]: {
     endpoint: '/userrequest/',
-    authenticated: true,
     types: [POST_DATA, SUBMIT_DATA_SUCCESS, SUBMIT_DATA_FAILED],
     config: {
       method: 'POST',
-      body: JSON.stringify(data),
+      data: JSON.stringify(data),
     },
   },
 });

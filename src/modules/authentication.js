@@ -1,13 +1,35 @@
 import tokenService from 'services/tokenService';
-import { TOKEN_API } from 'middlewares/token';
+import apiService from 'services/apiService';
+import { enableTimerRefreshToken } from 'modules/authenticationTimer';
 
-export const OBTAIN_TOKEN = 'authentication/OBTAIN_TOKEN';
+export const REQUEST_TOKEN = 'authentication/REQUEST_TOKEN';
 export const REFRESH_TOKEN = 'authentication/REFRESH_TOKEN';
 export const RECEIVE_TOKEN = 'authentication/RECEIVE_TOKEN';
 export const RESET_TOKEN = 'authentication/RESET_TOKEN';
 export const SET_AUTHENTICATION = 'authentication/SET_AUTHENTICATION';
 export const REQUEST_LOG_OUT = 'authentication/REQUEST_LOG_OUT';
 export const SET_ERROR_MESSAGE = 'authentication/SET_ERROR_MESSAGE';
+
+const handleTokenErrors = error => {
+  let errorMessage = '';
+
+  if (error.response && error.response.data) {
+    if (error.response.data.password) {
+      errorMessage += `Password : ${error.response.data.password[0]}`;
+    }
+    if (error.response.data.username) {
+      errorMessage += `Login : ${error.response.data.username[0]}`;
+    }
+    if (error.response.data.non_field_errors
+      && error.response.data.non_field_errors.length > 0) {
+      errorMessage += error.response.data.non_field_errors[0];
+    }
+  } else {
+    errorMessage = error;
+  }
+
+  return errorMessage;
+};
 
 const initialState = {
   isFetching: false,
@@ -23,8 +45,7 @@ const initialState = {
  */
 const authentication = (state = initialState, action) => {
   switch (action.type) {
-    case OBTAIN_TOKEN:
-    case REFRESH_TOKEN:
+    case REQUEST_TOKEN:
     case REQUEST_LOG_OUT:
       return {
         ...state,
@@ -62,6 +83,12 @@ export default authentication;
  * --------------------------------------------------------- *
  */
 
+export function requestToken () {
+  return {
+    type: REQUEST_TOKEN,
+  };
+}
+
 /**
  * Action handle when fetch token failed
  * @param  {string} errorMessage
@@ -83,13 +110,24 @@ export function setAuthentication () {
   };
 }
 
-/**
- * Handle when user log out : delete token and restore authorization status
- */
-export const logoutUser = () => dispatch => {
+export function resetToken () {
   tokenService.removeToken();
-  dispatch({ type: REQUEST_LOG_OUT });
-};
+  return {
+    type: RESET_TOKEN,
+    isAuthenticated: tokenService.isAuthenticated(),
+  };
+}
+
+/**
+ * Recieve token
+ * @param {object} user
+ */
+export const receiveToken = user => ({
+  type: RECEIVE_TOKEN,
+  user,
+  isAuthenticated: true,
+  receivedAt: Date.now(),
+});
 
 /**
  * Make a refresh request to the API.
@@ -98,24 +136,57 @@ export const logoutUser = () => dispatch => {
  * is still in the period of 'refresh token allowed'.
  *
  */
-export const refreshToken = () => ({
-  [TOKEN_API]: {
-    type: REFRESH_TOKEN,
-    endpoint: '/auth/refresh-token/',
-    body: { token: tokenService.getToken() },
-  },
-});
+export const refreshToken = () => dispatch => {
+  const token = tokenService.getToken();
+
+  dispatch(requestToken());
+  dispatch(setAuthentication());
+
+  return apiService.refreshToken(token)
+    .then(response => {
+      dispatch(receiveToken());
+      if (response.data && response.data.token) {
+        tokenService.setToken(response.data.token);
+        dispatch(setAuthentication());
+      }
+    })
+    .catch(error => {
+      const errorMessage = handleTokenErrors(error);
+      dispatch(setErrorMessage(errorMessage));
+      dispatch(receiveToken(null));
+    });
+};
 
 /**
  * Handle when user log in
- * @param {object} creds : credentials object
- * @param {string} creds.email
- * @param {string} creds.password
+ * @param {string} email
+ * @param {string} password
  */
-export const loginUser = creds => ({
-  [TOKEN_API]: {
-    type: OBTAIN_TOKEN,
-    endpoint: '/auth/obtain-token/',
-    body: creds,
-  },
+export const loginUser = ({ email, password }) => dispatch => {
+  dispatch(requestToken());
+  // dispatch(setAuthentication());
+
+  return apiService
+    .login(email, password)
+    .then(response => {
+      dispatch(receiveToken());
+
+      if (response && response.token) {
+        tokenService.setToken(response.token);
+        dispatch(setAuthentication());
+        dispatch(enableTimerRefreshToken());
+      }
+    })
+    .catch(error => {
+      dispatch(receiveToken());
+      const errorMessage = handleTokenErrors(error);
+      dispatch(setErrorMessage(errorMessage));
+    });
+};
+
+/**
+ * Handle when user log out : delete token and restore authorization status
+ */
+export const logoutUser = ({
+  type: REQUEST_LOG_OUT,
 });

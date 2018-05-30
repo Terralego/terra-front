@@ -12,6 +12,7 @@
   "license": "ISC",
   "dependencies": {
     "antd": "~3.3.3",
+    "axios": "~0.18.0",
     "eslint": "~4.19.1",
     "eslint-config-makina": "^0.3.0",
     "fetch-mock": "~6.4.2",
@@ -37,8 +38,7 @@
     "redux-mock-store": "~1.5.1",
     "redux-thunk": "~2.2.0",
     "reselect": "~3.0.1",
-    "sass-loader": "~6.0.6",
-    "whatwg-fetch": "~2.0.4"
+    "sass-loader": "~6.0.6"
   },
   "scripts": {
     "start": "react-app-rewired start",

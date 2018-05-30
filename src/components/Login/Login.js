@@ -18,6 +18,8 @@ class Login extends Component {
     event.preventDefault();
     this.props.form.validateFields((err, values) => {
       if (!err) {
+        console.log(values);
+
         this.props.loginUser(values);
       }
     });

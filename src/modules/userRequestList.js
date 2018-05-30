@@ -12,9 +12,9 @@ const initialState = {
   loading: false,
 };
 
-const getItemsFromResponse = response => {
+const getItemsFromResponse = data => {
   const items = {};
-  response.forEach(userrequest => {
+  data.forEach(userrequest => {
     items[userrequest.id] = userrequest;
   });
   return items;
@@ -34,7 +34,7 @@ const userrequestList = (state = initialState, action) => {
       return {
         ...state,
         loading: false,
-        items: getItemsFromResponse(action.response),
+        items: getItemsFromResponse(action.data),
       };
     case REQUEST_DETAIL:
       return {
@@ -64,7 +64,6 @@ export default userrequestList;
 export const getUserrequestList = () => ({
   [CALL_API]: {
     endpoint: '/userrequest/',
-    authenticated: true,
     types: [REQUEST_ALL, SUCCESS_ALL, FAILURE_ALL],
     config: { method: 'GET' },
   },
