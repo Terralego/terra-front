@@ -50,7 +50,7 @@ const userrequestComments = (state = initialState, action) => {
         loading: false,
         comments: {
           ...state.comments,
-          ...parseCommentsByUserrequest(action.response),
+          ...parseCommentsByUserrequest(action.data),
         },
       };
     case SUBMIT:
@@ -67,11 +67,11 @@ const userrequestComments = (state = initialState, action) => {
         error: null,
         comments: {
           ...state.comments,
-          [action.response.userrequest]: {
-            ...state.comments[action.response.userrequest],
-            [action.response.id]: {
-              content: action.response.properties.comment,
-              date: action.response.created_at,
+          [action.data.userrequest]: {
+            ...state.comments[action.data.userrequest],
+            [action.data.id]: {
+              content: action.data.properties.comment,
+              date: action.data.created_at,
             },
           },
         },
@@ -149,9 +149,9 @@ export const submitComment = (userrequestId, comment) => ({
     types: [SUBMIT, SUBMIT_SUCCESS, SUBMIT_FAILED],
     config: {
       method: 'POST',
-      body: JSON.stringify({
+      data: {
         properties: { comment },
-      }),
+      },
     },
   },
 });

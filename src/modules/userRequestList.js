@@ -47,7 +47,7 @@ const userrequestList = (state = initialState, action) => {
         loading: false,
         items: {
           ...state.items,
-          [action.response.id]: action.response,
+          [action.data.id]: action.data,
         },
       };
     default:
