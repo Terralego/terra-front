@@ -1,6 +1,8 @@
 import configureMockStore from 'redux-mock-store';
 import thunk from 'redux-thunk';
-import FetchMock from 'fetch-mock';
+
+import apiService from 'services/apiService';
+import api from 'middlewares/api';
 import userrequest, {
   UPDATE_VALUE,
   UPDATE_DATA_PROPERTIES,
@@ -15,8 +17,14 @@ import userrequest, {
 } from './userrequest';
 import initialState from './userrequest-initial';
 
-const middlewares = [thunk];
+const middlewares = [thunk, api];
 const mockStore = configureMockStore(middlewares);
+
+const MockAdapter = require('axios-mock-adapter');
+
+// This sets the mock adapter on the default instance
+const { instance } = apiService; // Axios.create()
+const mock = new MockAdapter(instance);
 
 describe('userrequest reducer', () => {
   it('should have initial value equal to {}', () => {
@@ -54,16 +62,16 @@ describe('userrequest async action', () => {
   it('should POST_DATA, then if success SUBMIT_DATA_SUCCESS', () => {
     const store = mockStore(initialState);
 
-    FetchMock.post('*', { id: 0 });
+    mock.onPost().reply(200, { id: 'Hello' });
 
-    return store.dispatch(submitData(1))
+    return store.dispatch(submitData('Hello'))
       .then(() => {
-        const expectedActions = store.getActions();
-        expect(expectedActions.length).toBe(2);
-        expect(expectedActions).toContainEqual({ type: POST_DATA });
-        expect(expectedActions).toContainEqual({
+        const actions = store.getActions();
+        expect(actions.length).toBe(2);
+        expect(actions).toContainEqual({ type: POST_DATA });
+        expect(actions).toContainEqual({
           type: SUBMIT_DATA_SUCCESS,
-          response: { id: 0 },
+          data: { id: 'Hello' },
         });
       });
   });
@@ -71,16 +79,17 @@ describe('userrequest async action', () => {
   it('should POST_DATA, then if failed SUBMIT_DATA_FAILED', () => {
     const store = mockStore(initialState);
 
-    FetchMock.post('*', 400, { overwriteRoutes: true });
+    mock.reset();
+    mock.onPost().reply(400);
 
-    return store.dispatch(submitData(1))
+    return store.dispatch(submitData('Bonjour'))
       .then(() => {
-        const expectedActions = store.getActions();
-        expect(expectedActions.length).toBe(2);
-        expect(expectedActions).toContainEqual({ type: POST_DATA });
-        expect(expectedActions).toContainEqual({
+        const actions = store.getActions();
+        expect(actions.length).toBe(2);
+        expect(actions).toContainEqual({ type: POST_DATA });
+        expect(actions).toContainEqual({
           type: SUBMIT_DATA_FAILED,
-          error: 'Error: Bad Request',
+          error: 'Request failed with status code 400',
         });
       });
   });

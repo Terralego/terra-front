@@ -1,6 +1,6 @@
 import userrequestComments, {
   getCommentsByUserrequest,
-  SUBMIT_DATA_SUCCESS,
+  SUBMIT_SUCCESS,
 } from './userrequestComments';
 
 describe('userrequestComments selector', () => {
@@ -39,8 +39,8 @@ describe('userrequestComments selector', () => {
   });
 });
 
-describe('SUBMIT_DATA_SUCCESS action', () => {
-  it('should add new comment when recieve response', () => {
+describe('SUBMIT_SUCCESS action', () => {
+  it('should add new comment when recieve data', () => {
     const state = {
       comments: {
         15: { 1: { content: 'ok', date: '01/02/18' } },
@@ -49,8 +49,8 @@ describe('SUBMIT_DATA_SUCCESS action', () => {
     };
 
     const action = {
-      type: SUBMIT_DATA_SUCCESS,
-      response: {
+      type: SUBMIT_SUCCESS,
+      data: {
         id: 5,
         created_at: '2018-05-18T16:48:09.299906+02:00',
         updated_at: '2018-05-18T16:48:09.299949+02:00',
