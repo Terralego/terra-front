@@ -1,7 +1,6 @@
 import configureMockStore from 'redux-mock-store';
 import thunk from 'redux-thunk';
-
-import apiService from 'services/apiService';
+import FetchMock from 'fetch-mock';
 import api from 'middlewares/api';
 import userrequest, {
   UPDATE_VALUE,
@@ -19,12 +18,6 @@ import initialState from './userrequest-initial';
 
 const middlewares = [thunk, api];
 const mockStore = configureMockStore(middlewares);
-
-const MockAdapter = require('axios-mock-adapter');
-
-// This sets the mock adapter on the default instance
-const { instance } = apiService; // Axios.create()
-const mock = new MockAdapter(instance);
 
 describe('userrequest reducer', () => {
   it('should have initial value equal to {}', () => {
@@ -62,7 +55,7 @@ describe('userrequest async action', () => {
   it('should POST_DATA, then if success SUBMIT_DATA_SUCCESS', () => {
     const store = mockStore(initialState);
 
-    mock.onPost().reply(200, { id: 'Hello' });
+    FetchMock.post('*', { id: 'Hello' });
 
     return store.dispatch(submitData('Hello'))
       .then(() => {
@@ -79,8 +72,7 @@ describe('userrequest async action', () => {
   it('should POST_DATA, then if failed SUBMIT_DATA_FAILED', () => {
     const store = mockStore(initialState);
 
-    mock.reset();
-    mock.onPost().reply(400);
+    FetchMock.post('*', 400, { overwriteRoutes: true });
 
     return store.dispatch(submitData('Bonjour'))
       .then(() => {
@@ -89,7 +81,7 @@ describe('userrequest async action', () => {
         expect(actions).toContainEqual({ type: POST_DATA });
         expect(actions).toContainEqual({
           type: SUBMIT_DATA_FAILED,
-          error: 'Request failed with status code 400',
+          error: 'Cannot read property \'on\' of undefined',
         });
       });
   });

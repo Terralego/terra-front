@@ -138,7 +138,7 @@ export const submitData = data => ({
     types: [POST_DATA, SUBMIT_DATA_SUCCESS, SUBMIT_DATA_FAILED],
     config: {
       method: 'POST',
-      data,
+      body: JSON.stringify(data),
     },
   },
 });

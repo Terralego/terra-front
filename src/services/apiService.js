@@ -1,91 +1,72 @@
+import 'whatwg-fetch';
 import settings from 'front-settings';
-import axios from 'axios';
-
 import tokenService from 'services/tokenService';
 
-export const SIGNATURE_HAS_EXPIRED = 'Signature has expired.';
+async function handleErrors (response) {
+  const data = await response.json();
 
-function addTokenToHeader (config) {
-  const token = tokenService.getToken();
-  if (token !== null) {
-    return { ...config, headers: { ...config.headers, Authorization: `JWT ${token}` } };
+  if (response.status >= 200 && response.status < 300) {
+    return data;
   }
-  return config;
+
+  let error = response.statusText;
+  if (data.password) {
+    error += `: Password : ${data.password[0]}`;
+  }
+  if (data.username) {
+    error += `: Login : ${data.username[0]}`;
+  }
+  if (data.non_field_errors
+    && data.non_field_errors.length > 0) {
+    error += `: ${data.non_field_errors[0]}`;
+  }
+
+  throw error;
 }
 
-class ApiService {
-  constructor () {
-    /**
-     * Useful to know if a refresh token is in progress.
-     *
-     * If it is, we must refresh only one time.
-     *
-     * If the result is an error,
-     * we must return the error to the caller.
-     */
-    this.refreshingToken = false;
+const options = {
+  headers: {
+    'Content-Type': 'application/json',
+  },
+};
 
-    this.instance = axios.create({
-      baseURL: settings.API_URL, // SITE_API_URL is set in index.html
-      timeout: 0,
-    });
-
-    this.interceptorTokenID = this.instance.interceptors.request.use(addTokenToHeader);
-  }
-
-  setErrorHandler (errorHandler) {
-    if (errorHandler) {
-      this.instance.interceptors.response.use(
-        response => response,
-        error => {
-          errorHandler(error);
-          return Promise.reject(error);
-        },
-      );
-    }
-  }
+export default {
+  /**
+   * refreshToken
+   */
+  refreshToken: async token =>
+    handleErrors(await fetch(`${settings.API_URL}/auth/refresh-token/`, {
+      method: 'POST',
+      ...options,
+      body: JSON.stringify({ token }),
+    })),
 
   /**
-   * Token endpoints
+   * login
+   * @param {string} email
+   * @param {string} password
    */
-  refreshToken (token) {
-    return this.instance.request({
+  login: async (email, password) =>
+    handleErrors(await fetch(`${settings.API_URL}/auth/obtain-token/`, {
       method: 'POST',
-      url: 'auth/refresh-token/',
-      data: { token },
-    });
-  }
+      ...options,
+      body: JSON.stringify({ email, password }),
+    })),
 
   /**
-   * User endpoints
+   * request
+   * @param  {string} endpoint
+   * @param  {object} config
    */
-  login (email, password) {
-    return this.instance.request({
-      method: 'POST',
-      url: 'auth/obtain-token/',
-      data: { email, password },
-    });
-  }
-  // logout () {
-  //   return this.instance
-  //     .request({
-  //       method: 'POST',
-  //       url: 'logout/',
-  //     })
-  //     .then(() => {
-  //       this.token = null;
-  //     });
-  // }
-
-  request (endpoint, config) {
-    return this.instance.request({
+  request: async (endpoint, config) =>
+    handleErrors(await fetch(`${settings.API_URL}${endpoint}`, {
       method: 'GET',
-      url: endpoint,
+      ...options,
+      headers: {
+        ...options.headers,
+        Authorization: `JWT ${tokenService.getToken()}`,
+      },
       ...config,
-    });
-  }
-}
-
-export const apiService = new ApiService();
-
-export default apiService;
+    }))
+      .then(response => ({ data: response })),
+};

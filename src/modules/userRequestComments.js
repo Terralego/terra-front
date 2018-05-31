@@ -149,9 +149,9 @@ export const submitComment = (userrequestId, comment) => ({
     types: [SUBMIT, SUBMIT_SUCCESS, SUBMIT_FAILED],
     config: {
       method: 'POST',
-      data: {
+      body: JSON.stringify({
         properties: { comment },
-      },
+      }),
     },
   },
 });

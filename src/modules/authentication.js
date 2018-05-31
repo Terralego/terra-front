@@ -10,27 +10,11 @@ export const SET_AUTHENTICATION = 'authentication/SET_AUTHENTICATION';
 export const REQUEST_LOG_OUT = 'authentication/REQUEST_LOG_OUT';
 export const SET_ERROR_MESSAGE = 'authentication/SET_ERROR_MESSAGE';
 
-const handleTokenErrors = error => {
-  let errorMessage = '';
-
-  if (error.response && error.response.data) {
-    if (error.response.data.password) {
-      errorMessage += `Password : ${error.response.data.password[0]}`;
-    }
-    if (error.response.data.username) {
-      errorMessage += `Login : ${error.response.data.username[0]}`;
-    }
-    if (error.response.data.non_field_errors
-      && error.response.data.non_field_errors.length > 0) {
-      errorMessage += error.response.data.non_field_errors[0];
-    }
-  } else {
-    errorMessage = error;
-  }
-
-  return errorMessage;
-};
-
+/**
+ * Parse JWT
+ * Decode token data
+ * @param  {string} token
+ */
 function parseJwt (token) {
   const base64Url = token.split('.')[1];
   const base64 = base64Url.replace('-', '+').replace('_', '/');
@@ -52,10 +36,13 @@ const initialState = {
 const authentication = (state = initialState, action) => {
   switch (action.type) {
     case REQUEST_TOKEN:
-    case REQUEST_LOG_OUT:
       return {
         ...state,
         isFetching: true,
+      };
+    case REQUEST_LOG_OUT:
+      return {
+        ...state,
         isAuthenticated: false,
       };
     case RECEIVE_TOKEN:
@@ -141,6 +128,12 @@ export const receiveToken = user => ({
   receivedAt: Date.now(),
 });
 
+export const logout = () => dispatch => {
+  dispatch(requestLogOut());
+  dispatch(disableTimerRefreshToken());
+  dispatch(resetToken());
+};
+
 /**
  * Make a refresh request to the API.
  *
@@ -158,15 +151,15 @@ export const refreshToken = () => dispatch => {
     .then(response => {
       dispatch(receiveToken());
 
-      if (response.data && response.data.token) {
-        tokenService.setToken(response.data.token);
+      if (response && response.token) {
+        tokenService.setToken(response.token);
         dispatch(setAuthentication());
       }
     })
     .catch(error => {
-      const errorMessage = handleTokenErrors(error);
-      dispatch(setErrorMessage(errorMessage));
-      dispatch(receiveToken(null));
+      dispatch(setErrorMessage(error));
+      dispatch(resetToken());
+      dispatch(refreshToken());
     });
 };
 
@@ -183,21 +176,14 @@ export const loginUser = ({ email, password }) => dispatch => {
     .login(email, password)
     .then(response => {
       dispatch(receiveToken());
-      if (response && response.data.token) {
-        tokenService.setToken(response.data.token);
+      if (response && response.token) {
+        tokenService.setToken(response.token);
         dispatch(setAuthentication());
         dispatch(enableTimerRefreshToken());
       }
     })
     .catch(error => {
       dispatch(receiveToken());
-      const errorMessage = handleTokenErrors(error);
-      dispatch(setErrorMessage(errorMessage));
+      dispatch(setErrorMessage(error));
     });
-};
-
-export const logout = () => dispatch => {
-  dispatch(requestLogOut());
-  dispatch(disableTimerRefreshToken());
-  dispatch(resetToken());
 };
