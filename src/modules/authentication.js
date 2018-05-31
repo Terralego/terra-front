@@ -1,6 +1,6 @@
-import tokenService from 'services/tokenService';
+import { disableTimerRefreshToken, enableTimerRefreshToken } from 'modules/authenticationTimer';
 import apiService from 'services/apiService';
-import { enableTimerRefreshToken, disableTimerRefreshToken } from 'modules/authenticationTimer';
+import tokenService from 'services/tokenService';
 
 export const REQUEST_TOKEN = 'authentication/REQUEST_TOKEN';
 export const REFRESH_TOKEN = 'authentication/REFRESH_TOKEN';
@@ -158,8 +158,7 @@ export const refreshToken = () => dispatch => {
     })
     .catch(error => {
       dispatch(setErrorMessage(error));
-      dispatch(resetToken());
-      dispatch(refreshToken());
+      dispatch(logout());
     });
 };
 
