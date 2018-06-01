@@ -11,7 +11,7 @@
   "author": "",
   "license": "ISC",
   "dependencies": {
-    "antd": "~3.3.3",
+    "antd": "~3.5.4",
     "axios-mock-adapter": "~1.15.0",
     "eslint": "~4.19.1",
     "eslint-config-makina": "^0.3.0",
