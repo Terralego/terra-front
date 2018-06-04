@@ -44,7 +44,6 @@ class FormProperties extends React.Component {
         />}
         <div style={{ margin: '24px 0', textAlign: 'right' }}>
           <Button
-            icon="arrow-right"
             size="large"
             onClick={this.editForm}
             style={{ marginRight: 8 }}

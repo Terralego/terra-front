@@ -2,7 +2,8 @@ const initialState = {
   formStep: 0,
   submitted: false,
   sent: false,
-  error: null,
+  apiError: null,
+  validationErrors: {},
   data: {
     state: 0,
     geojson: {

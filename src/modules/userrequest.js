@@ -1,13 +1,51 @@
+import { createSelector } from 'reselect';
 import { CALL_API } from 'middlewares/api';
 import initialState from 'modules/userrequest-initial';
 
 export const UPDATE_VALUE = 'userrequest/UPDATE_VALUE';
+export const VALIDATE_FIELDS = 'userrequest/VALIDATE_FIELDS';
 export const UPDATE_DATA_PROPERTIES = 'userrequest/UPDATE_DATA_PROPERTIES';
 export const ADD_GEOSJON_FEATURE = 'userrequest/ADD_GEOSJON_FEATURE';
 export const REMOVE_GEOSJON_FEATURE = 'userrequest/REMOVE_GEOSJON_FEATURE';
 export const POST_DATA = 'userrequest/POST_DATA';
 export const SUBMIT_DATA_SUCCESS = 'userrequest/SUBMIT_DATA_SUCCESS';
 export const SUBMIT_DATA_FAILED = 'userrequest/SUBMIT_DATA_FAILED';
+
+/**
+ * SELECTORS
+ * --------------------------------------------------------- *
+ */
+
+export const getValidationErrorsArray = createSelector(
+  state => state.validationErrors,
+  items => Object.keys(items).map(key => items[key]),
+);
+
+/**
+ * concatValidationErrors selector
+ * Concatenate all errors into error object with field id keys
+ *
+ * @param  {object} state
+ * @param  {object} fields
+ */
+function concatValidationErrors (state, fields) {
+  if (fields) {
+    const errors = { ...state.validationErrors };
+
+    [].concat(...Object.keys(fields)
+      .filter(key => {
+        if (!fields[key].errors) {
+          delete errors[key];
+        }
+        return fields[key].errors;
+      })
+      .map(key => fields[key].errors)).forEach(error => {
+      errors[error.field] = error.message;
+    });
+    return errors;
+  }
+  return {};
+}
 
 /**
  * REDUCER
@@ -19,6 +57,11 @@ const userrequest = (state = initialState, action) => {
       return {
         ...state,
         [action.key]: action.value,
+      };
+    case VALIDATE_FIELDS:
+      return {
+        ...state,
+        validationErrors: concatValidationErrors(state, action.fields),
       };
     case UPDATE_DATA_PROPERTIES:
       return {
@@ -66,12 +109,12 @@ const userrequest = (state = initialState, action) => {
       return {
         ...state,
         sent: true,
-        error: null,
+        apiError: null,
       };
     case SUBMIT_DATA_FAILED:
       return {
         ...state,
-        error: action.error,
+        apiError: action.error,
       };
     default:
       return state;
@@ -96,6 +139,16 @@ export const updateRequestValue = (key, value) => ({
   type: UPDATE_VALUE,
   key,
   value,
+});
+
+/**
+ * validateFields action
+ * concat all errors of fields
+ * @param  {object} fields : object of fields
+ */
+export const validateFields = fields => ({
+  type: VALIDATE_FIELDS,
+  fields,
 });
 
 /**
