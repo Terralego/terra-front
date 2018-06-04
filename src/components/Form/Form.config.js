@@ -7,6 +7,7 @@ const FormConfig = {
     { title: 'Récapitulatif', component: FormSummary, index: 1 },
   ],
   confirmation: {
+    editButton: 'Modifier ma demande',
     submitButton: 'Envoyer ma demande',
     errorText: 'Une erreur est survenue, merci de retenter l\'envoi. Si l\'erreur persiste, vous pouvez nous contacter.',
     modal: {

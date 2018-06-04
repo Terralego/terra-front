@@ -4,6 +4,7 @@ import Form from 'components/Form/Form';
 import ManageRequests from 'components/ManageRequests/ManageRequests';
 import ManageRequestDetail from 'components/ManageRequests/ManageRequestDetail';
 import Login from 'components/Login/Login';
+import FormSummary from 'components/Form/FormSummary';
 
 export const routes = [{
   path: '/',
@@ -22,6 +23,12 @@ export const routes = [{
   path: '/request',
   name: 'Request',
   component: Form,
+  icon: 'form',
+  protected: false,
+}, {
+  path: '/request-preview',
+  name: 'Request Preview',
+  component: FormSummary,
   icon: 'form',
   protected: false,
 }, {

@@ -34,7 +34,7 @@ class ManageRequestDetail extends React.Component {
       <Row gutter={24} style={{ paddingBottom: 24 }}>
         <Col span={24} lg={14}>
           {this.props.data ?
-            <Summary data={this.props.data.properties} />
+            <Summary data={this.props.data} />
           : <Spin style={{ margin: '30px auto', width: '100%' }} />}
         </Col>
 

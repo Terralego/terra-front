@@ -14,6 +14,7 @@ class FormProperties extends React.Component {
     super(props);
     this.submitForm = this.submitForm.bind(this);
     this.handleAction = this.handleAction.bind(this);
+    this.editForm = this.editForm.bind(this);
   }
 
   handleAction () {
@@ -24,11 +25,15 @@ class FormProperties extends React.Component {
     this.props.submitData(this.props.data);
   }
 
+  editForm () {
+    this.props.history.push('/request');
+  }
+
   render () {
     const { data, submitted, sent, error } = this.props;
     return (
       <div>
-        <Summary data={data.properties} features={data.geojson.features} editabled />
+        <Summary data={data} editabled />
 
         {error && <Alert
           style={{ marginTop: 16 }}
@@ -38,6 +43,14 @@ class FormProperties extends React.Component {
           showIcon
         />}
         <div style={{ margin: '24px 0', textAlign: 'right' }}>
+          <Button
+            icon="arrow-right"
+            size="large"
+            onClick={this.editForm}
+            style={{ marginRight: 8 }}
+          >
+            {FormConfig.confirmation.editButton}
+          </Button>
           <Button
             type="primary"
             icon="arrow-right"
