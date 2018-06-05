@@ -1,10 +1,10 @@
-import FormSummary from 'components/Form/FormSummary';
-import FormProperties from 'components/Form/FormProperties';
+import FormWhere from 'components/Form/FormWhere';
+import FormProject from 'components/Form/FormProject';
 
 const FormConfig = {
   steps: [
-    { title: 'Projet', component: FormProperties, index: 0 },
-    { title: 'Récapitulatif', component: FormSummary, index: 1 },
+    { title: 'Projet', component: FormProject },
+    { title: 'Where', component: FormWhere },
   ],
   confirmation: {
     editButton: 'Modifier ma demande',

@@ -30,14 +30,14 @@ class FormProperties extends React.Component {
   }
 
   render () {
-    const { data, submitted, sent, error } = this.props;
+    const { data, form } = this.props;
     return (
       <div>
-        <Summary data={data} editabled />
+        <Summary data={data} />
 
-        {error && <Alert
+        {!form.valid && <Alert
           style={{ marginTop: 16 }}
-          message={error}
+          message={form.error}
           description={FormConfig.confirmation.errorText}
           type="error"
           showIcon
@@ -55,14 +55,14 @@ class FormProperties extends React.Component {
             icon="arrow-right"
             size="large"
             onClick={this.submitForm}
-            loading={submitted && !sent && !error}
+            loading={form.pending}
           >
             {FormConfig.confirmation.submitButton}
           </Button>
         </div>
 
         <Modal
-          visible={submitted && sent}
+          visible={form.submitted}
           title={FormConfig.confirmation.modal.title}
           closable={false}
           footer={[
@@ -79,10 +79,8 @@ class FormProperties extends React.Component {
 }
 
 const StateToProps = state => ({
-  data: state.userrequest.data,
-  submitted: state.userrequest.submitted,
-  error: state.userrequest.error,
-  sent: state.userrequest.sent,
+  data: state.userrequest,
+  form: state.forms.userrequest.$form,
 });
 
 const DispatchToProps = dispatch => bindActionCreators({ submitData }, dispatch);

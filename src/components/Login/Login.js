@@ -56,11 +56,7 @@ class Login extends Component {
 
 const FormLogin = Form.create()(Login);
 
-const StateToProps = state => ({
-  properties: state.userrequest.data.properties,
-});
-
 const DispatchToProps = dispatch =>
   bindActionCreators({ loginUser }, dispatch);
 
-export default connect(StateToProps, DispatchToProps)(FormLogin);
+export default connect(null, DispatchToProps)(FormLogin);

@@ -1,56 +1,51 @@
 import React from 'react';
 import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
-import { Row, Col, Steps } from 'antd';
-
+import { Divider, Button } from 'antd';
+import { Form } from 'react-redux-form';
 import { updateRequestValue } from 'modules/userrequest';
 import FormConfig from 'components/Form/Form.config';
 
-const { Step } = Steps;
+class FormApp extends React.Component {
+  constructor (props) {
+    super(props);
+    this.handleSubmit = this.handleSubmit.bind(this);
+  }
 
-const FormApp = props => {
-  const { formStep } = props;
+  shouldComponentUpdate () {
+    return false;
+  }
 
-  const handleClick = step => {
-    if (step < formStep) {
-      props.updateRequestValue('formStep', step);
-    }
-  };
+  handleSubmit () {
+    this.props.history.push('/request-preview');
+  }
 
-  const stepStyle = step => ({
-    cursor: step < formStep ? 'pointer' : 'default',
-  });
+  render () {
+    return (
+      <Form
+        model="userrequest"
+        onSubmit={userrequest => this.handleSubmit(userrequest)}
+      >
+        {FormConfig.steps.map(step => (
+          <div key={`step_${step.title}`}>
+            <h2>{step.title}</h2>
+            <Divider />
+            <step.component {...this.props} />
+          </div>
+        ))}
 
-  const Component = FormConfig.steps[formStep].component;
-
-  return (
-    <Row gutter={24}>
-      <Col span={24}>
-        <div>
-          <Steps className="steps" size="small" current={formStep} style={{ margin: '10px 0 36px' }}>
-            {FormConfig.steps.map(step => (
-              <Step key={`step_${step.index}`} title={step.title} onClick={() => handleClick(step.index)} style={stepStyle(step.index)} />
-            ))}
-          </Steps>
-        </div>
-      </Col>
-      <Col span={24}>
-        <Component {...props} editabled />
-      </Col>
-    </Row>
-  );
-};
+        <Button type="primary" htmlType="submit">Preview your request</Button>
+      </Form>
+    );
+  }
+}
 
 const StateToProps = state => ({
   ...state.userrequest,
+  form: state.forms.userrequest,
 });
 
 const DispatchToProps = dispatch =>
-  bindActionCreators(
-    {
-      updateRequestValue,
-    },
-    dispatch,
-  );
+  bindActionCreators({ updateRequestValue }, dispatch);
 
 export default connect(StateToProps, DispatchToProps)(FormApp);
