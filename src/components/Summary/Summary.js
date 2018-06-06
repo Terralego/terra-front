@@ -3,7 +3,6 @@ import PropTypes from 'prop-types';
 import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
 import { Divider, Card } from 'antd';
-import { updateRequestValue } from 'modules/userrequest';
 
 const Summary = props => {
   const { data } = props;
@@ -38,8 +37,7 @@ const Summary = props => {
   );
 };
 
-const DispatchToProps = dispatch =>
-  bindActionCreators({ updateRequestValue }, dispatch);
+const DispatchToProps = dispatch => bindActionCreators({}, dispatch);
 
 Summary.propTypes = {
   data: PropTypes.shape({

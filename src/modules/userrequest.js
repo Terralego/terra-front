@@ -1,4 +1,3 @@
-import { createSelector } from 'reselect';
 import { CALL_API } from 'middlewares/api';
 import initialState from 'modules/userrequest-initial';
 
@@ -10,42 +9,6 @@ export const REMOVE_GEOSJON_FEATURE = 'userrequest/REMOVE_GEOSJON_FEATURE';
 export const POST_DATA = 'userrequest/POST_DATA';
 export const SUBMIT_DATA_SUCCESS = 'userrequest/SUBMIT_DATA_SUCCESS';
 export const SUBMIT_DATA_FAILED = 'userrequest/SUBMIT_DATA_FAILED';
-
-/**
- * SELECTORS
- * --------------------------------------------------------- *
- */
-
-export const getValidationErrorsArray = createSelector(
-  state => state.validationErrors,
-  items => Object.keys(items).map(key => items[key]),
-);
-
-/**
- * concatValidationErrors selector
- * Concatenate all errors into error object with field id keys
- *
- * @param  {object} state
- * @param  {object} fields
- */
-function concatValidationErrors (state, fields) {
-  if (fields) {
-    const errors = { ...state.validationErrors };
-
-    [].concat(...Object.keys(fields)
-      .filter(key => {
-        if (!fields[key].errors) {
-          delete errors[key];
-        }
-        return fields[key].errors;
-      })
-      .map(key => fields[key].errors)).forEach(error => {
-      errors[error.field] = error.message;
-    });
-    return errors;
-  }
-  return {};
-}
 
 /**
  * REDUCER
@@ -128,18 +91,6 @@ export default userrequest;
  * ACTIONS
  * --------------------------------------------------------- *
  */
-
-/**
- * userrequest action
- * updateRequestValue create or update a value of userrequest key
- * @param  {string} key : the key of the new userrequest value
- * @param  {any} value : the new value
- */
-export const updateRequestValue = (key, value) => ({
-  type: UPDATE_VALUE,
-  key,
-  value,
-});
 
 /**
  * validateFields action

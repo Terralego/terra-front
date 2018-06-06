@@ -3,7 +3,6 @@ import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
 import { Divider, Button } from 'antd';
 import { Form } from 'react-redux-form';
-import { updateRequestValue } from 'modules/userrequest';
 import FormConfig from 'components/Form/Form.config';
 
 class FormApp extends React.Component {
@@ -45,7 +44,6 @@ const StateToProps = state => ({
   form: state.forms.userrequest,
 });
 
-const DispatchToProps = dispatch =>
-  bindActionCreators({ updateRequestValue }, dispatch);
+const DispatchToProps = dispatch => bindActionCreators({}, dispatch);
 
 export default connect(StateToProps, DispatchToProps)(FormApp);
