@@ -30,15 +30,31 @@ class TerraDrawMap extends Component {
     this.vectorDraw = new ol.layer.Vector({
       source: this.sourceDraw,
       zIndex: 100,
-      style: new ol.style.Style({
-        fill: new ol.style.Fill({
-          color: 'rgba(0,132,255,0.25)',
-        }),
-        stroke: new ol.style.Stroke({
-          color: '#0084ff',
-          width: 1.8,
-        }),
-      }),
+      style (feature) {
+        if (feature.getGeometry().getType() === 'Point') {
+          return new ol.style.Style({
+            image: new ol.style.Circle({
+              radius: 5,
+              fill: new ol.style.Fill({
+                color: 'rgba(0,132,255,0.25)',
+              }),
+              stroke: new ol.style.Stroke({
+                color: '#0084ff',
+                width: 1.8,
+              }),
+            }),
+          });
+        }
+        return new ol.style.Style({
+          fill: new ol.style.Fill({
+            color: 'rgba(0,132,255,0.25)',
+          }),
+          stroke: new ol.style.Stroke({
+            color: '#0084ff',
+            width: 1.8,
+          }),
+        });
+      },
     });
     const vectorLayers = [];
     const vectorSourceLayer = new ol.source.VectorTile({
@@ -196,6 +212,18 @@ class TerraDrawMap extends Component {
     this.draw = new ol.interaction.Draw({
       source: this.sourceDraw,
       type: 'LineString',
+    });
+
+    this.map.addInteraction(this.draw);
+  }
+
+  startDrawPoint () {
+    this.stopDraw();
+    this.unsetSelectionMode();
+
+    this.draw = new ol.interaction.Draw({
+      source: this.sourceDraw,
+      type: 'Point',
     });
 
     this.map.addInteraction(this.draw);
