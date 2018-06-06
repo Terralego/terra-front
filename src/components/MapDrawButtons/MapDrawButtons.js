@@ -5,6 +5,7 @@ import { Radio } from 'antd';
 import Pointer from './Pointer';
 import Polygon from './Polygon';
 import Line from './Line';
+import Point from './Point';
 
 const RadioButton = Radio.Button;
 const RadioGroup = Radio.Group;
@@ -40,6 +41,7 @@ const MapDrawButtons = props => {
             {button === 'pointer' && <Pointer color={getColor(button)} />}
             {button === 'polygon' && <Polygon color={getColor(button)} />}
             {button === 'line' && <Line color={getColor(button)} />}
+            {button === 'point' && <Point color={getColor(button)} />}
           </RadioButton>
         ))}
       </RadioGroup>
@@ -58,7 +60,7 @@ MapDrawButtons.defaultProps = {
   color: '#999',
   selectedColor: '#000',
   mode: 'pointer',
-  availableButtons: ['pointer', 'polygon', 'line'],
+  availableButtons: ['pointer', 'polygon', 'line', 'point'],
 };
 
 export default MapDrawButtons;
