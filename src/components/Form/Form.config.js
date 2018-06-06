@@ -7,18 +7,19 @@ const FormConfig = {
     { title: 'Where', component: FormWhere },
   ],
   confirmation: {
-    editButton: 'Modifier ma demande',
-    submitButton: 'Envoyer ma demande',
-    errorText: 'Une erreur est survenue, merci de retenter l\'envoi. Si l\'erreur persiste, vous pouvez nous contacter.',
+    previewButton: 'Preview your request',
+    editButton: 'Edit my request',
+    submitButton: 'Send my request',
+    errorText: 'Error message',
     modal: {
-      title: 'Demande envoyée',
-      action: 'Accéder au suivi de ma demande',
-      text: 'Votre demande a été envoyé avec succès. Suivez le status de votre demande via votre interface de suivi.',
+      title: 'Request sent',
+      action: 'Go to requests list',
+      text: 'Submit successed!',
     },
   },
   status: [
-    { id: 0, title: 'Approuvée' },
-    { id: 1, title: 'Refusée' },
+    { id: 0, title: 'Approved' },
+    { id: 1, title: 'Refused' },
   ],
 };
 
