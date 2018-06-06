@@ -4,6 +4,8 @@ export default props => (
   <svg
     xmlns="http://www.w3.org/2000/svg"
     viewBox="0 0 144 144"
+    width="20"
+    height="20"
   >
     <g fill={props.color || '#000000'}>
       <line
