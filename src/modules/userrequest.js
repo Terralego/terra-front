@@ -1,8 +1,6 @@
 import { CALL_API } from 'middlewares/api';
 import initialState from 'modules/userrequest-initial';
 
-export const UPDATE_VALUE = 'userrequest/UPDATE_VALUE';
-export const VALIDATE_FIELDS = 'userrequest/VALIDATE_FIELDS';
 export const UPDATE_DATA_PROPERTIES = 'userrequest/UPDATE_DATA_PROPERTIES';
 export const ADD_GEOSJON_FEATURE = 'userrequest/ADD_GEOSJON_FEATURE';
 export const REMOVE_GEOSJON_FEATURE = 'userrequest/REMOVE_GEOSJON_FEATURE';
@@ -16,16 +14,6 @@ export const SUBMIT_DATA_FAILED = 'userrequest/SUBMIT_DATA_FAILED';
  */
 const userrequest = (state = initialState, action) => {
   switch (action.type) {
-    case UPDATE_VALUE:
-      return {
-        ...state,
-        [action.key]: action.value,
-      };
-    case VALIDATE_FIELDS:
-      return {
-        ...state,
-        validationErrors: concatValidationErrors(state, action.fields),
-      };
     case UPDATE_DATA_PROPERTIES:
       return {
         ...state,
@@ -91,16 +79,6 @@ export default userrequest;
  * ACTIONS
  * --------------------------------------------------------- *
  */
-
-/**
- * validateFields action
- * concat all errors of fields
- * @param  {object} fields : object of fields
- */
-export const validateFields = fields => ({
-  type: VALIDATE_FIELDS,
-  fields,
-});
 
 /**
  * userrequest action
