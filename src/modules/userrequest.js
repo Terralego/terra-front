@@ -17,56 +17,47 @@ const userrequest = (state = initialState, action) => {
     case UPDATE_DATA_PROPERTIES:
       return {
         ...state,
-        data: {
-          ...state.data,
-          properties: {
-            ...state.data.properties,
-            ...action.properties,
-          },
+        properties: {
+          ...state.properties,
+          ...action.properties,
         },
       };
     case ADD_GEOSJON_FEATURE:
       return {
         ...state,
-        data: {
-          ...state.data,
-          geojson: {
-            ...state.data.geojson,
-            features: [
-              ...state.data.geojson.features,
-              action.feature,
-            ],
-          },
+        geojson: {
+          ...state.geojson,
+          features: [
+            ...state.geojson.features,
+            action.feature,
+          ],
         },
       };
     case REMOVE_GEOSJON_FEATURE:
       return {
         ...state,
-        data: {
-          ...state.data,
-          geojson: {
-            ...state.data.geojson,
-            features: state.data.geojson.features
-              .filter(feature => feature.properties.id !== action.featureId),
-          },
+        geojson: {
+          ...state.geojson,
+          features: state.geojson.features
+            .filter(feature => feature.properties.id !== action.featureId),
         },
       };
-    case POST_DATA:
-      return {
-        ...state,
-        submitted: true,
-      };
-    case SUBMIT_DATA_SUCCESS:
-      return {
-        ...state,
-        sent: true,
-        apiError: null,
-      };
-    case SUBMIT_DATA_FAILED:
-      return {
-        ...state,
-        apiError: action.error,
-      };
+    // case POST_DATA:
+    //   return {
+    //     ...state,
+    //     submitted: true,
+    //   };
+    // case SUBMIT_DATA_SUCCESS:
+    //   return {
+    //     ...state,
+    //     sent: true,
+    //     apiError: null,
+    //   };
+    // case SUBMIT_DATA_FAILED:
+    //   return {
+    //     ...state,
+    //     apiError: action.error,
+    //   };
     default:
       return state;
   }

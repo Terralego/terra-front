@@ -22,7 +22,7 @@ class FormProperties extends React.Component {
   }
 
   submitForm () {
-    this.props.submitData(this.props.data);
+    this.props.submitData(this.props.userrequest);
   }
 
   editForm () {
@@ -30,10 +30,10 @@ class FormProperties extends React.Component {
   }
 
   render () {
-    const { data, form } = this.props;
+    const { userrequest, form } = this.props;
     return (
       <div>
-        <Summary data={data} />
+        <Summary data={userrequest} />
 
         {!form.valid && <Alert
           style={{ marginTop: 16 }}
@@ -79,7 +79,7 @@ class FormProperties extends React.Component {
 }
 
 const StateToProps = state => ({
-  data: state.userrequest,
+  userrequest: state.userrequest,
   form: state.forms.userrequest.$form,
 });
 

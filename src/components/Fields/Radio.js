@@ -1,10 +1,11 @@
 import React from 'react';
 import Proptypes from 'prop-types';
-import { Form, Checkbox } from 'antd';
+import { Form, Radio } from 'antd';
 import { Control, Errors } from 'react-redux-form';
 
 const FormItem = Form.Item;
-const CheckboxGroup = Checkbox.Group;
+const RadioButton = Radio.Button;
+const RadioGroup = Radio.Group;
 
 function validateStatus (fieldValue) {
   if (!fieldValue.valid && fieldValue.touched && !fieldValue.focus) {
@@ -14,7 +15,7 @@ function validateStatus (fieldValue) {
   return '';
 }
 
-function CustomCheckbox (props) {
+function CustomRadio (props) {
   return (
     <Control
       model={props.model}
@@ -27,6 +28,7 @@ function CustomCheckbox (props) {
         <FormItem
           label={props.label}
           validateStatus={validateStatus(innerProps.fieldValue)}
+          required={props.required}
           help={
             <Errors
               model={props.model}
@@ -34,31 +36,41 @@ function CustomCheckbox (props) {
               messages={props.errorMessages}
             />}
         >
-          <CheckboxGroup
-            options={props.options}
-            placeholder={props.placeholder}
+          <RadioGroup
+            defaultValue={props.defaultValue}
             onChange={innerProps.onChange}
             onFocus={innerProps.onFocus}
             onBlur={innerProps.onBlur}
             onKeyPress={innerProps.onKeyPress}
-          />
+          >
+            {props.options.map(option => (
+              <RadioButton value={option.value} key={`radio_${props.model}_${option.value}`}>
+                {option.label}
+              </RadioButton>
+            ))}
+          </RadioGroup>
         </FormItem>)}
     />
   );
 }
 
-CustomCheckbox.propTypes = {
+CustomRadio.propTypes = {
   model: Proptypes.string.isRequired,
   label: Proptypes.string.isRequired,
-  placeholder: Proptypes.string,
-  errorMessages: Proptypes.arrayOf(Proptypes.shape({
+  errorMessages: Proptypes.shape({
     x: Proptypes.string,
-  })),
+  }),
+  options: Proptypes.arrayOf(Proptypes.shape({
+    value: Proptypes.string,
+    label: Proptypes.string,
+  })).isRequired,
+  defaultValue: Proptypes.string.isRequired,
+  required: Proptypes.bool,
 };
 
-CustomCheckbox.defaultProps = {
-  placeholder: '',
+CustomRadio.defaultProps = {
+  required: false,
   errorMessages: { required: 'Please fill this field' },
 };
 
-export default CustomCheckbox;
+export default CustomRadio;

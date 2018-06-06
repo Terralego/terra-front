@@ -33,7 +33,7 @@ class FormApp extends React.Component {
           </div>
         ))}
 
-        <Button type="primary" htmlType="submit">Preview your request</Button>
+        <Button type="primary" htmlType="submit">{FormConfig.confirmation.previewButton}</Button>
       </Form>
     );
   }

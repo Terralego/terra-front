@@ -71,6 +71,10 @@ CustomSelect.propTypes = {
   errorMessages: Proptypes.shape({
     x: Proptypes.string,
   }),
+  options: Proptypes.arrayOf(Proptypes.shape({
+    value: Proptypes.string,
+    label: Proptypes.string,
+  })).isRequired,
   required: Proptypes.bool,
 };
 

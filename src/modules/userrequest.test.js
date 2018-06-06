@@ -3,7 +3,6 @@ import thunk from 'redux-thunk';
 import FetchMock from 'fetch-mock';
 import api from 'middlewares/api';
 import userrequest, {
-  UPDATE_VALUE,
   UPDATE_DATA_PROPERTIES,
   POST_DATA,
   SUBMIT_DATA_SUCCESS,
@@ -24,17 +23,6 @@ describe('userrequest reducer', () => {
     expect(userrequest({}, {})).toEqual({});
   });
 
-  describe('UPDATE_VALUE', () => {
-    it('should add a key / value in userrequest object', () => {
-      const updateRequestAction = {
-        type: UPDATE_VALUE,
-        key: 'error',
-        value: false,
-      };
-      expect(userrequest({}, updateRequestAction)).toEqual({ error: false });
-    });
-  });
-
   describe('UPDATE_DATA_PROPERTIES', () => {
     it('should add a properties object in userrequest', () => {
       const updateRequestAction = {
@@ -44,8 +32,8 @@ describe('userrequest reducer', () => {
           company: 'Makina',
         },
       };
-      expect(userrequest({ data: {} }, updateRequestAction)).toEqual({
-        data: { properties: { name: 'Alex', company: 'Makina' } },
+      expect(userrequest({}, updateRequestAction)).toEqual({
+        properties: { name: 'Alex', company: 'Makina' },
       });
     });
   });
@@ -119,7 +107,7 @@ describe('addRequestFeature action', () => {
     store.dispatch(addRequestFeature(feature));
     const actions = store.getActions();
 
-    expect(userrequest(initialState, actions[0]).data.geojson).toEqual({
+    expect(userrequest(initialState, actions[0]).geojson).toEqual({
       type: 'FeatureCollection',
       features: [feature],
     });
@@ -128,17 +116,15 @@ describe('addRequestFeature action', () => {
 
 describe('removeRequestFeature action', () => {
   const store = mockStore({
-    data: {
-      geojson: {
-        type: 'FeatureCollection',
-        features: [{
-          properties: { id: 'a', name: 'Polygon' },
-        }, {
-          properties: { id: 'b', name: 'Polygon' },
-        }, {
-          properties: { id: 'c', name: 'Polygon' },
-        }],
-      },
+    geojson: {
+      type: 'FeatureCollection',
+      features: [{
+        properties: { id: 'a', name: 'Polygon' },
+      }, {
+        properties: { id: 'b', name: 'Polygon' },
+      }, {
+        properties: { id: 'c', name: 'Polygon' },
+      }],
     },
   });
 
@@ -152,7 +138,7 @@ describe('removeRequestFeature action', () => {
     store.dispatch(removeRequestFeature('b'));
     const actions = store.getActions();
 
-    expect(userrequest(store.getState(), actions[0]).data.geojson).toEqual({
+    expect(userrequest(store.getState(), actions[0]).geojson).toEqual({
       type: 'FeatureCollection',
       features: [{
         properties: { id: 'a', name: 'Polygon' },
