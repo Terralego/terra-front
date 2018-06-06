@@ -1,6 +1,6 @@
 import React from 'react';
 import Proptypes from 'prop-types';
-import { Form, Input } from 'antd';
+import { Form, DatePicker } from 'antd';
 import { Control, Errors } from 'react-redux-form';
 
 const FormItem = Form.Item;
@@ -13,7 +13,7 @@ function validateStatus (fieldValue) {
   return '';
 }
 
-function InputField (props) {
+function CustomDatePicker (props) {
   return (
     <Control
       model={props.model}
@@ -24,9 +24,9 @@ function InputField (props) {
       withFieldValue
       component={innerProps => (
         <FormItem
-          label={props.label}
+          // style={{ display: 'inline-block' }}
+          label={props.label && props.label}
           validateStatus={validateStatus(innerProps.fieldValue)}
-          required={props.required}
           help={
             <Errors
               model={props.model}
@@ -34,33 +34,39 @@ function InputField (props) {
               messages={props.errorMessages}
             />}
         >
-          <Input
-            defaultValue={innerProps.value}
+          <DatePicker
+            style={props.style}
             placeholder={props.placeholder}
             onChange={innerProps.onChange}
             onFocus={innerProps.onFocus}
             onBlur={innerProps.onBlur}
             onKeyPress={innerProps.onKeyPress}
+            // autoFocus={!eventEndDate}
+            showTime
+            format={props.format}
+            // disabledDate={this.disabledStartDate}
+            // onOpenChange={this.handleStartOpenChange}
           />
         </FormItem>)}
     />
   );
 }
 
-InputField.propTypes = {
+CustomDatePicker.propTypes = {
   model: Proptypes.string.isRequired,
-  label: Proptypes.string.isRequired,
+  label: Proptypes.string,
   placeholder: Proptypes.string,
+  format: Proptypes.string,
   errorMessages: Proptypes.shape({
     x: Proptypes.string,
   }),
-  required: Proptypes.bool,
 };
 
-InputField.defaultProps = {
+CustomDatePicker.defaultProps = {
+  label: null,
   placeholder: '',
-  errorMessages: {},
-  required: false,
+  format: 'DD-MM-YYYY HH:mm',
+  errorMessages: { required: 'Please fill this field' },
 };
 
-export default InputField;
+export default CustomDatePicker;

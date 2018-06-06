@@ -13,7 +13,7 @@ function validateStatus (fieldValue) {
   return '';
 }
 
-function InputField (props) {
+function TextAreaField (props) {
   return (
     <Control
       model={props.model}
@@ -34,7 +34,7 @@ function InputField (props) {
               messages={props.errorMessages}
             />}
         >
-          <Input
+          <Input.TextArea
             defaultValue={innerProps.value}
             placeholder={props.placeholder}
             onChange={innerProps.onChange}
@@ -47,7 +47,7 @@ function InputField (props) {
   );
 }
 
-InputField.propTypes = {
+TextAreaField.propTypes = {
   model: Proptypes.string.isRequired,
   label: Proptypes.string.isRequired,
   placeholder: Proptypes.string,
@@ -57,10 +57,10 @@ InputField.propTypes = {
   required: Proptypes.bool,
 };
 
-InputField.defaultProps = {
+TextAreaField.defaultProps = {
   placeholder: '',
   errorMessages: {},
   required: false,
 };
 
-export default InputField;
+export default TextAreaField;

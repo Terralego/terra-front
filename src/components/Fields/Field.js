@@ -1,7 +1,7 @@
 import React from 'react';
 import Proptypes from 'prop-types';
 import { Form, Input } from 'antd';
-import { Control, Errors } from 'react-redux-form';
+import { Field, Errors } from 'react-redux-form';
 
 const FormItem = Form.Item;
 
@@ -13,9 +13,9 @@ function validateStatus (fieldValue) {
   return '';
 }
 
-function InputField (props) {
+function CustomField (props) {
   return (
-    <Control
+    <Field
       model={props.model}
       id={props.model}
       validators={{
@@ -26,7 +26,6 @@ function InputField (props) {
         <FormItem
           label={props.label}
           validateStatus={validateStatus(innerProps.fieldValue)}
-          required={props.required}
           help={
             <Errors
               model={props.model}
@@ -34,7 +33,7 @@ function InputField (props) {
               messages={props.errorMessages}
             />}
         >
-          <Input
+          <props.component
             defaultValue={innerProps.value}
             placeholder={props.placeholder}
             onChange={innerProps.onChange}
@@ -47,20 +46,14 @@ function InputField (props) {
   );
 }
 
-InputField.propTypes = {
+CustomField.propTypes = {
   model: Proptypes.string.isRequired,
   label: Proptypes.string.isRequired,
   placeholder: Proptypes.string,
-  errorMessages: Proptypes.shape({
-    x: Proptypes.string,
-  }),
-  required: Proptypes.bool,
 };
 
-InputField.defaultProps = {
+CustomField.defaultProps = {
   placeholder: '',
-  errorMessages: {},
-  required: false,
 };
 
-export default InputField;
+export default CustomField;

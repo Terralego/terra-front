@@ -1,9 +1,10 @@
 import React from 'react';
 import Proptypes from 'prop-types';
-import { Form, Input } from 'antd';
+import { Form, Checkbox } from 'antd';
 import { Control, Errors } from 'react-redux-form';
 
 const FormItem = Form.Item;
+const CheckboxGroup = Checkbox.Group;
 
 function validateStatus (fieldValue) {
   if (!fieldValue.valid && fieldValue.touched && !fieldValue.focus) {
@@ -13,7 +14,7 @@ function validateStatus (fieldValue) {
   return '';
 }
 
-function InputField (props) {
+function CustomCheckbox (props) {
   return (
     <Control
       model={props.model}
@@ -26,7 +27,6 @@ function InputField (props) {
         <FormItem
           label={props.label}
           validateStatus={validateStatus(innerProps.fieldValue)}
-          required={props.required}
           help={
             <Errors
               model={props.model}
@@ -34,8 +34,8 @@ function InputField (props) {
               messages={props.errorMessages}
             />}
         >
-          <Input
-            defaultValue={innerProps.value}
+          <CheckboxGroup
+            options={props.options}
             placeholder={props.placeholder}
             onChange={innerProps.onChange}
             onFocus={innerProps.onFocus}
@@ -47,20 +47,18 @@ function InputField (props) {
   );
 }
 
-InputField.propTypes = {
+CustomCheckbox.propTypes = {
   model: Proptypes.string.isRequired,
   label: Proptypes.string.isRequired,
   placeholder: Proptypes.string,
   errorMessages: Proptypes.shape({
     x: Proptypes.string,
   }),
-  required: Proptypes.bool,
 };
 
-InputField.defaultProps = {
+CustomCheckbox.defaultProps = {
   placeholder: '',
-  errorMessages: {},
-  required: false,
+  errorMessages: { required: 'Please fill this field' },
 };
 
-export default InputField;
+export default CustomCheckbox;
