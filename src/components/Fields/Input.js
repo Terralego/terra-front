@@ -41,6 +41,7 @@ function InputField (props) {
             onFocus={innerProps.onFocus}
             onBlur={innerProps.onBlur}
             onKeyPress={innerProps.onKeyPress}
+            autoFocus={props.autoFocus}
           />
         </FormItem>)}
     />
@@ -55,12 +56,14 @@ InputField.propTypes = {
     x: Proptypes.string,
   }),
   required: Proptypes.bool,
+  autoFocus: Proptypes.bool,
 };
 
 InputField.defaultProps = {
   placeholder: '',
   errorMessages: {},
   required: false,
+  autoFocus: false,
 };
 
 export default InputField;

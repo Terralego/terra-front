@@ -51,9 +51,9 @@ CustomCheckbox.propTypes = {
   model: Proptypes.string.isRequired,
   label: Proptypes.string.isRequired,
   placeholder: Proptypes.string,
-  errorMessages: Proptypes.arrayOf(Proptypes.shape({
-    x: Proptypes.string,
-  })),
+  errorMessages: Proptypes.shape({
+    required: Proptypes.string,
+  }),
 };
 
 CustomCheckbox.defaultProps = {
