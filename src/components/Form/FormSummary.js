@@ -55,6 +55,7 @@ class FormProperties extends React.Component {
             icon="arrow-right"
             size="large"
             onClick={this.submitForm}
+            htmlFor="submit"
             loading={form.pending}
           >
             {FormConfig.confirmation.submitButton}

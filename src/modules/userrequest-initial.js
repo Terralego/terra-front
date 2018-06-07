@@ -4,7 +4,7 @@ const initialState = {
     type: 'FeatureCollection',
     features: [],
   },
-  organization: [1],
+  organization: [355],
   properties: {
     project: {
       title: '',
