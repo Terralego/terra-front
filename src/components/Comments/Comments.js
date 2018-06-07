@@ -20,7 +20,7 @@ class Comments extends React.Component {
   }
 
   componentDidMount () {
-    if (!this.props.comments && !this.props.loading) {
+    if (!this.props.loading && !this.props.fetched) {
       this.props.fetchUserrequestComments(this.props.userrequestId);
     }
   }
@@ -107,6 +107,7 @@ const StateToProps = (state, props) => ({
   submitted: state.userrequestComments.submitted,
   sent: state.userrequestComments.sent,
   error: state.userrequestComments.error,
+  fetched: state.userrequestComments.fetched,
 });
 
 const DispatchToProps = dispatch =>

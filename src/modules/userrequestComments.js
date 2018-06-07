@@ -15,6 +15,7 @@ const initialState = {
   sent: false,
   error: null,
   loading: false, // loading comments list
+  fetched: false,
 };
 
 const parseCommentsByUserrequest = items => {
@@ -48,10 +49,16 @@ const userrequestComments = (state = initialState, action) => {
       return {
         ...state,
         loading: false,
+        fetched: true,
         comments: {
           ...state.comments,
           ...parseCommentsByUserrequest(action.data),
         },
+      };
+    case FAILURE_ALL:
+      return {
+        ...state,
+        fetched: true,
       };
     case SUBMIT:
       return {
