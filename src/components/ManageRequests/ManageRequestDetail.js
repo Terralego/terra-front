@@ -33,7 +33,7 @@ class ManageRequestDetail extends React.Component {
         </Col>
 
         <Col span={24} lg={10}>
-          <RequestStatus status={this.props.data && this.props.data.state} />
+          {this.props.data && <RequestStatus status={this.props.data.state} />}
           <Card title="Échanges" style={{ marginTop: 24 }}>
             <Comments userrequestId={this.props.match.params.id} />
           </Card>

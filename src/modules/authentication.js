@@ -26,7 +26,9 @@ const initialState = {
   isAuthenticated: !!localStorage.getItem('token'),
   receivedAt: null,
   errorMessage: null,
+  // Temporary set user permission (will be sent with API)
   user: {
+    group: 'niv1',
     permissions: [
       'can_create_requests',
       'can_read_self_requests',
