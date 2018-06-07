@@ -48,7 +48,6 @@ describe('userrequest async action', () => {
     return store.dispatch(submitData('Hello'))
       .then(() => {
         const actions = store.getActions();
-        expect(actions.length).toBe(2);
         expect(actions).toContainEqual({ type: POST_DATA });
         expect(actions).toContainEqual({
           type: SUBMIT_DATA_SUCCESS,
@@ -65,7 +64,6 @@ describe('userrequest async action', () => {
     return store.dispatch(submitData('Bonjour'))
       .then(() => {
         const actions = store.getActions();
-        expect(actions.length).toBe(2);
         expect(actions).toContainEqual({ type: POST_DATA });
         expect(actions).toContainEqual({
           type: SUBMIT_DATA_FAILED,
