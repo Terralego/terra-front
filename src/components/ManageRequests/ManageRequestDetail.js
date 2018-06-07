@@ -2,18 +2,12 @@ import React from 'react';
 import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
 import { withRouter } from 'react-router-dom';
-import { Spin, Row, Col, Card, Select } from 'antd';
+import { Spin, Row, Col, Card } from 'antd';
 
 import Summary from 'components/Summary/Summary';
 import { getUserrequest } from 'modules/userrequestList';
-import FormConfig from 'components/Form/Form.config';
+import RequestStatus from 'components/RequestStatus/RequestStatus';
 import Comments from 'components/Comments/Comments';
-
-const { Option } = Select;
-
-const handleChange = () => {
-  // console.log(e);
-};
 
 class ManageRequestDetail extends React.Component {
   componentDidMount () {
@@ -39,14 +33,7 @@ class ManageRequestDetail extends React.Component {
         </Col>
 
         <Col span={24} lg={10}>
-          <Card title="Status">
-            <Select defaultValue={0} style={{ width: '100%' }} onChange={handleChange}>
-              {FormConfig.status.map(status => (
-                <Option key={`status_${status.title}`} value={status.id}>{status.title}</Option>
-              ))}
-            </Select>
-          </Card>
-
+          <RequestStatus status={this.props.data && this.props.data.state} />
           <Card title="Échanges" style={{ marginTop: 24 }}>
             <Comments userrequestId={this.props.match.params.id} />
           </Card>

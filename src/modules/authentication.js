@@ -26,7 +26,13 @@ const initialState = {
   isAuthenticated: !!localStorage.getItem('token'),
   receivedAt: null,
   errorMessage: null,
-  user: null,
+  user: {
+    permissions: [
+      'can_create_requests',
+      'can_read_self_requests',
+      'can_comment_requests',
+    ],
+  },
 };
 
 /**
@@ -56,7 +62,10 @@ const authentication = (state = initialState, action) => {
       return {
         ...state,
         isAuthenticated: action.isAuthenticated,
-        user: action.user,
+        user: {
+          ...state.user,
+          ...action.user,
+        },
       };
     case SET_ERROR_MESSAGE:
       return {
