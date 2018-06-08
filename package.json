@@ -35,7 +35,7 @@
     "react-redux-form": "~1.16.9",
     "react-router-dom": "~4.3.1",
     "react-scripts": "~1.1.4",
-    "redux": "~3.7.2",
+    "redux": "~4.0.0",
     "redux-mock-store": "~1.5.1",
     "redux-thunk": "~2.3.0",
     "reselect": "~3.0.1",
