@@ -12,7 +12,7 @@ npm_install:
   stage: install
   script:
     - npm --version
-    - npm install
+    - npm ci
   artifacts:
     expire_in: 1 day
     name: "node_modules_${CI_COMMIT_SHA}"
