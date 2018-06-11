@@ -37,7 +37,8 @@ function CustomRadio (props) {
             />}
         >
           <RadioGroup
-            defaultValue={props.defaultValue}
+            // defaultValue={props.defaultValue}
+            value={innerProps.value}
             onChange={innerProps.onChange}
             onFocus={innerProps.onFocus}
             onBlur={innerProps.onBlur}
@@ -64,7 +65,7 @@ CustomRadio.propTypes = {
     value: Proptypes.string,
     label: Proptypes.string,
   })).isRequired,
-  defaultValue: Proptypes.string.isRequired,
+  // defaultValue: Proptypes.string.isRequired,
   required: Proptypes.bool,
 };
 
