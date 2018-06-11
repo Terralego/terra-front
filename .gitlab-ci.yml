@@ -1,4 +1,4 @@
-image: node:8.11.2 # Should match .nvmrc content
+image: node:10.4.0 # Should match .nvmrc content
 
 stages:
   - install
