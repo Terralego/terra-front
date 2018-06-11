@@ -1,4 +1,10 @@
 
+0.5.0 / 2018-06-11
+==================
+
+  * Too much changes to be listed here
+    See `git log --oneline 0.4.1..0.5.0` for more details
+
 0.4.1 / 2018-03-07
 ==================
 
