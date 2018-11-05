@@ -36,6 +36,7 @@
     "babel-loader": "^8.0.4",
     "enzyme": "^3.7.0",
     "enzyme-adapter-react-16": "^1.6.0",
+    "eslint-config-makina": "^0.7.1",
     "react-test-renderer": "^16.6.0"
   }
 }
