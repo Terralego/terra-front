@@ -33,6 +33,9 @@
     "@storybook/addon-viewport": "^4.0.2",
     "@storybook/addons": "^4.0.2",
     "@storybook/react": "^4.0.2",
-    "babel-loader": "^8.0.4"
+    "babel-loader": "^8.0.4",
+    "enzyme": "^3.7.0",
+    "enzyme-adapter-react-16": "^1.6.0",
+    "react-test-renderer": "^16.6.0"
   }
 }
