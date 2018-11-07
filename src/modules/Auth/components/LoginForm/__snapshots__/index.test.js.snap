@@ -1,0 +1,106 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`should render correctly 1`] = `
+<div
+  className="bp3-card bp3-elevation-0 login-form"
+>
+  <form
+    onSubmit={[Function]}
+  >
+    <div
+      className="bp3-form-group"
+    >
+      <label
+        className="bp3-label"
+        htmlFor="login"
+      >
+        Email
+         
+        <span
+          className="bp3-text-muted"
+        >
+          (required)
+        </span>
+      </label>
+      <div
+        className="bp3-form-content"
+      >
+        <div
+          className="bp3-input-group"
+        >
+          <input
+            className="bp3-input"
+            id="login"
+            onChange={[Function]}
+            placeholder="Email"
+            style={
+              Object {
+                "paddingRight": 10,
+              }
+            }
+            type="text"
+          />
+        </div>
+        <div
+          className="bp3-form-helper-text"
+        >
+          Type your email
+        </div>
+      </div>
+    </div>
+    <div
+      className="bp3-form-group"
+    >
+      <label
+        className="bp3-label"
+        htmlFor="password"
+      >
+        Password
+         
+        <span
+          className="bp3-text-muted"
+        >
+          (required)
+        </span>
+      </label>
+      <div
+        className="bp3-form-content"
+      >
+        <div
+          className="bp3-input-group"
+        >
+          <input
+            className="bp3-input"
+            id="password"
+            onChange={[Function]}
+            placeholder="Password"
+            style={
+              Object {
+                "paddingRight": 10,
+              }
+            }
+            type="password"
+          />
+        </div>
+        <div
+          className="bp3-form-helper-text"
+        >
+          Type your password
+        </div>
+      </div>
+    </div>
+    <button
+      className="bp3-button"
+      onKeyDown={[Function]}
+      onKeyUp={[Function]}
+      type="submit"
+    >
+      <span
+        className="bp3-button-text"
+      >
+        Connexion
+      </span>
+    </button>
+  </form>
+</div>
+`;
