@@ -1,16 +1,5 @@
-import React from 'react';
+import 'normalize.css/normalize.css';
+import '@blueprintjs/icons/lib/css/blueprint-icons.css';
+import '@blueprintjs/core/lib/css/blueprint.css';
 
-import { storiesOf } from '@storybook/react';
-import { action } from '@storybook/addon-actions';
-import { Button } from '@storybook/react/demo';
-import { text } from '@storybook/addon-knobs';
-
-const stories = storiesOf('Exemple', module);
-
-stories.add('with some emoji', () => (
-  <Button onClick={action('clicked')}>
-    <span role="img" aria-label="so cool">
-      {text('Content', '😀 😎 👍 💯')}
-    </span>
-  </Button>
-));
+import './Auth';
