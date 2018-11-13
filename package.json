@@ -6,6 +6,7 @@
     "@blueprintjs/core": "^3.8.0",
     "@blueprintjs/icons": "^3.3.0",
     "debug": "^4.1.0",
+    "mapbox-gl": "^0.51.0",
     "normalize.css": "^8.0.0",
     "prop-types": "^15.6.2",
     "query-string": "^6.2.0"
