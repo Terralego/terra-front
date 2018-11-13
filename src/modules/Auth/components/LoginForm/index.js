@@ -1,11 +1,21 @@
 import React from 'react';
-import { Card, FormGroup, InputGroup, Button, Intent } from '@blueprintjs/core';
+import PropTypes from 'prop-types';
 
-import { Consumer } from '../../services/context';
+import { connectModuleProvider } from '../../moduleProvider';
+import { connectAuthProvider } from '../../services/context';
+import render from './LoginFormRenderer';
 
 import './styles.css';
 
 export class LoginForm extends React.Component {
+  static propTypes = {
+    render: PropTypes.func,
+  };
+
+  static defaultProps = {
+    render,
+  };
+
   state = {};
 
   setLogin = ({ target: { value: login } }) => this.setState({ login });
@@ -34,62 +44,19 @@ export class LoginForm extends React.Component {
   }
 
   render () {
-    const { submit, setLogin, setPassword } = this;
+    const { render: Render } = this.props;
     const { errorLogin, errorPassword } = this.state;
+    const { submit, setLogin, setPassword } = this;
+    const props = {
+      submit, setLogin, setPassword, errorLogin, errorPassword,
+    };
 
-    return (
-      <Card className="login-form">
-        <form
-          onSubmit={submit}
-        >
-          <FormGroup
-            helperText={errorLogin ? 'Invalid email' : 'Type your email'}
-            label="Email"
-            labelFor="login"
-            labelInfo="(required)"
-            intent={errorLogin ? Intent.WARNING : null}
-          >
-            <InputGroup
-              id="login"
-              placeholder="Email"
-              onChange={setLogin}
-              intent={errorLogin ? Intent.WARNING : null}
-            />
-          </FormGroup>
-
-          <FormGroup
-            helperText={errorPassword ? 'Invalid password' : 'Type your password'}
-            label="Password"
-            labelFor="password"
-            labelInfo="(required)"
-            intent={errorPassword ? Intent.WARNING : null}
-          >
-            <InputGroup
-              type="password"
-              id="password"
-              placeholder="Password"
-              onChange={setPassword}
-              intent={errorPassword ? Intent.WARNING : null}
-            />
-          </FormGroup>
-          <Button
-            type="submit"
-          >
-            Connexion
-          </Button>
-        </form>
-      </Card>
-    );
+    return <Render {...props} />;
   }
 }
 
-export default props => (
-  <Consumer>
-    {({ authAction }) => (
-      <LoginForm
-        authAction={authAction}
-        {...props}
-      />
-    )}
-  </Consumer>
-);
+export default connectModuleProvider(({
+  components: { LoginForm: LoginFormProps = {} } = {},
+}) => LoginFormProps)(connectAuthProvider(({
+  authAction,
+}) => ({ authAction }))(LoginForm));
