@@ -1,2 +1,4 @@
-export * from './modules/Api';
-export * from './modules/Auth';
+import * as Api from './modules/Api';
+import * as Auth from './modules/Auth';
+
+export { Api, Auth };

@@ -18,4 +18,8 @@
 
 ## Build
 
-TODO
+    $ npm run build
+
+## Publish
+
+    $ ./scripts/publish.sh
