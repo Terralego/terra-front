@@ -8,10 +8,7 @@
     "@blueprintjs/icons": "^3.3.0",
     "debug": "^4.1.0",
     "normalize.css": "^8.0.0",
-    "query-string": "^6.2.0",
-    "react": "^16.6.0",
-    "react-dom": "^16.6.0",
-    "react-scripts": "2.1.1"
+    "query-string": "^6.2.0"
   },
   "scripts": {
     "build": "./build.sh",
@@ -49,5 +46,10 @@
     "enzyme-adapter-react-16": "^1.6.0",
     "eslint-config-makina": "^0.7.1",
     "react-test-renderer": "^16.6.0"
+  },
+  "peerDependencies": {
+    "react": "^16.6.0",
+    "react-dom": "^16.6.0",
+    "react-scripts": "2.1.1"
   }
 }
