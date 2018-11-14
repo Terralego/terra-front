@@ -2,6 +2,7 @@ import React from 'react';
 import mapBoxGl from 'mapbox-gl';
 import PropTypes from 'prop-types';
 import 'mapbox-gl/dist/mapbox-gl.css';
+import styles from './Map.css';
 
 class Map extends React.Component {
   componentDidMount () {
@@ -117,7 +118,7 @@ class Map extends React.Component {
   render () {
     const { mapRef } = this.props;
     return (
-      <div id={mapRef} style={{ width: '100%', height: '100%' }} />
+      <div id={mapRef} className={styles.map} />
     );
   }
 }

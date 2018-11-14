@@ -2,13 +2,13 @@ import React from 'react';
 import { storiesOf } from '@storybook/react';
 import { select, number, array, object } from '@storybook/addon-knobs';
 
-import Visualizer from '../../modules/Visualizer';
+import Map from '../../modules/Visualizer/widgets/Map/components/Map';
 
-const stories = storiesOf('Visualizer', module);
+const stories = storiesOf('Map', module);
 
-stories.add('Visualizer', () => (
+stories.add('Map', () => (
   <div style={{ width: '100vh', height: '100vh' }}>
-    <Visualizer
+    <Map
       accessToken="pk.eyJ1IjoidGFzdGF0aGFtMSIsImEiOiJjamZ1ejY2bmYxNHZnMnhxbjEydW9sM29hIn0.w9ndNH49d91aeyvxSjKQqg"
       mapRef="map-container"
       mapStyle={select(
