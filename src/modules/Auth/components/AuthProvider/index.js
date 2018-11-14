@@ -8,23 +8,23 @@ export class AuthProvider extends React.Component {
     super(props);
     const token = getToken();
 
-    this.state = { authentified: false, user: null };
+    this.state = { authenticated: false, user: null };
 
     if (!token) return;
 
     const { user } = this.extractTokenData(token);
-    this.state = { authentified: true, user };
+    this.state = { authenticated: true, user };
   }
 
   authAction = async ({ login, password }) => {
     const token = await obtainToken(login, password);
     const { user } = this.extractTokenData(token);
-    this.setState({ authentified: true, user });
+    this.setState({ authenticated: true, user });
   };
 
-  signoutAction = async () => {
+  logoutAction = async () => {
     invalidToken();
-    this.setState({ authentified: false, user: null });
+    this.setState({ authenticated: false, user: null });
   }
 
   // "Privates"
@@ -48,20 +48,20 @@ export class AuthProvider extends React.Component {
     try {
       const token = await refreshToken();
       const { user } = this.extractTokenData(token);
-      this.setState({ authentified: true, user });
+      this.setState({ authenticated: true, user });
     } catch (e) {
-      this.setState({ authentified: false, user: null });
+      this.setState({ authenticated: false, user: null });
     }
   }
 
   render () {
     const { children } = this.props;
-    const { authentified, user } = this.state;
-    const { authAction, signoutAction } = this;
+    const { authenticated, user } = this.state;
+    const { authAction, logoutAction } = this;
 
     return (
       <Provider
-        value={{ authentified, user, authAction, signoutAction }}
+        value={{ authenticated, user, authAction, logoutAction }}
       >
         {children}
       </Provider>

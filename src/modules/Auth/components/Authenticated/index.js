@@ -2,7 +2,7 @@ import React from 'react';
 
 import context from '../../services/context';
 
-export class Authentified extends React.Component {
+export class Authenticated extends React.Component {
   static contextType = context;
 
   render () {
@@ -12,4 +12,4 @@ export class Authentified extends React.Component {
   }
 }
 
-export default Authentified;
+export default Authenticated;
