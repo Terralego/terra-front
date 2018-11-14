@@ -15,7 +15,8 @@
     "eject": "react-scripts eject",
     "start": "start-storybook -p 9009 -s public",
     "build-storybook": "build-storybook -s public",
-    "lint": "eslint src"
+    "lint": "eslint src",
+    "coverage": "npm test -- --coverage --collectCoverageFrom=src/**/*.js --collectCoverageFrom=!src/stories/**/*"
   },
   "eslintConfig": {
     "extends": "react-app"

@@ -34,8 +34,13 @@ npm_test:
   tags: [shared-ci-docker]
   stage: tests
   script:
-    - npm test -- --coverage
-  coverage: /All files[^|]*\|[^|]*\s+([\d\.]+)/
+    - npm test
+
+npm_coverage:
+  tags: [shared-ci-docker]
+  stage: tests
+  script:
+    - npm run coverage | xargs node scripts/coverage.js
 
 npm_run_lint:
   tags: [shared-ci-docker]
