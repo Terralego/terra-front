@@ -1,23 +1,19 @@
 {
-  "name": "terra-front-ng",
+  "name": "mc-tf-test",
   "version": "0.1.0",
-  "private": true,
+  "private": false,
   "dependencies": {
     "@blueprintjs/core": "^3.8.0",
     "@blueprintjs/icons": "^3.3.0",
     "debug": "^4.1.0",
     "normalize.css": "^8.0.0",
-    "query-string": "^6.2.0",
-    "react": "^16.6.0",
-    "react-dom": "^16.6.0",
-    "react-scripts": "2.1.1"
+    "query-string": "^6.2.0"
   },
   "scripts": {
-    "start": "react-scripts start",
-    "build": "react-scripts build",
+    "build": "./scripts/build.sh",
     "test": "react-scripts test",
     "eject": "react-scripts eject",
-    "storybook": "start-storybook -p 9009 -s public",
+    "start": "start-storybook -p 9009 -s public",
     "build-storybook": "build-storybook -s public"
   },
   "eslintConfig": {
@@ -30,7 +26,13 @@
     "not op_mini all"
   ],
   "devDependencies": {
+    "@babel/cli": "^7.1.5",
     "@babel/core": "^7.1.2",
+    "@babel/plugin-proposal-class-properties": "^7.1.0",
+    "@babel/plugin-proposal-object-rest-spread": "^7.0.0",
+    "@babel/plugin-syntax-dynamic-import": "^7.0.0",
+    "@babel/plugin-transform-runtime": "^7.1.0",
+    "@babel/preset-react": "^7.0.0",
     "@storybook/addon-actions": "^4.0.2",
     "@storybook/addon-centered": "^4.0.2",
     "@storybook/addon-knobs": "^4.0.2",
@@ -42,6 +44,14 @@
     "enzyme": "^3.7.0",
     "enzyme-adapter-react-16": "^1.6.0",
     "eslint-config-makina": "^0.7.1",
-    "react-test-renderer": "^16.6.0"
+    "react-test-renderer": "^16.6.0",
+    "react": "^16.6.0",
+    "react-dom": "^16.6.0",
+    "react-scripts": "2.1.1"
+  },
+  "peerDependencies": {
+    "react": "^16.6.0",
+    "react-dom": "^16.6.0",
+    "react-scripts": "2.1.1"
   }
 }
