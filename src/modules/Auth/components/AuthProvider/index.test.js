@@ -30,27 +30,27 @@ it('should get props from consumer', () => {
   wrapper.html();
   expect(expected.authAction).toBeDefined();
   expect(typeof expected.authAction).toBe('function');
-  expect(expected.signoutAction).toBeDefined();
-  expect(typeof expected.signoutAction).toBe('function');
-  expect(expected.authentified).toBe(false);
+  expect(expected.logoutAction).toBeDefined();
+  expect(typeof expected.logoutAction).toBe('function');
+  expect(expected.authenticated).toBe(false);
   expect(expected.user).toBe(null);
 });
 
-it('should signin', async done => {
+it('should sign in', async done => {
   global.localStorage.removeItem('tf:auth:token');
   const wrapper = shallow(<Auth />);
   await wrapper.instance().authAction({ login: 'foo@bar', password: 'bar' });
-  expect(wrapper.state().authentified).toBe(true);
+  expect(wrapper.state().authenticated).toBe(true);
   expect(wrapper.state().user).toEqual({ id: 42 });
   done();
 });
 
-it('should signout', async done => {
+it('should logout', async done => {
   global.localStorage.setItem('tf:auth:token', MOCKED_TOKEN);
   const wrapper = shallow(<Auth />);
-  await wrapper.instance().signoutAction();
+  await wrapper.instance().logoutAction();
 
-  expect(wrapper.state().authentified).toBe(false);
+  expect(wrapper.state().authenticated).toBe(false);
   expect(wrapper.state().user).toBe(null);
   done();
 });
