@@ -9,6 +9,8 @@ const stories = storiesOf('Visualizer', module);
 stories.add('Visualizer', () => (
   <div style={{ width: '100vh', height: '100vh' }}>
     <Visualizer
+      accessToken="pk.eyJ1IjoidGFzdGF0aGFtMSIsImEiOiJjamZ1ejY2bmYxNHZnMnhxbjEydW9sM29hIn0.w9ndNH49d91aeyvxSjKQqg"
+      mapRef="map-container"
       mapStyle={select(
         'mapStyle',
         [
@@ -34,12 +36,11 @@ stories.add('Visualizer', () => (
         [true, false],
         true,
       )}
-      maxZoom={number('maxZoom', 18)}
+      maxZoom={number('maxZoom', 20)}
       minZoom={number('minZoom', 0)}
       maxBounds={array('maxBounds', [
-        [-74.04728500751165, 40.68392799015035], // Southwest coordinates
-        [-73.91058699000139, 40.87764500765852], // Northeast coordinates
-      ])}
+        [-5.7283633634, 42.114925591], [8.8212564471, 51.3236272327], // France coordinates
+      ])} // Should be tried with https://boundingbox.klokantech.com/
       flyTo={object('flyTo', { center: [0, 0], zoom: 9 })}
       zoom="5" // set default zoom
     />

@@ -1,3 +1,3 @@
-import VisualizerMap from './components/Map';
+import Map from './components/Map';
 
-export default VisualizerMap;
+export default Map;

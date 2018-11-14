@@ -1,10 +1,9 @@
 import React from 'react';
-import mapboxgl from 'mapbox-gl';
+import mapBoxGl from 'mapbox-gl';
+import PropTypes from 'prop-types';
 import 'mapbox-gl/dist/mapbox-gl.css';
 
-const REACT_APP_MAPBOX_API_ACCESS_TOKEN = 'pk.eyJ1IjoidGFzdGF0aGFtMSIsImEiOiJjamZ1ejY2bmYxNHZnMnhxbjEydW9sM29hIn0.w9ndNH49d91aeyvxSjKQqg';
-
-class VisualizerMap extends React.Component {
+class Map extends React.Component {
   componentDidMount () {
     this.initMapProperties();
   }
@@ -15,23 +14,22 @@ class VisualizerMap extends React.Component {
 
   initMapProperties () {
     const {
+      accessToken,
       mapStyle,
       scaleControl,
       navigationControl,
       attributionControl,
-      maxZoom = 20,
-      minZoom = 0,
+      maxZoom,
+      minZoom,
       zoom,
-      maxBounds = [
-        [-74.04728500751165, 40.68392799015035], // Southwest coordinates
-        [-73.91058699000139, 40.87764500765852], // Northeast coordinates
-      ],
+      maxBounds,
+      mapRef,
     } = this.props;
 
-    mapboxgl.accessToken = REACT_APP_MAPBOX_API_ACCESS_TOKEN;
-    this.map = new mapboxgl.Map({
+    mapBoxGl.accessToken = accessToken;
+    this.map = new mapBoxGl.Map({
       attributionControl: false,
-      container: 'visualizer-map',
+      container: mapRef,
       style: mapStyle,
       center: [2, 47],
       zoom,
@@ -41,17 +39,17 @@ class VisualizerMap extends React.Component {
       bearing: 0,
     });
     if (scaleControl && !this.scaleControl) {
-      this.control = new mapboxgl.ScaleControl();
+      this.control = new mapBoxGl.ScaleControl();
       this.map.addControl(this.control);
     }
 
     if (navigationControl && !this.navigationControl) {
-      this.navigationControl = new mapboxgl.NavigationControl();
+      this.navigationControl = new mapBoxGl.NavigationControl();
       this.map.addControl(this.navigationControl);
     }
 
     if (attributionControl && !this.attributionControl) {
-      this.attributionControl = new mapboxgl.AttributionControl();
+      this.attributionControl = new mapBoxGl.AttributionControl();
       this.map.addControl(this.attributionControl);
     }
   }
@@ -72,7 +70,7 @@ class VisualizerMap extends React.Component {
       this.map.flyTo(flyTo);
     }
 
-    if (JSON.stringify(prevProps.maxBounds) !== JSON.stringify(maxBounds)) {
+    if (prevProps.maxBounds !== maxBounds) {
       this.map.setMaxBounds(maxBounds);
     }
 
@@ -89,7 +87,7 @@ class VisualizerMap extends React.Component {
     }
 
     if (scaleControl && scaleControl !== prevProps.scaleControl) {
-      this.scaleControl = new mapboxgl.ScaleControl();
+      this.scaleControl = new mapBoxGl.ScaleControl();
       this.map.addControl(this.scaleControl);
     }
 
@@ -98,7 +96,7 @@ class VisualizerMap extends React.Component {
     }
 
     if (navigationControl && navigationControl !== prevProps.navigationControl) {
-      this.navigationControl = new mapboxgl.NavigationControl();
+      this.navigationControl = new mapBoxGl.NavigationControl();
       this.map.addControl(this.navigationControl);
     }
 
@@ -107,7 +105,7 @@ class VisualizerMap extends React.Component {
     }
 
     if (attributionControl && attributionControl !== prevProps.attributionControl) {
-      this.attributionControl = new mapboxgl.AttributionControl();
+      this.attributionControl = new mapBoxGl.AttributionControl();
       this.map.addControl(this.attributionControl);
     }
 
@@ -117,10 +115,49 @@ class VisualizerMap extends React.Component {
   }
 
   render () {
+    const { mapRef } = this.props;
     return (
-      <div id="visualizer-map" style={{ width: '100%', height: '100%' }} />
+      <div id={mapRef} style={{ width: '100%', height: '100%' }} />
     );
   }
 }
 
-export default VisualizerMap;
+Map.propTypes = {
+  accessToken: PropTypes.string.isRequired,
+  mapRef: PropTypes.string.isRequired,
+  mapStyle: PropTypes.string,
+  scaleControl: PropTypes.bool,
+  navigationControl: PropTypes.bool,
+  attributionControl: PropTypes.bool,
+  maxZoom: PropTypes.number,
+  minZoom: PropTypes.number,
+  zoom: PropTypes.number,
+  maxBounds: PropTypes.arrayOf(PropTypes.array),
+  flyTo: PropTypes.shape({
+    center: PropTypes.arrayOf(PropTypes.number),
+    zoom: PropTypes.number,
+    speed: PropTypes.number,
+    curve: PropTypes.number,
+    easing: PropTypes.func,
+  }),
+};
+
+Map.defaultProps = {
+  mapStyle: 'mapbox://styles/mapbox/light-v9',
+  scaleControl: true,
+  navigationControl: true,
+  attributionControl: true,
+  maxZoom: 20,
+  minZoom: 0,
+  zoom: 9,
+  maxBounds: false,
+  flyTo: {
+    center: [0, 0],
+    zoom: 7,
+    speed: false,
+    curve: false,
+    easing: () => {},
+  },
+};
+
+export default Map;
