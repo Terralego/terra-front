@@ -6,6 +6,44 @@ import 'mapbox-gl/dist/mapbox-gl.css';
 import styles from './Map.css';
 
 class Map extends React.Component {
+  static propTypes = {
+    accessToken: PropTypes.string.isRequired,
+    mapRef: PropTypes.string.isRequired,
+    mapStyle: PropTypes.string,
+    scaleControl: PropTypes.bool,
+    navigationControl: PropTypes.bool,
+    attributionControl: PropTypes.bool,
+    maxZoom: PropTypes.number,
+    minZoom: PropTypes.number,
+    zoom: PropTypes.number,
+    maxBounds: PropTypes.arrayOf(PropTypes.array),
+    flyTo: PropTypes.shape({
+      center: PropTypes.arrayOf(PropTypes.number),
+      zoom: PropTypes.number,
+      speed: PropTypes.number,
+      curve: PropTypes.number,
+      easing: PropTypes.func,
+    }),
+  };
+
+  static defaultProps = {
+    mapStyle: 'mapbox://styles/mapbox/light-v9',
+    scaleControl: true,
+    navigationControl: true,
+    attributionControl: true,
+    maxZoom: 20,
+    minZoom: 0,
+    zoom: 9,
+    maxBounds: false,
+    flyTo: {
+      center: [0, 0],
+      zoom: 7,
+      speed: false,
+      curve: false,
+      easing: () => {},
+    },
+  };
+
   componentDidMount () {
     this.initMapProperties();
   }
@@ -123,43 +161,5 @@ class Map extends React.Component {
     );
   }
 }
-
-Map.propTypes = {
-  accessToken: PropTypes.string.isRequired,
-  mapRef: PropTypes.string.isRequired,
-  mapStyle: PropTypes.string,
-  scaleControl: PropTypes.bool,
-  navigationControl: PropTypes.bool,
-  attributionControl: PropTypes.bool,
-  maxZoom: PropTypes.number,
-  minZoom: PropTypes.number,
-  zoom: PropTypes.number,
-  maxBounds: PropTypes.arrayOf(PropTypes.array),
-  flyTo: PropTypes.shape({
-    center: PropTypes.arrayOf(PropTypes.number),
-    zoom: PropTypes.number,
-    speed: PropTypes.number,
-    curve: PropTypes.number,
-    easing: PropTypes.func,
-  }),
-};
-
-Map.defaultProps = {
-  mapStyle: 'mapbox://styles/mapbox/light-v9',
-  scaleControl: true,
-  navigationControl: true,
-  attributionControl: true,
-  maxZoom: 20,
-  minZoom: 0,
-  zoom: 9,
-  maxBounds: false,
-  flyTo: {
-    center: [0, 0],
-    zoom: 7,
-    speed: false,
-    curve: false,
-    easing: () => {},
-  },
-};
 
 export default Map;
