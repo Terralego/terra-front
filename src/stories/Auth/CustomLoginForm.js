@@ -1,10 +1,10 @@
 import React from 'react';
 
-import AuthModuleProvider from '../../modules/Auth/moduleProvider';
+import TerraFrontProvider from '../../modules/TerraFrontProvider';
 import AuthProvider, { LoginForm } from '../../modules/Auth';
 
 export const CustomLoginForm = () => (
-  <AuthModuleProvider
+  <TerraFrontProvider
     config={{
       components: {
         LoginForm: {
@@ -18,7 +18,7 @@ export const CustomLoginForm = () => (
     <AuthProvider>
       <LoginForm />
     </AuthProvider>
-  </AuthModuleProvider>
+  </TerraFrontProvider>
 );
 
 export default CustomLoginForm;

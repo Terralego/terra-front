@@ -1,7 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 
-import { connectModuleProvider } from '../../moduleProvider';
+import { connectModuleProvider } from '../../../TerraFrontProvider';
 import { connectAuthProvider } from '../../services/context';
 import render from './LoginFormRenderer';
 
