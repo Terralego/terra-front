@@ -8,7 +8,6 @@ import styles from './Map.css';
 class Map extends React.Component {
   static propTypes = {
     accessToken: PropTypes.string.isRequired,
-    mapRef: PropTypes.string.isRequired,
     mapStyle: PropTypes.string,
     scaleControl: PropTypes.bool,
     navigationControl: PropTypes.bool,
@@ -44,6 +43,11 @@ class Map extends React.Component {
     },
   };
 
+  constructor (props) {
+    super(props);
+    this.containerEl = React.createRef();
+  }
+
   componentDidMount () {
     this.initMapProperties();
   }
@@ -63,13 +67,12 @@ class Map extends React.Component {
       minZoom,
       zoom,
       maxBounds,
-      mapRef,
     } = this.props;
 
     mapBoxGl.accessToken = accessToken;
     this.map = new mapBoxGl.Map({
       attributionControl: false,
-      container: mapRef,
+      container: this.containerEl.current,
       style: mapStyle,
       center: [2, 47],
       zoom,
@@ -106,7 +109,7 @@ class Map extends React.Component {
       flyTo,
     } = this.props;
 
-    if (JSON.stringify(prevProps.flyTo) !== JSON.stringify(flyTo)) {
+    if (prevProps.FlyTo !== flyTo) {
       this.map.flyTo(flyTo);
     }
 
@@ -155,9 +158,8 @@ class Map extends React.Component {
   }
 
   render () {
-    const { mapRef } = this.props;
     return (
-      <div id={mapRef} className={styles.map} />
+      <div id="map-container" ref={this.containerEl} className={styles.map} />
     );
   }
 }

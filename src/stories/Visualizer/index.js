@@ -10,7 +10,6 @@ stories.add('Map', () => (
   <div style={{ width: '100vh', height: '100vh' }}>
     <Map
       accessToken="pk.eyJ1IjoidGFzdGF0aGFtMSIsImEiOiJjamZ1ejY2bmYxNHZnMnhxbjEydW9sM29hIn0.w9ndNH49d91aeyvxSjKQqg"
-      mapRef="map-container"
       mapStyle={select(
         'mapStyle',
         [
@@ -42,7 +41,7 @@ stories.add('Map', () => (
         [-5.7283633634, 42.114925591], [8.8212564471, 51.3236272327], // France coordinates
       ])} // Should be tried with https://boundingbox.klokantech.com/
       flyTo={object('flyTo', { center: [0, 0], zoom: 9 })}
-      zoom="5" // set default zoom
+      zoom={5} // set default zoom
     />
   </div>
 ));
