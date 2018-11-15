@@ -79,7 +79,7 @@ export class Api {
     const listener = { eventName, callback };
     this.listeners.push(listener);
     return () => {
-      const pos = this.listeners.findIndex(listener);
+      const pos = this.listeners.findIndex(l => l === listener);
       if (pos > -1) {
         this.listeners.splice(pos, 1);
       }

@@ -67,3 +67,8 @@ it('should parse token', () => {
     exp: 1516239022,
   });
 });
+
+it('should parse an invalid token', () => {
+  const data = parseToken('foo');
+  expect(data).toEqual({});
+});

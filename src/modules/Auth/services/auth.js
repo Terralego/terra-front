@@ -1,4 +1,4 @@
-import Api, { POST, EVENT_FAILURE } from '../../Api/';
+import Api, { POST, EVENT_FAILURE } from '../../Api';
 import log from './log';
 
 const TOKEN_KEY = 'tf:auth:token';
@@ -37,7 +37,7 @@ export function invalidToken () {
 }
 
 export function parseToken (token) {
-  const [, payload] = token.split('.');
+  const [, payload = ''] = token.split('.');
   const base64 = payload.replace('-', '+').replace('_', '/');
 
   try {
