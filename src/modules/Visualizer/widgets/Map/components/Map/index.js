@@ -43,11 +43,6 @@ class Map extends React.Component {
     },
   };
 
-  constructor (props) {
-    super(props);
-    this.containerEl = React.createRef();
-  }
-
   componentDidMount () {
     this.initMapProperties();
   }
@@ -55,6 +50,8 @@ class Map extends React.Component {
   componentDidUpdate (prevProps) {
     this.updateMapProperties(prevProps);
   }
+
+  containerEl = React.createRef();
 
   initMapProperties () {
     const {
@@ -133,37 +130,38 @@ class Map extends React.Component {
       this.map.setStyle(mapStyle);
     }
 
-    if (scaleControl && scaleControl !== prevProps.scaleControl) {
-      this.scaleControl = new mapBoxGl.ScaleControl();
-      this.map.addControl(this.scaleControl);
+    if (scaleControl !== prevProps.scaleControl) {
+      if (scaleControl) {
+        this.scaleControl = new mapBoxGl.ScaleControl();
+        this.map.addControl(this.scaleControl);
+      } else {
+        this.map.removeControl(this.control);
+      }
     }
 
-    if (!scaleControl && scaleControl !== prevProps.scaleControl) {
-      this.map.removeControl(this.control);
+    if (navigationControl !== prevProps.navigationControl) {
+      if (navigationControl) {
+        this.navigationControl = new mapBoxGl.NavigationControl();
+        this.map.addControl(this.navigationControl);
+      } else {
+        this.map.removeControl(this.navigationControl);
+      }
     }
 
-    if (navigationControl && navigationControl !== prevProps.navigationControl) {
-      this.navigationControl = new mapBoxGl.NavigationControl();
-      this.map.addControl(this.navigationControl);
-    }
 
-    if (!navigationControl && navigationControl !== prevProps.navigationControl) {
-      this.map.removeControl(this.navigationControl);
-    }
-
-    if (attributionControl && attributionControl !== prevProps.attributionControl) {
-      this.attributionControl = new mapBoxGl.AttributionControl();
-      this.map.addControl(this.attributionControl);
-    }
-
-    if (!attributionControl && attributionControl !== prevProps.attributionControl) {
-      this.map.removeControl(this.attributionControl);
+    if (attributionControl !== prevProps.attributionControl) {
+      if (attributionControl) {
+        this.attributionControl = new mapBoxGl.AttributionControl();
+        this.map.addControl(this.attributionControl);
+      } else {
+        this.map.removeControl(this.attributionControl);
+      }
     }
   }
 
   render () {
     return (
-      <div id="map-container" ref={this.containerEl} className={styles.map} />
+      <div ref={this.containerEl} className={styles.map} />
     );
   }
 }
