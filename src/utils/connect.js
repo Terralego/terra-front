@@ -13,12 +13,10 @@ function parseMapContextToProps (mapContextToProps, context) {
     }), {});
   }
   if (typeof mapContextToProps === 'object') {
-    return Object.keys(mapContextToProps).reduce((ret, prop) => {
-      return {
-        ...ret,
-        [prop]: objectGet(context, mapContextToProps[prop]),
-      };
-    }, {});
+    return Object.keys(mapContextToProps).reduce((ret, prop) => ({
+      ...ret,
+      [prop]: objectGet(context, mapContextToProps[prop]),
+    }), {});
   }
 
   return {};
@@ -68,6 +66,6 @@ export const connect = ({ Consumer }) => (...mapContextToPropsList) => WrappedCo
   }
 
   return props => <Consumer>{(value = {}) => <Connect context={value} {...props} />}</Consumer>;
-}
+};
 
 export default connect;

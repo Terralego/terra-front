@@ -16,7 +16,7 @@ export const CustomLoginForm = () => (
                 <option value="admin@user">Admin</option>
                 <option value="user@user">User</option>
               </select>
-              <input type="password" onChange={setPassword}/>
+              <input type="password" onChange={setPassword} />
               <button>Connect</button>
             </form>
           ),
