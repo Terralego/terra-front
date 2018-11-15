@@ -3,7 +3,7 @@ import mapBoxGl from 'mapbox-gl';
 import PropTypes from 'prop-types';
 
 import 'mapbox-gl/dist/mapbox-gl.css';
-import styles from './Map.css';
+import './Map.scss';
 
 class Map extends React.Component {
   static propTypes = {
@@ -161,7 +161,7 @@ class Map extends React.Component {
 
   render () {
     return (
-      <div ref={this.containerEl} className={styles.map} />
+      <div ref={this.containerEl} className="mapboxgl-map" />
     );
   }
 }

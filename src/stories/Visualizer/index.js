@@ -7,7 +7,7 @@ import Map from '../../modules/Visualizer/widgets/Map/components/Map';
 const stories = storiesOf('Map', module);
 
 stories.add('Map', () => (
-  <div style={{ width: '100vh', height: '100vh' }}>
+  <div className="tf-map">
     <Map
       accessToken="pk.eyJ1IjoidGFzdGF0aGFtMSIsImEiOiJjamZ1ejY2bmYxNHZnMnhxbjEydW9sM29hIn0.w9ndNH49d91aeyvxSjKQqg"
       mapStyle={select(
