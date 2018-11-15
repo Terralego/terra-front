@@ -8,8 +8,17 @@ export const CustomLoginForm = () => (
     config={{
       components: {
         LoginForm: {
-          render: () => (
-            <p>This is an injected custom LoginFrom renderer</p>
+          render: ({ submit, setLogin, setPassword }) => (
+            <form onSubmit={submit}>
+              <select
+                onChange={setLogin}
+              >
+                <option value="admin@user">Admin</option>
+                <option value="user@user">User</option>
+              </select>
+              <input type="password" onChange={setPassword}/>
+              <button>Connect</button>
+            </form>
           ),
         },
       },

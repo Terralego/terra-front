@@ -10,7 +10,7 @@ import CustomLoginForm from './CustomLoginForm';
 
 const stories = storiesOf('Module Auth', module);
 
-stories.add('Login', () => (
+stories.add('Login form', () => (
   <ApiProvider host={text('API Host', '')}>
     <AuthProvider>
       <ShouldDisplayLoginForm />
@@ -18,4 +18,4 @@ stories.add('Login', () => (
   </ApiProvider>
 ));
 
-stories.add('Configure module', () => <CustomLoginForm />);
+stories.add('Custom Login form', () => <CustomLoginForm />);
