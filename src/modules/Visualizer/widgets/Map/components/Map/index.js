@@ -97,6 +97,12 @@ class Map extends React.Component {
     }
   }
 
+  updateFlyTo = (prevFlyTo, flyTo) => {
+    if (prevFlyTo !== flyTo) {
+      this.map.flyTo(flyTo);
+    }
+  }
+
   updateMapProperties = prevProps => {
     const {
       maxZoom,
@@ -109,9 +115,7 @@ class Map extends React.Component {
       flyTo,
     } = this.props;
 
-    if (prevProps.FlyTo !== flyTo) {
-      this.map.flyTo(flyTo);
-    }
+    this.updateFlyTo(prevProps.flyTo, flyTo);
 
     if (prevProps.maxBounds !== maxBounds) {
       this.map.setMaxBounds(maxBounds);
