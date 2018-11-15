@@ -86,3 +86,39 @@ it('should chain many connect', () => {
 
   expect(TestComponent).toHaveBeenCalledWith({ a: 'bar', b: 'foo' }, {});
 });
+
+it('should find props from strings list', () => {
+  const context = React.createContext();
+  const { Provider } = context;
+  const TestComponent = jest.fn(() => null);
+  const ConnectedTestComponent = connect(context)('foo', 'bar')(TestComponent);
+
+  mount((
+    <Provider value={{ foo: 'bar', bar: 'foo', babar: 'fofoo' }}>
+      <ConnectedTestComponent />
+    </Provider>
+  ));
+
+  expect(TestComponent).toHaveBeenCalledWith({ foo: 'bar', bar: 'foo' }, {});
+});
+
+it('should find props from dotted strings', () => {
+  const context = React.createContext();
+  const { Provider } = context;
+  const TestComponent = jest.fn(() => null);
+  const ConnectedTestComponent = connect(context)({
+    localFoo: 'foo',
+    deepBabar: 'foo.bar.babar',
+  })(TestComponent);
+
+  mount((
+    <Provider value={{ foo: { bar: { babar: 'foo' } } }}>
+      <ConnectedTestComponent />
+    </Provider>
+  ));
+
+  expect(TestComponent).toHaveBeenCalledWith({
+    localFoo: { bar: { babar: 'foo' } },
+    deepBabar: 'foo',
+  }, {});
+});

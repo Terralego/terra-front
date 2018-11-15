@@ -1,6 +1,34 @@
 import React from 'react';
 
-export const connect = ({ Consumer }) => mapContextToProps => WrappedComponent => {
+import objectGet from './objectGet';
+
+function parseMapContextToProps (mapContextToProps, context) {
+  if (typeof mapContextToProps === 'function') {
+    return mapContextToProps(context);
+  }
+  if (Array.isArray(mapContextToProps)) {
+    return mapContextToProps.reduce((ret, prop) => ({
+      ...ret,
+      [prop]: context[prop],
+    }), {});
+  }
+  if (typeof mapContextToProps === 'object') {
+    return Object.keys(mapContextToProps).reduce((ret, prop) => {
+      return {
+        ...ret,
+        [prop]: objectGet(context, mapContextToProps[prop]),
+      };
+    }, {});
+  }
+
+  return {};
+}
+
+export const connect = ({ Consumer }) => (...mapContextToPropsList) => WrappedComponent => {
+  const mapContextToProps = mapContextToPropsList.length > 1
+    ? mapContextToPropsList
+    : mapContextToPropsList[0];
+
   class Connect extends React.Component {
     state = {};
 
@@ -19,7 +47,7 @@ export const connect = ({ Consumer }) => mapContextToProps => WrappedComponent =
     }
 
     getNewState (context) {
-      const state = mapContextToProps(context);
+      const state = parseMapContextToProps(mapContextToProps, context);
       const hasChanged = Object.keys(state).reduce((changed, key) =>
         changed || state[key] !== this.state[key], false);
       return hasChanged ? state : false;
