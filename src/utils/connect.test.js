@@ -122,3 +122,28 @@ it('should find props from dotted strings', () => {
     deepBabar: 'foo',
   }, {});
 });
+
+it('should use props to dive into state', () => {
+  const context = React.createContext();
+  const { Provider } = context;
+  const TestComponent = jest.fn(() => null);
+  const ConnectedTestComponent = connect(context)((state, props) => ({
+    foo: state.getFoo(props.id),
+  }))(TestComponent);
+
+  const getFoo = jest.fn(id => ({ id: `foo:${id}` }));
+
+  mount((
+    <Provider value={{ getFoo }}>
+      <ConnectedTestComponent
+        id="42"
+      />
+    </Provider>
+  ));
+
+  expect(TestComponent).toHaveBeenCalledWith({
+    id: '42',
+    foo: { id: 'foo:42' },
+  }, {});
+  expect(getFoo).toHaveBeenCalledWith('42');
+});
