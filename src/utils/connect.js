@@ -28,14 +28,15 @@ export const connect = ({ Consumer }) => (...mapContextToPropsList) => WrappedCo
     : mapContextToPropsList[0];
 
   class Connect extends React.Component {
-    state = {};
+    constructor (props) {
+      super(props);
 
-    componentDidMount () {
-      this.updateFromContext();
+      this.state = {};
+      this.state = this.getNewState(props.context, props.props);
     }
 
     shouldComponentUpdate ({ context }) {
-      return !!this.getNewState(context);
+      return !!this.getNewState(context, this.props.props);
     }
 
     componentDidUpdate ({ context: prevContext }) {
@@ -44,8 +45,7 @@ export const connect = ({ Consumer }) => (...mapContextToPropsList) => WrappedCo
       }
     }
 
-    getNewState (context) {
-      const { props } = this.props;
+    getNewState (context, props) {
       const state = parseMapContextToProps(mapContextToProps, context, props);
       const hasChanged = Object.keys(state).reduce((changed, key) =>
         changed || state[key] !== this.state[key], false);
@@ -53,7 +53,8 @@ export const connect = ({ Consumer }) => (...mapContextToPropsList) => WrappedCo
     }
 
     updateFromContext () {
-      const state = this.getNewState(this.props.context);
+      const { context, props } = this.props;
+      const state = this.getNewState(context, props);
 
       if (state) {
         this.setState(state);
