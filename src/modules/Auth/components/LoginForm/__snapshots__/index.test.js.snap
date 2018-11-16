@@ -29,6 +29,7 @@ exports[`should render correctly 1`] = `
           className="bp3-input-group"
         >
           <input
+            autoComplete="username"
             className="bp3-input"
             id="login"
             onChange={[Function]}
@@ -70,6 +71,7 @@ exports[`should render correctly 1`] = `
           className="bp3-input-group"
         >
           <input
+            autoComplete="current-password"
             className="bp3-input"
             id="password"
             onChange={[Function]}

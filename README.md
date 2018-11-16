@@ -23,3 +23,17 @@
 ## Publish
 
     $ ./scripts/publish.sh
+
+## Modules
+
+### Api
+
+An API service to fetch data from backend
+
+### Auth
+
+A user provider with a login form. Wrap your app with AuthProvider to get access to all auth data and actions. Then, you will be able to get connected user and call login and signout action. 
+
+## Customization
+
+Every component should be configurable by passing replacement props from TerraFrontProvider.

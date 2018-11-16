@@ -4,22 +4,18 @@ import { storiesOf } from '@storybook/react';
 import { text } from '@storybook/addon-knobs';
 
 import ApiProvider from './ApiProvider';
-import AuthProvider, { LoginForm, Authenticated } from '../../modules/Auth';
+import AuthProvider from '../../modules/Auth';
+import ShouldDisplayLoginForm from './ShouldDisplayLoginForm';
+import CustomLoginForm from './CustomLoginForm';
 
-const stories = storiesOf('Auth', module);
+const stories = storiesOf('Module Auth', module);
 
-stories.add('Login', () => (
+stories.add('Login form', () => (
   <ApiProvider host={text('API Host', '')}>
     <AuthProvider>
-      <Authenticated>
-        {({ authenticated, signoutAction }) => (authenticated
-          ? <>
-            <p>Welcome !</p>
-            <button onClick={signoutAction}>Logout</button>
-            </>
-          : <LoginForm />)
-        }
-      </Authenticated>
+      <ShouldDisplayLoginForm />
     </AuthProvider>
   </ApiProvider>
 ));
+
+stories.add('Custom Login form', () => <CustomLoginForm />);
