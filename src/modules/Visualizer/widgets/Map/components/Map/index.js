@@ -5,7 +5,7 @@ import PropTypes from 'prop-types';
 import 'mapbox-gl/dist/mapbox-gl.css';
 import './Map.scss';
 
-class Map extends React.Component {
+export class Map extends React.Component {
   static propTypes = {
     accessToken: PropTypes.string.isRequired,
     mapStyle: PropTypes.string,
@@ -15,12 +15,12 @@ class Map extends React.Component {
     maxZoom: PropTypes.number,
     minZoom: PropTypes.number,
     zoom: PropTypes.number,
-    maxBounds: PropTypes.arrayOf(PropTypes.array),
+    maxBounds: PropTypes.oneOfType([PropTypes.arrayOf(PropTypes.array), PropTypes.bool]),
     flyTo: PropTypes.shape({
       center: PropTypes.arrayOf(PropTypes.number),
       zoom: PropTypes.number,
-      speed: PropTypes.number,
-      curve: PropTypes.number,
+      speed: PropTypes.oneOfType([PropTypes.number, PropTypes.bool]),
+      curve: PropTypes.oneOfType([PropTypes.number, PropTypes.bool]),
       easing: PropTypes.func,
     }),
   };
@@ -79,8 +79,8 @@ class Map extends React.Component {
       bearing: 0,
     });
     if (scaleControl && !this.scaleControl) {
-      this.control = new mapBoxGl.ScaleControl();
-      this.map.addControl(this.control);
+      this.scaleControl = new mapBoxGl.ScaleControl();
+      this.map.addControl(this.scaleControl);
     }
 
     if (navigationControl && !this.navigationControl) {
@@ -135,7 +135,7 @@ class Map extends React.Component {
         this.scaleControl = new mapBoxGl.ScaleControl();
         this.map.addControl(this.scaleControl);
       } else {
-        this.map.removeControl(this.control);
+        this.map.removeControl(this.scaleControl);
       }
     }
 

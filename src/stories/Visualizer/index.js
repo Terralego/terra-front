@@ -40,7 +40,7 @@ stories.add('Map', () => (
       maxBounds={array('maxBounds', [
         [-5.7283633634, 42.114925591], [8.8212564471, 51.3236272327], // France coordinates
       ])} // Should be tried with https://boundingbox.klokantech.com/
-      flyTo={object('flyTo', { center: [0, 0], zoom: 9 })}
+      flyTo={object('flyTo', {})}
       zoom={5} // set default zoom
     />
   </div>
