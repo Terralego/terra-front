@@ -1,16 +1,7 @@
 import React from 'react';
 import renderer from 'react-test-renderer';
-import { shallow, mount } from 'enzyme';
-import LoginFormWrapped, { LoginForm } from './';
-import * as context from '../../services/context';
-
-jest.mock('../../services/context', () => {
-  const authAction = jest.fn();
-  return {
-    authAction,
-    Consumer: ({ children }) => children({ authAction }),
-  };
-});
+import { shallow } from 'enzyme';
+import LoginForm from './LoginForm';
 
 it('should render correctly', () => {
   const tree = renderer
@@ -76,9 +67,4 @@ it('should set password', () => {
   const wrapper = shallow(<LoginForm />);
   wrapper.instance().setPassword({ target: { value: 'password' } });
   expect(wrapper.state().password).toBe('password');
-});
-
-it('should be wrapped into context consumer', () => {
-  const wrapper = mount(<LoginFormWrapped />);
-  expect(wrapper.find('LoginForm').props().authAction).toBe(context.authAction);
 });
