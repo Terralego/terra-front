@@ -17,7 +17,7 @@
     "start": "start-storybook -p 9009 -s public",
     "build-storybook": "build-storybook -s public",
     "lint": "eslint src",
-    "coverage": "npm test -- --coverage --collectCoverageFrom=src/**/*.js --collectCoverageFrom=!src/stories/**/*"
+    "coverage": "npm test -- --coverage"
   },
   "eslintConfig": {
     "extends": "react-app"
@@ -56,5 +56,20 @@
     "react": "^16.6.0",
     "react-dom": "^16.6.0",
     "react-scripts": "2.1.1"
+  },
+  "jest": {
+    "collectCoverageFrom": [
+      "src/**/*.js",
+      "!src/stories/**/*",
+      "!src/**/index.js"
+    ],
+    "coverageThreshold": {
+      "global": {
+        "branches": 75,
+        "functions": 75,
+        "lines": 75,
+        "statements": 75
+      }
+    }
   }
 }
