@@ -82,7 +82,6 @@ class MapLayersToggle extends React.Component {
     layout.isActive = !layout.isActive; // eslint-disable-line
 
     const newLayouts = deepmerge(this.state.layouts, layouts);
-    this.setState({ layouts });
 
     this.setState({
       treeLayouts: [...this.state.treeLayouts],
