@@ -1,4 +1,5 @@
 import React from 'react';
+import deepmerge from 'deepmerge';
 import Map from '../../modules/Visualizer/widgets/Map/components/Map';
 
 const TREELAYOUTS = [{
@@ -9,14 +10,10 @@ const TREELAYOUTS = [{
       visibility: 'visible',
     }, {
       id: 'road',
-      visibility: 'visible',
       paint: {
         'line-color': '#ff0000',
         'line-opacity': 0.2,
       },
-    }, {
-      id: 'waterway',
-      visibility: 'visible',
     }],
   },
   inactive: {
@@ -25,19 +22,16 @@ const TREELAYOUTS = [{
       visibility: 'none',
     }, {
       id: 'road',
-      visibility: 'visible',
-    }, {
-      id: 'waterway',
-      visibility: 'none',
+      paint: {
+        'line-color': '#000000',
+        'line-opacity': 1,
+      },
     }],
   },
 }, {
   label: 'scenario 2',
   active: {
     layouts: [{
-      id: 'background',
-      visibility: 'visible',
-    }, {
       id: 'road',
       visibility: 'visible',
       paint: {
@@ -50,43 +44,27 @@ const TREELAYOUTS = [{
   },
   inactive: {
     layouts: [{
-      id: 'background',
-      visibility: 'none',
-    }, {
       id: 'road',
-      visibility: 'none',
+      paint: {
+        'line-color': '#000000',
+      },
     }, {
       id: 'waterway',
-      visibility: 'none',
+      visibility: 'visible',
     }],
   },
 }, {
   label: 'scenario 3',
   active: {
     layouts: [{
-      id: 'background',
-      visibility: 'none',
-    }, {
       id: 'road',
-      visibility: 'visible',
-      paint: {
-        'line-color': '#00ff00',
-      },
-    }, {
-      id: 'waterway',
       visibility: 'none',
     }],
   },
   inactive: {
     layouts: [{
-      id: 'background',
-      visibility: 'none',
-    }, {
       id: 'road',
-      visibility: 'none',
-    }, {
-      id: 'waterway',
-      visibility: 'none',
+      visibility: 'visible',
     }],
   },
 }];
@@ -102,9 +80,13 @@ class MapLayersToggle extends React.Component {
       ? layout.inactive
       : layout.active;
     layout.isActive = !layout.isActive; // eslint-disable-line
+
+    const newLayouts = deepmerge(this.state.layouts, layouts);
+    this.setState({ layouts });
+
     this.setState({
       treeLayouts: [...this.state.treeLayouts],
-      layouts,
+      layouts: newLayouts,
     });
   }
 
