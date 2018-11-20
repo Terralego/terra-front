@@ -6,4 +6,4 @@ import addMapLayersStories from './MapLayers';
 const stories = storiesOf('Map', module);
 
 addMapStories(stories);
-addMapLayersStories(stories)
+addMapLayersStories(stories);

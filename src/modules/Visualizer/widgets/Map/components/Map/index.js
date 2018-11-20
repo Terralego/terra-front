@@ -8,7 +8,7 @@ import './Map.scss';
 export class Map extends React.Component {
   static propTypes = {
     accessToken: PropTypes.string.isRequired,
-    style: PropTypes.oneOfType([
+    styles: PropTypes.oneOfType([
       PropTypes.string,
       PropTypes.shape({
         // See mapboxgl style API
@@ -67,7 +67,7 @@ export class Map extends React.Component {
   initMapProperties () {
     const {
       accessToken,
-      style,
+      styles: style,
       displayScaleControl,
       displayNavigationControl,
       displayAttributionControl,
@@ -180,8 +180,24 @@ export class Map extends React.Component {
     const { layouts } = this.props;
     layouts.forEach(({ id, ...properties }) => {
       Object.keys(properties).forEach(property => {
-        this.map.setLayoutProperty(id, property, properties[property]);
+        switch (property) {
+          case 'paint':
+            this.updatePaintProperties(id, properties[property]);
+            break;
+          default:
+            this.map.setLayoutProperty(id, property, properties[property]);
+        }
       });
+    });
+  }
+
+  updatePaintProperties (id, properties) {
+    Object.keys(properties).forEach(property => {
+      try {
+        this.map.setPaintProperty(id, property, properties[property]);
+      } catch (e) {
+        //
+      }
     });
   }
 

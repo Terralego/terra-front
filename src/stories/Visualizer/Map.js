@@ -1,7 +1,7 @@
 import React from 'react';
-import Map from '../../modules/Visualizer/widgets/Map/components/Map';
-
 import { select, number, array, object } from '@storybook/addon-knobs';
+
+import Map from '../../modules/Visualizer/widgets/Map/components/Map';
 
 export default stories => {
   stories.add('Map', () => (
@@ -43,4 +43,4 @@ export default stories => {
       />
     </div>
   ));
-}
+};
