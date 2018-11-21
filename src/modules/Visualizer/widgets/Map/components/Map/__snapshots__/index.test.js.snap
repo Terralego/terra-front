@@ -2,6 +2,6 @@
 
 exports[`should render correctly 1`] = `
 <div
-  className="mapboxgl-map"
+  className="tf-map"
 />
 `;

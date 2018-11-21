@@ -158,7 +158,7 @@ describe('on properties changes', () => {
 
 it('should render div', () => {
   const wrapper = shallow(<Map {...props} />);
-  expect(wrapper.find('div').hasClass('mapboxgl-map')).toEqual(true);
+  expect(wrapper.find('div').hasClass('tf-map')).toEqual(true);
   expect(wrapper.find('div').length).toBe(1);
 });
 
