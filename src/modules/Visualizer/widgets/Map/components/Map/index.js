@@ -7,6 +7,13 @@ import { StylesToApplyProps } from '../../LayersTreeProps';
 
 import './Map.scss';
 
+function createMap (params) {
+  return new Promise(resolve => {
+    const map = new mapBoxGl.Map(params);
+    map.once('data', () => resolve(map));
+  });
+}
+
 export class Map extends React.Component {
   static propTypes = {
     accessToken: PropTypes.string.isRequired,
@@ -63,7 +70,7 @@ export class Map extends React.Component {
 
   containerEl = React.createRef();
 
-  initMapProperties () {
+  async initMapProperties () {
     const {
       accessToken,
       styles: style,
@@ -77,7 +84,7 @@ export class Map extends React.Component {
     } = this.props;
 
     mapBoxGl.accessToken = accessToken;
-    this.map = new mapBoxGl.Map({
+    this.map = await createMap({
       attributionControl: false,
       container: this.containerEl.current,
       style,
