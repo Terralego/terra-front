@@ -1,11 +1,11 @@
-import React, { Component } from 'react';
+import React from 'react';
 import PropTypes from 'prop-types';
 
 import render from './SignupFormRenderer';
 
 import './styles.css';
 
-export class SignupForm extends Component {
+export class SignupForm extends React.Component {
   static propTypes = {
     render: PropTypes.func,
   };

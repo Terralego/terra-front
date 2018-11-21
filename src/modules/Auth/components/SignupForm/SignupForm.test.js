@@ -14,7 +14,7 @@ it('should render correctly', () => {
 it('should render with errors', () => {
   const wrapper = renderer
     .create(<SignupForm />);
-  wrapper.getInstance().setState({ error: { email: true } });
+  wrapper.getInstance().setState({ errors: { email: true } });
   const tree = wrapper.toJSON();
   expect(tree).toMatchSnapshot();
 });
@@ -25,13 +25,20 @@ it('should submit form with success', async done => {
     signupAction={signupAction}
   />);
 
-  wrapper.setState({ email: 'foo@bar', password: 'bar' });
+  wrapper.setState({ email: 'foo@bar', password: 'bar', confirmEmail: 'foo@bar', confirmPassword: 'bar' });
 
   await wrapper.instance().submit({ preventDefault () {} });
 
-  expect(signupAction).toHaveBeenCalledWith({ email: 'foo@bar', password: 'bar' });
+  expect(signupAction).toHaveBeenCalledWith({
+    email: 'foo@bar',
+    password: 'bar',
+    confirmEmail: 'foo@bar',
+    confirmPassword: 'bar',
+  });
   expect(wrapper.state().errors.email).toBe(false);
   expect(wrapper.state().errors.password).toBe(false);
+  expect(wrapper.state().errors.confirmEmail).toBe(false);
+  expect(wrapper.state().errors.confirmPassword).toBe(false);
 
   done();
 });

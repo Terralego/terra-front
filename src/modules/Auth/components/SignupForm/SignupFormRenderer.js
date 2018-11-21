@@ -25,21 +25,6 @@ export const SignupFormRenderer = ({
           autoComplete="username"
         />
       </FormGroup>
-      <FormGroup
-        helperText="Confirm your email"
-        label="Confirm your email"
-        labelFor="confirmEmail"
-        labelInfo="(required)"
-        intent={email ? Intent.WARNING : null}
-      >
-        <InputGroup
-          id="confirmEmail"
-          placeholder="Confirm your email"
-          onChange={setSignupProperty}
-          intent={email ? Intent.WARNING : null}
-          autoComplete="email"
-        />
-      </FormGroup>
 
       <FormGroup
         helperText="Type your password"
@@ -58,22 +43,6 @@ export const SignupFormRenderer = ({
         />
       </FormGroup>
 
-      <FormGroup
-        helperText="Confirm your password"
-        label="Confirm your password"
-        labelFor="confirmPassword"
-        labelInfo="(required)"
-        intent={password ? Intent.WARNING : null}
-      >
-        <InputGroup
-          type="password"
-          id="confirmPassword"
-          placeholder="Confirm your Password"
-          onChange={setSignupProperty}
-          intent={password ? Intent.WARNING : null}
-          autoComplete="current-password"
-        />
-      </FormGroup>
       <Button
         type="submit"
       >

@@ -54,48 +54,6 @@ exports[`should render correctly 1`] = `
     >
       <label
         className="bp3-label"
-        htmlFor="confirmEmail"
-      >
-        Confirm your email
-         
-        <span
-          className="bp3-text-muted"
-        >
-          (required)
-        </span>
-      </label>
-      <div
-        className="bp3-form-content"
-      >
-        <div
-          className="bp3-input-group"
-        >
-          <input
-            autoComplete="email"
-            className="bp3-input"
-            id="confirmEmail"
-            onChange={[Function]}
-            placeholder="Confirm your email"
-            style={
-              Object {
-                "paddingRight": 10,
-              }
-            }
-            type="text"
-          />
-        </div>
-        <div
-          className="bp3-form-helper-text"
-        >
-          Confirm your email
-        </div>
-      </div>
-    </div>
-    <div
-      className="bp3-form-group"
-    >
-      <label
-        className="bp3-label"
         htmlFor="password"
       >
         Password
@@ -130,48 +88,6 @@ exports[`should render correctly 1`] = `
           className="bp3-form-helper-text"
         >
           Type your password
-        </div>
-      </div>
-    </div>
-    <div
-      className="bp3-form-group"
-    >
-      <label
-        className="bp3-label"
-        htmlFor="confirmPassword"
-      >
-        Confirm your password
-         
-        <span
-          className="bp3-text-muted"
-        >
-          (required)
-        </span>
-      </label>
-      <div
-        className="bp3-form-content"
-      >
-        <div
-          className="bp3-input-group"
-        >
-          <input
-            autoComplete="current-password"
-            className="bp3-input"
-            id="confirmPassword"
-            onChange={[Function]}
-            placeholder="Confirm your Password"
-            style={
-              Object {
-                "paddingRight": 10,
-              }
-            }
-            type="password"
-          />
-        </div>
-        <div
-          className="bp3-form-helper-text"
-        >
-          Confirm your password
         </div>
       </div>
     </div>
@@ -199,7 +115,7 @@ exports[`should render with errors 1`] = `
     onSubmit={[Function]}
   >
     <div
-      className="bp3-form-group"
+      className="bp3-form-group bp3-intent-warning"
     >
       <label
         className="bp3-label"
@@ -217,7 +133,7 @@ exports[`should render with errors 1`] = `
         className="bp3-form-content"
       >
         <div
-          className="bp3-input-group"
+          className="bp3-input-group bp3-intent-warning"
         >
           <input
             autoComplete="username"
@@ -237,48 +153,6 @@ exports[`should render with errors 1`] = `
           className="bp3-form-helper-text"
         >
           Type your email
-        </div>
-      </div>
-    </div>
-    <div
-      className="bp3-form-group"
-    >
-      <label
-        className="bp3-label"
-        htmlFor="confirmEmail"
-      >
-        Confirm your email
-         
-        <span
-          className="bp3-text-muted"
-        >
-          (required)
-        </span>
-      </label>
-      <div
-        className="bp3-form-content"
-      >
-        <div
-          className="bp3-input-group"
-        >
-          <input
-            autoComplete="email"
-            className="bp3-input"
-            id="confirmEmail"
-            onChange={[Function]}
-            placeholder="Confirm your email"
-            style={
-              Object {
-                "paddingRight": 10,
-              }
-            }
-            type="text"
-          />
-        </div>
-        <div
-          className="bp3-form-helper-text"
-        >
-          Confirm your email
         </div>
       </div>
     </div>
@@ -321,48 +195,6 @@ exports[`should render with errors 1`] = `
           className="bp3-form-helper-text"
         >
           Type your password
-        </div>
-      </div>
-    </div>
-    <div
-      className="bp3-form-group"
-    >
-      <label
-        className="bp3-label"
-        htmlFor="confirmPassword"
-      >
-        Confirm your password
-         
-        <span
-          className="bp3-text-muted"
-        >
-          (required)
-        </span>
-      </label>
-      <div
-        className="bp3-form-content"
-      >
-        <div
-          className="bp3-input-group"
-        >
-          <input
-            autoComplete="current-password"
-            className="bp3-input"
-            id="confirmPassword"
-            onChange={[Function]}
-            placeholder="Confirm your Password"
-            style={
-              Object {
-                "paddingRight": 10,
-              }
-            }
-            type="password"
-          />
-        </div>
-        <div
-          className="bp3-form-helper-text"
-        >
-          Confirm your password
         </div>
       </div>
     </div>

@@ -8,12 +8,10 @@ const ENDPOINT_CREATE_TOKEN = 'accounts/register/'; // => auth/create-token/
 
 export async function createToken (properties) {
   log('create auth token start');
-  const response = await Api.request(ENDPOINT_CREATE_TOKEN, {
+  return Api.request(ENDPOINT_CREATE_TOKEN, {
     method: POST,
     body: properties,
   });
-
-  return response;
 }
 
 export async function obtainToken (email, password) {
