@@ -4,6 +4,7 @@ import { shallow } from 'enzyme';
 import { Map } from './';
 
 const props = {
+  styles: {},
   accessToken: 'pk.eyJ1IjoidGFzdGF0aGFtMSIsImEiOiJjamZ1ejY2bmYxNHZnMnhxbjEydW9sM29hIn0.w9ndNH49d91aeyvxSjKQqg',
 };
 
@@ -18,6 +19,8 @@ jest.mock('mapbox-gl', () => ({
     setMaxZoom: jest.fn(() => 20),
     setMinZoom: jest.fn(() => 5),
     setStyle: jest.fn(() => 'mapbox://styles/mapbox/light-v9'),
+    setLayoutProperty: jest.fn(),
+    setPaintProperty: jest.fn(),
   })),
   ScaleControl: jest.fn(),
   NavigationControl: jest.fn(),
@@ -117,7 +120,7 @@ describe('on properties changes', () => {
 
   it("should not call setStyle if property doesn't change", () => {
     const wrapper = shallow(<Map {...props} />);
-    wrapper.setProps({ mapStyle: 'mapbox://styles/mapbox/light-v9' });
+    wrapper.setProps({ styles: 'mapbox://styles/mapbox/light-v9' });
     expect(wrapper.instance().map.setStyle).not.toHaveBeenCalled();
   });
 
@@ -139,15 +142,15 @@ describe('on properties changes', () => {
     const wrapper = shallow(<Map {...props} />);
     const instance = wrapper.instance();
 
-    wrapper.setProps({ scaleControl: false });
-    wrapper.setProps({ navigationControl: false });
-    wrapper.setProps({ attributionControl: false });
+    wrapper.setProps({ displayScaleControl: false });
+    wrapper.setProps({ displayNavigationControl: false });
+    wrapper.setProps({ displayAttributionControl: false });
     expect(instance.map.addControl).toHaveBeenCalledTimes(3);
     expect(instance.map.removeControl).toHaveBeenCalledTimes(3);
 
-    wrapper.setProps({ scaleControl: true });
-    wrapper.setProps({ navigationControl: true });
-    wrapper.setProps({ attributionControl: true });
+    wrapper.setProps({ displayScaleControl: true });
+    wrapper.setProps({ displayNavigationControl: true });
+    wrapper.setProps({ displayAttributionControl: true });
     expect(instance.map.addControl).toHaveBeenCalledTimes(6);
     expect(instance.map.removeControl).toHaveBeenCalledTimes(3);
   });
@@ -162,4 +165,16 @@ it('should render div', () => {
 it('should have a ref', () => {
   const wrapper = shallow(<Map {...props} />);
   expect(wrapper.instance().containerEl).toEqual(React.createRef());
+});
+
+it('should update map', () => {
+  const wrapper = shallow(<Map {...props} />);
+  const { map } = wrapper.instance();
+  wrapper.setProps({ stylesToApply: { layouts: [{ id: 'foo', visibility: 'visible' }] } });
+  expect(map.setLayoutProperty).toHaveBeenCalledWith('foo', 'visibility', 'visible');
+  wrapper.setProps({ stylesToApply: { layouts: [{ id: 'foo', visibility: 'none' }] } });
+  expect(map.setLayoutProperty).toHaveBeenCalledWith('foo', 'visibility', 'none');
+
+  wrapper.setProps({ stylesToApply: { layouts: [{ id: 'foo', paint: { 'fill-color': '#000000' } }] } });
+  expect(map.setPaintProperty).toHaveBeenCalledWith('foo', 'fill-color', '#000000');
 });
