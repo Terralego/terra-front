@@ -170,11 +170,11 @@ it('should have a ref', () => {
 it('should update map', () => {
   const wrapper = shallow(<Map {...props} />);
   const { map } = wrapper.instance();
-  wrapper.setProps({ layouts: [{ id: 'foo', visibility: 'visible' }] });
+  wrapper.setProps({ stylesToApply: { layouts: [{ id: 'foo', visibility: 'visible' }] } });
   expect(map.setLayoutProperty).toHaveBeenCalledWith('foo', 'visibility', 'visible');
-  wrapper.setProps({ layouts: [{ id: 'foo', visibility: 'none' }] });
+  wrapper.setProps({ stylesToApply: { layouts: [{ id: 'foo', visibility: 'none' }] } });
   expect(map.setLayoutProperty).toHaveBeenCalledWith('foo', 'visibility', 'none');
 
-  wrapper.setProps({ layouts: [{ id: 'foo', paint: { 'fill-color': '#000000' } }] });
+  wrapper.setProps({ stylesToApply: { layouts: [{ id: 'foo', paint: { 'fill-color': '#000000' } }] } });
   expect(map.setPaintProperty).toHaveBeenCalledWith('foo', 'fill-color', '#000000');
 });

@@ -1,8 +1,7 @@
 import React from 'react';
-import deepmerge from 'deepmerge';
-import Map from '../../modules/Visualizer/widgets/Map/components/Map';
+import WidgetMap from '../../modules/Visualizer/widgets/Map/WidgetMap';
 
-const TREELAYOUTS = [{
+const LAYERSTREE = [{
   label: 'scenario 1',
   active: {
     layouts: [{
@@ -69,51 +68,47 @@ const TREELAYOUTS = [{
   },
 }];
 
-class MapLayersToggle extends React.Component {
-  state = {
-    treeLayouts: this.props.treeLayouts,
-    layouts: [],
-  }
-
-  toggle = layout => {
-    const { layouts } = layout.isActive
-      ? layout.inactive
-      : layout.active;
-    layout.isActive = !layout.isActive; // eslint-disable-line
-
-    const newLayouts = deepmerge(this.state.layouts, layouts);
-
-    this.setState({
-      treeLayouts: [...this.state.treeLayouts],
-      layouts: newLayouts,
-    });
+class LayersTree extends React.Component {
+  toggle = layer => {
+    const { onChange } = this.props;
+    const stylesToApply = layer.isActive
+      ? layer.inactive
+      : layer.active;
+    layer.isActive = !layer.isActive; // eslint-disable-line
+    onChange(stylesToApply);
   }
 
   render () {
-    const { treeLayouts, layouts } = this.state;
+    const { layersTree } = this.props;
+
     return (
-      <div className="tf-map">
-        {treeLayouts.map(layout => (
+      <>
+        {layersTree.map(layer => (
           <button
-            key={layout.label}
-            onClick={() => this.toggle(layout)}
+            key={layer.label}
+            onClick={() => this.toggle(layer)}
           >
-            {layout.isActive ? 'disable ' : 'enable '}
-            {layout.label}
+            {layer.isActive ? 'disable ' : 'enable '}
+            {layer.label}
           </button>
         ))}
-        <Map
-          accessToken="pk.eyJ1IjoiaGFkcmllbmwiLCJhIjoiY2pueDgwZGhxMDVkbjN3cWx5dGlhd3p1eiJ9.FR_XylCvZZJLdB3No6Xxnw"
-          styles="mapbox://styles/hadrienl/cjoplcnu821de2rs2cf0em4rw"
-          center={[2.317600, 48.866500]}
-          zoom={12.0}
-          layouts={layouts}
-        />
-      </div>
+      </>
     );
   }
 }
 
 export default stories => {
-  stories.add('Map Layers', () => <MapLayersToggle treeLayouts={TREELAYOUTS} />);
+  stories.add('WidgetMap', () => (
+    <div className="tf-map">
+      <WidgetMap
+        LayersTreeComponent={LayersTree}
+        layersTree={LAYERSTREE}
+        accessToken="pk.eyJ1IjoiaGFkcmllbmwiLCJhIjoiY2pueDgwZGhxMDVkbjN3cWx5dGlhd3p1eiJ9.FR_XylCvZZJLdB3No6Xxnw"
+        styles="mapbox://styles/hadrienl/cjoplcnu821de2rs2cf0em4rw"
+        center={[2.317600, 48.866500]}
+        zoom={12.0}
+        style={{ height: '90vh' }}
+      />
+    </div>
+  ));
 };

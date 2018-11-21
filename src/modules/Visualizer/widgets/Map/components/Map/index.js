@@ -1,8 +1,10 @@
 import React from 'react';
 import mapBoxGl from 'mapbox-gl';
 import PropTypes from 'prop-types';
-
 import 'mapbox-gl/dist/mapbox-gl.css';
+
+import { StylesToApplyProps } from '../../LayersTreeProps';
+
 import './Map.scss';
 
 export class Map extends React.Component {
@@ -30,10 +32,7 @@ export class Map extends React.Component {
       easing: PropTypes.func,
     }),
 
-    layouts: PropTypes.arrayOf(PropTypes.shape({
-      id: PropTypes.string.isRequired,
-      visibility: PropTypes.oneOf(['visible', 'none']),
-    })),
+    stylesToApply: StylesToApplyProps,
   };
 
   static defaultProps = {
@@ -51,7 +50,7 @@ export class Map extends React.Component {
       curve: false,
       easing: () => {},
     },
-    layouts: [],
+    stylesToApply: {},
   };
 
   componentDidMount () {
@@ -122,7 +121,7 @@ export class Map extends React.Component {
       minZoom,
       maxBounds,
       flyTo,
-      layouts,
+      stylesToApply,
     } = this.props;
 
     this.updateFlyTo(prevProps.flyTo, flyTo);
@@ -171,13 +170,14 @@ export class Map extends React.Component {
       }
     }
 
-    if (layouts !== prevProps.layouts) {
-      this.updateLayouts();
+    if (stylesToApply !== prevProps.stylesToApply) {
+      this.applyNewStyles();
     }
   }
 
-  updateLayouts () {
-    const { layouts } = this.props;
+  applyNewStyles () {
+    const { stylesToApply: { layouts = [] } = {} } = this.props;
+
     layouts.forEach(({ id, ...properties }) => {
       Object.keys(properties).forEach(property => {
         switch (property) {

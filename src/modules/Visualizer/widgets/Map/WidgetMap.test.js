@@ -18,24 +18,32 @@ it('should render correctly', () => {
 it('should merge layouts', () => {
   const layersTree = [{
     label: 'foo',
-    active: [{
-      id: 'foo',
-      visibility: 'visible',
-    }],
-    inactive: [{
-      id: 'foo',
-      visibility: 'none',
-    }],
+    active: {
+      layouts: [{
+        id: 'foo',
+        visibility: 'visible',
+      }],
+    },
+    inactive: {
+      layouts: [{
+        id: 'foo',
+        visibility: 'none',
+      }],
+    },
   }, {
     label: 'bar',
-    active: [{
-      id: 'bar',
-      visibility: 'visible',
-    }],
-    inactive: [{
-      id: 'bar',
-      visibility: 'none',
-    }],
+    active: {
+      layouts: [{
+        id: 'bar',
+        visibility: 'visible',
+      }],
+    },
+    inactive: {
+      layouts: [{
+        id: 'bar',
+        visibility: 'none',
+      }],
+    },
   }];
   const wrapper = shallow((
     <WidgetMap
@@ -45,26 +53,26 @@ it('should merge layouts', () => {
 
   const instance = wrapper.instance();
   instance.onChange(layersTree[0].active);
-  expect(wrapper.state().layouts).toEqual([{
-    id: 'foo',
-    visibility: 'visible',
-  }]);
+  expect(wrapper.state().stylesToApply).toEqual({
+    layouts: [{
+      id: 'foo',
+      visibility: 'visible',
+    }],
+  });
 
   instance.onChange(layersTree[1].active);
-  expect(wrapper.state().layouts).toEqual([{
-    id: 'bar',
-    visibility: 'visible',
-  }, {
-    id: 'foo',
-    visibility: 'visible',
-  }]);
+  expect(wrapper.state().stylesToApply).toEqual({
+    layouts: [{
+      id: 'bar',
+      visibility: 'visible',
+    }],
+  });
 
   instance.onChange(layersTree[0].inactive);
-  expect(wrapper.state().layouts).toEqual([{
-    id: 'foo',
-    visibility: 'none',
-  }, {
-    id: 'bar',
-    visibility: 'visible',
-  }]);
+  expect(wrapper.state().stylesToApply).toEqual({
+    layouts: [{
+      id: 'foo',
+      visibility: 'none',
+    }],
+  });
 });
