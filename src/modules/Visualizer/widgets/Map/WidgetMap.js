@@ -3,8 +3,7 @@ import PropTypes from 'prop-types';
 
 import LayersTreeProps from './LayersTreeProps';
 import Map from './components/Map';
-
-const LayersTree = () => null;
+import LayersTree from './components/LayersTree';
 
 export class WidgetMap extends React.Component {
   static propTypes = {
