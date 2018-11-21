@@ -10,16 +10,15 @@ class LayersTree extends Component {
   static propTypes = layersTreeProps;
   static defaultProps = { layersTreeProps };
 
-  activityChange = layer => () => {
+  onToggleChange = layer => () => {
     const { onChange } = this.props;
-    const styleToApply = layer.isActive ? layer.active : layer.inactive;
+    const styleToApply = layer.isActive ? layer.inactive : layer.active;
     layer.isActive = !layer.isActive;
     onChange(styleToApply);
   }
 
   render () {
     const { layersTree } = this.props;
-
     return (
       <Card
         className="layersTreePanelContainer bp3-dark"
@@ -28,10 +27,10 @@ class LayersTree extends Component {
         { layersTree.map(layer => (
           <LayerNode
             label={layer.label}
-            activityChange={this.activityChange(layer)}
+            onToggleChange={this.onToggleChange(layer)}
             isActive={layer.isActive}
           />
-      ))}
+        ))}
       </Card>
     );
   }

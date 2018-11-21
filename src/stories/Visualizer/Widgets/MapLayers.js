@@ -11,7 +11,7 @@ const LAYERSTREE = [{
       id: 'road',
       paint: {
         'line-color': '#ff0000',
-        'line-opacity': 0.2,
+        'line-opacity': 0.1,
       },
     }],
   },
@@ -35,6 +35,7 @@ const LAYERSTREE = [{
       visibility: 'visible',
       paint: {
         'line-color': '#0000ff',
+        'line-opacity': 0.3,
       },
     }, {
       id: 'waterway',

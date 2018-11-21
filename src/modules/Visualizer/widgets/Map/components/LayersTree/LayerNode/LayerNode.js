@@ -7,7 +7,7 @@ const activedStyle = isActive => (
   isActive === true ? { opacity: 1 } : { opacity: 0.7 }
 );
 
-const LayerNode = ({ label, activityChange, isActive }) => (
+const LayerNode = ({ label, onToggleChange, isActive }) => (
   <Card
     className="dataLayerContainer"
     elevation={Elevation.TWO}
@@ -16,7 +16,7 @@ const LayerNode = ({ label, activityChange, isActive }) => (
     <Switch
       checked={isActive}
       label={label}
-      onChange={activityChange}
+      onChange={onToggleChange}
     />
   </Card>
 );
