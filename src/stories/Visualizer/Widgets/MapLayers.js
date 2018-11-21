@@ -1,5 +1,5 @@
 import React from 'react';
-import WidgetMap from '../../modules/Visualizer/widgets/Map/WidgetMap';
+import WidgetMap from '../../../modules/Visualizer/widgets/Map/WidgetMap';
 
 const LAYERSTREE = [{
   label: 'scenario 1',
@@ -97,18 +97,14 @@ class LayersTree extends React.Component {
   }
 }
 
-export default stories => {
-  stories.add('WidgetMap', () => (
-    <div className="tf-map">
-      <WidgetMap
-        LayersTreeComponent={LayersTree}
-        layersTree={LAYERSTREE}
-        accessToken="pk.eyJ1IjoiaGFkcmllbmwiLCJhIjoiY2pueDgwZGhxMDVkbjN3cWx5dGlhd3p1eiJ9.FR_XylCvZZJLdB3No6Xxnw"
-        styles="mapbox://styles/hadrienl/cjoplcnu821de2rs2cf0em4rw"
-        center={[2.317600, 48.866500]}
-        zoom={12.0}
-        style={{ height: '90vh' }}
-      />
-    </div>
-  ));
-};
+export default () => (
+  <WidgetMap
+    LayersTreeComponent={LayersTree}
+    layersTree={LAYERSTREE}
+    accessToken="pk.eyJ1IjoiaGFkcmllbmwiLCJhIjoiY2pueDgwZGhxMDVkbjN3cWx5dGlhd3p1eiJ9.FR_XylCvZZJLdB3No6Xxnw"
+    styles="mapbox://styles/hadrienl/cjoplcnu821de2rs2cf0em4rw"
+    center={[2.317600, 48.866500]}
+    zoom={12.0}
+    style={{ height: '90vh' }}
+  />
+);

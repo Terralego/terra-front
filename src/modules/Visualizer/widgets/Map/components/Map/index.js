@@ -210,7 +210,7 @@ export class Map extends React.Component {
 
   render () {
     return (
-      <div ref={this.containerEl} className="mapboxgl-map" />
+      <div ref={this.containerEl} className="tf-map" />
     );
   }
 }
