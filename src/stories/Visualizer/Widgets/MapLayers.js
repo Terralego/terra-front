@@ -1,5 +1,7 @@
 import React from 'react';
-import WidgetMap from '../../../modules/Visualizer/widgets/Map/WidgetMap';
+
+import VisualizerProvider from '../../../modules/Visualizer';
+import WidgetMap from '../../../modules/Visualizer/widgets/Map';
 
 const LAYERSTREE = [{
   label: 'scenario 1',
@@ -70,7 +72,7 @@ const LAYERSTREE = [{
 }];
 
 export default () => (
-  <div className="tf-map">
+  <VisualizerProvider>
     <WidgetMap
       layersTree={LAYERSTREE}
       accessToken="pk.eyJ1IjoiaGFkcmllbmwiLCJhIjoiY2pueDgwZGhxMDVkbjN3cWx5dGlhd3p1eiJ9.FR_XylCvZZJLdB3No6Xxnw"
@@ -78,6 +80,10 @@ export default () => (
       center={[2.317600, 48.866500]}
       zoom={12.0}
       style={{ height: '90vh', display: 'flex' }}
+      interactions={[{
+        id: 'place-city-label-major',
+        action: 'displayDetails',
+      }]}
     />
-  </div>
+  </VisualizerProvider>
 );

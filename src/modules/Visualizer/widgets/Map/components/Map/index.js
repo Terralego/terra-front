@@ -16,6 +16,7 @@ function createMap (params) {
 
 export class Map extends React.Component {
   static propTypes = {
+    // Mapbox general config
     accessToken: PropTypes.string.isRequired,
     styles: PropTypes.oneOfType([
       PropTypes.string,
@@ -31,6 +32,8 @@ export class Map extends React.Component {
     minZoom: PropTypes.number,
     zoom: PropTypes.number,
     maxBounds: PropTypes.oneOfType([PropTypes.arrayOf(PropTypes.array), PropTypes.bool]),
+
+    // Action to fly out to coordinates
     flyTo: PropTypes.shape({
       center: PropTypes.arrayOf(PropTypes.number),
       zoom: PropTypes.number,
@@ -39,7 +42,10 @@ export class Map extends React.Component {
       easing: PropTypes.func,
     }),
 
+    // Way to give order to map to apply new styles
     stylesToApply: StylesToApplyProps,
+
+    onClick: PropTypes.func,
   };
 
   static defaultProps = {
@@ -58,6 +64,7 @@ export class Map extends React.Component {
       easing: () => {},
     },
     stylesToApply: {},
+    onClick () {},
   };
 
   componentDidMount () {
@@ -68,6 +75,7 @@ export class Map extends React.Component {
     this.updateMapProperties(prevProps);
   }
 
+  clickListeners = [];
   containerEl = React.createRef();
 
   async initMapProperties () {
@@ -81,6 +89,7 @@ export class Map extends React.Component {
       minZoom,
       zoom,
       maxBounds,
+      center,
     } = this.props;
 
     mapBoxGl.accessToken = accessToken;
@@ -88,7 +97,7 @@ export class Map extends React.Component {
       attributionControl: false,
       container: this.containerEl.current,
       style,
-      center: [2, 47],
+      center,
       zoom,
       maxZoom,
       minZoom,
@@ -110,6 +119,8 @@ export class Map extends React.Component {
       this.attributionControl = new mapBoxGl.AttributionControl();
       this.map.addControl(this.attributionControl);
     }
+
+    this.addClickListeners();
   }
 
   updateFlyTo = (prevFlyTo, flyTo) => {
@@ -129,6 +140,7 @@ export class Map extends React.Component {
       maxBounds,
       flyTo,
       stylesToApply,
+      onClick,
     } = this.props;
 
     this.updateFlyTo(prevProps.flyTo, flyTo);
@@ -177,6 +189,10 @@ export class Map extends React.Component {
       }
     }
 
+    if (onClick !== prevProps.onClick) {
+      this.addClickListeners();
+    }
+
     if (stylesToApply !== prevProps.stylesToApply) {
       this.applyNewStyles();
     }
@@ -206,6 +222,15 @@ export class Map extends React.Component {
         //
       }
     });
+  }
+
+  addClickListeners () {
+    const { onClick } = this.props;
+    this.clickListeners.forEach(listener => {
+      listener();
+    });
+    this.map.getStyle().layers.map(({ id }) =>
+      this.clickListeners.push(this.map.on('click', id, e => onClick(id, e.features, e))));
   }
 
   reset () {
