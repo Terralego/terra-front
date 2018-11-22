@@ -3,5 +3,15 @@
 exports[`should render correctly 1`] = `
 <div
   className="widget-map"
-/>
+>
+  <div
+    className="bp3-card bp3-elevation-0 layerstree-panel-container bp3-dark"
+  >
+    <h4
+      className="bp3-heading"
+    >
+      Couches cartographiques
+    </h4>
+  </div>
+</div>
 `;
