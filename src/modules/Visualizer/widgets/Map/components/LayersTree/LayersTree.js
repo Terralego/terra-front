@@ -8,7 +8,12 @@ import './styles.scss';
 class LayersTree extends Component {
 
   static propTypes = layersTreeProps;
-  static defaultProps = { layersTreeProps };
+  static defaultProps = {
+    title: 'Couches cartographiques',
+    label: '',
+    active: {},
+    inactive: {},
+  };
 
   onToggleChange = layer => () => {
     const { onChange } = this.props;
@@ -18,12 +23,12 @@ class LayersTree extends Component {
   }
 
   render () {
-    const { layersTree } = this.props;
+    const { layersTree, title } = this.props;
     return (
       <Card
-        className="layersTreePanelContainer bp3-dark"
+        className="layerstree-panel-container bp3-dark"
       >
-        <H4>Couches cartographique</H4>
+        <H4>{title}</H4>
         { layersTree.map(layer => (
           <LayerNode
             label={layer.label}

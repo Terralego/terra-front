@@ -3,15 +3,11 @@ import { Card, Switch, Elevation } from '@blueprintjs/core';
 
 import './styles.scss';
 
-const activedStyle = isActive => (
-  isActive === true ? { opacity: 1 } : { opacity: 0.7 }
-);
-
 const LayerNode = ({ label, onToggleChange, isActive }) => (
   <Card
-    className="dataLayerContainer"
+    className="layerNode-container"
     elevation={Elevation.TWO}
-    style={activedStyle(isActive)}
+    style={{ opacity: isActive ? 1 : 0.7 }}
   >
     <Switch
       checked={isActive}
