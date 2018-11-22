@@ -111,17 +111,17 @@ export class Map extends React.Component {
       bearing: 0,
     });
 
-    if (displayScaleControl && !this.scaleControl) {
+    if (displayScaleControl && !this.displayScaleControl) {
       this.scaleControl = new mapBoxGl.ScaleControl();
       this.map.addControl(this.scaleControl);
     }
 
-    if (displayNavigationControl && !this.navigationControl) {
+    if (displayNavigationControl && !this.displayNavigationControl) {
       this.navigationControl = new mapBoxGl.NavigationControl();
       this.map.addControl(this.navigationControl);
     }
 
-    if (displayAttributionControl && !this.attributionControl) {
+    if (displayAttributionControl && !this.displayAttributionControl) {
       this.attributionControl = new mapBoxGl.AttributionControl();
       this.map.addControl(this.attributionControl);
     }

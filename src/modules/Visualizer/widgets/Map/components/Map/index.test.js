@@ -29,9 +29,9 @@ jest.mock('mapbox-gl', () => {
   };
   return {
     Map: jest.fn(() => map),
-    ScaleControl: jest.fn(),
-    NavigationControl: jest.fn(),
-    AttributionControl: jest.fn(),
+    ScaleControl: jest.fn(() => {}),
+    NavigationControl: jest.fn(() => {}),
+    AttributionControl: jest.fn(() => {}),
   };
 });
 
@@ -164,7 +164,7 @@ describe('on properties changes', () => {
 
   it('should call addControl on init', async done => {
     const wrapper = shallow(<Map {...props} />);
-    await true;
+    await new Promise(resolve => setTimeout(resolve, 1));
     const instance = wrapper.instance();
     expect(instance.map.addControl).toHaveBeenCalledWith(instance.scaleControl);
     expect(instance.map.addControl).toHaveBeenCalledWith(instance.navigationControl);

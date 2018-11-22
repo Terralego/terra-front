@@ -67,7 +67,9 @@
     "collectCoverageFrom": [
       "src/**/*.js",
       "!src/stories/**/*",
-      "!src/**/index.js"
+      "!src/**/index.js",
+      "!src/**/context.js",
+      "!src/**/log.js"
     ],
     "coverageThreshold": {
       "global": {

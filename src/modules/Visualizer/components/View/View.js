@@ -2,7 +2,6 @@ import React from 'react';
 import PropTypes from 'prop-types';
 
 import WidgetMap from '../../widgets/Map';
-import layersTreePropTypes from '../../propTypes/LayersTreePropTypes';
 
 const Details = () => null;
 
@@ -10,7 +9,6 @@ export class View extends React.Component {
   static propTypes = {
     widgets: PropTypes.arrayOf(PropTypes.shape({
       type: PropTypes.oneOf(['map']),
-      layersTree: layersTreePropTypes.isRequired,
     })).isRequired,
   };
 
