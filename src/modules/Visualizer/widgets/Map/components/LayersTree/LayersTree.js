@@ -32,6 +32,7 @@ export class LayersTree extends Component {
         <H4>{title}</H4>
         {layersTree.map(layer => (
           <LayerNode
+            key={layer.label}
             label={layer.label}
             onToggleChange={this.onToggleChange(layer)}
             isActive={layer.isActive}
