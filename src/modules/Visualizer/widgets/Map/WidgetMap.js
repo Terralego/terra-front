@@ -2,7 +2,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 
 import log from '../../services/log';
-import LayersTreeProps from './LayersTreeProps';
+import LayersTreeProps from '../../propTypes/LayersTreePropTypes';
 import Map from './components/Map';
 import LayersTree from './components/LayersTree';
 
