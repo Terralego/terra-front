@@ -1,0 +1,26 @@
+.layersTree-panel-container {
+  padding: 16px 8px;
+  border-radius: 0;
+  width: (100vw/12)*3;//((100% / 12) * 3); 
+}
+
+.layersGroup-label {
+  font-weight: 300;
+  vertical-align: middle;
+  margin-bottom: 0px;
+}
+
+.bp3-control {
+  margin-bottom: 0px;
+}
+
+.layerNode-card {
+  height: 38px;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+}
+
+.button-More-vertical {
+  transform: rotate(90deg);
+}
