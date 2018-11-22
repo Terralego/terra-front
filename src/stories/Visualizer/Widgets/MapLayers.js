@@ -69,17 +69,15 @@ const LAYERSTREE = [{
   },
 }];
 
-export default stories => {
-  stories.add('WidgetMap', () => (
-    <div className="tf-map">
-      <WidgetMap
-        layersTree={LAYERSTREE}
-        accessToken="pk.eyJ1IjoiaGFkcmllbmwiLCJhIjoiY2pueDgwZGhxMDVkbjN3cWx5dGlhd3p1eiJ9.FR_XylCvZZJLdB3No6Xxnw"
-        styles="mapbox://styles/hadrienl/cjoplcnu821de2rs2cf0em4rw"
-        center={[2.317600, 48.866500]}
-        zoom={12.0}
-        style={{ height: '90vh', display: 'flex' }}
-      />
-    </div>
-  ));
-};
+export default () => (
+  <div className="tf-map">
+    <WidgetMap
+      layersTree={LAYERSTREE}
+      accessToken="pk.eyJ1IjoiaGFkcmllbmwiLCJhIjoiY2pueDgwZGhxMDVkbjN3cWx5dGlhd3p1eiJ9.FR_XylCvZZJLdB3No6Xxnw"
+      styles="mapbox://styles/hadrienl/cjoplcnu821de2rs2cf0em4rw"
+      center={[2.317600, 48.866500]}
+      zoom={12.0}
+      style={{ height: '90vh', display: 'flex' }}
+    />
+  </div>
+);
