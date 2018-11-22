@@ -1,9 +1,12 @@
 import React from 'react';
 import renderer from 'react-test-renderer';
 import { shallow } from 'enzyme';
-import { Map } from './';
+import mapboxgl from 'mapbox-gl';
+import { Map } from './Map';
+
 
 const props = {
+  map: mapboxgl.Map(),
   styles: {},
   accessToken: 'pk.eyJ1IjoidGFzdGF0aGFtMSIsImEiOiJjamZ1ejY2bmYxNHZnMnhxbjEydW9sM29hIn0.w9ndNH49d91aeyvxSjKQqg',
 };
@@ -45,37 +48,30 @@ it('should render correctly', () => {
 });
 
 describe('Mount and update methods', () => {
-  it('should call initMapProperties in mount', async done => {
+  it('should call initMapProperties in mount', () => {
     jest.spyOn(Map.prototype, 'initMapProperties');
     const wrapper = shallow(<Map {...props} />);
-    await true;
     expect(wrapper.instance().initMapProperties).toHaveBeenCalled();
-    done();
   });
 
-  it('should call updateMapProperties in update', async done => {
+  it('should call updateMapProperties in update', () => {
     const wrapper = shallow(<Map {...props} />);
-    await true;
     jest.spyOn(wrapper.instance(), 'updateMapProperties');
     wrapper.setProps({ maxZoom: 7 });
     expect(wrapper.instance().updateMapProperties).toHaveBeenCalled();
-    done();
   });
 
-  it('should call updateFlyTo in updateMapProperties', async done => {
+  it('should call updateFlyTo in updateMapProperties', () => {
     const wrapper = shallow(<Map {...props} />);
-    await true;
     jest.spyOn(wrapper.instance(), 'updateFlyTo');
     wrapper.setProps({ maxZoom: 7 });
     expect(wrapper.instance().updateFlyTo).toHaveBeenCalled();
-    done();
   });
 });
 
 describe('on properties changes', () => {
-  it('should call flyTo and set new flyTo on update', async done => {
+  it('should call flyTo and set new flyTo on update', () => {
     const wrapper = shallow(<Map {...props} />);
-    await true;
     const flyTo = {
       center: [10, 9],
       zoom: 7,
@@ -85,151 +81,124 @@ describe('on properties changes', () => {
     };
 
     wrapper.setProps({ flyTo });
-    expect(wrapper.instance().map.flyTo).toHaveBeenCalled();
-    expect(wrapper.instance().props.flyTo).toBe(flyTo);
-    done();
+    expect(props.map.flyTo).toHaveBeenCalledWith(flyTo);
   });
 
-  it('should call flyTo and not update flyTo property', async done => {
+  it('should call flyTo and not update flyTo property', () => {
     const wrapper = shallow(<Map {...props} />);
-    await true;
     wrapper.setProps({ maxZoom: 9 });
-    expect(wrapper.instance().map.flyTo).not.toHaveBeenCalled();
-    done();
+    expect(props.map.flyTo).not.toHaveBeenCalled();
   });
 
-  it('should call setMaxBound on property change', async done => {
+  it('should call setMaxBound on property change', () => {
     const wrapper = shallow(<Map {...props} />);
-    await true;
     wrapper.setProps({ maxBounds: [[0, 0], [0, 0]] });
-    expect(wrapper.instance().map.setMaxBounds).toHaveBeenCalled();
-    done();
+    expect(props.map.setMaxBounds).toHaveBeenCalled();
   });
 
-  it("should not call setMaxBound if property doesn't change", async done => {
+  it("should not call setMaxBound if property doesn't change", () => {
     const wrapper = shallow(<Map {...props} />);
-    await true;
     wrapper.setProps({ maxBounds: false });
-    expect(wrapper.instance().map.setMaxBounds).not.toHaveBeenCalled();
-    done();
+    expect(props.map.setMaxBounds).not.toHaveBeenCalled();
   });
 
-  it('should call setMaxZoom on property change', async done => {
+  it('should call setMaxZoom on property change', () => {
     const wrapper = shallow(<Map {...props} />);
-    await true;
     wrapper.setProps({ maxZoom: 7 });
-    expect(wrapper.instance().map.setMaxZoom).toHaveBeenCalled();
-    done();
+    expect(props.map.setMaxZoom).toHaveBeenCalled();
   });
 
-  it("should not call setMaxZoom if property doesn't change", async done => {
+  it("should not call setMaxZoom if property doesn't change", () => {
     const wrapper = shallow(<Map {...props} />);
-    await true;
     wrapper.setProps({ maxZoom: 20 });
-    expect(wrapper.instance().map.setMaxZoom).not.toHaveBeenCalled();
-    done();
+    expect(props.map.setMaxZoom).not.toHaveBeenCalled();
   });
 
-  it('should call setMinZoom on property change', async done => {
+  it('should call setMinZoom on property change', () => {
     const wrapper = shallow(<Map {...props} />);
-    await true;
     wrapper.setProps({ minZoom: 7 });
-    expect(wrapper.instance().map.setMinZoom).toHaveBeenCalled();
-    done();
+    expect(props.map.setMinZoom).toHaveBeenCalled();
   });
 
-  it("should not call setMinZoom if property doesn't change", async done => {
+  it("should not call setMinZoom if property doesn't change", () => {
     const wrapper = shallow(<Map {...props} />);
-    await true;
     wrapper.setProps({ minZoom: 0 });
-    expect(wrapper.instance().map.setMinZoom).not.toHaveBeenCalled();
-    done();
+    expect(props.map.setMinZoom).not.toHaveBeenCalled();
   });
 
-  it('should call setStyle on property change', async done => {
+  it('should call setStyle on property change', () => {
     const wrapper = shallow(<Map {...props} />);
-    await true;
     wrapper.setProps({ mapStyle: '' });
-    expect(wrapper.instance().map.setStyle).toHaveBeenCalled();
-    done();
+    expect(props.map.setStyle).toHaveBeenCalled();
   });
 
-  it("should not call setStyle if property doesn't change", async done => {
+  it("should not call setStyle if property doesn't change", () => {
     const wrapper = shallow(<Map {...props} />);
-    await true;
     wrapper.setProps({ styles: 'mapbox://styles/mapbox/light-v9' });
-    expect(wrapper.instance().map.setStyle).not.toHaveBeenCalled();
-    done();
+    expect(props.map.setStyle).not.toHaveBeenCalled();
   });
 
-  it('should call addControl on init', async done => {
+  it('should call addControl on init', () => {
     const wrapper = shallow(<Map {...props} />);
-    await new Promise(resolve => setTimeout(resolve, 1));
     const instance = wrapper.instance();
-    expect(instance.map.addControl).toHaveBeenCalledWith(instance.scaleControl);
-    expect(instance.map.addControl).toHaveBeenCalledWith(instance.navigationControl);
-    expect(instance.map.addControl).toHaveBeenCalledWith(instance.attributionControl);
-    expect(instance.map.addControl).toHaveBeenCalledTimes(3);
-    done();
+    expect(props.map.addControl).toHaveBeenCalledWith(instance.scaleControl);
+    expect(props.map.addControl).toHaveBeenCalledWith(instance.navigationControl);
+    expect(props.map.addControl).toHaveBeenCalledWith(instance.attributionControl);
+    expect(props.map.addControl).toHaveBeenCalledTimes(3);
   });
 
-  it('should not call removeControl on init', async done => {
-    const wrapper = shallow(<Map {...props} />);
-    await true;
-    expect(wrapper.instance().map.removeControl).toHaveBeenCalledTimes(0);
-    done();
+  it('should not call removeControl on init', () => {
+    shallow(<Map {...props} />);
+    expect(props.map.removeControl).toHaveBeenCalledTimes(0);
   });
 
-  it('should call addControl if true or removeControl if false', async done => {
+  it('should call addControl if true or removeControl if false', () => {
     const wrapper = shallow(<Map {...props} />);
-    await true;
-    const instance = wrapper.instance();
 
     wrapper.setProps({ displayScaleControl: false });
     wrapper.setProps({ displayNavigationControl: false });
     wrapper.setProps({ displayAttributionControl: false });
-    expect(instance.map.addControl).toHaveBeenCalledTimes(3);
-    expect(instance.map.removeControl).toHaveBeenCalledTimes(3);
+    expect(props.map.addControl).toHaveBeenCalledTimes(3);
+    expect(props.map.removeControl).toHaveBeenCalledTimes(3);
 
     wrapper.setProps({ displayScaleControl: true });
     wrapper.setProps({ displayNavigationControl: true });
     wrapper.setProps({ displayAttributionControl: true });
-    expect(instance.map.addControl).toHaveBeenCalledTimes(6);
-    expect(instance.map.removeControl).toHaveBeenCalledTimes(3);
-    done();
+    expect(props.map.addControl).toHaveBeenCalledTimes(6);
+    expect(props.map.removeControl).toHaveBeenCalledTimes(3);
   });
 });
 
-it('should render div', () => {
-  const wrapper = shallow(<Map {...props} />);
-  expect(wrapper.find('div').hasClass('tf-map')).toEqual(true);
-  expect(wrapper.find('div').length).toBe(1);
-});
 
-it('should have a ref', () => {
+it('should update map', () => {
   const wrapper = shallow(<Map {...props} />);
-  expect(wrapper.instance().containerEl).toEqual(React.createRef());
-});
-
-it('should update map', async done => {
-  const wrapper = shallow(<Map {...props} />);
-  await true;
-  const { map } = wrapper.instance();
   wrapper.setProps({ stylesToApply: { layouts: [{ id: 'foo', visibility: 'visible' }] } });
-  expect(map.setLayoutProperty).toHaveBeenCalledWith('foo', 'visibility', 'visible');
+  expect(props.map.setLayoutProperty).toHaveBeenCalledWith('foo', 'visibility', 'visible');
   wrapper.setProps({ stylesToApply: { layouts: [{ id: 'foo', visibility: 'none' }] } });
-  expect(map.setLayoutProperty).toHaveBeenCalledWith('foo', 'visibility', 'none');
+  expect(props.map.setLayoutProperty).toHaveBeenCalledWith('foo', 'visibility', 'none');
 
   wrapper.setProps({ stylesToApply: { layouts: [{ id: 'foo', paint: { 'fill-color': '#000000' } }] } });
-  expect(map.setPaintProperty).toHaveBeenCalledWith('foo', 'fill-color', '#000000');
-  done();
+  expect(props.map.setPaintProperty).toHaveBeenCalledWith('foo', 'fill-color', '#000000');
 });
 
-it('should add click listener on each layers', async done => {
+it('should add click listener on each layers', () => {
   const wrapper = shallow(<Map {...props} />);
-  await true;
-  const { map } = wrapper.instance();
-  expect(map.getStyle).toHaveBeenCalled();
+  expect(props.map.getStyle).toHaveBeenCalled();
   expect(wrapper.instance().clickListeners.length).toBe(2);
-  done();
+});
+
+it('should add onClick listeners', () => {
+  const wrapper = shallow(<Map {...props} />);
+  const instance = wrapper.instance();
+  instance.addClickListeners = jest.fn();
+  wrapper.setProps({ onClick: () => null });
+  expect(instance.addClickListeners).toHaveBeenCalled();
+});
+
+it('should display a tooltip', () => {
+  const wrapper = shallow(<Map {...props} />);
+  const instance = wrapper.instance();
+  instance.displayTooltip = jest.fn();
+  wrapper.setProps({ displayTooltip: {} });
+  expect(instance.displayTooltip).toHaveBeenCalled();
 });
