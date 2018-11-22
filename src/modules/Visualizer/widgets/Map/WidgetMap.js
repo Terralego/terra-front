@@ -46,13 +46,13 @@ export class WidgetMap extends React.Component {
     const { interactions } = this.props;
     interactions
       .filter(interaction => interaction.id === layer)
-      .forEach(({ interaction }) => {
+      .forEach(({ interaction, ...interactionConfig }) => {
         switch (interaction) {
           case INTERACTION_DISPLAY_DETAILS:
-            this.displayDetails({ layer, features, event });
+            this.displayDetails({ layer, features, event, ...interactionConfig });
             break;
           case INTERACTION_DISPLAY_TOOLTIP:
-            this.displayTooltip({ layer, features, event });
+            this.displayTooltip({ layer, features, event, ...interactionConfig });
             break;
           default:
             log(`no interaction found for layer ${layer}`);
@@ -65,15 +65,20 @@ export class WidgetMap extends React.Component {
     setDetails(details);
   }
 
-  displayTooltip = (/* details */) => {
-    // console.log('envoyer une commande à la map pour lui faire afficher un tooltip')
+  displayTooltip = ({ event: { lngLat }, template }) => {
+    this.setState({
+      displayTooltip: {
+        coordinates: [lngLat.lng, lngLat.lat],
+        content: template,
+      },
+    });
   }
 
   render () {
     const {
       LayersTreeComponent, MapComponent, layersTree, style, ...mapProps
     } = this.props;
-    const { stylesToApply } = this.state;
+    const { stylesToApply, displayTooltip } = this.state;
     const { onChange, onClick } = this;
 
     return (
@@ -90,6 +95,7 @@ export class WidgetMap extends React.Component {
           stylesToApply={stylesToApply}
           onDetailsChange={this.onDetailsChange}
           onClick={onClick}
+          displayTooltip={displayTooltip}
         />
       </div>
     );

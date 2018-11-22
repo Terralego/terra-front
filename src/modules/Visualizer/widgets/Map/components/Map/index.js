@@ -39,6 +39,11 @@ export class Map extends React.Component {
     stylesToApply: StylesToApplyProps,
 
     onClick: PropTypes.func,
+
+    displayTooltip: PropTypes.shape({
+      coordinates: PropTypes.array,
+      content: PropTypes.string,
+    }),
   };
 
   static defaultProps = {
@@ -58,6 +63,7 @@ export class Map extends React.Component {
     },
     stylesToApply: {},
     onClick () {},
+    displayTooltip: null,
   };
 
   componentDidMount () {
@@ -141,6 +147,7 @@ export class Map extends React.Component {
       flyTo,
       stylesToApply,
       onClick,
+      displayTooltip,
     } = this.props;
 
     this.updateFlyTo(prevProps.flyTo, flyTo);
@@ -196,6 +203,10 @@ export class Map extends React.Component {
     if (stylesToApply !== prevProps.stylesToApply) {
       this.applyNewStyles();
     }
+
+    if (displayTooltip !== prevProps.displayTooltip) {
+      this.displayTooltip();
+    }
   }
 
   applyNewStyles () {
@@ -231,6 +242,17 @@ export class Map extends React.Component {
     });
     this.map.getStyle().layers.map(({ id }) =>
       this.clickListeners.push(this.map.on('click', id, e => onClick(id, e.features, e))));
+  }
+
+  displayTooltip () {
+    const { displayTooltip } = this.props;
+    if (!displayTooltip) return;
+    const { coordinates, content: description } = displayTooltip;
+
+    new mapBoxGl.Popup()
+      .setLngLat(coordinates)
+      .setHTML(description)
+      .addTo(this.map);
   }
 
   reset () {

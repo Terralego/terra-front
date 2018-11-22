@@ -21,6 +21,10 @@ stories.add('View Component', () => (
           interactions: [{
             id: 'place-city-label-major',
             interaction: 'displayDetails',
+          }, {
+            id: 'place-neighborhood-suburb-label',
+            interaction: 'displayTooltip',
+            template: '<p>Hello <strong>World</strong></p>',
           }],
         }]}
       />

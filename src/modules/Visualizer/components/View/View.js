@@ -4,7 +4,7 @@ import PropTypes from 'prop-types';
 import WidgetMap from '../../widgets/Map';
 import layersTreePropTypes from '../../propTypes/LayersTreePropTypes';
 
-const Details = props => console.log('Details', props) || null;
+const Details = () => null;
 
 export class View extends React.Component {
   static propTypes = {
@@ -23,7 +23,7 @@ export class View extends React.Component {
   }
 
   componentDidUpdate ({ widgets: prevWidgets }) {
-    const { widgets, details } = this.props;
+    const { widgets } = this.props;
     if (widgets !== prevWidgets) {
       this.generateWidgets();
     }
