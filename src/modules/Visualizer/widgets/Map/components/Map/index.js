@@ -7,13 +7,6 @@ import { StylesToApplyProps } from '../../LayersTreeProps';
 
 import './Map.scss';
 
-function createMap (params) {
-  return new Promise(resolve => {
-    const map = new mapBoxGl.Map(params);
-    map.once('data', () => resolve(map));
-  });
-}
-
 export class Map extends React.Component {
   static propTypes = {
     // Mapbox general config
@@ -78,6 +71,13 @@ export class Map extends React.Component {
   clickListeners = [];
   containerEl = React.createRef();
 
+  async createMap (params) {
+    return new Promise(resolve => {
+      this.map = new mapBoxGl.Map(params);
+      this.map.once('data', () => resolve(this.map));
+    });
+  }
+
   async initMapProperties () {
     const {
       accessToken,
@@ -93,7 +93,7 @@ export class Map extends React.Component {
     } = this.props;
 
     mapBoxGl.accessToken = accessToken;
-    this.map = await createMap({
+    await this.createMap({
       attributionControl: false,
       container: this.containerEl.current,
       style,
