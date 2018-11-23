@@ -16,7 +16,7 @@ stories.add('View Component', () => (
           layersTree,
           accessToken: 'pk.eyJ1IjoiaGFkcmllbmwiLCJhIjoiY2pueDgwZGhxMDVkbjN3cWx5dGlhd3p1eiJ9.FR_XylCvZZJLdB3No6Xxnw',
           styles: 'mapbox://styles/hadrienl/cjoplcnu821de2rs2cf0em4rw',
-          center: [2.317600, 48.866500],
+          center: [1.4133102599149652, 43.5881904444511],
           zoom: 12.0,
           interactions: [{
             id: 'place-city-label-major',
