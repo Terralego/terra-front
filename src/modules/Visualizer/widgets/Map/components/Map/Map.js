@@ -91,12 +91,24 @@ export class Map extends React.Component {
       map.addControl(this.navigationControl);
     }
 
-    if (displayAttributionControl && !this.displayAttributionControl) {
+    this.toggleAttributionControl(displayAttributionControl);
+
+    this.addClickListeners();
+  }
+
+  toggleAttributionControl (display) {
+    const { map } = this.props;
+    if (this.attributionControl && !display) {
+      map.removeControl(this.attributionControl);
+      delete this.attributionControl;
+    }
+    if (display) {
+      if (this.attributionControl) {
+        map.removeControl(this.attributionControl);
+      }
       this.attributionControl = new mapBoxGl.AttributionControl();
       map.addControl(this.attributionControl);
     }
-
-    this.addClickListeners();
   }
 
   updateFlyTo = (prevFlyTo, flyTo) => {
@@ -159,12 +171,7 @@ export class Map extends React.Component {
 
 
     if (displayAttributionControl !== prevProps.displayAttributionControl) {
-      if (displayAttributionControl) {
-        this.attributionControl = new mapBoxGl.AttributionControl();
-        map.addControl(this.attributionControl);
-      } else {
-        map.removeControl(this.attributionControl);
-      }
+      this.toggleAttributionControl(displayAttributionControl);
     }
 
     if (onClick !== prevProps.onClick) {

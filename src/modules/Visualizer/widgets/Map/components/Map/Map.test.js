@@ -273,3 +273,27 @@ it('should reset', () => {
   expect(props.map.once).toHaveBeenCalled();
   expect(props.map.setStyle).toHaveBeenCalledWith(style);
 });
+
+it('should toggle attribution control', () => {
+  const instance = new Map({ ...props }, {});
+  instance.toggleAttributionControl(false);
+  expect(props.map.removeControl).not.toHaveBeenCalled();
+  props.map.removeControl.mockClear();
+  props.map.addControl.mockClear();
+
+  instance.toggleAttributionControl(true);
+  expect(props.map.addControl).toHaveBeenCalledWith(instance.attributionControl);
+  props.map.removeControl.mockClear();
+  props.map.addControl.mockClear();
+
+  const { attributionControl } = instance;
+  instance.toggleAttributionControl(false);
+  expect(props.map.removeControl).toHaveBeenCalledWith(attributionControl);
+  expect(props.map.addControl).not.toHaveBeenCalled();
+
+  instance.toggleAttributionControl(true);
+  instance.toggleAttributionControl(true);
+  const { attributionControl: attributionControl2 } = instance;
+  expect(props.map.removeControl).toHaveBeenCalledWith(attributionControl2);
+  expect(props.map.addControl).toHaveBeenCalledWith(instance.attributionControl);
+});
