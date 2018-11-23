@@ -1,12 +1,20 @@
 import React from 'react';
 import renderer from 'react-test-renderer';
 import { shallow } from 'enzyme';
+import ReactDOM from 'react-dom';
 
 import WidgetMap from './WidgetMap';
 import log from '../../services/log';
 
 jest.mock('./components/Map', () => jest.fn(() => null));
 jest.mock('../../services/log', () => jest.fn());
+jest.mock('react-dom', () => {
+  const mockedElement = {};
+  return {
+    mockedElement,
+    render: jest.fn((jsx, el) => el),
+  };
+});
 
 it('should render correctly', () => {
   const tree = renderer.create((
@@ -114,7 +122,7 @@ it('should display details', () => {
   expect(setDetails).toHaveBeenCalledWith(details);
 });
 
-it('should display tooltips', () => {
+it('should display tooltip', () => {
   const instance = new WidgetMap({}, {});
   instance.setState = jest.fn();
   const event = {
@@ -122,10 +130,5 @@ it('should display tooltips', () => {
   };
   const template = 'Hello World';
   instance.displayTooltip({ event, template });
-  expect(instance.setState).toHaveBeenCalledWith({
-    displayTooltip: {
-      coordinates: [1, 2],
-      content: 'Hello World',
-    },
-  });
+  expect(ReactDOM.render).toHaveBeenCalled();
 });

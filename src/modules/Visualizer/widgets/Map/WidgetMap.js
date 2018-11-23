@@ -1,10 +1,12 @@
 import React from 'react';
+import ReactDOM from 'react-dom';
 import PropTypes from 'prop-types';
 
 import log from '../../services/log';
 import LayersTreeProps from '../../propTypes/LayersTreePropTypes';
 import Map from './components/Map';
 import LayersTree from './components/LayersTree';
+import MarkdownRenderer from '../../components/MarkdownRenderer';
 
 import './styles.scss';
 
@@ -67,11 +69,13 @@ export class WidgetMap extends React.Component {
     setDetails(details);
   }
 
-  displayTooltip = ({ event: { lngLat }, template }) => {
+  displayTooltip = ({ features: [{ properties }] = [{}], event: { lngLat }, template }) => {
+    const container = document.createElement('div');
+    ReactDOM.render(<MarkdownRenderer content={template} {...properties} />, container);
     this.setState({
       displayTooltip: {
         coordinates: [lngLat.lng, lngLat.lat],
-        content: template,
+        container,
       },
     });
   }
