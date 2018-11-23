@@ -1,0 +1,28 @@
+.visualizer-view {
+  .view-details {
+    position: absolute;
+    top: 0;
+    bottom: 0;
+    right: 0;;
+    width: 30rem;
+    background: white;
+    transform: translate3d(100%, 0, 0);
+    transition: transform .2s ease-in;
+    z-index: 2;
+    padding: 1rem;
+    background: #eee;
+
+    &--visible {
+      transform: translate3d(0, 0, 0);
+    }
+
+    &__close-button {
+      position: absolute;
+      top: 1rem;
+      right: 1rem;
+      background: none;
+      border: none;
+      cursor: pointer;
+    }
+  }
+}

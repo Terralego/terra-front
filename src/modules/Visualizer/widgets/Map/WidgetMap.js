@@ -6,6 +6,8 @@ import LayersTreeProps from '../../propTypes/LayersTreePropTypes';
 import Map from './components/Map';
 import LayersTree from './components/LayersTree';
 
+import './styles.scss';
+
 const INTERACTION_DISPLAY_DETAILS = 'displayDetails';
 const INTERACTION_DISPLAY_TOOLTIP = 'displayTooltip';
 

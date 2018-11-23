@@ -2,8 +2,9 @@ import React from 'react';
 import PropTypes from 'prop-types';
 
 import WidgetMap from '../../widgets/Map';
+import Details from '../Details';
 
-const Details = () => null;
+import './styles.scss';
 
 export class View extends React.Component {
   static propTypes = {
@@ -43,9 +44,17 @@ export class View extends React.Component {
     this.setState({ widgetsComponents });
   }
 
+  closeDetails = () => {
+    const { setDetails } = this.props;
+    setDetails(null);
+  }
+
   render () {
     const { details } = this.props;
     const { widgetsComponents } = this.state;
+    const { closeDetails } = this;
+    const visible = !!details;
+    const { features: [{ properties }] = [{}], template = '' } = details || {};
 
     return (
       <div className="visualizer-view">
@@ -56,7 +65,10 @@ export class View extends React.Component {
           />
         ))}
         <Details
-          visible={details}
+          visible={visible}
+          template={template}
+          onClose={closeDetails}
+          {...properties}
         />
       </div>
     );
