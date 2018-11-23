@@ -33,7 +33,6 @@ export const withMap = WrappedComponent =>
     initMap () {
       const {
         accessToken,
-        displayAttributionControl,
         styles: style,
         center,
         zoom,
@@ -46,7 +45,7 @@ export const withMap = WrappedComponent =>
 
       const map = new mapBoxGl.Map({
         container: this.containerEl.current,
-        displayAttributionControl,
+        attributionControl: false,
         style,
         center,
         zoom,
