@@ -1,6 +1,13 @@
 import React from 'react';
 
-import { getToken, obtainToken, parseToken, refreshToken, invalidToken } from '../../services/auth';
+import {
+  getToken,
+  obtainToken,
+  parseToken,
+  refreshToken,
+  invalidToken,
+  createToken,
+} from '../../services/auth';
 import { Provider } from '../../services/context';
 
 export class AuthProvider extends React.Component {
@@ -21,6 +28,10 @@ export class AuthProvider extends React.Component {
     const { user } = this.extractTokenData(token);
     this.setState({ authenticated: true, user });
   };
+
+  signupAction = async properties => {
+    await createToken(properties);
+  }
 
   logoutAction = async () => {
     invalidToken();
@@ -57,11 +68,11 @@ export class AuthProvider extends React.Component {
   render () {
     const { children } = this.props;
     const { authenticated, user } = this.state;
-    const { authAction, logoutAction } = this;
+    const { authAction, logoutAction, signupAction } = this;
 
     return (
       <Provider
-        value={{ authenticated, user, authAction, logoutAction }}
+        value={{ authenticated, user, authAction, logoutAction, signupAction }}
       >
         {children}
       </Provider>

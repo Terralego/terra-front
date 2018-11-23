@@ -4,6 +4,15 @@ import log from './log';
 const TOKEN_KEY = 'tf:auth:token';
 const ENDPOINT_OBTAIN_TOKEN = 'auth/obtain-token/';
 const ENDPOINT_REFRESH_TOKEN = 'auth/refresh-token/';
+const ENDPOINT_CREATE_TOKEN = 'accounts/register/'; // => auth/create-token/
+
+export async function createToken (properties) {
+  log('create auth token start');
+  return Api.request(ENDPOINT_CREATE_TOKEN, {
+    method: POST,
+    body: properties,
+  });
+}
 
 export async function obtainToken (email, password) {
   log('auth request start');
