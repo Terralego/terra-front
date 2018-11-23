@@ -16,18 +16,18 @@ export default () => (
       ],
       'mapbox://styles/mapbox/light-v9',
     )}
-    scaleControl={select(
-      'scaleControl',
+    displayScaleControl={select(
+      'displayScaleControl',
       [true, false],
       true,
     )}
-    navigationControl={select(
-      'navigationControl',
+    displayNavigationControl={select(
+      'displayNavigationControl',
       [true, false],
       true,
     )}
-    attributionControl={select(
-      'attributionControl',
+    displayAttributionControl={select(
+      'displayAttributionControl',
       [true, false],
       true,
     )}

@@ -23,7 +23,7 @@ function parseMapContextToProps (mapContextToProps, context, props) {
 }
 
 export const connect = ({ Consumer }) => (...mapContextToPropsList) => WrappedComponent => {
-  const mapContextToProps = mapContextToPropsList.length > 1
+  const mapContextToProps = (mapContextToPropsList.length > 1 || typeof mapContextToPropsList[0] === 'string')
     ? mapContextToPropsList
     : mapContextToPropsList[0];
 

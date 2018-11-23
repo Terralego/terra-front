@@ -2,13 +2,13 @@ import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import { Card, H4 } from '@blueprintjs/core';
 
-import layersTreeProps from '../../LayersTreeProps';
+import layersTreePropsTypes from '../../../../propTypes/LayersTreePropTypes';
 import LayerNode from './LayerNode';
 import './styles.scss';
 
 export class LayersTree extends Component {
   static propTypes = {
-    layersTree: layersTreeProps.isRequired,
+    layersTree: layersTreePropsTypes.isRequired,
     title: PropTypes.string,
   };
 

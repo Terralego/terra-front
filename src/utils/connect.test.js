@@ -102,6 +102,21 @@ it('should find props from strings list', () => {
   expect(TestComponent).toHaveBeenCalledWith({ foo: 'bar', bar: 'foo' }, {});
 });
 
+it('should find props from strings list with only one item', () => {
+  const context = React.createContext();
+  const { Provider } = context;
+  const TestComponent = jest.fn(() => null);
+  const ConnectedTestComponent = connect(context)('foo')(TestComponent);
+
+  mount((
+    <Provider value={{ foo: 'bar', bar: 'foo', babar: 'fofoo' }}>
+      <ConnectedTestComponent />
+    </Provider>
+  ));
+
+  expect(TestComponent).toHaveBeenCalledWith({ foo: 'bar' }, {});
+});
+
 it('should find props from dotted strings', () => {
   const context = React.createContext();
   const { Provider } = context;

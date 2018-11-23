@@ -1,1 +1,2 @@
+import './View';
 import './Widgets';
