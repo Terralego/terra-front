@@ -1,8 +1,8 @@
 import SignupForm from './SignupForm';
-import { connectModuleProvider } from '../../../TerraFrontProvider';
+import { connectTerraFrontProvider } from '../../../TerraFrontProvider';
 import { connectAuthProvider } from '../../services/context';
 
-export default connectModuleProvider(({
+export default connectTerraFrontProvider(({
   components: { SignupForm: SignupFormProps = {} } = {},
 }) => SignupFormProps)(connectAuthProvider(({
   signupAction,

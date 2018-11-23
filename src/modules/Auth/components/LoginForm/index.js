@@ -1,8 +1,8 @@
 import LoginForm from './LoginForm';
-import { connectModuleProvider } from '../../../TerraFrontProvider';
+import { connectTerraFrontProvider } from '../../../TerraFrontProvider';
 import { connectAuthProvider } from '../../services/context';
 
-export default connectModuleProvider(({
+export default connectTerraFrontProvider(({
   components: { LoginForm: LoginFormProps = {} } = {},
 }) => LoginFormProps)(connectAuthProvider(({
   authAction,

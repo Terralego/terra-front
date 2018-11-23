@@ -1,19 +1,19 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
-import { Card, H4 } from '@blueprintjs/core';
 
 import layersTreePropsTypes from '../../../../propTypes/LayersTreePropTypes';
-import LayerNode from './LayerNode';
-import './styles.scss';
+import LayersTreeRenderer from './LayersTreeRenderer';
 
 export class LayersTree extends Component {
   static propTypes = {
     layersTree: layersTreePropsTypes.isRequired,
     title: PropTypes.string,
+    render: PropTypes.func,
   };
 
   static defaultProps = {
     title: 'Couches cartographiques',
+    render: LayersTreeRenderer,
   };
 
   onToggleChange = layer => () => {
@@ -24,22 +24,15 @@ export class LayersTree extends Component {
   }
 
   render () {
-    const { layersTree, title } = this.props;
-    return (
-      <Card
-        className="layerstree-panel-container bp3-dark"
-      >
-        <H4>{title}</H4>
-        {layersTree.map(layer => (
-          <LayerNode
-            key={layer.label}
-            label={layer.label}
-            onToggleChange={this.onToggleChange(layer)}
-            isActive={layer.isActive}
-          />
-        ))}
-      </Card>
-    );
+    const { render: Render, layersTree, title } = this.props;
+    const { onToggleChange } = this;
+    const props = {
+      layersTree,
+      title,
+      onToggleChange,
+    };
+
+    return <Render {...props} />;
   }
 }
 
