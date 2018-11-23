@@ -78,10 +78,11 @@ export class WidgetMap extends React.Component {
 
   render () {
     const {
-      LayersTreeComponent, MapComponent, layersTree, style, ...mapProps
+      LayersTreeComponent, MapComponent, layersTree, style, interactions, ...mapProps
     } = this.props;
     const { stylesToApply, displayTooltip } = this.state;
     const { onChange, onClick } = this;
+    const displayPointerOnLayers = interactions.map(({ id }) => id);
 
     return (
       <div
@@ -98,6 +99,7 @@ export class WidgetMap extends React.Component {
           onDetailsChange={this.onDetailsChange}
           onClick={onClick}
           displayTooltip={displayTooltip}
+          displayPointerOnLayers={displayPointerOnLayers}
         />
       </div>
     );

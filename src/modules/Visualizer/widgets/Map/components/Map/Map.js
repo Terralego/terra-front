@@ -36,6 +36,8 @@ export class Map extends React.Component {
       coordinates: PropTypes.array,
       content: PropTypes.string,
     }),
+
+    displayPointerOnLayers: PropTypes.arrayOf(PropTypes.string),
   };
 
   static defaultProps = {
@@ -55,6 +57,7 @@ export class Map extends React.Component {
     stylesToApply: {},
     onClick () {},
     displayTooltip: null,
+    displayPointerOnLayers: [],
   };
 
   componentDidMount () {
@@ -65,7 +68,7 @@ export class Map extends React.Component {
     this.updateMapProperties(prevProps);
   }
 
-  clickListeners = [];
+  mapListeners = [];
 
   async initMapProperties () {
     const {
@@ -204,12 +207,27 @@ export class Map extends React.Component {
   }
 
   addClickListeners () {
-    const { onClick } = this.props;
-    this.clickListeners.forEach(listener => {
+    const { onClick, map, displayPointerOnLayers } = this.props;
+    this.mapListeners.forEach(listener => {
       listener();
     });
-    this.props.map.getStyle().layers.map(({ id }) =>
-      this.clickListeners.push(this.props.map.on('click', id, e => onClick(id, e.features, e))));
+    map.getStyle().layers.forEach(({ id }) => {
+      const clickListener = map.on('click', id, e => {
+        onClick(id, e.features, e);
+      });
+      this.mapListeners.push(clickListener);
+
+      if (displayPointerOnLayers.includes(id)) {
+        const mouseenterListener = map.on('mouseenter', id, () => {
+          map.getCanvas().style.cursor = 'pointer';
+        });
+        const mouseleaveListener = map.on('mouseleave', id, () => {
+          map.getCanvas().style.cursor = '';
+        });
+        this.mapListeners.push(mouseenterListener);
+        this.mapListeners.push(mouseleaveListener);
+      }
+    });
   }
 
   displayTooltip () {
