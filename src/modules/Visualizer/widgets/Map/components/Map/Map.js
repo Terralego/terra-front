@@ -233,12 +233,17 @@ export class Map extends React.Component {
   displayTooltip () {
     const { displayTooltip } = this.props;
     if (!displayTooltip) return;
-    const { coordinates, content: description } = displayTooltip;
+    const { coordinates, content: description, container } = displayTooltip;
 
-    new mapBoxGl.Popup()
-      .setLngLat(coordinates)
-      .setHTML(description)
-      .addTo(this.props.map);
+    const popup = new mapBoxGl.Popup();
+    popup.setLngLat(coordinates);
+    if (container) {
+      popup.setDOMContent(container);
+    }
+    if (description) {
+      popup.setHTML(description);
+    }
+    popup.addTo(this.props.map);
   }
 
   reset () {

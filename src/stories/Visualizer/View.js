@@ -27,7 +27,9 @@ stories.add('View Component', () => (
           }, {
             id: 'place-neighborhood-suburb-label',
             interaction: 'displayTooltip',
-            template: '<p>Hello <strong>World</strong></p>',
+            template: `
+Le quartier de {{name_fr}}
+`,
           }],
         }]}
       />

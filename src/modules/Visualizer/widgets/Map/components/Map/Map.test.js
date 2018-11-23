@@ -43,6 +43,7 @@ jest.mock('mapbox-gl', () => {
   PopupFunctions.setLngLat = jest.fn(() => PopupFunctions);
   PopupFunctions.setHTML = jest.fn(() => PopupFunctions);
   PopupFunctions.addTo = jest.fn(() => PopupFunctions);
+  PopupFunctions.setDOMContent = jest.fn(() => PopupFunctions);
   Popup.functions = PopupFunctions;
   return {
     off,
@@ -233,7 +234,7 @@ it('should display a tooltip', () => {
   expect(instance.displayTooltip).toHaveBeenCalled();
 });
 
-it('should display tooltip', () => {
+it('should display tooltip with html content', () => {
   const displayTooltip = {
     coordinates: [1, 2],
     content: 'foobar',
@@ -244,6 +245,25 @@ it('should display tooltip', () => {
   expect(mapboxgl.Popup.functions.setLngLat).toHaveBeenCalledWith([1, 2]);
   expect(mapboxgl.Popup.functions.setHTML).toHaveBeenCalledWith('foobar');
   expect(mapboxgl.Popup.functions.addTo).toHaveBeenCalledWith(props.map);
+});
+
+it('should not display a tooltip', () => {
+  const wrapper = shallow(<Map {...props} />);
+  const instance = wrapper.instance();
+  wrapper.setProps({ displayTooltip: null });
+  instance.displayTooltip();
+  expect(mapboxgl.Popup).not.toHaveBeenCalled();
+});
+
+it('should display tooltip with element', () => {
+  const el = document.createElement('div');
+  const displayTooltip = {
+    coordinates: [1, 2],
+    container: el,
+  };
+  const instance = new Map({ displayTooltip, ...props }, {});
+  instance.displayTooltip();
+  expect(mapboxgl.Popup.functions.setDOMContent).toHaveBeenCalledWith(el);
 });
 
 it('should reset', () => {
