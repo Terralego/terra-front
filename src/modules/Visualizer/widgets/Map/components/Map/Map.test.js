@@ -12,6 +12,7 @@ const props = {
 };
 
 jest.mock('mapbox-gl', () => {
+  const off = jest.fn();
   const map = {
     addControl: jest.fn(() => {}),
     removeControl: jest.fn(() => {}),
@@ -24,17 +25,32 @@ jest.mock('mapbox-gl', () => {
     setStyle: jest.fn(() => 'mapbox://styles/mapbox/light-v9'),
     setLayoutProperty: jest.fn(),
     setPaintProperty: jest.fn(),
-    on: jest.fn(),
-    once (event, fn) {
+    on: jest.fn((event, layer, fn) => {
+      fn({});
+      return off;
+    }),
+    getCanvas: jest.fn(() => ({
+      style: {},
+    })),
+    once: jest.fn((event, fn) => {
       fn(map);
-    },
+      return off;
+    }),
     getStyle: jest.fn(() => ({ layers: [{ id: 'foo' }, { id: 'bar' }] })),
   };
+  const PopupFunctions = {};
+  const Popup = jest.fn(() => PopupFunctions);
+  PopupFunctions.setLngLat = jest.fn(() => PopupFunctions);
+  PopupFunctions.setHTML = jest.fn(() => PopupFunctions);
+  PopupFunctions.addTo = jest.fn(() => PopupFunctions);
+  Popup.functions = PopupFunctions;
   return {
+    off,
     Map: jest.fn(() => map),
     ScaleControl: jest.fn(() => {}),
     NavigationControl: jest.fn(() => {}),
     AttributionControl: jest.fn(() => {}),
+    Popup,
   };
 });
 
@@ -184,7 +200,13 @@ it('should update map', () => {
 it('should add click listener on each layers', () => {
   const wrapper = shallow(<Map {...props} />);
   expect(props.map.getStyle).toHaveBeenCalled();
-  expect(wrapper.instance().clickListeners.length).toBe(2);
+  expect(wrapper.instance().mapListeners.length).toBe(2);
+});
+
+it('should add pointer cursor with click listener', () => {
+  const wrapper = shallow(<Map {...props} displayPointerOnLayers={['foo']} />);
+  expect(wrapper.instance().mapListeners.length).toBe(4);
+  expect(props.map.getCanvas).toHaveBeenCalledTimes(2);
 });
 
 it('should add onClick listeners', () => {
@@ -195,10 +217,39 @@ it('should add onClick listeners', () => {
   expect(instance.addClickListeners).toHaveBeenCalled();
 });
 
+it('should reset listener', () => {
+  const onClick = jest.fn();
+  const wrapper = shallow(<Map {...props} />);
+  wrapper.setProps({ onClick });
+  expect(onClick).toHaveBeenCalled();
+  expect(mapboxgl.off).toHaveBeenCalled();
+});
+
 it('should display a tooltip', () => {
   const wrapper = shallow(<Map {...props} />);
   const instance = wrapper.instance();
   instance.displayTooltip = jest.fn();
   wrapper.setProps({ displayTooltip: {} });
   expect(instance.displayTooltip).toHaveBeenCalled();
+});
+
+it('should display tooltip', () => {
+  const displayTooltip = {
+    coordinates: [1, 2],
+    content: 'foobar',
+  };
+  const instance = new Map({ displayTooltip, ...props }, {});
+  instance.displayTooltip();
+  expect(mapboxgl.Popup).toHaveBeenCalled();
+  expect(mapboxgl.Popup.functions.setLngLat).toHaveBeenCalledWith([1, 2]);
+  expect(mapboxgl.Popup.functions.setHTML).toHaveBeenCalledWith('foobar');
+  expect(mapboxgl.Popup.functions.addTo).toHaveBeenCalledWith(props.map);
+});
+
+it('should reset', () => {
+  const style = {};
+  const instance = new Map({ style, ...props }, {});
+  instance.reset();
+  expect(props.map.once).toHaveBeenCalled();
+  expect(props.map.setStyle).toHaveBeenCalledWith(style);
 });

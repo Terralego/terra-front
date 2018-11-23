@@ -6,6 +6,8 @@ import LayersTreeProps from '../../propTypes/LayersTreePropTypes';
 import Map from './components/Map';
 import LayersTree from './components/LayersTree';
 
+import './styles.scss';
+
 const INTERACTION_DISPLAY_DETAILS = 'displayDetails';
 const INTERACTION_DISPLAY_TOOLTIP = 'displayTooltip';
 
@@ -76,10 +78,11 @@ export class WidgetMap extends React.Component {
 
   render () {
     const {
-      LayersTreeComponent, MapComponent, layersTree, style, ...mapProps
+      LayersTreeComponent, MapComponent, layersTree, style, interactions, ...mapProps
     } = this.props;
     const { stylesToApply, displayTooltip } = this.state;
     const { onChange, onClick } = this;
+    const displayPointerOnLayers = interactions.map(({ id }) => id);
 
     return (
       <div
@@ -96,6 +99,7 @@ export class WidgetMap extends React.Component {
           onDetailsChange={this.onDetailsChange}
           onClick={onClick}
           displayTooltip={displayTooltip}
+          displayPointerOnLayers={displayPointerOnLayers}
         />
       </div>
     );

@@ -28,3 +28,22 @@ it('should build widgets', () => {
   expect(widgetsComponents[0].foo).toBe('bar');
   expect(widgetsComponents[0].key).toBe(0);
 });
+
+it('should regenerate widgets components', () => {
+  const widgets = [{ type: 'map', foo: 'bar' }];
+  const wrapper = shallow(<View
+    widgets={widgets}
+  />);
+  View.prototype.generateWidgets = jest.fn();
+  wrapper.setProps({
+    widgets: [{ type: 'map' }],
+  });
+  expect(View.prototype.generateWidgets).toHaveBeenCalled();
+});
+
+it('should close details', () => {
+  const setDetails = jest.fn();
+  const instance = new View({ setDetails }, {});
+  instance.closeDetails();
+  expect(setDetails).toHaveBeenCalledWith(null);
+});
