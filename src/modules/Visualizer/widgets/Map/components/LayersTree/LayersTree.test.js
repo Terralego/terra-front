@@ -48,7 +48,7 @@ it('should change on toggle', () => {
     active: {},
     inactive: {},
   };
-  const wrapper = shallow(<LayersTree onChange={onChange} layersTree={[]} />)
+  const wrapper = shallow(<LayersTree onChange={onChange} layersTree={[]} />);
   const instance = wrapper.instance();
   instance.onToggleChange(layer)();
   expect(onChange).toHaveBeenCalledWith(layer.active);

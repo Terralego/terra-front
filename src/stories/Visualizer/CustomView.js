@@ -15,7 +15,7 @@ stories.add('Custom View', () => (
         Visualizer: {
           components: {
             View: {
-              DetailsComponent ({ name_fr }) {
+              DetailsComponent ({ name_fr: name }) {
                 return (
                   <p style={{
                       position: 'absolute',
@@ -26,7 +26,7 @@ stories.add('Custom View', () => (
                       padding: '1rem',
                     }}
                   >
-                    Vous êtes à {name_fr}
+                    Vous êtes à {name}
                   </p>
                 );
               },
