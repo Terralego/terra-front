@@ -66,7 +66,11 @@ export class WidgetMap extends React.Component {
             break;
           case INTERACTION_FN:
             interactionConfig.fn({
-              layer, features, event, displayDetails: this.displayDetails, displayTooltip: this.displayTooltip,
+              layer,
+              features,
+              event,
+              displayDetails: this.displayDetails,
+              displayTooltip: this.displayTooltip,
             });
             break;
           default:
