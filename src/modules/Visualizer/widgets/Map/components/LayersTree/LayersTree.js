@@ -16,20 +16,37 @@ export class LayersTree extends Component {
     render: LayersTreeRenderer,
   };
 
+  state = {
+    areActives: new Set(),
+  };
+
   onToggleChange = layer => () => {
     const { onChange } = this.props;
-    const styleToApply = layer.isActive ? layer.inactive : layer.active;
-    layer.isActive = !layer.isActive; // eslint-disable-line
+    const { areActives } = this.state;
+    const isActive = areActives.has(layer);
+    const styleToApply = isActive ? layer.inactive : layer.active;
+    if (isActive) {
+      areActives.delete(layer);
+    } else {
+      areActives.add(layer);
+    }
+    this.setState({ areActives: new Set(areActives) });
     onChange(styleToApply);
+  }
+
+  isActive = layer => {
+    const areActives = new Set(this.state.areActives);
+    return areActives.has(layer);
   }
 
   render () {
     const { render: Render, layersTree, title } = this.props;
-    const { onToggleChange } = this;
+    const { onToggleChange, isActive } = this;
     const props = {
       layersTree,
       title,
       onToggleChange,
+      isActive,
     };
 
     return <Render {...props} />;

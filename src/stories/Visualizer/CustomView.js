@@ -15,7 +15,7 @@ stories.add('Custom View', () => (
         Visualizer: {
           widgets: {
             Map: {
-              renderLayersTree ({ layersTree: layers, onToggleChange }) {
+              renderLayersTree ({ layersTree: layers, onToggleChange, isActive }) {
                 return (
                   <div>
                     <h2>Un site spécifique avec un navigation différente</h2>
@@ -25,7 +25,7 @@ stories.add('Custom View', () => (
                         <button
                           onClick={onToggleChange(layer)}
                         >
-                          {layer.isActive ? 'désactiver' : 'activer'}
+                          {isActive(layer) ? 'désactiver' : 'activer'}
                         </button>
                       </p>
                     ))}
