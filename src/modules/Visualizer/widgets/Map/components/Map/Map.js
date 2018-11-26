@@ -3,6 +3,7 @@ import mapBoxGl from 'mapbox-gl';
 import PropTypes from 'prop-types';
 import 'mapbox-gl/dist/mapbox-gl.css';
 
+import log from '../../../../services/log';
 import { StylesToApplyProps } from '../../../../propTypes/LayersTreePropTypes';
 
 import './Map.scss';
@@ -220,6 +221,7 @@ export class Map extends React.Component {
     });
     map.getStyle().layers.forEach(({ id }) => {
       const clickListener = map.on('click', id, e => {
+        log('map clicked', id, e.features, e);
         onClick(id, e.features, e);
       });
       this.mapListeners.push(clickListener);

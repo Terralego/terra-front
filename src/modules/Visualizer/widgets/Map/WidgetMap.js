@@ -12,6 +12,7 @@ import './styles.scss';
 
 const INTERACTION_DISPLAY_DETAILS = 'displayDetails';
 const INTERACTION_DISPLAY_TOOLTIP = 'displayTooltip';
+const INTERACTION_FN = 'function';
 
 export class WidgetMap extends React.Component {
   static propTypes = {
@@ -26,6 +27,11 @@ export class WidgetMap extends React.Component {
         id: PropTypes.string.isRequired,
         interaction: INTERACTION_DISPLAY_TOOLTIP,
         template: PropTypes.string.isRequired,
+      }),
+      PropTypes.shape({
+        id: PropTypes.string.isRequired,
+        interaction: INTERACTION_FN,
+        fn: PropTypes.func.isRequired,
       }),
     ])),
     LayersTreeComponent: PropTypes.func,
@@ -57,6 +63,11 @@ export class WidgetMap extends React.Component {
             break;
           case INTERACTION_DISPLAY_TOOLTIP:
             this.displayTooltip({ layer, features, event, ...interactionConfig });
+            break;
+          case INTERACTION_FN:
+            interactionConfig.fn({
+              layer, features, event, displayDetails: this.displayDetails, displayTooltip: this.displayTooltip,
+            });
             break;
           default:
             log(`no interaction found for layer ${layer}`);
