@@ -1,5 +1,6 @@
 import React from 'react';
 import renderer from 'react-test-renderer';
+import { shallow } from 'enzyme';
 import { LayersTree } from './LayersTree';
 
 
@@ -47,13 +48,13 @@ it('should change on toggle', () => {
     active: {},
     inactive: {},
   };
-  const instance = new LayersTree({ onChange, layersTree: [] }, {});
-
+  const wrapper = shallow(<LayersTree onChange={onChange} layersTree={[]} />);
+  const instance = wrapper.instance();
   instance.onToggleChange(layer)();
   expect(onChange).toHaveBeenCalledWith(layer.active);
-  expect(layer.isActive).toBe(true);
+  expect(instance.isActive(layer)).toBe(true);
 
   instance.onToggleChange(layer)();
   expect(onChange).toHaveBeenCalledWith(layer.inactive);
-  expect(layer.isActive).toBe(false);
+  expect(instance.isActive(layer)).toBe(false);
 });

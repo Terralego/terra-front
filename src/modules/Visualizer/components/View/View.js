@@ -11,7 +11,12 @@ export class View extends React.Component {
     widgets: PropTypes.arrayOf(PropTypes.shape({
       type: PropTypes.oneOf(['map']),
     })).isRequired,
+    DetailsComponent: PropTypes.func,
   };
+
+  static defaultProps = {
+    DetailsComponent: Details,
+  }
 
   state = {
     widgetsComponents: [],
@@ -49,7 +54,7 @@ export class View extends React.Component {
   }
 
   render () {
-    const { details } = this.props;
+    const { DetailsComponent, details } = this.props;
     const { widgetsComponents } = this.state;
     const { closeDetails } = this;
     const visible = !!details;
@@ -63,7 +68,7 @@ export class View extends React.Component {
             {...props}
           />
         ))}
-        <Details
+        <DetailsComponent
           visible={visible}
           template={template}
           onClose={closeDetails}

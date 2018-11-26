@@ -12,6 +12,6 @@ export const TerraFrontProvider = ({ children, config }) => (
   </Provider>
 );
 
-export const connectModuleProvider = connect(context);
+export const connectTerraFrontProvider = connect(context);
 
 export default TerraFrontProvider;

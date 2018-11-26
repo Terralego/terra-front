@@ -6,15 +6,19 @@ import AuthProvider, { SignupForm } from '../../modules/Auth';
 export const CustomSignupForm = () => (
   <TerraFrontProvider
     config={{
-      components: {
-        SignupForm: {
-          render: ({ submit, setSignupProperty }) => (
-            <form onSubmit={submit}>
-              <p>Email <input id="email" type="text" onChange={setSignupProperty} /></p>
-              <p>Password <input id="password" type="password" onChange={setSignupProperty} /></p>
-              <button>Create</button>
-            </form>
-          ),
+      modules: {
+        Auth: {
+          components: {
+            SignupForm: {
+              render: ({ submit, setSignupProperty }) => (
+                <form onSubmit={submit}>
+                  <p>Email <input id="email" type="text" onChange={setSignupProperty} /></p>
+                  <p>Password <input id="password" type="password" onChange={setSignupProperty} /></p>
+                  <button>Create</button>
+                </form>
+              ),
+            },
+          },
         },
       },
     }}

@@ -15,7 +15,9 @@ function parseMapContextToProps (mapContextToProps, context, props) {
   if (typeof mapContextToProps === 'object') {
     return Object.keys(mapContextToProps).reduce((ret, prop) => ({
       ...ret,
-      [prop]: objectGet(context, mapContextToProps[prop]),
+      ...(prop === '*'
+        ? objectGet(context, mapContextToProps[prop])
+        : { [prop]: objectGet(context, mapContextToProps[prop]) }),
     }), {});
   }
 

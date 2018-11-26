@@ -162,3 +162,33 @@ it('should use props to dive into state', () => {
   }, {});
   expect(getFoo).toHaveBeenCalledWith('42');
 });
+
+it('should set all props with *', () => {
+  const context = React.createContext();
+  const { Provider } = context;
+  const TestComponent = jest.fn(() => null);
+  const ConnectedTestComponent = connect(context)({
+    '*': 'foo.bar',
+  })(TestComponent);
+
+  mount((
+    <Provider value={{
+      foo: {
+        bar: {
+          a: 1,
+          b: 2,
+          c: 3,
+        },
+      },
+    }}
+    >
+      <ConnectedTestComponent />
+    </Provider>
+  ));
+
+  expect(TestComponent).toHaveBeenCalledWith({
+    a: 1,
+    b: 2,
+    c: 3,
+  }, {});
+});
