@@ -13,6 +13,25 @@ stories.add('Custom View', () => (
     config={{
       modules: {
         Visualizer: {
+          components: {
+            View: {
+              DetailsComponent ({ name_fr }) {
+                return (
+                  <p style={{
+                      position: 'absolute',
+                      bottom: '1rem',
+                      right: '1rem',
+                      background: 'red',
+                      color: 'white',
+                      padding: '1rem',
+                    }}
+                  >
+                    Vous êtes à {name_fr}
+                  </p>
+                );
+              },
+            },
+          },
           widgets: {
             Map: {
               renderLayersTree ({ layersTree: layers, onToggleChange, isActive }) {

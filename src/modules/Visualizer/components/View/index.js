@@ -1,4 +1,7 @@
 import View from './View';
+import { connectTerraFrontProvider } from '../../../TerraFrontProvider';
 import { connectVisualizerProvider } from '../../services/context';
 
-export default connectVisualizerProvider('details', 'setDetails')(View);
+export default connectTerraFrontProvider({
+  '*': 'modules.Visualizer.components.View',
+})(connectVisualizerProvider('details', 'setDetails')(View));
