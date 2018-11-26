@@ -63,3 +63,5 @@ Api.on(EVENT_FAILURE, response => {
     invalidToken();
   }
 });
+
+export default { createToken, obtainToken, getToken, refreshToken, invalidToken, parseToken };
