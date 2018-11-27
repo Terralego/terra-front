@@ -10,6 +10,7 @@ export const MarkdownRenderer = ({ template, content, ...props }) => {
   return (
     <Markdown
       source={source}
+      escapeHtml={false}
     />
   );
 };

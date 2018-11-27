@@ -4,7 +4,7 @@ import { text, boolean } from '@storybook/addon-knobs';
 
 import { MarkdownRenderer } from '../../modules/Visualizer/';
 
-const stories = storiesOf('Module Visualizer');
+const stories = storiesOf('Module Visualizer', module);
 
 stories.add('MarkdownRenderer Component', () => (
   <MarkdownRenderer
@@ -22,6 +22,8 @@ stories.add('MarkdownRenderer Component', () => (
 {% if text.length > 30 %}
 Cool story bro
 {% endif %}
+
+<p><strong>Some</strong> <code>HTML</code></p>
     `}
     title={text('Title', 'Some title')}
     subtitle={text('Subtitle', 'Some subtitle')}
