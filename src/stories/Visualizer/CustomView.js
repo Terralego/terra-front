@@ -6,7 +6,7 @@ import TerraFrontProvider from '../../modules/TerraFrontProvider';
 import VisualizerProvider, { View } from '../../modules/Visualizer';
 import layersTree from './data/layersTree';
 
-const stories = storiesOf('Module Visualizer');
+const stories = storiesOf('Module Visualizer', module);
 
 stories.add('Custom View', () => (
   <TerraFrontProvider
