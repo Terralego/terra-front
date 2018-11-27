@@ -16,7 +16,7 @@ export default () => (
       style={{ height: '90vh', display: 'flex' }}
       interactions={[{
         id: 'place-city-label-major',
-        action: 'displayDetails',
+        interaction: 'displayDetails',
       }]}
     />
   </VisualizerProvider>
