@@ -5,7 +5,7 @@ import { storiesOf } from '@storybook/react';
 import VisualizerProvider, { View } from '../../modules/Visualizer/';
 import layersTree from './data/layersTree';
 
-const stories = storiesOf('Module Visualizer');
+const stories = storiesOf('Module Visualizer', module);
 
 stories.add('View Component', () => (
   <VisualizerProvider>
