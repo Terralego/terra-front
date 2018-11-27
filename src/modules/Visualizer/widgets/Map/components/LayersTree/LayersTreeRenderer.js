@@ -5,7 +5,7 @@ import LayerNode from './LayerNode';
 
 import './styles.scss';
 
-export const LayersTreeRenderer = ({ title, layersTree, onToggleChange }) => (
+export const LayersTreeRenderer = ({ title, layersTree, onToggleChange, isActive }) => (
   <Card
     className="layerstree-panel-container bp3-dark"
   >
@@ -15,7 +15,7 @@ export const LayersTreeRenderer = ({ title, layersTree, onToggleChange }) => (
         key={layer.label}
         label={layer.label}
         onToggleChange={onToggleChange(layer)}
-        isActive={layer.isActive}
+        isActive={isActive(layer)}
       />
     ))}
   </Card>

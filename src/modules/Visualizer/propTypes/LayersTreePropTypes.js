@@ -12,4 +12,7 @@ export default PropTypes.arrayOf(PropTypes.shape({
   label: PropTypes.string.isRequired,
   active: StylesToApplyProps,
   inactive: StylesToApplyProps,
+  initialState: PropTypes.shape({
+    active: PropTypes.bool,
+  }),
 }));

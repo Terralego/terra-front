@@ -1,23 +1,45 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
 exports[`should render correctly 1`] = `
-<div
-  className="bp3-card bp3-elevation-2 layerNode-container"
-  style={
-    Object {
-      "opacity": 0.7,
+Array [
+  <div
+    className="bp3-card bp3-elevation-2 layerNode-container"
+    style={
+      Object {
+        "opacity": 0.7,
+      }
     }
-  }
->
-  <label
-    className="bp3-control bp3-switch"
   >
-    <input
-      type="checkbox"
-    />
-    <span
-      className="bp3-control-indicator"
-    />
-  </label>
-</div>
+    <label
+      className="bp3-control bp3-switch"
+    >
+      <input
+        type="checkbox"
+      />
+      <span
+        className="bp3-control-indicator"
+      />
+    </label>
+  </div>,
+  <div
+    className="bp3-card bp3-elevation-2 layerNode-container"
+    style={
+      Object {
+        "opacity": 1,
+      }
+    }
+  >
+    <label
+      className="bp3-control bp3-switch"
+    >
+      <input
+        checked={true}
+        type="checkbox"
+      />
+      <span
+        className="bp3-control-indicator"
+      />
+    </label>
+  </div>,
+]
 `;

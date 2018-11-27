@@ -17,7 +17,9 @@ export class LayersTree extends Component {
   };
 
   state = {
-    areActives: new Set(),
+    areActives: new Set(this.props.layersTree
+      .map(layer => ((layer.initialState || {}).active ? layer : null))
+      .filter(a => a)),
   };
 
   onToggleChange = layer => () => {

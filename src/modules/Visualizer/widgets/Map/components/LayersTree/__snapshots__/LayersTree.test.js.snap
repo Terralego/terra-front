@@ -21,6 +21,7 @@ exports[`should render correctly 1`] = `
       className="bp3-control bp3-switch"
     >
       <input
+        checked={false}
         onChange={[Function]}
         type="checkbox"
       />
@@ -42,6 +43,7 @@ exports[`should render correctly 1`] = `
       className="bp3-control bp3-switch"
     >
       <input
+        checked={false}
         onChange={[Function]}
         type="checkbox"
       />
