@@ -13,7 +13,7 @@ export const Details = ({ visible, template, onClose = () => null, ...props }) =
     </button>
     {visible &&
       <MarkdownRenderer
-        content={template}
+        template={template}
         {...props}
       />
     }
