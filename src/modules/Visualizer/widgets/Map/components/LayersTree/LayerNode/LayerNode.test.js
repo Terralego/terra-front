@@ -4,9 +4,15 @@ import LayersNode from './';
 
 it('should render correctly', () => {
   const tree = renderer.create((
-    <LayersNode
-      LayersTree={[]}
-    />
+    <>
+      <LayersNode
+        LayersTree={[]}
+      />
+      <LayersNode
+        LayersTree={[]}
+        isActive
+      />
+    </>
   )).toJSON();
   expect(tree).toMatchSnapshot();
 });
