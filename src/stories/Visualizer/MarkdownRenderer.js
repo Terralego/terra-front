@@ -1,6 +1,6 @@
 import React from 'react';
 import { storiesOf } from '@storybook/react';
-import { text } from '@storybook/addon-knobs';
+import { text, boolean } from '@storybook/addon-knobs';
 
 import { MarkdownRenderer } from '../../modules/Visualizer/';
 
@@ -8,14 +8,24 @@ const stories = storiesOf('Module Visualizer');
 
 stories.add('MarkdownRenderer Component', () => (
   <MarkdownRenderer
-    content={`
-# Some title
+    template={`
+# {{title}}
 
-## Some subtitle
+{% if displayLogo %}
+![logo](https://makina-corpus.com/logo.svg)
+{% endif %}
 
-Some text with some variables like foo: {{foo}} or bar: {{bar}}
+## {{subtitle}}
+
+{{text}}
+
+{% if text.length > 30 %}
+Cool story bro
+{% endif %}
     `}
-    foo={text('Foo', 'foo')}
-    bar={text('Bar', 'bar')}
+    title={text('Title', 'Some title')}
+    subtitle={text('Subtitle', 'Some subtitle')}
+    text={text('Text', 'Some text')}
+    displayLogo={boolean('Display logo ?', true)}
   />
 ));
