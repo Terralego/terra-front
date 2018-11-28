@@ -91,49 +91,35 @@ export class Map extends React.Component {
     this.addClickListeners();
   }
 
-  toggleAttributionControl (display) {
+  toggleControl (display, control) {
     const { map } = this.props;
-    if (this.attributionControl && !display) {
-      map.removeControl(this.attributionControl);
-      delete this.attributionControl;
+    // Set the first character to uppercase
+    const [firstChar] = control.split('');
+    const controlMethod = control.replace(/(?:^|\s)\w/, firstChar.toUpperCase());
+
+    if (this[control] && !display) {
+      map.removeControl(this[control]);
+      delete this[control];
     }
     if (display) {
-      if (this.attributionControl) {
-        map.removeControl(this.attributionControl);
+      if (this[control]) {
+        map.removeControl(this[control]);
       }
-      this.attributionControl = new mapBoxGl.AttributionControl();
-      map.addControl(this.attributionControl);
+      this[control] = new mapBoxGl[controlMethod]();
+      map.addControl(this[control]);
     }
+  }
+
+  toggleAttributionControl (display) {
+    return this.toggleControl(display, 'attributionControl');
   }
 
   toggleNavigationControl (display) {
-    const { map } = this.props;
-    if (this.navigationControl && !display) {
-      map.removeControl(this.navigationControl);
-      delete this.navigationControl;
-    }
-    if (display) {
-      if (this.navigationControl) {
-        map.removeControl(this.navigationControl);
-      }
-      this.navigationControl = new mapBoxGl.NavigationControl();
-      map.addControl(this.navigationControl);
-    }
+    return this.toggleControl(display, 'navigationControl');
   }
 
   toggleDisplayScaleControl (display) {
-    const { map } = this.props;
-    if (this.scaleControl && !display) {
-      map.removeControl(this.scaleControl);
-      delete this.scaleControl;
-    }
-    if (display) {
-      if (this.scaleControl) {
-        map.removeControl(this.scaleControl);
-      }
-      this.scaleControl = new mapBoxGl.ScaleControl();
-      map.addControl(this.scaleControl);
-    }
+    return this.toggleControl(display, 'scaleControl');
   }
 
   updateFlyTo = (prevFlyTo, flyTo) => {
