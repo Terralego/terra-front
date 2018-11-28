@@ -301,3 +301,51 @@ it('should toggle attribution control', () => {
   expect(props.map.removeControl).toHaveBeenCalledWith(attributionControl2);
   expect(props.map.addControl).toHaveBeenCalledWith(instance.attributionControl);
 });
+
+it('should toggle scale control', () => {
+  const instance = new Map({ ...props }, {});
+  instance.toggleDisplayScaleControl(false);
+  expect(props.map.removeControl).not.toHaveBeenCalled();
+  props.map.removeControl.mockClear();
+  props.map.addControl.mockClear();
+
+  instance.toggleDisplayScaleControl(true);
+  expect(props.map.addControl).toHaveBeenCalledWith(instance.scaleControl);
+  props.map.removeControl.mockClear();
+  props.map.addControl.mockClear();
+
+  const { scaleControl } = instance;
+  instance.toggleDisplayScaleControl(false);
+  expect(props.map.removeControl).toHaveBeenCalledWith(scaleControl);
+  expect(props.map.addControl).not.toHaveBeenCalled();
+
+  instance.toggleDisplayScaleControl(true);
+  instance.toggleDisplayScaleControl(true);
+  const { scaleControl: scaleControl2 } = instance;
+  expect(props.map.removeControl).toHaveBeenCalledWith(scaleControl2);
+  expect(props.map.addControl).toHaveBeenCalledWith(instance.scaleControl);
+});
+
+it('should toggle navigation control', () => {
+  const instance = new Map({ ...props }, {});
+  instance.toggleNavigationControl(false);
+  expect(props.map.removeControl).not.toHaveBeenCalled();
+  props.map.removeControl.mockClear();
+  props.map.addControl.mockClear();
+
+  instance.toggleNavigationControl(true);
+  expect(props.map.addControl).toHaveBeenCalledWith(instance.navigationControl);
+  props.map.removeControl.mockClear();
+  props.map.addControl.mockClear();
+
+  const { navigationControl } = instance;
+  instance.toggleNavigationControl(false);
+  expect(props.map.removeControl).toHaveBeenCalledWith(navigationControl);
+  expect(props.map.addControl).not.toHaveBeenCalled();
+
+  instance.toggleNavigationControl(true);
+  instance.toggleNavigationControl(true);
+  const { navigationControl: navigationControl2 } = instance;
+  expect(props.map.removeControl).toHaveBeenCalledWith(navigationControl2);
+  expect(props.map.addControl).toHaveBeenCalledWith(instance.navigationControl);
+});
