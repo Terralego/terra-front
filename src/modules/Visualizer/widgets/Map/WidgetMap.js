@@ -81,9 +81,18 @@ export class WidgetMap extends React.Component {
     setDetails(details);
   }
 
-  displayTooltip = ({ features: [{ properties }] = [{}], event: { lngLat }, template }) => {
+  displayTooltip = ({
+    features: [{ properties }] = [{}], event: { lngLat }, template, content,
+  }) => {
     const container = document.createElement('div');
-    ReactDOM.render(<MarkdownRenderer content={template} {...properties} />, container);
+    ReactDOM.render(
+      <MarkdownRenderer
+        template={template}
+        content={content}
+        {...properties}
+      />,
+      container,
+    );
     this.setState({
       displayTooltip: {
         coordinates: [lngLat.lng, lngLat.lat],
