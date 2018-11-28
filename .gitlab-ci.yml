@@ -5,6 +5,7 @@ stages:
   - tests
   - build
   - deploy
+  - publish
 
 cache:
   paths:
@@ -56,11 +57,34 @@ npm_run_build:
     paths:
       - dist
 
-# Deploy stage
+# Deploy story book
+
+build_story_book:
+  tags: [shared-ci-docker]
+  stage: deploy
+  script:
+    - npm ci
+    - npm run build-storybook
+  artifacts:
+    expire_in: 3 days
+    paths:
+      - storybook-static/
 
 npm_run_deploy:
   tags: [shared-ci-docker]
   stage: deploy
+  dependencies:
+    - build_story_book
+  only:
+    - v2
+  script:
+    - npx --package netlify-cli netlify deploy --site=$NETLIFY_SITE_ID --auth=$NETLIFY_ACCESS_TOKEN  --dir=./storybook-static --prod
+
+# Publish on npm
+
+npm_run_deploy:
+  tags: [shared-ci-docker]
+  stage: publish
   when: manual
   script:
     - echo "//registry.npmjs.org/:_authToken=${NPM_TOKEN}">~/.npmrc
