@@ -5,6 +5,7 @@ import 'mapbox-gl/dist/mapbox-gl.css';
 
 import log from '../../../../services/log';
 import { StylesToApplyProps } from '../../../../propTypes/LayersTreePropTypes';
+import { capitalize } from '../../../../../../utils/strings';
 
 import './Map.scss';
 
@@ -93,33 +94,33 @@ export class Map extends React.Component {
 
   toggleControl (display, control) {
     const { map } = this.props;
-    // Set the first character to uppercase
-    const [firstChar] = control.split('');
-    const controlMethod = control.replace(/(?:^|\s)\w/, firstChar.toUpperCase());
+    const controlAttributeName = `${control}Control`;
+    const controlMethod = capitalize(controlAttributeName);
 
-    if (this[control] && !display) {
-      map.removeControl(this[control]);
-      delete this[control];
+    if (this[controlAttributeName] && !display) {
+      map.removeControl(this[controlAttributeName]);
+      delete this[controlAttributeName];
     }
+
     if (display) {
-      if (this[control]) {
-        map.removeControl(this[control]);
+      if (this[controlAttributeName]) {
+        map.removeControl(this[controlAttributeName]);
       }
-      this[control] = new mapBoxGl[controlMethod]();
-      map.addControl(this[control]);
+      this[controlAttributeName] = new mapBoxGl[controlMethod]();
+      map.addControl(this[controlAttributeName]);
     }
   }
 
   toggleAttributionControl (display) {
-    return this.toggleControl(display, 'attributionControl');
+    return this.toggleControl(display, 'attribution');
   }
 
   toggleNavigationControl (display) {
-    return this.toggleControl(display, 'navigationControl');
+    return this.toggleControl(display, 'navigation');
   }
 
   toggleDisplayScaleControl (display) {
-    return this.toggleControl(display, 'scaleControl');
+    return this.toggleControl(display, 'scale');
   }
 
   updateFlyTo = (prevFlyTo, flyTo) => {
