@@ -211,6 +211,9 @@ export class Map extends React.Component {
           case 'paint':
             this.updatePaintProperties(id, properties[property]);
             break;
+          case 'filter':
+            this.updateFilter(id, properties[property]);
+            break;
           default:
             map.setLayoutProperty(id, property, properties[property]);
         }
@@ -219,13 +222,19 @@ export class Map extends React.Component {
   }
 
   updatePaintProperties (id, properties) {
+    const { map } = this.props;
     Object.keys(properties).forEach(property => {
       try {
-        this.props.map.setPaintProperty(id, property, properties[property]);
+        map.setPaintProperty(id, property, properties[property]);
       } catch (e) {
         //
       }
     });
+  }
+
+  updateFilter (id, filter) {
+    const { map } = this.props;
+    map.setFilter(id, filter);
   }
 
   addClickListeners () {
