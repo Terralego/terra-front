@@ -25,6 +25,7 @@ jest.mock('mapbox-gl', () => {
     setStyle: jest.fn(() => 'mapbox://styles/mapbox/light-v9'),
     setLayoutProperty: jest.fn(),
     setPaintProperty: jest.fn(),
+    setFilter: jest.fn(),
     on: jest.fn((event, layer, fn) => {
       fn({});
       return off;
@@ -196,6 +197,9 @@ it('should update map', () => {
 
   wrapper.setProps({ stylesToApply: { layouts: [{ id: 'foo', paint: { 'fill-color': '#000000' } }] } });
   expect(props.map.setPaintProperty).toHaveBeenCalledWith('foo', 'fill-color', '#000000');
+
+  wrapper.setProps({ stylesToApply: { layouts: [{ id: 'foo', filter: ['all', ['==', 'categorie', 'tourisme']] }] } });
+  expect(props.map.setFilter).toHaveBeenCalledWith('foo', ['all', ['==', 'categorie', 'tourisme']]);
 });
 
 it('should add click listener on each layers', () => {
