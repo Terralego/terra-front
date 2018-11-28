@@ -113,7 +113,7 @@ export class Map extends React.Component {
       delete this.navigationControl;
     }
     if (display) {
-      if (this.attributionControl) {
+      if (this.navigationControl) {
         map.removeControl(this.navigationControl);
       }
       this.navigationControl = new mapBoxGl.NavigationControl();
