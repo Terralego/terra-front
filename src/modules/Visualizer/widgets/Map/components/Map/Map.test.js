@@ -349,3 +349,15 @@ it('should toggle navigation control', () => {
   expect(props.map.removeControl).toHaveBeenCalledWith(navigationControl2);
   expect(props.map.addControl).toHaveBeenCalledWith(instance.navigationControl);
 });
+
+it('should exec toggleControl', () => {
+  const instance = shallow(<Map {...props} />).instance();
+  jest.spyOn(instance, 'toggleControl');
+  instance.toggleNavigationControl(false);
+  instance.toggleNavigationControl(true);
+  instance.toggleAttributionControl(false);
+  instance.toggleAttributionControl(true);
+  instance.toggleDisplayScaleControl(false);
+  instance.toggleDisplayScaleControl(true);
+  expect(instance.toggleControl).toHaveBeenCalledTimes(6);
+});

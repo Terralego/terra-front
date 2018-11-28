@@ -5,6 +5,7 @@ import 'mapbox-gl/dist/mapbox-gl.css';
 
 import log from '../../../../services/log';
 import { StylesToApplyProps } from '../../../../propTypes/LayersTreePropTypes';
+import { capitalize } from '../../../../../../utils/strings';
 
 import './Map.scss';
 
@@ -91,49 +92,35 @@ export class Map extends React.Component {
     this.addClickListeners();
   }
 
-  toggleAttributionControl (display) {
+  toggleControl (display, control) {
     const { map } = this.props;
-    if (this.attributionControl && !display) {
-      map.removeControl(this.attributionControl);
-      delete this.attributionControl;
+    const controlAttributeName = `${control}Control`;
+    const controlMethod = capitalize(controlAttributeName);
+
+    if (this[controlAttributeName] && !display) {
+      map.removeControl(this[controlAttributeName]);
+      delete this[controlAttributeName];
     }
+
     if (display) {
-      if (this.attributionControl) {
-        map.removeControl(this.attributionControl);
+      if (this[controlAttributeName]) {
+        map.removeControl(this[controlAttributeName]);
       }
-      this.attributionControl = new mapBoxGl.AttributionControl();
-      map.addControl(this.attributionControl);
+      this[controlAttributeName] = new mapBoxGl[controlMethod]();
+      map.addControl(this[controlAttributeName]);
     }
+  }
+
+  toggleAttributionControl (display) {
+    return this.toggleControl(display, 'attribution');
   }
 
   toggleNavigationControl (display) {
-    const { map } = this.props;
-    if (this.navigationControl && !display) {
-      map.removeControl(this.navigationControl);
-      delete this.navigationControl;
-    }
-    if (display) {
-      if (this.navigationControl) {
-        map.removeControl(this.navigationControl);
-      }
-      this.navigationControl = new mapBoxGl.NavigationControl();
-      map.addControl(this.navigationControl);
-    }
+    return this.toggleControl(display, 'navigation');
   }
 
   toggleDisplayScaleControl (display) {
-    const { map } = this.props;
-    if (this.scaleControl && !display) {
-      map.removeControl(this.scaleControl);
-      delete this.scaleControl;
-    }
-    if (display) {
-      if (this.scaleControl) {
-        map.removeControl(this.scaleControl);
-      }
-      this.scaleControl = new mapBoxGl.ScaleControl();
-      map.addControl(this.scaleControl);
-    }
+    return this.toggleControl(display, 'scale');
   }
 
   updateFlyTo = (prevFlyTo, flyTo) => {
