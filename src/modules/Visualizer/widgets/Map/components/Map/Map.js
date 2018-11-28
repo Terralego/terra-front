@@ -74,7 +74,6 @@ export class Map extends React.Component {
 
   async initMapProperties () {
     const {
-      map,
       accessToken,
       displayScaleControl,
       displayNavigationControl,
@@ -83,15 +82,9 @@ export class Map extends React.Component {
 
     mapBoxGl.accessToken = accessToken;
 
-    if (displayScaleControl && !this.displayScaleControl) {
-      this.scaleControl = new mapBoxGl.ScaleControl();
-      map.addControl(this.scaleControl);
-    }
+    this.toggleDisplayScaleControl(displayScaleControl);
 
-    if (displayNavigationControl && !this.displayNavigationControl) {
-      this.navigationControl = new mapBoxGl.NavigationControl();
-      map.addControl(this.navigationControl);
-    }
+    this.toggleNavigationControl(displayNavigationControl);
 
     this.toggleAttributionControl(displayAttributionControl);
 
@@ -110,6 +103,36 @@ export class Map extends React.Component {
       }
       this.attributionControl = new mapBoxGl.AttributionControl();
       map.addControl(this.attributionControl);
+    }
+  }
+
+  toggleNavigationControl (display) {
+    const { map } = this.props;
+    if (this.navigationControl && !display) {
+      map.removeControl(this.navigationControl);
+      delete this.navigationControl;
+    }
+    if (display) {
+      if (this.attributionControl) {
+        map.removeControl(this.navigationControl);
+      }
+      this.navigationControl = new mapBoxGl.NavigationControl();
+      map.addControl(this.navigationControl);
+    }
+  }
+
+  toggleDisplayScaleControl (display) {
+    const { map } = this.props;
+    if (this.scaleControl && !display) {
+      map.removeControl(this.scaleControl);
+      delete this.scaleControl;
+    }
+    if (display) {
+      if (this.scaleControl) {
+        map.removeControl(this.scaleControl);
+      }
+      this.scaleControl = new mapBoxGl.ScaleControl();
+      map.addControl(this.scaleControl);
     }
   }
 
@@ -154,21 +177,11 @@ export class Map extends React.Component {
     }
 
     if (displayScaleControl !== prevProps.displayScaleControl) {
-      if (displayScaleControl) {
-        this.scaleControl = new mapBoxGl.ScaleControl();
-        map.addControl(this.scaleControl);
-      } else {
-        map.removeControl(this.scaleControl);
-      }
+      this.toggleDisplayScaleControl(displayScaleControl);
     }
 
     if (displayNavigationControl !== prevProps.displayNavigationControl) {
-      if (displayNavigationControl) {
-        this.navigationControl = new mapBoxGl.NavigationControl();
-        map.addControl(this.navigationControl);
-      } else {
-        map.removeControl(this.navigationControl);
-      }
+      this.toggleNavigationControl(displayNavigationControl);
     }
 
 
