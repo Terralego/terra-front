@@ -70,7 +70,7 @@ build_story_book:
     paths:
       - storybook-static/
 
-npm_run_deploy:
+deploy_story_book:
   tags: [shared-ci-docker]
   stage: deploy
   dependencies:
