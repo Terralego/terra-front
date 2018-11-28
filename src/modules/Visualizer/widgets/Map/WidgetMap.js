@@ -17,23 +17,20 @@ const INTERACTION_FN = 'function';
 export class WidgetMap extends React.Component {
   static propTypes = {
     layersTree: LayersTreeProps.isRequired,
-    interactions: PropTypes.arrayOf(PropTypes.oneOfType([
-      PropTypes.shape({
-        id: PropTypes.string.isRequired,
-        interaction: INTERACTION_DISPLAY_DETAILS,
-        template: PropTypes.string.isRequired,
-      }),
-      PropTypes.shape({
-        id: PropTypes.string.isRequired,
-        interaction: INTERACTION_DISPLAY_TOOLTIP,
-        template: PropTypes.string.isRequired,
-      }),
-      PropTypes.shape({
-        id: PropTypes.string.isRequired,
-        interaction: INTERACTION_FN,
-        fn: PropTypes.func.isRequired,
-      }),
-    ])),
+    interactions: PropTypes.arrayOf(PropTypes.shape({
+      id: PropTypes.string.isRequired,
+      interaction: PropTypes.oneOf([
+        INTERACTION_DISPLAY_DETAILS,
+        INTERACTION_DISPLAY_TOOLTIP,
+        INTERACTION_FN,
+      ]),
+      // INTERACTION_DISPLAY_DETAILS
+      // INTERACTION_DISPLAY_TOOLTIP
+      template: PropTypes.string,
+      content: PropTypes.string,
+      // INTERACTION_FN
+      fn: PropTypes.func,
+    })),
     LayersTreeComponent: PropTypes.func,
     MapComponent: PropTypes.func,
     setDetails: PropTypes.func,

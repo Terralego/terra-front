@@ -11,7 +11,7 @@ import './Map.scss';
 export class Map extends React.Component {
   static propTypes = {
     // Mapbox general config
-    accessToken: PropTypes.string.isRequired,
+    accessToken: PropTypes.string,
     displayScaleControl: PropTypes.bool,
     displayNavigationControl: PropTypes.bool,
     displayAttributionControl: PropTypes.bool,
@@ -42,6 +42,7 @@ export class Map extends React.Component {
   };
 
   static defaultProps = {
+    accessToken: '',
     displayScaleControl: true,
     displayNavigationControl: true,
     displayAttributionControl: true,

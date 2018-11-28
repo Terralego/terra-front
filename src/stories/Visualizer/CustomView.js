@@ -39,7 +39,7 @@ stories.add('Custom View', () => (
                   <div>
                     <h2>Un site spécifique avec un navigation différente</h2>
                     {layers.map(layer => (
-                      <p>
+                      <p key={layer.label}>
                         {layer.label}
                         <button
                           onClick={onToggleChange(layer)}
