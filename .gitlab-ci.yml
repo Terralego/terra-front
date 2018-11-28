@@ -61,7 +61,7 @@ npm_run_build:
 
 build_story_book:
   tags: [shared-ci-docker]
-  stage: deploy
+  stage: build
   script:
     - npm ci
     - npm run build-storybook
