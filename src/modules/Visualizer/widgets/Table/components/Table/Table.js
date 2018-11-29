@@ -39,7 +39,7 @@ export class Table extends React.Component {
 
     return (
       <BluePrintTable
-        className="widget-table"
+        className="component-table"
         numRows={data.length}
       >
         {cols}

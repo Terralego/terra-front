@@ -59,23 +59,13 @@ it('should get columns', () => {
     { label: 'Label1', sortable: true, display: true },
     { label: 'Label2', sortable: true, display: true },
   ];
-  expect(getColumns(columns)).toEqual([
-    {
-      props: {
-        label: 'Label1',
-        sortable: true,
-        display: true,
-        index: 0,
-      },
-    },
-    {
-      props: {
-        label: 'Label2',
-        sortable: true,
-        display: true,
-        index: 1,
-      },
-    },
-  ]);
+  expect(getColumns(columns).length).toBe(2);
+  expect(getColumns(columns)[0]).toHaveProperty('props', {
+    display: true,
+    index: 0,
+    label: 'Label1',
+    sortable: true,
+  });
+  expect(getColumns(columns)[0]).toHaveProperty('renderMenu');
 });
 
