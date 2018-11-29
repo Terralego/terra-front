@@ -38,6 +38,10 @@ jest.mock('mapbox-gl', () => {
       return off;
     }),
     getStyle: jest.fn(() => ({ layers: [{ id: 'foo' }, { id: 'bar' }] })),
+    touchZoomRotate: {
+      enableRotation: jest.fn(),
+      disableRotation: jest.fn(),
+    },
   };
   const PopupFunctions = {};
   const Popup = jest.fn(() => PopupFunctions);
@@ -360,4 +364,22 @@ it('should exec toggleControl', () => {
   instance.toggleDisplayScaleControl(false);
   instance.toggleDisplayScaleControl(true);
   expect(instance.toggleControl).toHaveBeenCalledTimes(6);
+});
+
+it('should toggle rotate', () => {
+  const instance = new Map({ ...props }, {});
+  instance.props.rotate = true;
+  instance.toggleRotate();
+  expect(props.map.touchZoomRotate.enableRotation).toHaveBeenCalled();
+  instance.props.rotate = false;
+  instance.toggleRotate();
+  expect(props.map.touchZoomRotate.disableRotation).toHaveBeenCalled();
+});
+
+it('should update rotate', () => {
+  Map.prototype.toggleRotate = jest.fn();
+  const wrapper = shallow(<Map {...props} />);
+  Map.prototype.toggleRotate.mockClear();
+  wrapper.setProps({ rotate: true });
+  expect(Map.prototype.toggleRotate).toHaveBeenCalled();
 });

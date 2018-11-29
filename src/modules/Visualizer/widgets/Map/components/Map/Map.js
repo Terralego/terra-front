@@ -19,6 +19,7 @@ export class Map extends React.Component {
     maxZoom: PropTypes.number,
     minZoom: PropTypes.number,
     maxBounds: PropTypes.oneOfType([PropTypes.arrayOf(PropTypes.array), PropTypes.bool]),
+    rotate: PropTypes.bool,
 
     // Action to fly out to coordinates
     flyTo: PropTypes.shape({
@@ -50,6 +51,7 @@ export class Map extends React.Component {
     maxZoom: 20,
     minZoom: 0,
     maxBounds: false,
+    rotate: false,
     flyTo: {
       center: [0, 0],
       zoom: 7,
@@ -89,6 +91,8 @@ export class Map extends React.Component {
 
     this.toggleAttributionControl(displayAttributionControl);
 
+    this.toggleRotate();
+
     this.addClickListeners();
   }
 
@@ -123,6 +127,15 @@ export class Map extends React.Component {
     return this.toggleControl(display, 'scale');
   }
 
+  toggleRotate () {
+    const { map, rotate } = this.props;
+    if (rotate) {
+      map.touchZoomRotate.enableRotation();
+    } else {
+      map.touchZoomRotate.disableRotation();
+    }
+  }
+
   updateFlyTo = (prevFlyTo, flyTo) => {
     if (prevFlyTo !== flyTo) {
       this.props.map.flyTo(flyTo);
@@ -139,6 +152,7 @@ export class Map extends React.Component {
       displayAttributionControl,
       minZoom,
       maxBounds,
+      rotate,
       flyTo,
       stylesToApply,
       onClick,
@@ -186,6 +200,10 @@ export class Map extends React.Component {
 
     if (displayTooltip !== prevProps.displayTooltip) {
       this.displayTooltip();
+    }
+
+    if (rotate !== prevProps.rotate) {
+      this.toggleRotate();
     }
   }
 
