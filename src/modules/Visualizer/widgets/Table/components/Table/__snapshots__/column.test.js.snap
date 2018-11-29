@@ -1,0 +1,12 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`should render correctly 1`] = `
+RenderColumn {
+  "props": Object {
+    "display": true,
+    "index": 1,
+    "label": "Label1",
+    "sortable": true,
+  },
+}
+`;
