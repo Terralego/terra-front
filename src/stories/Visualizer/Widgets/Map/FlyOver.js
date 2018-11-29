@@ -1,6 +1,6 @@
 import React from 'react';
 
-import Map from '../../../modules/Visualizer/widgets/Map/components/Map';
+import Map from '../../../../modules/Visualizer/widgets/Map/components/Map';
 
 const STEPS = [
   [4.8577, 43.9856],
