@@ -39,6 +39,7 @@ export const withMap = WrappedComponent =>
         maxZoom,
         minZoom,
         maxBounds,
+        pitchWithRotate = false,
       } = this.props;
 
       mapBoxGl.accessToken = accessToken;
@@ -52,7 +53,7 @@ export const withMap = WrappedComponent =>
         maxZoom,
         minZoom,
         maxBounds,
-        bearing: 0,
+        pitchWithRotate,
       });
       map.once('data', () => this.setState({ map }));
     }
