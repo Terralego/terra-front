@@ -1,8 +1,8 @@
 import { storiesOf } from '@storybook/react';
 
-import Map from './Map';
-import MapLayers from './MapLayers';
-import FlyOver from './FlyOver';
+import Map from './Map/Map';
+import MapLayers from './Map/MapLayers';
+import FlyOver from './Map/FlyOver';
 
 const stories = storiesOf('Module Visualizer/Widgets/Map', module);
 

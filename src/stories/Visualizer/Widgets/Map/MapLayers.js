@@ -1,9 +1,9 @@
 import React from 'react';
 
-import VisualizerProvider from '../../../modules/Visualizer';
-import WidgetMap from '../../../modules/Visualizer/widgets/Map';
+import VisualizerProvider from '../../../../modules/Visualizer';
+import WidgetMap from '../../../../modules/Visualizer/widgets/Map';
 
-import LAYERSTREE from '../data/layersTree';
+import LAYERSTREE from '../../data/layersTree';
 
 export default () => (
   <VisualizerProvider>
@@ -16,7 +16,7 @@ export default () => (
       style={{ height: '90vh', display: 'flex' }}
       interactions={[{
         id: 'place-city-label-major',
-        interaction: 'displayDetails',
+        action: 'displayDetails',
       }]}
     />
   </VisualizerProvider>
