@@ -11,7 +11,7 @@ export class RenderColumn {
     this.props = props;
   }
 
-  renderMenu (sortColumn) {
+  renderMenu = sortColumn => {
     const { index } = this.props;
 
     const sortAsc = () => sortColumn(index, (a, b) => a.toString().localeCompare(b));

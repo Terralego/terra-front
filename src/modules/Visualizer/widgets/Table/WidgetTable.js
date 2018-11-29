@@ -30,7 +30,7 @@ export class WidgetTable extends React.Component {
   render () {
     const { columns, data } = this.state;
     return (
-      <div>
+      <div className="widget-table">
         <Table columns={columns} data={data} />
       </div>
     );

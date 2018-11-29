@@ -27,7 +27,6 @@ it('should render correctly', () => {
 it('should get cell data', () => {
   const instance = new Table(props);
   expect(instance.getCellData(1, 0)).toBe('col2-row1');
-  // expect(instance.getCellData).toHaveBeenCalled();
 });
 
 it('should get sort column', () => {

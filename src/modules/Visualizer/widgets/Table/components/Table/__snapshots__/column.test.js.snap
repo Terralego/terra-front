@@ -8,5 +8,6 @@ RenderColumn {
     "label": "Label1",
     "sortable": true,
   },
+  "renderMenu": [Function],
 }
 `;
