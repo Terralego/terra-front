@@ -57,7 +57,6 @@ export const connect = ({ Consumer }) => (...mapContextToPropsList) => WrappedCo
     updateFromContext () {
       const { context, props } = this.props;
       const state = this.getNewState(context, props);
-
       if (state) {
         this.setState(state);
       }

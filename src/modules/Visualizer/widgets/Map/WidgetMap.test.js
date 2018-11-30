@@ -6,7 +6,10 @@ import ReactDOM from 'react-dom';
 import WidgetMap from './WidgetMap';
 import log from '../../services/log';
 
-jest.mock('./components/Map', () => jest.fn(() => null));
+jest.mock('./components/Map', () => {
+  function MapComponent () { return null; }
+  return MapComponent;
+});
 jest.mock('../../services/log', () => jest.fn());
 jest.mock('react-dom', () => {
   const mockedElement = {};
@@ -88,6 +91,7 @@ it('should merge layouts', () => {
 });
 
 it('should interact on click event', () => {
+  const customInteraction = jest.fn();
   const instance = new WidgetMap({
     interactions: [{
       id: 'foo',
@@ -95,6 +99,10 @@ it('should interact on click event', () => {
     }, {
       id: 'bar',
       interaction: 'displayTooltip',
+    }, {
+      id: 'barfn',
+      interaction: 'function',
+      fn: customInteraction,
     }, {
       id: 'foobar',
       interaction: 'invalid interaction',
@@ -106,12 +114,27 @@ it('should interact on click event', () => {
   expect(instance.displayDetails).toHaveBeenCalled();
   instance.onClick('bar', {}, {});
   expect(instance.displayTooltip).toHaveBeenCalled();
+  instance.onClick('barfn', {}, {});
+  expect(customInteraction).toHaveBeenCalled();
   instance.onClick('foobar', {}, {});
   expect(log).toHaveBeenCalledWith('no interaction found for layer foobar');
   instance.onClick('barfoo', {}, {});
   expect(instance.displayDetails).toHaveBeenCalledTimes(1);
   expect(instance.displayTooltip).toHaveBeenCalledTimes(1);
   expect(log).toHaveBeenCalledTimes(1);
+});
+
+it('should set display pointer on map', () => {
+  const wrapper = shallow((
+    <WidgetMap
+      layersTree={[]}
+      interactions={[{
+        id: 'foo',
+        interaction: 'displayDetails',
+      }]}
+    />
+  ));
+  expect(wrapper.find('MapComponent').props().displayPointerOnLayers).toEqual(['foo']);
 });
 
 it('should display details', () => {

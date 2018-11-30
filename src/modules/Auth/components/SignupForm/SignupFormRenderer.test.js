@@ -9,3 +9,11 @@ it('should render correctly', () => {
 
   expect(tree).toMatchSnapshot();
 });
+
+it('should render with errors', () => {
+  const tree = renderer
+    .create(<SignupFormRenderer errors={{ email: true, password: true }} />)
+    .toJSON();
+
+  expect(tree).toMatchSnapshot();
+});

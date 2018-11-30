@@ -58,3 +58,12 @@ it('should change on toggle', () => {
   expect(onChange).toHaveBeenCalledWith(layer.inactive);
   expect(instance.isActive(layer)).toBe(false);
 });
+
+it('should set initial state', () => {
+  const instance = new LayersTree({ layersTree: [] }, {});
+  expect(instance.state.areActives).toEqual(new Set());
+
+  const widget = { type: 'map', initialState: { active: true } };
+  const instance2 = new LayersTree({ layersTree: [widget] }, {});
+  expect(instance2.state.areActives).toEqual(new Set([widget]));
+});

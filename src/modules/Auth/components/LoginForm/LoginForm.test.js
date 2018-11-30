@@ -14,7 +14,7 @@ it('should render correctly', () => {
 it('should render with errors', () => {
   const wrapper = renderer
     .create(<LoginForm />);
-  wrapper.getInstance().setState({ errorLogin: true });
+  wrapper.getInstance().setState({ errorLogin: true, errorPassword: true });
   const tree = wrapper.toJSON();
   expect(tree).toMatchSnapshot();
 });
@@ -52,6 +52,23 @@ it('should submit form with failure', async done => {
 
   expect(authAction).toHaveBeenCalledWith({ login: undefined, password: undefined });
   expect(wrapper.state().errorLogin).toBe(true);
+  expect(wrapper.state().errorPassword).toBe(false);
+
+  done();
+});
+
+it('should submit form with failure and invalid error', async done => {
+  const authAction = jest.fn(() => {
+    const error = new Error();
+    throw error;
+  });
+  const wrapper = shallow(<LoginForm
+    authAction={authAction}
+  />);
+
+  await wrapper.instance().submit({ preventDefault () {} });
+
+  expect(wrapper.state().errorLogin).toBe(false);
   expect(wrapper.state().errorPassword).toBe(false);
 
   done();
