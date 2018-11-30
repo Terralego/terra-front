@@ -4,12 +4,12 @@ import { storiesOf } from '@storybook/react';
 import { text } from '@storybook/addon-knobs';
 
 import ApiProvider from './ApiProvider';
-import AuthProvider, { SignupForm } from '../../modules/Auth';
+import AuthProvider, { SignupForm } from '../../../modules/Auth';
 import ShouldDisplayLoginForm from './ShouldDisplayLoginForm';
 import CustomLoginForm from './CustomLoginForm';
 import CustomSignupForm from './CustomSignupForm';
 
-const stories = storiesOf('Module Auth', module);
+const stories = storiesOf('Modules/Auth', module);
 
 stories.add('Login form', () => (
   <ApiProvider host={text('API Host', '')}>

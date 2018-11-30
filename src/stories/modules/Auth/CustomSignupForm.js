@@ -1,7 +1,7 @@
 import React from 'react';
 
-import TerraFrontProvider from '../../modules/TerraFrontProvider';
-import AuthProvider, { SignupForm } from '../../modules/Auth';
+import TerraFrontProvider from '../../../modules/TerraFrontProvider';
+import AuthProvider, { SignupForm } from '../../../modules/Auth';
 
 export const CustomSignupForm = () => (
   <TerraFrontProvider

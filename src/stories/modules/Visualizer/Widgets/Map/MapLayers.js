@@ -1,7 +1,7 @@
 import React from 'react';
 
-import VisualizerProvider from '../../../../modules/Visualizer';
-import WidgetMap from '../../../../modules/Visualizer/widgets/Map';
+import VisualizerProvider from '../../../../../modules/Visualizer';
+import WidgetMap from '../../../../../modules/Visualizer/widgets/Map';
 
 import LAYERSTREE from '../../data/layersTree';
 
