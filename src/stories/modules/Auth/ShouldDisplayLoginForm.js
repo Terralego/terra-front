@@ -1,6 +1,6 @@
 import React from 'react';
 
-import { LoginForm, connectAuthProvider } from '../../modules/Auth';
+import { LoginForm, connectAuthProvider } from '../../../modules/Auth';
 
 export const ShouldDisplayLoginForm = connectAuthProvider(({
   authenticated, logoutAction,

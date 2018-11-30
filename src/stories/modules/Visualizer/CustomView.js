@@ -2,11 +2,11 @@
 import React from 'react';
 import { storiesOf } from '@storybook/react';
 
-import TerraFrontProvider from '../../modules/TerraFrontProvider';
-import VisualizerProvider, { View } from '../../modules/Visualizer';
+import TerraFrontProvider from '../../../modules/TerraFrontProvider';
+import VisualizerProvider, { View } from '../../../modules/Visualizer';
 import layersTree from './data/layersTree';
 
-const stories = storiesOf('Module Visualizer', module);
+const stories = storiesOf('Modules/Visualizer', module);
 
 stories.add('Custom View', () => (
   <TerraFrontProvider

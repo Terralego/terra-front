@@ -1,6 +1,6 @@
 import React from 'react';
 
-import WidgetTable from '../../../../modules/Visualizer/widgets/Table';
+import WidgetTable from '../../../../../modules/Visualizer/widgets/Table';
 
 import data from './data.json';
 

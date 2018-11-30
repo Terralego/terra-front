@@ -2,5 +2,8 @@ import 'normalize.css/normalize.css';
 import '@blueprintjs/icons/lib/css/blueprint-icons.css';
 import '@blueprintjs/core/lib/css/blueprint.css';
 
-import './Auth';
-import './Visualizer';
+import './summary';
+import './modules/Auth';
+import './modules/Visualizer';
+
+import './apps/Admin';

@@ -1,7 +1,7 @@
 import React from 'react';
 import { select, number, array, object } from '@storybook/addon-knobs';
 
-import Map from '../../../../modules/Visualizer/widgets/Map/components/Map';
+import Map from '../../../../../modules/Visualizer/widgets/Map/components/Map';
 
 export default () => (
   <Map
