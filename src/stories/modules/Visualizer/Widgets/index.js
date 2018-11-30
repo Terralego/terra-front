@@ -5,6 +5,7 @@ import MapLayers from './Map/MapLayers';
 import FlyOver from './Map/FlyOver';
 
 import Table from './Table/Table';
+import Header from './Table/Header';
 
 const storiesMap = storiesOf('Modules/Visualizer/Widgets/Map', module);
 
@@ -14,4 +15,5 @@ storiesMap.add('FlyOver', FlyOver);
 
 const storiesTable = storiesOf('Modules/Visualizer/Widgets/Table', module);
 
-storiesTable.add('Table', Table);
+storiesTable.add('Table Component', Table);
+storiesTable.add('Header', Header);
