@@ -14,8 +14,8 @@ export class RenderColumn {
   renderMenu = sortColumn => {
     const { index } = this.props;
 
-    const sortAsc = () => sortColumn(index, (a, b) => a.toString().localeCompare(b));
-    const sortDesc = () => sortColumn(index, (a, b) => b.toString().localeCompare(a));
+    const sortAsc = () => sortColumn(index, (a, b) => this.comparator(a, b));
+    const sortDesc = () => sortColumn(index, (a, b) => this.comparator(b, a));
     return (
       <Menu>
         <MenuItem icon="sort-alphabetical" onClick={sortAsc} text="Sort Asc" />
@@ -23,6 +23,20 @@ export class RenderColumn {
       </Menu>
     );
   }
+
+  comparator = (a, b) => {
+    const { format: { type } = {} } = this.props;
+    switch (type) {
+      case 'number':
+        return a - b;
+      case 'date':
+        return new Date(a) - new Date(b);
+      default:
+        return a.toString().localeCompare(b);
+    }
+  }
+
+
   getColumn (getCellData, sortColumn) {
     const { value, index, sortable } = this.props;
 

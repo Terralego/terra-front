@@ -20,14 +20,26 @@ export class Table extends React.Component {
   };
 
   state = {
-    sortedIndexMap: [],
+    sortedIndexMap: null,
   };
 
   getCellData = (rowIndex, columnIndex) => {
     const { data } = this.props;
-    const { sortedIndexMap } = this.state;
-    return data[sortedIndexMap[rowIndex] || rowIndex][columnIndex];
+    const sortedIndexMap = this.state.sortedIndexMap || data.map((_, k) => k);
+    const cell = data[sortedIndexMap[rowIndex]][columnIndex];
+    return this.formatCell(cell, columnIndex);
   };
+
+  formatCell = (cell, columnIndex) => {
+    const { columns } = this.props;
+    const { format: { type } = {} } = columns[columnIndex];
+    switch (type) {
+      case 'date':
+        return new Date(cell).toLocaleDateString();
+      default:
+        return cell;
+    }
+  }
 
   sortColumn = (columnIndex, comparator) => {
     const { data } = this.props;

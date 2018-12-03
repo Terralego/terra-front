@@ -14,17 +14,18 @@ export default () => (
         display: true,
       },
       {
-        value: 'Date',
+        value: 'Dates',
         sortable: true,
         editable: true,
-        format: { type: 'date', value: 'DD/MM/YYYY' },
+        format: { type: 'date' },
         display: false,
       },
       {
-        value: 'Lorem',
+        value: 'Numbers',
         sortable: true,
         editable: true,
         display: true,
+        format: { type: 'number' },
       },
     ]}
   />
