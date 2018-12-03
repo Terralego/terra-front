@@ -6,6 +6,7 @@ import FlyOver from './Map/FlyOver';
 
 import Table from './Table/Table';
 import Header from './Table/Header';
+import FullTable from './Table/FullTable';
 
 const storiesMap = storiesOf('Modules/Visualizer/Widgets/Map', module);
 
@@ -17,3 +18,4 @@ const storiesTable = storiesOf('Modules/Visualizer/Widgets/Table', module);
 
 storiesTable.add('Table Component', Table);
 storiesTable.add('Header', Header);
+storiesTable.add('Full Table', FullTable);

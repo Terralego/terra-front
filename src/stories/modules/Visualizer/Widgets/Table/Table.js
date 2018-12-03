@@ -1,35 +1,68 @@
 import React from 'react';
 
-import WidgetTable from '../../../../../modules/Visualizer/widgets/Table';
+import Table from '../../../../../modules/Visualizer/widgets/Table/components/Table';
 
 import data from './data.json';
 
 export default () => (
-  <WidgetTable
+  <Table
     data={data}
     columns={[
       {
-        label: 'Nom',
+        value: 'Name',
         sortable: true,
         editable: true,
       },
       {
-        label: 'Date',
+        value: 'Date',
         sortable: true,
         editable: true,
         format: { type: 'date', value: 'DD/MM/YYYY' },
       },
-      'Lorem',
-      'Ipsum',
-      'Dolor',
-      'Sit',
-      'Amet',
-      'Consectetur',
-      'Adipiscing',
-      'Elit',
-      'Sed',
-      'Non',
-      'Risus',
+      {
+        value: 'Lorem',
+        sortable: true,
+      },
+      {
+        value: 'Ipsum',
+        sortable: true,
+      },
+      {
+        value: 'Dolor',
+        sortable: true,
+      },
+      {
+        value: 'Sit',
+        sortable: true,
+      },
+      {
+        value: 'Amet',
+        sortable: true,
+      },
+      {
+        value: 'Consectetur',
+        sortable: true,
+      },
+      {
+        value: 'Adipiscing',
+        sortable: true,
+      },
+      {
+        value: 'Elit',
+        sortable: true,
+      },
+      {
+        value: 'Sed',
+        sortable: true,
+      },
+      {
+        value: 'Non',
+        sortable: true,
+      },
+      {
+        value: 'Risus',
+        sortable: true,
+      },
     ]}
   />
 );

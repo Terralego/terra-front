@@ -10,7 +10,7 @@ jest.mock('@blueprintjs/table', () => ({
 }));
 
 const props = {
-  columns: ['col1', 'col2'],
+  columns: [{ value: 'col1', sortable: true }, { value: 'col2', sortable: true }],
   data: [
     ['col1-row1', 'col1-row2'],
     ['col2-row1', 'col2-row2'],

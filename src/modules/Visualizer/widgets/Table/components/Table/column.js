@@ -24,19 +24,21 @@ export class RenderColumn {
     );
   }
   getColumn (getCellData, sortColumn) {
+    const { value, index, sortable } = this.props;
+
     const cellRenderer = (rowIndex, columnIndex) => (
       <Cell>{getCellData(rowIndex, columnIndex)}</Cell>
     );
 
     const columnHeaderCellRenderer = () => (
-      <ColumnHeaderCell name={this.props.label} menuRenderer={() => this.renderMenu(sortColumn)} />
+      <ColumnHeaderCell name={value} menuRenderer={() => this.renderMenu(sortColumn)} />
     );
     return (
       <Column
         cellRenderer={cellRenderer}
-        columnHeaderCellRenderer={this.props.sortable ? columnHeaderCellRenderer : null}
-        key={this.props.index}
-        name={this.props.label}
+        columnHeaderCellRenderer={sortable ? columnHeaderCellRenderer : null}
+        key={index}
+        name={value}
       />
     );
   }

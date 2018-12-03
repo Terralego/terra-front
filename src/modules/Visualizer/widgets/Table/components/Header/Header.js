@@ -8,13 +8,13 @@ export const Header = ({ title, columns, onChange }) => {
   const options = (
     <div className="table-header__options">
       <Label>Table options</Label>
-      {columns.map(({ label, display }, index) => (
+      {columns.map(({ value, display }, index) => (
         <Checkbox
           onChange={event => onChange({ event, index })}
-          key={label}
-          label={label}
+          key={value}
+          label={value}
           defaultChecked={display}
-          value={label}
+          value={value}
         />
         ))}
     </div>

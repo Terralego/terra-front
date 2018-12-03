@@ -4,6 +4,50 @@ exports[`should render correctly 1`] = `
 <div
   className="widget-table"
 >
+  <div
+    className="bp3-navbar table-header"
+  >
+    <div
+      className="bp3-navbar-group bp3-align-left"
+    >
+      <span
+        className="bp3-popover-wrapper"
+      >
+        <span
+          className="bp3-popover-target"
+          onClick={[Function]}
+        >
+          <button
+            className="bp3-button bp3-minimal bp3-intent-primary"
+            onKeyDown={[Function]}
+            onKeyUp={[Function]}
+            type="button"
+          >
+            <span
+              className="bp3-icon bp3-icon-properties"
+              icon="properties"
+            >
+              <svg
+                data-icon="properties"
+                height={16}
+                viewBox="0 0 16 16"
+                width={16}
+              >
+                <desc>
+                  properties
+                </desc>
+                <path
+                  d="M2 6C.9 6 0 6.9 0 8s.9 2 2 2 2-.9 2-2-.9-2-2-2zm4-3h9c.55 0 1-.45 1-1s-.45-1-1-1H6c-.55 0-1 .45-1 1s.45 1 1 1zm-4 9c-1.1 0-2 .9-2 2s.9 2 2 2 2-.9 2-2-.9-2-2-2zm13-5H6c-.55 0-1 .45-1 1s.45 1 1 1h9c.55 0 1-.45 1-1s-.45-1-1-1zm0 6H6c-.55 0-1 .45-1 1s.45 1 1 1h9c.55 0 1-.45 1-1s-.45-1-1-1zM2 0C.9 0 0 .9 0 2s.9 2 2 2 2-.9 2-2-.9-2-2-2z"
+                  fillRule="evenodd"
+                />
+              </svg>
+            </span>
+          </button>
+        </span>
+      </span>
+    </div>
+    
+  </div>
   <p>
     Mocked WidgetTable
   </p>
