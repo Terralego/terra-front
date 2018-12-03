@@ -10,8 +10,12 @@ import './styles.scss';
 
 export class Table extends React.Component {
   static propTypes = {
-    columns: PropTypes.arrayOf(PropTypes.oneOfType([PropTypes.object, PropTypes.string]))
-      .isRequired,
+    columns: PropTypes.arrayOf(PropTypes.shape({
+      value: PropTypes.string.isRequired,
+      sortable: PropTypes.bool,
+      editable: PropTypes.bool,
+      format: PropTypes.shape({ type: PropTypes.string, value: PropTypes.string }),
+    }).isRequired).isRequired,
     data: PropTypes.arrayOf(PropTypes.arrayOf(PropTypes.string)).isRequired,
   };
 
@@ -34,7 +38,7 @@ export class Table extends React.Component {
 
   render () {
     const { data, columns } = this.props;
-    const cols = getColumns(columns, data)
+    const cols = getColumns(columns)
       .map(col => col.getColumn(this.getCellData, this.sortColumn));
 
     return (
