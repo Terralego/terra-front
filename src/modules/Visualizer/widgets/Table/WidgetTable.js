@@ -62,7 +62,7 @@ export class WidgetTable extends React.Component {
     const columns = this.props.columns.map(col =>
       ((typeof col !== 'string')
         ? { display: true, ...col }
-        : { label: col, sortable: true, display: true }));
+        : { value: col, sortable: true, display: true }));
     this.setState({ columns });
     this.propsFiltered(columns);
   }

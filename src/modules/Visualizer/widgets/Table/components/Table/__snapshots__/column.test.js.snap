@@ -5,8 +5,8 @@ RenderColumn {
   "props": Object {
     "display": true,
     "index": 1,
-    "label": "Label1",
     "sortable": true,
+    "value": "Label1",
   },
   "renderMenu": [Function],
 }

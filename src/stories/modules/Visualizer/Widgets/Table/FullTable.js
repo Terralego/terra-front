@@ -10,12 +10,12 @@ export default () => (
     data={data}
     columns={[
       {
-        label: 'Nom',
+        value: 'Nom',
         sortable: true,
         editable: true,
       },
       {
-        label: 'Date',
+        value: 'Date',
         sortable: true,
         editable: true,
         format: { type: 'date', value: 'DD/MM/YYYY' },

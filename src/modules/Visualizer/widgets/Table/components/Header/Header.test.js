@@ -24,20 +24,20 @@ const props = {
   title: 'Title',
   columns: [
     {
-      label: 'Name',
+      value: 'Name',
       sortable: true,
       editable: true,
       display: true,
     },
     {
-      label: 'Date',
+      value: 'Date',
       sortable: true,
       editable: true,
       format: { type: 'date', value: 'DD/MM/YYYY' },
       display: false,
     },
     {
-      label: 'Lorem',
+      value: 'Lorem',
       sortable: true,
       editable: true,
       display: true,

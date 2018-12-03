@@ -24,7 +24,7 @@ jest.mock('@blueprintjs/core', () => {
 });
 
 it('should render correctly', () => {
-  const tree = new RenderColumn(({ label: 'Label1', sortable: true, display: true, index: 1 }));
+  const tree = new RenderColumn(({ value: 'Label1', sortable: true, display: true, index: 1 }));
   expect(tree).toMatchSnapshot();
 });
 
@@ -42,7 +42,7 @@ it('should renderMenu', () => {
 });
 
 it('should get column', () => {
-  const instance = new RenderColumn({ label: 'Label1', sortable: true, display: true, index: 1 }, {});
+  const instance = new RenderColumn({ value: 'Label1', sortable: true, display: true, index: 1 }, {});
   const sortColumn = jest.fn();
   const getCellData = jest.fn(() => 2);
   const GetColumn = () => instance.getColumn(getCellData, sortColumn);
@@ -56,14 +56,14 @@ it('should get column', () => {
 
 it('should get columns', () => {
   const columns = [
-    { label: 'Label1', sortable: true, display: true },
-    { label: 'Label2', sortable: true, display: true },
+    { value: 'Label1', sortable: true, display: true },
+    { value: 'Label2', sortable: true, display: true },
   ];
   expect(getColumns(columns).length).toBe(2);
   expect(getColumns(columns)[0]).toHaveProperty('props', {
     display: true,
     index: 0,
-    label: 'Label1',
+    value: 'Label1',
     sortable: true,
   });
   expect(getColumns(columns)[0]).toHaveProperty('renderMenu');

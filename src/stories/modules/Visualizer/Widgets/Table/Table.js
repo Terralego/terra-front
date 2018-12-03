@@ -9,58 +9,58 @@ export default () => (
     data={data}
     columns={[
       {
-        label: 'Name',
+        value: 'Name',
         sortable: true,
         editable: true,
       },
       {
-        label: 'Date',
+        value: 'Date',
         sortable: true,
         editable: true,
         format: { type: 'date', value: 'DD/MM/YYYY' },
       },
       {
-        label: 'Lorem',
+        value: 'Lorem',
         sortable: true,
       },
       {
-        label: 'Ipsum',
+        value: 'Ipsum',
         sortable: true,
       },
       {
-        label: 'Dolor',
+        value: 'Dolor',
         sortable: true,
       },
       {
-        label: 'Sit',
+        value: 'Sit',
         sortable: true,
       },
       {
-        label: 'Amet',
+        value: 'Amet',
         sortable: true,
       },
       {
-        label: 'Consectetur',
+        value: 'Consectetur',
         sortable: true,
       },
       {
-        label: 'Adipiscing',
+        value: 'Adipiscing',
         sortable: true,
       },
       {
-        label: 'Elit',
+        value: 'Elit',
         sortable: true,
       },
       {
-        label: 'Sed',
+        value: 'Sed',
         sortable: true,
       },
       {
-        label: 'Non',
+        value: 'Non',
         sortable: true,
       },
       {
-        label: 'Risus',
+        value: 'Risus',
         sortable: true,
       },
     ]}

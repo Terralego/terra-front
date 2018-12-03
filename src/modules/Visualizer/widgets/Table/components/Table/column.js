@@ -29,14 +29,14 @@ export class RenderColumn {
     );
 
     const columnHeaderCellRenderer = () => (
-      <ColumnHeaderCell name={this.props.label} menuRenderer={() => this.renderMenu(sortColumn)} />
+      <ColumnHeaderCell name={this.props.value} menuRenderer={() => this.renderMenu(sortColumn)} />
     );
     return (
       <Column
         cellRenderer={cellRenderer}
         columnHeaderCellRenderer={this.props.sortable ? columnHeaderCellRenderer : null}
         key={this.props.index}
-        name={this.props.label}
+        name={this.props.value}
       />
     );
   }
