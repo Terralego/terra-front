@@ -12,10 +12,10 @@ export class RenderColumn {
   }
 
   renderMenu = sortColumn => {
-    const { index } = this.props;
+    const { index, format: { type } = {} } = this.props;
 
-    const sortAsc = () => sortColumn(index, (a, b) => a.toString().localeCompare(b));
-    const sortDesc = () => sortColumn(index, (a, b) => b.toString().localeCompare(a));
+    const sortAsc = () => sortColumn(index, 'asc', type);
+    const sortDesc = () => sortColumn(index, 'desc', type);
     return (
       <Menu>
         <MenuItem icon="sort-alphabetical" onClick={sortAsc} text="Sort Asc" />
@@ -23,6 +23,7 @@ export class RenderColumn {
       </Menu>
     );
   }
+
   getColumn (getCellData, sortColumn) {
     const { value, index, sortable } = this.props;
 

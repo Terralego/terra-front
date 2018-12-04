@@ -24,7 +24,9 @@ jest.mock('@blueprintjs/core', () => {
 });
 
 it('should render correctly', () => {
-  const tree = new RenderColumn(({ value: 'Label1', sortable: true, display: true, index: 1 }));
+  const tree = new RenderColumn((
+    { value: 'Label1', sortable: true, display: true, index: 1 }
+  ));
   expect(tree).toMatchSnapshot();
 });
 
