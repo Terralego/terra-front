@@ -19,17 +19,26 @@ const Component = jest.fn(() => null);
 const ComponentWithMap = withMap(Component);
 
 it('should render correctly', () => {
-  const tree = renderer.create(<ComponentWithMap styles={{}} />).toJSON();
+  const tree = renderer.create(<ComponentWithMap backgroundStyle={{}} />).toJSON();
   expect(tree).toMatchSnapshot();
 });
 
 it('should have a map', () => {
-  shallow(<ComponentWithMap styles={{}} />);
-  expect(mapboxgl.Map).toHaveBeenCalled();
+  shallow(<ComponentWithMap backgroundStyle={{}} />);
+  expect(mapboxgl.Map).toHaveBeenCalledWith({
+    container: null,
+    attributionControl: false,
+    style: {},
+    center: undefined,
+    zoom: 9,
+    maxZoom: undefined,
+    minZoom: undefined,
+    maxBounds: undefined,
+  });
   expect(mapboxgl.map.once).toHaveBeenCalled();
   expect(Component).toHaveBeenCalledWith({
     map: mapboxgl.map,
-    styles: {},
+    backgroundStyle: {},
     zoom: 9,
   }, {});
 });

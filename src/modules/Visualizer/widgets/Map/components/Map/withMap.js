@@ -6,7 +6,7 @@ import 'mapbox-gl/dist/mapbox-gl.css';
 export const withMap = WrappedComponent =>
   class WithMap extends React.Component {
     static propTypes = {
-      styles: PropTypes.oneOfType([
+      backgroundStyle: PropTypes.oneOfType([
         PropTypes.string,
         PropTypes.shape({
           // See mapboxgl style API
@@ -33,7 +33,7 @@ export const withMap = WrappedComponent =>
     initMap () {
       const {
         accessToken,
-        styles: style,
+        backgroundStyle: style,
         center,
         zoom,
         maxZoom,
