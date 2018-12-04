@@ -42,6 +42,7 @@ export class View extends React.Component {
           widgetComponent.Component = WidgetMap;
           break;
         default:
+          throw new Error('Invalid widget type');
       }
       return widgetComponent;
     });

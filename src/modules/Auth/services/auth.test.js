@@ -1,10 +1,18 @@
-import { obtainToken, refreshToken, getToken, invalidToken, parseToken } from './auth';
 import Api from '../../Api';
+import { obtainToken, refreshToken, getToken, invalidToken, parseToken, createToken } from './auth';
 
 const MOCKED_TOKEN = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyIjp7ImlkIjo0Mn0sImV4cCI6MTUxNjIzOTAyMn0.mPABaxD6A5yFiIFWjNDFFEhtDsrtDPVsDKHCW6ljCNs';
 
 jest.mock('../../Api', () => ({
-  on: jest.fn(),
+  EVENT_FAILURE: 'failure',
+  on: jest.fn((event, fn) => {
+    fn({
+      status: 401,
+    });
+    fn({
+      status: 200,
+    });
+  }),
   request: jest.fn(endpoint => {
     if (endpoint === 'auth/obtain-token/') {
       return { token: 'newToken' };
@@ -71,4 +79,13 @@ it('should parse token', () => {
 it('should parse an invalid token', () => {
   const data = parseToken('foo');
   expect(data).toEqual({});
+});
+
+it('should create a token', () => {
+  const properties = { foo: 'bar' };
+  createToken(properties);
+  expect(Api.request).toHaveBeenCalledWith('accounts/register/', {
+    method: 'POST',
+    body: { foo: 'bar' },
+  });
 });

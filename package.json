@@ -74,7 +74,8 @@
       "!src/stories/**/*",
       "!src/**/index.js",
       "!src/**/context.js",
-      "!src/**/log.js"
+      "!src/**/log.js",
+      "!src/modules/TerraFrontProvider.js"
     ],
     "coverageThreshold": {
       "global": {

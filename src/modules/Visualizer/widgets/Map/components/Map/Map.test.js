@@ -383,3 +383,8 @@ it('should update rotate', () => {
   wrapper.setProps({ rotate: true });
   expect(Map.prototype.toggleRotate).toHaveBeenCalled();
 });
+
+it('should apply empty styles', () => {
+  const instance = new Map({}, {});
+  expect(() => instance.applyNewStyles()).not.toThrow();
+});

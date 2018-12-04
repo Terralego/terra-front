@@ -17,6 +17,7 @@ it('should build url', () => {
   expect(api.buildUrl({ endpoint: '' })).toBe('http://foo.bar/');
   expect(api.buildUrl({ endpoint: 'foo/bar' })).toBe('http://foo.bar/foo/bar');
   expect(api.buildUrl({ endpoint: 'foo//bar' })).toBe('http://foo.bar/foo/bar');
+  expect(api.buildUrl({ endpoint: 'foo', querystring: { bar: 'bar' } })).toBe('http://foo.bar/foo?bar=bar');
 });
 
 it('should fetch a request', async done => {
@@ -31,6 +32,20 @@ it('should fetch a request', async done => {
 
   done();
 });
+
+it('should request a formData', async done => {
+  const api = new Api();
+  api.host = '';
+  const body = new FormData();
+  await api.request('', { body });
+  expect(global.fetch).toHaveBeenCalledWith('/', {
+    method: 'GET',
+    headers: { 'Content-Type': 'application/json' },
+    body,
+  });
+  done();
+});
+
 
 it('should catch a failed fetch', async done => {
   const api = new Api();
@@ -61,6 +76,8 @@ it('should off event', () => {
   const api = new Api();
   const off = api.on('foo', () => null);
   expect(api.listeners.length).toBe(1);
+  off();
+  expect(api.listeners.length).toBe(0);
   off();
   expect(api.listeners.length).toBe(0);
 });

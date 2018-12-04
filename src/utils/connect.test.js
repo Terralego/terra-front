@@ -192,3 +192,46 @@ it('should set all props with *', () => {
     c: 3,
   }, {});
 });
+
+it('should return nothing', () => {
+  const context = React.createContext();
+  const { Provider } = context;
+  const TestComponent = jest.fn(() => null);
+  const contextConnect = connect(context);
+  const ConnectedTestComponent =
+    contextConnect(42)(TestComponent);
+
+  mount((
+    <Provider value={{ foo: 'bar' }}>
+      <ConnectedTestComponent />
+    </Provider>
+  ));
+
+  expect(TestComponent).toHaveBeenCalledWith({}, {});
+});
+
+it('should not update if context did not changed', () => {
+  const context = React.createContext();
+  const { Provider } = context;
+  const TestComponent = jest.fn(() => null);
+  const contextConnect = connect(context);
+  const ConnectedTestComponent =
+    contextConnect('foo')(TestComponent);
+
+  const wrapper = mount((
+    <Provider value={{ foo: 'bar' }}>
+      <ConnectedTestComponent />
+    </Provider>
+  ));
+
+  const instance = wrapper.find('Connect').instance();
+  instance.componentDidUpdate = () => {};
+  jest.spyOn(instance, 'setState');
+  wrapper.setProps({ value: { foo: 'foo' } });
+  instance.updateFromContext();
+  expect(instance.setState).toHaveBeenCalledWith({ foo: 'foo' });
+  instance.setState.mockClear();
+  wrapper.setProps({ value: { foo: 'foo', bar: 'bar' } });
+  instance.updateFromContext();
+  expect(instance.setState).not.toHaveBeenCalled();
+});

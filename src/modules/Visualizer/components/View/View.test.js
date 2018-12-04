@@ -34,11 +34,12 @@ it('should regenerate widgets components', () => {
   const wrapper = shallow(<View
     widgets={widgets}
   />);
-  View.prototype.generateWidgets = jest.fn();
+  const instance = wrapper.instance();
+  instance.generateWidgets = jest.fn();
   wrapper.setProps({
     widgets: [{ type: 'map' }],
   });
-  expect(View.prototype.generateWidgets).toHaveBeenCalled();
+  expect(instance.generateWidgets).toHaveBeenCalled();
 });
 
 it('should close details', () => {
@@ -46,4 +47,15 @@ it('should close details', () => {
   const instance = new View({ setDetails }, {});
   instance.closeDetails();
   expect(setDetails).toHaveBeenCalledWith(null);
+});
+
+it('should throw with invalid widget name', () => {
+  class ViewWithoutProptypes {
+    constructor (props) {
+      this.props = props;
+      this.generateWidgets = View.prototype.generateWidgets.bind(this);
+    }
+  }
+  const instance = new ViewWithoutProptypes({ widgets: [{ type: 'foo' }] }, {});
+  expect(() => instance.generateWidgets()).toThrow('Invalid widget type');
 });

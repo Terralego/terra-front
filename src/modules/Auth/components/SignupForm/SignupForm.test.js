@@ -64,6 +64,23 @@ it('should submit form with failure', async done => {
   done();
 });
 
+it('should submit form with failure and invalid error', async done => {
+  const signupAction = jest.fn(() => {
+    const error = new Error();
+    throw error;
+  });
+  const wrapper = shallow(<SignupForm
+    signupAction={signupAction}
+  />);
+
+  await wrapper.instance().submit({ preventDefault () {} });
+
+  expect(wrapper.state().errorLogin).toBe(undefined);
+  expect(wrapper.state().errorPassword).toBe(undefined);
+
+  done();
+});
+
 it('should set property', () => {
   const wrapper = shallow(<SignupForm />);
   wrapper.instance().setSignupProperty({ target: { value: 'foo', id: 'email' } });

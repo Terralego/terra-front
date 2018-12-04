@@ -157,7 +157,7 @@ exports[`should render with errors 1`] = `
       </div>
     </div>
     <div
-      className="bp3-form-group"
+      className="bp3-form-group bp3-intent-warning"
     >
       <label
         className="bp3-label"
@@ -175,7 +175,7 @@ exports[`should render with errors 1`] = `
         className="bp3-form-content"
       >
         <div
-          className="bp3-input-group"
+          className="bp3-input-group bp3-intent-warning"
         >
           <input
             autoComplete="current-password"
@@ -194,7 +194,7 @@ exports[`should render with errors 1`] = `
         <div
           className="bp3-form-helper-text"
         >
-          Type your password
+          Invalid password
         </div>
       </div>
     </div>
