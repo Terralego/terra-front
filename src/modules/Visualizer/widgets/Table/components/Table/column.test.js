@@ -71,21 +71,3 @@ it('should get columns', () => {
   expect(getColumns(columns)[0]).toHaveProperty('renderMenu');
 });
 
-describe('should compare', () => {
-  it('String', () => {
-    const instance = new RenderColumn({}, {});
-    const strings = ['Beta', 'Alpha', 'Tango', 'Charlie'];
-    expect(strings.sort((a, b) => instance.comparator(a, b))).toEqual(['Alpha', 'Beta', 'Charlie', 'Tango']);
-  });
-  it('Numbers', () => {
-    const instance = new RenderColumn({ format: { type: 'number' } }, {});
-    const numbers = ['0', '3', '1', '2'];
-    expect(numbers.sort((a, b) => instance.comparator(a, b))).toEqual(['0', '1', '2', '3']);
-  });
-  it('Dates', () => {
-    const instance = new RenderColumn({ format: { type: 'date' } }, {});
-    const dates = ['2018-12-01', '2015-09-10', '2019-05-25', '1999-08-30'];
-    expect(dates.sort((a, b) => instance.comparator(a, b))).toEqual(['1999-08-30', '2015-09-10', '2018-12-01', '2019-05-25']);
-  });
-});
-

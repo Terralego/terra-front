@@ -41,12 +41,27 @@ export class Table extends React.Component {
     }
   }
 
-  sortColumn = (columnIndex, comparator) => {
+  sortColumn = (columnIndex, order, type) => {
     const { data } = this.props;
     const sortedIndexMap = data.map((_, i) => i);
-    sortedIndexMap.sort((a, b) => comparator(data[a][columnIndex], data[b][columnIndex]));
+    sortedIndexMap.sort((a, b) => {
+      const orderA = order === 'asc' ? a : b;
+      const orderB = order === 'asc' ? b : a;
+      return this.compare(data[orderA][columnIndex], data[orderB][columnIndex], type);
+    });
     this.setState({ sortedIndexMap });
   };
+
+  compare = (a, b, type) => {
+    switch (type) {
+      case 'number':
+        return a - b;
+      case 'date':
+        return new Date(a) - new Date(b);
+      default:
+        return `${a}`.localeCompare(b);
+    }
+  }
 
   render () {
     const { data, columns } = this.props;

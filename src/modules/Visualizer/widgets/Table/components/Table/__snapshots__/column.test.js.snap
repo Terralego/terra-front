@@ -2,7 +2,6 @@
 
 exports[`should render correctly 1`] = `
 RenderColumn {
-  "comparator": [Function],
   "props": Object {
     "display": true,
     "index": 1,
