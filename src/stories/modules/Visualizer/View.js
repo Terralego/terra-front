@@ -15,7 +15,7 @@ stories.add('View Component', () => (
           type: 'map',
           layersTree,
           accessToken: 'pk.eyJ1IjoiaGFkcmllbmwiLCJhIjoiY2pueDgwZGhxMDVkbjN3cWx5dGlhd3p1eiJ9.FR_XylCvZZJLdB3No6Xxnw',
-          styles: 'mapbox://styles/hadrienl/cjoplcnu821de2rs2cf0em4rw',
+          backgroundStyle: 'mapbox://styles/hadrienl/cjoplcnu821de2rs2cf0em4rw',
           center: [1.4133102599149652, 43.5881904444511],
           zoom: 12.0,
           interactions: [{
@@ -31,6 +31,35 @@ stories.add('View Component', () => (
 Le quartier de {{name_fr}}
 `,
           }],
+          customStyle: {
+            sources: [{
+              id: 'test',
+              type: 'vector',
+              url: 'mapbox://mapbox.mapbox-streets-v7',
+            }],
+            layers: [
+              {
+                layout: {},
+                type: 'fill',
+                source: 'test',
+                id: 'foo',
+                paint: {
+                  'fill-color': 'hsl(231, 36%, 77%)',
+                },
+                'source-layer': 'water',
+              },
+              {
+                layout: {},
+                type: 'fill',
+                source: 'test',
+                id: 'bar',
+                paint: {
+                  'fill-color': 'hsl(220, 100%, 45%)',
+                },
+                'source-layer': 'landuse',
+              },
+            ],
+          },
         }]}
       />
     </div>

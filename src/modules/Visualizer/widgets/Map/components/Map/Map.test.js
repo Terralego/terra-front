@@ -150,8 +150,11 @@ describe('on properties changes', () => {
 
   it('should call setStyle on property change', () => {
     const wrapper = shallow(<Map {...props} />);
-    wrapper.setProps({ mapStyle: '' });
-    expect(props.map.setStyle).toHaveBeenCalled();
+    const instance = wrapper.instance();
+    jest.spyOn(instance, 'createLayers');
+    wrapper.setProps({ backgroundStyle: 'foo' });
+    expect(props.map.setStyle).toHaveBeenCalledWith('foo');
+    expect(instance.createLayers).toHaveBeenCalled();
   });
 
   it("should not call setStyle if property doesn't change", () => {
@@ -387,4 +390,33 @@ it('should update rotate', () => {
 it('should apply empty styles', () => {
   const instance = new Map({}, {});
   expect(() => instance.applyNewStyles()).not.toThrow();
+});
+
+it('should create layers', () => {
+  const map = {
+    addSource: jest.fn(),
+    addLayer: jest.fn(),
+  };
+  const customStyle = {
+    sources: [{
+      id: 'foo',
+      type: 'vector',
+      url: 'somewhere',
+    }],
+    layers: [{
+      id: 'layer1',
+    }, {
+      id: 'layer2',
+    }],
+  };
+  const instance = new Map({ map, customStyle }, {});
+  instance.createLayers();
+  expect(map.addSource).toHaveBeenCalledTimes(1);
+  expect(map.addLayer).toHaveBeenCalledTimes(2);
+  expect(map.addSource).toHaveBeenCalledWith('foo', {
+    type: 'vector',
+    url: 'somewhere',
+  });
+  expect(map.addLayer).toHaveBeenCalledWith({ id: 'layer1' });
+  expect(map.addLayer).toHaveBeenCalledWith({ id: 'layer2' });
 });

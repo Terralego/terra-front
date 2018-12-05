@@ -41,6 +41,21 @@ export class Map extends React.Component {
     }),
 
     displayPointerOnLayers: PropTypes.arrayOf(PropTypes.string),
+
+    customStyle: PropTypes.shape({
+      sources: PropTypes.arrayOf(PropTypes.shape({
+        id: PropTypes.string.isRequired,
+        type: PropTypes.oneOf(['vector']).isRequired,
+        url: PropTypes.string.isRequired,
+      })),
+      layers: PropTypes.arrayOf(PropTypes.shape({
+        id: PropTypes.string.isRequired,
+        source: PropTypes.string.isRequired,
+        'source-layer': PropTypes.string.isRequired,
+        type: PropTypes.oneOf(['fill', 'line', 'symbol', 'circle', 'heatmap', 'fill-extrusion', 'raster', 'hillshade', 'background']).isRequired,
+        paint: PropTypes.object,
+      })),
+    }),
   };
 
   static defaultProps = {
@@ -57,6 +72,7 @@ export class Map extends React.Component {
     onClick () {},
     displayTooltip: null,
     displayPointerOnLayers: [],
+    customStyle: {},
   };
 
   componentDidMount () {
@@ -79,6 +95,8 @@ export class Map extends React.Component {
 
     mapBoxGl.accessToken = accessToken;
 
+    this.createLayers();
+
     this.toggleDisplayScaleControl(displayScaleControl);
 
     this.toggleNavigationControl(displayNavigationControl);
@@ -88,6 +106,13 @@ export class Map extends React.Component {
     this.toggleRotate();
 
     this.addClickListeners();
+  }
+
+  createLayers () {
+    const { map, customStyle: { sources = [], layers = [] } } = this.props;
+
+    sources.forEach(({ id, ...sourceAttrs }) => map.addSource(id, sourceAttrs));
+    layers.forEach(layer => map.addLayer(layer));
   }
 
   toggleControl (display, control) {
@@ -140,7 +165,7 @@ export class Map extends React.Component {
     const {
       map,
       maxZoom,
-      mapStyle,
+      backgroundStyle,
       displayScaleControl,
       displayNavigationControl,
       displayAttributionControl,
@@ -167,8 +192,9 @@ export class Map extends React.Component {
       map.setMinZoom(minZoom);
     }
 
-    if (prevProps.mapStyle !== mapStyle) {
-      map.setStyle(mapStyle);
+    if (prevProps.backgroundStyle !== backgroundStyle) {
+      map.setStyle(backgroundStyle);
+      this.createLayers();
     }
 
     if (displayScaleControl !== prevProps.displayScaleControl) {
