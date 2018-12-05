@@ -46,7 +46,8 @@ export class Map extends React.Component {
       sources: PropTypes.arrayOf(PropTypes.shape({
         id: PropTypes.string.isRequired,
         type: PropTypes.oneOf(['vector']).isRequired,
-        url: PropTypes.string.isRequired,
+        url: PropTypes.string,
+        tiles: PropTypes.arrayOf(PropTypes.string),
       })),
       layers: PropTypes.arrayOf(PropTypes.shape({
         id: PropTypes.string.isRequired,
@@ -54,6 +55,9 @@ export class Map extends React.Component {
         'source-layer': PropTypes.string.isRequired,
         type: PropTypes.oneOf(['fill', 'line', 'symbol', 'circle', 'heatmap', 'fill-extrusion', 'raster', 'hillshade', 'background']).isRequired,
         paint: PropTypes.object,
+        layout: PropTypes.shape({
+          visibility: PropTypes.oneOf(['visible', 'none']),
+        }),
       })),
     }),
   };
@@ -229,7 +233,6 @@ export class Map extends React.Component {
 
   applyNewStyles () {
     const { map, stylesToApply: { layouts = [] } = {} } = this.props;
-
     layouts.forEach(({ id, ...properties }) => {
       Object.keys(properties).forEach(property => {
         switch (property) {
