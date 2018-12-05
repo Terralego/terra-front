@@ -1,8 +1,10 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
 import PropTypes from 'prop-types';
+import mapBoxGl from 'mapbox-gl';
 
 import log from '../../services/log';
+import { toggleLayerVisibility } from '../../services/mapUtils';
 import LayersTreeProps from '../../propTypes/LayersTreePropTypes';
 import Map from './components/Map';
 import LayersTree from './components/LayersTree';
@@ -16,7 +18,7 @@ const INTERACTION_FN = 'function';
 
 export class WidgetMap extends React.Component {
   static propTypes = {
-    layersTree: LayersTreeProps.isRequired,
+    layersTree: LayersTreeProps,
     interactions: PropTypes.arrayOf(PropTypes.shape({
       id: PropTypes.string.isRequired,
       interaction: PropTypes.oneOf([
@@ -24,11 +26,11 @@ export class WidgetMap extends React.Component {
         INTERACTION_DISPLAY_TOOLTIP,
         INTERACTION_FN,
       ]),
-      // INTERACTION_DISPLAY_DETAILS
-      // INTERACTION_DISPLAY_TOOLTIP
+      // for INTERACTION_DISPLAY_DETAILS
+      // and INTERACTION_DISPLAY_TOOLTIP
       template: PropTypes.string,
       content: PropTypes.string,
-      // INTERACTION_FN
+      // for INTERACTION_FN
       fn: PropTypes.func,
     })),
     LayersTreeComponent: PropTypes.func,
@@ -37,17 +39,19 @@ export class WidgetMap extends React.Component {
   };
 
   static defaultProps = {
+    layersTree: [],
     LayersTreeComponent: LayersTree,
     MapComponent: Map,
     interactions: [],
     setDetails () {},
   };
 
-  state = {
-    stylesToApply: {},
+  onChange = ({ layer, state: { active } }) => {
+    if (active !== undefined) {
+      layer.layers.forEach(layerId =>
+        toggleLayerVisibility(this.map, layerId, active ? 'visible' : 'none'));
+    }
   }
-
-  onChange = stylesToApply => this.setState({ stylesToApply });
 
   onClick = (layer, features, event) => {
     const { interactions } = this.props;
@@ -59,6 +63,7 @@ export class WidgetMap extends React.Component {
             this.displayDetails({ layer, features, event, ...interactionConfig });
             break;
           case INTERACTION_DISPLAY_TOOLTIP:
+            // TODO move this function here instead of Map
             this.displayTooltip({ layer, features, event, ...interactionConfig });
             break;
           case INTERACTION_FN:
@@ -75,6 +80,12 @@ export class WidgetMap extends React.Component {
         }
       });
   }
+
+  get map () {
+    return this.mapRef.current.map;
+  }
+
+  mapRef = React.createRef();
 
   displayDetails = details => {
     const { setDetails } = this.props;
@@ -93,20 +104,18 @@ export class WidgetMap extends React.Component {
       />,
       container,
     );
-    this.setState({
-      displayTooltip: {
-        coordinates: [lngLat.lng, lngLat.lat],
-        container,
-      },
-    });
+
+    const popup = new mapBoxGl.Popup();
+    popup.setLngLat([lngLat.lng, lngLat.lat]);
+    popup.setDOMContent(container);
+    popup.addTo(this.map);
   }
 
   render () {
     const {
       LayersTreeComponent, MapComponent, layersTree, style, interactions, ...mapProps
     } = this.props;
-    const { stylesToApply, displayTooltip } = this.state;
-    const { onChange, onClick } = this;
+    const { onChange, onClick, mapRef } = this;
     const displayPointerOnLayers = interactions.map(({ id }) => id);
 
     return (
@@ -114,16 +123,17 @@ export class WidgetMap extends React.Component {
         className="widget-map"
         style={style}
       >
-        <LayersTreeComponent
-          layersTree={layersTree}
-          onChange={onChange}
-        />
+        {layersTree.length &&
+          <LayersTreeComponent
+            layersTree={layersTree}
+            onChange={onChange}
+          />
+        }
         <MapComponent
           {...mapProps}
-          stylesToApply={stylesToApply}
+          ref={mapRef}
           onDetailsChange={this.onDetailsChange}
           onClick={onClick}
-          displayTooltip={displayTooltip}
           displayPointerOnLayers={displayPointerOnLayers}
         />
       </div>

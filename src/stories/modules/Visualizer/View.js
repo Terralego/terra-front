@@ -9,103 +9,37 @@ const layersTree = [{
   initialState: {
     active: false,
   },
-  active: {
-    layouts: [{
-      id: 'terralego-regions',
-      visibility: 'visible',
-    }],
-  },
-  inactive: {
-    layouts: [{
-      id: 'terralego-regions',
-      visibility: 'none',
-    }],
-  },
+  layers: ['terralego-regions'],
 }, {
   label: 'Departements',
   initialState: {
     active: false,
   },
-  active: {
-    layouts: [{
-      id: 'terralego-departements',
-      visibility: 'visible',
-    }],
-  },
-  inactive: {
-    layouts: [{
-      id: 'terralego-departements',
-      visibility: 'none',
-    }],
-  },
+  layers: ['terralego-departements'],
 }, {
   label: 'SCOT',
   initialState: {
     active: false,
   },
-  active: {
-    layouts: [{
-      id: 'terralego-scot',
-      visibility: 'visible',
-    }],
-  },
-  inactive: {
-    layouts: [{
-      id: 'terralego-scot',
-      visibility: 'none',
-    }],
-  },
+  layers: ['terralego-scot'],
 }, {
   label: 'EPCI',
   initialState: {
     active: false,
   },
-  active: {
-    layouts: [{
-      id: 'terralego-ecpi',
-      visibility: 'visible',
-    }],
-  },
-  inactive: {
-    layouts: [{
-      id: 'terralego-epci',
-      visibility: 'none',
-    }],
-  },
+  layers: ['terralego-epci'],
 }, {
   label: 'EAE',
   initialState: {
     active: false,
   },
-  active: {
-    layouts: [{
-      id: 'terralego-zae',
-      visibility: 'visible',
-    }],
-  },
-  inactive: {
-    layouts: [{
-      id: 'terralego-zae',
-      visibility: 'none',
-    }],
-  },
+  layers: ['terralego-eae'],
 }, {
   label: 'Établissements',
   initialState: {
     active: false,
   },
-  active: {
-    layouts: [{
-      id: 'terralego-etablissements',
-      visibility: 'visible',
-    }],
-  },
-  inactive: {
-    layouts: [{
-      id: 'terralego-etablissements',
-      visibility: 'none',
-    }],
-  },
+  layers: ['terralego-etablissements'],
 }];
 
 const stories = storiesOf('Modules/Visualizer', module);
@@ -124,16 +58,60 @@ stories.add('View Component', () => (
           maxZoom: 16,
           minZoom: 11,
           interactions: [{
-            id: 'place-city-label-major',
+            id: 'terralego-eae',
             interaction: 'displayDetails',
             template: `
-# La ville de {{name_fr}}
+* {{bbox}}
+* {{comdeta_et}}
+* {{comdetail_eff}}
+* {{comgr_et}}
+* {{comgros_eff}}
+* {{const_eff}}
+* {{const_et}}
+* {{date_crea}}
+* {{date_maj}}
+* {{geom}}
+* {{geom3857}}
+* {{id}}
+* {{id_eae}}
+* {{id_scot}}
+* {{id_zone}}
+* {{identifier}}
+* {{indus_eff}}
+* {{indus_et}}
+* {{insee_comm}}
+* {{insee_epci}}
+* {{layer_id}}
+* {{logis_eff}}
+* {{logis_et}}
+* {{nb_emplois}}
+* {{nom_ppal}}
+* {{nonpres_eff}}
+* {{nonpres_et}}
+* {{parti_eff}}
+* {{parti_et}}
+* {{pres_eff}}
+* {{pres_et}}
+* {{ray_eae}}
+* {{supp_eff}}
+* {{supp_et}}
+* {{surf_total}}
+* {{tertisup_eff}}
+* {{tertisup_et}}
+* {{type_esp}}
+* {{voc_decl}}
+* {{voc_dom}}
+* {{voc_synth}}
             `,
           }, {
-            id: 'place-neighborhood-suburb-label',
+            id: 'terralego-eae',
             interaction: 'displayTooltip',
             template: `
-Le quartier de {{name_fr}}
+# {{nom_ppal}}
+
+* Surface : {{surf_total}}km2
+* CP : {{insee_comm}}
+* Commune : à trouver
 `,
           }],
           customStyle: {
@@ -189,11 +167,11 @@ Le quartier de {{name_fr}}
                 'source-layer': 'scot',
               },
               {
-                type: 'fill',
+                type: 'line',
                 source: 'terralego',
                 id: 'terralego-epci',
                 paint: {
-                  'fill-color': 'hsl(220, 100%, 45%)',
+                  'line-color': 'hsl(220, 100%, 45%)',
                 },
                 layout: {
                   visibility: 'none',
@@ -203,7 +181,7 @@ Le quartier de {{name_fr}}
               {
                 type: 'fill',
                 source: 'terralego',
-                id: 'terralego-zae',
+                id: 'terralego-eae',
                 layout: {
                   visibility: 'none',
                 },
