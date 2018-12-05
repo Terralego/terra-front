@@ -51,10 +51,10 @@ stories.add('View Component', () => (
         widgets={[{
           type: 'map',
           layersTree,
-          accessToken: 'pk.eyJ1IjoidGFzdGF0aGFtMSIsImEiOiJjamZ1ejY2bmYxNHZnMnhxbjEydW9sM29hIn0.w9ndNH49d91aeyvxSjKQqg',
+          accessToken: 'pk.eyJ1IjoiaGFkcmllbmwiLCJhIjoiY2pueDgwZGhxMDVkbjN3cWx5dGlhd3p1eiJ9.FR_XylCvZZJLdB3No6Xxnw',
           backgroundStyle: 'mapbox://styles/mapbox/light-v9',
           center: [5.386195159396806, 43.30072210972415],
-          zoom: 11,
+          zoom: 15,
           maxZoom: 16,
           minZoom: 11,
           interactions: [{
@@ -106,6 +106,7 @@ stories.add('View Component', () => (
           }, {
             id: 'terralego-eae',
             interaction: 'displayTooltip',
+            trigger: 'mouseover',
             template: `
 # {{nom_ppal}}
 
