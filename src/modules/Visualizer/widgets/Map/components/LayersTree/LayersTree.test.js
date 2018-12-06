@@ -45,18 +45,23 @@ it('should render correctly', () => {
 it('should change on toggle', () => {
   const onChange = jest.fn();
   const layer = {
-    active: {},
-    inactive: {},
+    id: 'foo',
   };
-  const wrapper = shallow(<LayersTree onChange={onChange} layersTree={[]} />);
-  const instance = wrapper.instance();
+  const instance = new LayersTree({ onChange }, {});
+  jest.spyOn(instance.state.areActives, 'add');
+  jest.spyOn(instance.state.areActives, 'delete');
   instance.onToggleChange(layer)();
-  expect(onChange).toHaveBeenCalledWith(layer.active);
+  expect(onChange).toHaveBeenCalledWith({ layer, state: { active: true } });
   expect(instance.isActive(layer)).toBe(true);
+  // expect(instance.state.areActives)
 
   instance.onToggleChange(layer)();
-  expect(onChange).toHaveBeenCalledWith(layer.inactive);
+  expect(onChange).toHaveBeenCalledWith({ layer, state: { active: false } });
   expect(instance.isActive(layer)).toBe(false);
+
+  instance.onToggleChange(layer)();
+  expect(onChange).toHaveBeenCalledWith({ layer, state: { active: true } });
+  expect(instance.isActive(layer)).toBe(true);
 });
 
 it('should set initial state', () => {

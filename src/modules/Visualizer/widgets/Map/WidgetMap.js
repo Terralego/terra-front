@@ -60,20 +60,18 @@ export class WidgetMap extends React.Component {
     }
   }
 
-  onChange = ({ layer, state: { active } }) => {
+  onChange = async ({ layer, state: { active } }) => {
+    const map = await this.map;
+
     if (active !== undefined) {
       layer.layers.forEach(layerId =>
-        toggleLayerVisibility(this.map, layerId, active ? 'visible' : 'none'));
+        toggleLayerVisibility(map, layerId, active ? 'visible' : 'none'));
     }
   }
 
-  setInteractions () {
+  async setInteractions () {
+    const map = await this.map;
     const { interactions } = this.props;
-
-    if (!this.map) {
-      setTimeout(() => this.setInteractions(), 10);
-      return;
-    }
 
     if (this.mapInteractionsListeners) {
       this.mapInteractionsListeners.forEach(off => off());
@@ -81,7 +79,7 @@ export class WidgetMap extends React.Component {
 
     this.mapInteractionsListeners = [];
 
-    interactions.forEach(({ id, trigger, interaction, fn, ...config }) => {
+    interactions.forEach(({ id, trigger = 'click', interaction, fn, ...config }) => {
       const calls = [];
       switch (interaction) {
         case INTERACTION_DISPLAY_DETAILS:
@@ -108,6 +106,7 @@ export class WidgetMap extends React.Component {
               callback: (layerId, features, event) =>
                 this.displayTooltip({ layerId, features, event, ...config }),
               trigger,
+              displayCursor: trigger === 'click',
             });
           }
           break;
@@ -122,7 +121,7 @@ export class WidgetMap extends React.Component {
       const listeners = calls.reduce((list, { callback, trigger: callTrigger, displayCursor }) => [
         ...list,
         ...addListenerOnLayer(
-          this.map,
+          map,
           id,
           callback,
           { displayCursor, trigger: callTrigger },
@@ -133,26 +132,34 @@ export class WidgetMap extends React.Component {
     });
   }
 
-  get map () {
-    return this.mapRef.current.map;
-  }
+  mapRef = React.createRef();
+
+  map = new Promise(resolve => {
+    const waitForMap = () => {
+      if (this.mapRef && this.mapRef.current && this.mapRef.current.map) {
+        resolve(this.mapRef.current.map);
+        return;
+      }
+      setTimeout(waitForMap, 10);
+    };
+    waitForMap();
+  });
 
   popups = new Map();
-
-  mapRef = React.createRef();
 
   displayDetails = ({ features, template }) => {
     const { setDetails } = this.props;
     setDetails({ features, template });
   }
 
-  displayTooltip = ({
+  displayTooltip = async ({
     layerId,
     features: [{ properties }] = [{}],
     event: { lngLat },
     template,
     content,
   }) => {
+    const map = await this.map;
     const container = document.createElement('div');
     ReactDOM.render(
       <MarkdownRenderer
@@ -171,7 +178,7 @@ export class WidgetMap extends React.Component {
     this.popups.set(layerId, popup);
     popup.setLngLat([lngLat.lng, lngLat.lat]);
     popup.setDOMContent(container);
-    popup.addTo(this.map);
+    popup.addTo(map);
   }
 
   hideTooltip = debounce(({ layerId }) => {

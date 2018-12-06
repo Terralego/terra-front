@@ -7,7 +7,7 @@ import VisualizerProvider, { View } from '../../../modules/Visualizer';
 const layersTree = [{
   label: 'regions',
   initialState: {
-    active: false,
+    active: true,
   },
   layers: ['terralego-regions'],
 }, {
@@ -139,9 +139,6 @@ stories.add('View Component', () => (
                   'line-color': 'rgb(255, 0, 0)',
                   'line-width': 5,
                 },
-                layout: {
-                  visibility: 'none',
-                },
                 'source-layer': 'regions',
               },
               {
@@ -151,9 +148,6 @@ stories.add('View Component', () => (
                 paint: {
                   'line-color': 'hsl(265, 36%, 77%)',
                   'line-width': 2,
-                },
-                layout: {
-                  visibility: 'none',
                 },
                 'source-layer': 'departements',
               }, {
@@ -175,18 +169,12 @@ stories.add('View Component', () => (
                 paint: {
                   'line-color': 'hsl(220, 100%, 45%)',
                 },
-                layout: {
-                  visibility: 'none',
-                },
                 'source-layer': 'epci',
               },
               {
                 type: 'fill',
                 source: 'terralego',
                 id: 'terralego-eae',
-                layout: {
-                  visibility: 'none',
-                },
                 paint: {
                   'fill-color': 'hsl(220, 100%, 45%)',
                 },
@@ -200,9 +188,6 @@ stories.add('View Component', () => (
                     base: 1.75,
                     stops: [[12, 2], [22, 180]],
                   },
-                },
-                layout: {
-                  visibility: 'none',
                 },
                 'source-layer': 'etablissements',
               },

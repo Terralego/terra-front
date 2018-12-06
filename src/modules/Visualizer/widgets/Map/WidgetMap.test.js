@@ -6,6 +6,9 @@ import ReactDOM from 'react-dom';
 import WidgetMap from './WidgetMap';
 import log from '../../services/log';
 
+jest.mock('mapbox-gl', () => ({
+
+}));
 jest.mock('./components/Map', () => {
   function MapComponent () { return null; }
   return MapComponent;
