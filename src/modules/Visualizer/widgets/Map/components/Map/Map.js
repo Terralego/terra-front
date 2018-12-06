@@ -75,84 +75,14 @@ export class Map extends React.Component {
     customStyle: {},
   };
 
+  mapListeners = [];
+
   componentDidMount () {
     this.initMapProperties();
   }
 
   componentDidUpdate (prevProps) {
     this.updateMapProperties(prevProps);
-  }
-
-  mapListeners = [];
-
-  async initMapProperties () {
-    const {
-      accessToken,
-      displayScaleControl,
-      displayNavigationControl,
-      displayAttributionControl,
-    } = this.props;
-
-    mapBoxGl.accessToken = accessToken;
-
-    this.createLayers();
-
-    this.toggleDisplayScaleControl(displayScaleControl);
-
-    this.toggleNavigationControl(displayNavigationControl);
-
-    this.toggleAttributionControl(displayAttributionControl);
-
-    this.toggleRotate();
-
-    this.addClickListeners();
-  }
-
-  createLayers () {
-    const { map, customStyle: { sources = [], layers = [] } } = this.props;
-
-    sources.forEach(({ id, ...sourceAttrs }) => map.addSource(id, sourceAttrs));
-    layers.forEach(layer => map.addLayer(layer));
-  }
-
-  toggleControl (display, control) {
-    const { map } = this.props;
-    const controlAttributeName = `${control}Control`;
-    const controlMethod = capitalize(controlAttributeName);
-
-    if (this[controlAttributeName] && !display) {
-      map.removeControl(this[controlAttributeName]);
-      delete this[controlAttributeName];
-    }
-
-    if (display) {
-      if (this[controlAttributeName]) {
-        map.removeControl(this[controlAttributeName]);
-      }
-      this[controlAttributeName] = new mapBoxGl[controlMethod]();
-      map.addControl(this[controlAttributeName]);
-    }
-  }
-
-  toggleAttributionControl (display) {
-    return this.toggleControl(display, 'attribution');
-  }
-
-  toggleNavigationControl (display) {
-    return this.toggleControl(display, 'navigation');
-  }
-
-  toggleDisplayScaleControl (display) {
-    return this.toggleControl(display, 'scale');
-  }
-
-  toggleRotate () {
-    const { map, rotate } = this.props;
-    if (rotate) {
-      map.touchZoomRotate.enableRotation();
-    } else {
-      map.touchZoomRotate.disableRotation();
-    }
   }
 
   updateFlyTo = (prevFlyTo, flyTo) => {
@@ -224,6 +154,76 @@ export class Map extends React.Component {
 
     if (rotate !== prevProps.rotate) {
       this.toggleRotate();
+    }
+  }
+
+  async initMapProperties () {
+    const {
+      accessToken,
+      displayScaleControl,
+      displayNavigationControl,
+      displayAttributionControl,
+    } = this.props;
+
+    mapBoxGl.accessToken = accessToken;
+
+    this.createLayers();
+
+    this.toggleDisplayScaleControl(displayScaleControl);
+
+    this.toggleNavigationControl(displayNavigationControl);
+
+    this.toggleAttributionControl(displayAttributionControl);
+
+    this.toggleRotate();
+
+    this.addClickListeners();
+  }
+
+  createLayers () {
+    const { map, customStyle: { sources = [], layers = [] } } = this.props;
+
+    sources.forEach(({ id, ...sourceAttrs }) => map.addSource(id, sourceAttrs));
+    layers.forEach(layer => map.addLayer(layer));
+  }
+
+  toggleControl (display, control) {
+    const { map } = this.props;
+    const controlAttributeName = `${control}Control`;
+    const controlMethod = capitalize(controlAttributeName);
+
+    if (this[controlAttributeName] && !display) {
+      map.removeControl(this[controlAttributeName]);
+      delete this[controlAttributeName];
+    }
+
+    if (display) {
+      if (this[controlAttributeName]) {
+        map.removeControl(this[controlAttributeName]);
+      }
+      this[controlAttributeName] = new mapBoxGl[controlMethod]();
+      map.addControl(this[controlAttributeName]);
+    }
+  }
+
+  toggleAttributionControl (display) {
+    return this.toggleControl(display, 'attribution');
+  }
+
+  toggleNavigationControl (display) {
+    return this.toggleControl(display, 'navigation');
+  }
+
+  toggleDisplayScaleControl (display) {
+    return this.toggleControl(display, 'scale');
+  }
+
+  toggleRotate () {
+    const { map, rotate } = this.props;
+    if (rotate) {
+      map.touchZoomRotate.enableRotation();
+    } else {
+      map.touchZoomRotate.disableRotation();
     }
   }
 

@@ -24,11 +24,11 @@ export const withMap = WrappedComponent =>
       map: null,
     };
 
+    containerEl = React.createRef();
+
     componentDidMount () {
       this.initMap();
     }
-
-    containerEl = React.createRef();
 
     initMap () {
       const {
