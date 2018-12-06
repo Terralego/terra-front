@@ -2,6 +2,7 @@ import React from 'react';
 import ReactDOM from 'react-dom';
 import PropTypes from 'prop-types';
 import mapBoxGl from 'mapbox-gl';
+import debounce from 'lodash.debounce';
 
 import { toggleLayerVisibility, addListenerOnLayer } from '../../services/mapUtils';
 import LayersTreeProps from '../../propTypes/LayersTreePropTypes';
@@ -94,7 +95,7 @@ export class WidgetMap extends React.Component {
             calls.push({
               callback: (layerId, features, event) =>
                 this.displayTooltip({ layerId, features, event, ...config }),
-              trigger: 'mouseenter',
+              trigger: 'mousemove',
             });
             calls.push({
               callback: (layerId, features, event) =>
@@ -163,7 +164,8 @@ export class WidgetMap extends React.Component {
     );
 
     if (this.popups.has(layerId)) {
-      this.hideTooltip({ layerId });
+      this.popups.get(layerId).setLngLat([lngLat.lng, lngLat.lat]);
+      return;
     }
     const popup = new mapBoxGl.Popup();
     this.popups.set(layerId, popup);
@@ -172,13 +174,14 @@ export class WidgetMap extends React.Component {
     popup.addTo(this.map);
   }
 
-  hideTooltip ({ layerId }) {
+  hideTooltip = debounce(({ layerId }) => {
     if (!this.popups.has(layerId)) {
       return;
     }
     const popup = this.popups.get(layerId);
     popup.remove();
-  }
+    this.popups.delete(layerId);
+  }, 100);
 
   render () {
     const {

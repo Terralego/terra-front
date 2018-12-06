@@ -61,6 +61,7 @@ stories.add('View Component', () => (
             id: 'terralego-eae',
             interaction: 'displayDetails',
             template: `
+[{{nom_ppal}}](https://fiches.sud-foncier-eco.fr/espaces-d-activites/{{id_eae}})
 * {{bbox}}
 * {{comdeta_et}}
 * {{comdetail_eff}}
@@ -191,11 +192,14 @@ stories.add('View Component', () => (
                 },
                 'source-layer': 'zae',
               }, {
-                type: 'fill',
+                type: 'circle',
                 source: 'terralego',
                 id: 'terralego-etablissements',
                 paint: {
-                  'fill-color': 'hsl(220, 100%, 45%)',
+                  'circle-radius': {
+                    base: 1.75,
+                    stops: [[12, 2], [22, 180]],
+                  },
                 },
                 layout: {
                   visibility: 'none',
