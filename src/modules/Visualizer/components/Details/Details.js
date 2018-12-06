@@ -11,12 +11,12 @@ export const Details = ({ visible, template, onClose = () => null, ...props }) =
     >
       <Icon icon="cross" />
     </button>
-    {visible &&
+    {visible && (
       <MarkdownRenderer
         template={template}
         {...props}
       />
-    }
+    )}
   </div>
 );
 

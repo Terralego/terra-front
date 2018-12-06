@@ -11,6 +11,7 @@ export class WidgetTable extends React.Component {
     data: PropTypes.arrayOf(PropTypes.arrayOf(PropTypes.string)).isRequired,
     title: PropTypes.string,
   };
+
   static defaultProps = {
     title: '',
   }

@@ -70,4 +70,3 @@ it('should get columns', () => {
   });
   expect(getColumns(columns)[0]).toHaveProperty('renderMenu');
 });
-
