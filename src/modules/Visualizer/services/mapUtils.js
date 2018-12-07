@@ -4,10 +4,10 @@ export function toggleLayerVisibility (map, layerId, visibility) {
 
 export function addListenerOnLayer (map, layerId, fn, { trigger = 'click', displayCursor } = {}) {
   const listeners = [];
-  const clickListener = map.on(trigger, layerId, e => {
+  const triggerListener = map.on(trigger, layerId, e => {
     fn(layerId, e.features, e);
   });
-  listeners.push(clickListener);
+  listeners.push(triggerListener);
 
   if (displayCursor) {
     const mouseenterListener = map.on('mouseenter', layerId, () => {
