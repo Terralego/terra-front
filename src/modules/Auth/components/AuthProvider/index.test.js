@@ -1,6 +1,6 @@
 import React from 'react';
 import { shallow } from 'enzyme';
-import AuthProvider from './';
+import AuthProvider from '.';
 import { Consumer } from '../../services/context';
 import Auth from '../../services/auth';
 

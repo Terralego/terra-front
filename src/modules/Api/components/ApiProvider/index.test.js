@@ -1,8 +1,8 @@
 import React from 'react';
 import renderer from 'react-test-renderer';
 
-import Api from '../../';
-import ApiProvider from './';
+import Api from '../..';
+import ApiProvider from '.';
 
 it('should render children correctly', () => {
   const Div = () => <div>Test</div>;

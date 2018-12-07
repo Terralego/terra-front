@@ -1,6 +1,6 @@
 import React from 'react';
 import renderer from 'react-test-renderer';
-import LayersNode from './';
+import LayersNode from '.';
 
 it('should render correctly', () => {
   const tree = renderer.create((

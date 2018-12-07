@@ -1,4 +1,4 @@
-import * as lib from './';
+import * as lib from '.';
 
 jest.mock('mapbox-gl', () => ({}));
 
