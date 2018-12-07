@@ -194,97 +194,6 @@ describe('on properties changes', () => {
   });
 });
 
-
-it('should update map', () => {
-  const wrapper = shallow(<Map {...props} />);
-  wrapper.setProps({ stylesToApply: { layouts: [{ id: 'foo', visibility: 'visible' }] } });
-  expect(props.map.setLayoutProperty).toHaveBeenCalledWith('foo', 'visibility', 'visible');
-  wrapper.setProps({ stylesToApply: { layouts: [{ id: 'foo', visibility: 'none' }] } });
-  expect(props.map.setLayoutProperty).toHaveBeenCalledWith('foo', 'visibility', 'none');
-
-  wrapper.setProps({ stylesToApply: { layouts: [{ id: 'foo', paint: { 'fill-color': '#000000' } }] } });
-  expect(props.map.setPaintProperty).toHaveBeenCalledWith('foo', 'fill-color', '#000000');
-
-  wrapper.setProps({ stylesToApply: { layouts: [{ id: 'foo', filter: ['all', ['==', 'categorie', 'tourisme']] }] } });
-  expect(props.map.setFilter).toHaveBeenCalledWith('foo', ['all', ['==', 'categorie', 'tourisme']]);
-});
-
-it('should add click listener on each layers', () => {
-  const wrapper = shallow(<Map {...props} />);
-  expect(props.map.getStyle).toHaveBeenCalled();
-  expect(wrapper.instance().mapListeners.length).toBe(2);
-});
-
-it('should add pointer cursor with click listener', () => {
-  const wrapper = shallow(<Map {...props} displayPointerOnLayers={['foo']} />);
-  expect(wrapper.instance().mapListeners.length).toBe(4);
-  expect(props.map.getCanvas).toHaveBeenCalledTimes(2);
-});
-
-it('should add onClick listeners', () => {
-  const wrapper = shallow(<Map {...props} />);
-  const instance = wrapper.instance();
-  instance.addClickListeners = jest.fn();
-  wrapper.setProps({ onClick: () => null });
-  expect(instance.addClickListeners).toHaveBeenCalled();
-});
-
-it('should reset listener', () => {
-  const onClick = jest.fn();
-  const wrapper = shallow(<Map {...props} />);
-  wrapper.setProps({ onClick });
-  expect(onClick).toHaveBeenCalled();
-  expect(mapboxgl.off).toHaveBeenCalled();
-});
-
-it('should display a tooltip', () => {
-  const wrapper = shallow(<Map {...props} />);
-  const instance = wrapper.instance();
-  instance.displayTooltip = jest.fn();
-  wrapper.setProps({ displayTooltip: {} });
-  expect(instance.displayTooltip).toHaveBeenCalled();
-});
-
-it('should display tooltip with html content', () => {
-  const displayTooltip = {
-    coordinates: [1, 2],
-    content: 'foobar',
-  };
-  const instance = new Map({ displayTooltip, ...props }, {});
-  instance.displayTooltip();
-  expect(mapboxgl.Popup).toHaveBeenCalled();
-  expect(mapboxgl.Popup.functions.setLngLat).toHaveBeenCalledWith([1, 2]);
-  expect(mapboxgl.Popup.functions.setHTML).toHaveBeenCalledWith('foobar');
-  expect(mapboxgl.Popup.functions.addTo).toHaveBeenCalledWith(props.map);
-});
-
-it('should not display a tooltip', () => {
-  const wrapper = shallow(<Map {...props} />);
-  const instance = wrapper.instance();
-  wrapper.setProps({ displayTooltip: null });
-  instance.displayTooltip();
-  expect(mapboxgl.Popup).not.toHaveBeenCalled();
-});
-
-it('should display tooltip with element', () => {
-  const el = document.createElement('div');
-  const displayTooltip = {
-    coordinates: [1, 2],
-    container: el,
-  };
-  const instance = new Map({ displayTooltip, ...props }, {});
-  instance.displayTooltip();
-  expect(mapboxgl.Popup.functions.setDOMContent).toHaveBeenCalledWith(el);
-});
-
-it('should reset', () => {
-  const style = {};
-  const instance = new Map({ style, ...props }, {});
-  instance.reset();
-  expect(props.map.once).toHaveBeenCalled();
-  expect(props.map.setStyle).toHaveBeenCalledWith(style);
-});
-
 it('should toggle attribution control', () => {
   const instance = new Map({ ...props }, {});
   instance.toggleAttributionControl(false);
@@ -385,11 +294,6 @@ it('should update rotate', () => {
   Map.prototype.toggleRotate.mockClear();
   wrapper.setProps({ rotate: true });
   expect(Map.prototype.toggleRotate).toHaveBeenCalled();
-});
-
-it('should apply empty styles', () => {
-  const instance = new Map({}, {});
-  expect(() => instance.applyNewStyles()).not.toThrow();
 });
 
 it('should create layers', () => {

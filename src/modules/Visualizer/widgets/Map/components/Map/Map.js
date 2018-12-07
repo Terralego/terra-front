@@ -3,8 +3,6 @@ import mapBoxGl from 'mapbox-gl';
 import PropTypes from 'prop-types';
 import 'mapbox-gl/dist/mapbox-gl.css';
 
-import log from '../../../../services/log';
-import { StylesToApplyProps } from '../../../../propTypes/LayersTreePropTypes';
 import { capitalize } from '../../../../../../utils/strings';
 
 import './Map.scss';
@@ -30,30 +28,22 @@ export class Map extends React.Component {
       easing: PropTypes.func,
     }),
 
-    // Way to give order to map to apply new styles
-    stylesToApply: StylesToApplyProps,
-
-    onClick: PropTypes.func,
-
-    displayTooltip: PropTypes.shape({
-      coordinates: PropTypes.array,
-      content: PropTypes.string,
-    }),
-
-    displayPointerOnLayers: PropTypes.arrayOf(PropTypes.string),
-
     customStyle: PropTypes.shape({
       sources: PropTypes.arrayOf(PropTypes.shape({
         id: PropTypes.string.isRequired,
         type: PropTypes.oneOf(['vector']).isRequired,
-        url: PropTypes.string.isRequired,
+        url: PropTypes.string,
+        tiles: PropTypes.arrayOf(PropTypes.string),
       })),
       layers: PropTypes.arrayOf(PropTypes.shape({
         id: PropTypes.string.isRequired,
-        source: PropTypes.string.isRequired,
-        'source-layer': PropTypes.string.isRequired,
+        source: PropTypes.oneOfType([PropTypes.string, PropTypes.object]),
+        'source-layer': PropTypes.string,
         type: PropTypes.oneOf(['fill', 'line', 'symbol', 'circle', 'heatmap', 'fill-extrusion', 'raster', 'hillshade', 'background']).isRequired,
         paint: PropTypes.object,
+        layout: PropTypes.shape({
+          visibility: PropTypes.oneOf(['visible', 'none']),
+        }),
       })),
     }),
   };
@@ -68,10 +58,6 @@ export class Map extends React.Component {
     maxBounds: false,
     rotate: false,
     flyTo: {},
-    stylesToApply: {},
-    onClick () {},
-    displayTooltip: null,
-    displayPointerOnLayers: [],
     customStyle: {},
   };
 
@@ -85,9 +71,11 @@ export class Map extends React.Component {
     this.updateMapProperties(prevProps);
   }
 
-  updateFlyTo = (prevFlyTo, flyTo) => {
-    if (prevFlyTo !== flyTo) {
-      this.props.map.flyTo(flyTo);
+  // TODO : move to WidgetMap
+  updateFlyTo = (prevFlyToConfig, flyToConfig) => {
+    if (prevFlyToConfig !== flyToConfig) {
+      const { map: { flyTo } } = this.props;
+      flyTo(flyToConfig);
     }
   }
 
@@ -103,9 +91,6 @@ export class Map extends React.Component {
       maxBounds,
       rotate,
       flyTo,
-      stylesToApply,
-      onClick,
-      displayTooltip,
     } = this.props;
 
     this.updateFlyTo(prevProps.flyTo, flyTo);
@@ -140,18 +125,6 @@ export class Map extends React.Component {
       this.toggleAttributionControl(displayAttributionControl);
     }
 
-    if (onClick !== prevProps.onClick) {
-      this.addClickListeners();
-    }
-
-    if (stylesToApply !== prevProps.stylesToApply) {
-      this.applyNewStyles();
-    }
-
-    if (displayTooltip !== prevProps.displayTooltip) {
-      this.displayTooltip();
-    }
-
     if (rotate !== prevProps.rotate) {
       this.toggleRotate();
     }
@@ -176,8 +149,6 @@ export class Map extends React.Component {
     this.toggleAttributionControl(displayAttributionControl);
 
     this.toggleRotate();
-
-    this.addClickListeners();
   }
 
   createLayers () {
@@ -225,89 +196,6 @@ export class Map extends React.Component {
     } else {
       map.touchZoomRotate.disableRotation();
     }
-  }
-
-  applyNewStyles () {
-    const { map, stylesToApply: { layouts = [] } = {} } = this.props;
-
-    layouts.forEach(({ id, ...properties }) => {
-      Object.keys(properties).forEach(property => {
-        switch (property) {
-          case 'paint':
-            this.updatePaintProperties(id, properties[property]);
-            break;
-          case 'filter':
-            this.updateFilter(id, properties[property]);
-            break;
-          default:
-            map.setLayoutProperty(id, property, properties[property]);
-        }
-      });
-    });
-  }
-
-  updatePaintProperties (id, properties) {
-    const { map } = this.props;
-    Object.keys(properties).forEach(property => {
-      try {
-        map.setPaintProperty(id, property, properties[property]);
-      } catch (e) {
-        //
-      }
-    });
-  }
-
-  updateFilter (id, filter) {
-    const { map } = this.props;
-    map.setFilter(id, filter);
-  }
-
-  addClickListeners () {
-    const { onClick, map, displayPointerOnLayers } = this.props;
-    this.mapListeners.forEach(listener => {
-      listener();
-    });
-    map.getStyle().layers.forEach(({ id }) => {
-      const clickListener = map.on('click', id, e => {
-        log('map clicked', id, e.features, e);
-        onClick(id, e.features, e);
-      });
-      this.mapListeners.push(clickListener);
-
-      if (displayPointerOnLayers.includes(id)) {
-        const mouseenterListener = map.on('mouseenter', id, () => {
-          map.getCanvas().style.cursor = 'pointer';
-        });
-        const mouseleaveListener = map.on('mouseleave', id, () => {
-          map.getCanvas().style.cursor = '';
-        });
-        this.mapListeners.push(mouseenterListener);
-        this.mapListeners.push(mouseleaveListener);
-      }
-    });
-  }
-
-  displayTooltip () {
-    const { displayTooltip } = this.props;
-    if (!displayTooltip) return;
-    const { coordinates, content: description, container } = displayTooltip;
-
-    const popup = new mapBoxGl.Popup();
-    popup.setLngLat(coordinates);
-    if (container) {
-      popup.setDOMContent(container);
-    }
-    if (description) {
-      popup.setHTML(description);
-    }
-    popup.addTo(this.props.map);
-  }
-
-  reset () {
-    return new Promise(resolve => {
-      this.props.map.once('data', resolve);
-      this.props.map.setStyle(this.props.style);
-    });
   }
 
   render () {

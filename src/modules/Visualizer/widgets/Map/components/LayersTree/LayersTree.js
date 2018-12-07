@@ -22,18 +22,27 @@ export class LayersTree extends Component {
       .filter(a => a)),
   };
 
+  componentDidMount () {
+    const { onChange, layersTree } = this.props;
+    layersTree.forEach(layer => {
+      if (!layer.initialState) return;
+      if (layer.initialState.active !== undefined) {
+        onChange({ layer, state: { active: layer.initialState.active } });
+      }
+    });
+  }
+
   onToggleChange = layer => () => {
     const { onChange } = this.props;
     const { areActives } = this.state;
     const isActive = areActives.has(layer);
-    const styleToApply = isActive ? layer.inactive : layer.active;
     if (isActive) {
       areActives.delete(layer);
     } else {
       areActives.add(layer);
     }
     this.setState({ areActives: new Set(areActives) });
-    onChange(styleToApply);
+    onChange({ layer, state: { active: !isActive } });
   }
 
   isActive = layer => {

@@ -1,34 +1,37 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
 import PropTypes from 'prop-types';
+import mapBoxGl from 'mapbox-gl';
+import debounce from 'lodash.debounce';
 
-import log from '../../services/log';
+import { toggleLayerVisibility, addListenerOnLayer } from '../../services/mapUtils';
 import LayersTreeProps from '../../propTypes/LayersTreePropTypes';
-import Map from './components/Map';
+import DefaultMapComponent from './components/Map';
 import LayersTree from './components/LayersTree';
 import MarkdownRenderer from '../../components/MarkdownRenderer';
 
 import './styles.scss';
 
-const INTERACTION_DISPLAY_DETAILS = 'displayDetails';
-const INTERACTION_DISPLAY_TOOLTIP = 'displayTooltip';
-const INTERACTION_FN = 'function';
+export const INTERACTION_DISPLAY_DETAILS = 'displayDetails';
+export const INTERACTION_DISPLAY_TOOLTIP = 'displayTooltip';
+export const INTERACTION_FN = 'function';
 
 export class WidgetMap extends React.Component {
   static propTypes = {
-    layersTree: LayersTreeProps.isRequired,
+    layersTree: LayersTreeProps,
     interactions: PropTypes.arrayOf(PropTypes.shape({
       id: PropTypes.string.isRequired,
+      trigger: PropTypes.oneOf(['click', 'mouseover']),
       interaction: PropTypes.oneOf([
         INTERACTION_DISPLAY_DETAILS,
         INTERACTION_DISPLAY_TOOLTIP,
         INTERACTION_FN,
       ]),
-      // INTERACTION_DISPLAY_DETAILS
-      // INTERACTION_DISPLAY_TOOLTIP
+      // for INTERACTION_DISPLAY_DETAILS
+      // and INTERACTION_DISPLAY_TOOLTIP
       template: PropTypes.string,
       content: PropTypes.string,
-      // INTERACTION_FN
+      // for INTERACTION_FN
       fn: PropTypes.func,
     })),
     LayersTreeComponent: PropTypes.func,
@@ -37,53 +40,136 @@ export class WidgetMap extends React.Component {
   };
 
   static defaultProps = {
+    layersTree: [],
     LayersTreeComponent: LayersTree,
-    MapComponent: Map,
+    MapComponent: DefaultMapComponent,
     interactions: [],
     setDetails () {},
   };
 
-  state = {
-    stylesToApply: {},
+  mapRef = React.createRef();
+
+  map = new Promise(resolve => {
+    const waitForMap = () => {
+      if (this.mapRef && this.mapRef.current && this.mapRef.current.map) {
+        resolve(this.mapRef.current.map);
+        return;
+      }
+      setTimeout(waitForMap, 10);
+    };
+    waitForMap();
+  });
+
+  popups = new Map();
+
+  hideTooltip = debounce(({ layerId }) => {
+    if (!this.popups.has(layerId)) {
+      return;
+    }
+    const popup = this.popups.get(layerId);
+    popup.remove();
+    this.popups.delete(layerId);
+  }, 100);
+
+  componentDidMount () {
+    this.setInteractions();
   }
 
-  onChange = stylesToApply => this.setState({ stylesToApply });
-
-  onClick = (layer, features, event) => {
+  componentDidUpdate ({ interactions: prevInteractions }) {
     const { interactions } = this.props;
-    interactions
-      .filter(interaction => interaction.id === layer)
-      .forEach(({ interaction, ...interactionConfig }) => {
-        switch (interaction) {
-          case INTERACTION_DISPLAY_DETAILS:
-            this.displayDetails({ layer, features, event, ...interactionConfig });
-            break;
-          case INTERACTION_DISPLAY_TOOLTIP:
-            this.displayTooltip({ layer, features, event, ...interactionConfig });
-            break;
-          case INTERACTION_FN:
-            interactionConfig.fn({
-              layer,
-              features,
-              event,
-              displayDetails: this.displayDetails,
-              displayTooltip: this.displayTooltip,
+
+    if (interactions !== prevInteractions) {
+      this.setInteractions();
+    }
+  }
+
+  onChange = async ({ layer, state: { active } }) => {
+    const map = await this.map;
+
+    if (active !== undefined) {
+      layer.layers.forEach(layerId =>
+        toggleLayerVisibility(map, layerId, active ? 'visible' : 'none'));
+    }
+  }
+
+  async setInteractions () {
+    const map = await this.map;
+    const { interactions } = this.props;
+
+    if (this.mapInteractionsListeners) {
+      this.mapInteractionsListeners.forEach(off => off());
+    }
+
+    this.mapInteractionsListeners = [];
+
+    interactions.forEach(({ id, trigger = 'click', interaction, fn, ...config }) => {
+      const calls = [];
+      switch (interaction) {
+        case INTERACTION_DISPLAY_DETAILS:
+          calls.push({
+            callback: (layerId, features) => this.displayDetails({ features, ...config }),
+            trigger,
+            displayCursor: trigger === 'click',
+          });
+          break;
+        case INTERACTION_DISPLAY_TOOLTIP:
+          if (trigger === 'mouseover') {
+            calls.push({
+              callback: (layerId, features, event) =>
+                this.displayTooltip({ layerId, features, event, ...config }),
+              trigger: 'mousemove',
             });
-            break;
-          default:
-            log(`no interaction found for layer ${layer}`);
-        }
-      });
+            calls.push({
+              callback: (layerId, features, event) =>
+                this.hideTooltip({ layerId, features, event, ...config }),
+              trigger: 'mouseleave',
+            });
+          } else {
+            calls.push({
+              callback: (layerId, features, event) =>
+                this.displayTooltip({ layerId, features, event, ...config }),
+              trigger,
+              displayCursor: trigger === 'click',
+            });
+          }
+          break;
+        case INTERACTION_FN:
+          calls.push({
+            callback: fn,
+            trigger,
+            displayCursor: trigger === 'click',
+          });
+          break;
+        default:
+          return;
+      }
+      const listeners = calls.reduce((list, { callback, trigger: callTrigger, displayCursor }) => [
+        ...list,
+        ...addListenerOnLayer(
+          map,
+          id,
+          callback,
+          { displayCursor, trigger: callTrigger },
+        ),
+      ], []);
+
+      this.mapInteractionsListeners = this.mapInteractionsListeners.concat(listeners);
+    });
   }
 
-  displayDetails = details => {
+  displayDetails = ({ features, template }) => {
     const { setDetails } = this.props;
-    setDetails(details);
+    setDetails({ features, template });
   }
 
-  displayTooltip = ({
-    features: [{ properties }] = [{}], event: { lngLat }, template, content,
+  displayTooltip = async ({
+    layerId,
+    features: [{ properties }] = [{}],
+    event: { lngLat },
+    template,
+    content,
   }) => {
+    const map = await this.map;
     const container = document.createElement('div');
     ReactDOM.render(
       <MarkdownRenderer
@@ -93,38 +179,39 @@ export class WidgetMap extends React.Component {
       />,
       container,
     );
-    this.setState({
-      displayTooltip: {
-        coordinates: [lngLat.lng, lngLat.lat],
-        container,
-      },
-    });
+
+    if (this.popups.has(layerId)) {
+      this.popups.get(layerId).setLngLat([lngLat.lng, lngLat.lat]);
+      return;
+    }
+    const popup = new mapBoxGl.Popup();
+    this.popups.set(layerId, popup);
+    popup.setLngLat([lngLat.lng, lngLat.lat]);
+    popup.setDOMContent(container);
+    popup.addTo(map);
   }
 
   render () {
     const {
       LayersTreeComponent, MapComponent, layersTree, style, interactions, ...mapProps
     } = this.props;
-    const { stylesToApply, displayTooltip } = this.state;
-    const { onChange, onClick } = this;
-    const displayPointerOnLayers = interactions.map(({ id }) => id);
+    const { onChange, mapRef } = this;
 
     return (
       <div
         className="widget-map"
         style={style}
       >
+        {!!layersTree.length && (
         <LayersTreeComponent
           layersTree={layersTree}
           onChange={onChange}
         />
+        )}
         <MapComponent
           {...mapProps}
-          stylesToApply={stylesToApply}
+          ref={mapRef}
           onDetailsChange={this.onDetailsChange}
-          onClick={onClick}
-          displayTooltip={displayTooltip}
-          displayPointerOnLayers={displayPointerOnLayers}
         />
       </div>
     );

@@ -30,6 +30,11 @@ export const withMap = WrappedComponent =>
       this.initMap();
     }
 
+    get map () {
+      const { map } = this.state;
+      return map;
+    }
+
     initMap () {
       const {
         accessToken,

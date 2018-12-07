@@ -8,10 +8,8 @@ export const StylesToApplyProps = PropTypes.shape({
 });
 
 export default PropTypes.arrayOf(PropTypes.shape({
-  title: PropTypes.string,
   label: PropTypes.string.isRequired,
-  active: StylesToApplyProps,
-  inactive: StylesToApplyProps,
+  layers: PropTypes.arrayOf(PropTypes.string),
   initialState: PropTypes.shape({
     active: PropTypes.bool,
   }),
