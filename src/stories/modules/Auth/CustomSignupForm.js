@@ -14,7 +14,7 @@ export const CustomSignupForm = () => (
                 <form onSubmit={submit}>
                   <p>Email <input id="email" type="text" onChange={setSignupProperty} /></p>
                   <p>Password <input id="password" type="password" onChange={setSignupProperty} /></p>
-                  <button>Create</button>
+                  <button type="button">Create</button>
                 </form>
               ),
             },

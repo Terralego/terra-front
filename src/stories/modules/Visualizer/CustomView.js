@@ -42,6 +42,7 @@ stories.add('Custom View', () => (
                       <p key={layer.label}>
                         {layer.label}
                         <button
+                          type="button"
                           onClick={onToggleChange(layer)}
                         >
                           {isActive(layer) ? 'désactiver' : 'activer'}
