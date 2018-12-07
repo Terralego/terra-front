@@ -86,6 +86,7 @@ export class WidgetMap extends React.Component {
           calls.push({
             callback: (layerId, features) => this.displayDetails({ features, ...config }),
             trigger,
+            displayCursor: trigger === 'click',
           });
           break;
         case INTERACTION_DISPLAY_TOOLTIP:
@@ -99,7 +100,6 @@ export class WidgetMap extends React.Component {
               callback: (layerId, features, event) =>
                 this.hideTooltip({ layerId, features, event, ...config }),
               trigger: 'mouseleave',
-              displayCursor: false,
             });
           } else {
             calls.push({
@@ -113,6 +113,8 @@ export class WidgetMap extends React.Component {
         case INTERACTION_FN:
           calls.push({
             callback: fn,
+            trigger,
+            displayCursor: trigger === 'click',
           });
           break;
         default:
