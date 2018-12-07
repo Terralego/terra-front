@@ -21,7 +21,9 @@ exports[`should render correctly with a layers tree 1`] = `
         }
       }
     >
-      <div>
+      <div
+        className="layerNode-label-container"
+      >
         <label
           className="bp3-control bp3-switch"
         >

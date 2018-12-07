@@ -10,7 +10,9 @@ exports[`should render correctly 1`] = `
       }
     }
   >
-    <div>
+    <div
+      className="layerNode-label-container"
+    >
       <label
         className="bp3-control bp3-switch"
       >
@@ -31,7 +33,9 @@ exports[`should render correctly 1`] = `
       }
     }
   >
-    <div>
+    <div
+      className="layerNode-label-container"
+    >
       <label
         className="bp3-control bp3-switch"
       >

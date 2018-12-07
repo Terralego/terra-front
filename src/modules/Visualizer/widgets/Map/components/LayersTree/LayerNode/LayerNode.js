@@ -5,6 +5,7 @@ import './styles.scss';
 
 export class LayerNode extends React.Component {
   state = { isOptionsOpen: false };
+
   handleOptionPanel = () => this.setState({ isOptionsOpen: !this.state.isOptionsOpen });
 
   render () {
@@ -16,25 +17,27 @@ export class LayerNode extends React.Component {
         elevation={Elevation.TWO}
         style={{ opacity: isActive ? 1 : 0.7 }}
       >
-        <Switch
-          checked={isActive}
-          label={label}
-          onChange={onToggleChange}
-        />
-        {isActive &&
-          <Button
-            className="button-more-vertical"
-            icon="more"
-            minimal
-            onClick={this.handleOptionPanel}
+        <div className="layerNode-label-container">
+          <Switch
+            checked={isActive}
+            label={label}
+            onChange={onToggleChange}
           />
-        }
-        {isOptionsOpen && isActive &&
+          {isActive && (
+            <Button
+              className="button-more-vertical"
+              icon="more"
+              minimal
+              onClick={this.handleOptionPanel}
+            />
+          )}
+        </div>
+        {isOptionsOpen && isActive && (
           <OptionsLayer
             onOpacityChange={onOpacityChange}
             opacity={opacity}
           />
-        }
+        )}
       </Card>
     );
   }

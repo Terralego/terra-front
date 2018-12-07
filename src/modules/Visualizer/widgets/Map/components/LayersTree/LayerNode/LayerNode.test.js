@@ -33,5 +33,4 @@ it('should render options layer', () => {
   const wrapper = shallow(<LayersNode isActive />);
   wrapper.setState({ isOptionsOpen: true });
   expect(wrapper.find('OptionsLayer').length).toBe(1);
-})
-;
+});
