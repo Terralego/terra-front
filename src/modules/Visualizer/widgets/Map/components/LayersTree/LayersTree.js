@@ -20,6 +20,9 @@ export class LayersTree extends Component {
     areActives: new Set(this.props.layersTree
       .map(layer => ((layer.initialState || {}).active ? layer : null))
       .filter(a => a)),
+    opacities: this.props.layersTree
+      .reduce((ops, { label, initialState: { opacity = 1 } = {} }) =>
+        ({ ...ops, [label]: opacity }), {}),
   };
 
   componentDidMount () {
@@ -45,6 +48,21 @@ export class LayersTree extends Component {
     onChange({ layer, state: { active: !isActive } });
   }
 
+  onOpacityChange = layer => opacity => {
+    const { onChange } = this.props;
+    const { opacities } = this.state;
+    this.setState({ opacities: {
+      ...opacities,
+      [layer.label]: opacity,
+    } });
+    onChange({ layer, state: { opacity } });
+  }
+
+  getOpacity = layer => {
+    const { opacities } = this.state;
+    return opacities[layer.label];
+  }
+
   isActive = layer => {
     const areActives = new Set(this.state.areActives);
     return areActives.has(layer);
@@ -52,7 +70,7 @@ export class LayersTree extends Component {
 
   render () {
     const { render: Render, layersTree, title, onChange } = this.props;
-    const { onToggleChange, isActive } = this;
+    const { onToggleChange, isActive, onOpacityChange, getOpacity } = this;
     const props = {
       layersTree,
       title,
@@ -60,6 +78,8 @@ export class LayersTree extends Component {
       onToggleChange,
       isActive,
       LayersTree,
+      onOpacityChange,
+      getOpacity,
     };
 
     return <Render {...props} />;

@@ -11,6 +11,8 @@ export const LayersTreeRenderer = ({
   isActive,
   LayersTree,
   onChange,
+  getOpacity,
+  onOpacityChange,
 }) => (
   <Card
     className="layerstree-panel-container bp3-dark"
@@ -28,6 +30,8 @@ export const LayersTreeRenderer = ({
           label={layer.label}
           onToggleChange={onToggleChange(layer)}
           isActive={isActive(layer)}
+          opacity={getOpacity(layer)}
+          onOpacityChange={onOpacityChange(layer)}
         />
       )))}
   </Card>
