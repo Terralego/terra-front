@@ -18,13 +18,13 @@ stories.add('Custom View', () => (
               DetailsComponent ({ name_fr: name }) {
                 return (
                   <p style={{
-                      position: 'absolute',
-                      bottom: '1rem',
-                      right: '1rem',
-                      background: 'red',
-                      color: 'white',
-                      padding: '1rem',
-                    }}
+                    position: 'absolute',
+                    bottom: '1rem',
+                    right: '1rem',
+                    background: 'red',
+                    color: 'white',
+                    padding: '1rem',
+                  }}
                   >
                     Vous êtes à {name}
                   </p>
