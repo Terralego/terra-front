@@ -1,4 +1,4 @@
-import Api from '../../';
+import Api from '../..';
 
 export const ApiProvider = ({ host, children }) => {
   Api.host = host;

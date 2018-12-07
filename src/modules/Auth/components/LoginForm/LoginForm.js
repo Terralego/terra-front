@@ -17,6 +17,7 @@ export class LoginForm extends React.Component {
   state = {};
 
   setLogin = ({ target: { value: login } }) => this.setState({ login });
+
   setPassword = ({ target: { value: password } }) => this.setState({ password });
 
   submit = async event => {

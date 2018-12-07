@@ -17,6 +17,7 @@ export const DEFAULT_HEADERS = {
 
 export class Api {
   host = '/';
+
   token = '';
 
   listeners = [];

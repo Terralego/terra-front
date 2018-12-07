@@ -9,10 +9,17 @@ export const ShouldDisplayLoginForm = connectAuthProvider(({
 }))(({
   authenticated, logoutAction,
 }) => (authenticated
-  ? <>
-    <p>Welcome !</p>
-    <button onClick={logoutAction}>Logout</button>
+  ? (
+    <>
+      <p>Welcome !</p>
+      <button
+        type="button"
+        onClick={logoutAction}
+      >
+        Logout
+      </button>
     </>
+  )
   : <LoginForm />
 ));
 

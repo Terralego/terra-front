@@ -16,7 +16,7 @@ export const Header = ({ title, columns, onChange }) => {
           defaultChecked={display}
           value={value}
         />
-        ))}
+      ))}
     </div>
   );
   return (

@@ -33,6 +33,11 @@ export class View extends React.Component {
     }
   }
 
+  closeDetails = () => {
+    const { setDetails } = this.props;
+    setDetails(null);
+  }
+
   generateWidgets () {
     const { widgets } = this.props;
     const widgetsComponents = widgets.map(({ type, ...props }, key) => {
@@ -47,11 +52,6 @@ export class View extends React.Component {
       return widgetComponent;
     });
     this.setState({ widgetsComponents });
-  }
-
-  closeDetails = () => {
-    const { setDetails } = this.props;
-    setDetails(null);
   }
 
   render () {
