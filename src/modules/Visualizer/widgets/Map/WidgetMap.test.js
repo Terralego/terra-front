@@ -22,6 +22,7 @@ jest.mock('./components/Map', () => {
   const { Component } = require('react');
   class MapComponent extends Component {
     state = {};
+
     render () {
       return null;
     }

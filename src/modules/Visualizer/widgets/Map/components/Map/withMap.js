@@ -24,6 +24,8 @@ export const withMap = WrappedComponent =>
       map: null,
     };
 
+    containerEl = React.createRef();
+
     componentDidMount () {
       this.initMap();
     }
@@ -32,8 +34,6 @@ export const withMap = WrappedComponent =>
       const { map } = this.state;
       return map;
     }
-
-    containerEl = React.createRef();
 
     initMap () {
       const {

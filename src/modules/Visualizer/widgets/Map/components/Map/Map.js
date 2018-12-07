@@ -61,6 +61,8 @@ export class Map extends React.Component {
     customStyle: {},
   };
 
+  mapListeners = [];
+
   componentDidMount () {
     this.initMapProperties();
   }
@@ -68,8 +70,6 @@ export class Map extends React.Component {
   componentDidUpdate (prevProps) {
     this.updateMapProperties(prevProps);
   }
-
-  mapListeners = [];
 
   // TODO : move to WidgetMap
   updateFlyTo = (prevFlyToConfig, flyToConfig) => {

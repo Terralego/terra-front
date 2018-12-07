@@ -125,64 +125,64 @@ stories.add('View Component', () => (
               ],
             }],
             layers: [{
-                type: 'line',
-                source: 'terralego',
-                id: 'terralego-regions',
-                paint: {
-                  'line-color': 'rgb(255, 0, 0)',
-                  'line-width': 5,
-                },
-                'source-layer': 'regions',
-              }, {
-                type: 'line',
-                source: 'terralego',
-                id: 'terralego-departements',
-                paint: {
-                  'line-color': 'hsl(265, 36%, 77%)',
-                  'line-width': 2,
-                },
-                'source-layer': 'departements',
-              }, {
-                type: 'fill',
-                source: 'terralego',
-                id: 'terralego-scot',
-                paint: {
-                  'fill-color': 'hsl(220, 100%, 45%)',
-                },
-                layout: {
-                  visibility: 'none',
-                },
-                'source-layer': 'scot',
+              type: 'line',
+              source: 'terralego',
+              id: 'terralego-regions',
+              paint: {
+                'line-color': 'rgb(255, 0, 0)',
+                'line-width': 5,
               },
-              {
-                type: 'line',
-                source: 'terralego',
-                id: 'terralego-epci',
-                paint: {
-                  'line-color': 'hsl(220, 100%, 45%)',
-                },
-                'source-layer': 'epci',
+              'source-layer': 'regions',
+            }, {
+              type: 'line',
+              source: 'terralego',
+              id: 'terralego-departements',
+              paint: {
+                'line-color': 'hsl(265, 36%, 77%)',
+                'line-width': 2,
               },
-              {
-                type: 'fill',
-                source: 'terralego',
-                id: 'terralego-eae',
-                paint: {
-                  'fill-color': 'hsl(220, 100%, 45%)',
-                },
-                'source-layer': 'zae',
-              }, {
-                type: 'circle',
-                source: 'terralego',
-                id: 'terralego-etablissements',
-                paint: {
-                  'circle-radius': {
-                    base: 1.75,
-                    stops: [[12, 2], [22, 180]],
-                  },
-                },
-                'source-layer': 'etablissements',
+              'source-layer': 'departements',
+            }, {
+              type: 'fill',
+              source: 'terralego',
+              id: 'terralego-scot',
+              paint: {
+                'fill-color': 'hsl(220, 100%, 45%)',
               },
+              layout: {
+                visibility: 'none',
+              },
+              'source-layer': 'scot',
+            },
+            {
+              type: 'line',
+              source: 'terralego',
+              id: 'terralego-epci',
+              paint: {
+                'line-color': 'hsl(220, 100%, 45%)',
+              },
+              'source-layer': 'epci',
+            },
+            {
+              type: 'fill',
+              source: 'terralego',
+              id: 'terralego-eae',
+              paint: {
+                'fill-color': 'hsl(220, 100%, 45%)',
+              },
+              'source-layer': 'zae',
+            }, {
+              type: 'circle',
+              source: 'terralego',
+              id: 'terralego-etablissements',
+              paint: {
+                'circle-radius': {
+                  base: 1.75,
+                  stops: [[12, 2], [22, 180]],
+                },
+              },
+              'source-layer': 'etablissements',
+            },
             ],
           },
         }]}

@@ -47,6 +47,29 @@ export class WidgetMap extends React.Component {
     setDetails () {},
   };
 
+  mapRef = React.createRef();
+
+  map = new Promise(resolve => {
+    const waitForMap = () => {
+      if (this.mapRef && this.mapRef.current && this.mapRef.current.map) {
+        resolve(this.mapRef.current.map);
+        return;
+      }
+      setTimeout(waitForMap, 10);
+    };
+    waitForMap();
+  });
+
+  popups = new Map();
+
+  hideTooltip = debounce(({ layerId }) => {
+    if (!this.popups.has(layerId)) {
+      return;
+    }
+    const popup = this.popups.get(layerId);
+    popup.remove();
+    this.popups.delete(layerId);
+  }, 100);
 
   componentDidMount () {
     this.setInteractions();
@@ -134,21 +157,6 @@ export class WidgetMap extends React.Component {
     });
   }
 
-  mapRef = React.createRef();
-
-  map = new Promise(resolve => {
-    const waitForMap = () => {
-      if (this.mapRef && this.mapRef.current && this.mapRef.current.map) {
-        resolve(this.mapRef.current.map);
-        return;
-      }
-      setTimeout(waitForMap, 10);
-    };
-    waitForMap();
-  });
-
-  popups = new Map();
-
   displayDetails = ({ features, template }) => {
     const { setDetails } = this.props;
     setDetails({ features, template });
@@ -183,15 +191,6 @@ export class WidgetMap extends React.Component {
     popup.addTo(map);
   }
 
-  hideTooltip = debounce(({ layerId }) => {
-    if (!this.popups.has(layerId)) {
-      return;
-    }
-    const popup = this.popups.get(layerId);
-    popup.remove();
-    this.popups.delete(layerId);
-  }, 100);
-
   render () {
     const {
       LayersTreeComponent, MapComponent, layersTree, style, interactions, ...mapProps
@@ -203,12 +202,12 @@ export class WidgetMap extends React.Component {
         className="widget-map"
         style={style}
       >
-        {!!layersTree.length &&
-          <LayersTreeComponent
-            layersTree={layersTree}
-            onChange={onChange}
-          />
-        }
+        {!!layersTree.length && (
+        <LayersTreeComponent
+          layersTree={layersTree}
+          onChange={onChange}
+        />
+        )}
         <MapComponent
           {...mapProps}
           ref={mapRef}
