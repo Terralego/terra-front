@@ -5,12 +5,6 @@ import { storiesOf } from '@storybook/react';
 import VisualizerProvider, { View } from '../../../modules/Visualizer';
 
 const layersTree = [{
-  label: 'regions',
-  initialState: {
-    active: true,
-  },
-  layers: ['terralego-regions'],
-}, {
   label: 'Departements',
   initialState: {
     active: false,
@@ -31,7 +25,7 @@ const layersTree = [{
 }, {
   label: 'EAE',
   initialState: {
-    active: false,
+    active: true,
   },
   layers: ['terralego-eae'],
 }, {
@@ -130,8 +124,7 @@ stories.add('View Component', () => (
                 'http://j-dev-tiles-paca.makina-corpus.net/api/layer/__nogroup__/tiles/{z}/{x}/{y}/',
               ],
             }],
-            layers: [
-              {
+            layers: [{
                 type: 'line',
                 source: 'terralego',
                 id: 'terralego-regions',
@@ -140,8 +133,7 @@ stories.add('View Component', () => (
                   'line-width': 5,
                 },
                 'source-layer': 'regions',
-              },
-              {
+              }, {
                 type: 'line',
                 source: 'terralego',
                 id: 'terralego-departements',

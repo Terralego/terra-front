@@ -42,3 +42,8 @@ it('should have a map', () => {
     zoom: 9,
   }, {});
 });
+
+it('should have a map getter', () => {
+  const wrapper = shallow(<ComponentWithMap backgroundStyle={{}} />);
+  expect(wrapper.instance().map).toBe(mapboxgl.map);
+});

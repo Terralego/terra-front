@@ -3,6 +3,12 @@
 exports[`should render correctly 1`] = `
 <div
   className="widget-map"
+/>
+`;
+
+exports[`should render correctly with a layers tree 1`] = `
+<div
+  className="widget-map"
 >
   <div
     className="bp3-card bp3-elevation-0 layerstree-panel-container bp3-dark"
@@ -12,6 +18,28 @@ exports[`should render correctly 1`] = `
     >
       Couches cartographiques
     </h4>
+    <div
+      className="bp3-card bp3-elevation-2 layerNode-container"
+      style={
+        Object {
+          "opacity": 0.7,
+        }
+      }
+    >
+      <label
+        className="bp3-control bp3-switch"
+      >
+        <input
+          checked={false}
+          onChange={[Function]}
+          type="checkbox"
+        />
+        <span
+          className="bp3-control-indicator"
+        />
+        foo
+      </label>
+    </div>
   </div>
 </div>
 `;

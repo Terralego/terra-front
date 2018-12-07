@@ -12,9 +12,9 @@ import MarkdownRenderer from '../../components/MarkdownRenderer';
 
 import './styles.scss';
 
-const INTERACTION_DISPLAY_DETAILS = 'displayDetails';
-const INTERACTION_DISPLAY_TOOLTIP = 'displayTooltip';
-const INTERACTION_FN = 'function';
+export const INTERACTION_DISPLAY_DETAILS = 'displayDetails';
+export const INTERACTION_DISPLAY_TOOLTIP = 'displayTooltip';
+export const INTERACTION_FN = 'function';
 
 export class WidgetMap extends React.Component {
   static propTypes = {
@@ -195,14 +195,13 @@ export class WidgetMap extends React.Component {
       LayersTreeComponent, MapComponent, layersTree, style, interactions, ...mapProps
     } = this.props;
     const { onChange, mapRef } = this;
-    const displayPointerOnLayers = interactions.map(({ id }) => id);
 
     return (
       <div
         className="widget-map"
         style={style}
       >
-        {layersTree.length &&
+        {!!layersTree.length &&
           <LayersTreeComponent
             layersTree={layersTree}
             onChange={onChange}
@@ -212,7 +211,6 @@ export class WidgetMap extends React.Component {
           {...mapProps}
           ref={mapRef}
           onDetailsChange={this.onDetailsChange}
-          displayPointerOnLayers={displayPointerOnLayers}
         />
       </div>
     );
