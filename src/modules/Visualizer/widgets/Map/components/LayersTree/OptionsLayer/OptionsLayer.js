@@ -26,11 +26,7 @@ const OptionsLayer = ({ onOpacityChange, opacity }) => (
 );
 
 OptionsLayer.propTypes = {
-  onOpacityChange: PropTypes.func,
-};
-
-OptionsLayer.defaultProps = {
-  onOpacityChange: () => {},
+  onOpacityChange: PropTypes.func.isRequired,
 };
 
 export default OptionsLayer;

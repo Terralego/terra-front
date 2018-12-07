@@ -84,7 +84,6 @@ export class WidgetMap extends React.Component {
   }
 
   onChange = async ({ layer, state: { active, opacity } }) => {
-    console.log(layer, opacity);
     const map = await this.map;
 
     if (active !== undefined) {
