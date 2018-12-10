@@ -5,35 +5,38 @@ import { storiesOf } from '@storybook/react';
 import VisualizerProvider, { View } from '../../../modules/Visualizer';
 
 const layersTree = [{
-  label: 'Departements',
-  initialState: {
-    active: false,
-  },
-  layers: ['terralego-departements'],
-}, {
-  label: 'SCOT',
-  initialState: {
-    active: false,
-  },
-  layers: ['terralego-scot'],
-}, {
-  label: 'EPCI',
-  initialState: {
-    active: false,
-  },
-  layers: ['terralego-epci'],
-}, {
-  label: 'EAE',
-  initialState: {
-    active: true,
-  },
-  layers: ['terralego-eae'],
-}, {
-  label: 'Établissements',
-  initialState: {
-    active: false,
-  },
-  layers: ['terralego-etablissements'],
+  group: 'Afficher',
+  layers: [{
+    label: 'Departements',
+    initialState: {
+      active: false,
+    },
+    layers: ['terralego-departements'],
+  }, {
+    label: 'SCOT',
+    initialState: {
+      active: false,
+    },
+    layers: ['terralego-scot'],
+  }, {
+    label: 'EPCI',
+    initialState: {
+      active: false,
+    },
+    layers: ['terralego-epci'],
+  }, {
+    label: 'EAE',
+    initialState: {
+      active: true,
+    },
+    layers: ['terralego-eae'],
+  }, {
+    label: 'Établissements',
+    initialState: {
+      active: false,
+    },
+    layers: ['terralego-etablissements'],
+  }],
 }];
 
 const stories = storiesOf('Modules/Visualizer', module);

@@ -7,13 +7,13 @@ import LayersTreeRenderer from './LayersTreeRenderer';
 export class LayersTree extends Component {
   static propTypes = {
     layersTree: layersTreePropsTypes.isRequired,
-    title: PropTypes.string,
     render: PropTypes.func,
+    onChange: PropTypes.func,
   };
 
   static defaultProps = {
-    title: 'Couches cartographiques',
     render: LayersTreeRenderer,
+    onChange () {},
   };
 
   state = {
@@ -51,13 +51,15 @@ export class LayersTree extends Component {
   }
 
   render () {
-    const { render: Render, layersTree, title } = this.props;
+    const { render: Render, layersTree, title, onChange } = this.props;
     const { onToggleChange, isActive } = this;
     const props = {
       layersTree,
       title,
+      onChange,
       onToggleChange,
       isActive,
+      LayersTree,
     };
 
     return <Render {...props} />;
