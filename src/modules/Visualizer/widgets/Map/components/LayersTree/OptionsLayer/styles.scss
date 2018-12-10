@@ -1,8 +1,9 @@
 .layerNode-Option-Container {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
   padding: 4px;
+
+  .bp3-slider {
+    width: calc(100% - 0.3rem);
+  }
 }
 
 .layerNode-Option-slider-label {

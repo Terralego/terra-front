@@ -13,23 +13,21 @@ const OptionsLayer = ({ onOpacityChange, opacity }) => (
     className="layerNode-Option-Container"
     elevation={Elevation.TWO}
   >
-    <div>
-      <p
-        className="layerNode-Option-slider-label"
-      >
-        Opacité {getPercent(opacity)}%
-      </p>
-      <Slider
-        inititialValue={opacity}
-        stepSize={0.00001}
-        min={0}
-        max={1}
-        labelRenderer={false}
-        showTrackFill
-        value={opacity}
-        onChange={onOpacityChange}
-      />
-    </div>
+    <p
+      className="layerNode-Option-slider-label"
+    >
+      Opacité {getPercent(opacity)}%
+    </p>
+    <Slider
+      inititialValue={opacity}
+      stepSize={0.00001}
+      min={0}
+      max={1}
+      labelRenderer={false}
+      showTrackFill
+      value={opacity}
+      onChange={onOpacityChange}
+    />
   </div>
 );
 
