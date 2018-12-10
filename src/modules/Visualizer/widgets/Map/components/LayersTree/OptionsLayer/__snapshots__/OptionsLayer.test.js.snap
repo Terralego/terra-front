@@ -7,9 +7,11 @@ exports[`should render correctly 1`] = `
 >
   <div>
     <p
-      className=" layerNode-Option-slider-label"
+      className="layerNode-Option-slider-label"
     >
-      Opacité (0%)
+      Opacité 
+      0
+      %
     </p>
   </div>
 </div>
