@@ -6,32 +6,29 @@ import { LayersTree } from './LayersTree';
 it('should render correctly', () => {
   const layersTree = [{
     label: 'foo',
-    active: {
-      layouts: [{
-        id: 'foo',
-        visibility: 'visible',
-      }],
-    },
-    inactive: {
-      layouts: [{
-        id: 'foo',
-        visibility: 'none',
-      }],
-    },
+    layers: ['foo'],
   }, {
     label: 'bar',
-    active: {
-      layouts: [{
-        id: 'bar',
-        visibility: 'visible',
-      }],
-    },
-    inactive: {
-      layouts: [{
-        id: 'bar',
-        visibility: 'none',
-      }],
-    },
+    layers: ['bar'],
+  }];
+  const tree = renderer.create((
+    <LayersTree
+      layersTree={layersTree}
+    />
+  )).toJSON();
+  expect(tree).toMatchSnapshot();
+});
+
+it('should render a group', () => {
+  const layersTree = [{
+    group: 'foo',
+    layers: [{
+      label: 'foo',
+      layers: ['foo'],
+    }, {
+      label: 'bar',
+      layers: ['bar'],
+    }],
   }];
   const tree = renderer.create((
     <LayersTree

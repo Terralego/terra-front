@@ -1,14 +1,71 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
+exports[`should render a group 1`] = `
+<div
+  className="bp3-card bp3-elevation-0 layerstree-panel-container bp3-dark"
+>
+  <div>
+    <h4
+      className="bp3-heading"
+    >
+      foo
+    </h4>
+    <div
+      className="bp3-card bp3-elevation-0 layerstree-panel-container bp3-dark"
+    >
+      <div
+        className="bp3-card bp3-elevation-2 layerNode-container"
+        style={
+          Object {
+            "opacity": 0.7,
+          }
+        }
+      >
+        <label
+          className="bp3-control bp3-switch"
+        >
+          <input
+            checked={false}
+            onChange={[Function]}
+            type="checkbox"
+          />
+          <span
+            className="bp3-control-indicator"
+          />
+          foo
+        </label>
+      </div>
+      <div
+        className="bp3-card bp3-elevation-2 layerNode-container"
+        style={
+          Object {
+            "opacity": 0.7,
+          }
+        }
+      >
+        <label
+          className="bp3-control bp3-switch"
+        >
+          <input
+            checked={false}
+            onChange={[Function]}
+            type="checkbox"
+          />
+          <span
+            className="bp3-control-indicator"
+          />
+          bar
+        </label>
+      </div>
+    </div>
+  </div>
+</div>
+`;
+
 exports[`should render correctly 1`] = `
 <div
   className="bp3-card bp3-elevation-0 layerstree-panel-container bp3-dark"
 >
-  <h4
-    className="bp3-heading"
-  >
-    Couches cartographiques
-  </h4>
   <div
     className="bp3-card bp3-elevation-2 layerNode-container"
     style={

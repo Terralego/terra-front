@@ -5,19 +5,31 @@ import LayerNode from './LayerNode';
 
 import './styles.scss';
 
-export const LayersTreeRenderer = ({ title, layersTree, onToggleChange, isActive }) => (
+export const LayersTreeRenderer = ({
+  layersTree,
+  onToggleChange,
+  isActive,
+  LayersTree,
+  onChange,
+}) => (
   <Card
     className="layerstree-panel-container bp3-dark"
   >
-    <H4>{title}</H4>
-    {layersTree.map(layer => (
-      <LayerNode
-        key={layer.label}
-        label={layer.label}
-        onToggleChange={onToggleChange(layer)}
-        isActive={isActive(layer)}
-      />
-    ))}
+    {layersTree.map(layer => (layer.group
+      ? (
+        <div key={layer.group}>
+          <H4>{layer.group}</H4>
+          <LayersTree layersTree={layer.layers} onChange={onChange} />
+        </div>
+      )
+      : (
+        <LayerNode
+          key={layer.label}
+          label={layer.label}
+          onToggleChange={onToggleChange(layer)}
+          isActive={isActive(layer)}
+        />
+      )))}
   </Card>
 );
 
