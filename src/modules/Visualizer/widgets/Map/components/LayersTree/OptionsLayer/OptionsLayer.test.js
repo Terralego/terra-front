@@ -14,6 +14,7 @@ it('should render correctly', () => {
   const tree = renderer.create((
     <OptionsLayer
       opacity={0}
+      onOpacityChange={() => {}}
     />
   )).toJSON();
   expect(tree).toMatchSnapshot();

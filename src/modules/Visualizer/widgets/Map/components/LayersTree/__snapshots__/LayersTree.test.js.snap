@@ -21,19 +21,23 @@ exports[`should render a group 1`] = `
           }
         }
       >
-        <label
-          className="bp3-control bp3-switch"
+        <div
+          className="layerNode-label-container"
         >
-          <input
-            checked={false}
-            onChange={[Function]}
-            type="checkbox"
-          />
-          <span
-            className="bp3-control-indicator"
-          />
-          foo
-        </label>
+          <label
+            className="bp3-control bp3-switch"
+          >
+            <input
+              checked={false}
+              onChange={[Function]}
+              type="checkbox"
+            />
+            <span
+              className="bp3-control-indicator"
+            />
+            foo
+          </label>
+        </div>
       </div>
       <div
         className="bp3-card bp3-elevation-2 layerNode-container"
@@ -43,19 +47,23 @@ exports[`should render a group 1`] = `
           }
         }
       >
-        <label
-          className="bp3-control bp3-switch"
+        <div
+          className="layerNode-label-container"
         >
-          <input
-            checked={false}
-            onChange={[Function]}
-            type="checkbox"
-          />
-          <span
-            className="bp3-control-indicator"
-          />
-          bar
-        </label>
+          <label
+            className="bp3-control bp3-switch"
+          >
+            <input
+              checked={false}
+              onChange={[Function]}
+              type="checkbox"
+            />
+            <span
+              className="bp3-control-indicator"
+            />
+            bar
+          </label>
+        </div>
       </div>
     </div>
   </div>

@@ -3,6 +3,12 @@ import renderer from 'react-test-renderer';
 import { shallow } from 'enzyme';
 import LayersNode from '.';
 
+jest.mock('../OptionsLayer', () => {
+  function OptionsLayer () { return <div>OptionsLayer</div>; }
+
+  return OptionsLayer;
+});
+
 it('should render correctly', () => {
   const tree = renderer.create((
     <div>
