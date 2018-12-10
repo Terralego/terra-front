@@ -206,10 +206,10 @@ export class WidgetMap extends React.Component {
     const { legend } = layer;
     if (!legend) return;
     const { legends } = this.state;
-    const pos = legends.findIndex(l => l === legend);
+    const pos = legends.findIndex(l => l === layer);
     if (active && pos === -1) {
       this.setState({
-        legends: [...legends, legend],
+        legends: [...legends, layer],
       });
     }
     if (!active && pos > -1) {
@@ -245,8 +245,8 @@ export class WidgetMap extends React.Component {
         />
         {!!legends.length && (
           <div className="widget-map__legends">
-            {legends.map(legend => (
-              <Legend {...legend} />
+            {legends.map(({ label, legend }) => (
+              <Legend title={label} {...legend} />
             ))}
           </div>
         )}
