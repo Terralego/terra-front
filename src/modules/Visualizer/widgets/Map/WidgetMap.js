@@ -9,6 +9,7 @@ import LayersTreeProps from '../../propTypes/LayersTreePropTypes';
 import DefaultMapComponent from './components/Map';
 import LayersTree from './components/LayersTree';
 import MarkdownRenderer from '../../components/MarkdownRenderer';
+import Legend from './components/Legend';
 
 import './styles.scss';
 
@@ -45,6 +46,10 @@ export class WidgetMap extends React.Component {
     MapComponent: DefaultMapComponent,
     interactions: [],
     setDetails () {},
+  };
+
+  state = {
+    visibleLayers: [],
   };
 
   mapRef = React.createRef();
@@ -87,8 +92,10 @@ export class WidgetMap extends React.Component {
     const map = await this.map;
 
     if (active !== undefined) {
-      layer.layers.forEach(layerId =>
-        toggleLayerVisibility(map, layerId, active ? 'visible' : 'none'));
+      layer.layers.forEach(layerId => {
+        toggleLayerVisibility(map, layerId, active ? 'visible' : 'none');
+        this.toggleVisible(layer, active);
+      });
     }
     if (opacity !== undefined) {
       layer.layers.forEach(layerId =>
@@ -195,10 +202,29 @@ export class WidgetMap extends React.Component {
     popup.addTo(map);
   }
 
+  toggleVisible (layer, active) {
+    const { legend } = layer;
+    if (!legend) return;
+    const { visibleLayers } = this.state;
+    const pos = visibleLayers.findIndex(l => l === layer);
+    if (active && pos === -1) {
+      this.setState({
+        visibleLayers: [...visibleLayers, layer],
+      });
+    }
+    if (!active && pos > -1) {
+      visibleLayers.splice(pos, 1);
+      this.setState({
+        visibleLayers: [...visibleLayers],
+      });
+    }
+  }
+
   render () {
     const {
       LayersTreeComponent, MapComponent, layersTree, style, interactions, ...mapProps
     } = this.props;
+    const { visibleLayers } = this.state;
     const { onChange, mapRef } = this;
 
     return (
@@ -217,6 +243,19 @@ export class WidgetMap extends React.Component {
           ref={mapRef}
           onDetailsChange={this.onDetailsChange}
         />
+        {!!visibleLayers.length && (
+          <div className="widget-map__legends">
+            {visibleLayers
+              .filter(layer => layer.legend)
+              .map(({ label, legend }) => (
+                <Legend
+                  key={label}
+                  title={label}
+                  {...legend}
+                />
+              ))}
+          </div>
+        )}
       </div>
     );
   }

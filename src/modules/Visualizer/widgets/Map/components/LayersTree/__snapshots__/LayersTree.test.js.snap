@@ -14,7 +14,7 @@ exports[`should render a group 1`] = `
       className="bp3-card bp3-elevation-0 layerstree-panel-container bp3-dark"
     >
       <div
-        className="bp3-card bp3-elevation-2 layerNode-container"
+        className="bp3-card bp3-elevation-2 layerNode-container options-hidden"
         style={
           Object {
             "opacity": 0.7,
@@ -40,7 +40,7 @@ exports[`should render a group 1`] = `
         </div>
       </div>
       <div
-        className="bp3-card bp3-elevation-2 layerNode-container"
+        className="bp3-card bp3-elevation-2 layerNode-container options-hidden"
         style={
           Object {
             "opacity": 0.7,
@@ -75,7 +75,7 @@ exports[`should render correctly 1`] = `
   className="bp3-card bp3-elevation-0 layerstree-panel-container bp3-dark"
 >
   <div
-    className="bp3-card bp3-elevation-2 layerNode-container"
+    className="bp3-card bp3-elevation-2 layerNode-container options-hidden"
     style={
       Object {
         "opacity": 0.7,
@@ -101,7 +101,7 @@ exports[`should render correctly 1`] = `
     </div>
   </div>
   <div
-    className="bp3-card bp3-elevation-2 layerNode-container"
+    className="bp3-card bp3-elevation-2 layerNode-container options-hidden"
     style={
       Object {
         "opacity": 0.7,

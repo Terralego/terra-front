@@ -13,7 +13,7 @@ export class LayerNode extends React.Component {
     const { isOptionsOpen } = this.state;
     return (
       <Card
-        className="layerNode-container"
+        className={`layerNode-container ${(isActive) ? '' : 'options-hidden'}`}
         elevation={Elevation.TWO}
         style={{ opacity: isActive ? 1 : 0.7 }}
       >

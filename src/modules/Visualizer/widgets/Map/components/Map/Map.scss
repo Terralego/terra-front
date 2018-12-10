@@ -1,8 +1,8 @@
 .tf-map {
-  height: 100vh;
-  width: 100vh;
+  height: 100%;
+  width: auto;
   .mapboxgl-map {
-    width: 100%;
     height: 100%;
+    width: auto;
   }
 }

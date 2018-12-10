@@ -1,11 +1,13 @@
 .visualizer-view {
+  position: relative;
+  overflow: hidden;
+
   .view-details {
     position: absolute;
     top: 0;
     bottom: 0;
     right: 0;
     width: 30rem;
-    background: white;
     transform: translate3d(100%, 0, 0);
     transition: transform .2s ease-in;
     z-index: 2;
