@@ -1,5 +1,6 @@
 import React from 'react';
 import renderer from 'react-test-renderer';
+import { shallow } from 'enzyme';
 import ReactDOM from 'react-dom';
 import mapboxGl from 'mapbox-gl';
 
@@ -51,6 +52,7 @@ it('should render correctly', () => {
   )).toJSON();
   expect(tree).toMatchSnapshot();
 });
+
 it('should render correctly with a layers tree', () => {
   const tree = renderer.create((
     <WidgetMap
@@ -288,4 +290,40 @@ it('should hide tooltip', () => {
   popup.remove.mockClear();
   instance.hideTooltip({ layerId: 'foo' });
   expect(popup.remove).not.toHaveBeenCalled();
+});
+
+it('should toggle legend', () => {
+  const layersTree = [{
+    label: 'foo',
+    legend: {
+      items: [{
+        label: 'Red',
+        color: 'red',
+      }],
+    },
+  }];
+  const wrapper = shallow(<WidgetMap layersTree={layersTree} />);
+  const instance = wrapper.instance();
+  jest.spyOn(instance, 'setState');
+
+  instance.toggleVisible(layersTree[0], true);
+  expect(instance.setState).toHaveBeenCalledWith({
+    visibleLayers: [layersTree[0]],
+  });
+  expect(wrapper.find('Legend').length).toBe(1);
+  instance.setState.mockClear();
+
+  instance.toggleVisible(layersTree[0], true);
+  expect(instance.setState).not.toHaveBeenCalled();
+  instance.setState.mockClear();
+
+  instance.toggleVisible(layersTree[0], false);
+  expect(instance.setState).toHaveBeenCalledWith({
+    visibleLayers: [],
+  });
+  expect(wrapper.find('Legend').length).toBe(0);
+  instance.setState.mockClear();
+
+  instance.toggleVisible({}, true);
+  expect(instance.setState).not.toHaveBeenCalled();
 });

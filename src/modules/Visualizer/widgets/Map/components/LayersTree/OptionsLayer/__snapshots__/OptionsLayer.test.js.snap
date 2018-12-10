@@ -5,14 +5,12 @@ exports[`should render correctly 1`] = `
   className="layerNode-Option-Container"
   elevation={2}
 >
-  <div>
-    <p
-      className="layerNode-Option-slider-label"
-    >
-      Opacité 
-      0
-      %
-    </p>
-  </div>
+  <p
+    className="layerNode-Option-slider-label"
+  >
+    Opacité 
+    0
+    %
+  </p>
 </div>
 `;

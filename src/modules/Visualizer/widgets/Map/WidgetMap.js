@@ -49,7 +49,7 @@ export class WidgetMap extends React.Component {
   };
 
   state = {
-    legends: [],
+    visibleLayers: [],
   };
 
   mapRef = React.createRef();
@@ -94,7 +94,7 @@ export class WidgetMap extends React.Component {
     if (active !== undefined) {
       layer.layers.forEach(layerId => {
         toggleLayerVisibility(map, layerId, active ? 'visible' : 'none');
-        this.toggleLegend(layer, active);
+        this.toggleVisible(layer, active);
       });
     }
     if (opacity !== undefined) {
@@ -202,20 +202,20 @@ export class WidgetMap extends React.Component {
     popup.addTo(map);
   }
 
-  toggleLegend (layer, active) {
+  toggleVisible (layer, active) {
     const { legend } = layer;
     if (!legend) return;
-    const { legends } = this.state;
-    const pos = legends.findIndex(l => l === layer);
+    const { visibleLayers } = this.state;
+    const pos = visibleLayers.findIndex(l => l === layer);
     if (active && pos === -1) {
       this.setState({
-        legends: [...legends, layer],
+        visibleLayers: [...visibleLayers, layer],
       });
     }
     if (!active && pos > -1) {
-      legends.splice(pos, 1);
+      visibleLayers.splice(pos, 1);
       this.setState({
-        legends: [...legends],
+        visibleLayers: [...visibleLayers],
       });
     }
   }
@@ -224,7 +224,7 @@ export class WidgetMap extends React.Component {
     const {
       LayersTreeComponent, MapComponent, layersTree, style, interactions, ...mapProps
     } = this.props;
-    const { legends } = this.state;
+    const { visibleLayers } = this.state;
     const { onChange, mapRef } = this;
 
     return (
@@ -243,11 +243,17 @@ export class WidgetMap extends React.Component {
           ref={mapRef}
           onDetailsChange={this.onDetailsChange}
         />
-        {!!legends.length && (
+        {!!visibleLayers.length && (
           <div className="widget-map__legends">
-            {legends.map(({ label, legend }) => (
-              <Legend title={label} {...legend} />
-            ))}
+            {visibleLayers
+              .filter(layer => layer.legend)
+              .map(({ label, legend }) => (
+                <Legend
+                  key={label}
+                  title={label}
+                  {...legend}
+                />
+              ))}
           </div>
         )}
       </div>
