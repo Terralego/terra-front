@@ -3,7 +3,7 @@ import renderer from 'react-test-renderer';
 import ReactDOM from 'react-dom';
 import mapboxGl from 'mapbox-gl';
 
-import { toggleLayerVisibility } from '../../services/mapUtils';
+import { toggleLayerVisibility, setLayerOpacity } from '../../services/mapUtils';
 import WidgetMap, { INTERACTION_DISPLAY_DETAILS, INTERACTION_DISPLAY_TOOLTIP, INTERACTION_FN } from './WidgetMap';
 
 
@@ -31,6 +31,7 @@ jest.mock('./components/Map', () => {
 });
 jest.mock('../../services/mapUtils', () => ({
   toggleLayerVisibility: jest.fn(),
+  setLayerOpacity: jest.fn(),
   addListenerOnLayer: jest.fn((map, id, callback) => [{ map, id, callback }]),
 }));
 jest.mock('react-dom', () => {
@@ -77,7 +78,7 @@ it('should setInteraction on update', () => {
   expect(instance.setInteractions).toHaveBeenCalled();
 });
 
-it('should apply changes', async done => {
+it('should apply visibility changes', async done => {
   const instance = new WidgetMap();
   const map = {};
   instance.map = map;
@@ -121,6 +122,26 @@ it('should apply changes', async done => {
 
   expect(toggleLayerVisibility).not.toHaveBeenCalled();
   toggleLayerVisibility.mockClear();
+
+  done();
+});
+
+it('should apply opacity changes', async done => {
+  const instance = new WidgetMap();
+  const map = {};
+  instance.map = map;
+  instance.onChange({
+    layer: {
+      id: 'foo',
+      layers: ['bar', 'babar'],
+    },
+    state: {
+      opacity: 42,
+    },
+  });
+  await true;
+  expect(setLayerOpacity).toHaveBeenCalledWith(map, 'bar', 42);
+  expect(setLayerOpacity).toHaveBeenCalledWith(map, 'babar', 42);
 
   done();
 });

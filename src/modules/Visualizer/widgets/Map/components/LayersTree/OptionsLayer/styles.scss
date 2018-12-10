@@ -1,0 +1,15 @@
+.layerNode-Option-Container {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 4px;
+}
+
+.layerNode-Option-slider-label {
+  font-weight: 200;
+  font-size: 14px;
+}
+
+.layerNode-Option-button:not(:last-of-type) {
+  margin-right: 12px;
+}

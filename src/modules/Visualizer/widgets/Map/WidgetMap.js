@@ -4,7 +4,7 @@ import PropTypes from 'prop-types';
 import mapBoxGl from 'mapbox-gl';
 import debounce from 'lodash.debounce';
 
-import { toggleLayerVisibility, addListenerOnLayer } from '../../services/mapUtils';
+import { toggleLayerVisibility, addListenerOnLayer, setLayerOpacity } from '../../services/mapUtils';
 import LayersTreeProps from '../../propTypes/LayersTreePropTypes';
 import DefaultMapComponent from './components/Map';
 import LayersTree from './components/LayersTree';
@@ -83,12 +83,16 @@ export class WidgetMap extends React.Component {
     }
   }
 
-  onChange = async ({ layer, state: { active } }) => {
+  onChange = async ({ layer, state: { active, opacity } }) => {
     const map = await this.map;
 
     if (active !== undefined) {
       layer.layers.forEach(layerId =>
         toggleLayerVisibility(map, layerId, active ? 'visible' : 'none'));
+    }
+    if (opacity !== undefined) {
+      layer.layers.forEach(layerId =>
+        setLayerOpacity(map, layerId, opacity));
     }
   }
 

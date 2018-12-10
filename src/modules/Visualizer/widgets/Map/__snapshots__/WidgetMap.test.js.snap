@@ -21,19 +21,23 @@ exports[`should render correctly with a layers tree 1`] = `
         }
       }
     >
-      <label
-        className="bp3-control bp3-switch"
+      <div
+        className="layerNode-label-container"
       >
-        <input
-          checked={false}
-          onChange={[Function]}
-          type="checkbox"
-        />
-        <span
-          className="bp3-control-indicator"
-        />
-        foo
-      </label>
+        <label
+          className="bp3-control bp3-switch"
+        >
+          <input
+            checked={false}
+            onChange={[Function]}
+            type="checkbox"
+          />
+          <span
+            className="bp3-control-indicator"
+          />
+          foo
+        </label>
+      </div>
     </div>
   </div>
 </div>

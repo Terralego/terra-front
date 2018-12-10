@@ -1,26 +1,19 @@
-.layersTree-panel-container {
-  padding: 16px 8px;
-  border-radius: 0;
-  width: (100vw/12)*3;//((100% / 12) * 3); 
+.layerNode-container {
+  padding: 4px 4px 4px 8px;
+  border: 1px solid #293742;
+  font-size: 16px;
+  font-weight: 200;
+  border-radius: 0px;
 }
 
-.layersGroup-label {
-  font-weight: 300;
-  vertical-align: middle;
-  margin-bottom: 0px;
-}
-
-.bp3-control {
-  margin-bottom: 0px;
-}
-
-.layerNode-card {
-  height: 38px;
+.layerNode-header {
   display: flex;
   flex-direction: row;
+  justify-content: space-between;
   align-items: center;
+  margin-bottom: 8px;
 }
 
-.button-More-vertical {
-  transform: rotate(90deg);
+.button-more-vertical {
+  transform: rotate(90deg)
 }

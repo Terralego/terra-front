@@ -73,6 +73,16 @@ it('should change on toggle', () => {
   expect(currentAreActives.delete).not.toHaveBeenCalled();
 });
 
+it('should change opacity', () => {
+  const onChange = jest.fn();
+  const wrapper = shallow(<LayersTree layersTree={[]} onChange={onChange} />);
+  const instance = wrapper.instance();
+  jest.spyOn(instance, 'setState');
+  instance.onOpacityChange({ label: 'foo' })(42);
+  expect(instance.setState).toHaveBeenCalledWith({ opacities: { foo: 42 } });
+  expect(onChange).toHaveBeenCalledWith({ layer: { label: 'foo' }, state: { opacity: 42 } });
+});
+
 it('should set initial state', () => {
   const instance = new LayersTree({ layersTree: [] }, {});
   expect(instance.state.areActives).toEqual(new Set());
