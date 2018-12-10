@@ -85,7 +85,8 @@ deploy_story_book:
 npm_run_deploy:
   tags: [shared-ci-docker]
   stage: publish
-  when: manual
+  only:
+    - tags
   script:
     - echo "//registry.npmjs.org/:_authToken=${NPM_TOKEN}">~/.npmrc
     - scripts/publish.sh
