@@ -27,7 +27,7 @@ const layersTree = [{
   }, {
     label: 'EAE',
     initialState: {
-      active: true,
+      active: false,
     },
     layers: ['terralego-eae'],
   }, {
@@ -36,6 +36,28 @@ const layersTree = [{
       active: false,
     },
     layers: ['terralego-etablissements'],
+  }],
+}, {
+  group: 'Analyser',
+  layers: [{
+    label: 'EAE par vocation',
+    initialState: {
+      active: true,
+    },
+    layers: ['terralego-eae-vocation'],
+    legend: {
+      items: [
+        { label: 'Mixte', color: '#fe0200' },
+        { label: 'Tertiaire supérieur', color: '#6fab46' },
+        { label: 'Commerce de gros/Logistique', color: '#fec000' },
+        { label: 'Construction', color: '#a4a6a4' },
+        { label: 'Activités supports', color: '#8ea8db' },
+        { label: 'Industrie', color: '#245e91' },
+        { label: 'Commerce de détail', color: '#ec7c31' },
+        { label: 'Services aux particuliers', color: '#9e470e' },
+        { label: 'Autres', color: '#6a89cc' },
+      ],
+    },
   }],
 }];
 
@@ -185,8 +207,31 @@ stories.add('View Component', () => (
                 },
               },
               'source-layer': 'etablissements',
-            },
-            ],
+            }, {
+              type: 'fill',
+              source: 'terralego',
+              id: 'terralego-eae-vocation',
+              layout: {
+                visibility: 'visible',
+              },
+              paint: {
+                'fill-color': [
+                  'match',
+                  ['get', 'voc_synth'],
+                  'Mixte', '#fe0200',
+                  'Tertiaire supérieur', '#6fab46',
+                  'Commerce de gros/Logistique', '#fec000',
+                  'Construction', '#a4a6a4',
+                  'Activités supports', '#8ea8db',
+                  'Industrie', '#245e91',
+                  'Commerce de détail', '#ec7c31',
+                  'Services aux particuliers', '#9e470e',
+                  '#6a89cc',
+                ],
+                'fill-opacity': 0.8,
+              },
+              'source-layer': 'zae',
+            }],
           },
         }]}
       />

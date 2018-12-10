@@ -9,6 +9,7 @@ import LayersTreeProps from '../../propTypes/LayersTreePropTypes';
 import DefaultMapComponent from './components/Map';
 import LayersTree from './components/LayersTree';
 import MarkdownRenderer from '../../components/MarkdownRenderer';
+import Legend from './components/Legend';
 
 import './styles.scss';
 
@@ -45,6 +46,10 @@ export class WidgetMap extends React.Component {
     MapComponent: DefaultMapComponent,
     interactions: [],
     setDetails () {},
+  };
+
+  state = {
+    legends: [],
   };
 
   mapRef = React.createRef();
@@ -87,8 +92,10 @@ export class WidgetMap extends React.Component {
     const map = await this.map;
 
     if (active !== undefined) {
-      layer.layers.forEach(layerId =>
-        toggleLayerVisibility(map, layerId, active ? 'visible' : 'none'));
+      layer.layers.forEach(layerId => {
+        toggleLayerVisibility(map, layerId, active ? 'visible' : 'none');
+        this.toggleLegend(layer, active);
+      });
     }
     if (opacity !== undefined) {
       layer.layers.forEach(layerId =>
@@ -195,10 +202,29 @@ export class WidgetMap extends React.Component {
     popup.addTo(map);
   }
 
+  toggleLegend (layer, active) {
+    const { legend } = layer;
+    if (!legend) return;
+    const { legends } = this.state;
+    const pos = legends.findIndex(l => l === legend);
+    if (active && pos === -1) {
+      this.setState({
+        legends: [...legends, legend],
+      });
+    }
+    if (!active && pos > -1) {
+      legends.splice(pos, 1);
+      this.setState({
+        legends: [...legends],
+      });
+    }
+  }
+
   render () {
     const {
       LayersTreeComponent, MapComponent, layersTree, style, interactions, ...mapProps
     } = this.props;
+    const { legends } = this.state;
     const { onChange, mapRef } = this;
 
     return (
@@ -217,6 +243,13 @@ export class WidgetMap extends React.Component {
           ref={mapRef}
           onDetailsChange={this.onDetailsChange}
         />
+        {!!legends.length && (
+          <div className="widget-map__legends">
+            {legends.map(legend => (
+              <Legend {...legend} />
+            ))}
+          </div>
+        )}
       </div>
     );
   }

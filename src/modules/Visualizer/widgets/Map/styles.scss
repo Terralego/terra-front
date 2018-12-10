@@ -1,4 +1,18 @@
 .widget-map {
   display: flex;
   flex-direction: row;
+  height: 100vh;
+  display: flex;
+  overflow: hidden;
+  width: auto;
+
+  .tf-map {
+    flex: 1;
+  }
+
+  &__legends {
+    position: absolute;
+    bottom: 1rem;
+    right: 1rem;
+  }
 }
