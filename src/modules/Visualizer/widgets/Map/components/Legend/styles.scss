@@ -1,0 +1,36 @@
+.tf-legend {
+  border: 1px solid #333;
+  box-shadow: 0 0 2px rgba(0,0,0,.4);
+  border-radius: 2px;
+
+  &__title {
+    margin: .2rem;
+    font-size: 1rem;
+  }
+
+  .item {
+    margin: .4rem;
+    display: flex;
+
+    &__content {
+      padding: 0 1rem;
+      flex: 1;
+    }
+
+    &__before,
+    &__after {
+      display: inline-block;
+      width: 1rem;
+      height: 1rem;
+    }
+
+    &__before {
+      margin-right: 1rem;
+    }
+
+    &__after {
+      display: none;
+      margin-left: 1rem;
+    }
+  }
+}

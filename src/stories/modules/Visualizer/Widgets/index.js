@@ -3,6 +3,7 @@ import { storiesOf } from '@storybook/react';
 import Map from './Map/Map';
 import MapLayers from './Map/MapLayers';
 import FlyOver from './Map/FlyOver';
+import Legend from './Map/Legend';
 
 import Table from './Table/Table';
 import Header from './Table/Header';
@@ -13,6 +14,7 @@ const storiesMap = storiesOf('Modules/Visualizer/Widgets/Map', module);
 storiesMap.add('Map Component', Map);
 storiesMap.add('Map communicating with a simple layer tree', MapLayers);
 storiesMap.add('FlyOver', FlyOver);
+storiesMap.add('Legend', Legend);
 
 const storiesTable = storiesOf('Modules/Visualizer/Widgets/Table', module);
 
