@@ -8,6 +8,7 @@ import { toggleLayerVisibility, addListenerOnLayer, setLayerOpacity } from '../.
 import LayersTreeProps from '../../propTypes/LayersTreePropTypes';
 import DefaultMapComponent from './components/Map';
 import LayersTree from './components/LayersTree';
+import BackgroundStyles from './components/BackgroundStyles';
 import MarkdownRenderer from '../../components/MarkdownRenderer';
 import Legend from './components/Legend';
 
@@ -48,11 +49,14 @@ export class WidgetMap extends React.Component {
     setDetails () {},
   };
 
+  mapRef = React.createRef();
+
   state = {
     visibleLayers: [],
-  };
-
-  mapRef = React.createRef();
+    selectedBackgroundStyle: typeof this.props.backgroundStyle === 'string'
+      ? this.props.backgroundStyle
+      : this.props.backgroundStyle[0].url,
+  }
 
   map = new Promise(resolve => {
     const waitForMap = () => {
@@ -87,6 +91,8 @@ export class WidgetMap extends React.Component {
       this.setInteractions();
     }
   }
+
+  onBackgroundChange = selectedBackgroundStyle => this.setState({ selectedBackgroundStyle });
 
   onChange = async ({ layer, state: { active, opacity } }) => {
     const map = await this.map;
@@ -222,16 +228,30 @@ export class WidgetMap extends React.Component {
 
   render () {
     const {
-      LayersTreeComponent, MapComponent, layersTree, style, interactions, ...mapProps
+      LayersTreeComponent,
+      MapComponent,
+      layersTree,
+      style,
+      interactions,
+      backgroundStyle,
+      ...mapProps
     } = this.props;
-    const { visibleLayers } = this.state;
-    const { onChange, mapRef } = this;
+    const { visibleLayers, selectedBackgroundStyle } = this.state;
+    const { onChange, mapRef, onBackgroundChange } = this;
 
     return (
       <div
         className="widget-map"
         style={style}
       >
+        {typeof backgroundStyle !== 'string' && (
+          <BackgroundStyles
+            onChange={onBackgroundChange}
+            styles={backgroundStyle}
+            selected={selectedBackgroundStyle}
+          />
+        )}
+
         {!!layersTree.length && (
         <LayersTreeComponent
           layersTree={layersTree}
@@ -240,6 +260,7 @@ export class WidgetMap extends React.Component {
         )}
         <MapComponent
           {...mapProps}
+          backgroundStyle={selectedBackgroundStyle}
           ref={mapRef}
           onDetailsChange={this.onDetailsChange}
         />
