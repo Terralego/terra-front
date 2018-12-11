@@ -5,7 +5,7 @@ import { storiesOf } from '@storybook/react';
 import VisualizerProvider, { View } from '../../../modules/Visualizer';
 
 const layersTree = [{
-  group: 'Afficher',
+  group: 'Limites administratives',
   layers: [{
     label: 'Departements',
     initialState: {
@@ -13,24 +13,24 @@ const layersTree = [{
     },
     layers: ['terralego-departements'],
   }, {
-    label: 'SCOT',
-    initialState: {
-      active: false,
-    },
-    layers: ['terralego-scot'],
-  }, {
     label: 'EPCI',
     initialState: {
       active: false,
     },
     layers: ['terralego-epci'],
-  }, {
-    label: 'EAE',
+  }],
+}, {
+  group: 'Périmètre d\'urbanisme',
+  layers: [{
+    label: 'SCOT',
     initialState: {
       active: false,
     },
-    layers: ['terralego-eae'],
-  }, {
+    layers: ['terralego-scot'],
+  }],
+}, {
+  group: 'Bâtiments',
+  layers: [{
     label: 'Établissements',
     initialState: {
       active: false,
@@ -38,26 +38,32 @@ const layersTree = [{
     layers: ['terralego-etablissements'],
   }],
 }, {
-  group: 'Analyser',
+  group: 'EAE',
   layers: [{
-    label: 'EAE par vocation',
+    label: 'EAE',
     initialState: {
       active: true,
     },
-    layers: ['terralego-eae-vocation'],
-    legend: {
-      items: [
-        { label: 'Mixte', color: '#fe0200' },
-        { label: 'Tertiaire supérieur', color: '#6fab46' },
-        { label: 'Commerce de gros/Logistique', color: '#fec000' },
-        { label: 'Construction', color: '#a4a6a4' },
-        { label: 'Activités supports', color: '#8ea8db' },
-        { label: 'Industrie', color: '#245e91' },
-        { label: 'Commerce de détail', color: '#ec7c31' },
-        { label: 'Services aux particuliers', color: '#9e470e' },
-        { label: 'Autres', color: '#6a89cc' },
-      ],
-    },
+    sublayers: [{
+      label: 'Toutes',
+      layers: ['terralego-eae'],
+    }, {
+      label: 'par vocation',
+      layers: ['terralego-eae-vocation'],
+      legend: {
+        items: [
+          { label: 'Mixte', color: '#fe0200' },
+          { label: 'Tertiaire supérieur', color: '#6fab46' },
+          { label: 'Commerce de gros/Logistique', color: '#fec000' },
+          { label: 'Construction', color: '#a4a6a4' },
+          { label: 'Activités supports', color: '#8ea8db' },
+          { label: 'Industrie', color: '#245e91' },
+          { label: 'Commerce de détail', color: '#ec7c31' },
+          { label: 'Services aux particuliers', color: '#9e470e' },
+          { label: 'Autres', color: '#6a89cc' },
+        ],
+      },
+    }],
   }],
 }];
 
@@ -143,15 +149,7 @@ stories.add('View Component', () => (
             sources: [{
               id: 'terralego',
               type: 'vector',
-              tiles: [
-                'http://a-dev-tiles-paca.makina-corpus.net/api/layer/__nogroup__/tiles/{z}/{x}/{y}/',
-                'http://b-dev-tiles-paca.makina-corpus.net/api/layer/__nogroup__/tiles/{z}/{x}/{y}/',
-                'http://c-dev-tiles-paca.makina-corpus.net/api/layer/__nogroup__/tiles/{z}/{x}/{y}/',
-                'http://d-dev-tiles-paca.makina-corpus.net/api/layer/__nogroup__/tiles/{z}/{x}/{y}/',
-                'http://e-dev-tiles-paca.makina-corpus.net/api/layer/__nogroup__/tiles/{z}/{x}/{y}/',
-                'http://f-dev-tiles-paca.makina-corpus.net/api/layer/__nogroup__/tiles/{z}/{x}/{y}/',
-                'http://j-dev-tiles-paca.makina-corpus.net/api/layer/__nogroup__/tiles/{z}/{x}/{y}/',
-              ],
+              url: 'http://dev-tiles-paca.makina-corpus.net/api/layer/__nogroup__/tilejson',
             }],
             layers: [{
               type: 'line',
