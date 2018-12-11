@@ -72,11 +72,9 @@ stories.add('View Component', () => (
           layersTree,
           accessToken: 'pk.eyJ1IjoibWFraW5hY29ycHVzIiwiYSI6ImNqY3E4ZTNwcTFta3ozMm80d2xzY29wM2MifQ.Nwl_FHrWAIQ46s_lY0KNiQ',
           backgroundStyle: [
-            { label: 'Thème personnalisé', url: 'mapbox://styles/hadrienl/cjoplcnu821de2rs2cf0em4rw' },
             { label: 'Thème blanc', url: 'mapbox://styles/mapbox/light-v9' },
             { label: 'Thème noir', url: 'mapbox://styles/mapbox/dark-v9' },
             { label: 'satellite', url: 'mapbox://styles/mapbox/satellite-v9' },
-            { label: 'Thème ortho', url: 'http://za.vaucluseprovence-attractivite.com:8080/styles/satellite-hybrid/style.json' },
           ],
           center: [5.386195159396806, 43.30072210972415],
           zoom: 15,

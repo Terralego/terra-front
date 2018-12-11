@@ -21,6 +21,10 @@ export const INTERACTION_FN = 'function';
 export class WidgetMap extends React.Component {
   static propTypes = {
     layersTree: LayersTreeProps,
+    backgroundStyle: PropTypes.oneOfType([
+      PropTypes.arrayOf(PropTypes.objectOf(PropTypes.string)),
+      PropTypes.string,
+    ]),
     interactions: PropTypes.arrayOf(PropTypes.shape({
       id: PropTypes.string.isRequired,
       trigger: PropTypes.oneOf(['click', 'mouseover']),
@@ -42,6 +46,7 @@ export class WidgetMap extends React.Component {
   };
 
   static defaultProps = {
+    backgroundStyle: 'mapbox://styles/mapbox/light-v9',
     layersTree: [],
     LayersTreeComponent: LayersTree,
     MapComponent: DefaultMapComponent,

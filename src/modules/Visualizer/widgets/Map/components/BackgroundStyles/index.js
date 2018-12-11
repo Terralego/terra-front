@@ -1,9 +1,19 @@
 import React from 'react';
+import PropTypes from 'prop-types';
 import { Radio, RadioGroup, Button, Icon, Popover } from '@blueprintjs/core';
 
 import './styles.scss';
 
 export class BackgroundStyles extends React.Component {
+  static propTypes = {
+    styles: PropTypes.oneOfType([
+      PropTypes.arrayOf(PropTypes.objectOf(PropTypes.string)),
+      PropTypes.string,
+    ]).isRequired,
+    selected: PropTypes.string.isRequired,
+    onChange: PropTypes.func.isRequired,
+  }
+
   state = {
     showRadioGroup: false,
   }
@@ -33,7 +43,7 @@ export class BackgroundStyles extends React.Component {
               selectedValue={selected}
             >
               {styles.map(({ label, url }) => (
-                <Radio label={label} value={url} />
+                <Radio key={`${label}${url}`} label={label} value={url} />
               ))}
             </RadioGroup>
           </div>

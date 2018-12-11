@@ -1,0 +1,44 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`should render correctly 1`] = `
+<span
+  className="bp3-popover-wrapper bp3-dark popoverPos"
+>
+  <span
+    className="bp3-popover-target"
+    onClick={[Function]}
+  >
+    <button
+      className="bp3-button"
+      onClick={[Function]}
+      onKeyDown={[Function]}
+      onKeyUp={[Function]}
+      type="button"
+    >
+      <span
+        className="bp3-button-text"
+      >
+        <span
+          className="bp3-icon bp3-icon-page-layout"
+          icon="page-layout"
+        >
+          <svg
+            data-icon="page-layout"
+            height={16}
+            viewBox="0 0 16 16"
+            width={16}
+          >
+            <desc>
+              page-layout
+            </desc>
+            <path
+              d="M15 .95H1c-.55 0-1 .45-1 1v12c0 .55.45 1 1 1h14c.55 0 1-.45 1-1v-12c0-.55-.45-1-1-1zm-9 12H2v-6h4v6zm8 0H7v-6h7v6zm0-7H2v-3h12v3z"
+              fillRule="evenodd"
+            />
+          </svg>
+        </span>
+      </span>
+    </button>
+  </span>
+</span>
+`;

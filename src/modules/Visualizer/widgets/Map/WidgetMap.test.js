@@ -65,14 +65,18 @@ it('should render correctly with a layers tree', () => {
 });
 
 it('should setInteraction on mount', () => {
-  const instance = new WidgetMap();
+  const instance = new WidgetMap({
+    backgroundStyle: [{ url: 'HADOKEN' }],
+  });
   instance.setInteractions = jest.fn();
   instance.componentDidMount();
   expect(instance.setInteractions).toHaveBeenCalled();
 });
 
 it('should setInteraction on update', () => {
-  const instance = new WidgetMap({});
+  const instance = new WidgetMap({
+    backgroundStyle: [{ url: 'HADOKEN' }],
+  });
   instance.setInteractions = jest.fn();
   instance.componentDidUpdate({});
   expect(instance.setInteractions).not.toHaveBeenCalled();
@@ -81,7 +85,9 @@ it('should setInteraction on update', () => {
 });
 
 it('should apply visibility changes', async done => {
-  const instance = new WidgetMap();
+  const instance = new WidgetMap({
+    backgroundStyle: [{ url: 'HADOKEN' }],
+  });
   const map = {};
   instance.map = map;
   instance.onChange({
@@ -129,7 +135,9 @@ it('should apply visibility changes', async done => {
 });
 
 it('should apply opacity changes', async done => {
-  const instance = new WidgetMap();
+  const instance = new WidgetMap({
+    backgroundStyle: [{ url: 'HADOKEN' }],
+  });
   const map = {};
   instance.map = map;
   instance.onChange({
@@ -169,6 +177,7 @@ it('should set interactions', async done => {
       id: 'foo',
       interaction: 'invalid interaction',
     }],
+    backgroundStyle: [{ url: 'HADOKEN' }],
   });
   instance.map = {};
   instance.displayDetails = jest.fn();
@@ -200,6 +209,7 @@ it('should set interactions', async done => {
 it('should stop interactions', async done => {
   const instance = new WidgetMap({
     interactions: [],
+    backgroundStyle: [{ url: 'HADOKEN' }],
   });
   const mapInteractionsListeners = [jest.fn(), jest.fn(), jest.fn()];
   instance.mapInteractionsListeners = mapInteractionsListeners;
@@ -214,7 +224,9 @@ it('should stop interactions', async done => {
 });
 
 it('should wait for map loading', async done => {
-  const instance = new WidgetMap();
+  const instance = new WidgetMap({
+    backgroundStyle: [{ url: 'HADOKEN' }],
+  });
   const { map } = instance;
   let resolved = false;
   const mapObject = {};
@@ -236,14 +248,19 @@ it('should wait for map loading', async done => {
 
 it('should display details', () => {
   const setDetails = jest.fn();
-  const instance = new WidgetMap({ setDetails });
+  const instance = new WidgetMap({
+    setDetails,
+    backgroundStyle: [{ url: 'HADOKEN' }],
+  });
   const params = { features: {}, template: {} };
   instance.displayDetails(params);
   expect(setDetails).toHaveBeenCalledWith({ features: params.features, template: params.template });
 });
 
 it('should display tooltips', async done => {
-  const instance = new WidgetMap();
+  const instance = new WidgetMap({
+    backgroundStyle: [{ url: 'HADOKEN' }],
+  });
   instance.map = {};
   instance.displayTooltip({
     layerId: 'foo',
@@ -280,7 +297,9 @@ it('should display tooltips', async done => {
 });
 
 it('should hide tooltip', () => {
-  const instance = new WidgetMap();
+  const instance = new WidgetMap({
+    backgroundStyle: [{ url: 'HADOKEN' }],
+  });
   const popup = {
     remove: jest.fn(),
   };
@@ -326,4 +345,13 @@ it('should toggle legend', () => {
 
   instance.toggleVisible({}, true);
   expect(instance.setState).not.toHaveBeenCalled();
+});
+
+it('should init and update background onChange', () => {
+  const backgroundStyle = [{ label: 'HADO', url: 'KEN' }];
+  const wrapper = shallow(<WidgetMap backgroundStyle={backgroundStyle} />);
+
+  expect(wrapper.instance().state.selectedBackgroundStyle).toBe('KEN');
+  wrapper.instance().onBackgroundChange('ONIZUKA');
+  expect(wrapper.instance().state.selectedBackgroundStyle).toBe('ONIZUKA');
 });
