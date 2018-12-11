@@ -50,16 +50,18 @@ class FlyOver extends React.Component {
     };
 
     return (
-      <Map
-        accessToken="pk.eyJ1IjoibWFraW5hY29ycHVzIiwiYSI6ImNqY3E4ZTNwcTFta3ozMm80d2xzY29wM2MifQ.Nwl_FHrWAIQ46s_lY0KNiQ"
-        styles="mapbox://styles/mapbox/light-v9"
-        center={[5.3833, 43.9]}
-        zoom={10}
-        minZoom={6}
-        maxZoom={17}
-        maxBounds={[[1.0, 42.6], [8.2, 46.6]]}
-        flyTo={flyTo}
-      />
+      <div style={{ width: '100vw', height: '100vh' }}>
+        <Map
+          accessToken="pk.eyJ1IjoibWFraW5hY29ycHVzIiwiYSI6ImNqY3E4ZTNwcTFta3ozMm80d2xzY29wM2MifQ.Nwl_FHrWAIQ46s_lY0KNiQ"
+          backgroundStyle="mapbox://styles/mapbox/light-v9"
+          center={[5.3833, 43.9]}
+          zoom={10}
+          minZoom={6}
+          maxZoom={17}
+          maxBounds={[[1.0, 42.6], [8.2, 46.6]]}
+          flyTo={flyTo}
+        />
+      </div>
     );
   }
 }
