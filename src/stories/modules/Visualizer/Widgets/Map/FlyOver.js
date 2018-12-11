@@ -51,7 +51,7 @@ class FlyOver extends React.Component {
 
     return (
       <Map
-        accessToken="pk.eyJ1IjoidGFzdGF0aGFtMSIsImEiOiJjamZ1ejY2bmYxNHZnMnhxbjEydW9sM29hIn0.w9ndNH49d91aeyvxSjKQqg"
+        accessToken="pk.eyJ1IjoibWFraW5hY29ycHVzIiwiYSI6ImNqY3E4ZTNwcTFta3ozMm80d2xzY29wM2MifQ.Nwl_FHrWAIQ46s_lY0KNiQ"
         styles="mapbox://styles/mapbox/light-v9"
         center={[5.3833, 43.9]}
         zoom={10}
