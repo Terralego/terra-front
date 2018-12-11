@@ -65,7 +65,7 @@ stories.add('Custom View', () => (
             type: 'map',
             layersTree,
             accessToken: 'pk.eyJ1IjoibWFraW5hY29ycHVzIiwiYSI6ImNqY3E4ZTNwcTFta3ozMm80d2xzY29wM2MifQ.Nwl_FHrWAIQ46s_lY0KNiQ',
-            styles: 'mapbox://styles/hadrienl/cjoplcnu821de2rs2cf0em4rw',
+            backgroundStyle: 'mapbox://styles/mapbox/light-v9',
             center: [1.4133102599149652, 43.5881904444511],
             zoom: 12.0,
             interactions: [{
