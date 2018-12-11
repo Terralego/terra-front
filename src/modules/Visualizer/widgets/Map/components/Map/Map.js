@@ -109,7 +109,7 @@ export class Map extends React.Component {
 
     if (prevProps.backgroundStyle !== backgroundStyle) {
       map.setStyle(backgroundStyle);
-      this.createLayers();
+      map.once('style.load', () => this.createLayers());
     }
 
     if (displayScaleControl !== prevProps.displayScaleControl) {
