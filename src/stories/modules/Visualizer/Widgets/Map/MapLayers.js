@@ -9,7 +9,7 @@ export default () => (
   <VisualizerProvider>
     <WidgetMap
       layersTree={LAYERSTREE}
-      accessToken="pk.eyJ1IjoiaGFkcmllbmwiLCJhIjoiY2pueDgwZGhxMDVkbjN3cWx5dGlhd3p1eiJ9.FR_XylCvZZJLdB3No6Xxnw"
+      accessToken="pk.eyJ1IjoibWFraW5hY29ycHVzIiwiYSI6ImNqY3E4ZTNwcTFta3ozMm80d2xzY29wM2MifQ.Nwl_FHrWAIQ46s_lY0KNiQ"
       styles="mapbox://styles/hadrienl/cjoplcnu821de2rs2cf0em4rw"
       center={[2.317600, 48.866500]}
       zoom={12.0}
