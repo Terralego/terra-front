@@ -58,7 +58,7 @@ export const withMap = WrappedComponent =>
         minZoom,
         maxBounds,
       });
-      map.once('data', () => this.setState({ map }));
+      map.once('style.load', () => this.setState({ map }));
     }
 
     render () {
