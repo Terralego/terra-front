@@ -70,3 +70,20 @@ it('should get columns', () => {
   });
   expect(getColumns(columns)[0]).toHaveProperty('renderMenu');
 });
+
+it('should render menu in column header', () => {
+  const instance = new RenderColumn({
+    value: 'foo',
+    index: 0,
+    sortable: true,
+  });
+  const sortColumn = 1;
+  instance.renderMenu = jest.fn();
+  const ColumnRenderer = () => instance.getColumn(null, sortColumn);
+  const wrapper = shallow(<ColumnRenderer />);
+  expect(wrapper.find('Column').length).toBe(1);
+  const { columnHeaderCellRenderer: ColumnHeaderCellRenderer } = wrapper.find('Column').get(0).props;
+  const columnHeaderWrapper = shallow(<ColumnHeaderCellRenderer />);
+  columnHeaderWrapper.props().menuRenderer();
+  expect(instance.renderMenu).toHaveBeenCalledWith(sortColumn);
+});

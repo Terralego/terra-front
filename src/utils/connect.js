@@ -30,6 +30,10 @@ export const connect = ({ Consumer }) => (...mapContextToPropsList) => WrappedCo
     : mapContextToPropsList[0];
 
   class Connect extends React.Component {
+    static defaultProps = {
+      context: {},
+    }
+
     constructor (props) {
       super(props);
 
@@ -67,7 +71,7 @@ export const connect = ({ Consumer }) => (...mapContextToPropsList) => WrappedCo
     }
   }
 
-  return props => <Consumer>{(value = {}) => <Connect context={value} props={props} />}</Consumer>;
+  return props => <Consumer>{value => <Connect context={value} props={props} />}</Consumer>;
 };
 
 export default connect;

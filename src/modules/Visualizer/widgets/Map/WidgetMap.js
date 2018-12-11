@@ -60,13 +60,11 @@ export class WidgetMap extends React.Component {
   mapRef = React.createRef();
 
   state = {
-    selectedBackgroundStyle: typeof this.props.backgroundStyle === 'string'
-      ? this.props.backgroundStyle
-      : this.props.backgroundStyle[0].url,
+    selectedBackgroundStyle: Array.isArray(this.props.backgroundStyle)
+      ? this.props.backgroundStyle[0].url
+      : this.props.backgroundStyle,
     layersTreeState: new Map(),
   };
-
-  mapRef = React.createRef();
 
   map = new Promise(resolve => {
     const waitForMap = () => {
@@ -108,7 +106,7 @@ export class WidgetMap extends React.Component {
     }
 
     if (prevLayersTreeState !== layersTreeState) {
-      this.updateLayersTree(layersTreeState, prevLayersTreeState);
+      this.updateLayersTree();
     }
   }
 
@@ -123,11 +121,11 @@ export class WidgetMap extends React.Component {
           const selected = state.sublayers.findIndex(active => active);
           const selectedSublayer = layer.sublayers[selected];
           return selectedSublayer && selectedSublayer.legend && ({
-            title: layer.label,
+            title: selectedSublayer.label,
             ...selectedSublayer.legend,
           });
         }
-        return ({
+        return layer.legend && ({
           title: layer.label,
           ...layer.legend,
         });
@@ -275,13 +273,17 @@ export class WidgetMap extends React.Component {
         const { active } = initialState;
         if (sublayers) {
           initialState.sublayers = initialState.sublayers || sublayers.map((_, k) =>
-            (k === 0 && active));
+            (k === 0 && !!active));
         }
         if (layer.group) {
           return reduceLayers(layer.layers, layersStateMap);
         }
         initialState.opacity = initialState.opacity || 1;
-        layersStateMap.set(layer, initialState);
+        layersStateMap.set(layer, {
+          active: false,
+          opacity: 1,
+          ...initialState,
+        });
         return layersStateMap;
       }, map);
     }
@@ -341,7 +343,15 @@ export class WidgetMap extends React.Component {
     } = this.props;
 
     const { selectedBackgroundStyle } = this.state;
-    const { onChange, mapRef, getLayerState, setLayerState, selectSublayer, legends, onBackgroundChange } = this;
+    const {
+      onChange,
+      mapRef,
+      getLayerState,
+      setLayerState,
+      selectSublayer,
+      legends,
+      onBackgroundChange,
+    } = this;
     const contextValue = {
       getLayerState,
       setLayerState,

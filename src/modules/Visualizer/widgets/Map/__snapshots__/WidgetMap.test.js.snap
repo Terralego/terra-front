@@ -1,12 +1,22 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
-exports[`should render correctly 1`] = `
+exports[`snaphsots should render background style selector 1`] = `
+<div
+  className="widget-map"
+>
+  <p>
+    BackgroundStyles
+  </p>
+</div>
+`;
+
+exports[`snaphsots should render correctly 1`] = `
 <div
   className="widget-map"
 />
 `;
 
-exports[`should render correctly with a layers tree 1`] = `
+exports[`snaphsots should render correctly with a layers tree 1`] = `
 <div
   className="widget-map"
 >
@@ -38,6 +48,83 @@ exports[`should render correctly with a layers tree 1`] = `
           foo
         </label>
       </div>
+    </div>
+  </div>
+</div>
+`;
+
+exports[`snaphsots should render legends 1`] = `
+<div
+  className="widget-map"
+>
+  <div
+    className="bp3-card bp3-elevation-0 layerstree-panel-container bp3-dark"
+  >
+    <div
+      className="bp3-card bp3-elevation-2 layerNode-container "
+      style={
+        Object {
+          "opacity": 1,
+        }
+      }
+    >
+      <div
+        className="layerNode-label-container"
+      >
+        <label
+          className="bp3-control bp3-switch"
+        >
+          <input
+            checked={true}
+            onChange={[Function]}
+            type="checkbox"
+          />
+          <span
+            className="bp3-control-indicator"
+          />
+          foo
+        </label>
+        <button
+          className="bp3-button bp3-minimal button-more-vertical"
+          onClick={[Function]}
+          onKeyDown={[Function]}
+          onKeyUp={[Function]}
+          type="button"
+        >
+          <span
+            className="bp3-icon bp3-icon-more"
+            icon="more"
+          >
+            <svg
+              data-icon="more"
+              height={16}
+              viewBox="0 0 16 16"
+              width={16}
+            >
+              <desc>
+                more
+              </desc>
+              <path
+                d="M2 6.03a2 2 0 1 0 0 4 2 2 0 1 0 0-4zM14 6.03a2 2 0 1 0 0 4 2 2 0 1 0 0-4zM8 6.03a2 2 0 1 0 0 4 2 2 0 1 0 0-4z"
+                fillRule="evenodd"
+              />
+            </svg>
+          </span>
+        </button>
+      </div>
+    </div>
+  </div>
+  <div
+    className="widget-map__legends"
+  >
+    <div
+      className="tf-legend"
+    >
+      <h4
+        className="tf-legend__title"
+      >
+        foo
+      </h4>
     </div>
   </div>
 </div>
