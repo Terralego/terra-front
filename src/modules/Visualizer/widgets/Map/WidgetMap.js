@@ -388,7 +388,7 @@ export class WidgetMap extends React.Component {
               {legends
                 .map(legend => (
                   <Legend
-                    key={legend.label}
+                    key={legend.title}
                     {...legend}
                   />
                 ))}
