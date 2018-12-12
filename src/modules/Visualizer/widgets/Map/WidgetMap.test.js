@@ -1,11 +1,31 @@
 import React from 'react';
 import renderer from 'react-test-renderer';
+import { shallow } from 'enzyme';
 import ReactDOM from 'react-dom';
 import mapboxGl from 'mapbox-gl';
 
 import { toggleLayerVisibility, setLayerOpacity } from '../../services/mapUtils';
 import WidgetMap, { INTERACTION_DISPLAY_DETAILS, INTERACTION_DISPLAY_TOOLTIP, INTERACTION_FN } from './WidgetMap';
 
+// jest.mock('@blueprintjs/core', () => ({
+//   Card ({ children }) {
+//     return children;
+//   },
+//   Button () {
+//     return 'LayerTree Button';
+//   },
+//   Tooltip  ({ children }) {
+//     return children;
+//   },
+//   Classes: { DARK: 'dark' },
+// }));
+// jest.mock('./components/LayersTree/LayersTreeGroup', () => function LayersTreeGroup () {
+//   return <p>LayersTreeGroup</p>;
+// });
+
+// jest.mock('./components/LayersTree/LayersTreeItem', () => function LayersTreeItem () {
+//   return <p>LayersTreeItem</p>;
+// });
 
 jest.mock('mapbox-gl', () => {
   function Popup () {}

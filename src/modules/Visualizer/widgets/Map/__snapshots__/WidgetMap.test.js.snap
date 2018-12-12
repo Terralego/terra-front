@@ -2,7 +2,7 @@
 
 exports[`snaphsots should render background style selector 1`] = `
 <div
-  className="widget-map"
+  className="widget-map widget-map--layerstree-is-visible"
 >
   <p>
     BackgroundStyles
@@ -12,7 +12,7 @@ exports[`snaphsots should render background style selector 1`] = `
 
 exports[`snaphsots should render correctly 1`] = `
 <div
-  className="widget-map"
+  className="widget-map widget-map--layerstree-is-visible"
 />
 `;
 

@@ -6,11 +6,18 @@ jest.mock('@blueprintjs/core', () => ({
   Card ({ children }) {
     return children;
   },
+  Button () {
+    return 'LayerTree Button';
+  },
+  Tooltip  ({ children }) {
+    return children;
+  },
   Classes: { DARK: 'dark' },
 }));
 jest.mock('./LayersTreeGroup', () => function LayersTreeGroup () {
   return <p>LayersTreeGroup</p>;
 });
+
 jest.mock('./LayersTreeItem', () => function LayersTreeItem () {
   return <p>LayersTreeItem</p>;
 });

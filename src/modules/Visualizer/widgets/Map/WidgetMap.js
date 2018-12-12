@@ -64,6 +64,7 @@ export class WidgetMap extends React.Component {
       ? this.props.backgroundStyle[0].url
       : this.props.backgroundStyle,
     layersTreeState: new Map(),
+    isLayersTreeVisible: true,
   };
 
   map = new Promise(resolve => {
@@ -264,6 +265,8 @@ export class WidgetMap extends React.Component {
     this.setState({ layersTreeState });
   }
 
+  toggleLayersTree = () => this.setState({ isLayersTreeVisible: !this.state.isLayersTreeVisible })
+
   initLayersState () {
     const { layersTree } = this.props;
     const layersTreeState = new Map();
@@ -342,7 +345,7 @@ export class WidgetMap extends React.Component {
       ...mapProps
     } = this.props;
 
-    const { selectedBackgroundStyle } = this.state;
+    const { selectedBackgroundStyle, isLayersTreeVisible } = this.state;
     const {
       onChange,
       mapRef,
@@ -351,6 +354,7 @@ export class WidgetMap extends React.Component {
       selectSublayer,
       legends,
       onBackgroundChange,
+      toggleLayersTree,
     } = this;
     const contextValue = {
       getLayerState,
@@ -361,7 +365,7 @@ export class WidgetMap extends React.Component {
     return (
       <Provider value={contextValue}>
         <div
-          className="widget-map"
+          className={`widget-map ${isLayersTreeVisible ? 'widget-map--layerstree-is-visible' : ''}`}
           style={style}
         >
           {typeof backgroundStyle !== 'string' && (
@@ -375,6 +379,8 @@ export class WidgetMap extends React.Component {
           <LayersTreeComponent
             layersTree={layersTree}
             onChange={onChange}
+            toggleLabel={isLayersTreeVisible ? 'replier ' : 'déplier'}
+            onToggle={toggleLayersTree}
           />
           )}
           <MapComponent
