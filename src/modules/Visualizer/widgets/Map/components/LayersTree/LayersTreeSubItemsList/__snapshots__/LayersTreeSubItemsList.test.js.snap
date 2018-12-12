@@ -1,12 +1,14 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
 exports[`should render correctly 1`] = `
-Array [
+<div
+  className="layers-tree-subitems-list"
+>
   <p>
-    LayersTreeGroup
-  </p>,
+    Radio
+  </p>
   <p>
-    LayersTreeItem
-  </p>,
-]
+    Radio
+  </p>
+</div>
 `;

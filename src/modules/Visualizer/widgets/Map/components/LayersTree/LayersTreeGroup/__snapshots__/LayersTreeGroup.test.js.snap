@@ -1,12 +1,15 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
 exports[`should render correctly 1`] = `
-Array [
-  <p>
-    LayersTreeGroup
-  </p>,
+<div
+  className="layers-tree-group"
+>
+  Group 1
   <p>
     LayersTreeItem
-  </p>,
-]
+  </p>
+  <p>
+    LayersTreeItem
+  </p>
+</div>
 `;

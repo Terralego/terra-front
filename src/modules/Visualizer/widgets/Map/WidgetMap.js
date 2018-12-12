@@ -4,6 +4,7 @@ import PropTypes from 'prop-types';
 import mapBoxGl from 'mapbox-gl';
 import debounce from 'lodash.debounce';
 
+import { context } from './connect';
 import { toggleLayerVisibility, addListenerOnLayer, setLayerOpacity } from '../../services/mapUtils';
 import LayersTreeProps from '../../propTypes/LayersTreePropTypes';
 import DefaultMapComponent from './components/Map';
@@ -17,6 +18,8 @@ import './styles.scss';
 export const INTERACTION_DISPLAY_DETAILS = 'displayDetails';
 export const INTERACTION_DISPLAY_TOOLTIP = 'displayTooltip';
 export const INTERACTION_FN = 'function';
+
+const { Provider } = context;
 
 export class WidgetMap extends React.Component {
   static propTypes = {
@@ -57,11 +60,11 @@ export class WidgetMap extends React.Component {
   mapRef = React.createRef();
 
   state = {
-    visibleLayers: [],
-    selectedBackgroundStyle: typeof this.props.backgroundStyle === 'string'
-      ? this.props.backgroundStyle
-      : this.props.backgroundStyle[0].url,
-  }
+    selectedBackgroundStyle: Array.isArray(this.props.backgroundStyle)
+      ? this.props.backgroundStyle[0].url
+      : this.props.backgroundStyle,
+    layersTreeState: new Map(),
+  };
 
   map = new Promise(resolve => {
     const waitForMap = () => {
@@ -86,32 +89,50 @@ export class WidgetMap extends React.Component {
   }, 100);
 
   componentDidMount () {
+    this.initLayersState();
     this.setInteractions();
   }
 
-  componentDidUpdate ({ interactions: prevInteractions }) {
+  componentDidUpdate ({
+    interactions: prevInteractions,
+  }, {
+    layersTreeState: prevLayersTreeState,
+  }) {
     const { interactions } = this.props;
+    const { layersTreeState } = this.state;
 
     if (interactions !== prevInteractions) {
       this.setInteractions();
+    }
+
+    if (prevLayersTreeState !== layersTreeState) {
+      this.updateLayersTree();
     }
   }
 
   onBackgroundChange = selectedBackgroundStyle => this.setState({ selectedBackgroundStyle });
 
-  onChange = async ({ layer, state: { active, opacity } }) => {
-    const map = await this.map;
+  get legends () {
+    const { layersTreeState } = this.state;
+    const legends = Array.from(layersTreeState.entries())
+      .map(([layer, state]) => {
+        if (!state.active) return undefined;
+        if (layer.sublayers) {
+          const selected = state.sublayers.findIndex(active => active);
+          const selectedSublayer = layer.sublayers[selected];
+          return selectedSublayer && selectedSublayer.legend && ({
+            title: selectedSublayer.label,
+            ...selectedSublayer.legend,
+          });
+        }
+        return layer.legend && ({
+          title: layer.label,
+          ...layer.legend,
+        });
+      })
+      .filter(defined => defined);
 
-    if (active !== undefined) {
-      layer.layers.forEach(layerId => {
-        toggleLayerVisibility(map, layerId, active ? 'visible' : 'none');
-        this.toggleVisible(layer, active);
-      });
-    }
-    if (opacity !== undefined) {
-      layer.layers.forEach(layerId =>
-        setLayerOpacity(map, layerId, opacity));
-    }
+    return legends;
   }
 
   async setInteractions () {
@@ -179,6 +200,27 @@ export class WidgetMap extends React.Component {
     });
   }
 
+  setLayerState = ({ layer, state }) => {
+    const { layersTreeState: prevLayersTreeState } = this.state;
+    const layersTreeState = new Map(prevLayersTreeState);
+    const layerState = layersTreeState.get(layer);
+
+    if (!layerState) return;
+
+    layersTreeState.set(layer, {
+      ...layerState,
+      ...state,
+    });
+    this.setState({ layersTreeState });
+  }
+
+  getLayerState = ({ layer }) => {
+    const { layersTreeState } = this.state;
+    const layerState = layersTreeState.get(layer);
+
+    return layerState || {};
+  }
+
   displayDetails = ({ features, template }) => {
     const { setDetails } = this.props;
     setDetails({ features, template });
@@ -213,22 +255,80 @@ export class WidgetMap extends React.Component {
     popup.addTo(map);
   }
 
-  toggleVisible (layer, active) {
-    const { legend } = layer;
-    if (!legend) return;
-    const { visibleLayers } = this.state;
-    const pos = visibleLayers.findIndex(l => l === layer);
-    if (active && pos === -1) {
-      this.setState({
-        visibleLayers: [...visibleLayers, layer],
-      });
+  selectSublayer = ({ layer, sublayer }) => {
+    const { layersTreeState: prevLayersTreeState } = this.state;
+    const layersTreeState = new Map(prevLayersTreeState);
+    const layerState = layersTreeState.get(layer);
+    layerState.sublayers = layerState.sublayers.map((_, k) => k === sublayer);
+    layersTreeState.set(layer, { ...layerState });
+    this.setState({ layersTreeState });
+  }
+
+  initLayersState () {
+    const { layersTree } = this.props;
+    const layersTreeState = new Map();
+    function reduceLayers (group, map) {
+      return group.reduce((layersStateMap, layer) => {
+        const { initialState = {}, sublayers } = layer;
+        const { active } = initialState;
+        if (sublayers) {
+          initialState.sublayers = initialState.sublayers || sublayers.map((_, k) =>
+            (k === 0 && !!active));
+        }
+        if (layer.group) {
+          return reduceLayers(layer.layers, layersStateMap);
+        }
+        initialState.opacity = initialState.opacity || 1;
+        layersStateMap.set(layer, {
+          active: false,
+          opacity: 1,
+          ...initialState,
+        });
+        return layersStateMap;
+      }, map);
     }
-    if (!active && pos > -1) {
-      visibleLayers.splice(pos, 1);
-      this.setState({
-        visibleLayers: [...visibleLayers],
-      });
-    }
+    this.setState({
+      layersTreeState: reduceLayers(layersTree, layersTreeState),
+    });
+  }
+
+  async updateLayersTree () {
+    const map = await this.map;
+    const { layersTreeState } = this.state;
+    layersTreeState.forEach(({ active, opacity, sublayers }, layer) => {
+      if (sublayers) {
+        if (active) {
+          layer.sublayers.forEach((sublayer, index) => {
+            const sublayerActive = sublayers[index];
+            sublayer.layers.forEach(layerId => {
+              toggleLayerVisibility(map, layerId, sublayerActive ? 'visible' : 'none');
+            });
+          });
+        } else {
+          layer.sublayers.forEach(sublayer => {
+            sublayer.layers.forEach(layerId => {
+              toggleLayerVisibility(map, layerId, 'none');
+            });
+          });
+        }
+
+        layer.sublayers.forEach(sublayer => {
+          sublayer.layers.forEach(layerId => {
+            setLayerOpacity(map, layerId, opacity);
+          });
+        });
+      }
+
+      if (active !== undefined && layer.layers) {
+        layer.layers.forEach(layerId => {
+          toggleLayerVisibility(map, layerId, active ? 'visible' : 'none');
+        });
+      }
+      if (opacity !== undefined && layer.layers) {
+        layer.layers.forEach(layerId =>
+          setLayerOpacity(map, layerId, opacity));
+      }
+    });
   }
 
   render () {
@@ -241,48 +341,61 @@ export class WidgetMap extends React.Component {
       backgroundStyle,
       ...mapProps
     } = this.props;
-    const { visibleLayers, selectedBackgroundStyle } = this.state;
-    const { onChange, mapRef, onBackgroundChange } = this;
+
+    const { selectedBackgroundStyle } = this.state;
+    const {
+      onChange,
+      mapRef,
+      getLayerState,
+      setLayerState,
+      selectSublayer,
+      legends,
+      onBackgroundChange,
+    } = this;
+    const contextValue = {
+      getLayerState,
+      setLayerState,
+      selectSublayer,
+    };
 
     return (
-      <div
-        className="widget-map"
-        style={style}
-      >
-        {typeof backgroundStyle !== 'string' && (
-          <BackgroundStyles
-            onChange={onBackgroundChange}
-            styles={backgroundStyle}
-            selected={selectedBackgroundStyle}
+      <Provider value={contextValue}>
+        <div
+          className="widget-map"
+          style={style}
+        >
+          {typeof backgroundStyle !== 'string' && (
+            <BackgroundStyles
+              onChange={onBackgroundChange}
+              styles={backgroundStyle}
+              selected={selectedBackgroundStyle}
+            />
+          )}
+          {!!layersTree.length && (
+          <LayersTreeComponent
+            layersTree={layersTree}
+            onChange={onChange}
           />
-        )}
-
-        {!!layersTree.length && (
-        <LayersTreeComponent
-          layersTree={layersTree}
-          onChange={onChange}
-        />
-        )}
-        <MapComponent
-          {...mapProps}
-          backgroundStyle={selectedBackgroundStyle}
-          ref={mapRef}
-          onDetailsChange={this.onDetailsChange}
-        />
-        {!!visibleLayers.length && (
-          <div className="widget-map__legends">
-            {visibleLayers
-              .filter(layer => layer.legend)
-              .map(({ label, legend }) => (
-                <Legend
-                  key={label}
-                  title={label}
-                  {...legend}
-                />
-              ))}
-          </div>
-        )}
-      </div>
+          )}
+          <MapComponent
+            {...mapProps}
+            ref={mapRef}
+            backgroundStyle={selectedBackgroundStyle}
+            onDetailsChange={this.onDetailsChange}
+          />
+          {!!legends.length && (
+            <div className="widget-map__legends">
+              {legends
+                .map(legend => (
+                  <Legend
+                    key={legend.label}
+                    {...legend}
+                  />
+                ))}
+            </div>
+          )}
+        </div>
+      </Provider>
     );
   }
 }
