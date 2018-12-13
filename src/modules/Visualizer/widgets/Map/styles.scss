@@ -5,6 +5,7 @@ $transitionSpeed: .2s;
   overflow: hidden;
   width: auto;
   height: 100vh;
+  display: flex;
 
   .tf-map {
     flex: 1;
