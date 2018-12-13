@@ -66,6 +66,19 @@
     }
     .layerstree-panel-list {
       transform: translate3d(0, 0, 0);
+      overflow-y: auto;
+      scrollbar-color: #202B33 #30404D;      
+    }
+    .layerstree-panel-list::-webkit-scrollbar {
+      width: 8px;
+    }
+    
+    .layerstree-panel-list::-webkit-scrollbar-track {
+      background-color: #30404D; 
+    }
+   
+    .layerstree-panel-list::-webkit-scrollbar-thumb {
+      background-color: #202B33; 
     }
   }
 }

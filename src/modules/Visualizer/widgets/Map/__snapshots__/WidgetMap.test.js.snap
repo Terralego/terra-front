@@ -18,102 +18,21 @@ exports[`snaphsots should render correctly 1`] = `
 
 exports[`snaphsots should render correctly with a layers tree 1`] = `
 <div
-  className="widget-map"
+  className="widget-map widget-map--layerstree-is-visible"
 >
-  <div
-    className="bp3-card bp3-elevation-0 layerstree-panel-container bp3-dark"
-  >
-    <div
-      className="bp3-card bp3-elevation-2 layerNode-container options-hidden"
-      style={
-        Object {
-          "opacity": 0.7,
-        }
-      }
-    >
-      <div
-        className="layerNode-label-container"
-      >
-        <label
-          className="bp3-control bp3-switch"
-        >
-          <input
-            checked={false}
-            onChange={[Function]}
-            type="checkbox"
-          />
-          <span
-            className="bp3-control-indicator"
-          />
-          foo
-        </label>
-      </div>
-    </div>
-  </div>
+  <p>
+    LayersTree
+  </p>
 </div>
 `;
 
 exports[`snaphsots should render legends 1`] = `
 <div
-  className="widget-map"
+  className="widget-map widget-map--layerstree-is-visible"
 >
-  <div
-    className="bp3-card bp3-elevation-0 layerstree-panel-container bp3-dark"
-  >
-    <div
-      className="bp3-card bp3-elevation-2 layerNode-container "
-      style={
-        Object {
-          "opacity": 1,
-        }
-      }
-    >
-      <div
-        className="layerNode-label-container"
-      >
-        <label
-          className="bp3-control bp3-switch"
-        >
-          <input
-            checked={true}
-            onChange={[Function]}
-            type="checkbox"
-          />
-          <span
-            className="bp3-control-indicator"
-          />
-          foo
-        </label>
-        <button
-          className="bp3-button bp3-minimal button-more-vertical"
-          onClick={[Function]}
-          onKeyDown={[Function]}
-          onKeyUp={[Function]}
-          type="button"
-        >
-          <span
-            className="bp3-icon bp3-icon-more"
-            icon="more"
-          >
-            <svg
-              data-icon="more"
-              height={16}
-              viewBox="0 0 16 16"
-              width={16}
-            >
-              <desc>
-                more
-              </desc>
-              <path
-                d="M2 6.03a2 2 0 1 0 0 4 2 2 0 1 0 0-4zM14 6.03a2 2 0 1 0 0 4 2 2 0 1 0 0-4zM8 6.03a2 2 0 1 0 0 4 2 2 0 1 0 0-4z"
-                fillRule="evenodd"
-              />
-            </svg>
-          </span>
-        </button>
-      </div>
-    </div>
-  </div>
+  <p>
+    LayersTree
+  </p>
   <div
     className="widget-map__legends"
   >
