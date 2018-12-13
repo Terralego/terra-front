@@ -4,7 +4,6 @@ import { Button, Card, Classes, Tooltip } from '@blueprintjs/core';
 import LayersTree from '../LayersTree';
 
 export const MapNavigation = ({
-  toggleLabel,
   onToggle,
   isVisible,
   ContentComponent,

@@ -352,7 +352,6 @@ export class WidgetMap extends React.Component {
 
     const { selectedBackgroundStyle, isLayersTreeVisible } = this.state;
     const {
-      onChange,
       mapRef,
       getLayerState,
       setLayerState,
@@ -384,7 +383,6 @@ export class WidgetMap extends React.Component {
             <MapNavigation
               layersTree={layersTree}
               isVisible={isLayersTreeVisible}
-              toggleLabel={isLayersTreeVisible ? 'replier ' : 'déplier'}
               onToggle={toggleLayersTree}
             />
           )}

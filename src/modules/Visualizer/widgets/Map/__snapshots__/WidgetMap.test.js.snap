@@ -16,9 +16,19 @@ exports[`snaphsots should render correctly 1`] = `
 />
 `;
 
-exports[`snaphsots should render correctly with a layers tree 1`] = `
+exports[`snaphsots should render correctly with a map navigation 1`] = `
 <div
   className="widget-map widget-map--layerstree-is-visible"
+>
+  <p>
+    MapNavigation
+  </p>
+</div>
+`;
+
+exports[`snaphsots should render correctly with hidden map navigation 1`] = `
+<div
+  className="widget-map "
 >
   <p>
     MapNavigation

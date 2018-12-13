@@ -54,7 +54,7 @@ describe('snaphsots', () => {
     expect(tree).toMatchSnapshot();
   });
 
-  it('should render correctly with a layers tree', () => {
+  it('should render correctly with a map navigation', () => {
     const tree = renderer.create((
       <WidgetMap
         layersTree={[{
@@ -65,6 +65,18 @@ describe('snaphsots', () => {
     expect(tree).toMatchSnapshot();
   });
 
+  it('should render correctly with hidden map navigation', () => {
+    const tree = renderer.create((
+      <WidgetMap
+        layersTree={[{
+          label: 'foo',
+        }]}
+      />
+    ));
+    tree.getInstance().setState({ isLayersTreeVisible: false });
+    expect(tree.toJSON()).toMatchSnapshot();
+  });
+
   it('should display layerstree panel', () => {
     const instance = new WidgetMap({});
     instance.setState = jest.fn();
@@ -72,6 +84,7 @@ describe('snaphsots', () => {
     instance.toggleLayersTree();
     expect(instance.setState).toHaveBeenCalledWith({ isLayersTreeVisible });
   });
+
 
   it('should render legends', () => {
     const tree = renderer.create((
