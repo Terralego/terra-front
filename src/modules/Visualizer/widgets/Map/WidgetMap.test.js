@@ -42,7 +42,7 @@ jest.mock('react-dom', () => {
 });
 jest.mock('lodash.debounce', () => fn => () => fn({ layerId: 'foo' }));
 jest.mock('./components/BackgroundStyles', () => () => <p>BackgroundStyles</p>);
-jest.mock('./components/LayersTree', () => () => <p>LayersTree</p>);
+jest.mock('./components/MapNavigation', () => () => <p>MapNavigation</p>);
 
 describe('snaphsots', () => {
   it('should render correctly', () => {

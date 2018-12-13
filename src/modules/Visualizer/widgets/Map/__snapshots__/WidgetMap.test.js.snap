@@ -21,7 +21,7 @@ exports[`snaphsots should render correctly with a layers tree 1`] = `
   className="widget-map widget-map--layerstree-is-visible"
 >
   <p>
-    LayersTree
+    MapNavigation
   </p>
 </div>
 `;
@@ -31,7 +31,7 @@ exports[`snaphsots should render legends 1`] = `
   className="widget-map widget-map--layerstree-is-visible"
 >
   <p>
-    LayersTree
+    MapNavigation
   </p>
   <div
     className="widget-map__legends"

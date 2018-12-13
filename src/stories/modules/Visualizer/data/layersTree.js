@@ -3,56 +3,54 @@ export default [{
   initialState: {
     active: true,
   },
-  active: {
-    layouts: [{
-      id: 'background',
-      visibility: 'visible',
-    }],
-  },
-  inactive: {
-    layouts: [{
-      id: 'background',
-      visibility: 'none',
-    }],
-  },
+  layers: ['background'],
 }, {
   label: 'Road',
   initialState: {
     active: true,
   },
-  active: {
-    layouts: [{
-      id: 'road',
-      visibility: 'visible',
-    }],
-  },
-  inactive: {
-    layouts: [{
-      id: 'road',
-      visibility: 'none',
-    }],
-  },
+  layers: [
+    'road-pedestrian-case',
+    'road-street-low',
+    'road-street_limited-low',
+    'road-service-link-track-case',
+    'road-street_limited-case',
+    'road-street-case',
+    'road-main-case',
+    'road-primary-case',
+    'road-motorway_link-case',
+    'road-trunk_link-case',
+    'road-trunk-case',
+    'road-motorway-case',
+    'road-construction',
+    'road-sidewalks',
+    'road-path',
+    'road-steps',
+    'road-trunk_link',
+    'road-motorway_link',
+    'road-pedestrian',
+    'road-service-link-track',
+    'road-street_limited',
+    'road-street',
+    'road-secondary-tertiary',
+    'road-primary',
+    'road-trunk',
+    'road-motorway',
+    'road-rail',
+    'road-label-small',
+    'road-label-medium',
+    'road-label-large',
+  ],
 }, {
   label: 'Water',
   initialState: {
     active: true,
   },
-  active: {
-    layouts: [{
-      id: 'water',
-      visibility: 'visible',
-    }, {
-      id: 'waterway',
-      visibility: 'visible',
-    }],
-  },
-  inactive: {
-    layouts: [{
-      id: 'water',
-      visibility: 'none',
-    }, {
-      id: 'waterway',
-      visibility: 'none',
-    }],
-  },
+  layers: [
+    'waterway-river-canal',
+    'water shadow',
+    'water',
+    'waterway-label',
+    'water-label',
+  ],
 }];

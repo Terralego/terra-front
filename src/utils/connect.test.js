@@ -27,7 +27,7 @@ it('should get props from a context', () => {
   expect(expected).toBe('foo');
 });
 
-it('should update only when connected props change', () => {
+fit('should update only when connected props change', () => {
   let expected;
   const context = React.createContext();
   const { Provider } = context;

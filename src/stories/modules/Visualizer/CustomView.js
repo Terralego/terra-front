@@ -8,6 +8,16 @@ import layersTree from './data/layersTree';
 
 const stories = storiesOf('Modules/Visualizer', module);
 
+const MapNavigationCustomContentComponent = ({
+  defaultContentComponent: ContentComponent,
+  ...props
+}) => (
+  <>
+    <p>Ceci est un composant personnalisé reprenant le composant par defaut</p>
+    <ContentComponent {...props} />
+  </>
+);
+
 stories.add('Custom View', () => (
   <TerraFrontProvider
     config={{
@@ -34,12 +44,12 @@ stories.add('Custom View', () => (
           },
           widgets: {
             Map: {
-              renderLayersTree ({ defaultRender: LayersTree, ...props }) {
+              renderMapNavigation ({ defaultRender: MapNavigation, ...props }) {
                 return (
-                  <div>
-                    <h2>Un site spécifique avec une navigation différente</h2>
-                    <LayersTree {...props} />
-                  </div>
+                  <MapNavigation
+                    {...props}
+                    ContentComponent={MapNavigationCustomContentComponent}
+                  />
                 );
               },
             },

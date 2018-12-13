@@ -8,7 +8,8 @@ import { context } from './connect';
 import { toggleLayerVisibility, addListenerOnLayer, setLayerOpacity } from '../../services/mapUtils';
 import LayersTreeProps from '../../propTypes/LayersTreePropTypes';
 import DefaultMapComponent from './components/Map';
-import LayersTree from './components/LayersTree';
+import MapNavigation from './components/MapNavigation';
+
 import BackgroundStyles from './components/BackgroundStyles';
 import MarkdownRenderer from '../../components/MarkdownRenderer';
 import Legend from './components/Legend';
@@ -43,7 +44,6 @@ export class WidgetMap extends React.Component {
       // for INTERACTION_FN
       fn: PropTypes.func,
     })),
-    LayersTreeComponent: PropTypes.func,
     MapComponent: PropTypes.func,
     setDetails: PropTypes.func,
   };
@@ -51,7 +51,6 @@ export class WidgetMap extends React.Component {
   static defaultProps = {
     backgroundStyle: 'mapbox://styles/mapbox/light-v9',
     layersTree: [],
-    LayersTreeComponent: LayersTree,
     MapComponent: DefaultMapComponent,
     interactions: [],
     setDetails () {},
@@ -141,7 +140,13 @@ export class WidgetMap extends React.Component {
     const { interactions } = this.props;
 
     if (this.mapInteractionsListeners) {
-      this.mapInteractionsListeners.forEach(off => off());
+      this.mapInteractionsListeners.forEach(off => {
+        try {
+          off();
+        } catch (e) {
+          //
+        }
+      });
     }
 
     this.mapInteractionsListeners = [];
@@ -376,9 +381,9 @@ export class WidgetMap extends React.Component {
             />
           )}
           {!!layersTree.length && (
-            <LayersTreeComponent
+            <MapNavigation
               layersTree={layersTree}
-              onChange={onChange}
+              isVisible={isLayersTreeVisible}
               toggleLabel={isLayersTreeVisible ? 'replier ' : 'déplier'}
               onToggle={toggleLayersTree}
             />
