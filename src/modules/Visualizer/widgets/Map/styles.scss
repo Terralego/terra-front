@@ -5,12 +5,11 @@ $transitionSpeed: .2s;
   overflow: hidden;
   width: auto;
   height: 100vh;
+  display: flex;
 
   .tf-map {
     flex: 1;
-    width: 100vw;
-    top: 0;
-    left: 0;
+    width: 100%;
   }
 
   .mapboxgl-ctrl-bottom-left {
@@ -47,6 +46,11 @@ $transitionSpeed: .2s;
       opacity: 0;
       width: 100%;
       transition: opacity $transitionSpeed ease-in;
+      transform: translate3d(0, 0, 0);
+      overflow-y: auto;
+    }
+    &__content::-webkit-scrollbar {
+      width: 8px;
     }
   }
 
@@ -75,19 +79,19 @@ $transitionSpeed: .2s;
   }
 }
 
-.layerstree-panel-list {
-  transform: translate3d(0, 0, 0);
-  overflow-y: auto;
-  scrollbar-color: #202B33 #30404D;      
-}
-.layerstree-panel-list::-webkit-scrollbar {
-  width: 8px;
-}
+// Styles relative to DarkTheme
+.bp3-dark {
 
-.layerstree-panel-list::-webkit-scrollbar-track {
-  background-color: #30404D; 
-}
+  .map-navigation__content {
+    scrollbar-color: #202B33 #30404D;
+  }
 
-.layerstree-panel-list::-webkit-scrollbar-thumb {
-  background-color: #202B33; 
+  .map-navigation__content::-webkit-scrollbar-track {
+    background-color: #30404D;
+  }
+  
+  .map-navigation__content::-webkit-scrollbar-thumb {
+    background-color: #202B33;
+  }
+
 }

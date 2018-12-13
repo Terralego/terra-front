@@ -16,7 +16,6 @@ export default () => (
       ]}
       center={[2.317600, 48.866500]}
       zoom={12.0}
-      style={{ height: '90vh', display: 'flex' }}
       interactions={[{
         id: 'place-city-label-major',
         action: 'displayDetails',
