@@ -6,7 +6,6 @@ import mapboxGl from 'mapbox-gl';
 import { toggleLayerVisibility, setLayerOpacity } from '../../services/mapUtils';
 import WidgetMap, { INTERACTION_DISPLAY_DETAILS, INTERACTION_DISPLAY_TOOLTIP, INTERACTION_FN } from './WidgetMap';
 
-
 jest.mock('mapbox-gl', () => {
   function Popup () {}
   Popup.prototype.setLngLat = jest.fn();
@@ -43,6 +42,8 @@ jest.mock('react-dom', () => {
 });
 jest.mock('lodash.debounce', () => fn => () => fn({ layerId: 'foo' }));
 jest.mock('./components/BackgroundStyles', () => () => <p>BackgroundStyles</p>);
+jest.mock('./components/LayersTree', () => () => <p>LayersTree</p>);
+
 describe('snaphsots', () => {
   it('should render correctly', () => {
     const tree = renderer.create((
@@ -62,6 +63,14 @@ describe('snaphsots', () => {
       />
     )).toJSON();
     expect(tree).toMatchSnapshot();
+  });
+
+  it('should display layerstree panel', () => {
+    const instance = new WidgetMap({});
+    instance.setState = jest.fn();
+    const isLayersTreeVisible = false;
+    instance.toggleLayersTree();
+    expect(instance.setState).toHaveBeenCalledWith({ isLayersTreeVisible });
   });
 
   it('should render legends', () => {
