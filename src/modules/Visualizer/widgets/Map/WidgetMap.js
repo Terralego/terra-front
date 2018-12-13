@@ -376,12 +376,12 @@ export class WidgetMap extends React.Component {
             />
           )}
           {!!layersTree.length && (
-          <LayersTreeComponent
-            layersTree={layersTree}
-            onChange={onChange}
-            toggleLabel={isLayersTreeVisible ? 'replier ' : 'déplier'}
-            onToggle={toggleLayersTree}
-          />
+            <LayersTreeComponent
+              layersTree={layersTree}
+              onChange={onChange}
+              toggleLabel={isLayersTreeVisible ? 'replier ' : 'déplier'}
+              onToggle={toggleLayersTree}
+            />
           )}
           <MapComponent
             {...mapProps}
