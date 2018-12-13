@@ -41,21 +41,24 @@ export const connect = ({ Consumer }) => (...mapContextToPropsList) => WrappedCo
       this.state = this.getNewState(props.context, props.props);
     }
 
-    shouldComponentUpdate ({ context }) {
-      return !!this.getNewState(context, this.props.props);
+    shouldComponentUpdate ({ context, props: newProps }) {
+      const { props } = this.props;
+      return newProps !== props || !!this.getNewState(context, props);
     }
 
     componentDidUpdate ({ context: prevContext }) {
-      if (this.props.context !== prevContext) {
+      const { context } = this.props;
+      if (context !== prevContext) {
         this.updateFromContext();
       }
     }
 
     getNewState (context, props) {
-      const state = parseMapContextToProps(mapContextToProps, context, props);
-      const hasChanged = Object.keys(state).reduce((changed, key) =>
-        changed || state[key] !== this.state[key], false);
-      return hasChanged ? state : false;
+      const { state } = this;
+      const newState = parseMapContextToProps(mapContextToProps, context, props);
+      const hasChanged = Object.keys(newState).reduce((changed, key) =>
+        changed || newState[key] !== state[key], false);
+      return hasChanged ? newState : false;
     }
 
     updateFromContext () {
@@ -67,7 +70,8 @@ export const connect = ({ Consumer }) => (...mapContextToPropsList) => WrappedCo
     }
 
     render () {
-      return <WrappedComponent {...this.state} {...this.props.props} />;
+      const { state, props: { props } } = this;
+      return <WrappedComponent {...state} {...props} />;
     }
   }
 

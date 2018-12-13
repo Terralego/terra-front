@@ -1,0 +1,22 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`should render correctly 1`] = `
+Array [
+  "LayerTree Button",
+  <div
+    className="map-navigation__content"
+  >
+    <p>
+      LayersTree
+    </p>
+  </div>,
+  "LayerTree Button",
+  <div
+    className="map-navigation__content"
+  >
+    <p>
+      LayersTree
+    </p>
+  </div>,
+]
+`;
