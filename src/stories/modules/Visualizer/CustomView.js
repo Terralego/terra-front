@@ -34,21 +34,11 @@ stories.add('Custom View', () => (
           },
           widgets: {
             Map: {
-              renderLayersTree ({ layersTree: layers, onToggleChange, isActive }) {
+              renderLayersTree ({ defaultRender: LayersTree, ...props }) {
                 return (
                   <div>
-                    <h2>Un site spécifique avec un navigation différente</h2>
-                    {layers.map(layer => (
-                      <p key={layer.label}>
-                        {layer.label}
-                        <button
-                          type="button"
-                          onClick={onToggleChange(layer)}
-                        >
-                          {isActive(layer) ? 'désactiver' : 'activer'}
-                        </button>
-                      </p>
-                    ))}
+                    <h2>Un site spécifique avec une navigation différente</h2>
+                    <LayersTree {...props} />
                   </div>
                 );
               },
