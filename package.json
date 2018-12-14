@@ -1,6 +1,6 @@
 {
   "name": "mc-tf-test",
-  "version": "0.3.10",
+  "version": "0.3.11",
   "private": false,
   "dependencies": {
     "@blueprintjs/core": "^3.8.0",
