@@ -1,16 +1,29 @@
 import React from 'react';
+import { select } from '@storybook/addon-knobs';
 
 import Legend from '../../../../../modules/Visualizer/widgets/Map/components/Legend';
 
-const items = [{
+const items = shape => ([{
   label: 'Rouge',
   color: 'red',
+  shape,
 }, {
   label: 'Vert',
   color: 'green',
+  shape,
 }, {
   label: 'Bleu',
   color: 'blue',
-}];
+  shape,
+}]);
 
-export default () => <Legend title="Exemple de légende" items={items} />;
+export default () => (
+  <Legend
+    title="Exemple de légende"
+    items={items(select(
+      'Shape',
+      ['square', 'circle'],
+      'square',
+    ))}
+  />
+);

@@ -1,6 +1,6 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
-exports[`should render correctly 1`] = `
+exports[`should render correctly circle 1`] = `
 <div
   className="tf-legend"
 >
@@ -10,7 +10,7 @@ exports[`should render correctly 1`] = `
     Hello World
   </h4>
   <div
-    className="tf-legend__item item"
+    className="tf-legend__item item item--circle"
   >
     <div
       className="item__before"
@@ -35,7 +35,7 @@ exports[`should render correctly 1`] = `
     />
   </div>
   <div
-    className="tf-legend__item item"
+    className="tf-legend__item item item--circle"
   >
     <div
       className="item__before"
@@ -60,7 +60,94 @@ exports[`should render correctly 1`] = `
     />
   </div>
   <div
-    className="tf-legend__item item"
+    className="tf-legend__item item item--circle"
+  >
+    <div
+      className="item__before"
+      style={
+        Object {
+          "backgroundColor": "blue",
+        }
+      }
+    />
+    <div
+      className="item__label"
+    >
+      Bleu
+    </div>
+    <div
+      className="item__after"
+      style={
+        Object {
+          "backgroundColor": "blue",
+        }
+      }
+    />
+  </div>
+</div>
+`;
+
+exports[`should render correctly square 1`] = `
+<div
+  className="tf-legend"
+>
+  <h4
+    className="tf-legend__title"
+  >
+    Hello World
+  </h4>
+  <div
+    className="tf-legend__item item item--square"
+  >
+    <div
+      className="item__before"
+      style={
+        Object {
+          "backgroundColor": "red",
+        }
+      }
+    />
+    <div
+      className="item__label"
+    >
+      Rouge
+    </div>
+    <div
+      className="item__after"
+      style={
+        Object {
+          "backgroundColor": "red",
+        }
+      }
+    />
+  </div>
+  <div
+    className="tf-legend__item item item--square"
+  >
+    <div
+      className="item__before"
+      style={
+        Object {
+          "backgroundColor": "green",
+        }
+      }
+    />
+    <div
+      className="item__label"
+    >
+      Vert
+    </div>
+    <div
+      className="item__after"
+      style={
+        Object {
+          "backgroundColor": "green",
+        }
+      }
+    />
+  </div>
+  <div
+    className="tf-legend__item item item--square"
   >
     <div
       className="item__before"
