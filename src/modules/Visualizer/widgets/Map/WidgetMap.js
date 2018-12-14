@@ -5,14 +5,15 @@ import mapBoxGl from 'mapbox-gl';
 import debounce from 'lodash.debounce';
 
 import { context } from './connect';
+import { initLayersStateAction, selectSublayerAction, setLayerStateAction } from './layerTreeUtils';
 import { toggleLayerVisibility, addListenerOnLayer, setLayerOpacity } from '../../services/mapUtils';
 import LayersTreeProps from '../../propTypes/LayersTreePropTypes';
 import DefaultMapComponent from './components/Map';
 import MapNavigation from './components/MapNavigation';
-
 import BackgroundStyles from './components/BackgroundStyles';
 import MarkdownRenderer from '../../components/MarkdownRenderer';
 import Legend from './components/Legend';
+
 
 import './styles.scss';
 
@@ -58,14 +59,6 @@ export class WidgetMap extends React.Component {
 
   mapRef = React.createRef();
 
-  state = {
-    selectedBackgroundStyle: Array.isArray(this.props.backgroundStyle)
-      ? this.props.backgroundStyle[0].url
-      : this.props.backgroundStyle,
-    layersTreeState: new Map(),
-    isLayersTreeVisible: true,
-  };
-
   map = new Promise(resolve => {
     const waitForMap = () => {
       if (this.mapRef && this.mapRef.current && this.mapRef.current.map) {
@@ -87,6 +80,18 @@ export class WidgetMap extends React.Component {
     popup.remove();
     this.popups.delete(layerId);
   }, 100);
+
+  constructor (props) {
+    super(props);
+    const { backgroundStyle } = props;
+    this.state = {
+      selectedBackgroundStyle: Array.isArray(backgroundStyle)
+        ? backgroundStyle[0].url
+        : backgroundStyle,
+      layersTreeState: new Map(),
+      isLayersTreeVisible: true,
+    };
+  }
 
   componentDidMount () {
     this.initLayersState();
@@ -206,18 +211,11 @@ export class WidgetMap extends React.Component {
     });
   }
 
-  setLayerState = ({ layer, state }) => {
-    const { layersTreeState: prevLayersTreeState } = this.state;
-    const layersTreeState = new Map(prevLayersTreeState);
-    const layerState = layersTreeState.get(layer);
-
-    if (!layerState) return;
-
-    layersTreeState.set(layer, {
-      ...layerState,
+  setLayerState = ({ layer, state: layerState }) => {
+    this.setState(state => ({
       ...state,
-    });
-    this.setState({ layersTreeState });
+      layersTreeState: setLayerStateAction(layer, layerState, state.layersTreeState),
+    }));
   }
 
   getLayerState = ({ layer }) => {
@@ -262,42 +260,25 @@ export class WidgetMap extends React.Component {
   }
 
   selectSublayer = ({ layer, sublayer }) => {
-    const { layersTreeState: prevLayersTreeState } = this.state;
-    const layersTreeState = new Map(prevLayersTreeState);
-    const layerState = layersTreeState.get(layer);
-    layerState.sublayers = layerState.sublayers.map((_, k) => k === sublayer);
-    layersTreeState.set(layer, { ...layerState });
-    this.setState({ layersTreeState });
+    this.setState(state => ({
+      ...state,
+      layersTreeState: selectSublayerAction(layer, sublayer, state.layersTreeState),
+    }));
   }
 
-  toggleLayersTree = () => this.setState({ isLayersTreeVisible: !this.state.isLayersTreeVisible })
+  toggleLayersTree = () => {
+    this.setState(state => ({
+      ...state,
+      isLayersTreeVisible: !state.isLayersTreeVisible,
+    }));
+  }
 
   initLayersState () {
     const { layersTree } = this.props;
-    const layersTreeState = new Map();
-    function reduceLayers (group, map) {
-      return group.reduce((layersStateMap, layer) => {
-        const { initialState = {}, sublayers } = layer;
-        const { active } = initialState;
-        if (sublayers) {
-          initialState.sublayers = initialState.sublayers || sublayers.map((_, k) =>
-            (k === 0 && !!active));
-        }
-        if (layer.group) {
-          return reduceLayers(layer.layers, layersStateMap);
-        }
-        initialState.opacity = initialState.opacity || 1;
-        layersStateMap.set(layer, {
-          active: false,
-          opacity: 1,
-          ...initialState,
-        });
-        return layersStateMap;
-      }, map);
-    }
-    this.setState({
-      layersTreeState: reduceLayers(layersTree, layersTreeState),
-    });
+    this.setState(state => ({
+      ...state,
+      layersTreeState: initLayersStateAction(layersTree),
+    }));
   }
 
   async updateLayersTree () {

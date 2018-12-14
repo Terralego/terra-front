@@ -79,10 +79,11 @@ describe('snaphsots', () => {
 
   it('should display layerstree panel', () => {
     const instance = new WidgetMap({});
-    instance.setState = jest.fn();
-    const isLayersTreeVisible = false;
+    let expected;
+    instance.setState = jest.fn(stateFn => { expected = stateFn({ isLayersTreeVisible: true }); });
     instance.toggleLayersTree();
-    expect(instance.setState).toHaveBeenCalledWith({ isLayersTreeVisible });
+    expect(instance.setState).toHaveBeenCalled();
+    expect(expected).toEqual({ isLayersTreeVisible: false });
   });
 
 
@@ -410,18 +411,22 @@ describe('LayersTree', () => {
       }],
     }];
     const instance = new WidgetMap({ layersTree });
-    instance.setState = jest.fn();
+    let expected;
+    instance.setState = jest.fn(stateFn => { expected = stateFn({ layersTreeState: new Map() }); });
     instance.initLayersState();
 
-    const expected = new Map();
-    expected.set(layersTree[0], { active: true, opacity: 1 });
-    expected.set(layersTree[1].layers[0], { active: true, opacity: 1 });
-    expected.set(layersTree[1].layers[1], { active: false, opacity: 1 });
-    expected.set(layersTree[2], { active: true, sublayers: [true, false], opacity: 1 });
-    expected.set(layersTree[3].layers[0], { active: false, sublayers: [false, false], opacity: 1 });
-    expect(instance.setState).toHaveBeenCalledWith({
-      layersTreeState: expected,
+    const layersTreeState = new Map();
+    layersTreeState.set(layersTree[0], { active: true, opacity: 1 });
+    layersTreeState.set(layersTree[1].layers[0], { active: true, opacity: 1 });
+    layersTreeState.set(layersTree[1].layers[1], { active: false, opacity: 1 });
+    layersTreeState.set(layersTree[2], { active: true, sublayers: [true, false], opacity: 1 });
+    layersTreeState.set(layersTree[3].layers[0], {
+      active: false,
+      sublayers: [false, false],
+      opacity: 1,
     });
+    expect(instance.setState).toHaveBeenCalled();
+    expect(expected).toEqual({ layersTreeState });
   });
 
   it('should update layersTreeState', () => {
@@ -444,18 +449,20 @@ describe('LayersTree', () => {
       label: 'label',
     }];
     const instance = new WidgetMap({});
-    instance.setState = jest.fn();
-    instance.state.layersTreeState = new Map();
-    instance.state.layersTreeState.set(layersTree[0], {
+    let expected;
+    const initialState = {
+      layersTreeState: new Map(),
+    };
+    initialState.layersTreeState.set(layersTree[0], {
       active: false,
     });
+    instance.setState = jest.fn(stateFn => { expected = stateFn(initialState); });
     const state = { active: true };
     instance.setLayerState({ layer: layersTree[0], state });
-    const expected = new Map();
-    expected.set(layersTree[0], state);
-    expect(instance.setState).toHaveBeenCalledWith({
-      layersTreeState: expected,
-    });
+    const layersTreeState = new Map();
+    layersTreeState.set(layersTree[0], state);
+    expect(instance.setState).toHaveBeenCalled();
+    expect(expected).toEqual({ layersTreeState });
   });
 
   it('should not set layer state', () => {
@@ -463,13 +470,19 @@ describe('LayersTree', () => {
       label: 'label',
     }];
     const instance = new WidgetMap({});
-    instance.setState = jest.fn();
-    instance.state.layersTreeState = new Map();
-    const state = { active: true };
-    instance.setLayerState({ layer: layersTree[0], state });
-    const expected = new Map();
-    expected.set(layersTree[0], state);
-    expect(instance.setState).not.toHaveBeenCalled();
+    let expected;
+    const initialState = {
+      layersTreeState: new Map(),
+    };
+    initialState.layersTreeState.set(layersTree[0], {
+      active: true,
+    });
+    instance.setState = jest.fn(stateFn => { expected = stateFn(initialState); });
+    instance.setLayerState({ layer: layersTree[0], state: { active: true } });
+    const layersTreeState = new Map();
+    layersTreeState.set(layersTree[0], { active: true });
+    expect(instance.setState).toHaveBeenCalled();
+    expect(expected).toEqual(initialState);
   });
 
   it('should get layer state', () => {
@@ -497,16 +510,19 @@ describe('LayersTree', () => {
       }],
     }];
     const instance = new WidgetMap({});
-    instance.setState = jest.fn();
-    instance.state.layersTreeState = new Map();
-    instance.state.layersTreeState.set(layersTree[0], {
+    let expected;
+    const initialState = {
+      layersTreeState: new Map(),
+    };
+    initialState.layersTreeState.set(layersTree[0], {
       active: true,
       opacity: 1,
       sublayers: [true, false],
     });
+    instance.setState = jest.fn(stateFn => { expected = stateFn(initialState); });
     instance.selectSublayer({ layer: layersTree[0], sublayer: 1 });
-    const expected = new Map();
-    expected.set(layersTree[0], {
+    const layersTreeState = new Map();
+    layersTreeState.set(layersTree[0], {
       active: true,
       opacity: 1,
       sublayers: [
@@ -514,9 +530,8 @@ describe('LayersTree', () => {
         true,
       ],
     });
-    expect(instance.setState).toHaveBeenCalledWith({
-      layersTreeState: expected,
-    });
+    expect(instance.setState).toHaveBeenCalled();
+    expect(expected).toEqual({ layersTreeState });
   });
 
   it('should update map as layers tree state', async done => {
