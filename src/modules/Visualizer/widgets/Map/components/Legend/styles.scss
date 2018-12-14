@@ -26,6 +26,12 @@
       height: 1rem;
     }
 
+    &--circle {
+      .item__before {
+        border-radius: 50%;
+      }
+    }
+
     &__before {
       margin-right: 1rem;
     }

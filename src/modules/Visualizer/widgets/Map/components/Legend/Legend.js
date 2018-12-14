@@ -9,10 +9,10 @@ export const Legend = ({ title, items }) => (
     >
       {title}
     </h4>
-    {items.map(({ label, color }) => (
+    {items.map(({ label, color, shape = 'square' }) => (
       <div
         key={`${label}${color}`}
-        className="tf-legend__item item"
+        className={`tf-legend__item item item--${shape}`}
       >
         <div
           className="item__before"
@@ -35,6 +35,7 @@ Legend.propTypes = {
   items: PropTypes.arrayOf(PropTypes.shape({
     label: PropTypes.string.isRequired,
     color: PropTypes.string.isRequired,
+    shape: PropTypes.string,
   })).isRequired,
 };
 

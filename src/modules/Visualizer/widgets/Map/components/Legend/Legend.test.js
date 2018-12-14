@@ -3,17 +3,27 @@ import renderer from 'react-test-renderer';
 
 import Legend from './Legend';
 
-it('should render correctly', () => {
-  const items = [{
+describe('should render correctly', () => {
+  const items = shape => ([{
     label: 'Rouge',
     color: 'red',
+    shape,
   }, {
     label: 'Vert',
     color: 'green',
+    shape,
   }, {
     label: 'Bleu',
     color: 'blue',
-  }];
-  const tree = renderer.create(<Legend title="Hello World" items={items} />).toJSON();
-  expect(tree).toMatchSnapshot();
+    shape,
+  }]);
+  it('square', () => {
+    const tree = renderer.create(<Legend title="Hello World" items={items()} />).toJSON();
+    expect(tree).toMatchSnapshot();
+  });
+
+  it('circle', () => {
+    const tree = renderer.create(<Legend title="Hello World" items={items('circle')} />).toJSON();
+    expect(tree).toMatchSnapshot();
+  });
 });
