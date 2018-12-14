@@ -18,8 +18,8 @@ module.exports = {
   // Custom rules
   rules: {
     'operator-linebreak':                [off],
-    'react/destructuring-assignment':    [warn],
-    'react/no-this-in-sfc':              [warn],
-    'react/no-access-state-in-setstate': [warn],
+    'react/destructuring-assignment':    [error],
+    'react/no-this-in-sfc':              [error],
+    'react/no-access-state-in-setstate': [error],
   }
 };
