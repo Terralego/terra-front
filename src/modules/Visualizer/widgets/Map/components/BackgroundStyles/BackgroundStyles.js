@@ -50,7 +50,7 @@ export class BackgroundStyles extends React.Component {
         )}
       >
         <Button onClick={toggleSelector}>
-          {<Icon icon="page-layout" />}
+          {<Icon icon="layers" />}
         </Button>
       </Popover>
     );
