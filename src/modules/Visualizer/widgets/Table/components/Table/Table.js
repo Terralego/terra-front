@@ -25,7 +25,8 @@ export class Table extends React.Component {
 
   getCellData = (rowIndex, columnIndex) => {
     const { data } = this.props;
-    const sortedIndexMap = this.state.sortedIndexMap || data.map((_, k) => k);
+    const { sortedIndexMap: initialSortedIndexMap } = this.state;
+    const sortedIndexMap = initialSortedIndexMap || data.map((_, k) => k);
     const cell = data[sortedIndexMap[rowIndex]][columnIndex];
     return this.formatCell(cell, columnIndex);
   };
