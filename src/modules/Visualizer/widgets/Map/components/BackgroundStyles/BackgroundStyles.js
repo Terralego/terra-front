@@ -43,7 +43,12 @@ export class BackgroundStyles extends React.Component {
               selectedValue={selected}
             >
               {styles.map(({ label, url }) => (
-                <Radio key={`${label}${url}`} label={label} value={url} />
+                <Radio
+                  className="bgLayer-radio"
+                  key={`${label}${url}`}
+                  label={label}
+                  value={url}
+                />
               ))}
             </RadioGroup>
           </div>
