@@ -218,8 +218,8 @@ export class WidgetMap extends React.Component {
   triggerInteraction ({ map, event, feature, layerId, interaction, eventType }) {
     const { id, interaction: interactionType, fn, trigger = 'click', ...config } = interaction;
 
-    if ((trigger === 'mouseover' && !['mousemove', 'mouseleave'].includes(eventType)) &&
-        trigger !== eventType) return;
+    if ((trigger === 'mouseover' && !['mousemove', 'mouseleave'].includes(eventType)) ||
+        (trigger !== 'mouseover' && trigger !== eventType)) return;
 
     switch (interactionType) {
       case INTERACTION_DISPLAY_DETAILS:

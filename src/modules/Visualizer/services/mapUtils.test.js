@@ -1,4 +1,4 @@
-import { toggleLayerVisibility, addListenerOnLayer, getOpacityProperty, setLayerOpacity } from './mapUtils';
+import { toggleLayerVisibility, getOpacityProperty, setLayerOpacity, getInteractionOnEvent, setInteractions } from './mapUtils';
 
 it('should toggle layer visibility', () => {
   const map = {
@@ -9,39 +9,6 @@ it('should toggle layer visibility', () => {
   map.setLayoutProperty.mockClear();
   toggleLayerVisibility(map, 'foo', 'none');
   expect(map.setLayoutProperty).toHaveBeenCalledWith('foo', 'visibility', 'none');
-});
-
-it('should add a listener on layer', () => {
-  const mapListeners = [];
-  const map = {
-    on: jest.fn((trigger, layerId, fn) => mapListeners.push({ trigger, layerId, fn })),
-  };
-  const listener = jest.fn();
-  const listeners = addListenerOnLayer(map, 'foo', listener);
-  expect(listeners.length).toBe(1);
-  mapListeners[0].fn({ features: [] });
-
-  expect(listener).toHaveBeenCalled();
-});
-
-it('should add a listener on layer with display cursor', () => {
-  const mapListeners = [];
-  const mapCanvas = { style: {} };
-  const map = {
-    on: jest.fn((trigger, layerId, fn) => mapListeners.push({ trigger, layerId, fn })),
-    getCanvas: jest.fn(() => mapCanvas),
-  };
-  const listener = () => null;
-  const listeners = addListenerOnLayer(map, 'foo', listener, { displayCursor: true });
-  expect(listeners.length).toBe(3);
-  mapListeners[1].fn({ features: [] });
-  expect(map.getCanvas).toHaveBeenCalled();
-  expect(mapCanvas.style.cursor).toBe('pointer');
-  map.getCanvas.mockClear();
-
-  mapListeners[2].fn({ features: [] });
-  expect(map.getCanvas).toHaveBeenCalled();
-  expect(mapCanvas.style.cursor).toBe('');
 });
 
 it('should get opacity property', () => {
@@ -73,4 +40,283 @@ it('should not set layer opacity', () => {
   setLayerOpacity(map, 'foo', 42);
   expect(map.getLayer).toHaveBeenCalledWith('foo');
   expect(map.setPaintProperty).not.toHaveBeenCalled();
+});
+
+it('should get interaction on event', () => {
+  const interactions = [{
+    id: 'foo',
+  }, {
+    id: 'bar',
+    trigger: 'mouseover',
+  }, {
+    id: 'foobar',
+    trigger: 'click',
+  }];
+  const map = {
+    queryRenderedFeatures: jest.fn(() => [{
+      layer: {
+        id: 'foo',
+      },
+    }, {
+      layer: {
+        id: 'bar',
+      },
+    }, {
+      layer: {
+        id: 'foobar',
+      },
+    }]),
+  };
+  const eventType = 'click';
+  const point = [1, 2];
+  const interaction = getInteractionOnEvent({ eventType, map, point, interactions });
+
+  expect(map.queryRenderedFeatures).toHaveBeenCalledWith(point);
+  expect(interaction).toEqual({
+    interaction: interactions[0],
+    feature: {
+      layer: {
+        id: 'foo',
+      },
+    },
+    layerId: 'foo',
+  });
+});
+
+it('should get interaction on mouseover event', () => {
+  const interactions = [{
+    id: 'foo',
+    trigger: 'click',
+  }, {
+    id: 'bar',
+    trigger: 'mouseover',
+  }, {
+    id: 'foobar',
+  }];
+  const map = {
+    queryRenderedFeatures: jest.fn(() => [{
+      layer: {
+        id: 'foo',
+      },
+    }, {
+      layer: {
+        id: 'bar',
+      },
+    }, {
+      layer: {
+        id: 'foobar',
+      },
+    }]),
+  };
+  const eventType = 'mousemove';
+  const point = [1, 2];
+  const interaction = getInteractionOnEvent({ eventType, map, point, interactions });
+
+  expect(map.queryRenderedFeatures).toHaveBeenCalledWith(point);
+  expect(interaction).toEqual({
+    interaction: interactions[1],
+    feature: {
+      layer: {
+        id: 'bar',
+      },
+    },
+    layerId: 'bar',
+  });
+});
+
+it('should get no interaction on event', () => {
+  const interactions = [{
+    id: 'foo',
+    trigger: 'click',
+  }, {
+    id: 'bar',
+    trigger: 'click',
+  }];
+  const map = {
+    queryRenderedFeatures: jest.fn(() => [{
+      layer: {
+        id: 'foo',
+      },
+    }, {
+      layer: {
+        id: 'bar',
+      },
+    }]),
+  };
+  const eventType = 'mousover';
+  const point = [1, 2];
+  const interaction = getInteractionOnEvent({ eventType, map, point, interactions });
+
+  expect(map.queryRenderedFeatures).toHaveBeenCalledWith(point);
+  expect(interaction).toBe(false);
+});
+
+
+describe('should set interactions', () => {
+  let listeners = [];
+  const map = {
+    on: jest.fn((event, id, listener) => listeners.push({
+      event,
+      listener: listener || id,
+      id: listener ? id : null,
+    })),
+  };
+  beforeEach(() => {
+    listeners = [];
+  });
+
+  it('with click events', () => {
+    const interactions = [{
+      id: 'foo',
+      interaction: 'doSomething',
+    }, {
+      id: 'foo',
+      interaction: 'doSomethingOther',
+      trigger: 'mousedown',
+    }];
+    const callback = () => {};
+    setInteractions({ map, interactions, callback });
+    expect(listeners.length).toBe(3);
+    expect(listeners[0].event).toBe('click');
+    expect(listeners[1].event).toBe('mousedown');
+    expect(listeners[2].event).toBe('mousemove');
+  });
+
+  it('with mouseover events', () => {
+    const interactions = [{
+      id: 'foo',
+      interaction: 'doSomething',
+      trigger: 'mouseover',
+    }];
+    const callback = () => {};
+    setInteractions({ map, interactions, callback });
+    expect(listeners.length).toBe(3);
+    expect(listeners[0].event).toBe('mousemove');
+    expect(listeners[1].event).toBe('mouseleave');
+    expect(listeners[1].id).toBe('foo');
+    expect(listeners[2].event).toBe('mousemove');
+  });
+
+  it('then call callback', () => {
+    const interactions = [{
+      id: 'foo',
+      interaction: 'doSomething',
+    }];
+    const callback = jest.fn();
+    const event = { target: map, point: [1, 2] };
+    map.queryRenderedFeatures = () => [{
+      layer: {
+        id: 'foo',
+      },
+    }, {
+      layer: {
+        id: 'bar',
+      },
+    }, {
+      layer: {
+        id: 'foobar',
+      },
+    }];
+
+    setInteractions({ map, interactions, callback });
+    listeners[0].listener(event);
+    expect(callback).toHaveBeenCalledWith({
+      event,
+      map,
+      layerId: 'foo',
+      feature: {
+        layer: {
+          id: 'foo',
+        },
+      },
+      interaction: interactions[0],
+      eventType: 'click',
+    });
+  });
+
+  it('then call no callback', () => {
+    const interactions = [{
+      id: 'foo',
+      interaction: 'doSomething',
+    }];
+    const callback = jest.fn();
+    const event = { target: map, point: [1, 2] };
+    map.queryRenderedFeatures = () => [];
+
+    setInteractions({ map, interactions, callback });
+    listeners[0].listener(event);
+    expect(callback).not.toHaveBeenCalled();
+  });
+
+  it('then call callback with mousemove', () => {
+    const interactions = [{
+      id: 'foo',
+      interaction: 'doSomething',
+      trigger: 'mouseover',
+    }];
+    const callback = jest.fn();
+    const event = { target: map, point: [1, 2] };
+    map.queryRenderedFeatures = () => [{
+      layer: {
+        id: 'foo',
+      },
+    }];
+
+    setInteractions({ map, interactions, callback });
+
+    listeners[0].listener(event);
+    expect(callback).toHaveBeenCalledWith({
+      event,
+      map,
+      layerId: 'foo',
+      feature: {
+        layer: {
+          id: 'foo',
+        },
+      },
+      interaction: interactions[0],
+      eventType: 'mousemove',
+    });
+    callback.mockClear();
+
+    listeners[1].listener(event);
+    expect(listeners[1].event).toBe('mouseleave');
+    expect(listeners[1].id).toBe('foo');
+    expect(callback).toHaveBeenCalledWith({
+      event,
+      map,
+      layerId: 'foo',
+      interaction: interactions[0],
+      eventType: 'mouseleave',
+    });
+  });
+
+  it('and display pointer cursor', () => {
+    const interactions = [{
+      id: 'foo',
+      interaction: 'doSomething',
+    }];
+    const callback = () => {};
+    const canvas = { style: {} };
+    map.getCanvas = jest.fn(() => canvas);
+    map.queryRenderedFeatures = () => [{
+      layer: {
+        id: 'foo',
+      },
+    }];
+
+    setInteractions({ map, interactions, callback });
+
+    listeners[1].listener({ target: map, point: [1, 2] });
+
+    expect(map.getCanvas).toHaveBeenCalled();
+    expect(canvas.style.cursor).toBe('pointer');
+
+    map.queryRenderedFeatures = () => [];
+
+    listeners[1].listener({ target: map, point: [1, 2] });
+
+    expect(map.getCanvas).toHaveBeenCalled();
+    expect(canvas.style.cursor).toBe('');
+  });
 });
