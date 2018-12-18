@@ -18,7 +18,10 @@ jest.mock('../LayersTree', () => function LayersTree () {
   return <p>LayersTree</p>;
 });
 
+
 it('should render correctly', () => {
+  Math.random = () => 1;
+  Date.now = () => 66;
   const tree = renderer.create((
     <>
       <MapNavigation />
