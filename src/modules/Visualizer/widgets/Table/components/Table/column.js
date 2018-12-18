@@ -12,6 +12,7 @@ export class RenderColumn {
   }
 
   renderMenu = sortColumn => {
+    // eslint-disable-next-line react/no-this-in-sfc
     const { index, format: { type } = {} } = this.props;
 
     const sortAsc = () => sortColumn(index, 'asc', type);
@@ -32,6 +33,7 @@ export class RenderColumn {
     );
 
     const columnHeaderCellRenderer = () => (
+      // eslint-disable-next-line react/no-this-in-sfc
       <ColumnHeaderCell name={value} menuRenderer={() => this.renderMenu(sortColumn)} />
     );
     return (

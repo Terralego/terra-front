@@ -21,11 +21,12 @@ export class SignupForm extends React.Component {
   submit = async event => {
     event.preventDefault();
     const properties = { ...this.state };
-    this.setState({
+    this.setState(state => ({
+      ...state,
       errors: {
-        ...Object.keys(this.state).reduce((acc, curr) => ({ ...acc, [curr]: false }), {}),
+        ...Object.keys(state).reduce((acc, curr) => ({ ...acc, [curr]: false }), {}),
       },
-    });
+    }));
 
     const { signupAction } = this.props;
 

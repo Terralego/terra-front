@@ -16,11 +16,16 @@ export class WidgetTable extends React.Component {
     title: '',
   }
 
-  state = {
-    columns: [],
-    data: this.props.data,
-    dataFiltered: [],
-    columnsFiltered: [],
+  constructor (props) {
+    super(props);
+    const { data } = props;
+
+    this.state = {
+      columns: [],
+      data,
+      dataFiltered: [],
+      columnsFiltered: [],
+    };
   }
 
   componentDidMount () {
@@ -28,16 +33,21 @@ export class WidgetTable extends React.Component {
   }
 
   onHeaderChange = ({ event, index }) => {
-    const columns = this.state.columns.map((col, i) => (
-      (i !== index)
-        ? col
-        : {
-          ...col,
-          display: event.target.checked,
-        }
-    ));
-    this.setState({ columns });
-    this.propsFiltered(columns);
+    this.setState(state => {
+      const columns = state.columns.map((col, i) => (
+        (i !== index)
+          ? col
+          : {
+            ...col,
+            display: event.target.checked,
+          }
+      ));
+      this.propsFiltered(columns);
+      return {
+        ...state,
+        columns,
+      };
+    });
   }
 
   propsFiltered = columns => {
@@ -60,7 +70,8 @@ export class WidgetTable extends React.Component {
   }
 
   initColumns = () => {
-    const columns = this.props.columns.map(col =>
+    const { columns: allColumns } = this.props;
+    const columns = allColumns.map(col =>
       ((typeof col !== 'string')
         ? { display: true, ...col }
         : { value: col, sortable: true, display: true }));
