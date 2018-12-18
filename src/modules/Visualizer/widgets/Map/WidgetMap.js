@@ -115,7 +115,12 @@ export class WidgetMap extends React.Component {
     }
   }
 
-  onBackgroundChange = selectedBackgroundStyle => this.setState({ selectedBackgroundStyle });
+  onBackgroundChange = selectedBackgroundStyle => {
+    this.mapRef.current.map.once('style.load', () => {
+      this.updateLayersTree();
+    });
+    this.setState({ selectedBackgroundStyle });
+  };
 
   get legends () {
     const { layersTreeState } = this.state;
