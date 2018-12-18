@@ -59,7 +59,7 @@ export class View extends React.Component {
     const { widgetsComponents } = this.state;
     const { closeDetails } = this;
     const visible = !!details;
-    const { features: [{ properties }] = [{}], template = '' } = details || {};
+    const { feature: { properties } = {}, template = '' } = details || {};
 
     return (
       <div className="visualizer-view">
