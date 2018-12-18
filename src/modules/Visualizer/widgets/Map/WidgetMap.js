@@ -6,7 +6,7 @@ import debounce from 'lodash.debounce';
 
 import { context } from './connect';
 import { initLayersStateAction, selectSublayerAction, setLayerStateAction } from './layerTreeUtils';
-import { toggleLayerVisibility, addListenerOnLayer, setLayerOpacity } from '../../services/mapUtils';
+import { toggleLayerVisibility, setInteractions, setLayerOpacity } from '../../services/mapUtils';
 import LayersTreeProps from '../../propTypes/LayersTreePropTypes';
 import DefaultMapComponent from './components/Map';
 import MapNavigation from './components/MapNavigation';
@@ -143,72 +143,7 @@ export class WidgetMap extends React.Component {
   async setInteractions () {
     const map = await this.map;
     const { interactions } = this.props;
-
-    if (this.mapInteractionsListeners) {
-      this.mapInteractionsListeners.forEach(off => {
-        try {
-          off();
-        } catch (e) {
-          //
-        }
-      });
-    }
-
-    this.mapInteractionsListeners = [];
-
-    interactions.forEach(({ id, trigger = 'click', interaction, fn, ...config }) => {
-      const calls = [];
-      switch (interaction) {
-        case INTERACTION_DISPLAY_DETAILS:
-          calls.push({
-            callback: (layerId, features) => this.displayDetails({ features, ...config }),
-            trigger,
-            displayCursor: trigger === 'click',
-          });
-          break;
-        case INTERACTION_DISPLAY_TOOLTIP:
-          if (trigger === 'mouseover') {
-            calls.push({
-              callback: (layerId, features, event) =>
-                this.displayTooltip({ layerId, features, event, ...config }),
-              trigger: 'mousemove',
-            });
-            calls.push({
-              callback: (layerId, features, event) =>
-                this.hideTooltip({ layerId, features, event, ...config }),
-              trigger: 'mouseleave',
-            });
-          } else {
-            calls.push({
-              callback: (layerId, features, event) =>
-                this.displayTooltip({ layerId, features, event, ...config }),
-              trigger,
-              displayCursor: trigger === 'click',
-            });
-          }
-          break;
-        case INTERACTION_FN:
-          calls.push({
-            callback: fn,
-            trigger,
-            displayCursor: trigger === 'click',
-          });
-          break;
-        default:
-          return;
-      }
-      const listeners = calls.reduce((list, { callback, trigger: callTrigger, displayCursor }) => [
-        ...list,
-        ...addListenerOnLayer(
-          map,
-          id,
-          callback,
-          { displayCursor, trigger: callTrigger },
-        ),
-      ], []);
-
-      this.mapInteractionsListeners = this.mapInteractionsListeners.concat(listeners);
-    });
+    setInteractions({ map, interactions, callback: config => this.triggerInteraction(config) });
   }
 
   setLayerState = ({ layer, state: layerState }) => {
@@ -225,17 +160,18 @@ export class WidgetMap extends React.Component {
     return layerState || {};
   }
 
-  displayDetails = ({ features, template }) => {
+  displayDetails = ({ feature, template }) => {
     const { setDetails } = this.props;
-    setDetails({ features, template });
+    setDetails({ feature, template });
   }
 
   displayTooltip = async ({
     layerId,
-    features: [{ properties }] = [{}],
+    feature: { properties } = {},
     event: { lngLat },
     template,
     content,
+    unique,
   }) => {
     const map = await this.map;
     const container = document.createElement('div');
@@ -252,6 +188,12 @@ export class WidgetMap extends React.Component {
       this.popups.get(layerId).setLngLat([lngLat.lng, lngLat.lat]);
       return;
     }
+
+    if (unique) {
+      this.popups.forEach(popup => popup.remove());
+      this.popups.clear();
+    }
+
     const popup = new mapBoxGl.Popup();
     this.popups.set(layerId, popup);
     popup.setLngLat([lngLat.lng, lngLat.lat]);
@@ -271,6 +213,35 @@ export class WidgetMap extends React.Component {
       ...state,
       isLayersTreeVisible: !state.isLayersTreeVisible,
     }));
+  }
+
+  triggerInteraction ({ map, event, feature, layerId, interaction, eventType }) {
+    const { id, interaction: interactionType, fn, trigger = 'click', ...config } = interaction;
+
+    if ((trigger === 'mouseover' && !['mousemove', 'mouseleave'].includes(eventType)) ||
+        (trigger !== 'mouseover' && trigger !== eventType)) return;
+
+    switch (interactionType) {
+      case INTERACTION_DISPLAY_DETAILS:
+        this.displayDetails({ feature, ...config });
+        break;
+      case INTERACTION_DISPLAY_TOOLTIP:
+        if (eventType === 'mouseleave') {
+          this.hideTooltip({ layerId });
+        }
+        this.displayTooltip({
+          layerId,
+          feature,
+          event,
+          unique: ['mouseover', 'mousemove'].includes(trigger),
+          ...config,
+        });
+        break;
+      case INTERACTION_FN:
+        fn({ map, event, layerId, feature, widgetMapInstance: this });
+        break;
+      default:
+    }
   }
 
   initLayersState () {

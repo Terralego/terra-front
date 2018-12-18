@@ -49,7 +49,7 @@ const layersTree = [{
       layers: ['terralego-eae'],
     }, {
       label: 'par vocation',
-      layers: ['terralego-eae-vocation'],
+      layers: ['terralego-eae-sync'],
       legend: {
         items: [
           { label: 'Mixte', color: '#fe0200' },
@@ -144,6 +144,15 @@ stories.add('View Component', () => (
 * CP : {{insee_comm}}
 * Commune : à trouver
 `,
+          }, {
+            id: 'terralego-etablissements',
+            interaction: 'displayTooltip',
+            trigger: 'mouseover',
+            template: 'Etablissement',
+          }, {
+            id: 'terralego-etablissements',
+            interaction: 'displayDetails',
+            template: 'Etablissement',
           }],
           customStyle: {
             sources: [{
@@ -151,89 +160,185 @@ stories.add('View Component', () => (
               type: 'vector',
               url: 'http://dev-tiles-paca.makina-corpus.net/api/layer/__nogroup__/tilejson',
             }],
-            layers: [{
-              type: 'line',
-              source: 'terralego',
-              id: 'terralego-regions',
-              paint: {
-                'line-color': 'rgb(255, 0, 0)',
-                'line-width': 5,
-              },
-              'source-layer': 'regions',
-            }, {
-              type: 'line',
-              source: 'terralego',
-              id: 'terralego-departements',
-              paint: {
-                'line-color': 'hsl(265, 36%, 77%)',
-                'line-width': 2,
-              },
-              'source-layer': 'departements',
-            }, {
-              type: 'fill',
-              source: 'terralego',
-              id: 'terralego-scot',
-              paint: {
-                'fill-color': 'hsl(220, 100%, 45%)',
-              },
-              layout: {
-                visibility: 'none',
-              },
-              'source-layer': 'scot',
-            },
-            {
-              type: 'line',
-              source: 'terralego',
-              id: 'terralego-epci',
-              paint: {
-                'line-color': 'hsl(220, 100%, 45%)',
-              },
-              'source-layer': 'epci',
-            },
-            {
-              type: 'fill',
-              source: 'terralego',
-              id: 'terralego-eae',
-              paint: {
-                'fill-color': 'hsl(220, 100%, 45%)',
-              },
-              'source-layer': 'zae',
-            }, {
-              type: 'circle',
-              source: 'terralego',
-              id: 'terralego-etablissements',
-              paint: {
-                'circle-radius': {
-                  base: 1.75,
-                  stops: [[12, 2], [22, 180]],
+            layers: [
+              {
+                id: 'cadastre',
+                type: 'raster',
+                minzoom: 14,
+                source: {
+                  type: 'raster',
+                  tiles: [
+                    'https://gpp3-wxs.ign.fr/6ldzy836lrz6uea2qmzawkwe/geoportail/wmts?LAYER=CADASTRALPARCELS.PARCELS&EXCEPTIONS=text/xml&FORMAT=image/png&SERVICE=WMTS&VERSION=1.0.0&REQUEST=GetTile&STYLE=bdparcellaire_o&TILEMATRIXSET=PM&TILEMATRIX={z}&TILEROW={y}&TILECOL={x}',
+                  ],
+                  tileSize: 256,
                 },
+                layout: {
+                  visibility: 'none',
+                },
+              }, {
+                type: 'line',
+                source: 'terralego',
+                id: 'terralego-departements',
+                paint: {
+                  'line-color': '#66c2a4',
+                  'line-width': 2,
+                },
+                layout: {
+                  visibility: 'visible',
+                },
+                'source-layer': 'departements',
+              }, {
+                type: 'line',
+                source: 'terralego',
+                id: 'terralego-communes',
+                paint: {
+                  'line-color': '#66c2a4',
+                  'line-opacity': 0.4,
+                  'line-width': 1,
+                },
+                layout: {
+                  visibility: 'visible',
+                },
+                'source-layer': 'communes',
+              }, {
+                type: 'line',
+                source: 'terralego',
+                id: 'terralego-scot',
+                paint: {
+                  'line-color': '#fe9929',
+                  'line-width': 1,
+                },
+                layout: {
+                  visibility: 'none',
+                },
+                'source-layer': 'scot',
+              }, {
+                type: 'line',
+                source: 'terralego',
+                id: 'terralego-epci',
+                paint: {
+                  'line-color': '#f768a1',
+                  'line-width': 2,
+                },
+                layout: {
+                  visibility: 'none',
+                },
+                'source-layer': 'epci',
               },
-              'source-layer': 'etablissements',
-            }, {
-              type: 'fill',
-              source: 'terralego',
-              id: 'terralego-eae-vocation',
-              layout: {
-                visibility: 'visible',
+              {
+                type: 'fill',
+                source: 'terralego',
+                id: 'terralego-eae',
+                layout: {
+                  visibility: 'visible',
+                },
+                paint: {
+                  'fill-color': '#41b6c4',
+                  'fill-opacity': 0.4,
+                },
+                'source-layer': 'zae',
               },
-              paint: {
-                'fill-color': [
-                  'match',
-                  ['get', 'voc_synth'],
-                  'Mixte', '#fe0200',
-                  'Tertiaire supérieur', '#6fab46',
-                  'Commerce de gros/Logistique', '#fec000',
-                  'Construction', '#a4a6a4',
-                  'Activités supports', '#8ea8db',
-                  'Industrie', '#245e91',
-                  'Commerce de détail', '#ec7c31',
-                  'Services aux particuliers', '#9e470e',
-                  '#6a89cc',
-                ],
-                'fill-opacity': 0.8,
+              {
+                type: 'fill',
+                source: 'terralego',
+                id: 'terralego-eae-sync',
+                layout: {
+                  visibility: 'none',
+                },
+                paint: {
+                  'fill-color': [
+                    'match',
+                    ['get', 'voc_synth'],
+                    'Mixte', '#fe0200',
+                    'Tertiaire supérieur', '#6fab46',
+                    'Commerce de gros/Logistique', '#fec000',
+                    'Construction', '#a4a6a4',
+                    'Activités supports', '#8ea8db',
+                    'Industrie', '#245e91',
+                    'Commerce de détail', '#ec7c31',
+                    'Services aux particuliers', '#9e470e',
+                    '#6a89cc',
+                  ],
+                  'fill-opacity': 0.8,
+                },
+                'source-layer': 'zae',
               },
-              'source-layer': 'zae',
-            }],
+              {
+                type: 'circle',
+                source: 'terralego',
+                id: 'terralego-eae-employment',
+                layout: {
+                  visibility: 'none',
+                },
+                paint: {
+                  'circle-radius': [
+                    'interpolate', ['linear'], ['zoom'],
+                    8,
+                    ['case', ['has', 'nb_emplois'],
+                      [
+                        'case',
+                        ['<', ['get', 'nb_emplois'], 600],
+                        3,
+                        ['<', ['get', 'nb_emplois'], 2300],
+                        6,
+                        ['<', ['get', 'nb_emplois'], 5200],
+                        9,
+                        ['<', ['get', 'nb_emplois'], 12000],
+                        12,
+                        15,
+                      ],
+                      0],
+                    16,
+                    ['case', ['has', 'nb_emplois'],
+                      [
+                        'case',
+                        ['<', ['get', 'nb_emplois'], 600],
+                        30,
+                        ['<', ['get', 'nb_emplois'], 2300],
+                        60,
+                        ['<', ['get', 'nb_emplois'], 5200],
+                        90,
+                        ['<', ['get', 'nb_emplois'], 12000],
+                        120,
+                        150,
+                      ],
+                      0],
+                  ],
+                  'circle-color': [
+                    'case',
+                    ['has', 'nb_emplois'],
+                    [
+                      'case',
+                      ['<', ['get', 'nb_emplois'], 600],
+                      '#ffffb2',
+                      ['<', ['get', 'nb_emplois'], 2300],
+                      '#fecc5c',
+                      ['<', ['get', 'nb_emplois'], 5200],
+                      '#fd8c3c',
+                      ['<', ['get', 'nb_emplois'], 12000],
+                      '#f03b1f',
+                      '#bd0226',
+                    ],
+                    '#fff',
+                  ],
+                },
+                'source-layer': 'zae-centroid',
+              }, {
+                type: 'fill',
+                source: 'terralego',
+                id: 'terralego-industrie',
+                paint: {
+                  'fill-color': '#ae8964',
+                  'fill-opacity': 0.4,
+                },
+                'source-layer': 'territoire_industrie',
+              }, {
+                type: 'circle',
+                source: 'terralego',
+                id: 'terralego-etablissements',
+                'source-layer': 'etablissements',
+              },
+            ],
           },
         }]}
       />

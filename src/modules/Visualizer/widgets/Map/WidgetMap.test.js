@@ -3,7 +3,7 @@ import renderer from 'react-test-renderer';
 import ReactDOM from 'react-dom';
 import mapboxGl from 'mapbox-gl';
 
-import { toggleLayerVisibility, setLayerOpacity } from '../../services/mapUtils';
+import { toggleLayerVisibility, setLayerOpacity, setInteractions } from '../../services/mapUtils';
 import WidgetMap, { INTERACTION_DISPLAY_DETAILS, INTERACTION_DISPLAY_TOOLTIP, INTERACTION_FN } from './WidgetMap';
 
 jest.mock('mapbox-gl', () => {
@@ -11,6 +11,7 @@ jest.mock('mapbox-gl', () => {
   Popup.prototype.setLngLat = jest.fn();
   Popup.prototype.setDOMContent = jest.fn();
   Popup.prototype.addTo = jest.fn();
+  Popup.prototype.remove = jest.fn();
   return {
     Popup,
   };
@@ -31,7 +32,7 @@ jest.mock('./components/Map', () => {
 jest.mock('../../services/mapUtils', () => ({
   toggleLayerVisibility: jest.fn(),
   setLayerOpacity: jest.fn(),
-  addListenerOnLayer: jest.fn((map, id, callback) => [{ map, id, callback }]),
+  setInteractions: jest.fn(),
 }));
 jest.mock('react-dom', () => {
   const mockedElement = {};
@@ -171,77 +172,210 @@ describe('Interactions', () => {
   });
 
   it('should set interactions', async done => {
-    const customFn = jest.fn();
+    const interactions = [];
     const instance = new WidgetMap({
-      interactions: [{
-        id: 'foo',
-        interaction: INTERACTION_DISPLAY_DETAILS,
-      }, {
-        id: 'bar',
-        interaction: INTERACTION_DISPLAY_TOOLTIP,
-      }, {
-        id: 'foo',
-        interaction: INTERACTION_DISPLAY_TOOLTIP,
-        trigger: 'mouseover',
-      }, {
-        id: 'foo',
-        interaction: INTERACTION_FN,
-        fn: customFn,
-      }, {
-        id: 'foo',
-        interaction: 'invalid interaction',
-      }],
+      interactions,
     });
     instance.map = {};
-    instance.displayDetails = jest.fn();
-    instance.displayTooltip = jest.fn();
-    instance.hideTooltip = jest.fn();
+    instance.triggerInteraction = () => null;
 
     instance.setInteractions();
     await true;
 
-    const { mapInteractionsListeners } = instance;
-    expect(mapInteractionsListeners.length).toBe(5);
-    mapInteractionsListeners[0].callback();
-    expect(instance.displayDetails).toHaveBeenCalled();
-    instance.displayTooltip.mockClear();
-    mapInteractionsListeners[1].callback();
-    expect(instance.displayTooltip).toHaveBeenCalled();
-    instance.displayTooltip.mockClear();
-    mapInteractionsListeners[2].callback();
-    expect(instance.displayTooltip).toHaveBeenCalled();
-    instance.displayTooltip.mockClear();
-    mapInteractionsListeners[3].callback();
-    expect(instance.hideTooltip).toHaveBeenCalled();
-    instance.displayTooltip.mockClear();
-    mapInteractionsListeners[4].callback();
-    expect(customFn).toHaveBeenCalled();
+    expect(setInteractions).toHaveBeenCalled();
+    const {
+      map: configMap,
+      interactions: configInteractions,
+      callback: configCallback,
+    } = setInteractions.mock.calls[0][0];
+    expect(configMap).toBe(instance.map);
+    expect(configInteractions).toBe(interactions);
+
+    instance.triggerInteraction = jest.fn();
+    const config = {};
+    configCallback(config);
+    expect(instance.triggerInteraction).toHaveBeenCalledWith(config);
     done();
   });
 
-  it('should stop interactions', async done => {
+  it('should not trigger interaction', () => {
+    const interactions = [];
     const instance = new WidgetMap({
-      interactions: [],
+      interactions,
     });
-    const mapInteractionsListeners = [jest.fn(), jest.fn(), jest.fn()];
-    instance.mapInteractionsListeners = mapInteractionsListeners;
-    instance.map = {};
-    instance.setInteractions();
-    await true;
-    expect(mapInteractionsListeners[0]).toHaveBeenCalled();
-    expect(mapInteractionsListeners[1]).toHaveBeenCalled();
-    expect(mapInteractionsListeners[2]).toHaveBeenCalled();
-    expect(instance.mapInteractionsListeners).toEqual([]);
-    done();
+    const map = {};
+    instance.displayDetails = jest.fn();
+    instance.triggerInteraction({
+      map,
+      event: {},
+      feature: {},
+      layerId: 'foo',
+      interaction: {
+        id: 'foo',
+        interaction: INTERACTION_DISPLAY_DETAILS,
+        template: 'template',
+      },
+      eventType: 'mousedown',
+    });
+    expect(instance.displayDetails).not.toHaveBeenCalled();
+  });
+
+  it('should trigger displayDetails interaction', () => {
+    const interactions = [];
+    const instance = new WidgetMap({
+      interactions,
+    });
+    const map = {};
+    instance.displayDetails = jest.fn();
+    instance.triggerInteraction({
+      map,
+      event: {},
+      feature: {},
+      layerId: 'foo',
+      interaction: {
+        id: 'foo',
+        interaction: INTERACTION_DISPLAY_DETAILS,
+        template: 'template',
+        trigger: 'click',
+      },
+      eventType: 'click',
+    });
+    expect(instance.displayDetails).toHaveBeenCalledWith({
+      feature: {},
+      template: 'template',
+    });
+  });
+
+  it('should trigger displayDetails interaction on mouseover', () => {
+    const interactions = [];
+    const instance = new WidgetMap({
+      interactions,
+    });
+    const map = {};
+    instance.displayDetails = jest.fn();
+    instance.triggerInteraction({
+      map,
+      event: {},
+      feature: {},
+      layerId: 'foo',
+      interaction: {
+        id: 'foo',
+        interaction: INTERACTION_DISPLAY_DETAILS,
+        template: 'template',
+        trigger: 'mouseover',
+      },
+      eventType: 'mousemove',
+    });
+    expect(instance.displayDetails).toHaveBeenCalledWith({
+      feature: {},
+      template: 'template',
+    });
+  });
+
+  it('should trigger displayTooltip interaction', () => {
+    const interactions = [];
+    const instance = new WidgetMap({
+      interactions,
+    });
+    const map = {};
+    instance.displayTooltip = jest.fn();
+    instance.triggerInteraction({
+      map,
+      event: {},
+      feature: {},
+      layerId: 'foo',
+      interaction: {
+        id: 'foo',
+        interaction: INTERACTION_DISPLAY_TOOLTIP,
+        template: 'template',
+        trigger: 'click',
+      },
+      eventType: 'click',
+    });
+    expect(instance.displayTooltip).toHaveBeenCalled();
+  });
+
+  it('should trigger hideTooltip interaction', () => {
+    const interactions = [];
+    const instance = new WidgetMap({
+      interactions,
+    });
+    const map = {};
+    instance.hideTooltip = jest.fn();
+    instance.triggerInteraction({
+      map,
+      event: {},
+      feature: {},
+      layerId: 'foo',
+      interaction: {
+        id: 'foo',
+        interaction: INTERACTION_DISPLAY_TOOLTIP,
+        template: 'template',
+        trigger: 'mouseover',
+      },
+      eventType: 'mouseleave',
+    });
+    expect(instance.hideTooltip).toHaveBeenCalled();
+  });
+
+  it('should trigger function interaction', () => {
+    const interactions = [];
+    const instance = new WidgetMap({
+      interactions,
+    });
+    const map = {};
+    const fn = jest.fn();
+    instance.triggerInteraction({
+      map,
+      event: {},
+      feature: {},
+      layerId: 'foo',
+      interaction: {
+        id: 'foo',
+        interaction: INTERACTION_FN,
+        fn,
+      },
+      eventType: 'click',
+    });
+    expect(fn).toHaveBeenCalledWith({
+      map,
+      event: {},
+      layerId: 'foo',
+      feature: {},
+      widgetMapInstance: instance,
+    });
+  });
+
+  it('should trigger nothing', () => {
+    const interactions = [];
+    const instance = new WidgetMap({
+      interactions,
+    });
+    const map = {};
+    instance.displayDetails = jest.fn();
+    instance.displayTooltip = jest.fn();
+    instance.triggerInteraction({
+      map,
+      event: {},
+      feature: {},
+      layerId: 'foo',
+      interaction: {
+        id: 'foo',
+        interaction: 'random',
+      },
+      eventType: 'click',
+    });
+    expect(instance.displayDetails).not.toHaveBeenCalled();
+    expect(instance.displayTooltip).not.toHaveBeenCalled();
   });
 
   it('should display details', () => {
     const setDetails = jest.fn();
     const instance = new WidgetMap({ setDetails });
-    const params = { features: {}, template: {} };
+    const params = { feature: {}, template: {} };
     instance.displayDetails(params);
     expect(setDetails).toHaveBeenCalledWith({
-      features: params.features, template: params.template,
+      feature: params.feature, template: params.template,
     });
   });
 
@@ -255,7 +389,9 @@ describe('Interactions', () => {
       },
       template: 'bar',
     });
+
     await true;
+
     expect(ReactDOM.render).toHaveBeenCalled();
     expect(mapboxGl.Popup.prototype.setLngLat).toHaveBeenCalledWith([1, 2]);
     expect(mapboxGl.Popup.prototype.setDOMContent).toHaveBeenCalled();
@@ -278,6 +414,47 @@ describe('Interactions', () => {
     expect(mapboxGl.Popup.prototype.setLngLat).toHaveBeenCalledWith([3, 4]);
     expect(mapboxGl.Popup.prototype.setDOMContent).not.toHaveBeenCalled();
     expect(mapboxGl.Popup.prototype.addTo).not.toHaveBeenCalled();
+
+    done();
+  });
+
+  it('should display only one tooltips', async done => {
+    const instance = new WidgetMap({});
+    instance.map = {};
+
+    instance.displayTooltip({
+      layerId: 'foo',
+      event: {
+        lngLat: { lng: 1, lat: 2 },
+      },
+      template: 'bar',
+    });
+    await true;
+
+    instance.displayTooltip({
+      layerId: 'bar',
+      event: {
+        lngLat: { lng: 1, lat: 2 },
+      },
+      template: 'bar',
+    });
+    await true;
+
+    expect(instance.popups.size).toBe(2);
+
+    instance.displayTooltip({
+      layerId: 'foobar',
+      event: {
+        lngLat: { lng: 1, lat: 2 },
+      },
+      template: 'bar',
+      unique: true,
+    });
+
+    await true;
+
+    expect(instance.popups.size).toBe(1);
+    expect(mapboxGl.Popup.prototype.remove).toHaveBeenCalledTimes(2);
 
     done();
   });
