@@ -5,6 +5,7 @@ Array [
   "LayerTree Button",
   <div
     className="map-navigation__content"
+    id="map-navigation__content-42"
   >
     <p>
       LayersTree
@@ -13,6 +14,7 @@ Array [
   "LayerTree Button",
   <div
     className="map-navigation__content"
+    id="map-navigation__content-42"
   >
     <p>
       LayersTree
