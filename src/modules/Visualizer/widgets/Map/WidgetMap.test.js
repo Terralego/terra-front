@@ -8,6 +8,10 @@ import WidgetMap, { INTERACTION_DISPLAY_DETAILS, INTERACTION_DISPLAY_TOOLTIP, IN
 
 jest.mock('mapbox-gl', () => {
   function Popup () {}
+  Popup.prototype.mockedListeners = [];
+  Popup.prototype.once = jest.fn((event, listener) => {
+    Popup.prototype.mockedListeners.push({ event, listener });
+  });
   Popup.prototype.setLngLat = jest.fn();
   Popup.prototype.setDOMContent = jest.fn();
   Popup.prototype.addTo = jest.fn();
@@ -407,12 +411,14 @@ describe('Interactions', () => {
     await true;
 
     expect(ReactDOM.render).toHaveBeenCalled();
+    expect(mapboxGl.Popup.prototype.once).toHaveBeenCalled();
     expect(mapboxGl.Popup.prototype.setLngLat).toHaveBeenCalledWith([1, 2]);
     expect(mapboxGl.Popup.prototype.setDOMContent).toHaveBeenCalled();
     expect(mapboxGl.Popup.prototype.addTo).toHaveBeenCalledWith(instance.map);
     mapboxGl.Popup.prototype.setLngLat.mockClear();
     mapboxGl.Popup.prototype.setDOMContent.mockClear();
     mapboxGl.Popup.prototype.addTo.mockClear();
+    mapboxGl.Popup.prototype.once.mockClear();
 
     instance.displayTooltip({
       layerId: 'foo',
@@ -425,9 +431,13 @@ describe('Interactions', () => {
       template: 'bar',
     });
     await true;
+    expect(mapboxGl.Popup.prototype.once).not.toHaveBeenCalled();
     expect(mapboxGl.Popup.prototype.setLngLat).toHaveBeenCalledWith([3, 4]);
     expect(mapboxGl.Popup.prototype.setDOMContent).not.toHaveBeenCalled();
     expect(mapboxGl.Popup.prototype.addTo).not.toHaveBeenCalled();
+
+    mapboxGl.Popup.prototype.mockedListeners[0].listener();
+    expect(instance.popups.has('foo')).toBe(false);
 
     done();
   });
