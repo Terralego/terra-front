@@ -1,10 +1,10 @@
 .layerNode-container {
   width: calc(100% - 0.8rem);
   padding: 0 0 0 8px;
-  border-right: 1px solid rgba(0,0,0,0.2);
-  border-left: 1px solid rgba(0,0,0,0.2);
+  border-right: 1px solid rgba(0, 0, 0, 0.2);
+  border-left: 1px solid rgba(0, 0, 0, 0.2);
   border-radius: 0px;
-  font-family: SFProDisplay-light;
+  font-family: "SFProText-Light", Arial, Helvetica, sans-serif;
   font-size: 14px;
   color: #F5F8FA;
   letter-spacing: 1px;
@@ -43,7 +43,7 @@
 .layers-tree-group {
   margin-bottom: 2rem;
   H5 {
-    font-family: SFProText-Medium;
+    font-family: "SFProText-Medium", Arial, Helvetica, sans-serif;
     font-size: 14px;
     letter-spacing: 0.75px;
     color: #F5F8FA;
