@@ -3,7 +3,7 @@ import renderer from 'react-test-renderer';
 import LayersTreeGroup from './LayersTreeGroup';
 
 jest.mock('@blueprintjs/core', () => ({
-  H4 ({ children }) {
+  H5 ({ children }) {
     return children;
   },
 }));

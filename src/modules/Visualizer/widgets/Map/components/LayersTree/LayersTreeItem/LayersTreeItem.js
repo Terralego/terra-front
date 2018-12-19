@@ -31,7 +31,7 @@ export class LayersTreeItem extends React.Component {
     return (
       <Card
         className={`layerNode-container ${(isActive) ? '' : 'options-hidden'}`}
-        elevation={Elevation.TWO}
+        elevation={Elevation.ZERO}
         style={{ opacity: isActive ? 1 : 0.7 }}
       >
         <div className="layerNode-label-container">
