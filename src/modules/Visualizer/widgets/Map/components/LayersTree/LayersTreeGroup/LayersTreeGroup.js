@@ -1,11 +1,11 @@
 import React from 'react';
-import { H4 } from '@blueprintjs/core';
+import { H5 } from '@blueprintjs/core';
 
 import LayersTreeItem from '../LayersTreeItem';
 
 export const LayersTreeGroup = ({ title, layers }) => (
   <div className="layers-tree-group">
-    <H4>{title}</H4>
+    <H5>{title}</H5>
     {layers.map(layer => (
       <LayersTreeItem
         key={layer.label}

@@ -1,10 +1,21 @@
 .layerNode-container {
-  padding: 4px 4px 4px 8px;
-  border: 1px solid #293742;
-  font-size: 16px;
-  font-weight: 200;
+  width: calc(100% - 0.8rem);
+  padding: 0 0 0 8px;
+  border-right: 1px solid rgba(0,0,0,0.2);
+  border-left: 1px solid rgba(0,0,0,0.2);
   border-radius: 0px;
-  margin-bottom: .3rem;
+  font-family: SFProDisplay-light;
+  font-size: 14px;
+  color: #F5F8FA;
+  letter-spacing: 1px;
+  line-height: 21px;
+
+  &:last-of-type {
+    border-bottom: 1px solid rgba(32, 43, 51, 0.5);
+  }
+  &:first-of-type {
+    border-top: 1px solid rgba(32, 43, 51, 0.5);
+  }
 }
 
 .layerNode-header {
@@ -31,6 +42,14 @@
 
 .layers-tree-group {
   margin-bottom: 2rem;
+  H5 {
+    font-family: SFProText-Medium;
+    font-size: 14px;
+    letter-spacing: 0.75px;
+    color: #F5F8FA;
+    line-height: 18px;
+    font-weight: 500;
+  }
 }
 
 .layers-tree-subitems-list {
