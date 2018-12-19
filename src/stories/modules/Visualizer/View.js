@@ -42,7 +42,7 @@ const layersTree = [{
   layers: [{
     label: 'EAE',
     initialState: {
-      active: true,
+      active: false,
     },
     sublayers: [{
       label: 'Toutes',

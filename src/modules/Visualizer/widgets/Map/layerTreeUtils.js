@@ -28,12 +28,18 @@ export function initLayersStateAction (layersTree) {
 export function setLayerStateAction (layer, layerState, prevLayersTreeState) {
   const layersTreeState = new Map(prevLayersTreeState);
   const prevLayerState = layersTreeState.get(layer);
+  const newLayerState = { ...layerState };
 
   if (!prevLayerState) return prevLayersTreeState;
 
+  if (prevLayerState.sublayers && !prevLayerState.sublayers.find(sl => sl)) {
+    newLayerState.sublayers = [...prevLayerState.sublayers];
+    newLayerState.sublayers[0] = true;
+  }
+
   layersTreeState.set(layer, {
     ...prevLayerState,
-    ...layerState,
+    ...newLayerState,
   });
   return layersTreeState;
 }

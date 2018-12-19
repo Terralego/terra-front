@@ -72,6 +72,20 @@ it('should init layers state', () => {
 
 
 it('should set layer state', () => {
+  const newLayersTreeState = setLayerStateAction(
+    layersTree[3].layers[0],
+    { active: true },
+    initialLayersTreeState,
+  );
+  expect(newLayersTreeState).not.toBe(initialLayersTreeState);
+  expect(newLayersTreeState.get(layersTree[3].layers[0])).toEqual({
+    active: true,
+    opacity: 1,
+    sublayers: [true, false],
+  });
+});
+
+it('should set layer state and initial sublayers', () => {
   const newLayersTreeState1 = setLayerStateAction(
     layersTree[0],
     { active: false },
