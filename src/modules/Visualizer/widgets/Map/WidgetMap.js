@@ -200,6 +200,7 @@ export class WidgetMap extends React.Component {
     }
 
     const popup = new mapBoxGl.Popup();
+    popup.once('close', () => this.popups.delete(layerId));
     this.popups.set(layerId, popup);
     popup.setLngLat([lngLat.lng, lngLat.lat]);
     popup.setDOMContent(container);
