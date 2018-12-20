@@ -178,12 +178,14 @@ export class WidgetMap extends React.Component {
     content,
     unique,
   }) => {
+    const { history } = this.props;
     const map = await this.map;
     const container = document.createElement('div');
     ReactDOM.render(
       <MarkdownRenderer
         template={template}
         content={content}
+        history={history}
         {...properties}
       />,
       container,
