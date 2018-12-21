@@ -1,7 +1,7 @@
 import React from 'react';
 import { Icon } from '@blueprintjs/core';
 
-import MarkdownRenderer from '../MarkdownRenderer';
+import MarkdownRenderer from '../../../Template/MarkdownRenderer';
 
 export const Details = ({ visible, template, onClose = () => null, ...props }) => (
   <div className={`view-details ${visible ? 'view-details--visible' : ''}`}>

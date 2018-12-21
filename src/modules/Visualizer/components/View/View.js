@@ -1,7 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 
-import WidgetMap from '../../widgets/Map';
+import WidgetMap from '../../../Map/InteractiveMap/WidgetMap';
 import Details from '../Details';
 
 import './styles.scss';

@@ -3,7 +3,7 @@ import renderer from 'react-test-renderer';
 import { shallow } from 'enzyme';
 import { View } from './View';
 
-import WidgetMap from '../../widgets/Map';
+import WidgetMap from '../../../Map/InteractiveMap/WidgetMap';
 
 jest.mock('../../widgets/Map', () => jest.fn(() => null));
 

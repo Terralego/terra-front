@@ -1,6 +1,6 @@
 import React from 'react';
 import MapNavigation from './MapNavigation';
-import { connectTerraFrontProvider } from '../../../../../TerraFrontProvider';
+import { connectTerraFrontProvider } from '../../../../TerraFrontProvider';
 
 export * from './MapNavigation';
 export default connectTerraFrontProvider({

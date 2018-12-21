@@ -2,7 +2,7 @@ import React from 'react';
 import { storiesOf } from '@storybook/react';
 import { text, boolean } from '@storybook/addon-knobs';
 
-import { MarkdownRenderer } from '../../../modules/Visualizer';
+import { MarkdownRenderer } from '../../../modules/Template/MarkdownRenderer';
 
 const stories = storiesOf('Modules/Visualizer', module);
 

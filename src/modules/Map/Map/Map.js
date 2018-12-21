@@ -3,7 +3,7 @@ import mapBoxGl from 'mapbox-gl';
 import PropTypes from 'prop-types';
 import 'mapbox-gl/dist/mapbox-gl.css';
 
-import { capitalize } from '../../../../../../utils/strings';
+import { capitalize } from '../../../utils/strings';
 
 import './Map.scss';
 

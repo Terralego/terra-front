@@ -6,12 +6,11 @@ import debounce from 'lodash.debounce';
 
 import { context } from './connect';
 import { initLayersStateAction, selectSublayerAction, setLayerStateAction } from './layerTreeUtils';
-import { toggleLayerVisibility, setInteractions, setLayerOpacity } from '../../services/mapUtils';
-import LayersTreeProps from '../../propTypes/LayersTreePropTypes';
-import DefaultMapComponent from './components/Map';
+import { toggleLayerVisibility, setInteractions, setLayerOpacity } from './services/mapUtils';
+import DefaultMapComponent from '../Map/Map';
 import MapNavigation from './components/MapNavigation';
 import BackgroundStyles from './components/BackgroundStyles';
-import MarkdownRenderer from '../../components/MarkdownRenderer';
+import MarkdownRenderer from '../../../stories/modules/Visualizer/MarkdownRenderer';
 import Legend from './components/Legend';
 
 
@@ -25,7 +24,13 @@ const { Provider } = context;
 
 export class WidgetMap extends React.Component {
   static propTypes = {
-    layersTree: LayersTreeProps,
+    layersTree: PropTypes.shape({
+      label: PropTypes.string.isRequired,
+      layers: PropTypes.arrayOf(PropTypes.string),
+      initialState: PropTypes.shape({
+        active: PropTypes.bool,
+      }),
+    }),
     backgroundStyle: PropTypes.oneOfType([
       PropTypes.arrayOf(PropTypes.objectOf(PropTypes.string)),
       PropTypes.string,
