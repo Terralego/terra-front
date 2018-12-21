@@ -153,7 +153,6 @@ export class Map extends React.Component {
 
   createLayers () {
     const { map, customStyle: { sources = [], layers = [] } } = this.props;
-
     sources.forEach(({ id, ...sourceAttrs }) => map.addSource(id, sourceAttrs));
     layers.forEach(layer => map.addLayer(layer));
   }

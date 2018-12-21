@@ -1,7 +1,8 @@
 import React from 'react';
+
 import { select, number, array, object } from '@storybook/addon-knobs';
 
-import Map from '../../../../../modules/Map/Map';
+import Map from '../../../modules/Map/Map';
 
 export default () => (
   <div style={{ width: '100vw', height: '100vh' }}>

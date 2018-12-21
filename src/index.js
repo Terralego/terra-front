@@ -1,8 +1,9 @@
 import TerraFrontProvider from './modules/TerraFrontProvider';
 import * as Api from './modules/Api';
 import * as Auth from './modules/Auth';
-import * as Visualizer from './modules/Visualizer';
+import * as Map from './modules/Map';
 
-export { Api, Auth, Visualizer };
+
+export { Api, Auth, Map };
 
 export default TerraFrontProvider;

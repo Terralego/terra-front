@@ -1,17 +1,17 @@
 import React from 'react';
-import { Icon } from '@blueprintjs/core';
+import { Button } from '@blueprintjs/core';
 
-import MarkdownRenderer from '../../../Template/MarkdownRenderer';
+import MarkdownRenderer from '../../../../Template/MarkdownRenderer';
+import './styles.scss';
 
 export const Details = ({ visible, template, onClose = () => null, ...props }) => (
   <div className={`view-details ${visible ? 'view-details--visible' : ''}`}>
-    <button
+    <Button
       type="button"
       className="view-details__close-button"
       onClick={onClose}
-    >
-      <Icon icon="cross" />
-    </button>
+      icon="cross"
+    />
     {visible && (
       <MarkdownRenderer
         template={template}

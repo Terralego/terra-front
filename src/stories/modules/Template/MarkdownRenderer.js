@@ -4,7 +4,7 @@ import { text, boolean } from '@storybook/addon-knobs';
 
 import { MarkdownRenderer } from '../../../modules/Template/MarkdownRenderer';
 
-const stories = storiesOf('Modules/Visualizer', module);
+const stories = storiesOf('Modules/Template', module);
 
 stories.add('MarkdownRenderer Component', () => (
   <MarkdownRenderer

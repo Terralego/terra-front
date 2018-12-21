@@ -3,8 +3,8 @@ import renderer from 'react-test-renderer';
 import ReactDOM from 'react-dom';
 import mapboxGl from 'mapbox-gl';
 
-import { toggleLayerVisibility, setLayerOpacity, setInteractions } from '../../services/mapUtils';
-import WidgetMap, { INTERACTION_DISPLAY_DETAILS, INTERACTION_DISPLAY_TOOLTIP, INTERACTION_FN } from './WidgetMap';
+import { toggleLayerVisibility, setLayerOpacity, setInteractions } from './services/mapUtils';
+import InteractiveMap, { INTERACTION_DISPLAY_DETAILS, INTERACTION_DISPLAY_TOOLTIP, INTERACTION_FN } from './InteractiveMap';
 
 jest.mock('mapbox-gl', () => {
   function Popup () {}
@@ -20,7 +20,7 @@ jest.mock('mapbox-gl', () => {
     Popup,
   };
 });
-jest.mock('./components/Map', () => {
+jest.mock('../Map', () => {
   // A class component is needed to accept the ref
   // eslint-disable-next-line global-require
   const { Component } = require('react');
@@ -52,7 +52,7 @@ jest.mock('./components/MapNavigation', () => () => <p>MapNavigation</p>);
 describe('snaphsots', () => {
   it('should render correctly', () => {
     const tree = renderer.create((
-      <WidgetMap
+      <InteractiveMap
         layersTree={[]}
       />
     )).toJSON();
@@ -61,7 +61,7 @@ describe('snaphsots', () => {
 
   it('should render correctly with a map navigation', () => {
     const tree = renderer.create((
-      <WidgetMap
+      <InteractiveMap
         layersTree={[{
           label: 'foo',
         }]}
@@ -72,7 +72,7 @@ describe('snaphsots', () => {
 
   it('should render correctly with hidden map navigation', () => {
     const tree = renderer.create((
-      <WidgetMap
+      <InteractiveMap
         layersTree={[{
           label: 'foo',
         }]}
@@ -83,7 +83,7 @@ describe('snaphsots', () => {
   });
 
   it('should display layerstree panel', () => {
-    const instance = new WidgetMap({});
+    const instance = new InteractiveMap({});
     let expected;
     instance.setState = jest.fn(stateFn => { expected = stateFn({ isLayersTreeVisible: true }); });
     instance.toggleLayersTree();
@@ -94,7 +94,7 @@ describe('snaphsots', () => {
 
   it('should render legends', () => {
     const tree = renderer.create((
-      <WidgetMap
+      <InteractiveMap
         layersTree={[{
           label: 'foo',
           initialState: {
@@ -112,7 +112,7 @@ describe('snaphsots', () => {
 
   it('should render background style selector', () => {
     const tree = renderer.create((
-      <WidgetMap
+      <InteractiveMap
         backgroundStyle={[{ label: 'foo', url: 'mapbox://foo' }, { label: 'bar', url: 'mapbox://bar' }]}
       />
     )).toJSON();
@@ -122,7 +122,7 @@ describe('snaphsots', () => {
 
 describe('map', () => {
   it('should wait for map loading', async done => {
-    const instance = new WidgetMap({});
+    const instance = new InteractiveMap({});
     const { map } = instance;
     let resolved = false;
     const mapObject = {};
@@ -143,21 +143,21 @@ describe('map', () => {
   });
 
   it('should select backgroundStyle', () => {
-    const instance = new WidgetMap({
+    const instance = new InteractiveMap({
       backgroundStyle: 'bar',
     });
     expect(instance.state.selectedBackgroundStyle).toBe('bar');
   });
 
   it('should select first backgroundStyle', () => {
-    const instance = new WidgetMap({
+    const instance = new InteractiveMap({
       backgroundStyle: [{ url: 'foo' }, { url: 'bar' }],
     });
     expect(instance.state.selectedBackgroundStyle).toBe('foo');
   });
 
   it('should change background style', () => {
-    const instance = new WidgetMap({});
+    const instance = new InteractiveMap({});
     instance.setState = jest.fn();
     instance.updateLayersTree = jest.fn();
     let expectedListener;
@@ -181,7 +181,7 @@ describe('map', () => {
 
 describe('Interactions', () => {
   it('should setInteraction on update', () => {
-    const instance = new WidgetMap({});
+    const instance = new InteractiveMap({});
     instance.setInteractions = jest.fn();
     instance.componentDidUpdate({}, {});
     expect(instance.setInteractions).not.toHaveBeenCalled();
@@ -191,7 +191,7 @@ describe('Interactions', () => {
 
   it('should set interactions', async done => {
     const interactions = [];
-    const instance = new WidgetMap({
+    const instance = new InteractiveMap({
       interactions,
     });
     instance.map = {};
@@ -218,7 +218,7 @@ describe('Interactions', () => {
 
   it('should not trigger interaction', () => {
     const interactions = [];
-    const instance = new WidgetMap({
+    const instance = new InteractiveMap({
       interactions,
     });
     const map = {};
@@ -240,7 +240,7 @@ describe('Interactions', () => {
 
   it('should trigger displayDetails interaction', () => {
     const interactions = [];
-    const instance = new WidgetMap({
+    const instance = new InteractiveMap({
       interactions,
     });
     const map = {};
@@ -266,7 +266,7 @@ describe('Interactions', () => {
 
   it('should trigger displayDetails interaction on mouseover', () => {
     const interactions = [];
-    const instance = new WidgetMap({
+    const instance = new InteractiveMap({
       interactions,
     });
     const map = {};
@@ -292,7 +292,7 @@ describe('Interactions', () => {
 
   it('should trigger displayTooltip interaction', () => {
     const interactions = [];
-    const instance = new WidgetMap({
+    const instance = new InteractiveMap({
       interactions,
     });
     const map = {};
@@ -315,7 +315,7 @@ describe('Interactions', () => {
 
   it('should trigger hideTooltip interaction', () => {
     const interactions = [];
-    const instance = new WidgetMap({
+    const instance = new InteractiveMap({
       interactions,
     });
     const map = {};
@@ -338,7 +338,7 @@ describe('Interactions', () => {
 
   it('should trigger function interaction', () => {
     const interactions = [];
-    const instance = new WidgetMap({
+    const instance = new InteractiveMap({
       interactions,
     });
     const map = {};
@@ -366,7 +366,7 @@ describe('Interactions', () => {
 
   it('should trigger nothing', () => {
     const interactions = [];
-    const instance = new WidgetMap({
+    const instance = new InteractiveMap({
       interactions,
     });
     const map = {};
@@ -389,7 +389,7 @@ describe('Interactions', () => {
 
   it('should display details', () => {
     const setDetails = jest.fn();
-    const instance = new WidgetMap({ setDetails });
+    const instance = new InteractiveMap({ setDetails });
     const params = { feature: {}, template: {} };
     instance.displayDetails(params);
     expect(setDetails).toHaveBeenCalledWith({
@@ -398,7 +398,7 @@ describe('Interactions', () => {
   });
 
   it('should display tooltips', async done => {
-    const instance = new WidgetMap({});
+    const instance = new InteractiveMap({});
     instance.map = {};
     instance.displayTooltip({
       layerId: 'foo',
@@ -443,7 +443,7 @@ describe('Interactions', () => {
   });
 
   it('should display only one tooltips', async done => {
-    const instance = new WidgetMap({});
+    const instance = new InteractiveMap({});
     instance.map = {};
 
     instance.displayTooltip({
@@ -484,7 +484,7 @@ describe('Interactions', () => {
   });
 
   it('should hide tooltip', () => {
-    const instance = new WidgetMap({});
+    const instance = new InteractiveMap({});
     const popup = {
       remove: jest.fn(),
     };
@@ -497,7 +497,7 @@ describe('Interactions', () => {
   });
 
   it('should get legends', () => {
-    const instance = new WidgetMap({}, {});
+    const instance = new InteractiveMap({}, {});
     instance.state.layersTreeState = new Map();
     const { layersTreeState } = instance.state;
     const legend1 = {
@@ -563,7 +563,7 @@ describe('Interactions', () => {
 
 describe('LayersTree', () => {
   it('should be a Map', () => {
-    const instance = new WidgetMap({});
+    const instance = new InteractiveMap({});
     expect(instance.state.layersTreeState instanceof Map).toBe(true);
   });
 
@@ -611,7 +611,7 @@ describe('LayersTree', () => {
         }],
       }],
     }];
-    const instance = new WidgetMap({ layersTree });
+    const instance = new InteractiveMap({ layersTree });
     let expected;
     instance.setState = jest.fn(stateFn => { expected = stateFn({ layersTreeState: new Map() }); });
     instance.initLayersState();
@@ -632,7 +632,7 @@ describe('LayersTree', () => {
 
   it('should update layersTreeState', () => {
     const layersTreeState = {};
-    const instance = new WidgetMap({});
+    const instance = new InteractiveMap({});
 
     instance.updateLayersTree = jest.fn();
     instance.state.layersTreeState = layersTreeState;
@@ -649,7 +649,7 @@ describe('LayersTree', () => {
     const layersTree = [{
       label: 'label',
     }];
-    const instance = new WidgetMap({});
+    const instance = new InteractiveMap({});
     let expected;
     const initialState = {
       layersTreeState: new Map(),
@@ -670,7 +670,7 @@ describe('LayersTree', () => {
     const layersTree = [{
       label: 'label',
     }];
-    const instance = new WidgetMap({});
+    const instance = new InteractiveMap({});
     let expected;
     const initialState = {
       layersTreeState: new Map(),
@@ -690,7 +690,7 @@ describe('LayersTree', () => {
     const layersTree = [{
       label: 'label',
     }];
-    const instance = new WidgetMap({});
+    const instance = new InteractiveMap({});
     instance.state.layersTreeState = new Map();
     instance.state.layersTreeState.set(layersTree[0], {
       active: false,
@@ -710,7 +710,7 @@ describe('LayersTree', () => {
         label: 'sublayer2',
       }],
     }];
-    const instance = new WidgetMap({});
+    const instance = new InteractiveMap({});
     let expected;
     const initialState = {
       layersTreeState: new Map(),
@@ -736,7 +736,7 @@ describe('LayersTree', () => {
   });
 
   it('should update map as layers tree state', async done => {
-    const instance = new WidgetMap({});
+    const instance = new InteractiveMap({});
     instance.map = {};
 
     // Many layers

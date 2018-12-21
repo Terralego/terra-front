@@ -7,11 +7,12 @@ import debounce from 'lodash.debounce';
 import { context } from './connect';
 import { initLayersStateAction, selectSublayerAction, setLayerStateAction } from './layerTreeUtils';
 import { toggleLayerVisibility, setInteractions, setLayerOpacity } from './services/mapUtils';
-import DefaultMapComponent from '../Map/Map';
+import MapComponent from '../Map';
 import MapNavigation from './components/MapNavigation';
 import BackgroundStyles from './components/BackgroundStyles';
-import MarkdownRenderer from '../../../stories/modules/Visualizer/MarkdownRenderer';
+import MarkdownRenderer from '../../Template/MarkdownRenderer';
 import Legend from './components/Legend';
+import Details from './components/Details';
 
 
 import './styles.scss';
@@ -22,15 +23,26 @@ export const INTERACTION_FN = 'function';
 
 const { Provider } = context;
 
+const LayersTreeProps = PropTypes.shape({
+  label: PropTypes.string.isRequired,
+  layers: PropTypes.arrayOf(PropTypes.string),
+  initialState: PropTypes.shape({
+    active: PropTypes.bool,
+  }),
+});
+
+const LayersTreeGroupProps = PropTypes.shape({
+  group: PropTypes.string.isRequired,
+  layers: PropTypes.arrayOf(LayersTreeProps.isRequired),
+});
+
+
 export class WidgetMap extends React.Component {
   static propTypes = {
-    layersTree: PropTypes.shape({
-      label: PropTypes.string.isRequired,
-      layers: PropTypes.arrayOf(PropTypes.string),
-      initialState: PropTypes.shape({
-        active: PropTypes.bool,
-      }),
-    }),
+    layersTree: PropTypes.arrayOf(PropTypes.oneOfType([
+      LayersTreeProps,
+      LayersTreeGroupProps,
+    ])),
     backgroundStyle: PropTypes.oneOfType([
       PropTypes.arrayOf(PropTypes.objectOf(PropTypes.string)),
       PropTypes.string,
@@ -50,14 +62,12 @@ export class WidgetMap extends React.Component {
       // for INTERACTION_FN
       fn: PropTypes.func,
     })),
-    MapComponent: PropTypes.func,
     setDetails: PropTypes.func,
   };
 
   static defaultProps = {
     backgroundStyle: 'mapbox://styles/mapbox/light-v9',
     layersTree: [],
-    MapComponent: DefaultMapComponent,
     interactions: [],
     setDetails () {},
   };
@@ -171,8 +181,11 @@ export class WidgetMap extends React.Component {
   }
 
   displayDetails = ({ feature, template }) => {
-    const { setDetails } = this.props;
-    setDetails({ feature, template });
+    this.setState({ details: { feature, template } });
+  }
+
+  closeDetails = () => {
+    this.setState({ details: null });
   }
 
   displayTooltip = async ({
@@ -307,7 +320,6 @@ export class WidgetMap extends React.Component {
   render () {
     const {
       LayersTreeComponent,
-      MapComponent,
       layersTree,
       style,
       interactions,
@@ -315,7 +327,7 @@ export class WidgetMap extends React.Component {
       ...mapProps
     } = this.props;
 
-    const { selectedBackgroundStyle, isLayersTreeVisible } = this.state;
+    const { selectedBackgroundStyle, isLayersTreeVisible, details } = this.state;
     const {
       mapRef,
       getLayerState,
@@ -324,12 +336,15 @@ export class WidgetMap extends React.Component {
       legends,
       onBackgroundChange,
       toggleLayersTree,
+      closeDetails,
     } = this;
     const contextValue = {
       getLayerState,
       setLayerState,
       selectSublayer,
     };
+    const visible = !!details;
+    const { feature: { properties } = {}, template = '' } = details || {};
 
     return (
       <Provider value={contextValue}>
@@ -367,6 +382,14 @@ export class WidgetMap extends React.Component {
                   />
                 ))}
             </div>
+          )}
+          {!!details && (
+            <Details
+              visible={visible}
+              template={template}
+              onClose={closeDetails}
+              {...properties}
+            />
           )}
         </div>
       </Provider>

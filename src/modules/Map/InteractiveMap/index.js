@@ -1,5 +1,5 @@
-import { connectVisualizerProvider } from '../../Visualizer/services/context';
-import WidgetMap from './WidgetMap';
+import { connectVisualizerProvider } from ".";
+import InteractiveMap from './InteractiveMap';
 
-export * from './WidgetMap';
-export default connectVisualizerProvider('setDetails')(WidgetMap);
+export * from './InteractiveMap';
+export default connectVisualizerProvider('setDetails')(InteractiveMap);
