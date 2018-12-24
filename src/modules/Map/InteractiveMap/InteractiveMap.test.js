@@ -403,6 +403,13 @@ describe('Interactions', () => {
     });
   });
 
+  it('should close details', () => {
+    const details = {};
+    const instance = new InteractiveMap({ details });
+    instance.setState = jest.fn();
+    instance.closeDetails(null);
+  });
+
   it('should display tooltips', async done => {
     const instance = new InteractiveMap({});
     instance.map = {};

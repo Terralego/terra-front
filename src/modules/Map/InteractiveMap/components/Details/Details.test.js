@@ -43,15 +43,15 @@ it('should close', () => {
       onClose={onClose}
     />
   ));
-  console.log(wrapper.length);
-  wrapper.find('button').props().onClick();
+  wrapper.find('Button').props().onClick();
   expect(onClose).toHaveBeenCalled();
 });
 
-it('should close without onClose and without crashing', () => {
+it('should do nothing', () => {
+  const onClose = jest.fn();
   const wrapper = shallow((
     <Details />
   ));
-  wrapper.find('button').props().onClick();
-  expect(wrapper.find('button')).toBeDefined();
+  wrapper.find('Button').props().onClick();
+  expect(onClose).not.toHaveBeenCalled();
 });
