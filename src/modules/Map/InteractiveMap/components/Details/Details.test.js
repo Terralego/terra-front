@@ -3,6 +3,12 @@ import renderer from 'react-test-renderer';
 import { shallow } from 'enzyme';
 import { Details } from './Details';
 
+jest.mock('@blueprintjs/core', () => ({
+  Button () {
+    return <p>Button</p>;
+  },
+}));
+
 it('should render correctly with content', () => {
   const tree = renderer.create((
     <Details
@@ -37,6 +43,7 @@ it('should close', () => {
       onClose={onClose}
     />
   ));
+  console.log(wrapper.length);
   wrapper.find('button').props().onClick();
   expect(onClose).toHaveBeenCalled();
 });

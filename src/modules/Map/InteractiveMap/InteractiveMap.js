@@ -62,14 +62,12 @@ export class WidgetMap extends React.Component {
       // for INTERACTION_FN
       fn: PropTypes.func,
     })),
-    setDetails: PropTypes.func,
   };
 
   static defaultProps = {
     backgroundStyle: 'mapbox://styles/mapbox/light-v9',
     layersTree: [],
     interactions: [],
-    setDetails () {},
   };
 
   mapRef = React.createRef();
@@ -370,7 +368,6 @@ export class WidgetMap extends React.Component {
             {...mapProps}
             ref={mapRef}
             backgroundStyle={selectedBackgroundStyle}
-            onDetailsChange={this.onDetailsChange}
           />
           {!!legends.length && (
             <div className="widget-map__legends">

@@ -33,7 +33,7 @@ jest.mock('../Map', () => {
   }
   return MapComponent;
 });
-jest.mock('../../services/mapUtils', () => ({
+jest.mock('./services/mapUtils', () => ({
   toggleLayerVisibility: jest.fn(),
   setLayerOpacity: jest.fn(),
   setInteractions: jest.fn(),
@@ -388,12 +388,18 @@ describe('Interactions', () => {
   });
 
   it('should display details', () => {
-    const setDetails = jest.fn();
-    const instance = new InteractiveMap({ setDetails });
-    const params = { feature: {}, template: {} };
-    instance.displayDetails(params);
-    expect(setDetails).toHaveBeenCalledWith({
-      feature: params.feature, template: params.template,
+    const details = {};
+    const instance = new InteractiveMap({ details });
+    instance.setState = jest.fn();
+    instance.displayDetails({
+      feature: {
+        layer: {
+          id: 'foo',
+        },
+      },
+      template: {
+        title: 'bar',
+      },
     });
   });
 
