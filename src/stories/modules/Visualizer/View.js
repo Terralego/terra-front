@@ -146,7 +146,7 @@ export default () => (
       }, {
         id: 'terralego-etablissements',
         interaction: 'displayDetails',
-        template: 'Etablissement',
+        template: 'Etablissement -test',
       }]}
       customStyle={{
         sources: [{

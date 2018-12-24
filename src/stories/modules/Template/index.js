@@ -1,4 +1,5 @@
 import { storiesOf } from '@storybook/react';
+import { text, boolean } from '@storybook/addon-knobs';
 
 import MarkdownRendererView from './MarkdownRenderer';
 

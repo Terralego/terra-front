@@ -1,12 +1,9 @@
 import React from 'react';
-import { storiesOf } from '@storybook/react';
 import { text, boolean } from '@storybook/addon-knobs';
 
-import { MarkdownRenderer } from '../../../modules/Template/MarkdownRenderer';
+import MarkdownRenderer  from '../../../modules/Template/MarkdownRenderer';
 
-const stories = storiesOf('Modules/Template', module);
-
-stories.add('MarkdownRenderer Component', () => (
+export default () => (
   <MarkdownRenderer
     template={`
 # {{title}}
@@ -30,4 +27,4 @@ Cool story bro
     text={text('Text', 'Some text')}
     displayLogo={boolean('Display logo ?', true)}
   />
-));
+);
