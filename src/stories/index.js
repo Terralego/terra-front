@@ -5,5 +5,6 @@ import '@blueprintjs/core/lib/css/blueprint.css';
 import './summary';
 import './modules/Auth';
 import './modules/Visualizer';
+import './modules/Template';
 
 import './apps/Admin';

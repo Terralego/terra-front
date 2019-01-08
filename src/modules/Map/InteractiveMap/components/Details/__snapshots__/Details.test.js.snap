@@ -1,0 +1,27 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`should render correctly with content 1`] = `
+<div
+  className="view-details view-details--visible"
+>
+  <p>
+    Button
+  </p>
+  <h1>
+    Hello world
+  </h1>
+  <p>
+     This is FOO
+  </p>
+</div>
+`;
+
+exports[`should render correctly without content 1`] = `
+<div
+  className="view-details "
+>
+  <p>
+    Button
+  </p>
+</div>
+`;
