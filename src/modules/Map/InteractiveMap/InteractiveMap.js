@@ -207,19 +207,20 @@ export class WidgetMap extends React.Component {
       container,
     );
 
-    if (this.popups.has(layerId)) {
-      this.popups.get(layerId).setLngLat([lngLat.lng, lngLat.lat]);
+    if (this.popups.has(layerId) &&
+        this.popups.get(layerId).content === container.innerHTML) {
+      this.popups.get(layerId).popup.setLngLat([lngLat.lng, lngLat.lat]);
       return;
     }
 
     if (unique) {
-      this.popups.forEach(popup => popup.remove());
+      this.popups.forEach(({ popup }) => popup.remove());
       this.popups.clear();
     }
 
     const popup = new mapBoxGl.Popup();
     popup.once('close', () => this.popups.delete(layerId));
-    this.popups.set(layerId, popup);
+    this.popups.set(layerId, { popup, content: container.innerHTML });
     popup.setLngLat([lngLat.lng, lngLat.lat]);
     popup.setDOMContent(container);
     popup.addTo(map);
