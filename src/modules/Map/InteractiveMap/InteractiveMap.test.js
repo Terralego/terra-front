@@ -59,6 +59,17 @@ describe('snaphsots', () => {
     expect(tree).toMatchSnapshot();
   });
 
+  it('should render correctly with details', () => {
+    const node = renderer.create((
+      <InteractiveMap
+        layersTree={[]}
+      />
+    ));
+    node.getInstance().setState({ details: {} });
+    const tree = node.toJSON();
+    expect(tree).toMatchSnapshot();
+  });
+
   it('should render correctly with a map navigation', () => {
     const tree = renderer.create((
       <InteractiveMap
