@@ -89,7 +89,7 @@ export class WidgetMap extends React.Component {
     if (!this.popups.has(layerId)) {
       return;
     }
-    const popup = this.popups.get(layerId);
+    const { popup } = this.popups.get(layerId);
     popup.remove();
     this.popups.delete(layerId);
   }, 100);
