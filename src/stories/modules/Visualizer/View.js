@@ -152,7 +152,7 @@ export default () => (
         sources: [{
           id: 'terralego',
           type: 'vector',
-          url: 'http://dev-tiles-paca.makina-corpus.net/api/layer/__nogroup__/tilejson',
+          url: 'http://dev-tiles-paca.makina-corpus.net/api/layer/reference/tilejson',
         }],
         layers: [
           {
