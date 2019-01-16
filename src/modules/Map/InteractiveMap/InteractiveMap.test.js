@@ -509,10 +509,13 @@ describe('Interactions', () => {
 
   it('should hide tooltip', () => {
     const instance = new InteractiveMap({});
-    const popup = {
-      remove: jest.fn(),
+    const obj = {
+      popup: {
+        remove: jest.fn(),
+      },
     };
-    instance.popups.set('foo', popup);
+    const { popup } = obj;
+    instance.popups.set('foo', obj);
     instance.hideTooltip({ layerId: 'foo' });
     expect(popup.remove).toHaveBeenCalled();
     popup.remove.mockClear();
