@@ -8,6 +8,7 @@ import withMap from './withMap';
 jest.mock('mapbox-gl', () => {
   const map = {
     once: jest.fn((e, fn) => fn()),
+    fitBounds: jest.fn(),
   };
   return {
     map,
@@ -39,6 +40,7 @@ it('should have a map', () => {
   expect(Component).toHaveBeenCalledWith({
     map: mapboxgl.map,
     backgroundStyle: {},
+    fitBounds: null,
     zoom: 9,
   }, {});
 });
@@ -46,4 +48,19 @@ it('should have a map', () => {
 it('should have a map getter', () => {
   const wrapper = shallow(<ComponentWithMap backgroundStyle={{}} />);
   expect(wrapper.instance().map).toBe(mapboxgl.map);
+});
+
+it('should fit bounds', () => {
+  shallow(<ComponentWithMap backgroundStyle={{}} fitBounds={[[1, 2], [3, 4]]} />);
+  expect(mapboxgl.Map).toHaveBeenCalledWith({
+    container: null,
+    attributionControl: false,
+    style: {},
+    center: undefined,
+    zoom: 9,
+    maxZoom: undefined,
+    minZoom: undefined,
+    maxBounds: undefined,
+  });
+  expect(mapboxgl.map.fitBounds).toHaveBeenCalledWith([[1, 2], [3, 4]]);
 });

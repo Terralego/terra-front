@@ -14,10 +14,15 @@ export const withMap = WrappedComponent =>
         }),
       ]).isRequired,
       zoom: PropTypes.number,
+      fitBounds: PropTypes.arrayOf(
+        PropTypes.array,
+        PropTypes.array,
+      ),
     };
 
     static defaultProps = {
       zoom: 9,
+      fitBounds: null,
     };
 
     state = {
@@ -44,6 +49,7 @@ export const withMap = WrappedComponent =>
         maxZoom,
         minZoom,
         maxBounds,
+        fitBounds,
       } = this.props;
 
       mapBoxGl.accessToken = accessToken;
@@ -58,6 +64,11 @@ export const withMap = WrappedComponent =>
         minZoom,
         maxBounds,
       });
+
+      if (fitBounds) {
+        map.fitBounds(fitBounds);
+      }
+
       map.once('style.load', () => this.setState({ map }));
     }
 
