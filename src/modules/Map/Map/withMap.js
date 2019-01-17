@@ -18,11 +18,15 @@ export const withMap = WrappedComponent =>
         PropTypes.array,
         PropTypes.array,
       ),
+      onMapInit: PropTypes.func,
+      onMapLoaded: PropTypes.func,
     };
 
     static defaultProps = {
       zoom: 9,
       fitBounds: null,
+      onMapInit () {},
+      onMapLoaded () {},
     };
 
     state = {
@@ -50,6 +54,8 @@ export const withMap = WrappedComponent =>
         minZoom,
         maxBounds,
         fitBounds,
+        onMapInit,
+        onMapLoaded,
       } = this.props;
 
       mapBoxGl.accessToken = accessToken;
@@ -69,7 +75,11 @@ export const withMap = WrappedComponent =>
         map.fitBounds(fitBounds);
       }
 
-      map.once('style.load', () => this.setState({ map }));
+      map.once('style.load', () => {
+        this.setState({ map });
+        onMapLoaded(map);
+      });
+      onMapInit(map);
     }
 
     render () {
