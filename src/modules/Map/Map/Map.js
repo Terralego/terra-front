@@ -7,6 +7,18 @@ import { capitalize } from '../../../utils/strings';
 
 import './Map.scss';
 
+export function getLayerBeforeId (type, layers) {
+  const sameTypes = layers.filter(({ type: lType }) => type === lType);
+
+  if (!sameTypes.length) return undefined;
+
+  const lastOfSameType = sameTypes[sameTypes.length - 1];
+
+  const pos = layers.findIndex(({ id }) => id === lastOfSameType.id) + 1;
+
+  return layers[pos] && layers[pos].id;
+}
+
 export class Map extends React.Component {
   static propTypes = {
     // Mapbox general config
@@ -153,8 +165,13 @@ export class Map extends React.Component {
 
   createLayers () {
     const { map, customStyle: { sources = [], layers = [] } } = this.props;
+    const { layers: allLayers } = map.getStyle();
     sources.forEach(({ id, ...sourceAttrs }) => map.addSource(id, sourceAttrs));
-    layers.forEach(layer => map.addLayer(layer));
+    layers.forEach(layer => {
+      const { type } = layer;
+      const beforeId = getLayerBeforeId(type, allLayers);
+      map.addLayer(layer, beforeId);
+    });
   }
 
   toggleControl (display, control) {
