@@ -348,7 +348,7 @@ export class WidgetMap extends React.Component {
     return (
       <Provider value={contextValue}>
         <div
-          className={`widget-map ${isLayersTreeVisible ? 'widget-map--layerstree-is-visible' : ''}`}
+          className={`interactive-map widget-map ${isLayersTreeVisible ? 'widget-map--layerstree-is-visible' : ''}`}
           style={style}
         >
           {typeof backgroundStyle !== 'string' && (
@@ -381,14 +381,12 @@ export class WidgetMap extends React.Component {
                 ))}
             </div>
           )}
-          {!!details && (
-            <Details
-              visible={visible}
-              template={template}
-              onClose={closeDetails}
-              {...properties}
-            />
-          )}
+          <Details
+            visible={visible}
+            template={template}
+            onClose={closeDetails}
+            {...properties}
+          />
         </div>
       </Provider>
     );
