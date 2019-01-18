@@ -15,11 +15,9 @@ export class SyncedMap extends React.Component {
     const { getMap } = this;
 
     return React.Children.map(children, child =>
-      ((child.type.propTypes && child.type.propTypes.onMapInit)
-        ? React.cloneElement(child, {
-          onMapInit: getMap,
-        })
-        : child));
+      React.cloneElement(child, {
+        onMapInit: getMap,
+      }));
   }
 }
 

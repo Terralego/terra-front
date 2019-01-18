@@ -5,7 +5,7 @@ export const context = React.createContext();
 
 const { Provider } = context;
 
-export class SyncMap extends React.Component {
+export class SyncMaps extends React.Component {
   maps = [];
 
   addMap = map => {
@@ -28,4 +28,4 @@ export class SyncMap extends React.Component {
     );
   }
 }
-export default SyncMap;
+export default SyncMaps;

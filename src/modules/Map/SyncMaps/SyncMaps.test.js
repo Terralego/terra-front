@@ -58,13 +58,14 @@ it('should add a map to sync', () => {
 });
 
 it('should not sync a single map', () => {
+  const NotAMap = () => null;
   mount((
     <SyncMaps>
       <SyncedMap>
         <Map />
       </SyncedMap>
       <SyncedMap>
-        <p>Foo</p>
+        <NotAMap />
       </SyncedMap>
     </SyncMaps>
   ));
