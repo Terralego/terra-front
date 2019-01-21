@@ -2,7 +2,7 @@
 
 exports[`should render correctly circle 1`] = `
 <div
-  className="tf-legend"
+  className="tf-legend tf-legend--level-1"
 >
   <h4
     className="tf-legend__title"
@@ -89,7 +89,7 @@ exports[`should render correctly circle 1`] = `
 
 exports[`should render correctly square 1`] = `
 <div
-  className="tf-legend"
+  className="tf-legend tf-legend--level-1"
 >
   <h4
     className="tf-legend__title"
@@ -170,6 +170,245 @@ exports[`should render correctly square 1`] = `
         }
       }
     />
+  </div>
+</div>
+`;
+
+exports[`should render correctly with multi level 1`] = `
+<div
+  className="tf-legend tf-legend--level-1"
+>
+  <h4
+    className="tf-legend__title"
+  >
+    level1
+  </h4>
+  <div
+    className="tf-legend__item item item--square"
+  >
+    <div
+      className="item__before"
+      style={
+        Object {
+          "backgroundColor": "red",
+        }
+      }
+    />
+    <div
+      className="item__label"
+    >
+      level1.1
+    </div>
+    <div
+      className="item__after"
+      style={
+        Object {
+          "backgroundColor": "red",
+        }
+      }
+    />
+  </div>
+  <div
+    className="tf-legend__item item item--square"
+  >
+    <div
+      className="item__before"
+      style={
+        Object {
+          "backgroundColor": "blue",
+        }
+      }
+    />
+    <div
+      className="item__label"
+    >
+      level1.2
+    </div>
+    <div
+      className="item__after"
+      style={
+        Object {
+          "backgroundColor": "blue",
+        }
+      }
+    />
+  </div>
+  <div
+    className="tf-legend tf-legend--level-2"
+  >
+    <h4
+      className="tf-legend__title"
+    >
+      level2
+    </h4>
+    <div
+      className="tf-legend__item item item--square"
+    >
+      <div
+        className="item__before"
+        style={
+          Object {
+            "backgroundColor": "red",
+          }
+        }
+      />
+      <div
+        className="item__label"
+      >
+        level2.1
+      </div>
+      <div
+        className="item__after"
+        style={
+          Object {
+            "backgroundColor": "red",
+          }
+        }
+      />
+    </div>
+    <div
+      className="tf-legend__item item item--square"
+    >
+      <div
+        className="item__before"
+        style={
+          Object {
+            "backgroundColor": "blue",
+          }
+        }
+      />
+      <div
+        className="item__label"
+      >
+        level2.2
+      </div>
+      <div
+        className="item__after"
+        style={
+          Object {
+            "backgroundColor": "blue",
+          }
+        }
+      />
+    </div>
+    <div
+      className="tf-legend tf-legend--level-3"
+    >
+      <h4
+        className="tf-legend__title"
+      >
+        level3
+      </h4>
+      <div
+        className="tf-legend__item item item--square"
+      >
+        <div
+          className="item__before"
+          style={
+            Object {
+              "backgroundColor": "red",
+            }
+          }
+        />
+        <div
+          className="item__label"
+        >
+          level3.1
+        </div>
+        <div
+          className="item__after"
+          style={
+            Object {
+              "backgroundColor": "red",
+            }
+          }
+        />
+      </div>
+      <div
+        className="tf-legend__item item item--square"
+      >
+        <div
+          className="item__before"
+          style={
+            Object {
+              "backgroundColor": "blue",
+            }
+          }
+        />
+        <div
+          className="item__label"
+        >
+          level3.2
+        </div>
+        <div
+          className="item__after"
+          style={
+            Object {
+              "backgroundColor": "blue",
+            }
+          }
+        />
+      </div>
+      <div
+        className="tf-legend tf-legend--level-4"
+      >
+        <h4
+          className="tf-legend__title"
+        >
+          level4
+        </h4>
+        <div
+          className="tf-legend__item item item--square"
+        >
+          <div
+            className="item__before"
+            style={
+              Object {
+                "backgroundColor": "red",
+              }
+            }
+          />
+          <div
+            className="item__label"
+          >
+            level4.1
+          </div>
+          <div
+            className="item__after"
+            style={
+              Object {
+                "backgroundColor": "red",
+              }
+            }
+          />
+        </div>
+        <div
+          className="tf-legend__item item item--square"
+        >
+          <div
+            className="item__before"
+            style={
+              Object {
+                "backgroundColor": "blue",
+              }
+            }
+          />
+          <div
+            className="item__label"
+          >
+            level4.2
+          </div>
+          <div
+            className="item__after"
+            style={
+              Object {
+                "backgroundColor": "blue",
+              }
+            }
+          />
+        </div>
+      </div>
+    </div>
   </div>
 </div>
 `;
