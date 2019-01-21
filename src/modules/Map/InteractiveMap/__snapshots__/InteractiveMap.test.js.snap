@@ -210,7 +210,7 @@ exports[`snaphsots should render legends 1`] = `
     className="widget-map__legends"
   >
     <div
-      className="tf-legend"
+      className="tf-legend tf-legend--level-1"
     >
       <h4
         className="tf-legend__title"

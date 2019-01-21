@@ -5,6 +5,11 @@
   background: white;
   margin-top: 1rem;
 
+  > .tf-legend {
+    border: 0;
+    box-shadow: none;
+  }
+
   &__title {
     margin: 0.2rem 0.3rem;
     font-size: 1rem;
