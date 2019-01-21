@@ -2,7 +2,7 @@ import React from 'react';
 import renderer from 'react-test-renderer';
 import { shallow } from 'enzyme';
 import mapboxgl from 'mapbox-gl';
-import { Map } from './Map';
+import { Map, getLayerBeforeId } from './Map';
 
 
 const props = {
@@ -300,6 +300,9 @@ it('should create layers', () => {
   const map = {
     addSource: jest.fn(),
     addLayer: jest.fn(),
+    getStyle: jest.fn(() => ({
+      layers: [],
+    })),
   };
   const customStyle = {
     sources: [{
@@ -321,6 +324,52 @@ it('should create layers', () => {
     type: 'vector',
     url: 'somewhere',
   });
-  expect(map.addLayer).toHaveBeenCalledWith({ id: 'layer1' });
-  expect(map.addLayer).toHaveBeenCalledWith({ id: 'layer2' });
+  expect(map.addLayer).toHaveBeenCalledWith({ id: 'layer1' }, undefined);
+  expect(map.addLayer).toHaveBeenCalledWith({ id: 'layer2' }, undefined);
+});
+
+it('should get layer before', () => {
+  expect(getLayerBeforeId('line', [{
+    type: 'line',
+    id: 'a',
+  }, {
+    type: 'line',
+    id: 'b',
+  }, {
+    type: 'line',
+    id: 'c',
+  }, {
+    type: 'circle',
+    id: 'd',
+  }])).toBe('d');
+
+  expect(getLayerBeforeId('circle', [{
+    type: 'line',
+    id: 'a',
+  }, {
+    type: 'line',
+    id: 'b',
+  }, {
+    type: 'line',
+    id: 'c',
+  }, {
+    type: 'circle',
+    id: 'd',
+  }])).toBe(undefined);
+
+  expect(getLayerBeforeId('fill', [{
+    type: 'fill',
+    id: 'a',
+  }, {
+    type: 'line',
+    id: 'b',
+  }, {
+    type: 'line',
+    id: 'c',
+  }, {
+    type: 'circle',
+    id: 'd',
+  }])).toBe('b');
+
+  expect(getLayerBeforeId('fill', [])).toBe(undefined);
 });
