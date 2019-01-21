@@ -6,6 +6,7 @@
     "@blueprintjs/core": "^3.8.0",
     "@blueprintjs/icons": "^3.3.0",
     "@blueprintjs/table": "^3.3.0",
+    "@mapbox/mapbox-gl-sync-move": "^0.2.0",
     "debug": "^4.1.0",
     "lodash.debounce": "^4.0.8",
     "lodash.template": "^4.4.0",

@@ -37,7 +37,7 @@ const LayersTreeGroupProps = PropTypes.shape({
 });
 
 
-export class WidgetMap extends React.Component {
+export class InteractiveMap extends React.Component {
   static propTypes = {
     layersTree: PropTypes.arrayOf(PropTypes.oneOfType([
       LayersTreeProps,
@@ -70,19 +70,6 @@ export class WidgetMap extends React.Component {
     interactions: [],
   };
 
-  mapRef = React.createRef();
-
-  map = new Promise(resolve => {
-    const waitForMap = () => {
-      if (this.mapRef && this.mapRef.current && this.mapRef.current.map) {
-        resolve(this.mapRef.current.map);
-        return;
-      }
-      setTimeout(waitForMap, 10);
-    };
-    waitForMap();
-  });
-
   popups = new Map();
 
   hideTooltip = debounce(({ layerId }) => {
@@ -106,11 +93,6 @@ export class WidgetMap extends React.Component {
     };
   }
 
-  componentDidMount () {
-    this.initLayersState();
-    this.setInteractions();
-  }
-
   componentDidUpdate ({
     interactions: prevInteractions,
   }, {
@@ -128,8 +110,19 @@ export class WidgetMap extends React.Component {
     }
   }
 
+  onMapInit = map => {
+    const { onMapInit = () => {} } = this.props;
+    onMapInit(map);
+  }
+
+  onMapLoaded = map => {
+    this.map = map;
+    this.initLayersState();
+    this.setInteractions();
+  }
+
   onBackgroundChange = selectedBackgroundStyle => {
-    this.mapRef.current.map.once('style.load', () => {
+    this.map.once('style.load', () => {
       this.updateLayersTree();
     });
     this.setState({ selectedBackgroundStyle });
@@ -159,7 +152,10 @@ export class WidgetMap extends React.Component {
   }
 
   async setInteractions () {
-    const map = await this.map;
+    const { map } = this;
+
+    if (!map) return;
+
     const { interactions } = this.props;
     setInteractions({ map, interactions, callback: config => this.triggerInteraction(config) });
   }
@@ -186,7 +182,7 @@ export class WidgetMap extends React.Component {
     this.setState({ details: null });
   }
 
-  displayTooltip = async ({
+  displayTooltip = ({
     layerId,
     feature: { properties } = {},
     event: { lngLat },
@@ -195,7 +191,7 @@ export class WidgetMap extends React.Component {
     unique,
   }) => {
     const { history } = this.props;
-    const map = await this.map;
+    const { map } = this;
     const container = document.createElement('div');
     ReactDOM.render(
       <MarkdownRenderer
@@ -278,7 +274,10 @@ export class WidgetMap extends React.Component {
   }
 
   async updateLayersTree () {
-    const map = await this.map;
+    const { map } = this;
+
+    if (!map) return;
+
     const { layersTreeState } = this.state;
     layersTreeState.forEach(({ active, opacity, sublayers }, layer) => {
       if (sublayers) {
@@ -328,7 +327,8 @@ export class WidgetMap extends React.Component {
 
     const { selectedBackgroundStyle, isLayersTreeVisible, details } = this.state;
     const {
-      mapRef,
+      onMapInit,
+      onMapLoaded,
       getLayerState,
       setLayerState,
       selectSublayer,
@@ -367,8 +367,9 @@ export class WidgetMap extends React.Component {
           )}
           <MapComponent
             {...mapProps}
-            ref={mapRef}
             backgroundStyle={selectedBackgroundStyle}
+            onMapInit={onMapInit}
+            onMapLoaded={onMapLoaded}
           />
           {!!legends.length && (
             <div className="widget-map__legends">
@@ -393,4 +394,4 @@ export class WidgetMap extends React.Component {
   }
 }
 
-export default WidgetMap;
+export default InteractiveMap;

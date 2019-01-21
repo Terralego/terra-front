@@ -20,19 +20,7 @@ jest.mock('mapbox-gl', () => {
     Popup,
   };
 });
-jest.mock('../Map', () => {
-  // A class component is needed to accept the ref
-  // eslint-disable-next-line global-require
-  const { Component } = require('react');
-  class MapComponent extends Component {
-    state = {};
-
-    render () {
-      return null;
-    }
-  }
-  return MapComponent;
-});
+jest.mock('../Map', () => function MapComponent () { return null; });
 jest.mock('./services/mapUtils', () => ({
   toggleLayerVisibility: jest.fn(),
   setLayerOpacity: jest.fn(),
@@ -104,7 +92,7 @@ describe('snaphsots', () => {
 
 
   it('should render legends', () => {
-    const tree = renderer.create((
+    const wrapper = renderer.create((
       <InteractiveMap
         layersTree={[{
           label: 'foo',
@@ -117,7 +105,9 @@ describe('snaphsots', () => {
           },
         }]}
       />
-    )).toJSON();
+    ));
+    wrapper.getInstance().initLayersState();
+    const tree = wrapper.toJSON();
     expect(tree).toMatchSnapshot();
   });
 
@@ -132,25 +122,28 @@ describe('snaphsots', () => {
 });
 
 describe('map', () => {
-  it('should wait for map loading', async done => {
+  it('should init map', () => {
+    const onMapInit = jest.fn();
+    let instance = new InteractiveMap({ onMapInit });
+    const map = {};
+    instance.onMapInit(map);
+    expect(onMapInit).toHaveBeenCalledWith(map);
+    onMapInit.mockClear();
+
+    instance = new InteractiveMap({});
+    instance.onMapInit(map);
+    expect(onMapInit).not.toHaveBeenCalled();
+  });
+
+  it('should load map', () => {
     const instance = new InteractiveMap({});
-    const { map } = instance;
-    let resolved = false;
-    const mapObject = {};
-    map.then(awaitedMapObject => {
-      resolved = awaitedMapObject;
-    });
-    expect(map instanceof Promise).toBe(true);
-    await new Promise(resolve => setTimeout(resolve, 11));
-    expect(resolved).toBe(false);
-    instance.mapRef = {
-      current: {
-        map: mapObject,
-      },
-    };
-    await new Promise(resolve => setTimeout(resolve, 11));
-    expect(resolved).toBe(mapObject);
-    done();
+    const map = {};
+    instance.initLayersState = jest.fn();
+    instance.setInteractions = jest.fn();
+    instance.onMapLoaded(map);
+    expect(instance.map).toBe(map);
+    expect(instance.initLayersState).toHaveBeenCalled();
+    expect(instance.setInteractions).toHaveBeenCalled();
   });
 
   it('should select backgroundStyle', () => {
@@ -172,19 +165,15 @@ describe('map', () => {
     instance.setState = jest.fn();
     instance.updateLayersTree = jest.fn();
     let expectedListener;
-    instance.mapRef = {
-      current: {
-        map: {
-          once: jest.fn((event, fn) => {
-            expectedListener = fn;
-          }),
-        },
-      },
+    instance.map = {
+      once: jest.fn((event, fn) => {
+        expectedListener = fn;
+      }),
     };
     const selectedBackgroundStyle = 'foo';
     instance.onBackgroundChange(selectedBackgroundStyle);
     expect(instance.setState).toHaveBeenCalledWith({ selectedBackgroundStyle });
-    expect(instance.mapRef.current.map.once).toHaveBeenCalled();
+    expect(instance.map.once).toHaveBeenCalled();
     expectedListener();
     expect(instance.updateLayersTree).toHaveBeenCalled();
   });
@@ -198,6 +187,12 @@ describe('Interactions', () => {
     expect(instance.setInteractions).not.toHaveBeenCalled();
     instance.componentDidUpdate({ interactions: {} }, {});
     expect(instance.setInteractions).toHaveBeenCalled();
+  });
+
+  it('should not setInteraction without map', () => {
+    const instance = new InteractiveMap({});
+    instance.setInteractions();
+    expect(setInteractions).not.toHaveBeenCalled();
   });
 
   it('should set interactions', async done => {
@@ -333,7 +328,9 @@ describe('Interactions', () => {
     instance.hideTooltip = jest.fn();
     instance.triggerInteraction({
       map,
-      event: {},
+      event: {
+        lngLat: {},
+      },
       feature: {},
       layerId: 'foo',
       interaction: {
@@ -421,7 +418,7 @@ describe('Interactions', () => {
     instance.closeDetails(null);
   });
 
-  it('should display tooltips', async done => {
+  it('should display tooltips', () => {
     const instance = new InteractiveMap({});
     instance.map = {};
     instance.displayTooltip({
@@ -431,8 +428,6 @@ describe('Interactions', () => {
       },
       template: 'bar',
     });
-
-    await true;
 
     expect(ReactDOM.render).toHaveBeenCalled();
     expect(mapboxGl.Popup.prototype.once).toHaveBeenCalled();
@@ -454,16 +449,15 @@ describe('Interactions', () => {
       },
       template: 'bar',
     });
-    await true;
+
     expect(mapboxGl.Popup.prototype.once).not.toHaveBeenCalled();
     expect(mapboxGl.Popup.prototype.setLngLat).toHaveBeenCalledWith([3, 4]);
     expect(mapboxGl.Popup.prototype.setDOMContent).not.toHaveBeenCalled();
     expect(mapboxGl.Popup.prototype.addTo).not.toHaveBeenCalled();
 
-    mapboxGl.Popup.prototype.mockedListeners[0].listener();
-    expect(instance.popups.has('foo')).toBe(false);
+    mapboxGl.Popup.prototype.mockedListeners[1].listener();
 
-    done();
+    expect(instance.popups.has('foo')).toBe(false);
   });
 
   it('should display only one tooltips', async done => {

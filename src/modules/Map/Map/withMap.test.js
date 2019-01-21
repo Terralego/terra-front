@@ -37,12 +37,12 @@ it('should have a map', () => {
     maxBounds: undefined,
   });
   expect(mapboxgl.map.once).toHaveBeenCalled();
-  expect(Component).toHaveBeenCalledWith({
-    map: mapboxgl.map,
-    backgroundStyle: {},
-    fitBounds: null,
-    zoom: 9,
-  }, {});
+  expect(Component).toHaveBeenCalled();
+  const attrs = Component.mock.calls[0][0];
+  expect(attrs.map).toBe(mapboxgl.map);
+  expect(attrs.backgroundStyle).toEqual({});
+  expect(attrs.fitBounds).toBe(null);
+  expect(attrs.zoom).toEqual(9);
 });
 
 it('should have a map getter', () => {
