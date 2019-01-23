@@ -29,7 +29,7 @@ export class Api {
 
     const response = await fetch(url, {
       method,
-      headers: this.buildHeaders(headers),
+      headers: this.buildHeaders(headers, body),
       body: body instanceof FormData ? body : JSON.stringify(body),
     });
 
@@ -44,14 +44,15 @@ export class Api {
     return `${this.host}/${endpoint.replace(/\/+/g, '/')}${querystring ? `?${qs.stringify(querystring)}` : ''}`;
   }
 
-  buildHeaders (headers) {
+  buildHeaders (headers, body) {
+    const newHeaders = { ...headers };
     if (this.token) {
-      return {
-        ...headers,
-        Authorization: `JWT ${this.token}`,
-      };
+      newHeaders.Authorization = `JWT ${this.token}`;
     }
-    return headers;
+    if (body instanceof FormData) {
+      delete newHeaders['Content-Type'];
+    }
+    return newHeaders;
   }
 
   async handleError (response) {
