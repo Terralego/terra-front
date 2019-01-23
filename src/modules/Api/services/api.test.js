@@ -40,7 +40,7 @@ it('should request a formData', async done => {
   await api.request('', { body });
   expect(global.fetch).toHaveBeenCalledWith('/', {
     method: 'GET',
-    headers: { 'Content-Type': 'application/json' },
+    headers: {},
     body,
   });
   done();
