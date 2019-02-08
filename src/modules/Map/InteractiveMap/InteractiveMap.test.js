@@ -3,8 +3,8 @@ import renderer from 'react-test-renderer';
 import ReactDOM from 'react-dom';
 import mapboxGl from 'mapbox-gl';
 
-import { toggleLayerVisibility, setLayerOpacity, setInteractions } from './services/mapUtils';
-import InteractiveMap, { INTERACTION_DISPLAY_DETAILS, INTERACTION_DISPLAY_TOOLTIP, INTERACTION_FN } from './InteractiveMap';
+import { setInteractions } from './services/mapUtils';
+import InteractiveMap, { INTERACTION_DISPLAY_TOOLTIP, INTERACTION_FN } from './InteractiveMap';
 
 jest.mock('mapbox-gl', () => {
   function Popup () {}
@@ -35,7 +35,6 @@ jest.mock('react-dom', () => {
 });
 jest.mock('lodash.debounce', () => fn => () => fn({ layerId: 'foo' }));
 jest.mock('./components/BackgroundStyles', () => () => <p>BackgroundStyles</p>);
-jest.mock('./components/MapNavigation', () => () => <p>MapNavigation</p>);
 
 describe('snaphsots', () => {
   it('should render correctly', () => {
@@ -60,53 +59,28 @@ describe('snaphsots', () => {
 
   it('should render correctly with a map navigation', () => {
     const tree = renderer.create((
-      <InteractiveMap
-        layersTree={[{
-          label: 'foo',
-        }]}
-      />
+      <InteractiveMap />
     )).toJSON();
     expect(tree).toMatchSnapshot();
   });
 
   it('should render correctly with hidden map navigation', () => {
     const tree = renderer.create((
-      <InteractiveMap
-        layersTree={[{
-          label: 'foo',
-        }]}
-      />
+      <InteractiveMap />
     ));
     tree.getInstance().setState({ isLayersTreeVisible: false });
     expect(tree.toJSON()).toMatchSnapshot();
   });
 
-  it('should display layerstree panel', () => {
-    const instance = new InteractiveMap({});
-    let expected;
-    instance.setState = jest.fn(stateFn => { expected = stateFn({ isLayersTreeVisible: true }); });
-    instance.toggleLayersTree();
-    expect(instance.setState).toHaveBeenCalled();
-    expect(expected).toEqual({ isLayersTreeVisible: false });
-  });
-
-
   it('should render legends', () => {
     const wrapper = renderer.create((
       <InteractiveMap
-        layersTree={[{
-          label: 'foo',
-          initialState: {
-            active: true,
-          },
-          legend: {
-            label: 'foo',
-            items: [],
-          },
+        legends={[{
+          title: 'foo',
+          items: [],
         }]}
       />
     ));
-    wrapper.getInstance().initLayersState();
     const tree = wrapper.toJSON();
     expect(tree).toMatchSnapshot();
   });
@@ -138,11 +112,9 @@ describe('map', () => {
   it('should load map', () => {
     const instance = new InteractiveMap({});
     const map = {};
-    instance.initLayersState = jest.fn();
     instance.setInteractions = jest.fn();
     instance.onMapLoaded(map);
     expect(instance.map).toBe(map);
-    expect(instance.initLayersState).toHaveBeenCalled();
     expect(instance.setInteractions).toHaveBeenCalled();
   });
 
@@ -228,7 +200,7 @@ describe('Interactions', () => {
       interactions,
     });
     const map = {};
-    instance.displayDetails = jest.fn();
+    instance.displayTooltip = jest.fn();
     instance.triggerInteraction({
       map,
       event: {},
@@ -236,64 +208,12 @@ describe('Interactions', () => {
       layerId: 'foo',
       interaction: {
         id: 'foo',
-        interaction: INTERACTION_DISPLAY_DETAILS,
+        interaction: INTERACTION_DISPLAY_TOOLTIP,
         template: 'template',
       },
       eventType: 'mousedown',
     });
-    expect(instance.displayDetails).not.toHaveBeenCalled();
-  });
-
-  it('should trigger displayDetails interaction', () => {
-    const interactions = [];
-    const instance = new InteractiveMap({
-      interactions,
-    });
-    const map = {};
-    instance.displayDetails = jest.fn();
-    instance.triggerInteraction({
-      map,
-      event: {},
-      feature: {},
-      layerId: 'foo',
-      interaction: {
-        id: 'foo',
-        interaction: INTERACTION_DISPLAY_DETAILS,
-        template: 'template',
-        trigger: 'click',
-      },
-      eventType: 'click',
-    });
-    expect(instance.displayDetails).toHaveBeenCalledWith({
-      feature: {},
-      template: 'template',
-    });
-  });
-
-  it('should trigger displayDetails interaction on mouseover', () => {
-    const interactions = [];
-    const instance = new InteractiveMap({
-      interactions,
-    });
-    const map = {};
-    instance.displayDetails = jest.fn();
-    instance.triggerInteraction({
-      map,
-      event: {},
-      feature: {},
-      layerId: 'foo',
-      interaction: {
-        id: 'foo',
-        interaction: INTERACTION_DISPLAY_DETAILS,
-        template: 'template',
-        trigger: 'mouseover',
-      },
-      eventType: 'mousemove',
-    });
-    expect(instance.displayDetails).toHaveBeenCalledWith({
-      feature: {},
-      template: 'template',
-    });
+    expect(instance.displayTooltip).not.toHaveBeenCalled();
   });
 
   it('should trigger displayTooltip interaction', () => {
@@ -395,29 +315,6 @@ describe('Interactions', () => {
     expect(instance.displayTooltip).not.toHaveBeenCalled();
   });
 
-  it('should display details', () => {
-    const details = {};
-    const instance = new InteractiveMap({ details });
-    instance.setState = jest.fn();
-    instance.displayDetails({
-      feature: {
-        layer: {
-          id: 'foo',
-        },
-      },
-      template: {
-        title: 'bar',
-      },
-    });
-  });
-
-  it('should close details', () => {
-    const details = {};
-    const instance = new InteractiveMap({ details });
-    instance.setState = jest.fn();
-    instance.closeDetails(null);
-  });
-
   it('should display tooltips', () => {
     const instance = new InteractiveMap({});
     instance.map = {};
@@ -515,369 +412,5 @@ describe('Interactions', () => {
     popup.remove.mockClear();
     instance.hideTooltip({ layerId: 'foo' });
     expect(popup.remove).not.toHaveBeenCalled();
-  });
-
-  it('should get legends', () => {
-    const instance = new InteractiveMap({}, {});
-    instance.state.layersTreeState = new Map();
-    const { layersTreeState } = instance.state;
-    const legend1 = {
-      items: [1],
-    };
-    const legend2 = {
-      items: [2],
-    };
-    const legend3 = {
-      items: [3],
-    };
-    const legend4 = {
-      items: [4],
-    };
-    layersTreeState.set({
-      label: 'foo',
-    }, {
-      active: true,
-    });
-    layersTreeState.set({
-      label: 'bar',
-      legend: legend1,
-    }, {
-      active: true,
-    });
-    layersTreeState.set({
-      label: 'foofoo',
-      legend: legend2,
-    }, {
-      active: false,
-    });
-    layersTreeState.set({
-      label: 'barbar',
-      sublayers: [{
-        label: 'title barbar',
-        legend: legend3,
-      }, {}],
-    }, {
-      active: true,
-      sublayers: [true, false],
-    });
-    layersTreeState.set({
-      label: 'foobar',
-      sublayers: [{
-        legend: legend4,
-      }, {}],
-    }, {
-      active: true,
-      sublayers: [false, true],
-    });
-    const { legends } = instance;
-    expect(legends.length).toBe(2);
-    expect(legends[0]).toEqual({
-      title: 'bar',
-      items: [1],
-    });
-    expect(legends[1]).toEqual({
-      title: 'title barbar',
-      items: [3],
-    });
-  });
-});
-
-describe('LayersTree', () => {
-  it('should be a Map', () => {
-    const instance = new InteractiveMap({});
-    expect(instance.state.layersTreeState instanceof Map).toBe(true);
-  });
-
-  it('should init layers state', () => {
-    const layersTree = [{
-      label: 'label1',
-      initialState: {
-        active: true,
-      },
-      layers: ['layer1', 'layer2'],
-    }, {
-      group: 'group1',
-      layers: [{
-        label: 'label1.1',
-        initialState: {
-          active: true,
-        },
-        layers: ['layer1.1'],
-      }, {
-        label: 'label1.2',
-        layers: ['layer1.2'],
-      }],
-    }, {
-      label: 'layer2',
-      initialState: {
-        active: true,
-      },
-      sublayers: [{
-        label: 'sublayer1',
-        layers: ['sublayer1'],
-      }, {
-        label: 'sublayer2',
-        layers: ['sublayer2'],
-      }],
-    }, {
-      group: 'group2',
-      layers: [{
-        label: 'label2.1',
-        sublayers: [{
-          label: 'sublayer2.1',
-          layers: ['sublayer2.1'],
-        }, {
-          label: 'sublayer2.2',
-          layers: ['sublayer2.2'],
-        }],
-      }],
-    }];
-    const instance = new InteractiveMap({ layersTree });
-    let expected;
-    instance.setState = jest.fn(stateFn => { expected = stateFn({ layersTreeState: new Map() }); });
-    instance.initLayersState();
-
-    const layersTreeState = new Map();
-    layersTreeState.set(layersTree[0], { active: true, opacity: 1 });
-    layersTreeState.set(layersTree[1].layers[0], { active: true, opacity: 1 });
-    layersTreeState.set(layersTree[1].layers[1], { active: false, opacity: 1 });
-    layersTreeState.set(layersTree[2], { active: true, sublayers: [true, false], opacity: 1 });
-    layersTreeState.set(layersTree[3].layers[0], {
-      active: false,
-      sublayers: [false, false],
-      opacity: 1,
-    });
-    expect(instance.setState).toHaveBeenCalled();
-    expect(expected).toEqual({ layersTreeState });
-  });
-
-  it('should update layersTreeState', () => {
-    const layersTreeState = {};
-    const instance = new InteractiveMap({});
-
-    instance.updateLayersTree = jest.fn();
-    instance.state.layersTreeState = layersTreeState;
-
-    instance.componentDidUpdate({ foo: 'bar ' }, { layersTreeState });
-    expect(instance.updateLayersTree).not.toHaveBeenCalled();
-    instance.updateLayersTree.mockClear();
-
-    instance.componentDidUpdate({}, { layersTreeState: {} });
-    expect(instance.updateLayersTree).toHaveBeenCalled();
-  });
-
-  it('should set layer state', () => {
-    const layersTree = [{
-      label: 'label',
-    }];
-    const instance = new InteractiveMap({});
-    let expected;
-    const initialState = {
-      layersTreeState: new Map(),
-    };
-    initialState.layersTreeState.set(layersTree[0], {
-      active: false,
-    });
-    instance.setState = jest.fn(stateFn => { expected = stateFn(initialState); });
-    const state = { active: true };
-    instance.setLayerState({ layer: layersTree[0], state });
-    const layersTreeState = new Map();
-    layersTreeState.set(layersTree[0], state);
-    expect(instance.setState).toHaveBeenCalled();
-    expect(expected).toEqual({ layersTreeState });
-  });
-
-  it('should not set layer state', () => {
-    const layersTree = [{
-      label: 'label',
-    }];
-    const instance = new InteractiveMap({});
-    let expected;
-    const initialState = {
-      layersTreeState: new Map(),
-    };
-    initialState.layersTreeState.set(layersTree[0], {
-      active: true,
-    });
-    instance.setState = jest.fn(stateFn => { expected = stateFn(initialState); });
-    instance.setLayerState({ layer: layersTree[0], state: { active: true } });
-    const layersTreeState = new Map();
-    layersTreeState.set(layersTree[0], { active: true });
-    expect(instance.setState).toHaveBeenCalled();
-    expect(expected).toEqual(initialState);
-  });
-
-  it('should get layer state', () => {
-    const layersTree = [{
-      label: 'label',
-    }];
-    const instance = new InteractiveMap({});
-    instance.state.layersTreeState = new Map();
-    instance.state.layersTreeState.set(layersTree[0], {
-      active: false,
-    });
-    expect(instance.getLayerState({ layer: layersTree[0] })).toEqual({
-      active: false,
-    });
-    expect(instance.getLayerState({ layer: {} })).toEqual({});
-  });
-
-  it('should select sublayer', () => {
-    const layersTree = [{
-      label: 'label',
-      sublayers: [{
-        label: 'sublayer1',
-      }, {
-        label: 'sublayer2',
-      }],
-    }];
-    const instance = new InteractiveMap({});
-    let expected;
-    const initialState = {
-      layersTreeState: new Map(),
-    };
-    initialState.layersTreeState.set(layersTree[0], {
-      active: true,
-      opacity: 1,
-      sublayers: [true, false],
-    });
-    instance.setState = jest.fn(stateFn => { expected = stateFn(initialState); });
-    instance.selectSublayer({ layer: layersTree[0], sublayer: 1 });
-    const layersTreeState = new Map();
-    layersTreeState.set(layersTree[0], {
-      active: true,
-      opacity: 1,
-      sublayers: [
-        false,
-        true,
-      ],
-    });
-    expect(instance.setState).toHaveBeenCalled();
-    expect(expected).toEqual({ layersTreeState });
-  });
-
-  it('should update map as layers tree state', async done => {
-    const instance = new InteractiveMap({});
-    instance.map = {};
-
-    // Many layers
-    instance.state.layersTreeState = new Map();
-    instance.state.layersTreeState.set({
-      label: 'label1',
-      layers: ['layer1'],
-    }, {
-      active: false,
-    });
-    instance.state.layersTreeState.set({
-      label: 'label2',
-      layers: ['layer2.1', 'layer2.2'],
-    }, {
-      active: true,
-    });
-    instance.updateLayersTree();
-    await true;
-
-    expect(toggleLayerVisibility).toHaveBeenCalledWith(
-      instance.map,
-      'layer1',
-      'none',
-    );
-    expect(toggleLayerVisibility).toHaveBeenCalledWith(
-      instance.map,
-      'layer2.1',
-      'visible',
-    );
-    expect(toggleLayerVisibility).toHaveBeenCalledWith(
-      instance.map,
-      'layer2.2',
-      'visible',
-    );
-    toggleLayerVisibility.mockClear();
-    setLayerOpacity.mockClear();
-
-    // opacity and visibility
-    instance.state.layersTreeState = new Map();
-    instance.state.layersTreeState.set({
-      label: 'label1',
-      layers: ['layer1'],
-    }, {
-      active: true,
-      opacity: 0.3,
-    });
-    instance.updateLayersTree();
-    await true;
-
-    expect(toggleLayerVisibility).toHaveBeenCalledWith(
-      instance.map,
-      'layer1',
-      'visible',
-    );
-    expect(setLayerOpacity).toHaveBeenCalledWith(
-      instance.map,
-      'layer1',
-      0.3,
-    );
-    toggleLayerVisibility.mockClear();
-    setLayerOpacity.mockClear();
-
-    // sublayers active
-    instance.state.layersTreeState = new Map();
-    instance.state.layersTreeState.set({
-      label: 'label1',
-      sublayers: [{
-        label: 'label1.1',
-        layers: ['layer1'],
-      }, {
-        label: 'label1.2',
-        layers: ['layer2'],
-      }],
-    }, {
-      active: true,
-      sublayers: [true, false],
-    });
-    instance.updateLayersTree();
-    await true;
-
-    expect(toggleLayerVisibility).toHaveBeenCalledWith(
-      instance.map,
-      'layer1',
-      'visible',
-    );
-    expect(toggleLayerVisibility).toHaveBeenCalledWith(
-      instance.map,
-      'layer2',
-      'none',
-    );
-
-    // sublayers inactive
-    instance.state.layersTreeState = new Map();
-    instance.state.layersTreeState.set({
-      label: 'label1',
-      sublayers: [{
-        label: 'label1.1',
-        layers: ['layer1'],
-      }, {
-        label: 'label1.2',
-        layers: ['layer2'],
-      }],
-    }, {
-      active: false,
-      sublayers: [true, false],
-    });
-    instance.updateLayersTree();
-    await true;
-
-    expect(toggleLayerVisibility).toHaveBeenCalledWith(
-      instance.map,
-      'layer1',
-      'none',
-    );
-    expect(toggleLayerVisibility).toHaveBeenCalledWith(
-      instance.map,
-      'layer2',
-      'none',
-    );
-
-    done();
   });
 });

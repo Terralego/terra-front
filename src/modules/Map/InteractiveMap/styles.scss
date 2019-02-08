@@ -1,6 +1,6 @@
 $transitionSpeed: .2s;
 
-.widget-map {
+.interactive-map {
   position: relative;
   overflow: hidden;
   width: auto;
@@ -12,86 +12,9 @@ $transitionSpeed: .2s;
     width: 100%;
   }
 
-  .mapboxgl-ctrl-bottom-left {
-    transition: transform $transitionSpeed ease-in;
-    transform: translate3d(2.5rem, 0, 0);
-  }
-
-  .map-navigation {
-    position: absolute;
-    top: 0;
-    bottom: 0;
-    z-index: 2;
-    width: 20rem;
-    transform: translate3d(-18rem, 0, 0);
-    transition: transform $transitionSpeed ease-in;
-    display: flex;
-    flex-direction: column;
-    justify-content: flex-start;
-    align-items: flex-end;
-    border-radius: 0;
-    padding: 0 0.7rem;
-
-    &__button {
-      width: auto;
-      height: auto;
-      border-radius: 0;
-      margin: 0.7rem 0;
-      outline: none;
-      transition: transform $transitionSpeed ease-in;
-      transform: translate3d(0.6rem, 0, 0);
-    }
-
-    &__content {
-      opacity: 0;
-      width: 100%;
-      transition: opacity $transitionSpeed ease-in;
-      transform: translate3d(0, 0, 0);
-      overflow-y: auto;
-    }
-    &__content::-webkit-scrollbar {
-      width: 8px;
-    }
-  }
-
   &__legends {
     position: absolute;
     bottom: 1rem;
     right: 1rem;
   }
-
-  &--layerstree-is-visible {
-    .map-navigation {
-      transform: translate3d(0, 0, 0);
-      padding: 0 0.7rem;
-
-      &__button {
-        transform: scaleX(-1) translate3d(0, 0, 0);
-      }
-
-      &__content {
-        opacity: 1;
-      }
-    }
-    .mapboxgl-ctrl-bottom-left {
-      transform: translate3d(20rem, 0, 0);
-    }
-  }
-}
-
-// Styles relative to DarkTheme
-.bp3-dark {
-
-  .map-navigation__content {
-    scrollbar-color: #202B33 #30404D;
-  }
-
-  .map-navigation__content::-webkit-scrollbar-track {
-    background-color: #30404D;
-  }
-  
-  .map-navigation__content::-webkit-scrollbar-thumb {
-    background-color: #202B33;
-  }
-
 }
