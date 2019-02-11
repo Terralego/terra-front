@@ -4,6 +4,7 @@ import PropTypes from 'prop-types';
 import mapBoxGl from 'mapbox-gl';
 import debounce from 'lodash.debounce';
 import bbox from '@turf/bbox';
+import centroid from '@turf/centroid';
 
 import { setInteractions } from './services/mapUtils';
 import MapComponent from '../Map';
@@ -32,6 +33,7 @@ export class InteractiveMap extends React.Component {
         INTERACTION_DISPLAY_TOOLTIP,
         INTERACTION_FN,
       ]),
+      fixed: PropTypes.bool,
       // for INTERACTION_DISPLAY_DETAILS
       // and INTERACTION_DISPLAY_TOOLTIP
       template: PropTypes.string,
@@ -100,6 +102,9 @@ export class InteractiveMap extends React.Component {
     this.setState({ selectedBackgroundStyle });
   };
 
+  getOriginalTarget = ({ originalEvent }) =>
+    originalEvent.relatedTarget || originalEvent.explicitOriginalTarget;
+
   async setInteractions () {
     const { map } = this;
 
@@ -114,11 +119,13 @@ export class InteractiveMap extends React.Component {
 
   displayTooltip = ({
     layerId,
+    feature,
     feature: { properties } = {},
-    event: { lngLat },
+    event: { lngLat, type },
     template,
     content,
     unique,
+    fixed,
   }) => {
     const { history } = this.props;
     const { map } = this;
@@ -133,9 +140,10 @@ export class InteractiveMap extends React.Component {
       container,
     );
 
-    if (this.popups.has(layerId) &&
-        this.popups.get(layerId).content === container.innerHTML) {
-      this.popups.get(layerId).popup.setLngLat([lngLat.lng, lngLat.lat]);
+    if (this.popups.has(layerId)) {
+      if (this.popups.get(layerId).content === container.innerHTML && !fixed) {
+        this.popups.get(layerId).popup.setLngLat([lngLat.lng, lngLat.lat]);
+      }
       return;
     }
 
@@ -143,17 +151,30 @@ export class InteractiveMap extends React.Component {
       this.popups.forEach(({ popup }) => popup.remove());
       this.popups.clear();
     }
-
     const popup = new mapBoxGl.Popup();
+    const lnglat = !fixed
+      ? [lngLat.lng, lngLat.lat]
+      : centroid(feature.geometry).geometry.coordinates;
     popup.once('close', () => this.popups.delete(layerId));
     this.popups.set(layerId, { popup, content: container.innerHTML });
-    popup.setLngLat([lngLat.lng, lngLat.lat]);
+    popup.setLngLat(lnglat);
     popup.setDOMContent(container);
     popup.addTo(map);
+    const { _content: popupContent } = popup;
+
+    if (type === 'click') {
+      return;
+    }
+
+    const onMouseLeave = () => {
+      popup.remove();
+      popupContent.removeEventListener('mouseleave', onMouseLeave);
+    };
+    popupContent.addEventListener('mouseleave', onMouseLeave);
   }
 
   triggerInteraction ({ map, event, feature, layerId, interaction, eventType }) {
-    const { id, interaction: interactionType, fn, trigger = 'click', ...config } = interaction;
+    const { id, interaction: interactionType, fn, trigger = 'click', fixed, ...config } = interaction;
 
     if ((trigger === 'mouseover' && !['mousemove', 'mouseleave'].includes(eventType)) ||
         (trigger !== 'mouseover' && trigger !== eventType)) return;
@@ -161,13 +182,19 @@ export class InteractiveMap extends React.Component {
     switch (interactionType) {
       case INTERACTION_DISPLAY_TOOLTIP:
         if (eventType === 'mouseleave') {
-          this.hideTooltip({ layerId });
+          const { popup = {} } = this.popups.get(layerId) || {};
+          const { _content: popupContent } = popup;
+
+          if (!fixed || this.getOriginalTarget(event) !== popupContent) {
+            this.hideTooltip({ layerId });
+          }
         }
         this.displayTooltip({
           layerId,
           feature,
           event,
           unique: ['mouseover', 'mousemove'].includes(trigger),
+          fixed,
           ...config,
         });
         break;

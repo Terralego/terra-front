@@ -8,7 +8,14 @@ import InteractiveMap, { INTERACTION_ZOOM, INTERACTION_DISPLAY_TOOLTIP, INTERACT
 
 jest.mock('@turf/bbox', () => jest.fn());
 jest.mock('mapbox-gl', () => {
-  function Popup () {}
+  function Popup () {
+    this.listeners = [];
+    // eslint-disable-next-line no-underscore-dangle
+    this._content = {
+      removeEventListener: jest.fn(),
+      addEventListener: (event, callback) => this.listeners.push({ event, callback }),
+    };
+  }
   Popup.prototype.mockedListeners = [];
   Popup.prototype.once = jest.fn((event, listener) => {
     Popup.prototype.mockedListeners.push({ event, listener });
@@ -35,6 +42,7 @@ jest.mock('react-dom', () => {
   };
 });
 jest.mock('lodash.debounce', () => fn => () => fn({ layerId: 'foo' }));
+jest.mock('@turf/centroid', () => () => ({ geometry: { coordinates: [0, 0] } }));
 jest.mock('./components/BackgroundStyles', () => () => <p>BackgroundStyles</p>);
 
 describe('snaphsots', () => {
@@ -308,29 +316,110 @@ describe('Interactions', () => {
     expect(instance.displayTooltip).toHaveBeenCalled();
   });
 
-  it('should trigger hideTooltip interaction', () => {
-    const interactions = [];
-    const instance = new InteractiveMap({
-      interactions,
+  describe('HideTooltip interaction', () => {
+    it('should trigger when tooltip is not fixed', () => {
+      const interactions = [];
+      const instance = new InteractiveMap({
+        interactions,
+      });
+      const map = {};
+      instance.hideTooltip = jest.fn();
+      instance.triggerInteraction({
+        map,
+        event: {
+          lngLat: {},
+        },
+        feature: {},
+        layerId: 'foo',
+        interaction: {
+          id: 'foo',
+          interaction: INTERACTION_DISPLAY_TOOLTIP,
+          template: 'template',
+          trigger: 'mouseover',
+        },
+        eventType: 'mouseleave',
+      });
+      expect(instance.hideTooltip).toHaveBeenCalled();
     });
-    const map = {};
-    instance.hideTooltip = jest.fn();
-    instance.triggerInteraction({
-      map,
-      event: {
-        lngLat: {},
-      },
-      feature: {},
-      layerId: 'foo',
-      interaction: {
-        id: 'foo',
-        interaction: INTERACTION_DISPLAY_TOOLTIP,
-        template: 'template',
-        trigger: 'mouseover',
-      },
-      eventType: 'mouseleave',
+    it('should trigger when tooltip is fixed and not hover the tooltip', () => {
+      const interactions = [];
+      const instance = new InteractiveMap({
+        interactions,
+      });
+
+      const popup = new mapboxGl.Popup();
+      // eslint-disable-next-line no-underscore-dangle
+      popup._content = global.document.createElement('div');
+      instance.popups.set('foo', { popup });
+
+      const map = {};
+      instance.hideTooltip = jest.fn();
+      instance.triggerInteraction({
+        map,
+        event: {
+          originalEvent: {
+            explicitOriginalTarget: null,
+            relatedTarget: global.document.createElement('div'),
+          },
+          lngLat: {},
+        },
+        feature: {
+          geometry: {
+            coordinates: [0, 0],
+          },
+        },
+        layerId: 'foo',
+        interaction: {
+          id: 'foo',
+          interaction: INTERACTION_DISPLAY_TOOLTIP,
+          template: 'template',
+          trigger: 'mouseover',
+          fixed: true,
+        },
+        eventType: 'mouseleave',
+      });
+      expect(instance.hideTooltip).toHaveBeenCalled();
     });
-    expect(instance.hideTooltip).toHaveBeenCalled();
+    it('should\'nt trigger when tooltip is fixed and hover the tooltip', () => {
+      const interactions = [];
+      const instance = new InteractiveMap({
+        interactions,
+      });
+
+      const popup = new mapboxGl.Popup();
+      // eslint-disable-next-line no-underscore-dangle
+      popup._content = global.document.createElement('div');
+      instance.popups.set('foo', { popup });
+
+      const map = {};
+      instance.hideTooltip = jest.fn();
+      instance.triggerInteraction({
+        map,
+        event: {
+          originalEvent: {
+            // eslint-disable-next-line no-underscore-dangle
+            explicitOriginalTarget: popup._content,
+            relatedTarget: null,
+          },
+          lngLat: {},
+        },
+        feature: {
+          geometry: {
+            coordinates: [0, 0],
+          },
+        },
+        layerId: 'foo',
+        interaction: {
+          id: 'foo',
+          interaction: INTERACTION_DISPLAY_TOOLTIP,
+          template: 'template',
+          trigger: 'mouseover',
+          fixed: true,
+        },
+        eventType: 'mouseleave',
+      });
+      expect(instance.hideTooltip).not.toHaveBeenCalled();
+    });
   });
 
   it('should trigger function interaction', () => {
@@ -442,6 +531,7 @@ describe('Interactions', () => {
     instance.displayTooltip({
       layerId: 'bar',
       event: {
+        type: 'click',
         lngLat: { lng: 1, lat: 2 },
       },
       template: 'bar',
@@ -455,8 +545,14 @@ describe('Interactions', () => {
       event: {
         lngLat: { lng: 1, lat: 2 },
       },
+      feature: {
+        geometry: {
+          coordinates: [0, 0],
+        },
+      },
       template: 'bar',
       unique: true,
+      fixed: true,
     });
 
     await true;
@@ -482,4 +578,21 @@ describe('Interactions', () => {
     instance.hideTooltip({ layerId: 'foo' });
     expect(popup.remove).not.toHaveBeenCalled();
   });
+});
+
+it('should display tooltips', () => {
+  const instance = new InteractiveMap({});
+  instance.map = {};
+  instance.displayTooltip({
+    layerId: 'foo',
+    event: {
+      lngLat: { lng: 1, lat: 2 },
+    },
+    template: 'bar',
+  });
+  const { popup } = instance.popups.get('foo');
+  popup.listeners[0].callback();
+  expect(popup.remove).toHaveBeenCalled();
+  // eslint-disable-next-line no-underscore-dangle
+  expect(popup._content.removeEventListener).toHaveBeenCalled();
 });

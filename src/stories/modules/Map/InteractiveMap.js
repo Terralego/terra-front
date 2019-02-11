@@ -1,5 +1,7 @@
 import React from 'react';
 
+import { boolean } from '@storybook/addon-knobs';
+
 import InteractiveMap from '../../../modules/Map/InteractiveMap';
 
 export default () => (
@@ -39,6 +41,22 @@ export default () => (
       }, {
         id: 'terralego-etablissements',
         interaction: 'fitZoom',
+      }, {
+        id: 'terralego-etablissements',
+        interaction: 'displayTooltip',
+        fixed: boolean('fix tooltip', true),
+        trigger: 'mouseover',
+        template: `
+  # Établissement
+  
+  * Siret : {{siret}}
+  * Date de création :  {% if date_crea.length > 0 %}{{date_crea}}{% else %}Non connue{% endif %}
+  * Raison sociale : {{raison_sociale}}
+  * Nom commune : {{libcom}}
+  * Activité principale exercée : {{libapet}}
+  * Effectif{% if effectif_reel > 0 %}s{% endif %} salarié{% if effectif_reel > 0 %}s{% endif %} : {{effectif_reel}}
+  * Vocation regroupée : {% if voc_regr.length > 0 %}{{voc_regr}}{% else %}Non connue{% endif %}
+  `,
       }, {
         id: 'terralego-eae-employment',
         interaction: 'displayTooltip',
@@ -144,6 +162,9 @@ export default () => (
           source: 'terralego',
           id: 'terralego-etablissements',
           'source-layer': 'etablissements',
+          paint: {
+            'circle-radius': 10,
+          },
         }],
       }}
     />
