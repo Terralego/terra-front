@@ -3,6 +3,7 @@ import ReactDOM from 'react-dom';
 import PropTypes from 'prop-types';
 import mapBoxGl from 'mapbox-gl';
 import debounce from 'lodash.debounce';
+import bbox from '@turf/bbox';
 
 import { setInteractions } from './services/mapUtils';
 import MapComponent from '../Map';
@@ -13,6 +14,7 @@ import Legend from './components/Legend';
 
 import './styles.scss';
 
+export const INTERACTION_ZOOM = 'fitZoom';
 export const INTERACTION_DISPLAY_TOOLTIP = 'displayTooltip';
 export const INTERACTION_FN = 'function';
 
@@ -26,6 +28,7 @@ export class InteractiveMap extends React.Component {
       id: PropTypes.string.isRequired,
       trigger: PropTypes.oneOf(['click', 'mouseover']),
       interaction: PropTypes.oneOf([
+        INTERACTION_ZOOM,
         INTERACTION_DISPLAY_TOOLTIP,
         INTERACTION_FN,
       ]),
@@ -106,6 +109,9 @@ export class InteractiveMap extends React.Component {
     setInteractions({ map, interactions, callback: config => this.triggerInteraction(config) });
   }
 
+  fitZoom = ({ feature, map }) =>
+    map.fitBounds(bbox({ type: 'FeatureCollection', features: [feature] }));
+
   displayTooltip = ({
     layerId,
     feature: { properties } = {},
@@ -164,6 +170,9 @@ export class InteractiveMap extends React.Component {
           unique: ['mouseover', 'mousemove'].includes(trigger),
           ...config,
         });
+        break;
+      case INTERACTION_ZOOM:
+        this.fitZoom({ feature, map });
         break;
       case INTERACTION_FN:
         fn({ map, event, layerId, feature, widgetMapInstance: this });
