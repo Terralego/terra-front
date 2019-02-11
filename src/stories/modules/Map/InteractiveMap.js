@@ -37,6 +37,9 @@ export default () => (
 {{nom_ppal}}
 `,
       }, {
+        id: 'terralego-etablissements',
+        interaction: 'fitZoom',
+      }, {
         id: 'terralego-eae-employment',
         interaction: 'displayTooltip',
         trigger: 'mouseover',
@@ -136,6 +139,11 @@ export default () => (
             ],
           },
           'source-layer': 'zae-centroid',
+        }, {
+          type: 'circle',
+          source: 'terralego',
+          id: 'terralego-etablissements',
+          'source-layer': 'etablissements',
         }],
       }}
     />

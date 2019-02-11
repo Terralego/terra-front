@@ -4,8 +4,9 @@ import ReactDOM from 'react-dom';
 import mapboxGl from 'mapbox-gl';
 
 import { setInteractions } from './services/mapUtils';
-import InteractiveMap, { INTERACTION_DISPLAY_TOOLTIP, INTERACTION_FN } from './InteractiveMap';
+import InteractiveMap, { INTERACTION_ZOOM, INTERACTION_DISPLAY_TOOLTIP, INTERACTION_FN } from './InteractiveMap';
 
+jest.mock('@turf/bbox', () => jest.fn());
 jest.mock('mapbox-gl', () => {
   function Popup () {}
   Popup.prototype.mockedListeners = [];
@@ -192,6 +193,74 @@ describe('Interactions', () => {
     configCallback(config);
     expect(instance.triggerInteraction).toHaveBeenCalledWith(config);
     done();
+  });
+
+  describe('fitZoom interaction', () => {
+    it('should trigger fitZoom interaction', () => {
+      const interactions = [];
+      const instance = new InteractiveMap({
+        interactions,
+      });
+      const map = { fitBounds: jest.fn() };
+      const feature = {
+        type: 'Feature',
+        geometry: {
+          type: 'Polygon',
+          coordinates: [
+            [
+              [
+                -33.83789062499999,
+                60.37042901631508,
+              ],
+              [
+                -39.814453125,
+                55.825973254619015,
+              ],
+            ],
+          ],
+        },
+      };
+      instance.triggerInteraction({
+        map,
+        event: {},
+        feature,
+        layerId: 'foo',
+        interaction: {
+          id: 'foo',
+          interaction: INTERACTION_ZOOM,
+          trigger: 'click',
+        },
+        eventType: 'click',
+      });
+    });
+
+    it('should call bbox & fitBounds', () => {
+      const interactions = [];
+      const instance = new InteractiveMap({
+        interactions,
+      });
+      const map = { fitBounds: jest.fn() };
+      const feature = {
+        type: 'Feature',
+        geometry: {
+          type: 'Polygon',
+          coordinates: [
+            [
+              [
+                -33.83789062499999,
+                60.37042901631508,
+              ],
+              [
+                -39.814453125,
+                55.825973254619015,
+              ],
+            ],
+          ],
+        },
+      };
+      instance.fitZoom({ feature, map });
+      expect(map.fitBounds).toHaveBeenCalled();
+    });
   });
 
   it('should not trigger interaction', () => {
