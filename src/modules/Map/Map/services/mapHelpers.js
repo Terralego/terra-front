@@ -8,34 +8,36 @@ export const addMapDebug = map => {
   const debugToPopup = ['*', 'popup'].includes(mapDebugMode);
   const debugToConsole = ['*', 'console'].includes(mapDebugMode);
 
-  if (debugToPopup || debugToConsole) {
-    const popup = new mapBoxGl.Popup({
-      closeButton: false,
-      closeOnClick: false,
-    });
-
-    if (!debugToPopup) {
-      popup.on('open', ({ target }) => target.remove());
-    }
-
-    const renderPopup = features => {
-      if (debugToConsole) {
-        console.log(features); // eslint-disable-line no-console
-      }
-      return renderInspectPopup(features);
-    };
-
-    map.addControl(new MapboxInspect({
-      popup,
-      renderPopup,
-      showMapPopup: true,
-      showMapPopupOnHover: false,
-
-      showInspectButton: false,
-      showInspectMap: false,
-      showInspectMapPopupOnHover: false,
-    }));
+  if (!debugToPopup && !debugToConsole) {
+    return map;
   }
+
+  const popup = new mapBoxGl.Popup({
+    closeButton: false,
+    closeOnClick: false,
+  });
+
+  if (!debugToPopup) {
+    popup.on('open', ({ target }) => target.remove());
+  }
+
+  const renderPopup = features => {
+    if (debugToConsole) {
+      console.log(features); // eslint-disable-line no-console
+    }
+    return renderInspectPopup(features);
+  };
+
+  map.addControl(new MapboxInspect({
+    popup,
+    renderPopup,
+    showMapPopup: true,
+    showMapPopupOnHover: false,
+
+    showInspectButton: false,
+    showInspectMap: false,
+    showInspectMapPopupOnHover: false,
+  }));
 
   return map;
 };
