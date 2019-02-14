@@ -1,7 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import mapBoxGl from 'mapbox-gl';
-import { addMapDebug } from './services/mapHelpers';
+import { addMapDebug } from '../helpers/mapDebug';
 
 import 'mapbox-gl/dist/mapbox-gl.css';
 

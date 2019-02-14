@@ -2,7 +2,7 @@
 import mapBoxGl from 'mapbox-gl';
 import MapboxInspect from 'mapbox-gl-inspect';
 import renderInspectPopup from 'mapbox-gl-inspect/lib/renderPopup';
-import { addMapDebug } from './mapHelpers';
+import { addMapDebug } from './mapDebug';
 
 jest.mock('mapbox-gl', () => {
   const mockedPopup = { on: jest.fn() };
