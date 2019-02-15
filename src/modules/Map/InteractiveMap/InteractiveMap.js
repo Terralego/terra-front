@@ -119,8 +119,7 @@ export class InteractiveMap extends React.Component {
 
   displayTooltip = ({
     layerId,
-    feature,
-    feature: { properties } = {},
+    feature: { properties, geometry } = {},
     event: { lngLat, type },
     template,
     content,
@@ -140,9 +139,13 @@ export class InteractiveMap extends React.Component {
       container,
     );
 
+    const lnglat = !fixed
+      ? [lngLat.lng, lngLat.lat]
+      : centroid(geometry).geometry.coordinates;
+
     if (this.popups.has(layerId)) {
-      if (this.popups.get(layerId).content === container.innerHTML && !fixed) {
-        this.popups.get(layerId).popup.setLngLat([lngLat.lng, lngLat.lat]);
+      if (this.popups.get(layerId).content === container.innerHTML) {
+        this.popups.get(layerId).popup.setLngLat(lnglat);
       }
       return;
     }
@@ -152,9 +155,6 @@ export class InteractiveMap extends React.Component {
       this.popups.clear();
     }
     const popup = new mapBoxGl.Popup();
-    const lnglat = !fixed
-      ? [lngLat.lng, lngLat.lat]
-      : centroid(feature.geometry).geometry.coordinates;
     popup.once('close', () => this.popups.delete(layerId));
     this.popups.set(layerId, { popup, content: container.innerHTML });
     popup.setLngLat(lnglat);
