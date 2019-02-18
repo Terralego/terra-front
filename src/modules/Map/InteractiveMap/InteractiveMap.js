@@ -174,7 +174,7 @@ export class InteractiveMap extends React.Component {
   }
 
   triggerInteraction ({ map, event, feature, layerId, interaction, eventType }) {
-    const { id, interaction: interactionType, fn, trigger = 'click', fixed, ...config, constraints } = interaction;
+    const { id, interaction: interactionType, fn, trigger = 'click', fixed, constraints, ...config } = interaction;
 
     if ((trigger === 'mouseover' && !['mousemove', 'mouseleave'].includes(eventType)) ||
         (trigger !== 'mouseover' && trigger !== eventType)) return;
