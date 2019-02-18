@@ -119,7 +119,8 @@ export class InteractiveMap extends React.Component {
 
   displayTooltip = ({
     layerId,
-    feature: { properties, geometry } = {},
+    feature,
+    feature: { properties } = {},
     event: { lngLat, type },
     template,
     content,
@@ -141,13 +142,13 @@ export class InteractiveMap extends React.Component {
 
     const lnglat = !fixed
       ? [lngLat.lng, lngLat.lat]
-      : centroid(geometry).geometry.coordinates;
+      : centroid(feature).geometry.coordinates;
 
     if (this.popups.has(layerId)) {
       if (this.popups.get(layerId).content === container.innerHTML) {
         this.popups.get(layerId).popup.setLngLat(lnglat);
+        return;
       }
-      return;
     }
 
     if (unique) {
@@ -195,10 +196,10 @@ export class InteractiveMap extends React.Component {
         if (eventType === 'mouseleave') {
           const { popup = {} } = this.popups.get(layerId) || {};
           const { _content: popupContent } = popup;
-
           if (!fixed || this.getOriginalTarget(event) !== popupContent) {
             this.hideTooltip({ layerId });
           }
+          return;
         }
         this.displayTooltip({
           layerId,
