@@ -61,6 +61,10 @@ export default () => (
         id: 'terralego-eae-employment',
         interaction: 'displayTooltip',
         trigger: 'mouseover',
+        constraints: {
+          minZoom: 12,
+          maxZoom: 14,
+        },
         template: 'Emploi',
       }]}
       customStyle={{
