@@ -1,0 +1,26 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`should fail to fetch properties 1`] = `
+<p>
+  foo
+</p>
+`;
+
+exports[`should fail to get an id value 1`] = `
+<p>
+  foo
+</p>
+`;
+
+exports[`should render fetched properties 1`] = `
+<p>
+  bar
+  foo
+</p>
+`;
+
+exports[`should render static properties 1`] = `
+<p>
+  foo
+</p>
+`;
