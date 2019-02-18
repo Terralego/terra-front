@@ -316,6 +316,53 @@ describe('Interactions', () => {
     expect(instance.displayTooltip).toHaveBeenCalled();
   });
 
+  describe('Interaction with constraints', () => {
+    const createInteraction = (map, constraints) => ({
+      map,
+      event: {},
+      feature: {},
+      layerId: 'foo',
+      interaction: {
+        id: 'foo',
+        interaction: INTERACTION_DISPLAY_TOOLTIP,
+        template: 'template',
+        trigger: 'click',
+        constraints,
+      },
+      eventType: 'click',
+    });
+
+    const mapZ10 = { getZoom: () => 10 };
+    const mapZ13 = { getZoom: () => 13 };
+    const mapZ16 = { getZoom: () => 16 };
+
+    it('should not be triggered when zoom is out of range', () => {
+      const instance = new InteractiveMap({ interactions: [] });
+      instance.displayTooltip = jest.fn();
+
+      instance.triggerInteraction(createInteraction(mapZ16, { minZoom: 12, maxZoom: 14 }));
+      instance.triggerInteraction(createInteraction(mapZ10, { minZoom: 12, maxZoom: 14 }));
+      expect(instance.displayTooltip).not.toHaveBeenCalled();
+    });
+
+    it('should be triggered if zoom is in range', () => {
+      const instance = new InteractiveMap({ interactions: [] });
+      instance.displayTooltip = jest.fn();
+
+      instance.triggerInteraction(createInteraction(mapZ13, { minZoom: 12, maxZoom: 14 }));
+      expect(instance.displayTooltip).toHaveBeenCalled();
+    });
+
+    it('should be triggered when only max OR min zoom is set', () => {
+      const instance = new InteractiveMap({ interactions: [] });
+      instance.displayTooltip = jest.fn();
+
+      instance.triggerInteraction(createInteraction(mapZ13, { minZoom: 12 }));
+      instance.triggerInteraction(createInteraction(mapZ13, { maxZoom: 14 }));
+      expect(instance.displayTooltip).toHaveBeenCalledTimes(2);
+    });
+  });
+
   describe('HideTooltip interaction', () => {
     it('should trigger when tooltip is not fixed', () => {
       const interactions = [];

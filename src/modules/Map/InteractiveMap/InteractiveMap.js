@@ -174,10 +174,21 @@ export class InteractiveMap extends React.Component {
   }
 
   triggerInteraction ({ map, event, feature, layerId, interaction, eventType }) {
-    const { id, interaction: interactionType, fn, trigger = 'click', fixed, ...config } = interaction;
+    const { id, interaction: interactionType, fn, trigger = 'click', fixed, constraints, ...config } = interaction;
 
     if ((trigger === 'mouseover' && !['mousemove', 'mouseleave'].includes(eventType)) ||
         (trigger !== 'mouseover' && trigger !== eventType)) return;
+
+    if (constraints) {
+      const currentZoom = map.getZoom();
+      const {
+        minZoom = 0,
+        maxZoom = Infinity,
+      }  = constraints;
+      if (currentZoom >= maxZoom || currentZoom <= minZoom) {
+        return;
+      }
+    }
 
     switch (interactionType) {
       case INTERACTION_DISPLAY_TOOLTIP:
