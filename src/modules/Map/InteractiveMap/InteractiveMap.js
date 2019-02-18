@@ -9,8 +9,8 @@ import centroid from '@turf/centroid';
 import { setInteractions } from './services/mapUtils';
 import MapComponent from '../Map';
 import BackgroundStyles from './components/BackgroundStyles';
-import MarkdownRenderer from '../../Template/MarkdownRenderer';
 import Legend from './components/Legend';
+import Tooltip from './components/Tooltip';
 
 
 import './styles.scss';
@@ -33,11 +33,18 @@ export class InteractiveMap extends React.Component {
         INTERACTION_DISPLAY_TOOLTIP,
         INTERACTION_FN,
       ]),
-      fixed: PropTypes.bool,
-      // for INTERACTION_DISPLAY_DETAILS
-      // and INTERACTION_DISPLAY_TOOLTIP
+      // for INTERACTION_DISPLAY_TOOLTIP
       template: PropTypes.string,
       content: PropTypes.string,
+      unique: PropTypes.bool, // Tooltip should be unique in screen
+      fixed: PropTypes.bool, // Tooltip should be anchored on feature centroid
+      fetchProperties: PropTypes.shape({
+        // URL where to fetch properties. Url should take a {{id}} placeholder
+        // Ex : /api/something/{{id}}
+        url: PropTypes.string.isRequired,
+        // name of the feature's property which will fit the "id" placeholder
+        id: PropTypes.string.isRequired,
+      }),
       // for INTERACTION_FN
       fn: PropTypes.func,
     })),
@@ -119,35 +126,38 @@ export class InteractiveMap extends React.Component {
 
   displayTooltip = ({
     layerId,
-    feature: { properties, geometry } = {},
+    feature,
+    feature: { properties } = {},
     event: { lngLat, type },
     template,
     content,
     unique,
     fixed,
+    fetchProperties = {},
   }) => {
     const { history } = this.props;
     const { map } = this;
     const container = document.createElement('div');
     ReactDOM.render(
-      <MarkdownRenderer
+      <Tooltip
+        fetch={fetchProperties}
+        properties={properties}
         template={template}
         content={content}
         history={history}
-        {...properties}
       />,
       container,
     );
 
     const lnglat = !fixed
       ? [lngLat.lng, lngLat.lat]
-      : centroid(geometry).geometry.coordinates;
+      : centroid(feature).geometry.coordinates;
 
     if (this.popups.has(layerId)) {
       if (this.popups.get(layerId).content === container.innerHTML) {
         this.popups.get(layerId).popup.setLngLat(lnglat);
+        return;
       }
-      return;
     }
 
     if (unique) {
@@ -195,10 +205,10 @@ export class InteractiveMap extends React.Component {
         if (eventType === 'mouseleave') {
           const { popup = {} } = this.popups.get(layerId) || {};
           const { _content: popupContent } = popup;
-
           if (!fixed || this.getOriginalTarget(event) !== popupContent) {
             this.hideTooltip({ layerId });
           }
+          return;
         }
         this.displayTooltip({
           layerId,

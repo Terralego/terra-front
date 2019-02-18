@@ -8,14 +8,14 @@ import InteractiveMap, { INTERACTION_ZOOM, INTERACTION_DISPLAY_TOOLTIP, INTERACT
 
 jest.mock('@turf/bbox', () => jest.fn());
 jest.mock('mapbox-gl', () => {
-  function Popup () {
+  const Popup = jest.fn(function Popup () {
     this.listeners = [];
     // eslint-disable-next-line no-underscore-dangle
     this._content = {
       removeEventListener: jest.fn(),
       addEventListener: (event, callback) => this.listeners.push({ event, callback }),
     };
-  }
+  });
   Popup.prototype.mockedListeners = [];
   Popup.prototype.once = jest.fn((event, listener) => {
     Popup.prototype.mockedListeners.push({ event, listener });
@@ -44,6 +44,10 @@ jest.mock('react-dom', () => {
 jest.mock('lodash.debounce', () => fn => () => fn({ layerId: 'foo' }));
 jest.mock('@turf/centroid', () => () => ({ geometry: { coordinates: [0, 0] } }));
 jest.mock('./components/BackgroundStyles', () => () => <p>BackgroundStyles</p>);
+
+beforeEach(() => {
+  mapboxGl.Popup.prototype.remove.mockClear();
+});
 
 describe('snaphsots', () => {
   it('should render correctly', () => {
@@ -557,10 +561,29 @@ describe('Interactions', () => {
     expect(mapboxGl.Popup.prototype.setDOMContent).not.toHaveBeenCalled();
     expect(mapboxGl.Popup.prototype.addTo).not.toHaveBeenCalled();
 
-    mapboxGl.Popup.prototype.mockedListeners[1].listener();
+    mapboxGl.Popup.prototype.mockedListeners[0].listener();
 
     expect(instance.popups.has('foo')).toBe(false);
   });
+
+  it('should remove tooltip', () => {
+    const instance = new InteractiveMap({});
+    instance.map = {};
+    instance.displayTooltip({
+      layerId: 'foo',
+      event: {
+        lngLat: { lng: 1, lat: 2 },
+      },
+      template: 'bar',
+    });
+    const { popup } = instance.popups.get('foo');
+    console.log(popup.listeners);
+    popup.listeners[0].callback();
+    expect(popup.remove).toHaveBeenCalled();
+    // eslint-disable-next-line no-underscore-dangle
+    expect(popup._content.removeEventListener).toHaveBeenCalled();
+  });
+
 
   it('should display only one tooltips', async done => {
     const instance = new InteractiveMap({});
@@ -625,21 +648,25 @@ describe('Interactions', () => {
     instance.hideTooltip({ layerId: 'foo' });
     expect(popup.remove).not.toHaveBeenCalled();
   });
-});
 
-it('should display tooltips', () => {
-  const instance = new InteractiveMap({});
-  instance.map = {};
-  instance.displayTooltip({
-    layerId: 'foo',
-    event: {
-      lngLat: { lng: 1, lat: 2 },
-    },
-    template: 'bar',
+  it('should build a new tooltip', () => {
+    const instance = new InteractiveMap({});
+    instance.popups = {
+      has: () => true,
+      get: () => ({
+        content: false,
+      }),
+      set () {},
+    };
+
+    instance.displayTooltip({
+      layerId: 'foo',
+      event: {
+        lngLat: { lng: 1, lat: 2 },
+      },
+      template: 'bar',
+    });
+
+    expect(mapboxGl.Popup).toHaveBeenCalled();
   });
-  const { popup } = instance.popups.get('foo');
-  popup.listeners[0].callback();
-  expect(popup.remove).toHaveBeenCalled();
-  // eslint-disable-next-line no-underscore-dangle
-  expect(popup._content.removeEventListener).toHaveBeenCalled();
 });
