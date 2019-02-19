@@ -61,14 +61,14 @@ it('should get columns', () => {
     { value: 'Label1', sortable: true, display: true },
     { value: 'Label2', sortable: true, display: true },
   ];
-  expect(getColumns(columns).length).toBe(2);
-  expect(getColumns(columns)[0]).toHaveProperty('props', {
+  expect(getColumns({ columns }).length).toBe(2);
+  expect(getColumns({ columns })[0]).toHaveProperty('props', {
     display: true,
     index: 0,
     value: 'Label1',
     sortable: true,
   });
-  expect(getColumns(columns)[0]).toHaveProperty('renderMenu');
+  expect(getColumns({ columns })[0]).toHaveProperty('renderMenu');
 });
 
 it('should render menu in column header', () => {
