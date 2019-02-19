@@ -577,7 +577,6 @@ describe('Interactions', () => {
       template: 'bar',
     });
     const { popup } = instance.popups.get('foo');
-    console.log(popup.listeners);
     popup.listeners[0].callback();
     expect(popup.remove).toHaveBeenCalled();
     // eslint-disable-next-line no-underscore-dangle
