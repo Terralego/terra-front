@@ -3,6 +3,14 @@ import renderer from 'react-test-renderer';
 
 import Filters from './Filters';
 
+jest.mock('@blueprintjs/core', () => ({
+  Checkbox: () => <p>Checkbox</p>,
+  InputGroup: () => <p>Input</p>,
+  Select: ({ children }) => children,
+  MenuItem: () => <p>Menu Item</p>,
+  Button: () => <p>Button</p>,
+}));
+
 it('should build a form', () => {
   const tree = renderer.create((
     <Filters
