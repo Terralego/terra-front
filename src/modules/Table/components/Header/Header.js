@@ -35,7 +35,10 @@ export const Header = ({ title, columns, onChange }) => {
 };
 
 Header.propTypes = {
-  title: PropTypes.string,
+  title: PropTypes.oneOfType([
+    PropTypes.string,
+    PropTypes.element,
+  ]),
   columns: PropTypes.arrayOf(PropTypes.object).isRequired,
   onChange: PropTypes.func,
 };

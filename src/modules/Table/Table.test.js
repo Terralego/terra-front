@@ -44,47 +44,50 @@ it('should header change', () => {
   ]);
 });
 
-it('should reset data', () => {
-  const data = {};
-  const instance = new Table({ data });
-  instance.resetData = jest.fn();
-  instance.componentDidUpdate({ data: {} });
-  expect(instance.resetData).toHaveBeenCalledWith(data);
+it('should reset columns', () => {
+  const wrapper = shallow(<Table columns={['foo']} data={[]} />);
+  const instance = wrapper.instance();
+  jest.spyOn(instance, 'resetColumns');
+  const columns = ['bar', { label: 'Foo', value: 'foo', display: false }];
+  wrapper.setProps({ columns });
+  expect(instance.resetColumns).toHaveBeenCalledWith(columns);
+  expect(wrapper.state().columns).toEqual([
+    { value: 'bar', display: true, sortable: true },
+    { label: 'Foo', value: 'foo', display: false },
+  ]);
 });
 
-it('should filter props', () => {
+it('should get filtered columns', () => {
   const instance = new Table({});
-  instance.setState = jest.fn();
-
-  instance.propsFiltered([{
+  instance.state.columns = [{
     value: 'foo',
-    display: true,
+    display: false,
   }, {
     value: 'bar',
-    display: false,
+    display: true,
+  }];
+  expect(instance.filteredColumns).toEqual([{
+    value: 'bar',
+    display: true,
   }]);
-  expect(instance.setState).toHaveBeenCalledWith({
-    columnsFiltered: [{
-      value: 'foo',
-      display: true,
-    }],
-    dataFiltered: [],
-  });
+});
 
-  instance.setState.mockClear();
-
-  instance.propsFiltered([{
+it('should get filtered data', () => {
+  const instance = new Table({ data: [
+    ['foo1', 'bar1'],
+    ['foo2', 'bar2'],
+    ['foo3', 'bar3'],
+  ] });
+  instance.state.columns = [{
     value: 'foo',
-    display: true,
+    display: false,
   }, {
     value: 'bar',
-    display: false,
-  }], [['datafoo', 'databar']]);
-  expect(instance.setState).toHaveBeenCalledWith({
-    columnsFiltered: [{
-      value: 'foo',
-      display: true,
-    }],
-    dataFiltered: [['datafoo']],
-  });
+    display: true,
+  }];
+  expect(instance.filteredData).toEqual([
+    ['bar1'],
+    ['bar2'],
+    ['bar3'],
+  ]);
 });

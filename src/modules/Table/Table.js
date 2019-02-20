@@ -18,7 +18,7 @@ export class Table extends React.Component {
     data: PropTypes.arrayOf(PropTypes.arrayOf(PropTypes.string)).isRequired,
     title: PropTypes.oneOfType([
       PropTypes.string,
-      PropTypes.func,
+      PropTypes.element,
     ]),
     locales: PropTypes.shape({
       sortAsc: PropTypes.string,
@@ -33,24 +33,38 @@ export class Table extends React.Component {
 
   state = {
     columns: [],
-    dataFiltered: [],
-    columnsFiltered: [],
   }
 
   componentDidMount () {
-    const { data } = this.props;
-    this.resetData(data);
+    const { columns } = this.props;
+    this.resetColumns(columns);
   }
 
-  componentDidUpdate ({ data: prevData }) {
-    const { data } = this.props;
-    if (data !== prevData) {
-      this.resetData(data);
+  componentDidUpdate ({ columns: prevColumns }) {
+    const { columns } = this.props;
+    if (columns !== prevColumns) {
+      this.resetColumns(columns);
     }
   }
 
-  onHeaderChange = ({ event: { target: { checked } }, index }) => {
+  get filteredColumns () {
+    const { columns } = this.state;
+
+    return columns.filter(({ display }) => display);
+  }
+
+  get filteredData () {
     const { data } = this.props;
+    const { columns } = this.state;
+
+    return data.map(line => line.reduce((cells, cell, k) => (
+      (columns[k] || {}).display
+        ? [...cells, cell]
+        : cells
+    ), []));
+  }
+
+  onHeaderChange = ({ event: { target: { checked } }, index }) => {
     this.setState(({ columns: prevColumns }) => {
       const columns = prevColumns.map((col, i) => (
         (i !== index)
@@ -60,57 +74,32 @@ export class Table extends React.Component {
             display: checked,
           }
       ));
-      this.propsFiltered(columns, data);
       return {
         columns,
       };
     });
   }
 
-  propsFiltered = (columns, data = []) => {
-    const { dataFiltered, columnsFiltered } = columns.reduce((acc, col, index) => (
-      (col.display !== false)
-        ? acc
-        : {
-          ...acc,
-          columnsFiltered: [
-            ...acc.columnsFiltered.filter((_, i) => (i + acc.count) !== index),
-          ],
-          dataFiltered: [
-            ...acc.dataFiltered.map(item => item.filter((_, i) => (i + acc.count) !== index)),
-          ],
-          count: acc.count + 1,
-        }
-    ), { dataFiltered: data, columnsFiltered: columns, count: 0 });
-
-    this.setState({ dataFiltered, columnsFiltered });
-  }
-
-  initColumns = data => {
-    const { columns: allColumns } = this.props;
-    const columns = allColumns.map(col =>
-      ((typeof col === 'string')
+  resetColumns = columns => {
+    const safeColumns = columns.map(col => (
+      typeof col === 'string'
         ? { value: col, sortable: true, display: true }
         : { display: true, ...col }));
-    this.setState({ columns });
-    this.propsFiltered(columns, data);
-  }
-
-  resetData (data) {
-    this.initColumns(data);
+    this.setState({ columns: safeColumns });
   }
 
   render () {
-    const { columns, dataFiltered, columnsFiltered } = this.state;
+    const { columns } = this.state;
     const { title, locales: customLocales } = this.props;
     const locales = { ...DEFAULT_LOCALES, ...customLocales };
+    const { filteredColumns, filteredData } = this;
 
     return (
       <div className="table">
         <Header title={title} columns={columns} onChange={this.onHeaderChange} />
         <TableComponent
-          columns={columnsFiltered}
-          data={dataFiltered}
+          columns={filteredColumns}
+          data={filteredData}
           locales={locales}
         />
       </div>
