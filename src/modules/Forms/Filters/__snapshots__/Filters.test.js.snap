@@ -2,8 +2,12 @@
 
 exports[`should build a form 1`] = `
 <div>
-  <div>
-    <p>
+  <div
+    className="control-container"
+  >
+    <p
+      className="control-label"
+    >
       Vocations
     </p>
     <div
@@ -22,8 +26,12 @@ exports[`should build a form 1`] = `
       />
     </div>
   </div>
-  <div>
-    <p>
+  <div
+    className="control-container"
+  >
+    <p
+      className="control-label"
+    >
       Vocations
     </p>
     <span
@@ -43,11 +51,6 @@ exports[`should build a form 1`] = `
             onKeyUp={[Function]}
             type="button"
           >
-            <span
-              className="bp3-button-text"
-            >
-              développeur
-            </span>
             <span
               className="bp3-icon bp3-icon-double-caret-vertical"
               icon="double-caret-vertical"
@@ -72,8 +75,14 @@ exports[`should build a form 1`] = `
       </span>
     </span>
   </div>
-  <p>
-    Checkboxes
-  </p>
+  <div
+    className="control-container"
+  >
+    <p
+      className="control-label"
+    >
+      Foo
+    </p>
+  </div>
 </div>
 `;

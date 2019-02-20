@@ -1,0 +1,19 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`should render correctly 1`] = `
+<div
+  className="control-container"
+>
+  <p
+    className="control-label"
+  >
+    Pwout
+  </p>
+  <p>
+    Checkbox
+  </p>
+  <p>
+    Checkbox
+  </p>
+</div>
+`;
