@@ -1,9 +1,22 @@
 import React from 'react';
+import PropTypes from 'prop-types';
 import { Checkbox } from '@blueprintjs/core';
 
 import './index.scss';
 
 export class Checkboxes extends React.Component {
+  static propTypes = {
+    label: PropTypes.string,
+    values: PropTypes.arrayOf(PropTypes.string),
+    onChange: PropTypes.func,
+  }
+
+  static defaultProps = {
+    label: '',
+    values: [],
+    onChange: () => null,
+  }
+
   state = {
     values: [],
   }

@@ -1,9 +1,20 @@
 import React from 'react';
+import PropTypes from 'prop-types';
 import { InputGroup } from '@blueprintjs/core';
 
 import './index.scss';
 
 export class Text extends React.Component {
+  static propTypes = {
+    label: PropTypes.string,
+    onChange: PropTypes.func,
+  }
+
+  static defaultProps = {
+    label: '',
+    onChange: () => {},
+  }
+
   state = {
     value: '',
   }

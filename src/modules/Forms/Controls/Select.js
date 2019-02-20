@@ -1,10 +1,23 @@
 import React from 'react';
+import PropTypes from 'prop-types';
 import { MenuItem, Button } from '@blueprintjs/core';
 import { Select } from '@blueprintjs/select';
 
 import './index.scss';
 
 export class WrapperSelect extends React.Component {
+  static propTypes = {
+    label: PropTypes.string,
+    onChange: PropTypes.func,
+    values: PropTypes.arrayOf(PropTypes.string),
+  }
+
+  static defaultProps = {
+    label: '',
+    values: [],
+    onChange: () => {},
+  }
+
   constructor (props) {
     super(props);
     const { values } = this.props;
@@ -22,7 +35,7 @@ export class WrapperSelect extends React.Component {
   handleClick = value => () => this.handleChange(value);
 
   render () {
-    const { label, values = [] } = this.props;
+    const { label, values } = this.props;
     const { value } = this.state;
     const { handleChange, handleClick } = this;
 

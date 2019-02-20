@@ -6,7 +6,7 @@ import Filters from './Filters';
 it('should build a form', () => {
   const tree = renderer.create((
     <Filters
-      onChange={() => {}}
+      onChange={() => null}
       properties={[{
         property: 'single_value',
         label: 'Vocations',

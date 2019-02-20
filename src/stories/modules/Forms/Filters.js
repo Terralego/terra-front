@@ -24,11 +24,7 @@ export class CustomFilters extends React.Component {
           label: 'Foo',
           type: 'many',
           values: ['développeur', 'UX designer', 'Chef de projet'],
-        }/*, {
-          property: 'employments',
-          label: 'Emplois',
-          type: 'range',
-        }*/]}
+        }]}
       />
     );
   }
