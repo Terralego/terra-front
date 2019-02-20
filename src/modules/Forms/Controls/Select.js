@@ -1,11 +1,11 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { MenuItem, Button } from '@blueprintjs/core';
-import { Select } from '@blueprintjs/select';
+import { Select as BPSelect } from '@blueprintjs/select';
 
 import './index.scss';
 
-export class WrapperSelect extends React.Component {
+export class Select extends React.Component {
   static propTypes = {
     label: PropTypes.string,
     onChange: PropTypes.func,
@@ -15,7 +15,7 @@ export class WrapperSelect extends React.Component {
   static defaultProps = {
     label: '',
     values: [],
-    onChange: () => {},
+    onChange: () => null,
   }
 
   constructor (props) {
@@ -42,7 +42,7 @@ export class WrapperSelect extends React.Component {
     return (
       <div className="control-container">
         <p className="control-label">{label}</p>
-        <Select
+        <BPSelect
           popoverProps={{ usePortal: false }}
           items={values}
           filterable={values.length > 9}
@@ -51,10 +51,10 @@ export class WrapperSelect extends React.Component {
           onItemSelect={handleChange}
         >
           <Button text={value} rightIcon="double-caret-vertical" />
-        </Select>
+        </BPSelect>
       </div>
     );
   }
 }
 
-export default WrapperSelect;
+export default Select;
