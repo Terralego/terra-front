@@ -33,7 +33,7 @@ export class Filters extends React.Component {
   }
 
   static defaultProps = {
-    onChange () {},
+    onChange: () => null,
     properties: [],
     layer: '',
   }
