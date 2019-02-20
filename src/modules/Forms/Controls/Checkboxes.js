@@ -1,6 +1,7 @@
 import React from 'react';
 import { Checkbox } from '@blueprintjs/core';
 
+import './index.scss';
 
 export class Checkboxes extends React.Component {
   state = {
@@ -24,8 +25,8 @@ export class Checkboxes extends React.Component {
     const { handleChange } = this;
 
     return (
-      <div>
-        <p>{label}</p>
+      <div className="control-container">
+        <p className="control-label">{label}</p>
         {valuesProperties.map(val =>
           <Checkbox key={val} onChange={handleChange(val)} label={val} />)}
       </div>

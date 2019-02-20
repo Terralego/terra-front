@@ -2,6 +2,8 @@ import React from 'react';
 import { MenuItem, Button } from '@blueprintjs/core';
 import { Select } from '@blueprintjs/select';
 
+import './index.scss';
+
 export class WrapperSelect extends React.Component {
   constructor (props) {
     super(props);
@@ -25,8 +27,8 @@ export class WrapperSelect extends React.Component {
     const { handleChange, handleClick } = this;
 
     return (
-      <div>
-        <p>{label}</p>
+      <div className="control-container">
+        <p className="control-label">{label}</p>
         <Select
           popoverProps={{ usePortal: false }}
           items={values}

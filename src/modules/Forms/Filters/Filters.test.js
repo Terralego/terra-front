@@ -6,7 +6,7 @@ import Filters from './Filters';
 it('should build a form', () => {
   const tree = renderer.create((
     <Filters
-      onChange={properties => console.log(properties)}
+      onChange={() => {}}
       properties={[{
         property: 'single_value',
         label: 'Vocations',
@@ -21,11 +21,7 @@ it('should build a form', () => {
         label: 'Foo',
         type: 'many',
         values: ['développeur', 'UX designer', 'Chef de projet'],
-      }/*, {
-        property: 'employments',
-        label: 'Emplois',
-        type: 'range',
-      }*/]}
+      }]}
     />
   )).toJSON();
   expect(tree).toMatchSnapshot();
