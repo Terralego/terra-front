@@ -9,6 +9,10 @@ export const TYPE_SINGLE = 'single';
 export const TYPE_MANY = 'many';
 export const TYPE_RANGE = 'range';
 
+const DEFAULT_LOCALES = {
+  noResults: 'No results',
+};
+
 function getComponent (type, values) {
   switch (type) {
     case TYPE_SINGLE:
@@ -24,6 +28,9 @@ function getComponent (type, values) {
 
 export class Filters extends React.Component {
   static propTypes = {
+    locales: PropTypes.shape({
+      noResults: PropTypes.string,
+    }),
     onChange: PropTypes.func,
     layer: PropTypes.string,
     properties: PropTypes.arrayOf(PropTypes.shape({
@@ -37,6 +44,7 @@ export class Filters extends React.Component {
   }
 
   static defaultProps = {
+    locales: {},
     onChange () {},
     properties: [],
     layer: '',
@@ -64,12 +72,14 @@ export class Filters extends React.Component {
   }
 
   generateFilters () {
-    const { properties: propertiesSchema } = this.props;
+    const { properties: propertiesSchema, locales: customLocales } = this.props;
+    const locales = { ...DEFAULT_LOCALES, ...customLocales };
     const filters = propertiesSchema.map(({ type, values, property, ...props }) => {
       const Component = getComponent(type, values);
       const { properties } = this.state;
 
       if (!Component) return null;
+
 
       return (
         <Component
@@ -79,6 +89,7 @@ export class Filters extends React.Component {
           property={property}
           onChange={this.onChange(property)}
           value={properties[property] || ''}
+          locales={locales}
           {...props}
         />
       );

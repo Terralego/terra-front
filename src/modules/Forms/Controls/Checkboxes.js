@@ -17,19 +17,17 @@ export class Checkboxes extends React.Component {
     onChange () {},
   }
 
-  state = {
-    values: [],
-  }
+  values = [];
 
   handleChange = value => () => {
     const { onChange } = this.props;
-    this.setState(({ values: prevValues }) => {
-      const values = prevValues.includes(value)
-        ? [...prevValues.filter(val => val !== value)]
-        : [...prevValues, value];
-      onChange(values);
-      return value;
-    });
+    const { values: prevValues } = this;
+    const values = prevValues.includes(value)
+      ? [...prevValues.filter(val => val !== value)]
+      : [...prevValues, value];
+
+    this.values = values;
+    onChange(values);
   }
 
   render () {

@@ -7,12 +7,14 @@ import './index.scss';
 
 export class Select extends React.Component {
   static propTypes = {
+    locales: PropTypes.shape({ noResults: PropTypes.string }),
     label: PropTypes.string,
     onChange: PropTypes.func,
     values: PropTypes.arrayOf(PropTypes.string),
   }
 
   static defaultProps = {
+    locales: { noResults: 'No results.' },
     label: '',
     values: [],
     onChange () {},
@@ -33,7 +35,7 @@ export class Select extends React.Component {
   handleClick = value => () => this.handleChange(value);
 
   render () {
-    const { label, values } = this.props;
+    const { label, values, locales: { noResults } } = this.props;
     const { value } = this.state;
     const { handleChange, handleClick } = this;
 
@@ -45,7 +47,7 @@ export class Select extends React.Component {
           items={values}
           filterable={values.length > 9}
           itemRenderer={val => <MenuItem onClick={handleClick(val)} key={val} text={val} />}
-          noResults={<MenuItem disabled text="No results." />}
+          noResults={<MenuItem disabled text={noResults} />}
           onItemSelect={handleChange}
         >
           <Button text={value} rightIcon="double-caret-vertical" />

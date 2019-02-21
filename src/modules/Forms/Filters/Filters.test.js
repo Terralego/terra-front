@@ -15,6 +15,7 @@ jest.mock('@blueprintjs/core', () => ({
 it('should build a form', () => {
   const tree = renderer.create((
     <Filters
+      locales={{ noResults: 'Aucun résultats' }}
       onChange={() => null}
       properties={[{
         property: 'single_value',
@@ -67,5 +68,5 @@ it('should mount & update correctly', () => {
   ));
 
   wrapper.instance().onChange('pwout')('pwet');
-  expect(wrapper.instance().state.pwout).toEqual('pwet');
+  expect(wrapper.instance().state.properties.pwout).toEqual('pwet');
 });
