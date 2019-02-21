@@ -20,23 +20,26 @@ export class Select extends React.Component {
     onChange () {},
   }
 
-  constructor (props) {
-    super(props);
-    const { values: [value] } = this.props;
-    this.state = { value };
+  componentDidMount () {
+    const { onChange, values: [value] } = this.props;
+    onChange(value);
   }
 
   handleChange = value => {
     const { onChange } = this.props;
-    this.setState({ value });
     onChange(value);
   }
 
   handleClick = value => () => this.handleChange(value);
 
   render () {
-    const { label, values, locales: { noResults } } = this.props;
-    const { value } = this.state;
+    const {
+      label,
+      values,
+      values: [defaultValue],
+      locales: { noResults },
+      value,
+    } = this.props;
     const { handleChange, handleClick } = this;
 
     return (
@@ -50,7 +53,7 @@ export class Select extends React.Component {
           noResults={<MenuItem disabled text={noResults} />}
           onItemSelect={handleChange}
         >
-          <Button text={value} rightIcon="double-caret-vertical" />
+          <Button text={value || defaultValue} rightIcon="double-caret-vertical" />
         </BPSelect>
       </div>
     );

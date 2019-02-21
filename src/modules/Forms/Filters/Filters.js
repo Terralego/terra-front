@@ -37,7 +37,6 @@ export class Filters extends React.Component {
       property: PropTypes.string.isRequired,
       label: PropTypes.string,
       placeholder: PropTypes.string,
-
       type: PropTypes.oneOf([TYPE_SINGLE, TYPE_MANY, TYPE_RANGE]).isRequired,
       values: PropTypes.arrayOf(PropTypes.string),
     })),
@@ -51,12 +50,7 @@ export class Filters extends React.Component {
   }
 
   state = {
-    filters: [],
     properties: {},
-  }
-
-  componentDidMount () {
-    this.generateFilters();
   }
 
   onChange = property => value => {
@@ -71,15 +65,13 @@ export class Filters extends React.Component {
     });
   }
 
-  generateFilters () {
+  generateFilters = properties => {
     const { properties: propertiesSchema, locales: customLocales } = this.props;
     const locales = { ...DEFAULT_LOCALES, ...customLocales };
-    const filters = propertiesSchema.map(({ type, values, property, ...props }) => {
+    return propertiesSchema.map(({ type, values, property, ...props }) => {
       const Component = getComponent(type, values);
-      const { properties } = this.state;
 
       if (!Component) return null;
-
 
       return (
         <Component
@@ -94,15 +86,15 @@ export class Filters extends React.Component {
         />
       );
     });
-    this.setState({ filters });
   }
 
   render () {
-    const { filters } = this.state;
+    const { generateFilters } = this;
+    const { properties } = this.state;
 
     return (
       <div>
-        {filters}
+        {generateFilters(properties)}
       </div>
     );
   }

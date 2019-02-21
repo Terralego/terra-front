@@ -4,44 +4,32 @@ import { Checkbox } from '@blueprintjs/core';
 
 import './index.scss';
 
-export class Checkboxes extends React.Component {
-  static propTypes = {
-    label: PropTypes.string,
-    values: PropTypes.arrayOf(PropTypes.string),
-    onChange: PropTypes.func,
-  }
-
-  static defaultProps = {
-    label: '',
-    values: [],
-    onChange () {},
-  }
-
-  values = [];
-
-  handleChange = value => () => {
-    const { onChange } = this.props;
-    const { values: prevValues } = this;
-    const values = prevValues.includes(value)
-      ? [...prevValues.filter(val => val !== value)]
-      : [...prevValues, value];
-
-    this.values = values;
-    onChange(values);
-  }
-
-  render () {
-    const { label, values } = this.props;
-    const { handleChange } = this;
-
-    return (
-      <div className="control-container">
-        <p className="control-label">{label}</p>
-        {values.map(val =>
-          <Checkbox key={val} onChange={handleChange(val)} label={val} />)}
-      </div>
-    );
-  }
+function hasValue (array, value) {
+  return array.includes(value)
+    ? [...array.filter(val => val !== value)]
+    : [...array, value];
 }
+
+export const Checkboxes = ({ label, values, value, onChange }) => (
+  <div className="control-container">
+    <p className="control-label">{label}</p>
+    {values.map(val =>
+      <Checkbox key={val} onChange={() => onChange(hasValue(value, val))} label={val} />)}
+  </div>
+);
+
+Checkboxes.propTypes = {
+  label: PropTypes.string,
+  value: PropTypes.oneOfType([PropTypes.arrayOf(PropTypes.string), PropTypes.string]),
+  values: PropTypes.arrayOf(PropTypes.string),
+  onChange: PropTypes.func,
+};
+
+Checkboxes.defaultProps = {
+  label: '',
+  value: [],
+  values: [],
+  onChange () {},
+};
 
 export default Checkboxes;

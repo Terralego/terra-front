@@ -8,26 +8,22 @@ export class Text extends React.Component {
   static propTypes = {
     label: PropTypes.string,
     onChange: PropTypes.func,
+    value: PropTypes.string,
   }
 
   static defaultProps = {
     label: '',
     onChange () {},
-  }
-
-  state = {
     value: '',
   }
 
   handleChange = ({ target: { value } }) => {
     const { onChange } = this.props;
-    this.setState({ value });
     onChange(value);
   }
 
   render () {
-    const { label } = this.props;
-    const { value } = this.state;
+    const { label, value } = this.props;
     const { handleChange } = this;
 
     return (
