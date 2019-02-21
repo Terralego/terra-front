@@ -2,7 +2,7 @@
 
 exports[`should render correctly 1`] = `
 <div
-  className="widget-table"
+  className="table"
 >
   <div
     className="bp3-navbar table-header"
@@ -49,7 +49,7 @@ exports[`should render correctly 1`] = `
     
   </div>
   <p>
-    Mocked WidgetTable
+    Mocked Table
   </p>
 </div>
 `;

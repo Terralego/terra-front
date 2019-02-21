@@ -1,3 +1,3 @@
-import WidgetTable from './WidgetTable';
+import Table from './Table';
 
-export default WidgetTable;
+export default Table;

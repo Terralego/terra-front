@@ -6,5 +6,4 @@ import './summary';
 import './modules/Auth';
 import './modules/Map';
 import './modules/Template';
-
-import './apps/Admin';
+import './modules/Table';

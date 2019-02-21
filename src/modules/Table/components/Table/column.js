@@ -12,43 +12,48 @@ export class RenderColumn {
   }
 
   renderMenu = sortColumn => {
-    // eslint-disable-next-line react/no-this-in-sfc
-    const { index, format: { type } = {} } = this.props;
+    const {
+      index,
+      locales: { sortAsc: labelSortAsc, sortDesc: labelSortDesc } = {},
+      format: { type } = {},
+    } = this.props; // eslint-disable-line react/no-this-in-sfc
 
     const sortAsc = () => sortColumn(index, 'asc', type);
     const sortDesc = () => sortColumn(index, 'desc', type);
     return (
       <Menu>
-        <MenuItem icon="sort-alphabetical" onClick={sortAsc} text="Sort Asc" />
-        <MenuItem icon="sort-alphabetical-desc" onClick={sortDesc} text="Sort Desc" />
+        <MenuItem icon="sort-alphabetical" onClick={sortAsc} text={labelSortAsc} />
+        <MenuItem icon="sort-alphabetical-desc" onClick={sortDesc} text={labelSortDesc} />
       </Menu>
     );
   }
 
   getColumn (getCellData, sortColumn) {
-    const { value, index, sortable } = this.props;
+    const { value, label = value, index, sortable } = this.props;
 
     const cellRenderer = (rowIndex, columnIndex) => (
       <Cell>{getCellData(rowIndex, columnIndex)}</Cell>
     );
 
     const columnHeaderCellRenderer = () => (
-      // eslint-disable-next-line react/no-this-in-sfc
-      <ColumnHeaderCell name={value} menuRenderer={() => this.renderMenu(sortColumn)} />
+      <ColumnHeaderCell
+        name={label}
+        menuRenderer={() => this.renderMenu(sortColumn)} // eslint-disable-line react/no-this-in-sfc
+      />
     );
     return (
       <Column
         cellRenderer={cellRenderer}
         columnHeaderCellRenderer={sortable ? columnHeaderCellRenderer : null}
         key={index}
-        name={value}
+        name={label}
       />
     );
   }
 }
 
-export const getColumns = columns => (
-  columns.map((item, index) => new RenderColumn({ ...item, index }))
+export const getColumns = ({ columns, locales }) => (
+  columns.map((item, index) => new RenderColumn({ ...item, index, locales }))
 );
 
 export default getColumns;
