@@ -14,33 +14,32 @@ export class Checkboxes extends React.Component {
   static defaultProps = {
     label: '',
     values: [],
-    onChange: () => null,
+    onChange () {},
   }
 
   state = {
     values: [],
   }
 
-  handleChange = value => async () => {
+  handleChange = value => () => {
     const { onChange } = this.props;
-    const { values } = this.state;
-    await this.setState({
-      values: values.includes(value)
-        ? [...values.filter(val => val !== value)]
-        : [...values, value],
+    this.setState(({ values: prevValues }) => {
+      const values = prevValues.includes(value)
+        ? [...prevValues.filter(val => val !== value)]
+        : [...prevValues, value];
+      onChange(values);
+      return value;
     });
-    // eslint-disable-next-line
-    onChange(this.state.values);
   }
 
   render () {
-    const { label, values: valuesProperties } = this.props;
+    const { label, values } = this.props;
     const { handleChange } = this;
 
     return (
       <div className="control-container">
         <p className="control-label">{label}</p>
-        {valuesProperties.map(val =>
+        {values.map(val =>
           <Checkbox key={val} onChange={handleChange(val)} label={val} />)}
       </div>
     );

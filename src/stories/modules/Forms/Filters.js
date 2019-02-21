@@ -1,6 +1,6 @@
 import React from 'react';
 
-import Filters from '../../../modules/Forms/Filters';
+import Filters, { TYPE_SINGLE, TYPE_MANY } from '../../../modules/Forms/Filters';
 
 export class CustomFilters extends React.Component {
   handleChange = properties => this.setState(state => ({ ...state, ...properties }));
@@ -13,16 +13,16 @@ export class CustomFilters extends React.Component {
         properties={[{
           property: 'single_value',
           label: 'Vocations',
-          type: 'single',
+          type: TYPE_SINGLE,
         }, {
           property: 'single_value_forced',
           label: 'Vocations',
-          type: 'single',
+          type: TYPE_SINGLE,
           values: ['développeur', 'UX designer', 'Chef de projet'],
         }, {
           property: 'many_values',
           label: 'Foo',
-          type: 'many',
+          type: TYPE_MANY,
           values: ['développeur', 'UX designer', 'Chef de projet'],
         }]}
       />

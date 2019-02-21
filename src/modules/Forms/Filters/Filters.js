@@ -5,13 +5,17 @@ import Select from '../Controls/Select';
 import Text from '../Controls/Text';
 import Checkboxes from '../Controls/Checkboxes';
 
+export const TYPE_SINGLE = 'single';
+export const TYPE_MANY = 'many';
+export const TYPE_RANGE = 'range';
+
 function getComponent (type, values) {
   switch (type) {
-    case 'single':
+    case TYPE_SINGLE:
       return Array.isArray(values)
         ? Select
         : Text;
-    case 'many':
+    case TYPE_MANY:
       return Checkboxes;
     default:
       return null;
@@ -27,13 +31,13 @@ export class Filters extends React.Component {
       label: PropTypes.string,
       placeholder: PropTypes.string,
 
-      type: PropTypes.oneOf(['single', 'many', 'range']).isRequired,
+      type: PropTypes.oneOf([TYPE_SINGLE, TYPE_MANY, TYPE_RANGE]).isRequired,
       values: PropTypes.arrayOf(PropTypes.string),
     })),
   }
 
   static defaultProps = {
-    onChange: () => null,
+    onChange () {},
     properties: [],
     layer: '',
   }

@@ -15,15 +15,13 @@ export class Select extends React.Component {
   static defaultProps = {
     label: '',
     values: [],
-    onChange: () => null,
+    onChange () {},
   }
 
   constructor (props) {
     super(props);
-    const { values } = this.props;
-    this.state = {
-      value: values[0],
-    };
+    const { values: [value] } = this.props;
+    this.state = { value };
   }
 
   handleChange = value => {

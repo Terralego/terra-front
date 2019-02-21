@@ -14,14 +14,6 @@ it('should render correctly', () => {
   expect(tree).toMatchSnapshot();
 });
 
-it('should have default onChange', () => {
-  expect(Text.defaultProps.onChange).toBeDefined();
-});
-
-it('should default props make something', () => {
-  expect(Text.defaultProps.onChange('ah')).toBe(null);
-});
-
 it('should mount & update correctly', () => {
   const wrapper = shallow((
     <Text

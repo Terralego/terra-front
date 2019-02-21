@@ -2,7 +2,7 @@ import React from 'react';
 import renderer from 'react-test-renderer';
 import { shallow } from 'enzyme';
 
-import Filters from './Filters';
+import Filters, { TYPE_SINGLE, TYPE_MANY, TYPE_RANGE } from './Filters';
 
 jest.mock('@blueprintjs/core', () => ({
   Checkbox: () => <p>Checkbox</p>,
@@ -19,33 +19,25 @@ it('should build a form', () => {
       properties={[{
         property: 'single_value',
         label: 'Vocations',
-        type: 'single',
+        type: TYPE_SINGLE,
       }, {
         property: 'single_value_forced',
         label: 'Vocations',
-        type: 'single',
+        type: TYPE_SINGLE,
         values: ['développeur', 'UX designer', 'Chef de projet'],
       }, {
         property: 'many_values',
         label: 'Foo',
-        type: 'many',
+        type: TYPE_MANY,
         values: ['développeur', 'UX designer', 'Chef de projet'],
       }, {
         property: 'fake',
         label: 'fake',
-        type: 'range',
+        type: TYPE_RANGE,
       }]}
     />
   )).toJSON();
   expect(tree).toMatchSnapshot();
-});
-
-it('should have default onChange', () => {
-  expect(Filters.defaultProps.onChange).toBeDefined();
-});
-
-it('should default props make something', () => {
-  expect(Filters.defaultProps.onChange('ah')).toBe(null);
 });
 
 it('should mount & update correctly', () => {
@@ -55,21 +47,21 @@ it('should mount & update correctly', () => {
       properties={[{
         property: 'single_value',
         label: 'Vocations',
-        type: 'single',
+        type: TYPE_SINGLE,
       }, {
         property: 'single_value_forced',
         label: 'Vocations',
-        type: 'single',
+        type: TYPE_SINGLE,
         values: ['développeur', 'UX designer', 'Chef de projet'],
       }, {
         property: 'many_values',
         label: 'Foo',
-        type: 'many',
+        type: TYPE_MANY,
         values: ['développeur', 'UX designer', 'Chef de projet'],
       }, {
         property: 'fake',
         label: 'fake',
-        type: 'range',
+        type: TYPE_RANGE,
       }]}
     />
   ));

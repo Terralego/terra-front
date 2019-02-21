@@ -12,7 +12,7 @@ export class Text extends React.Component {
 
   static defaultProps = {
     label: '',
-    onChange: () => null,
+    onChange () {},
   }
 
   state = {
