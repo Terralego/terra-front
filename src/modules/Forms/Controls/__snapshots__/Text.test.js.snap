@@ -1,0 +1,28 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`should render correctly 1`] = `
+<div
+  className="control-container"
+>
+  <p
+    className="control-label"
+  >
+    Pwout
+  </p>
+  <div
+    className="bp3-input-group"
+  >
+    <input
+      className="bp3-input"
+      onChange={[Function]}
+      style={
+        Object {
+          "paddingRight": 10,
+        }
+      }
+      type="text"
+      value=""
+    />
+  </div>
+</div>
+`;

@@ -7,3 +7,4 @@ import './modules/Auth';
 import './modules/Map';
 import './modules/Template';
 import './modules/Table';
+import './modules/Forms';
