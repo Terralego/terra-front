@@ -51,12 +51,14 @@ export class InteractiveMap extends React.Component {
     legends: PropTypes.arrayOf(PropTypes.shape({
 
     })),
+    onStyleChange: PropTypes.func,
   };
 
   static defaultProps = {
     backgroundStyle: 'mapbox://styles/mapbox/light-v9',
     interactions: [],
     legends: [],
+    onStyleChange () {},
   };
 
   popups = new Map();
@@ -103,9 +105,6 @@ export class InteractiveMap extends React.Component {
   }
 
   onBackgroundChange = selectedBackgroundStyle => {
-    this.map.once('style.load', () => {
-      this.updateLayersTree();
-    });
     this.setState({ selectedBackgroundStyle });
   };
 
@@ -236,6 +235,7 @@ export class InteractiveMap extends React.Component {
       interactions,
       backgroundStyle,
       legends,
+      onStyleChange,
       ...mapProps
     } = this.props;
 
@@ -263,6 +263,7 @@ export class InteractiveMap extends React.Component {
           backgroundStyle={selectedBackgroundStyle}
           onMapInit={onMapInit}
           onMapLoaded={onMapLoaded}
+          onBackgroundChange={onStyleChange}
         />
         {!!legends.length && (
           <div className="interactive-map__legends">

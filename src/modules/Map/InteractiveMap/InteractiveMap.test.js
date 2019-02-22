@@ -148,19 +148,9 @@ describe('map', () => {
   it('should change background style', () => {
     const instance = new InteractiveMap({});
     instance.setState = jest.fn();
-    instance.updateLayersTree = jest.fn();
-    let expectedListener;
-    instance.map = {
-      once: jest.fn((event, fn) => {
-        expectedListener = fn;
-      }),
-    };
     const selectedBackgroundStyle = 'foo';
     instance.onBackgroundChange(selectedBackgroundStyle);
     expect(instance.setState).toHaveBeenCalledWith({ selectedBackgroundStyle });
-    expect(instance.map.once).toHaveBeenCalled();
-    expectedListener();
-    expect(instance.updateLayersTree).toHaveBeenCalled();
   });
 });
 

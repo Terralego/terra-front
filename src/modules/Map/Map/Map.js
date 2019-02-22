@@ -58,6 +58,8 @@ export class Map extends React.Component {
         }),
       })),
     }),
+
+    onBackgroundChange: PropTypes.func,
   };
 
   static defaultProps = {
@@ -71,6 +73,7 @@ export class Map extends React.Component {
     rotate: false,
     flyTo: {},
     customStyle: {},
+    onBackgroundChange () {},
   };
 
   mapListeners = [];
@@ -121,7 +124,7 @@ export class Map extends React.Component {
 
     if (prevProps.backgroundStyle !== backgroundStyle) {
       map.setStyle(backgroundStyle);
-      map.once('style.load', () => this.createLayers());
+      map.once('style.load', () => this.backgroundChanged(backgroundStyle));
     }
 
     if (displayScaleControl !== prevProps.displayScaleControl) {
@@ -161,6 +164,12 @@ export class Map extends React.Component {
     this.toggleAttributionControl(displayAttributionControl);
 
     this.toggleRotate();
+  }
+
+  backgroundChanged (backgroundStyle) {
+    const { onBackgroundChange } = this.props;
+    this.createLayers();
+    onBackgroundChange(backgroundStyle);
   }
 
   createLayers () {
