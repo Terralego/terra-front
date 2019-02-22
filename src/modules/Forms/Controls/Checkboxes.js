@@ -4,7 +4,7 @@ import { Checkbox } from '@blueprintjs/core';
 
 import './index.scss';
 
-function hasValue (array, value) {
+export function toggleValue (array, value) {
   return array.includes(value)
     ? [...array.filter(val => val !== value)]
     : [...array, value];
@@ -14,7 +14,7 @@ export const Checkboxes = ({ label, values, value, onChange }) => (
   <div className="control-container">
     <p className="control-label">{label}</p>
     {values.map(val =>
-      <Checkbox key={val} onChange={() => onChange(hasValue(value, val))} label={val} />)}
+      <Checkbox key={val} onChange={() => onChange(toggleValue(value, val))} label={val} />)}
   </div>
 );
 

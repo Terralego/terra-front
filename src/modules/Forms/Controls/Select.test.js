@@ -19,16 +19,18 @@ it('should render correctly', () => {
 });
 
 it('should mount & update correctly', () => {
+  const onChange = jest.fn();
   const wrapper = shallow((
     <Select
       label="Pwout"
-      onChange={() => null}
+      onChange={onChange}
       values={['pwet', 'wxd']}
     />
   ));
 
   wrapper.instance().handleChange('pwout');
-  expect(wrapper.instance().state.value).toEqual('pwout');
+  expect(onChange).toHaveBeenCalled();
+  jest.clearAllMocks();
   wrapper.instance().handleClick('pwit')();
-  expect(wrapper.instance().state.value).toEqual('pwit');
+  expect(onChange).toHaveBeenCalled();
 });

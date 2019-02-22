@@ -2,7 +2,7 @@ import React from 'react';
 import renderer from 'react-test-renderer';
 import { shallow } from 'enzyme';
 
-import Checkboxes from './Checkboxes';
+import Checkboxes, { toggleValue } from './Checkboxes';
 
 jest.mock('@blueprintjs/core', () => ({
   Checkbox: () => <p>Checkbox</p>,
@@ -32,4 +32,10 @@ it('should mount & update correctly', () => {
   const pwetCheckbox = wrapper.find({ label: 'pwet' });
   pwetCheckbox.simulate('change');
   expect(onChange).toHaveBeenCalled();
+});
+
+it('should filter correctly', () => {
+  const arr = ['ah'];
+  expect(toggleValue(arr, 'ah')).toEqual([]);
+  expect(toggleValue(arr, 'oh')).toEqual(['ah', 'oh']);
 });

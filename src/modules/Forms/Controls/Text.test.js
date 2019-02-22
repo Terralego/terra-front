@@ -9,22 +9,23 @@ it('should render correctly', () => {
     <Text
       label="Pwout"
       onChange={() => null}
+      value=""
     />
   )).toJSON();
   expect(tree).toMatchSnapshot();
 });
 
 it('should mount & update correctly', () => {
+  const onChange = jest.fn();
   const wrapper = shallow((
     <Text
       label="Pwout"
-      onChange={() => null}
+      onChange={onChange}
+      value=""
     />
   ));
 
   const pwetText = wrapper.find({ value: '' });
-  pwetText.simulate('change', { target: { value: 'ah' } });
-  expect(wrapper.instance().state.value).toEqual('ah');
-  pwetText.simulate('change', { target: { value: '' } });
-  expect(wrapper.instance().state.value).toEqual('');
+  pwetText.simulate('change', ({ target: { value: 'pwet' } }));
+  expect(onChange).toHaveBeenCalled();
 });
