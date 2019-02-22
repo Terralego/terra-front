@@ -2,7 +2,7 @@ import React from 'react';
 import renderer from 'react-test-renderer';
 import { shallow } from 'enzyme';
 
-import Checkboxes, { toggleValue } from './Checkboxes';
+import Checkboxes from './Checkboxes';
 
 jest.mock('@blueprintjs/core', () => ({
   Checkbox: () => <p>Checkbox</p>,
@@ -26,16 +26,12 @@ it('should mount & update correctly', () => {
       label="Pwout"
       onChange={onChange}
       values={['pwet', 'wxd']}
+      value={['foo']}
     />
   ));
 
-  const pwetCheckbox = wrapper.find({ label: 'pwet' });
-  pwetCheckbox.simulate('change');
-  expect(onChange).toHaveBeenCalled();
-});
-
-it('should filter correctly', () => {
-  const arr = ['ah'];
-  expect(toggleValue(arr, 'ah')).toEqual([]);
-  expect(toggleValue(arr, 'oh')).toEqual(['ah', 'oh']);
+  wrapper.instance().onToggle('pwet');
+  expect(onChange).toHaveBeenCalledWith(['foo', 'pwet']);
+  wrapper.instance().onToggle('foo');
+  expect(onChange).toHaveBeenCalledWith([]);
 });
