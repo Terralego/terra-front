@@ -17,6 +17,9 @@ jest.mock('@blueprintjs/core', () => {
       RIGHT_BOTTOM: 'RIGHT_BOTTOM',
     },
     Navbar,
+    Intent: {
+      PRIMARY: 'primary',
+    },
   };
 });
 
@@ -59,24 +62,4 @@ describe('header snapshot', () => {
     )).toJSON();
     expect(tree).toMatchSnapshot();
   });
-});
-
-it('should item onchange', () => {
-  const onChange = jest.fn();
-  const wrapper = shallow(<Header columns={props.columns} onChange={onChange} />, {});
-  const popover = wrapper.find('Popover');
-  const Content = () => popover.props().content;
-  const wrapperContent = shallow(<Content />);
-  wrapperContent.find('Checkbox').get(0).props.onChange();
-  expect(onChange).toHaveBeenCalled();
-});
-
-it('should item onchange', () => {
-  const onChange = jest.fn();
-  const wrapper = shallow(<Header columns={props.columns} />, {});
-  const popover = wrapper.find('Popover');
-  const Content = () => popover.props().content;
-  const wrapperContent = shallow(<Content />);
-  wrapperContent.find('Checkbox').get(0).props.onChange();
-  expect(onChange).not.toHaveBeenCalled();
 });

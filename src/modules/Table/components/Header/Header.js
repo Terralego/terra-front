@@ -1,38 +1,26 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import { Button, Checkbox, Popover, Position, Navbar } from '@blueprintjs/core';
+import { Navbar } from '@blueprintjs/core';
+
+import ColumnsSelector from '../ColumnsSelector';
 
 import './styles.scss';
 
-export const Header = ({ title, columns, onChange }) => {
-  const options = (
-    <div className="table-header__options">
-      {columns.map(({ value, display }, index) => (
-        <Checkbox
-          onChange={event => onChange({ event, index })}
-          key={value}
-          label={value}
-          defaultChecked={display}
-          value={value}
-        />
-      ))}
-    </div>
-  );
-  return (
-    <Navbar className="table-header">
-      <Navbar.Group>
-        <Popover content={options} position={Position.RIGHT_BOTTOM}>
-          <Button icon="properties" minimal intent="primary" />
-        </Popover>
+export const Header = ({ children, title, columns, onChange }) => (children || (
+  <Navbar className="table-header">
+    <Navbar.Group>
+      <ColumnsSelector
+        columns={columns}
+        onChange={onChange}
+      />
+    </Navbar.Group>
+    {title && (
+      <Navbar.Group className="table-header__title">
+        <Navbar.Heading>{title}</Navbar.Heading>
       </Navbar.Group>
-      {title && (
-        <Navbar.Group className="table-header__title">
-          <Navbar.Heading>{title}</Navbar.Heading>
-        </Navbar.Group>
-      )}
-    </Navbar>
-  );
-};
+    )}
+  </Navbar>
+));
 
 Header.propTypes = {
   title: PropTypes.oneOfType([
@@ -45,7 +33,7 @@ Header.propTypes = {
 
 Header.defaultProps = {
   title: '',
-  onChange: () => {},
+  onChange () {},
 };
 
 export default Header;
