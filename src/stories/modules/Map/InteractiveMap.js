@@ -20,6 +20,9 @@ export default () => (
       minZoom={11}
       legends={[{
         title: 'Emplois',
+        minZoom: 11,
+        maxZoom: 13,
+        layers: ['terralego-etablissements'],
         items: [
           { label: 'Mixte', color: '#fe0200' },
           { label: 'Tertiaire supérieur', color: '#6fab46' },
@@ -30,6 +33,16 @@ export default () => (
           { label: 'Commerce de détail', color: '#ec7c31' },
           { label: 'Services aux particuliers', color: '#9e470e' },
           { label: 'Autres', color: '#6a89cc' },
+        ],
+      }, {
+        title: 'Emplois',
+        minZoom: 13,
+        maxZoom: 16,
+        layers: ['terralego-etablissements'],
+        items: [
+          { label: 'Mixte', color: '#fe0200' },
+          { label: 'Tertiaire supérieur', color: '#6fab46' },
+          { label: 'Commerce de gros/Logistique', color: '#fec000' },
         ],
       }]}
       interactions={[{
