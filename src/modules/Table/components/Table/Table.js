@@ -2,15 +2,27 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import {
   Table as BluePrintTable,
+  TableLoadingOption,
 } from '@blueprintjs/table';
 import '@blueprintjs/table/lib/css/table.css';
 
 import { getColumns } from './column';
 import './styles.scss';
 
+export const LOADING_ROWS_LEN = 100;
+export const LOADING_COLS = Array.from({ length: 10 }, () => ({
+  label: '',
+}));
+export const LOADING_DATA =
+  Array.from({ length: LOADING_ROWS_LEN }, () =>
+    Array.from({ length: LOADING_COLS.length }, () => ''));
+const LOADING_OPTIONS = [
+  TableLoadingOption.CELLS,
+  TableLoadingOption.COLUMN_HEADERS,
+  TableLoadingOption.ROW_HEADERS,
+];
 export class Table extends React.Component {
   static propTypes = {
-
     columns: PropTypes.arrayOf(PropTypes.shape({
       label: PropTypes.string,
       value: PropTypes.string.isRequired,
@@ -26,8 +38,18 @@ export class Table extends React.Component {
     sortedIndexMap: null,
   };
 
+  get columns () {
+    const { columns, loading } = this.props;
+    return loading ? LOADING_COLS : columns;
+  }
+
+  get data () {
+    const { data, loading } = this.props;
+    return loading ? LOADING_DATA : data;
+  }
+
   getCellData = (rowIndex, columnIndex) => {
-    const { data } = this.props;
+    const { data } = this;
     const { sortedIndexMap: initialSortedIndexMap } = this.state;
     const sortedIndexMap = initialSortedIndexMap || data.map((_, k) => k);
     const cell = data[sortedIndexMap[rowIndex]][columnIndex];
@@ -35,7 +57,7 @@ export class Table extends React.Component {
   };
 
   formatCell = (cell, columnIndex) => {
-    const { columns } = this.props;
+    const { columns } = this;
     const { format: { type } = {} } = columns[columnIndex];
     switch (type) {
       case 'date':
@@ -68,8 +90,8 @@ export class Table extends React.Component {
   }
 
   render () {
-    const { data, columns, locales } = this.props;
-
+    const { locales, loading } = this.props;
+    const { columns, data } = this;
     const cols = getColumns({ columns, locales })
       .map(col => col.getColumn(this.getCellData, this.sortColumn));
 
@@ -77,6 +99,9 @@ export class Table extends React.Component {
       <BluePrintTable
         className="component-table"
         numRows={data.length}
+        loadingOptions={loading
+          ? LOADING_OPTIONS
+          : undefined}
       >
         {cols}
       </BluePrintTable>

@@ -2,11 +2,12 @@ import React from 'react';
 import renderer from 'react-test-renderer';
 import { shallow } from 'enzyme';
 
-import { Table } from './Table';
+import { Table, LOADING_COLS, LOADING_DATA } from './Table';
 
 jest.mock('@blueprintjs/table', () => ({
   Table: jest.fn(() => <p>Mocked BlueprintTable</p>),
   Column: jest.fn(() => null),
+  TableLoadingOption: {},
 }));
 
 global.Date.prototype.toLocaleDateString = jest.fn(() => 'mocked date');
@@ -26,6 +27,13 @@ const props = {
 it('should render correctly', () => {
   const tree = renderer.create((
     <Table {...props} />
+  )).toJSON();
+  expect(tree).toMatchSnapshot();
+});
+
+it('should render with loading', () => {
+  const tree = renderer.create((
+    <Table {...props} loading />
   )).toJSON();
   expect(tree).toMatchSnapshot();
 });
@@ -67,4 +75,20 @@ it('should format cell', () => {
   expect(instance.formatCell('col1-row1', 0)).toBe('col1-row1');
   expect(instance.formatCell('04-12-2018', 3)).toBe('mocked date');
   expect(global.Date.prototype.toLocaleDateString).toHaveBeenCalled();
+});
+
+it('should get columns', () => {
+  const columns = [];
+  const instance = new Table({ columns });
+  expect(instance.columns).toBe(columns);
+  instance.props.loading = true;
+  expect(instance.columns).toBe(LOADING_COLS);
+});
+
+it('should get data', () => {
+  const data = [];
+  const instance = new Table({ data });
+  expect(instance.data).toBe(data);
+  instance.props.loading = true;
+  expect(instance.data).toBe(LOADING_DATA);
 });

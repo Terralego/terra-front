@@ -2,7 +2,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 
 import TableComponent from './components/Table';
-import Header from './components/Header';
+import HeaderComponent from './components/Header';
 
 import './styles.scss';
 
@@ -20,15 +20,19 @@ export class Table extends React.Component {
       PropTypes.string,
       PropTypes.element,
     ]),
+    Header: PropTypes.func,
     locales: PropTypes.shape({
       sortAsc: PropTypes.string,
       sortDesc: PropTypes.string,
     }),
+    loading: PropTypes.bool,
   };
 
   static defaultProps = {
     title: '',
     locales: {},
+    Header: HeaderComponent,
+    loading: false,
   }
 
   state = {
@@ -90,7 +94,7 @@ export class Table extends React.Component {
 
   render () {
     const { columns } = this.state;
-    const { title, locales: customLocales } = this.props;
+    const { Header, title, locales: customLocales, loading } = this.props;
     const locales = { ...DEFAULT_LOCALES, ...customLocales };
     const { filteredColumns, filteredData } = this;
 
@@ -101,6 +105,7 @@ export class Table extends React.Component {
           columns={filteredColumns}
           data={filteredData}
           locales={locales}
+          loading={loading}
         />
       </div>
     );
