@@ -5,3 +5,9 @@ exports[`should render correctly 1`] = `
   Mocked BlueprintTable
 </p>
 `;
+
+exports[`should render with loading 1`] = `
+<p>
+  Mocked BlueprintTable
+</p>
+`;

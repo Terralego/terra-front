@@ -1,6 +1,6 @@
 import React from 'react';
 
-import { object } from '@storybook/addon-knobs';
+import { boolean, object } from '@storybook/addon-knobs';
 
 import Table from '../../../modules/Table/Table';
 
@@ -12,6 +12,7 @@ export default () => (
     <Table
       columns={object('Columns', columns)}
       data={object('Data', data)}
+      loading={boolean('Loading ?', false)}
     />
   </div>
 );
