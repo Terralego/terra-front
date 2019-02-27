@@ -1,15 +1,19 @@
-.table-header {
+.table-columns-selector {
   display: flex;
   align-items: center;
   > * {
     width: calc(100% / 3);
   }
   &__options {
-    padding: 10px;
-    background: #fff;
+    padding: 10px 20px 10px 0;
     .bp3-control {
+      white-space: nowrap;
       padding-bottom: 5px;
     }
+  }
+  &__options-popover .bp3-popover-content {
+    max-height: calc(100vh - 2rem);
+    overflow: auto;
   }
   &__title {
     display: flex;

@@ -4,7 +4,7 @@ import { Button, Checkbox, Popover, Position, Intent } from '@blueprintjs/core';
 
 export const ColumnsSelector = ({ columns, onChange, icon, position, intent }) => {
   const options = (
-    <div className="table-header__options">
+    <div className="table-columns-selector__options">
       {columns.map(({ value, display }, index) => (
         <Checkbox
           onChange={event => onChange({ event, index })}
@@ -17,7 +17,11 @@ export const ColumnsSelector = ({ columns, onChange, icon, position, intent }) =
     </div>
   );
   return (
-    <Popover content={options} position={position}>
+    <Popover
+      content={options}
+      position={position}
+      popoverClassName="table-columns-selector__options-popover"
+    >
       <Button
         icon={icon}
         minimal
