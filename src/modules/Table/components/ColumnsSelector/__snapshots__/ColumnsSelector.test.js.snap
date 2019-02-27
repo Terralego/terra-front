@@ -2,6 +2,6 @@
 
 exports[`should render correctly 1`] = `
 <div
-  className="table-header__options"
+  className="table-columns-selector__options"
 />
 `;
