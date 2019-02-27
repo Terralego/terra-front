@@ -1,6 +1,6 @@
 import React from 'react';
 
-import Filters, { TYPE_SINGLE, TYPE_MANY, TYPE_RANGE } from '../../../modules/Forms/Filters';
+import Filters, { TYPE_SINGLE, TYPE_MANY, TYPE_BOOL, TYPE_RANGE } from '../../../modules/Forms/Filters';
 
 export class CustomFilters extends React.Component {
   handleChange = properties => this.setState(state => ({ ...state, ...properties }));
@@ -35,6 +35,11 @@ export class CustomFilters extends React.Component {
           max: 100,
           stepSize: 2,
           labelStepSize: 20,
+        }, {
+          property: 'switch_value',
+          label: 'Switch label',
+          type: TYPE_BOOL,
+          value: true,
         }]}
       />
     );
