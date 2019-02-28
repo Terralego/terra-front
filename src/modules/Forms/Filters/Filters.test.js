@@ -10,6 +10,7 @@ jest.mock('@blueprintjs/core', () => ({
   Select: ({ children }) => children,
   MenuItem: () => <p>Menu Item</p>,
   Button: () => <p>Button</p>,
+  RangeSlider: () => <p>Range</p>,
 }));
 
 it('should build a form', () => {
@@ -32,9 +33,12 @@ it('should build a form', () => {
         type: TYPE_MANY,
         values: ['développeur', 'UX designer', 'Chef de projet'],
       }, {
-        property: 'fake',
-        label: 'fake',
+        property: 'range_values',
+        label: 'Percentage of bar',
         type: TYPE_RANGE,
+        values: [40, 60],
+        min: 0,
+        max: 100,
       }]}
     />
   )).toJSON();
