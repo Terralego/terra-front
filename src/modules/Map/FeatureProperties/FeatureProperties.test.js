@@ -138,3 +138,10 @@ it('should set properties in state', async done => {
 
   done();
 });
+
+it('should reload properties', () => {
+  const instance = new FeatureProperties({ properties: {} });
+  instance.fetchProperties = jest.fn();
+  instance.componentDidUpdate({ properties: {} });
+  expect(instance.fetchProperties).toHaveBeenCalled();
+});

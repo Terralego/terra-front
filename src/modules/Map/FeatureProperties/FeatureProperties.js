@@ -17,6 +17,13 @@ export class FeatureProperties extends React.Component {
     }
   }
 
+  componentDidUpdate ({ properties: prevProperties }) {
+    const { properties } = this.props;
+    if (properties !== prevProperties) {
+      this.fetchProperties();
+    }
+  }
+
   async fetchProperties () {
     const { id, url, properties } = this.props;
 
@@ -31,6 +38,12 @@ export class FeatureProperties extends React.Component {
 
     if (!idValue) {
       log(`no id "${id}" found in`, properties);
+      this.setState({
+        properties: {
+          ...properties,
+          loading: false,
+        },
+      });
       return;
     }
 
