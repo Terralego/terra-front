@@ -79,6 +79,7 @@ export class InteractiveMap extends React.Component {
       selectedBackgroundStyle: Array.isArray(backgroundStyle)
         ? backgroundStyle[0].url
         : backgroundStyle,
+      legends: [],
     };
   }
 
@@ -100,7 +101,9 @@ export class InteractiveMap extends React.Component {
   onMapLoaded = map => {
     const { onMapLoaded = () => {} } = this.props;
     this.map = map;
+    map.on('zoom', this.filterLegendsByZoom);
     this.setInteractions();
+    this.filterLegendsByZoom();
     onMapLoaded(map);
   }
 
@@ -118,6 +121,16 @@ export class InteractiveMap extends React.Component {
 
     const { interactions } = this.props;
     setInteractions({ map, interactions, callback: config => this.triggerInteraction(config) });
+  }
+
+  filterLegendsByZoom = () => {
+    const { legends } = this.props;
+    const { map } = this;
+    const zoom = map.getZoom();
+    const filteredLegends = legends
+      .filter(({ minZoom = 0, maxZoom = Infinity }) => zoom >= minZoom && zoom <= maxZoom);
+
+    this.setState({ legends: filteredLegends });
   }
 
   fitZoom = ({ feature, map }) =>
@@ -234,12 +247,11 @@ export class InteractiveMap extends React.Component {
       style,
       interactions,
       backgroundStyle,
-      legends,
       onStyleChange,
       ...mapProps
     } = this.props;
 
-    const { selectedBackgroundStyle } = this.state;
+    const { selectedBackgroundStyle, legends } = this.state;
     const {
       onMapInit,
       onMapLoaded,
@@ -270,7 +282,7 @@ export class InteractiveMap extends React.Component {
             {legends
               .map(legend => (
                 <Legend
-                  key={legend.title}
+                  key={`${legend.title}${legend.items}`}
                   {...legend}
                 />
               ))}

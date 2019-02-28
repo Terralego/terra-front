@@ -91,9 +91,25 @@ describe('snaphsots', () => {
         legends={[{
           title: 'foo',
           items: [],
+        }, {
+          title: 'pwet',
+          minZoom: 0,
+          maxZoom: 20,
+          items: [],
         }]}
       />
     ));
+    wrapper.getInstance().setState({
+      legends: [{
+        title: 'foo',
+        items: [],
+      }, {
+        title: 'pwet',
+        minZoom: 0,
+        maxZoom: 20,
+        items: [],
+      }],
+    });
     const tree = wrapper.toJSON();
     expect(tree).toMatchSnapshot();
   });
@@ -124,11 +140,35 @@ describe('map', () => {
 
   it('should load map', () => {
     const instance = new InteractiveMap({});
-    const map = {};
+    const map = { on: jest.fn() };
+    instance.filterLegendsByZoom = jest.fn();
     instance.setInteractions = jest.fn();
     instance.onMapLoaded(map);
     expect(instance.map).toBe(map);
     expect(instance.setInteractions).toHaveBeenCalled();
+    expect(instance.filterLegendsByZoom).toHaveBeenCalled();
+  });
+
+  it('should return filtered legends', () => {
+    const instance = new InteractiveMap({
+      legends: [
+        { minZoom: 10, maxZoom: 15, title: 'pwet', items: [] },
+        { minZoom: 0, maxZoom: 9, title: 'pwout', items: [] },
+        { title: 'w' },
+      ],
+    });
+    instance.setState = jest.fn();
+    const map = {
+      getZoom: jest.fn(() => 10),
+      on: jest.fn(),
+    };
+    instance.setInteractions = jest.fn();
+    instance.onMapLoaded(map);
+    expect(instance.map).toBe(map);
+    expect(map.getZoom).toHaveBeenCalled();
+    expect(instance.setState).toHaveBeenCalledWith({
+      legends: [{ minZoom: 10, maxZoom: 15, title: 'pwet', items: [] }, { title: 'w' }],
+    });
   });
 
   it('should select backgroundStyle', () => {
