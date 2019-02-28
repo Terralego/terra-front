@@ -102,6 +102,7 @@ export class Table extends React.Component {
       <div className="table">
         <Header title={title} columns={columns} onChange={this.onHeaderChange} />
         <TableComponent
+          {...this.props}
           columns={filteredColumns}
           data={filteredData}
           locales={locales}

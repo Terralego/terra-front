@@ -32,6 +32,11 @@ export class Table extends React.Component {
       format: PropTypes.shape({ type: PropTypes.string }),
     }).isRequired).isRequired,
     data: PropTypes.arrayOf(PropTypes.arrayOf(PropTypes.string)).isRequired,
+    onSelection: PropTypes.func,
+  };
+
+  static defaultProps = {
+    onSelection () {},
   };
 
   state = {
@@ -89,12 +94,34 @@ export class Table extends React.Component {
     }
   }
 
+  onSelection = selection => {
+    const { data, onSelection } = this.props;
+    const { sortedIndexMap } = this.state;
+    const rows = this.getRows(selection, data);
+    console.log(rows);
+    // const realRows = rows.map(row => sortedIndexMap[row]);
+  };
+
+  getRows = (selection, data) => {
+    let rows = [];
+    const sortedIndexMap = this.state;
+    if (!selection[0]) { // if (!selection[0].rows) {
+      rows = Array.from({ length: data.length }, (v, k) => k);
+      rows.map(row => sortedIndexMap[row]);
+    } else {
+      rows = selection.reduce((lines, { rows: [start, end] }) =>
+        [...lines, ...Array.from({ length: end + 1 }, (v, k) => k)
+          .filter((v, k) => k >= start)], []);
+      rows.map(row => sortedIndexMap[row]);
+    }
+    return rows;
+  };
+
   render () {
     const { locales, loading } = this.props;
-    const { columns, data } = this;
+    const { columns, data, onSelection } = this;
     const cols = getColumns({ columns, locales })
       .map(col => col.getColumn(this.getCellData, this.sortColumn));
-
     return (
       <BluePrintTable
         className="component-table"
@@ -102,6 +129,7 @@ export class Table extends React.Component {
         loadingOptions={loading
           ? LOADING_OPTIONS
           : undefined}
+        onSelection={onSelection}
       >
         {cols}
       </BluePrintTable>
