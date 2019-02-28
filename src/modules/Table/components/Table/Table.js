@@ -7,6 +7,7 @@ import {
 import '@blueprintjs/table/lib/css/table.css';
 
 import { getColumns } from './column';
+import { getRows } from '../../tableUtils';
 import './styles.scss';
 
 export const LOADING_ROWS_LEN = 100;
@@ -97,24 +98,11 @@ export class Table extends React.Component {
   onSelection = selection => {
     const { data, onSelection } = this.props;
     const { sortedIndexMap } = this.state;
-    const rows = this.getRows(selection, data);
-    console.log(rows);
-    // const realRows = rows.map(row => sortedIndexMap[row]);
-  };
-
-  getRows = (selection, data) => {
-    let rows = [];
-    const sortedIndexMap = this.state;
-    if (!selection[0]) { // if (!selection[0].rows) {
-      rows = Array.from({ length: data.length }, (v, k) => k);
-      rows.map(row => sortedIndexMap[row]);
-    } else {
-      rows = selection.reduce((lines, { rows: [start, end] }) =>
-        [...lines, ...Array.from({ length: end + 1 }, (v, k) => k)
-          .filter((v, k) => k >= start)], []);
-      rows.map(row => sortedIndexMap[row]);
-    }
-    return rows;
+    const rows = getRows(selection, data);
+    const realRows = sortedIndexMap
+      ? rows.map(row => sortedIndexMap[row])
+      : rows;
+    onSelection(realRows);
   };
 
   render () {
