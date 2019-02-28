@@ -14,7 +14,7 @@ const DEFAULT_LOCALES = {
   noResults: 'No results',
 };
 
-function getComponent (type, values) {
+export function getComponent (type, values) {
   switch (type) {
     case TYPE_SINGLE:
       return Array.isArray(values)
