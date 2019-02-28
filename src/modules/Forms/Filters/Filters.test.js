@@ -2,7 +2,12 @@ import React from 'react';
 import renderer from 'react-test-renderer';
 import { shallow } from 'enzyme';
 
-import Filters, { TYPE_SINGLE, TYPE_MANY, TYPE_RANGE } from './Filters';
+import Select from '../Controls/Select';
+import Text from '../Controls/Text';
+import Checkboxes from '../Controls/Checkboxes';
+import Range from '../Controls/Range';
+
+import Filters, { TYPE_SINGLE, TYPE_MANY, TYPE_RANGE, getComponent } from './Filters';
 
 jest.mock('@blueprintjs/core', () => ({
   Checkbox: () => <p>Checkbox</p>,
@@ -10,7 +15,13 @@ jest.mock('@blueprintjs/core', () => ({
   Select: ({ children }) => children,
   MenuItem: () => <p>Menu Item</p>,
   Button: () => <p>Button</p>,
+  RangeSlider: () => <p>Range</p>,
 }));
+
+jest.mock('../Controls/Text', () => () => <p>ControlText</p>);
+jest.mock('../Controls/Select', () => () => <p>ControlSelect</p>);
+jest.mock('../Controls/Checkboxes', () => () => <p>ControlCheckboxes</p>);
+jest.mock('../Controls/Range', () => () => <p>ControlRange</p>);
 
 it('should build a form', () => {
   const tree = renderer.create((
@@ -32,9 +43,12 @@ it('should build a form', () => {
         type: TYPE_MANY,
         values: ['développeur', 'UX designer', 'Chef de projet'],
       }, {
-        property: 'fake',
-        label: 'fake',
+        property: 'range_values',
+        label: 'Percentage of bar',
         type: TYPE_RANGE,
+        values: [40, 60],
+        min: 0,
+        max: 100,
       }]}
     />
   )).toJSON();
@@ -60,13 +74,25 @@ it('should mount & update correctly', () => {
         type: TYPE_MANY,
         values: ['développeur', 'UX designer', 'Chef de projet'],
       }, {
-        property: 'fake',
-        label: 'fake',
+        property: 'range_values',
+        label: 'Percentage of bar',
         type: TYPE_RANGE,
-      }]}
+        values: [40, 60],
+        min: 0,
+        max: 100,
+      },
+      ]}
     />
   ));
 
   wrapper.instance().onChange('pwout')('pwet');
   expect(wrapper.instance().state.properties.pwout).toEqual('pwet');
+});
+
+it('should get component', () => {
+  expect(getComponent(TYPE_SINGLE, 'text') === Text).toBe(true);
+  expect(getComponent(TYPE_SINGLE, ['text', 'text2']) === Select).toBe(true);
+  expect(getComponent(TYPE_MANY, ['text', 'text2']) === Checkboxes).toBe(true);
+  expect(getComponent(TYPE_RANGE, [10, 90]) === Range).toBe(true);
+  expect(getComponent('NONE_EXISTING_TYPE', 'text') === null).toBe(true);
 });

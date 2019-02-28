@@ -1,6 +1,6 @@
 import React from 'react';
 
-import Filters, { TYPE_SINGLE, TYPE_MANY } from '../../../modules/Forms/Filters';
+import Filters, { TYPE_SINGLE, TYPE_MANY, TYPE_RANGE } from '../../../modules/Forms/Filters';
 
 export class CustomFilters extends React.Component {
   handleChange = properties => this.setState(state => ({ ...state, ...properties }));
@@ -24,6 +24,17 @@ export class CustomFilters extends React.Component {
           label: 'Foo',
           type: TYPE_MANY,
           values: ['développeur', 'UX designer', 'Chef de projet'],
+        },
+        {
+          property: 'Range_values',
+          label: 'Pourcentage de Bar',
+          type: TYPE_RANGE,
+          values: [10, 40],
+          // Belows, props accepted by https://blueprintjs.com/docs/#core/components/sliders.range-slider
+          min: 0,
+          max: 100,
+          stepSize: 2,
+          labelStepSize: 20,
         }]}
       />
     );

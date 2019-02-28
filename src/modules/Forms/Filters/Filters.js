@@ -4,6 +4,7 @@ import PropTypes from 'prop-types';
 import Select from '../Controls/Select';
 import Text from '../Controls/Text';
 import Checkboxes from '../Controls/Checkboxes';
+import Range from '../Controls/Range';
 
 export const TYPE_SINGLE = 'single';
 export const TYPE_MANY = 'many';
@@ -13,7 +14,7 @@ const DEFAULT_LOCALES = {
   noResults: 'No results',
 };
 
-function getComponent (type, values) {
+export function getComponent (type, values) {
   switch (type) {
     case TYPE_SINGLE:
       return Array.isArray(values)
@@ -21,6 +22,8 @@ function getComponent (type, values) {
         : Text;
     case TYPE_MANY:
       return Checkboxes;
+    case TYPE_RANGE:
+      return Range;
     default:
       return null;
   }
@@ -38,7 +41,7 @@ export class Filters extends React.Component {
       label: PropTypes.string,
       placeholder: PropTypes.string,
       type: PropTypes.oneOf([TYPE_SINGLE, TYPE_MANY, TYPE_RANGE]).isRequired,
-      values: PropTypes.arrayOf(PropTypes.string),
+      values: PropTypes.arrayOf(PropTypes.oneOfType([PropTypes.string, PropTypes.number])),
     })),
   }
 
@@ -81,7 +84,7 @@ export class Filters extends React.Component {
           values={values}
           property={property}
           onChange={onChange(property)}
-          value={properties[property] || ''}
+          value={properties[property]}
           locales={locales}
           {...props}
         />
