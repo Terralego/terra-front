@@ -10,6 +10,7 @@
     "@mapbox/mapbox-gl-sync-move": "^0.2.0",
     "@turf/bbox": "^6.0.1",
     "@turf/centroid": "^6.0.2",
+    "classnames": "^2.2.6",
     "debug": "^4.1.0",
     "lodash.debounce": "^4.0.8",
     "lodash.template": "^4.4.0",
