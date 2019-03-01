@@ -20,11 +20,6 @@ export class Select extends React.Component {
     onChange () {},
   }
 
-  componentDidMount () {
-    const { onChange, values: [value] } = this.props;
-    onChange(value);
-  }
-
   handleChange = value => {
     const { onChange } = this.props;
     onChange(value);

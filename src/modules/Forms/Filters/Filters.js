@@ -75,8 +75,6 @@ export class Filters extends React.Component {
     return propertiesSchema.map(({ type, values, property, ...props }) => {
       const Component = getComponent(type, values);
 
-      if (!Component) return null;
-
       return (
         <Component
           key={property}
