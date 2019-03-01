@@ -85,11 +85,16 @@ export class InteractiveMap extends React.Component {
 
   componentDidUpdate ({
     interactions: prevInteractions,
+    legends: prevLegends,
   }) {
-    const { interactions } = this.props;
+    const { interactions, legends } = this.props;
 
     if (interactions !== prevInteractions) {
       this.setInteractions();
+    }
+
+    if (legends !== prevLegends) {
+      this.filterLegendsByZoom();
     }
   }
 
@@ -126,6 +131,7 @@ export class InteractiveMap extends React.Component {
   filterLegendsByZoom = () => {
     const { legends } = this.props;
     const { map } = this;
+    if (!map) return;
     const zoom = map.getZoom();
     const filteredLegends = legends
       .filter(({ minZoom = 0, maxZoom = Infinity }) =>
