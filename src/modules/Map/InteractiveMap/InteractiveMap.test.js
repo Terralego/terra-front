@@ -153,7 +153,9 @@ describe('map', () => {
     const instance = new InteractiveMap({
       legends: [
         { minZoom: 10, maxZoom: 15, title: 'pwet', items: [] },
-        { minZoom: 0, maxZoom: 9, title: 'pwout', items: [] },
+        { minZoom: 0, maxZoom: 10, title: 'pwout', items: [] },
+        { minZoom: 0, maxZoom: 0 },
+        { minZoom: 0, maxZoom: 1 },
         { title: 'w' },
       ],
     });
@@ -167,7 +169,21 @@ describe('map', () => {
     expect(instance.map).toBe(map);
     expect(map.getZoom).toHaveBeenCalled();
     expect(instance.setState).toHaveBeenCalledWith({
-      legends: [{ minZoom: 10, maxZoom: 15, title: 'pwet', items: [] }, { title: 'w' }],
+      legends: [{ minZoom: 0, maxZoom: 10, title: 'pwout', items: [] }, { title: 'w' }],
+    });
+    map.getZoom = jest.fn(() => 0);
+    instance.onMapLoaded(map);
+    expect(instance.setState).toHaveBeenCalledWith({
+      legends: [{ minZoom: 0, maxZoom: 10, title: 'pwout', items: [] }, { title: 'w' }],
+    });
+    map.getZoom = jest.fn(() => 1);
+    instance.onMapLoaded(map);
+    expect(instance.setState).toHaveBeenCalledWith({
+      legends: [
+        { minZoom: 0, maxZoom: 10, title: 'pwout', items: [] },
+        { minZoom: 0, maxZoom: 1 },
+        { title: 'w' },
+      ],
     });
   });
 

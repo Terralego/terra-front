@@ -128,7 +128,8 @@ export class InteractiveMap extends React.Component {
     const { map } = this;
     const zoom = map.getZoom();
     const filteredLegends = legends
-      .filter(({ minZoom = 0, maxZoom = Infinity }) => zoom >= minZoom && zoom <= maxZoom);
+      .filter(({ minZoom = 0, maxZoom = Infinity }) =>
+        ((zoom === 0 && minZoom === 0) || zoom > minZoom) && zoom <= maxZoom);
 
     this.setState({ legends: filteredLegends });
   }
