@@ -1,0 +1,21 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`should render correctly 1`] = `
+<div
+  className="control-container"
+>
+  <label
+    className="bp3-control bp3-switch control-label"
+  >
+    <input
+      checked={false}
+      onChange={[Function]}
+      type="checkbox"
+    />
+    <span
+      className="bp3-control-indicator"
+    />
+    Pwout
+  </label>
+</div>
+`;

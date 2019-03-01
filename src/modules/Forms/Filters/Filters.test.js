@@ -6,13 +6,15 @@ import Select from '../Controls/Select';
 import Text from '../Controls/Text';
 import Checkboxes from '../Controls/Checkboxes';
 import Range from '../Controls/Range';
+import Switch from '../Controls/Switch';
 
-import Filters, { TYPE_SINGLE, TYPE_MANY, TYPE_RANGE, getComponent } from './Filters';
+import Filters, { TYPE_SINGLE, TYPE_MANY, TYPE_RANGE, TYPE_BOOL, getComponent } from './Filters';
 
 jest.mock('@blueprintjs/core', () => ({
   Checkbox: () => <p>Checkbox</p>,
   InputGroup: () => <p>Input</p>,
   Select: ({ children }) => children,
+  Switch: () => <p>Switch</p>,
   MenuItem: () => <p>Menu Item</p>,
   Button: () => <p>Button</p>,
   RangeSlider: () => <p>Range</p>,
@@ -49,6 +51,11 @@ it('should build a form', () => {
         values: [40, 60],
         min: 0,
         max: 100,
+      }, {
+        property: 'one_value',
+        label: 'Booléen',
+        type: TYPE_BOOL,
+        value: true,
       }]}
     />
   )).toJSON();
@@ -80,8 +87,11 @@ it('should mount & update correctly', () => {
         values: [40, 60],
         min: 0,
         max: 100,
-      },
-      ]}
+      }, {
+        property: 'switch_value',
+        label: 'Switch label',
+        type: TYPE_BOOL,
+      }]}
     />
   ));
 
@@ -93,6 +103,7 @@ it('should get component', () => {
   expect(getComponent(TYPE_SINGLE, 'text') === Text).toBe(true);
   expect(getComponent(TYPE_SINGLE, ['text', 'text2']) === Select).toBe(true);
   expect(getComponent(TYPE_MANY, ['text', 'text2']) === Checkboxes).toBe(true);
+  expect(getComponent(TYPE_BOOL, true) === Switch).toBe(true);
   expect(getComponent(TYPE_RANGE, [10, 90]) === Range).toBe(true);
   expect(getComponent('NONE_EXISTING_TYPE', 'text') === null).toBe(true);
 });
