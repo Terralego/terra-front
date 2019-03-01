@@ -7,6 +7,7 @@ import {
 import '@blueprintjs/table/lib/css/table.css';
 
 import { getColumns } from './column';
+import { getRows } from '../../tableUtils';
 import './styles.scss';
 
 export const LOADING_ROWS_LEN = 100;
@@ -32,6 +33,11 @@ export class Table extends React.Component {
       format: PropTypes.shape({ type: PropTypes.string }),
     }).isRequired).isRequired,
     data: PropTypes.arrayOf(PropTypes.arrayOf(PropTypes.string)).isRequired,
+    onSelection: PropTypes.func,
+  };
+
+  static defaultProps = {
+    onSelection () {},
   };
 
   state = {
@@ -89,12 +95,21 @@ export class Table extends React.Component {
     }
   }
 
+  onSelection = selection => {
+    const { data, onSelection } = this.props;
+    const { sortedIndexMap } = this.state;
+    const rows = getRows(selection, data);
+    const realRows = sortedIndexMap
+      ? rows.map(row => sortedIndexMap[row])
+      : rows;
+    onSelection(realRows);
+  };
+
   render () {
     const { locales, loading } = this.props;
-    const { columns, data } = this;
+    const { columns, data, onSelection } = this;
     const cols = getColumns({ columns, locales })
       .map(col => col.getColumn(this.getCellData, this.sortColumn));
-
     return (
       <BluePrintTable
         className="component-table"
@@ -102,6 +117,7 @@ export class Table extends React.Component {
         loadingOptions={loading
           ? LOADING_OPTIONS
           : undefined}
+        onSelection={onSelection}
       >
         {cols}
       </BluePrintTable>

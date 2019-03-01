@@ -92,3 +92,31 @@ it('should get data', () => {
   instance.props.loading = true;
   expect(instance.data).toBe(LOADING_DATA);
 });
+
+it('should set selection', () => {
+  const onSelection = jest.fn();
+  const data = [['abc', '123'], ['efg', '789']];
+  const instance = new Table({ data, onSelection });
+
+  instance.onSelection([{ cols: [0, 1], rows: [0, 0] }]);
+  expect(onSelection).toHaveBeenCalledWith([0]);
+  onSelection.mockClear();
+
+  instance.onSelection([{ cols: [1, 1], rows: [0, 1] }]);
+  expect(onSelection).toHaveBeenCalledWith([0, 1]);
+  onSelection.mockClear();
+
+  instance.onSelection([{ cols: [1, 1], rows: [0, 1] }]);
+  expect(onSelection).toHaveBeenCalledWith([0, 1]);
+  onSelection.mockClear();
+
+  instance.state.sortedIndexMap = [1, 0];
+  instance.onSelection([{ cols: [1, 1], rows: [0, 1] }]);
+  expect(onSelection).toHaveBeenCalledWith([1, 0]);
+  onSelection.mockClear();
+
+  instance.state.sortedIndexMap = [1, 0];
+  instance.onSelection([{ cols: [0, 1], rows: [0, 1] }]);
+  expect(onSelection).toHaveBeenCalledWith([1, 0]);
+  onSelection.mockClear();
+});
