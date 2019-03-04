@@ -1,6 +1,6 @@
 import React from 'react';
 import renderer from 'react-test-renderer';
-import { shallow, mount } from 'enzyme';
+import { mount, shallow } from 'enzyme';
 
 import Select from './Select';
 
@@ -17,43 +17,66 @@ it('should render correctly', () => {
     <Select
       label="Pwout"
       onChange={() => null}
+      values={['foo']}
     />
   )).toJSON();
   expect(tree).toMatchSnapshot();
 });
 
-it('should mount & update correctly', () => {
-  const onChange = jest.fn();
-  const wrapper = shallow((
-    <Select
-      label="Pwout"
-      onChange={onChange}
-      values={['pwet', 'wxd']}
-    />
-  ));
+it('should update items', () => {
+  const instance = new Select({ values: [], locales: { emptySelectItem: 'empty' } });
 
-  wrapper.instance().handleChange('pwout');
-  expect(onChange).toHaveBeenCalled();
-  jest.clearAllMocks();
-  wrapper.instance().handleClick('pwit')();
-  expect(onChange).toHaveBeenCalled();
+  instance.setState = jest.fn();
+  const prevValues = instance.props.values;
+  instance.props.values = ['foo'];
+  instance.componentDidUpdate({ values: prevValues });
+  expect(instance.setState).toHaveBeenCalledWith({
+    items: [{
+      value: '',
+      label: 'empty',
+    }, {
+      value: 'foo',
+      label: 'foo',
+    }],
+  });
 });
 
-it('should render an item', () => {
+it('should handle change', () => {
   const onChange = jest.fn();
-  const wrapper = mount((
-    <Select
-      label="Pwout"
-      values={['pwet', 'wxd']}
-      onChange={onChange}
-    />
-  ));
-
-  const { itemRenderer } = wrapper.find('BPSelect').props();
-  const ItemRenderer = () => itemRenderer('foo');
-  const itemWrapper = shallow(<ItemRenderer />);
-  expect(itemWrapper.find('BPMenuItem').length).toBe(1);
-  const { onClick } = itemWrapper.find('BPMenuItem').props();
-  onClick();
+  const instance = new Select({ onChange });
+  instance.handleChange({ value: 'foo' });
   expect(onChange).toHaveBeenCalledWith('foo');
+});
+
+it('should render Item', () => {
+  const wrapper = mount(
+    <Select
+      values={['foo']}
+    />,
+  );
+  const ItemRenderer = ({ item, ...props }) =>
+    wrapper.find('BPSelect').props().itemRenderer(
+      item,
+      {
+        ...props,
+        modifiers: { ...props.modifiers || {} },
+      },
+    );
+
+  expect(shallow(
+    <ItemRenderer
+      item={{
+        label: 'Foo',
+        value: 'foo',
+      }}
+    />,
+  ).props().className).toBe('control-container__item');
+  expect(shallow(
+    <ItemRenderer
+      item={{
+        label: 'empty',
+        value: '',
+      }}
+    />,
+  ).props().className).toBe('control-container__item control-container__item--empty');
 });

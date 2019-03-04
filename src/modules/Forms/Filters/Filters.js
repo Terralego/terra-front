@@ -14,6 +14,7 @@ export const TYPE_BOOL = 'boolean';
 
 const DEFAULT_LOCALES = {
   noResults: 'No results',
+  emptySelectItem: 'Nothing',
 };
 
 export function getComponent (type, values) {
