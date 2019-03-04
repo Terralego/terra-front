@@ -187,6 +187,22 @@ describe('map', () => {
     });
   });
 
+  it('should update legends correctly', () => {
+    const instance = new InteractiveMap({});
+    instance.filterLegendsByZoom = jest.fn();
+    instance.componentDidUpdate({}, {});
+    expect(instance.filterLegendsByZoom).not.toHaveBeenCalled();
+    instance.componentDidUpdate({ legends: [] }, {});
+    expect(instance.filterLegendsByZoom).toHaveBeenCalled();
+  });
+
+  it('should not filterLegendsByZoom without map', () => {
+    const instance = new InteractiveMap({});
+    instance.filterLegendsByZoom();
+    instance.setState = jest.fn();
+    expect(instance.setState).not.toHaveBeenCalled();
+  });
+
   it('should select backgroundStyle', () => {
     const instance = new InteractiveMap({
       backgroundStyle: 'bar',
