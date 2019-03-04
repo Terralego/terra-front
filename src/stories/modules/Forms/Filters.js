@@ -16,7 +16,7 @@ export const CustomFilters = () => (
       property: 'single_value_forced',
       label: 'Vocations',
       type: TYPE_SINGLE,
-      values: ['développeur', 'UX designer', 'Chef de projet'],
+      values: ['développeur', 'UX designer', 'Chef de projet', 'foo', 'bar', 'foobar', 'barfoo', 'test', 'test2', 'coin'],
       value: select('single value with suggestions initial value', {
         développeur: 'développeur',
         'UX designer': 'UX designer',

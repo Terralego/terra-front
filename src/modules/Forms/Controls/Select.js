@@ -12,17 +12,20 @@ export class Select extends React.Component {
     label: PropTypes.string,
     onChange: PropTypes.func,
     values: PropTypes.arrayOf(PropTypes.string),
+    placeholder: PropTypes.string,
   }
 
   static defaultProps = {
     locales: { noResults: 'No results.' },
     label: '',
     values: [],
+    placeholder: 'Filter…',
     onChange () {},
   }
 
   state = {
     items: [],
+    query: '',
   }
 
   componentDidMount () {
@@ -42,11 +45,14 @@ export class Select extends React.Component {
     onChange(value);
   }
 
+  handleQueryChange = query => {
+    this.setState({ query });
+  }
+
   updateItems () {
     const { values, locales: { emptySelectItem } } = this.props;
     this.setState({
       items: ['', ...values].map(v => ({
-        // TODO changer RIEN par une locale venant de Filters
         label: (v === '' ? emptySelectItem : v),
         value: v,
       })),
@@ -58,18 +64,25 @@ export class Select extends React.Component {
       label,
       values,
       locales: { noResults, emptySelectItem },
+      placeholder,
       value,
     } = this.props;
-    const { items } = this.state;
+    const { items, query } = this.state;
     const { handleChange } = this;
+
+    const filteredItems = query === ''
+      ? items
+      : items.filter(item => item.label.toLowerCase().includes(query.toLowerCase()));
 
     return (
       <div className="control-container">
         <p className="control-label">{label}</p>
         <BPSelect
           popoverProps={{ usePortal: false }}
-          items={items}
+          items={filteredItems}
           filterable={values.length > 9}
+          inputProps={{ placeholder }}
+          onQueryChange={this.handleQueryChange}
           itemRenderer={({
             label: itemLabel, value: itemValue,
           }, {
