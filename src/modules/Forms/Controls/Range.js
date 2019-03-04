@@ -4,23 +4,28 @@ import { RangeSlider } from '@blueprintjs/core';
 
 import './index.scss';
 
+const DEFAULT_MIN = 0;
+const DEFAULT_MAX = 100;
+
 export const Range = ({
   label,
-  values,
   value,
   onChange,
+  min,
+  max,
   ...props
 }) => {
-  const val = value.length ? value : values;
-  if (val.length !== 2 || (+val[0] > +val[1])) {
+  if (value && (value.length !== 2 || (+value[0] > +value[1]))) {
     throw new Error('Range control: There must be two values and the first must be less than the second');
   }
   return (
     <div className="control-container">
       <p className="control-label">{label}</p>
       <RangeSlider
-        value={val}
+        value={value || [min, max]}
         onChange={onChange}
+        min={min}
+        max={max}
         {...props}
       />
     </div>
@@ -30,17 +35,17 @@ export const Range = ({
 Range.propTypes = {
   label: PropTypes.string,
   value: PropTypes.arrayOf(PropTypes.number),
-  values: PropTypes.arrayOf(PropTypes.number),
   onChange: PropTypes.func,
-  min: PropTypes.number.isRequired,
-  max: PropTypes.number.isRequired,
+  min: PropTypes.number,
+  max: PropTypes.number,
 };
 
 Range.defaultProps = {
   label: '',
-  value: [],
-  values: [],
+  value: null,
   onChange () {},
+  min: DEFAULT_MIN,
+  max: DEFAULT_MAX,
 };
 
 export default Range;
