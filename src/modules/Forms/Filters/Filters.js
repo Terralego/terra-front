@@ -81,7 +81,8 @@ export class Filters extends React.Component {
     const { onChange } = this;
     const { properties: propertiesSchema, locales: customLocales } = this.props;
     const locales = { ...DEFAULT_LOCALES, ...customLocales };
-    return propertiesSchema.map(({ type, values, property, ...props }) => {
+
+    return propertiesSchema.map(({ type, values, property, value, ...props }) => {
       const Component = getComponent(type, values);
 
       return (
@@ -92,8 +93,8 @@ export class Filters extends React.Component {
           values={values}
           property={property}
           onChange={onChange(property)}
-          value={properties[property]}
           locales={locales}
+          value={properties[property] || value}
         />
       );
     });
