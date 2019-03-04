@@ -57,7 +57,7 @@ export class Select extends React.Component {
     const {
       label,
       values,
-      locales: { noResults },
+      locales: { noResults, emptySelectItem },
       value,
     } = this.props;
     const { items } = this.state;
@@ -83,7 +83,7 @@ export class Select extends React.Component {
               <MenuItem
                 {...modifiers}
                 onClick={handleClick}
-                key={itemValue}
+                key={`${itemValue}${itemLabel}`}
                 text={itemLabel}
               />
             </div>
@@ -91,7 +91,7 @@ export class Select extends React.Component {
           noResults={<MenuItem disabled text={noResults} />}
           onItemSelect={handleChange}
         >
-          <Button text={value} rightIcon="double-caret-vertical" />
+          <Button text={value || emptySelectItem} rightIcon="double-caret-vertical" />
         </BPSelect>
       </div>
     );
