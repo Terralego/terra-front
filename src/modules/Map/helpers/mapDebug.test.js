@@ -107,6 +107,7 @@ it('should create a new mapboxInspect', () => {
 
 it('should render the popup', () => {
   const map = { addControl () {} };
+  global.console = { log: jest.fn() };
 
   global.localStorage.mapDebug = '*';
   addMapDebug(map);
