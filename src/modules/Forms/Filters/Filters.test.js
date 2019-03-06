@@ -30,7 +30,7 @@ it('should build a form', () => {
     <Filters
       locales={{ noResults: 'Aucun résultats' }}
       onChange={() => null}
-      properties={[{
+      filters={[{
         property: 'single_value',
         label: 'Vocations',
         type: TYPE_SINGLE,
@@ -63,10 +63,11 @@ it('should build a form', () => {
 });
 
 it('should mount & update correctly', () => {
+  const onChange = jest.fn();
   const wrapper = shallow((
     <Filters
-      onChange={() => null}
-      properties={[{
+      onChange={onChange}
+      filters={[{
         property: 'single_value',
         label: 'Vocations',
         type: TYPE_SINGLE,
@@ -96,7 +97,7 @@ it('should mount & update correctly', () => {
   ));
 
   wrapper.instance().onChange('pwout')('pwet');
-  expect(wrapper.instance().state.properties.pwout).toEqual('pwet');
+  expect(onChange).toHaveBeenCalledWith({ pwout: 'pwet' });
 });
 
 it('should get component', () => {
