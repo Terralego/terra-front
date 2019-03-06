@@ -41,7 +41,7 @@ export class Filters extends React.Component {
     }),
     onChange: PropTypes.func,
     layer: PropTypes.string,
-    properties: PropTypes.arrayOf(PropTypes.shape({
+    filters: PropTypes.arrayOf(PropTypes.shape({
       property: PropTypes.string.isRequired,
       label: PropTypes.string,
       placeholder: PropTypes.string,
@@ -52,61 +52,47 @@ export class Filters extends React.Component {
         PropTypes.bool,
       ]),
     })),
+    properties: PropTypes.shape({
+      // property: value
+    }),
   }
 
   static defaultProps = {
     locales: {},
     onChange () {},
-    properties: [],
+    filters: [],
+    properties: {},
     layer: '',
   }
 
-  state = {
-    properties: {},
-  }
-
   onChange = property => value => {
-    const { onChange } = this.props;
-    this.setState(({ properties: prevProperties }) => {
-      const properties = {
-        ...prevProperties,
-        [property]: value,
-      };
-      onChange(properties);
-      return { properties };
-    });
-  }
-
-  generateFilters = properties => {
-    const { onChange } = this;
-    const { properties: propertiesSchema, locales: customLocales } = this.props;
-    const locales = { ...DEFAULT_LOCALES, ...customLocales };
-
-    return propertiesSchema.map(({ type, values, property, value, ...props }) => {
-      const Component = getComponent(type, values);
-
-      return (
-        <Component
-          {...props}
-          key={property}
-          type={type}
-          values={values}
-          property={property}
-          onChange={onChange(property)}
-          locales={locales}
-          value={properties[property] || value}
-        />
-      );
-    });
+    const { onChange, properties } = this.props;
+    onChange({ ...properties, [property]: value });
   }
 
   render () {
-    const { generateFilters } = this;
-    const { properties } = this.state;
+    const { onChange } = this;
+    const { properties, filters, locales: customLocales } = this.props;
+    const locales = { ...DEFAULT_LOCALES, ...customLocales };
 
     return (
       <div>
-        {generateFilters(properties)}
+        {filters.map(({ type, values, property, ...props }) => {
+          const Component = getComponent(type, values);
+
+          return (
+            <Component
+              {...props}
+              key={property}
+              type={type}
+              values={values}
+              property={property}
+              onChange={onChange(property)}
+              locales={locales}
+              value={properties[property]}
+            />
+          );
+        })}
       </div>
     );
   }
