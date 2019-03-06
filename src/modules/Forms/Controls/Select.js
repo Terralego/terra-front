@@ -88,15 +88,16 @@ export class Select extends React.Component {
           }, {
             handleClick, modifiers: { matchesPredicate, ...modifiers },
           }) => (
-            <div className={classnames({
-              'control-container__item': true,
-              'control-container__item--empty': itemValue === '',
-            })}
+            <div
+              key={`${itemValue}${itemLabel}`}
+              className={classnames({
+                'control-container__item': true,
+                'control-container__item--empty': itemValue === '',
+              })}
             >
               <MenuItem
                 {...modifiers}
                 onClick={handleClick}
-                key={`${itemValue}${itemLabel}`}
                 text={itemLabel}
               />
             </div>
