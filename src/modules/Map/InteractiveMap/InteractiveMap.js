@@ -20,6 +20,7 @@ export const INTERACTION_FLY_TO = 'flyTo';
 export const INTERACTION_FIT_ZOOM = 'fitZoom';
 export const INTERACTION_ZOOM = 'zoom';
 export const INTERACTION_DISPLAY_TOOLTIP = 'displayTooltip';
+export const INTERACTION_HIGHLIGHT = 'highlight';
 export const INTERACTION_FN = 'function';
 
 const generateTooltipContainer = ({ fetchProperties, properties, template, content, history }) => {
@@ -37,6 +38,10 @@ const generateTooltipContainer = ({ fetchProperties, properties, template, conte
   return container;
 };
 
+export const getHighlightLayerId = (layerId, type = 'fill') => `${type}-${layerId}-highlight`;
+const getHighlightLayerIdFill = layerId => getHighlightLayerId(layerId, 'fill');
+const getHighlightLayerIdLine = layerId => getHighlightLayerId(layerId, 'line');
+
 export class InteractiveMap extends React.Component {
   static propTypes = {
     backgroundStyle: PropTypes.oneOfType([
@@ -50,6 +55,7 @@ export class InteractiveMap extends React.Component {
         INTERACTION_FIT_ZOOM,
         INTERACTION_DISPLAY_TOOLTIP,
         INTERACTION_ZOOM,
+        INTERACTION_HIGHLIGHT,
         INTERACTION_FN,
       ]),
       constraints: PropTypes.arrayOf(PropTypes.shape({
@@ -99,6 +105,8 @@ export class InteractiveMap extends React.Component {
     popup.remove();
     this.popups.delete(layerId);
   }, 100);
+
+  highlightedLayers = new Map();
 
   constructor (props) {
     super(props);
@@ -170,6 +178,116 @@ export class InteractiveMap extends React.Component {
 
   fitZoom = ({ feature, map }) =>
     map.fitBounds(bbox({ type: 'FeatureCollection', features: [feature] }));
+
+  highlight = () => {
+    const { map, highlightedLayers } = this;
+    highlightedLayers.forEach(layerFeatures => layerFeatures.forEach(({
+      feature: {
+        layer: { id: layerId } = {},
+        properties: { _id: filterId } = {},
+        sourceLayer,
+      } = {},
+      highlightColor,
+    }) => {
+      if (!filterId) return;
+
+      const fillId = getHighlightLayerIdFill(filterId);
+      const lineId = getHighlightLayerIdLine(filterId);
+      const layerColor = highlightColor || map.getPaintProperty(layerId, 'fill-color');
+
+      if (map.getLayer(fillId) || map.getLayer(lineId)) return;
+
+      map.addLayer({
+        id: fillId,
+        source: 'terralego',
+        type: 'fill',
+        'source-layer': sourceLayer,
+        filter: ['==', '_id', filterId],
+        paint: {
+          'fill-color': layerColor,
+          'fill-outline-color': layerColor,
+          'fill-opacity': 0.4,
+        },
+      });
+      map.addLayer({
+        id: lineId,
+        source: 'terralego',
+        'source-layer': sourceLayer,
+        filter: ['==', '_id', filterId],
+        type: 'line',
+        paint: {
+          'line-color': layerColor,
+          'line-width': 2,
+        },
+      });
+    }));
+  }
+
+  removeHighlight = ({
+    feature: {
+      layer: { id: layerId } = {},
+      properties: { _id: featureId } = {},
+    } = {},
+  }) => {
+    const { map, highlight } = this;
+    if (!map || !layerId || !featureId) return;
+
+    const fillId = getHighlightLayerIdFill(featureId);
+    const lineId = getHighlightLayerIdLine(featureId);
+    const highlightedFeatures = this.highlightedLayers.get(layerId);
+
+    const filtered = highlightedFeatures
+      .filter(({ feature: { properties: { _id: id } } }) => id !== featureId);
+
+    if (map.getLayer(fillId)) {
+      map.removeLayer(fillId);
+      map.removeLayer(lineId);
+    }
+
+    if (filtered.length) {
+      this.highlightedLayers.set(layerId, filtered);
+      highlight();
+      return;
+    }
+
+    this.highlightedLayers.delete(layerId);
+  }
+
+  // WORKAROUND: Async is needed to fix error log message
+  addHighlight = async ({
+    feature,
+    feature: {
+      layer: { id: layerId } = {},
+      properties: { _id: id } = {},
+    } = {},
+    highlightColor,
+    unique,
+  }) => {
+    const { removeHighlight, highlight } = this;
+
+    if (!layerId) return;
+
+    const highlightedLayer = this.highlightedLayers.get(layerId);
+
+    if (highlightedLayer) {
+      const isHighlighted = highlightedLayer
+        .find(({ feature: { properties: { _id } } }) => _id === id);
+
+      if (isHighlighted) return;
+
+      if (unique) {
+        highlightedLayer.forEach(feat => removeHighlight({ feature: feat }));
+        this.highlightedLayers.set(layerId, [{ highlightColor, feature }]);
+      } else {
+        this.highlightedLayers
+          .set(layerId, [...highlightedLayer, { highlightColor, feature }]);
+      }
+    } else {
+      await this.highlightedLayers.set(layerId, [{ highlightColor, feature }]);
+    }
+
+    highlight();
+  }
 
   displayTooltip = ({
     layerId,
@@ -253,6 +371,7 @@ export class InteractiveMap extends React.Component {
     const {
       id, interaction: interactionType, fn,
       trigger = 'click', fixed, constraints,
+      highlightColor, unique: uniqueConf, highlight,
       zoomConfig, targetZoom, step, ...config
     } = interaction;
     if ((trigger === 'mouseover' && !['mousemove', 'mouseleave'].includes(eventType)) ||
@@ -289,8 +408,35 @@ export class InteractiveMap extends React.Component {
       case INTERACTION_ZOOM:
         this.zoom(feature, step);
         break;
+      case INTERACTION_HIGHLIGHT: {
+        const unique = uniqueConf || ['mouseover', 'mousemove'].includes(trigger);
+        const hasPrevFeatureChanged = this.prevSelectedFeature
+          && this.prevSelectedFeature !== feature;
+        const hasLeavedFeature = eventType === 'mouseleave' || (hasPrevFeatureChanged && unique);
+
+        if (hasLeavedFeature) {
+          this.removeHighlight({ feature: this.prevSelectedFeature });
+        }
+        this.prevSelectedFeature = feature;
+        this.addHighlight({
+          unique,
+          feature,
+          highlightColor,
+        });
+        break;
+      }
       case INTERACTION_FN:
-        fn({ map, event, layerId, feature, instance: this, clusteredFeatures });
+        fn({
+          map,
+          event,
+          layerId,
+          feature,
+          instance: this,
+          highlight,
+          addHighlight: this.addHighlight,
+          removeHighlights: this.removeHighlights,
+          clusteredFeatures,
+        });
         break;
       default:
     }
