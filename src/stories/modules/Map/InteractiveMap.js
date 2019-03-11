@@ -18,33 +18,6 @@ export default () => (
       zoom={15}
       maxZoom={16}
       minZoom={11}
-      legends={[{
-        title: 'Emplois',
-        minZoom: 11,
-        maxZoom: 13,
-        layers: ['terralego-etablissements'],
-        items: [
-          { label: 'Mixte', color: '#fe0200' },
-          { label: 'Tertiaire supérieur', color: '#6fab46' },
-          { label: 'Commerce de gros/Logistique', color: '#fec000' },
-          { label: 'Construction', color: '#a4a6a4' },
-          { label: 'Activités supports', color: '#8ea8db' },
-          { label: 'Industrie', color: '#245e91' },
-          { label: 'Commerce de détail', color: '#ec7c31' },
-          { label: 'Services aux particuliers', color: '#9e470e' },
-          { label: 'Autres', color: '#6a89cc' },
-        ],
-      }, {
-        title: 'Emplois',
-        minZoom: 13,
-        maxZoom: 16,
-        layers: ['terralego-etablissements'],
-        items: [
-          { label: 'Mixte', color: '#fe0200' },
-          { label: 'Tertiaire supérieur', color: '#6fab46' },
-          { label: 'Commerce de gros/Logistique', color: '#fec000' },
-        ],
-      }]}
       interactions={[{
         id: 'terralego-eae',
         interaction: 'displayTooltip',
@@ -84,7 +57,7 @@ export default () => (
         sources: [{
           id: 'terralego',
           type: 'vector',
-          url: 'http://dev-tiles-paca.makina-corpus.net/api/layer/reference/tilejson',
+          url: 'https://dev-terralego-paca.makina-corpus.net/api/layer/reference/tilejson',
         }],
         layers: [{
           type: 'fill',
@@ -180,8 +153,42 @@ export default () => (
           id: 'terralego-etablissements',
           'source-layer': 'etablissements',
           paint: {
-            'circle-radius': 10,
+            'circle-radius': [
+              'case',
+              ['has', 'point_count'],
+              [
+                'case',
+                ['<', ['get', 'point_count'], 20],
+                5,
+                ['<', ['get', 'point_count'], 300],
+                10,
+                ['<', ['get', 'point_count'], 800],
+                15,
+                ['<', ['get', 'point_count'], 1200],
+                20,
+                25,
+              ],
+              0,
+            ],
+            'circle-color': [
+              'case',
+              ['has', 'point_count'],
+              [
+                'case',
+                ['<', ['get', 'point_count'], 20],
+                '#ffb3a8',
+                ['<', ['get', 'point_count'], 300],
+                '#d7887b',
+                ['<', ['get', 'point_count'], 800],
+                '#af5f51',
+                ['<', ['get', 'point_count'], 1200],
+                '#883729',
+                '#600c00',
+              ],
+              '#fff',
+            ],
           },
+          asCluster: true,
         }],
       }}
     />

@@ -3,7 +3,9 @@ import mapBoxGl from 'mapbox-gl';
 import PropTypes from 'prop-types';
 import 'mapbox-gl/dist/mapbox-gl.css';
 
+import debounce from 'lodash.debounce';
 import { capitalize } from '../../../utils/strings';
+import { updateCluster } from '../services/cluster';
 
 import './Map.scss';
 
@@ -19,7 +21,9 @@ export function getLayerBeforeId (type, layers) {
   return layers[pos] && layers[pos].id;
 }
 
-export class Map extends React.Component {
+const debouncedUpdateCluster = debounce(updateCluster, 500);
+
+export class MapComponent extends React.Component {
   static propTypes = {
     // Mapbox general config
     accessToken: PropTypes.string,
@@ -56,6 +60,7 @@ export class Map extends React.Component {
         layout: PropTypes.shape({
           visibility: PropTypes.oneOf(['visible', 'none']),
         }),
+        asCluster: PropTypes.bool,
       })),
     }),
 
@@ -181,10 +186,19 @@ export class Map extends React.Component {
     const { layers: allLayers } = map.getStyle();
     sources.forEach(({ id, ...sourceAttrs }) => map.addSource(id, sourceAttrs));
     layers.forEach(layer => {
+      if (layer.cluster) return this.createClusterLayer(layer);
       const { type } = layer;
       const beforeId = getLayerBeforeId(type, allLayers);
-      map.addLayer(layer, beforeId);
+      return map.addLayer(layer, beforeId);
     });
+  }
+
+  createClusterLayer (layer) {
+    const { map } = this.props;
+    map.on('zoom', () => debouncedUpdateCluster(map, layer));
+    map.on('move', () => debouncedUpdateCluster(map, layer));
+    map.once('load', () => debouncedUpdateCluster(map, layer));
+    debouncedUpdateCluster(map, layer);
   }
 
   deleteLayers ({ sources, layers }) {
@@ -249,4 +263,4 @@ export class Map extends React.Component {
   }
 }
 
-export default Map;
+export default MapComponent;
