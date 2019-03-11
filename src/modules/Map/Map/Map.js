@@ -99,6 +99,7 @@ export class Map extends React.Component {
       map,
       maxZoom,
       backgroundStyle,
+      customStyle,
       displayScaleControl,
       displayNavigationControl,
       displayAttributionControl,
@@ -135,13 +136,16 @@ export class Map extends React.Component {
       this.toggleNavigationControl(displayNavigationControl);
     }
 
-
     if (displayAttributionControl !== prevProps.displayAttributionControl) {
       this.toggleAttributionControl(displayAttributionControl);
     }
 
     if (rotate !== prevProps.rotate) {
       this.toggleRotate();
+    }
+
+    if (customStyle !== prevProps.customStyle) {
+      this.replaceLayers(prevProps.customStyle);
     }
   }
 
@@ -181,6 +185,23 @@ export class Map extends React.Component {
       const beforeId = getLayerBeforeId(type, allLayers);
       map.addLayer(layer, beforeId);
     });
+  }
+
+  deleteLayers ({ sources, layers }) {
+    const { map } = this.props;
+    const { layers: allLayers } = map.getStyle();
+
+    sources.forEach(({ id, ...sourceAttrs }) => map.removeSource(id, sourceAttrs));
+    layers.forEach(layer => {
+      const { type } = layer;
+      const beforeId = getLayerBeforeId(type, allLayers);
+      map.removeLayer(layer, beforeId);
+    });
+  }
+
+  replaceLayers (prevCustomStyle) {
+    this.deleteLayers(prevCustomStyle);
+    this.createLayers();
   }
 
   toggleControl (display, control) {

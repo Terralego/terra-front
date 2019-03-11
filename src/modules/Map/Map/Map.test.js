@@ -15,7 +15,11 @@ jest.mock('mapbox-gl', () => {
   const off = jest.fn();
   const map = {
     addControl: jest.fn(() => {}),
+    addLayer: jest.fn(() => {}),
+    addSource: jest.fn(() => {}),
     removeControl: jest.fn(() => {}),
+    removeLayer: jest.fn(() => {}),
+    removeSource: jest.fn(() => {}),
     flyTo: jest.fn(() => {}),
     setMaxBounds: jest.fn(() => [
       [-5.7283633634, 42.114925591], [8.8212564471, 51.3236272327], // France coordinates
@@ -161,6 +165,65 @@ describe('on properties changes', () => {
     const wrapper = shallow(<Map {...props} />);
     wrapper.setProps({ styles: 'mapbox://styles/mapbox/light-v9' });
     expect(props.map.setStyle).not.toHaveBeenCalled();
+  });
+
+  it('should call replaceLayers on property change', () => {
+    const customStyle = {
+      sources: [{
+        id: 'foo',
+        type: 'vector',
+        url: 'somewhere',
+      }],
+      layers: [{
+        id: 'layer1',
+        type: 'fill',
+      }, {
+        id: 'layer2',
+        type: 'circle',
+      }],
+    };
+    const customStyleChanged = {
+      sources: [{
+        id: 'foo1',
+        type: 'vector',
+        url: 'somewhere',
+      }],
+      layers: [{
+        id: 'layer3',
+        type: 'fill',
+      }, {
+        id: 'layer2',
+        type: 'circle',
+      }],
+    };
+
+    const wrapper = shallow(<Map {...props} customStyle={customStyle} />);
+    const instance = wrapper.instance();
+    jest.spyOn(instance, 'replaceLayers');
+    wrapper.setProps({ customStyle: customStyleChanged });
+    expect(instance.replaceLayers).toHaveBeenCalled();
+  });
+
+  it("should not call replaceLayers if property doesn't change", () => {
+    const customStyle = {
+      sources: [{
+        id: 'foo',
+        type: 'vector',
+        url: 'somewhere',
+      }],
+      layers: [{
+        id: 'layer1',
+        type: 'fill',
+      }, {
+        id: 'layer2',
+        type: 'circle',
+      }],
+    };
+    const wrapper = shallow(<Map {...props} customStyle={customStyle} />);
+    const instance = wrapper.instance();
+    jest.spyOn(instance, 'replaceLayers');
+    wrapper.setProps({ customStyle });
+    expect(instance.replaceLayers).not.toHaveBeenCalled();
   });
 
   it('should call addControl on init', () => {
