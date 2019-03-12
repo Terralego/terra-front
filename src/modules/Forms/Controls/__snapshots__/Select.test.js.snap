@@ -9,5 +9,49 @@ exports[`should render correctly 1`] = `
   >
     Pwout
   </p>
+  <select>
+    <option
+      value=""
+    />
+    <option
+      value="foo"
+    >
+      foo
+    </option>
+  </select>
+</div>
+`;
+
+exports[`should render correctly with query 1`] = `
+<div
+  className="control-container"
+>
+  <p
+    className="control-label"
+  >
+    Pwout
+  </p>
+  <select>
+    <option
+      value="foo"
+    >
+      foo
+    </option>
+    <option
+      value="foofoo"
+    >
+      foofoo
+    </option>
+    <option
+      value="fou"
+    >
+      fou
+    </option>
+    <option
+      value="fooooo"
+    >
+      fooooo
+    </option>
+  </select>
 </div>
 `;
