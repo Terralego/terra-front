@@ -7,6 +7,7 @@ import bbox from '@turf/bbox';
 import centroid from '@turf/centroid';
 
 import { setInteractions } from './services/mapUtils';
+import { getClusteredFeatures } from '../services/cluster';
 import MapComponent from '../Map';
 import BackgroundStyles from './components/BackgroundStyles';
 import Legend from './components/Legend';
@@ -202,7 +203,7 @@ export class InteractiveMap extends React.Component {
     popupContent.addEventListener('mouseleave', onMouseLeave);
   }
 
-  triggerInteraction ({ map, event, feature, layerId, interaction, eventType }) {
+  async triggerInteraction ({ map, event, feature, layerId, interaction, eventType }) {
     const { id, interaction: interactionType, fn, trigger = 'click', fixed, constraints, ...config } = interaction;
 
     if ((trigger === 'mouseover' && !['mousemove', 'mouseleave'].includes(eventType)) ||
@@ -218,6 +219,7 @@ export class InteractiveMap extends React.Component {
         return;
       }
     }
+    const clusteredFeatures = await getClusteredFeatures(map, feature);
 
     switch (interactionType) {
       case INTERACTION_DISPLAY_TOOLTIP:
@@ -242,7 +244,7 @@ export class InteractiveMap extends React.Component {
         this.fitZoom({ feature, map });
         break;
       case INTERACTION_FN:
-        fn({ map, event, layerId, feature, widgetMapInstance: this });
+        fn({ map, event, layerId, feature, widgetMapInstance: this, clusteredFeatures });
         break;
       default:
     }

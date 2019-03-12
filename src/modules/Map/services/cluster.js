@@ -20,7 +20,7 @@ export const createCluster = (map, layer) => {
    * A ghost layer to force data ro be fetched
    */
   map.addLayer({
-    id: `${id}-for-cluster`,
+    id: `${id}-cluster-data`,
     type: 'circle',
     source,
     'source-layer': sourceLayer,
@@ -104,20 +104,6 @@ export const createCluster = (map, layer) => {
       'text-color': color || '#000000',
     },
   });
-
-  map.on('click', id, e => {
-    const [{ properties: { cluster_id: clusterId } = {} }] = map.queryRenderedFeatures(e.point, { layers: [id] });
-    if (!clusterId) return;
-    map.getSource(clusterSourceName).getClusterLeaves(clusterId, -1, 0, (err, features) => {
-      console.log(features);
-    });
-  });
-  map.on('mouseenter', id, () => {
-    map.getCanvas().style.cursor = 'pointer';
-  });
-  map.on('mouseleave', id, () => {
-    map.getCanvas().style.cursor = '';
-  });
 };
 
 export const updateCluster = (map, layer) => {
@@ -136,5 +122,16 @@ export const updateCluster = (map, layer) => {
   });
 };
 
+export const getClusteredFeatures = (map, feature) => new Promise((resolve, reject) => {
+  const { source, properties: { cluster, cluster_id: clusterId } = {} } = feature;
+  if (!cluster) resolve(null);
+  else {
+    map.getSource(source).getClusterLeaves(clusterId, -1, 0, (err, features) => {
+      if (err) reject(err);
+      else resolve(features);
+    });
+  }
+});
 
-export default { updateCluster };
+
+export default { updateCluster, getClusteredFeatures };

@@ -1,10 +1,10 @@
 import React from 'react';
 
-import Map from '../../../modules/Map/Map';
+import InteractiveMap from '../../../modules/Map/InteractiveMap';
 
 export default () => (
   <div style={{ height: '100vh' }}>
-    <Map
+    <InteractiveMap
       type="map"
       accessToken="pk.eyJ1IjoibWFraW5hY29ycHVzIiwiYSI6ImNqY3E4ZTNwcTFta3ozMm80d2xzY29wM2MifQ.Nwl_FHrWAIQ46s_lY0KNiQ"
       backgroundStyle="mapbox://styles/mapbox/light-v9"
@@ -46,6 +46,13 @@ export default () => (
           },
         }],
       }}
+      interactions={[{
+        id: 'terralego-etablissements',
+        interaction: 'function',
+        fn (...args) {
+          console.log('click', args);
+        },
+      }]}
     />
   </div>
 );
