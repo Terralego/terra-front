@@ -44,6 +44,9 @@ jest.mock('react-dom', () => {
 jest.mock('lodash.debounce', () => fn => () => fn({ layerId: 'foo' }));
 jest.mock('@turf/centroid', () => () => ({ geometry: { coordinates: [0, 0] } }));
 jest.mock('./components/BackgroundStyles', () => () => <p>BackgroundStyles</p>);
+jest.mock('../services/cluster', () => ({
+  getClusteredFeatures: jest.fn(),
+}));
 
 beforeEach(() => {
   mapboxGl.Popup.prototype.remove.mockClear();
@@ -566,7 +569,7 @@ describe('Interactions', () => {
       layerId: 'foo',
       feature: {},
       widgetMapInstance: instance,
-      clusteredFeatures: null,
+      clusteredFeatures: undefined,
     });
   });
 

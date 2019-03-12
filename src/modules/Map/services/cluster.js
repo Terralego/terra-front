@@ -11,7 +11,10 @@ export const createCluster = (map, layer) => {
       steps,
       sizes,
       colors,
-      font: { family, color } = {},
+      font: {
+        family = ['DIN Offc Pro Medium', 'Arial Unicode MS Bold'],
+        color = '#000000',
+      } = {},
     },
   } = layer;
   const clusterSourceName = getClusterSourceName(layer.id);
@@ -87,7 +90,7 @@ export const createCluster = (map, layer) => {
     filter: ['has', 'point_count'],
     layout: {
       'text-field': '{point_count_abbreviated}',
-      'text-font': family || ['DIN Offc Pro Medium', 'Arial Unicode MS Bold'],
+      'text-font': family,
       'text-size': ['case',
         ...[...steps, null].reduce((rules, step, key) =>
           [
@@ -101,7 +104,7 @@ export const createCluster = (map, layer) => {
       'text-allow-overlap': true,
     },
     paint: {
-      'text-color': color || '#000000',
+      'text-color': color,
     },
   });
 };
