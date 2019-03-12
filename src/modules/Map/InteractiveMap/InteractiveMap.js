@@ -144,7 +144,7 @@ export class InteractiveMap extends React.Component {
   fitZoom = ({ feature, map }) =>
     map.fitBounds(bbox({ type: 'FeatureCollection', features: [feature] }));
 
-  displayTooltip = ({
+  displayTooltip ({
     layerId,
     feature,
     feature: { properties } = {},
@@ -155,7 +155,7 @@ export class InteractiveMap extends React.Component {
     fixed,
     fetchProperties = {},
     clusteredFeatures,
-  }) => {
+  }) {
     const { history } = this.props;
     const { map } = this;
     const zoom = map.getZoom();
