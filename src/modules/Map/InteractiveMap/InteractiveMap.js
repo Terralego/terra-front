@@ -154,14 +154,20 @@ export class InteractiveMap extends React.Component {
     unique,
     fixed,
     fetchProperties = {},
+    clusteredFeatures,
   }) => {
     const { history } = this.props;
     const { map } = this;
+    const zoom = map.getZoom();
     const container = document.createElement('div');
     ReactDOM.render(
       <Tooltip
         fetch={fetchProperties}
-        properties={properties}
+        properties={{
+          properties,
+          clusteredFeatures,
+          zoom,
+        }}
         template={template}
         content={content}
         history={history}
@@ -237,6 +243,7 @@ export class InteractiveMap extends React.Component {
           event,
           unique: ['mouseover', 'mousemove'].includes(trigger),
           fixed,
+          clusteredFeatures,
           ...config,
         });
         break;

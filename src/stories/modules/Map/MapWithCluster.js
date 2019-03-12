@@ -48,10 +48,19 @@ export default () => (
       }}
       interactions={[{
         id: 'terralego-etablissements',
-        interaction: 'function',
-        fn (...args) {
-          console.log('click', args);
-        },
+        interaction: 'displayTooltip',
+        template: `
+{% if clusteredFeatures.length > 800 and zoom < 15 %}
+<p>Trop de résultats, ayez l'obligeance de zoomer, merci.</p>
+{% else %}
+<ul style="max-height: 300px; overflow: auto">
+  {% for feature in clusteredFeatures %}
+  <li>{{feature.properties.raison_sociale}}</li>
+  {% endfor %}
+</ul>
+{% endif %}
+`,
+        fixed: true,
       }]}
     />
   </div>
