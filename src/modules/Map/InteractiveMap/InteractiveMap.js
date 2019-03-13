@@ -173,7 +173,7 @@ export class InteractiveMap extends React.Component {
       <Tooltip
         fetch={fetchProperties}
         properties={{
-          properties,
+          ...properties,
           clusteredFeatures,
           zoom,
         }}
@@ -252,7 +252,7 @@ export class InteractiveMap extends React.Component {
         this.fitZoom({ feature, map });
         break;
       case INTERACTION_FN:
-        fn({ map, event, layerId, feature, widgetMapInstance: this, clusteredFeatures });
+        fn({ map, event, layerId, feature, instance: this, clusteredFeatures });
         break;
       default:
     }
