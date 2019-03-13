@@ -6,7 +6,7 @@ import debounce from 'lodash.debounce';
 import bbox from '@turf/bbox';
 import centroid from '@turf/centroid';
 
-import { setInteractions } from './services/mapUtils';
+import { setInteractions, checkContraints } from './services/mapUtils';
 import { getClusteredFeatures } from '../services/cluster';
 import MapComponent from '../Map';
 import BackgroundStyles from './components/BackgroundStyles';
@@ -34,6 +34,15 @@ export class InteractiveMap extends React.Component {
         INTERACTION_DISPLAY_TOOLTIP,
         INTERACTION_FN,
       ]),
+      constraints: PropTypes.arrayOf(PropTypes.shape({
+        minZoom: PropTypes.number,
+        maxZoom: PropTypes.number,
+        // withLayers takes a list of layers ids which should exists and be visible,
+        // or with "!layerId", should not
+        withLayers: PropTypes.arrayOf(PropTypes.string),
+        // Pass if the feature is a cluster of features
+        isCluster: PropTypes.bool,
+      })),
       // for INTERACTION_DISPLAY_TOOLTIP
       template: PropTypes.string,
       content: PropTypes.string,
@@ -211,19 +220,11 @@ export class InteractiveMap extends React.Component {
 
   async triggerInteraction ({ map, event, feature, layerId, interaction, eventType }) {
     const { id, interaction: interactionType, fn, trigger = 'click', fixed, constraints, ...config } = interaction;
-
     if ((trigger === 'mouseover' && !['mousemove', 'mouseleave'].includes(eventType)) ||
         (trigger !== 'mouseover' && trigger !== eventType)) return;
 
-    if (constraints) {
-      const currentZoom = map.getZoom();
-      const {
-        minZoom = 0,
-        maxZoom = Infinity,
-      }  = constraints;
-      if (currentZoom >= maxZoom || currentZoom <= minZoom) {
-        return;
-      }
+    if (!checkContraints({ map, constraints, feature })) {
+      return;
     }
     const clusteredFeatures = await getClusteredFeatures(map, feature);
 

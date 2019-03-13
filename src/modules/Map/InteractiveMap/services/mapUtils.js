@@ -119,10 +119,48 @@ export function setInteractions ({ map, interactions, callback }) {
   });
 }
 
+export const checkContraints = ({
+  map,
+  constraints = [],
+  feature: { properties: { cluster } = {} } = {},
+}) => {
+  if (!constraints.length) return true;
+  const currentZoom = map.getZoom();
+  return constraints.reduce((prev, {
+    minZoom = 0,
+    maxZoom = Infinity,
+    withLayers = [],
+    isCluster,
+  }) => {
+    const checkZoom = minZoom !== undefined && maxZoom !== undefined
+      ? currentZoom <= maxZoom && currentZoom >= minZoom
+      : true;
+
+    const checkLayers = withLayers.reduce((prevCheck, layer) => {
+      const match = layer.match(/^(!)?(.+)$/);
+
+      const visible = match[1] !== '!';
+      const layerId = match[2];
+
+      return prevCheck
+        && visible
+        ? (map.getLayer(layerId) !== undefined
+          && map.getLayoutProperty(layerId, 'visibility') === 'visible')
+        : (!map.getLayer(layerId)
+          || map.getLayoutProperty(layerId, 'visibility') === 'none');
+    }, true);
+    const checkCluster = isCluster === undefined
+      || cluster === isCluster;
+
+    return prev || (checkZoom && checkLayers && checkCluster);
+  }, false);
+};
+
 export default {
   toggleLayerVisibility,
   getOpacityProperty,
   setLayerOpacity,
   getInteractionOnEvent,
   setInteractions,
+  checkContraints,
 };

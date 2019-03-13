@@ -3,7 +3,9 @@ import renderer from 'react-test-renderer';
 import ReactDOM from 'react-dom';
 import mapboxGl from 'mapbox-gl';
 
-import { setInteractions } from './services/mapUtils';
+// mockCheckContraints is added with mock
+// eslint-disable-next-line import/named
+import { setInteractions, mockCheckContraints } from './services/mapUtils';
 import InteractiveMap, { INTERACTION_ZOOM, INTERACTION_DISPLAY_TOOLTIP, INTERACTION_FN } from './InteractiveMap';
 
 jest.mock('@turf/bbox', () => jest.fn());
@@ -29,11 +31,18 @@ jest.mock('mapbox-gl', () => {
   };
 });
 jest.mock('../Map', () => function MapComponent () { return null; });
-jest.mock('./services/mapUtils', () => ({
-  toggleLayerVisibility: jest.fn(),
-  setLayerOpacity: jest.fn(),
-  setInteractions: jest.fn(),
-}));
+jest.mock('./services/mapUtils', () => {
+  let checkContraints = true;
+  return {
+    toggleLayerVisibility: jest.fn(),
+    setLayerOpacity: jest.fn(),
+    setInteractions: jest.fn(),
+    checkContraints: () => checkContraints,
+    mockCheckContraints: v => {
+      checkContraints = v;
+    },
+  };
+});
 jest.mock('react-dom', () => {
   const mockedElement = {};
   return {
@@ -387,51 +396,47 @@ describe('Interactions', () => {
   });
 
   describe('Interaction with constraints', () => {
-    const createInteraction = (map, constraints) => ({
-      map,
-      event: {},
-      feature: {},
-      layerId: 'foo',
-      interaction: {
-        id: 'foo',
-        interaction: INTERACTION_DISPLAY_TOOLTIP,
-        template: 'template',
-        trigger: 'click',
-        constraints,
-      },
-      eventType: 'click',
-    });
-
-    const mapZ10 = { getZoom: () => 10 };
-    const mapZ13 = { getZoom: () => 13 };
-    const mapZ16 = { getZoom: () => 16 };
-
-    it('should not be triggered when zoom is out of range', () => {
+    it('should trigger', async () => {
+      mockCheckContraints(true);
       const instance = new InteractiveMap({ interactions: [] });
       instance.displayTooltip = jest.fn();
-
-      instance.triggerInteraction(createInteraction(mapZ16, { minZoom: 12, maxZoom: 14 }));
-      instance.triggerInteraction(createInteraction(mapZ10, { minZoom: 12, maxZoom: 14 }));
-      expect(instance.displayTooltip).not.toHaveBeenCalled();
-    });
-
-    it('should be triggered if zoom is in range', async () => {
-      const instance = new InteractiveMap({ interactions: [] });
-      instance.displayTooltip = jest.fn();
-
-      instance.triggerInteraction(createInteraction(mapZ13, { minZoom: 12, maxZoom: 14 }));
+      instance.triggerInteraction({
+        map: {},
+        event: {},
+        feature: {},
+        layerId: 'foo',
+        interaction: {
+          id: 'foo',
+          interaction: INTERACTION_DISPLAY_TOOLTIP,
+          template: 'template',
+          trigger: 'click',
+        },
+        eventType: 'click',
+      });
       await true;
       expect(instance.displayTooltip).toHaveBeenCalled();
     });
 
-    it('should be triggered when only max OR min zoom is set', async () => {
+    it('should not trigger', async () => {
+      mockCheckContraints(false);
       const instance = new InteractiveMap({ interactions: [] });
       instance.displayTooltip = jest.fn();
-
-      instance.triggerInteraction(createInteraction(mapZ13, { minZoom: 12 }));
-      instance.triggerInteraction(createInteraction(mapZ13, { maxZoom: 14 }));
+      instance.triggerInteraction({
+        map: {},
+        event: {},
+        feature: {},
+        layerId: 'foo',
+        interaction: {
+          id: 'foo',
+          interaction: INTERACTION_DISPLAY_TOOLTIP,
+          template: 'template',
+          trigger: 'click',
+        },
+        eventType: 'click',
+      });
       await true;
-      expect(instance.displayTooltip).toHaveBeenCalledTimes(2);
+      expect(instance.displayTooltip).not.toHaveBeenCalled();
+      mockCheckContraints(true);
     });
   });
 

@@ -1,4 +1,11 @@
-import { toggleLayerVisibility, getOpacityProperty, setLayerOpacity, getInteractionOnEvent, setInteractions } from './mapUtils';
+import {
+  toggleLayerVisibility,
+  getOpacityProperty,
+  setLayerOpacity,
+  getInteractionOnEvent,
+  setInteractions,
+  checkContraints,
+} from './mapUtils';
 
 it('should toggle layer visibility', () => {
   const map = {
@@ -319,4 +326,171 @@ describe('should set interactions', () => {
     expect(map.getCanvas).toHaveBeenCalled();
     expect(canvas.style.cursor).toBe('');
   });
+});
+
+it('should check contraints', () => {
+  expect(checkContraints({
+    map: {
+      getZoom: () => 2,
+    },
+  })).toBe(true);
+
+  expect(checkContraints({
+    map: {
+      getZoom: () => 2,
+    },
+    constraints: [],
+  })).toBe(true);
+
+  expect(checkContraints({
+    map: {
+      getZoom: () => 2,
+    },
+    constraints: [{ minZoom: 1, maxZoom: 2 }],
+  })).toBe(true);
+
+  expect(checkContraints({
+    map: {
+      getZoom: () => 2,
+    },
+    constraints: [{ minZoom: 1, maxZoom: 3 }],
+  })).toBe(true);
+  expect(checkContraints({
+    map: {
+      getZoom: () => 3,
+    },
+    constraints: [{ minZoom: 1, maxZoom: 2 }],
+  })).toBe(false);
+  expect(checkContraints({
+    map: {
+      getZoom: () => 3,
+    },
+    constraints: [{ minZoom: 4, maxZoom: 5 }],
+  })).toBe(false);
+
+  expect(checkContraints({
+    map: {
+      getZoom: () => 2,
+      getLayer: () => ({}),
+      getLayoutProperty: () => 'visible',
+    },
+    constraints: [{ withLayers: ['foo-bar*34"/fgù%'] }],
+  })).toBe(true);
+
+  expect(checkContraints({
+    map: {
+      getZoom: () => 2,
+      getLayer: () => undefined,
+      getLayoutProperty: () => 'none',
+    },
+    constraints: [{ withLayers: ['foo'] }],
+  })).toBe(false);
+
+  expect(checkContraints({
+    map: {
+      getZoom: () => 2,
+      getLayer: layerId => (layerId === 'bar' ? {} : undefined),
+      getLayoutProperty: () => 'visible',
+    },
+    constraints: [{ withLayers: ['bar', 'foo'] }],
+  })).toBe(false);
+
+  expect(checkContraints({
+    map: {
+      getZoom: () => 2,
+      getLayer: () => ({}),
+      getLayoutProperty: layerId => (layerId === 'foo' ? 'visible' : 'none'),
+    },
+    constraints: [{ withLayers: ['foo', '!bar'] }],
+  })).toBe(true);
+
+  expect(checkContraints({
+    map: {
+      getZoom: () => 2,
+      getLayer: () => ({}),
+      getLayoutProperty: layerId => (layerId === 'foo' ? 'visible' : 'none'),
+    },
+    constraints: [{ minZoom: 1, maxZoom: 3, withLayers: ['foo', '!bar'] }],
+  })).toBe(true);
+
+  expect(checkContraints({
+    map: {
+      getZoom: () => 2,
+      getLayer: () => ({}),
+      getLayoutProperty: layerId => (layerId === 'foo' ? 'visible' : 'none'),
+    },
+    constraints: [{ minZoom: 1, maxZoom: 3, withLayers: ['foo', '!bar'] }],
+  })).toBe(true);
+
+  expect(checkContraints({
+    map: {
+      getZoom: () => 2,
+    },
+    constraints: [{ isCluster: true }],
+    feature: {
+      properties: {
+        cluster: true,
+      },
+    },
+  })).toBe(true);
+
+  expect(checkContraints({
+    map: {
+      getZoom: () => 2,
+    },
+    constraints: [{ isCluster: false }],
+    feature: {
+      properties: {
+        cluster: true,
+      },
+    },
+  })).toBe(false);
+
+  expect(checkContraints({
+    map: {
+      getZoom: () => 2,
+      getLayer: () => ({}),
+      getLayoutProperty: layerId => (layerId === 'bar' ? 'visible' : 'none'),
+    },
+    constraints: [{ isCluster: true, withLayers: ['bar', '!foo'] }],
+    feature: {
+      properties: {
+        cluster: true,
+      },
+    },
+  })).toBe(true);
+
+  expect(checkContraints({
+    map: {
+      getZoom: () => 2,
+      getLayer: () => ({}),
+      getLayoutProperty: layerId => (layerId === 'bar' ? 'visible' : 'none'),
+    },
+    constraints: [
+      { isCluster: true, withLayers: ['bar', '!foo'] },
+      { isCluster: false, withLayers: ['!bar', 'foo'] },
+    ],
+    feature: {
+      properties: {
+        cluster: true,
+      },
+    },
+  })).toBe(true);
+
+  expect(checkContraints({
+    map: {
+      getZoom: () => 2,
+      getLayer: () => ({}),
+      getLayoutProperty: layerId => (layerId === 'bar' ? 'visible' : 'none'),
+    },
+    constraints: [
+      { isCluster: false, withLayers: ['bar', '!foo'] },
+      { isCluster: false, withLayers: ['!bar', 'foo'] },
+    ],
+    feature: {
+      properties: {
+        cluster: true,
+      },
+    },
+  })).toBe(false);
 });
