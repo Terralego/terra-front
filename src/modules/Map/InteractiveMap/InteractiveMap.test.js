@@ -573,7 +573,7 @@ describe('Interactions', () => {
       event: {},
       layerId: 'foo',
       feature: {},
-      widgetMapInstance: instance,
+      instance,
       clusteredFeatures: undefined,
     });
   });
