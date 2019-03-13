@@ -125,7 +125,7 @@ export const updateCluster = (map, layer) => {
   });
 };
 
-export const getClusteredFeatures = (map, feature) => new Promise((resolve, reject) => {
+export const getClusteredFeatures = (map, feature = {}) => new Promise((resolve, reject) => {
   const { source, properties: { cluster, cluster_id: clusterId } = {} } = feature;
   if (!cluster) resolve(null);
   else {
