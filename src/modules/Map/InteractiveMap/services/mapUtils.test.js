@@ -494,3 +494,31 @@ it('should check contraints', () => {
     },
   })).toBe(false);
 });
+
+it('should get interactions responding to constraints', () => {
+  const map = {
+    getZoom: () => 3,
+    queryRenderedFeatures: () => [{
+      layer: {
+        id: 'foo',
+      },
+    }],
+  };
+  const interactions = [{
+    id: 'foo',
+    interaction: 'foo',
+    constraints: [{
+      minZoom: 1,
+      maxZoom: 2,
+    }],
+  }, {
+    id: 'foo',
+    interaction: 'foo',
+    constraints: [{
+      minZoom: 2,
+      maxZoom: 3,
+    }],
+  }];
+  const interaction = getInteractionOnEvent({ eventType: 'click', map, points: [], interactions });
+  expect(interaction.interaction).toBe(interactions[1]);
+});

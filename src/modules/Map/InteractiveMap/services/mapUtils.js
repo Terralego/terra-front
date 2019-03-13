@@ -31,6 +31,41 @@ export function setLayerOpacity (map, layerId, opacity) {
   }
 }
 
+export const checkContraints = ({
+  map,
+  constraints = [],
+  feature: { properties: { cluster } = {} } = {},
+}) => {
+  if (!constraints.length) return true;
+  const currentZoom = map.getZoom();
+  return constraints.reduce((prev, {
+    minZoom = 0,
+    maxZoom = Infinity,
+    withLayers = [],
+    isCluster,
+  }) => {
+    const checkZoom = currentZoom <= maxZoom && currentZoom >= minZoom;
+
+    const checkLayers = withLayers.reduce((prevCheck, layer) => {
+      const match = layer.match(/^(!)?(.+)$/);
+
+      const visible = match[1] !== '!';
+      const layerId = match[2];
+
+      return prevCheck
+        && visible
+        ? (map.getLayer(layerId) !== undefined
+          && map.getLayoutProperty(layerId, 'visibility') === 'visible')
+        : (!map.getLayer(layerId)
+          || map.getLayoutProperty(layerId, 'visibility') === 'none');
+    }, true);
+    const checkCluster = isCluster === undefined
+      || cluster === isCluster;
+
+    return prev || (checkZoom && checkLayers && checkCluster);
+  }, false);
+};
+
 export function getInteractionOnEvent ({ eventType, map, point, interactions }) {
   const features = map.queryRenderedFeatures(point);
   let interaction = false;
@@ -38,8 +73,12 @@ export function getInteractionOnEvent ({ eventType, map, point, interactions }) 
   features.some(feature => {
     const { layer: { id: layerId } } = feature;
 
-    const foundInteraction = interactions.find(({ id, trigger = 'click' }) => {
+    const foundInteraction = interactions.find(({ id, trigger = 'click', constraints }) => {
       const found = id === layerId;
+
+      if (constraints && !checkContraints({ map, constraints, feature })) {
+        return false;
+      }
 
       return found &&
         eventType === (trigger === 'mouseover' ? 'mousemove' : trigger);
@@ -118,43 +157,6 @@ export function setInteractions ({ map, interactions, callback }) {
     }
   });
 }
-
-export const checkContraints = ({
-  map,
-  constraints = [],
-  feature: { properties: { cluster } = {} } = {},
-}) => {
-  if (!constraints.length) return true;
-  const currentZoom = map.getZoom();
-  return constraints.reduce((prev, {
-    minZoom = 0,
-    maxZoom = Infinity,
-    withLayers = [],
-    isCluster,
-  }) => {
-    const checkZoom = minZoom !== undefined && maxZoom !== undefined
-      ? currentZoom <= maxZoom && currentZoom >= minZoom
-      : true;
-
-    const checkLayers = withLayers.reduce((prevCheck, layer) => {
-      const match = layer.match(/^(!)?(.+)$/);
-
-      const visible = match[1] !== '!';
-      const layerId = match[2];
-
-      return prevCheck
-        && visible
-        ? (map.getLayer(layerId) !== undefined
-          && map.getLayoutProperty(layerId, 'visibility') === 'visible')
-        : (!map.getLayer(layerId)
-          || map.getLayoutProperty(layerId, 'visibility') === 'none');
-    }, true);
-    const checkCluster = isCluster === undefined
-      || cluster === isCluster;
-
-    return prev || (checkZoom && checkLayers && checkCluster);
-  }, false);
-};
 
 export default {
   toggleLayerVisibility,

@@ -24,6 +24,18 @@ export default () => (
         template: `
 {{nom_ppal}}
 `,
+        constraints: [{
+          minZoom: 14,
+          maxZoom: 16,
+        }],
+      }, {
+        coin: 'this',
+        id: 'terralego-eae',
+        interaction: 'fitZoom',
+        constraints: [{
+          minZoom: 1,
+          maxZoom: 14,
+        }],
       }, {
         id: 'terralego-etablissements',
         interaction: 'fitZoom',

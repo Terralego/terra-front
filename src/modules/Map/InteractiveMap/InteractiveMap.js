@@ -6,7 +6,7 @@ import debounce from 'lodash.debounce';
 import bbox from '@turf/bbox';
 import centroid from '@turf/centroid';
 
-import { setInteractions, checkContraints } from './services/mapUtils';
+import { setInteractions } from './services/mapUtils';
 import { getClusteredFeatures } from '../services/cluster';
 import MapComponent from '../Map';
 import BackgroundStyles from './components/BackgroundStyles';
@@ -223,9 +223,6 @@ export class InteractiveMap extends React.Component {
     if ((trigger === 'mouseover' && !['mousemove', 'mouseleave'].includes(eventType)) ||
         (trigger !== 'mouseover' && trigger !== eventType)) return;
 
-    if (!checkContraints({ map, constraints, feature })) {
-      return;
-    }
     const clusteredFeatures = await getClusteredFeatures(map, feature);
 
     switch (interactionType) {
