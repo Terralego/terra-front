@@ -44,6 +44,9 @@ jest.mock('react-dom', () => {
 jest.mock('lodash.debounce', () => fn => () => fn({ layerId: 'foo' }));
 jest.mock('@turf/centroid', () => () => ({ geometry: { coordinates: [0, 0] } }));
 jest.mock('./components/BackgroundStyles', () => () => <p>BackgroundStyles</p>);
+jest.mock('../services/cluster', () => ({
+  getClusteredFeatures: jest.fn(),
+}));
 
 beforeEach(() => {
   mapboxGl.Popup.prototype.remove.mockClear();
@@ -359,7 +362,7 @@ describe('Interactions', () => {
     expect(instance.displayTooltip).not.toHaveBeenCalled();
   });
 
-  it('should trigger displayTooltip interaction', () => {
+  it('should trigger displayTooltip interaction', async () => {
     const interactions = [];
     const instance = new InteractiveMap({
       interactions,
@@ -379,6 +382,7 @@ describe('Interactions', () => {
       },
       eventType: 'click',
     });
+    await true;
     expect(instance.displayTooltip).toHaveBeenCalled();
   });
 
@@ -411,26 +415,28 @@ describe('Interactions', () => {
       expect(instance.displayTooltip).not.toHaveBeenCalled();
     });
 
-    it('should be triggered if zoom is in range', () => {
+    it('should be triggered if zoom is in range', async () => {
       const instance = new InteractiveMap({ interactions: [] });
       instance.displayTooltip = jest.fn();
 
       instance.triggerInteraction(createInteraction(mapZ13, { minZoom: 12, maxZoom: 14 }));
+      await true;
       expect(instance.displayTooltip).toHaveBeenCalled();
     });
 
-    it('should be triggered when only max OR min zoom is set', () => {
+    it('should be triggered when only max OR min zoom is set', async () => {
       const instance = new InteractiveMap({ interactions: [] });
       instance.displayTooltip = jest.fn();
 
       instance.triggerInteraction(createInteraction(mapZ13, { minZoom: 12 }));
       instance.triggerInteraction(createInteraction(mapZ13, { maxZoom: 14 }));
+      await true;
       expect(instance.displayTooltip).toHaveBeenCalledTimes(2);
     });
   });
 
   describe('HideTooltip interaction', () => {
-    it('should trigger when tooltip is not fixed', () => {
+    it('should trigger when tooltip is not fixed', async () => {
       const interactions = [];
       const instance = new InteractiveMap({
         interactions,
@@ -452,9 +458,10 @@ describe('Interactions', () => {
         },
         eventType: 'mouseleave',
       });
+      await true;
       expect(instance.hideTooltip).toHaveBeenCalled();
     });
-    it('should trigger when tooltip is fixed and not hover the tooltip', () => {
+    it('should trigger when tooltip is fixed and not hover the tooltip', async () => {
       const interactions = [];
       const instance = new InteractiveMap({
         interactions,
@@ -491,6 +498,7 @@ describe('Interactions', () => {
         },
         eventType: 'mouseleave',
       });
+      await true;
       expect(instance.hideTooltip).toHaveBeenCalled();
     });
     it('should\'nt trigger when tooltip is fixed and hover the tooltip', () => {
@@ -535,7 +543,7 @@ describe('Interactions', () => {
     });
   });
 
-  it('should trigger function interaction', () => {
+  it('should trigger function interaction', async () => {
     const interactions = [];
     const instance = new InteractiveMap({
       interactions,
@@ -554,12 +562,14 @@ describe('Interactions', () => {
       },
       eventType: 'click',
     });
+    await true;
     expect(fn).toHaveBeenCalledWith({
       map,
       event: {},
       layerId: 'foo',
       feature: {},
       widgetMapInstance: instance,
+      clusteredFeatures: undefined,
     });
   });
 
@@ -588,7 +598,9 @@ describe('Interactions', () => {
 
   it('should display tooltips', () => {
     const instance = new InteractiveMap({});
-    instance.map = {};
+    instance.map = {
+      getZoom: jest.fn(() => 14),
+    };
     instance.displayTooltip({
       layerId: 'foo',
       event: {
@@ -630,7 +642,9 @@ describe('Interactions', () => {
 
   it('should remove tooltip', () => {
     const instance = new InteractiveMap({});
-    instance.map = {};
+    instance.map = {
+      getZoom: jest.fn(() => 14),
+    };
     instance.displayTooltip({
       layerId: 'foo',
       event: {
@@ -648,7 +662,9 @@ describe('Interactions', () => {
 
   it('should display only one tooltips', async done => {
     const instance = new InteractiveMap({});
-    instance.map = {};
+    instance.map = {
+      getZoom: jest.fn(() => 14),
+    };
 
     instance.displayTooltip({
       layerId: 'foo',
@@ -712,6 +728,9 @@ describe('Interactions', () => {
 
   it('should build a new tooltip', () => {
     const instance = new InteractiveMap({});
+    instance.map = {
+      getZoom: jest.fn(() => 14),
+    };
     instance.popups = {
       has: () => true,
       get: () => ({

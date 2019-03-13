@@ -2,8 +2,9 @@ import React from 'react';
 import renderer from 'react-test-renderer';
 import { shallow } from 'enzyme';
 import mapboxgl from 'mapbox-gl';
-import { Map, getLayerBeforeId } from './Map';
 
+import { MapComponent as Map, getLayerBeforeId } from './Map';
+import { updateCluster } from '../services/cluster';
 
 const props = {
   map: mapboxgl.Map(),
@@ -64,6 +65,10 @@ jest.mock('mapbox-gl', () => {
   };
 });
 
+jest.mock('lodash.debounce', () => fn => (...args) => fn(...args));
+jest.mock('../services/cluster', () => ({
+  updateCluster: jest.fn(),
+}));
 afterEach(() => {
   jest.clearAllMocks();
 });
@@ -435,4 +440,44 @@ it('should get layer before', () => {
   }])).toBe('b');
 
   expect(getLayerBeforeId('fill', [])).toBe(undefined);
+});
+
+it('should create cluster layer', () => {
+  const map = {
+    getStyle: jest.fn(() => ({ layers: [] })),
+  };
+  const instance =  new Map({
+    customStyle: {
+      sources: [],
+      layers: [{
+        id: 'foo',
+        cluster: {},
+      }],
+    },
+    map,
+  });
+  instance.createClusterLayer = jest.fn();
+  instance.createLayers();
+  expect(instance.createClusterLayer).toHaveBeenCalledTimes(1);
+});
+
+it('should debounce cluster creation', () => {
+  const listeners = [];
+  const map = {
+    on: jest.fn((type, listener) => listeners.push({ type, listener })),
+    once: jest.fn((type, listener) => listeners.push({ type, listener })),
+  };
+  const instance = new Map({ map });
+  const layer = {};
+  instance.createClusterLayer(layer);
+  expect(updateCluster).toHaveBeenCalledWith(map, layer);
+  expect(updateCluster).toHaveBeenCalledTimes(1);
+
+  expect(listeners.length).toBe(3);
+  listeners[0].listener();
+  expect(updateCluster).toHaveBeenCalledTimes(2);
+  listeners[1].listener();
+  expect(updateCluster).toHaveBeenCalledTimes(3);
+  listeners[2].listener();
+  expect(updateCluster).toHaveBeenCalledTimes(4);
 });
