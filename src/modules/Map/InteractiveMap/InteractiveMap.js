@@ -223,9 +223,6 @@ export class InteractiveMap extends React.Component {
     if ((trigger === 'mouseover' && !['mousemove', 'mouseleave'].includes(eventType)) ||
         (trigger !== 'mouseover' && trigger !== eventType)) return;
 
-    if (!checkContraints({ map, constraints, feature })) {
-      return;
-    }
     const clusteredFeatures = await getClusteredFeatures(map, feature);
 
     switch (interactionType) {
