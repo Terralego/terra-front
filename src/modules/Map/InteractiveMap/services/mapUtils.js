@@ -44,9 +44,7 @@ export const checkContraints = ({
     withLayers = [],
     isCluster,
   }) => {
-    const checkZoom = minZoom !== undefined && maxZoom !== undefined
-      ? currentZoom <= maxZoom && currentZoom >= minZoom
-      : true;
+    const checkZoom = currentZoom <= maxZoom && currentZoom >= minZoom;
 
     const checkLayers = withLayers.reduce((prevCheck, layer) => {
       const match = layer.match(/^(!)?(.+)$/);

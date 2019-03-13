@@ -227,7 +227,7 @@ it('should create cluster on update', () => {
 });
 
 it('should not get clustered features', async () => {
-  const noFeature = await getClusteredFeatures({}, {});
+  const noFeature = await getClusteredFeatures({});
   expect(noFeature).toBe(null);
 });
 

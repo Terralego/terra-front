@@ -3,9 +3,7 @@ import renderer from 'react-test-renderer';
 import ReactDOM from 'react-dom';
 import mapboxGl from 'mapbox-gl';
 
-// mockCheckContraints is added with mock
-// eslint-disable-next-line import/named
-import { setInteractions, mockCheckContraints } from './services/mapUtils';
+import { setInteractions } from './services/mapUtils';
 import InteractiveMap, { INTERACTION_ZOOM, INTERACTION_DISPLAY_TOOLTIP, INTERACTION_FN } from './InteractiveMap';
 
 jest.mock('@turf/bbox', () => jest.fn());
@@ -31,18 +29,12 @@ jest.mock('mapbox-gl', () => {
   };
 });
 jest.mock('../Map', () => function MapComponent () { return null; });
-jest.mock('./services/mapUtils', () => {
-  let checkContraints = true;
-  return {
-    toggleLayerVisibility: jest.fn(),
-    setLayerOpacity: jest.fn(),
-    setInteractions: jest.fn(),
-    checkContraints: () => checkContraints,
-    mockCheckContraints: v => {
-      checkContraints = v;
-    },
-  };
-});
+jest.mock('./services/mapUtils', () => ({
+  toggleLayerVisibility: jest.fn(),
+  setLayerOpacity: jest.fn(),
+  setInteractions: jest.fn(),
+  checkContraints: () => true,
+}));
 jest.mock('react-dom', () => {
   const mockedElement = {};
   return {
@@ -395,49 +387,24 @@ describe('Interactions', () => {
     expect(instance.displayTooltip).toHaveBeenCalled();
   });
 
-  describe('Interaction with constraints', () => {
-    it('should trigger', async () => {
-      mockCheckContraints(true);
-      const instance = new InteractiveMap({ interactions: [] });
-      instance.displayTooltip = jest.fn();
-      instance.triggerInteraction({
-        map: {},
-        event: {},
-        feature: {},
-        layerId: 'foo',
-        interaction: {
-          id: 'foo',
-          interaction: INTERACTION_DISPLAY_TOOLTIP,
-          template: 'template',
-          trigger: 'click',
-        },
-        eventType: 'click',
-      });
-      await true;
-      expect(instance.displayTooltip).toHaveBeenCalled();
+  it('should trigger interaction with constraints', async () => {
+    const instance = new InteractiveMap({ interactions: [] });
+    instance.displayTooltip = jest.fn();
+    instance.triggerInteraction({
+      map: {},
+      event: {},
+      feature: {},
+      layerId: 'foo',
+      interaction: {
+        id: 'foo',
+        interaction: INTERACTION_DISPLAY_TOOLTIP,
+        template: 'template',
+        trigger: 'click',
+      },
+      eventType: 'click',
     });
-
-    it('should not trigger', async () => {
-      mockCheckContraints(false);
-      const instance = new InteractiveMap({ interactions: [] });
-      instance.displayTooltip = jest.fn();
-      instance.triggerInteraction({
-        map: {},
-        event: {},
-        feature: {},
-        layerId: 'foo',
-        interaction: {
-          id: 'foo',
-          interaction: INTERACTION_DISPLAY_TOOLTIP,
-          template: 'template',
-          trigger: 'click',
-        },
-        eventType: 'click',
-      });
-      await true;
-      expect(instance.displayTooltip).not.toHaveBeenCalled();
-      mockCheckContraints(true);
-    });
+    await true;
+    expect(instance.displayTooltip).toHaveBeenCalled();
   });
 
   describe('HideTooltip interaction', () => {
