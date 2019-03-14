@@ -51,6 +51,7 @@ jest.mock('../services/cluster', () => ({
 
 beforeEach(() => {
   mapboxGl.Popup.prototype.remove.mockClear();
+  ReactDOM.render.mockClear();
 });
 
 describe('snaphsots', () => {
@@ -720,5 +721,23 @@ describe('Interactions', () => {
     });
 
     expect(mapboxGl.Popup).toHaveBeenCalled();
+  });
+
+  it('should display an element in a tooltip', async () => {
+    const instance = new InteractiveMap({});
+    instance.map = {
+      getZoom: jest.fn(() => 14),
+    };
+    const element = document.createElement('div');
+
+    instance.displayTooltip({
+      layerId: 'foo',
+      event: {
+        lngLat: { lng: 1, lat: 2 },
+      },
+      element,
+    });
+
+    expect(ReactDOM.render).not.toHaveBeenCalled();
   });
 });
