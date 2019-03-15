@@ -19,7 +19,7 @@ exports[`should render correctly circle 1`] = `
         className="item__symbol-container"
         style={
           Object {
-            "height": "px",
+            "height": "NaNpx",
             "margin": "0.5rem",
           }
         }
@@ -48,7 +48,7 @@ exports[`should render correctly circle 1`] = `
         className="item__symbol-container"
         style={
           Object {
-            "height": "px",
+            "height": "NaNpx",
             "margin": "0.5rem",
           }
         }
@@ -77,7 +77,7 @@ exports[`should render correctly circle 1`] = `
         className="item__symbol-container"
         style={
           Object {
-            "height": "px",
+            "height": "NaNpx",
             "margin": "0.5rem",
           }
         }
@@ -122,7 +122,7 @@ exports[`should render correctly square 1`] = `
         className="item__symbol-container"
         style={
           Object {
-            "height": "px",
+            "height": "NaNpx",
             "margin": "0.5rem",
           }
         }
@@ -151,7 +151,7 @@ exports[`should render correctly square 1`] = `
         className="item__symbol-container"
         style={
           Object {
-            "height": "px",
+            "height": "NaNpx",
             "margin": "0.5rem",
           }
         }
@@ -180,7 +180,7 @@ exports[`should render correctly square 1`] = `
         className="item__symbol-container"
         style={
           Object {
-            "height": "px",
+            "height": "NaNpx",
             "margin": "0.5rem",
           }
         }
@@ -225,7 +225,7 @@ exports[`should render correctly with multi level 1`] = `
         className="item__symbol-container"
         style={
           Object {
-            "height": "px",
+            "height": "NaNpx",
             "margin": "0.5rem",
           }
         }
@@ -254,7 +254,7 @@ exports[`should render correctly with multi level 1`] = `
         className="item__symbol-container"
         style={
           Object {
-            "height": "px",
+            "height": "NaNpx",
             "margin": "0.5rem",
           }
         }
@@ -294,7 +294,7 @@ exports[`should render correctly with multi level 1`] = `
             className="item__symbol-container"
             style={
               Object {
-                "height": "px",
+                "height": "NaNpx",
                 "margin": "0.5rem",
               }
             }
@@ -323,7 +323,7 @@ exports[`should render correctly with multi level 1`] = `
             className="item__symbol-container"
             style={
               Object {
-                "height": "px",
+                "height": "NaNpx",
                 "margin": "0.5rem",
               }
             }
@@ -363,7 +363,7 @@ exports[`should render correctly with multi level 1`] = `
                 className="item__symbol-container"
                 style={
                   Object {
-                    "height": "px",
+                    "height": "NaNpx",
                     "margin": "0.5rem",
                   }
                 }
@@ -392,7 +392,7 @@ exports[`should render correctly with multi level 1`] = `
                 className="item__symbol-container"
                 style={
                   Object {
-                    "height": "px",
+                    "height": "NaNpx",
                     "margin": "0.5rem",
                   }
                 }
@@ -432,7 +432,7 @@ exports[`should render correctly with multi level 1`] = `
                     className="item__symbol-container"
                     style={
                       Object {
-                        "height": "px",
+                        "height": "NaNpx",
                         "margin": "0.5rem",
                       }
                     }
@@ -461,7 +461,7 @@ exports[`should render correctly with multi level 1`] = `
                     className="item__symbol-container"
                     style={
                       Object {
-                        "height": "px",
+                        "height": "NaNpx",
                         "margin": "0.5rem",
                       }
                     }

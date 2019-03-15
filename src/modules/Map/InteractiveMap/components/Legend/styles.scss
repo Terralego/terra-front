@@ -21,27 +21,33 @@
   &__list {
     display: table;
     margin: 0 .5rem;
+  }
 
-    .item {
-      &--circle {
-        display: table-row;
-        
-        .item__symbol-container {
-          display: table-cell;
-          text-align: center;
-          vertical-align: middle;
-        }
-        .item__symbol {
-          border-radius: 50%;
-          display: inline-block;
-        }
-        .item__label {
-          font-size: 0.8rem;
-          padding: 0 0 0 .5rem;
-          display: table-cell;
-          vertical-align: middle;
-          max-width: 170px;
-        }
+
+
+  &__symbol-container {
+    display: table-cell;
+    text-align: center;
+    vertical-align: middle;
+  }
+  &__symbol {
+    border-radius: 0%;
+    display: inline-block;
+  }
+  &__label {
+    font-size: 0.8rem;
+    padding: 0 0 0 .5rem;
+    display: table-cell;
+    vertical-align: middle;
+    max-width: 170px;
+  }
+
+  &__item {
+    &--circle {
+      display: table-row;
+      .tf-legend__symbol {
+        border-radius: 50%;
+        display: inline-block;
       }
     }
   }

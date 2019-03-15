@@ -2,9 +2,11 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import './styles.scss';
 
+const DEFAULT_RADIUS = 16;
+
 export const Legend = props => {
   const { title, items, level, position } = props;
-  const biggerRadius = items.filter((int, item) => Math.max(int, item.radius), 0);
+  const biggestRadius = items.reduce((int, item) => Math.max(int, item.radius), 0);
 
   return (
     <div className={`tf-legend tf-legend--level-${level}`}>
@@ -26,19 +28,25 @@ export const Legend = props => {
             ) : (
               <div
                 key={`${label}${color}`}
-                className={`tf-legend__item item--${shape} item--${position}`}
+                className={`tf-legend__item tf-legend__item--${shape} tf-legend__item--${position}`}
               >
                 <div
-                  className="item__symbol-container"
-                  style={{ height: `${biggerRadius}px`, margin: '0.5rem' }}
+                  className="tf-legend__symbol-container"
+                  style={{
+                    height: shape === 'circle' ? biggestRadius : DEFAULT_RADIUS * 2,
+                  }}
                 >
                   <div
-                    className="item__symbol"
-                    style={{ backgroundColor: color, width: radius, height: radius }}
+                    className="tf-legend__symbol"
+                    style={{
+                      backgroundColor: color,
+                      width: shape === 'circle' ? radius : DEFAULT_RADIUS,
+                      height: shape === 'circle' ? radius : DEFAULT_RADIUS,
+                    }}
                   />
                 </div>
                 <div
-                  className="item__label"
+                  className="tf-legend__label"
                 >
                   {label}
                 </div>
