@@ -199,6 +199,14 @@ export class MapComponent extends React.Component {
     map.on('move', () => debouncedUpdateCluster(map, layer));
     map.once('load', () => debouncedUpdateCluster(map, layer));
     debouncedUpdateCluster(map, layer);
+    const listener = ({ isSourceLoaded }) => {
+      const { onMapUpdate } = this.props;
+      if (isSourceLoaded) {
+        onMapUpdate(map);
+        map.off('sourcedata', listener);
+      }
+    };
+    map.on('sourcedata', listener);
   }
 
   deleteLayers ({ sources, layers }) {

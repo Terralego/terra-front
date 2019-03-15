@@ -473,11 +473,37 @@ it('should debounce cluster creation', () => {
   expect(updateCluster).toHaveBeenCalledWith(map, layer);
   expect(updateCluster).toHaveBeenCalledTimes(1);
 
-  expect(listeners.length).toBe(3);
+  expect(listeners.length).toBe(4);
   listeners[0].listener();
   expect(updateCluster).toHaveBeenCalledTimes(2);
   listeners[1].listener();
   expect(updateCluster).toHaveBeenCalledTimes(3);
   listeners[2].listener();
   expect(updateCluster).toHaveBeenCalledTimes(4);
+});
+
+it('should update on map events', () => {
+  const listeners = [];
+  const onMapUpdate = jest.fn();
+  const map = {
+    on: jest.fn((type, listener) => listeners.push({ type, listener })),
+    once: jest.fn((type, listener) => listeners.push({ type, listener })),
+    off: jest.fn(),
+  };
+  const instance = new Map({ onMapUpdate, map });
+  instance.debouncedUpdateCluster = jest.fn();
+  instance.createClusterLayer({});
+
+  const sourcedataListener = listeners.find(({ type }) => type === 'sourcedata');
+  expect(sourcedataListener).toBeDefined();
+
+  sourcedataListener.listener({});
+
+  expect(onMapUpdate).not.toHaveBeenCalled();
+  expect(map.off).not.toHaveBeenCalled();
+
+  sourcedataListener.listener({ isSourceLoaded: true });
+
+  expect(onMapUpdate).toHaveBeenCalled();
+  expect(map.off).toHaveBeenCalled();
 });
