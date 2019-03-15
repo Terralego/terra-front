@@ -10,79 +10,95 @@ exports[`should render correctly circle 1`] = `
     Hello World
   </h4>
   <div
-    className="tf-legend__item item item--circle"
+    className="tf-legend__list"
   >
     <div
-      className="item__before"
-      style={
-        Object {
-          "backgroundColor": "red",
-        }
-      }
-    />
-    <div
-      className="item__label"
+      className="tf-legend__item item--circle item--left"
     >
-      Rouge
+      <div
+        className="item__symbol-container"
+        style={
+          Object {
+            "height": "px",
+            "margin": "0.5rem",
+          }
+        }
+      >
+        <div
+          className="item__symbol"
+          style={
+            Object {
+              "backgroundColor": "red",
+              "height": undefined,
+              "width": undefined,
+            }
+          }
+        />
+      </div>
+      <div
+        className="item__label"
+      >
+        Rouge
+      </div>
     </div>
     <div
-      className="item__after"
-      style={
-        Object {
-          "backgroundColor": "red",
-        }
-      }
-    />
-  </div>
-  <div
-    className="tf-legend__item item item--circle"
-  >
-    <div
-      className="item__before"
-      style={
-        Object {
-          "backgroundColor": "green",
-        }
-      }
-    />
-    <div
-      className="item__label"
+      className="tf-legend__item item--circle item--left"
     >
-      Vert
+      <div
+        className="item__symbol-container"
+        style={
+          Object {
+            "height": "px",
+            "margin": "0.5rem",
+          }
+        }
+      >
+        <div
+          className="item__symbol"
+          style={
+            Object {
+              "backgroundColor": "green",
+              "height": undefined,
+              "width": undefined,
+            }
+          }
+        />
+      </div>
+      <div
+        className="item__label"
+      >
+        Vert
+      </div>
     </div>
     <div
-      className="item__after"
-      style={
-        Object {
-          "backgroundColor": "green",
-        }
-      }
-    />
-  </div>
-  <div
-    className="tf-legend__item item item--circle"
-  >
-    <div
-      className="item__before"
-      style={
-        Object {
-          "backgroundColor": "blue",
-        }
-      }
-    />
-    <div
-      className="item__label"
+      className="tf-legend__item item--circle item--left"
     >
-      Bleu
-    </div>
-    <div
-      className="item__after"
-      style={
-        Object {
-          "backgroundColor": "blue",
+      <div
+        className="item__symbol-container"
+        style={
+          Object {
+            "height": "px",
+            "margin": "0.5rem",
+          }
         }
-      }
-    />
+      >
+        <div
+          className="item__symbol"
+          style={
+            Object {
+              "backgroundColor": "blue",
+              "height": undefined,
+              "width": undefined,
+            }
+          }
+        />
+      </div>
+      <div
+        className="item__label"
+      >
+        Bleu
+      </div>
+    </div>
   </div>
 </div>
 `;
@@ -97,79 +113,95 @@ exports[`should render correctly square 1`] = `
     Hello World
   </h4>
   <div
-    className="tf-legend__item item item--square"
+    className="tf-legend__list"
   >
     <div
-      className="item__before"
-      style={
-        Object {
-          "backgroundColor": "red",
-        }
-      }
-    />
-    <div
-      className="item__label"
+      className="tf-legend__item item--square item--left"
     >
-      Rouge
+      <div
+        className="item__symbol-container"
+        style={
+          Object {
+            "height": "px",
+            "margin": "0.5rem",
+          }
+        }
+      >
+        <div
+          className="item__symbol"
+          style={
+            Object {
+              "backgroundColor": "red",
+              "height": undefined,
+              "width": undefined,
+            }
+          }
+        />
+      </div>
+      <div
+        className="item__label"
+      >
+        Rouge
+      </div>
     </div>
     <div
-      className="item__after"
-      style={
-        Object {
-          "backgroundColor": "red",
-        }
-      }
-    />
-  </div>
-  <div
-    className="tf-legend__item item item--square"
-  >
-    <div
-      className="item__before"
-      style={
-        Object {
-          "backgroundColor": "green",
-        }
-      }
-    />
-    <div
-      className="item__label"
+      className="tf-legend__item item--square item--left"
     >
-      Vert
+      <div
+        className="item__symbol-container"
+        style={
+          Object {
+            "height": "px",
+            "margin": "0.5rem",
+          }
+        }
+      >
+        <div
+          className="item__symbol"
+          style={
+            Object {
+              "backgroundColor": "green",
+              "height": undefined,
+              "width": undefined,
+            }
+          }
+        />
+      </div>
+      <div
+        className="item__label"
+      >
+        Vert
+      </div>
     </div>
     <div
-      className="item__after"
-      style={
-        Object {
-          "backgroundColor": "green",
-        }
-      }
-    />
-  </div>
-  <div
-    className="tf-legend__item item item--square"
-  >
-    <div
-      className="item__before"
-      style={
-        Object {
-          "backgroundColor": "blue",
-        }
-      }
-    />
-    <div
-      className="item__label"
+      className="tf-legend__item item--square item--left"
     >
-      Bleu
-    </div>
-    <div
-      className="item__after"
-      style={
-        Object {
-          "backgroundColor": "blue",
+      <div
+        className="item__symbol-container"
+        style={
+          Object {
+            "height": "px",
+            "margin": "0.5rem",
+          }
         }
-      }
-    />
+      >
+        <div
+          className="item__symbol"
+          style={
+            Object {
+              "backgroundColor": "blue",
+              "height": undefined,
+              "width": undefined,
+            }
+          }
+        />
+      </div>
+      <div
+        className="item__label"
+      >
+        Bleu
+      </div>
+    </div>
   </div>
 </div>
 `;
@@ -184,228 +216,276 @@ exports[`should render correctly with multi level 1`] = `
     level1
   </h4>
   <div
-    className="tf-legend__item item item--square"
+    className="tf-legend__list"
   >
     <div
-      className="item__before"
-      style={
-        Object {
-          "backgroundColor": "red",
-        }
-      }
-    />
-    <div
-      className="item__label"
-    >
-      level1.1
-    </div>
-    <div
-      className="item__after"
-      style={
-        Object {
-          "backgroundColor": "red",
-        }
-      }
-    />
-  </div>
-  <div
-    className="tf-legend__item item item--square"
-  >
-    <div
-      className="item__before"
-      style={
-        Object {
-          "backgroundColor": "blue",
-        }
-      }
-    />
-    <div
-      className="item__label"
-    >
-      level1.2
-    </div>
-    <div
-      className="item__after"
-      style={
-        Object {
-          "backgroundColor": "blue",
-        }
-      }
-    />
-  </div>
-  <div
-    className="tf-legend tf-legend--level-2"
-  >
-    <h4
-      className="tf-legend__title"
-    >
-      level2
-    </h4>
-    <div
-      className="tf-legend__item item item--square"
+      className="tf-legend__item item--square item--left"
     >
       <div
-        className="item__before"
+        className="item__symbol-container"
         style={
           Object {
-            "backgroundColor": "red",
+            "height": "px",
+            "margin": "0.5rem",
           }
         }
-      />
+      >
+        <div
+          className="item__symbol"
+          style={
+            Object {
+              "backgroundColor": "red",
+              "height": undefined,
+              "width": undefined,
+            }
+          }
+        />
+      </div>
       <div
         className="item__label"
       >
-        level2.1
+        level1.1
       </div>
-      <div
-        className="item__after"
-        style={
-          Object {
-            "backgroundColor": "red",
-          }
-        }
-      />
     </div>
     <div
-      className="tf-legend__item item item--square"
+      className="tf-legend__item item--square item--left"
     >
       <div
-        className="item__before"
+        className="item__symbol-container"
         style={
           Object {
-            "backgroundColor": "blue",
+            "height": "px",
+            "margin": "0.5rem",
           }
         }
-      />
+      >
+        <div
+          className="item__symbol"
+          style={
+            Object {
+              "backgroundColor": "blue",
+              "height": undefined,
+              "width": undefined,
+            }
+          }
+        />
+      </div>
       <div
         className="item__label"
       >
-        level2.2
+        level1.2
       </div>
-      <div
-        className="item__after"
-        style={
-          Object {
-            "backgroundColor": "blue",
-          }
-        }
-      />
     </div>
     <div
-      className="tf-legend tf-legend--level-3"
+      className="tf-legend tf-legend--level-2"
     >
       <h4
         className="tf-legend__title"
       >
-        level3
+        level2
       </h4>
       <div
-        className="tf-legend__item item item--square"
+        className="tf-legend__list"
       >
         <div
-          className="item__before"
-          style={
-            Object {
-              "backgroundColor": "red",
-            }
-          }
-        />
-        <div
-          className="item__label"
-        >
-          level3.1
-        </div>
-        <div
-          className="item__after"
-          style={
-            Object {
-              "backgroundColor": "red",
-            }
-          }
-        />
-      </div>
-      <div
-        className="tf-legend__item item item--square"
-      >
-        <div
-          className="item__before"
-          style={
-            Object {
-              "backgroundColor": "blue",
-            }
-          }
-        />
-        <div
-          className="item__label"
-        >
-          level3.2
-        </div>
-        <div
-          className="item__after"
-          style={
-            Object {
-              "backgroundColor": "blue",
-            }
-          }
-        />
-      </div>
-      <div
-        className="tf-legend tf-legend--level-4"
-      >
-        <h4
-          className="tf-legend__title"
-        >
-          level4
-        </h4>
-        <div
-          className="tf-legend__item item item--square"
+          className="tf-legend__item item--square item--left"
         >
           <div
-            className="item__before"
+            className="item__symbol-container"
             style={
               Object {
-                "backgroundColor": "red",
+                "height": "px",
+                "margin": "0.5rem",
               }
             }
-          />
+          >
+            <div
+              className="item__symbol"
+              style={
+                Object {
+                  "backgroundColor": "red",
+                  "height": undefined,
+                  "width": undefined,
+                }
+              }
+            />
+          </div>
           <div
             className="item__label"
           >
-            level4.1
+            level2.1
           </div>
-          <div
-            className="item__after"
-            style={
-              Object {
-                "backgroundColor": "red",
-              }
-            }
-          />
         </div>
         <div
-          className="tf-legend__item item item--square"
+          className="tf-legend__item item--square item--left"
         >
           <div
-            className="item__before"
+            className="item__symbol-container"
             style={
               Object {
-                "backgroundColor": "blue",
+                "height": "px",
+                "margin": "0.5rem",
               }
             }
-          />
+          >
+            <div
+              className="item__symbol"
+              style={
+                Object {
+                  "backgroundColor": "blue",
+                  "height": undefined,
+                  "width": undefined,
+                }
+              }
+            />
+          </div>
           <div
             className="item__label"
           >
-            level4.2
+            level2.2
           </div>
+        </div>
+        <div
+          className="tf-legend tf-legend--level-3"
+        >
+          <h4
+            className="tf-legend__title"
+          >
+            level3
+          </h4>
           <div
-            className="item__after"
-            style={
-              Object {
-                "backgroundColor": "blue",
-              }
-            }
-          />
+            className="tf-legend__list"
+          >
+            <div
+              className="tf-legend__item item--square item--left"
+            >
+              <div
+                className="item__symbol-container"
+                style={
+                  Object {
+                    "height": "px",
+                    "margin": "0.5rem",
+                  }
+                }
+              >
+                <div
+                  className="item__symbol"
+                  style={
+                    Object {
+                      "backgroundColor": "red",
+                      "height": undefined,
+                      "width": undefined,
+                    }
+                  }
+                />
+              </div>
+              <div
+                className="item__label"
+              >
+                level3.1
+              </div>
+            </div>
+            <div
+              className="tf-legend__item item--square item--left"
+            >
+              <div
+                className="item__symbol-container"
+                style={
+                  Object {
+                    "height": "px",
+                    "margin": "0.5rem",
+                  }
+                }
+              >
+                <div
+                  className="item__symbol"
+                  style={
+                    Object {
+                      "backgroundColor": "blue",
+                      "height": undefined,
+                      "width": undefined,
+                    }
+                  }
+                />
+              </div>
+              <div
+                className="item__label"
+              >
+                level3.2
+              </div>
+            </div>
+            <div
+              className="tf-legend tf-legend--level-4"
+            >
+              <h4
+                className="tf-legend__title"
+              >
+                level4
+              </h4>
+              <div
+                className="tf-legend__list"
+              >
+                <div
+                  className="tf-legend__item item--square item--left"
+                >
+                  <div
+                    className="item__symbol-container"
+                    style={
+                      Object {
+                        "height": "px",
+                        "margin": "0.5rem",
+                      }
+                    }
+                  >
+                    <div
+                      className="item__symbol"
+                      style={
+                        Object {
+                          "backgroundColor": "red",
+                          "height": undefined,
+                          "width": undefined,
+                        }
+                      }
+                    />
+                  </div>
+                  <div
+                    className="item__label"
+                  >
+                    level4.1
+                  </div>
+                </div>
+                <div
+                  className="tf-legend__item item--square item--left"
+                >
+                  <div
+                    className="item__symbol-container"
+                    style={
+                      Object {
+                        "height": "px",
+                        "margin": "0.5rem",
+                      }
+                    }
+                  >
+                    <div
+                      className="item__symbol"
+                      style={
+                        Object {
+                          "backgroundColor": "blue",
+                          "height": undefined,
+                          "width": undefined,
+                        }
+                      }
+                    />
+                  </div>
+                  <div
+                    className="item__label"
+                  >
+                    level4.2
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
         </div>
       </div>
     </div>

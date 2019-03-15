@@ -1,49 +1,48 @@
 .tf-legend {
-  border: 1px solid #333;
-  box-shadow: 0 0 2px rgba(0,0,0,.4);
+  box-shadow: 0 1px 3px 0 rgba(16,22,26,0.40);
   border-radius: 2px;
-  background: white;
+  background: #F5F8FA;
+  padding: .5rem;
   margin-top: 1rem;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
 
   > .tf-legend {
     border: 0;
-    box-shadow: none;
   }
 
   &__title {
     margin: 0.2rem 0.3rem;
     font-size: 1rem;
+    font-weight: 600;
   }
 
-  .item {
-    margin: .4rem;
-    display: flex;
+  &__list {
+    display: table;
+    margin: 0 .5rem;
 
-    &__content {
-      padding: 0 1rem;
-      flex: 1;
-    }
-
-    &__before,
-    &__after {
-      display: inline-block;
-      width: 1rem;
-      height: 1rem;
-    }
-
-    &--circle {
-      .item__before {
-        border-radius: 50%;
+    .item {
+      &--circle {
+        display: table-row;
+        
+        .item__symbol-container {
+          display: table-cell;
+          text-align: center;
+          vertical-align: middle;
+        }
+        .item__symbol {
+          border-radius: 50%;
+          display: inline-block;
+        }
+        .item__label {
+          font-size: 0.8rem;
+          padding: 0 0 0 .5rem;
+          display: table-cell;
+          vertical-align: middle;
+          max-width: 170px;
+        }
       }
-    }
-
-    &__before {
-      margin-right: 1rem;
-    }
-
-    &__after {
-      display: none;
-      margin-left: 1rem;
     }
   }
 }
