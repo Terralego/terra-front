@@ -20,6 +20,21 @@ export const INTERACTION_ZOOM = 'fitZoom';
 export const INTERACTION_DISPLAY_TOOLTIP = 'displayTooltip';
 export const INTERACTION_FN = 'function';
 
+const generateTooltipContainer = ({ fetchProperties, properties, template, content, history }) => {
+  const container = document.createElement('div');
+  ReactDOM.render(
+    <Tooltip
+      fetch={fetchProperties}
+      properties={properties}
+      template={template}
+      content={content}
+      history={history}
+    />,
+    container,
+  );
+  return container;
+};
+
 export class InteractiveMap extends React.Component {
   static propTypes = {
     backgroundStyle: PropTypes.oneOfType([
@@ -164,25 +179,19 @@ export class InteractiveMap extends React.Component {
     fixed,
     fetchProperties = {},
     clusteredFeatures,
+    element,
+    className,
   }) => {
     const { history } = this.props;
     const { map } = this;
     const zoom = map.getZoom();
-    const container = document.createElement('div');
-    ReactDOM.render(
-      <Tooltip
-        fetch={fetchProperties}
-        properties={{
-          ...properties,
-          clusteredFeatures,
-          zoom,
-        }}
-        template={template}
-        content={content}
-        history={history}
-      />,
-      container,
-    );
+    const container = element || generateTooltipContainer({
+      fetchProperties,
+      properties: { ...properties, clusteredFeatures, zoom },
+      template,
+      content,
+      history,
+    });
 
     const lnglat = !fixed
       ? [lngLat.lng, lngLat.lat]
@@ -199,7 +208,9 @@ export class InteractiveMap extends React.Component {
       this.popups.forEach(({ popup }) => popup.remove());
       this.popups.clear();
     }
-    const popup = new mapBoxGl.Popup();
+    const popup = new mapBoxGl.Popup({
+      className,
+    });
     popup.once('close', () => this.popups.delete(layerId));
     this.popups.set(layerId, { popup, content: container.innerHTML });
     popup.setLngLat(lnglat);
