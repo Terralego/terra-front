@@ -2,7 +2,7 @@ import {
   toggleLayerVisibility,
   getOpacityProperty,
   setLayerOpacity,
-  getInteractionOnEvent,
+  getInteractionsOnEvent,
   setInteractions,
   checkContraints,
 } from './mapUtils';
@@ -76,11 +76,11 @@ it('should get interaction on event', () => {
   };
   const eventType = 'click';
   const point = [1, 2];
-  const interaction = getInteractionOnEvent({ eventType, map, point, interactions });
+  const interaction = getInteractionsOnEvent({ eventType, map, point, interactions });
 
   expect(map.queryRenderedFeatures).toHaveBeenCalledWith(point);
   expect(interaction).toEqual({
-    interaction: interactions[0],
+    interactions: [interactions[0]],
     feature: {
       layer: {
         id: 'foo',
@@ -88,6 +88,26 @@ it('should get interaction on event', () => {
     },
     layerId: 'foo',
   });
+});
+
+it('should return if queryRenderedFeatures return error', () => {
+  const interactions = [{
+    id: 'foo',
+  }, {
+    id: 'bar',
+    trigger: 'mouseover',
+  }, {
+    id: 'foobar',
+    trigger: 'click',
+  }];
+  const map = {
+    queryRenderedFeatures: new Error(),
+  };
+  const eventType = 'click';
+  const point = [1, 2];
+  const interaction = getInteractionsOnEvent({ eventType, map, point, interactions });
+
+  expect(interaction).toEqual(false);
 });
 
 it('should get interaction on mouseover event', () => {
@@ -117,11 +137,11 @@ it('should get interaction on mouseover event', () => {
   };
   const eventType = 'mousemove';
   const point = [1, 2];
-  const interaction = getInteractionOnEvent({ eventType, map, point, interactions });
+  const interaction = getInteractionsOnEvent({ eventType, map, point, interactions });
 
   expect(map.queryRenderedFeatures).toHaveBeenCalledWith(point);
   expect(interaction).toEqual({
-    interaction: interactions[1],
+    interactions: [interactions[1]],
     feature: {
       layer: {
         id: 'bar',
@@ -152,7 +172,7 @@ it('should get no interaction on event', () => {
   };
   const eventType = 'mousover';
   const point = [1, 2];
-  const interaction = getInteractionOnEvent({ eventType, map, point, interactions });
+  const interaction = getInteractionsOnEvent({ eventType, map, point, interactions });
 
   expect(map.queryRenderedFeatures).toHaveBeenCalledWith(point);
   expect(interaction).toBe(false);
@@ -519,6 +539,26 @@ it('should get interactions responding to constraints', () => {
       maxZoom: 3,
     }],
   }];
-  const interaction = getInteractionOnEvent({ eventType: 'click', map, points: [], interactions });
-  expect(interaction.interaction).toBe(interactions[1]);
+  const interaction = getInteractionsOnEvent({ eventType: 'click', map, points: [], interactions });
+  expect(interaction.interactions).toEqual([interactions[1]]);
+});
+
+it('should get multiple interactions', () => {
+  const map = {
+    getZoom: () => 3,
+    queryRenderedFeatures: () => [{
+      layer: {
+        id: 'foo',
+      },
+    }],
+  };
+  const interactions = [{
+    id: 'foo',
+    interaction: 'foo',
+  }, {
+    id: 'foo',
+    interaction: 'foo',
+  }];
+  const interaction = getInteractionsOnEvent({ eventType: 'click', map, points: [], interactions });
+  expect(interaction.interactions).toEqual(interactions);
 });

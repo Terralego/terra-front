@@ -394,7 +394,7 @@ describe('Interactions', () => {
   it('should highlight features', async () => {
     const interactions = [];
     const instance = new InteractiveMap({ interactions });
-    instance.removeHighlights = jest.fn();
+    instance.removeHighlight = jest.fn();
     instance.map = {};
     instance.map.getLayer = jest.fn();
     instance.map.addLayer = jest.fn();
@@ -442,18 +442,13 @@ describe('Interactions', () => {
     });
     expect(instance.highlightedLayers.get('pwet').length).toEqual(2);
     expect(instance.highlightedLayers.size).toEqual(2);
-
-    instance.addHighlight({
-      feature: { layer: { id: 'pwet' }, properties: { _id: 3 } },
-      highlightColor: 'red',
-    });
-    expect(instance.removeHighlights).toHaveBeenCalled();
   });
 
   it('should highlight selected features', async () => {
     const interactions = [];
     const instance = new InteractiveMap({ interactions });
     instance.map = {};
+    instance.map.setFilter = jest.fn();
     instance.map.getPaintProperty = jest.fn(() => 'red');
     instance.map.getLayer = jest.fn(() => true);
     instance.map.addLayer = jest.fn();
@@ -469,6 +464,7 @@ describe('Interactions', () => {
     });
     await true;
     instance.addHighlight({ feature: { layer: { id: 'new' }, properties: { _id: 1 } } });
+    instance.highlightedLayers.set('a');
     instance.highlight();
     expect(instance.map.addLayer).not.toHaveBeenCalled();
     expect(instance.map.getPaintProperty).toHaveBeenCalled();
@@ -503,7 +499,7 @@ describe('Interactions', () => {
       feature,
       highlightColor: 'red',
     });
-    instance.removeHighlights({ feature: { layer: { id: 'test' }, properties: { _id: 3 } } });
+    instance.removeHighlight({ feature });
     expect(instance.highlightedLayers.has('test')).toEqual(false);
 
     const newFeat = { layer: { id: 'test' }, properties: { _id: 3 } };
@@ -514,7 +510,7 @@ describe('Interactions', () => {
     instance.addHighlight({
       feature: { ...newFeat, properties: { _id: 15 } },
     });
-    instance.removeHighlights({ feature: { layer: { id: 'test' }, properties: { _id: 3 } } });
+    instance.removeHighlight({ feature: { layer: { id: 'test' }, properties: { _id: 3 } } });
     expect(instance.highlightedLayers.has('test')).toEqual(true);
     expect(instance.highlightedLayers.get('test')).toEqual([{
       feature: { ...newFeat, properties: { _id: 15 } },
@@ -535,7 +531,7 @@ describe('Interactions', () => {
         properties: { _id: 1 },
       },
     }]);
-    instance.removeHighlights({
+    instance.removeHighlight({
       feature: {
         layer: { id: 'test1' },
         properties: { _id: 1 },
@@ -545,10 +541,18 @@ describe('Interactions', () => {
     expect(instance.map.removeLayer).not.toHaveBeenCalled();
   });
 
-  it('should call removeHighlights if new & prev features are differents', async () => {
+  it('should not crash if map has nothing', () => {
+    const instance = new InteractiveMap({});
+    instance.map = {};
+    instance.map.getLayer = jest.fn(() => false);
+    instance.map.removeLayer = jest.fn();
+    instance.removeHighlight({ feature: { properties: { _id: 2 }, layer: { id: 1 } } });
+  });
+
+  it('should call removeHighlight if new & prev features are differents', async () => {
     const interactions = [];
     const instance = new InteractiveMap({ interactions });
-    instance.removeHighlights = jest.fn();
+    instance.removeHighlight = jest.fn();
     instance.addHighlight = jest.fn();
     instance.triggerInteraction({
       event: {},
@@ -899,7 +903,7 @@ describe('Interactions', () => {
     const instance = new InteractiveMap({
       interactions,
       addHighlight: jest.fn(),
-      removeHighlights: jest.fn(),
+      removeHighlight: jest.fn(),
     });
     const map = {};
     const fn = jest.fn();
@@ -923,9 +927,6 @@ describe('Interactions', () => {
       feature: {},
       instance,
       clusteredFeatures: undefined,
-      highlight: undefined,
-      addHighlight: instance.addHighlight,
-      removeHighlights: instance.removeHighlights,
     });
   });
 
