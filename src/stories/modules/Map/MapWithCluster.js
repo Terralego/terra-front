@@ -44,6 +44,22 @@ export default () => (
               color: '#ffffff',
             },
           },
+          paint: {
+            'circle-color': [
+              'match',
+              ['get', 'apet700_ta5_corres_naf'],
+              'Activité support', '#8dd3c7',
+              'Agriculture', '#ffff66',
+              'Commerce détail', '#bebada',
+              'Commerce de gros', '#fb8072',
+              'Construction', '#80b1d3',
+              'Industrie', '#fdb462',
+              'Logistique', '#b3de69',
+              'Services aux particuliers', '#fccde5',
+              'Services tertiaire supérieur', '#8c8c8c',
+              '#777',
+            ],
+          },
         }],
       }}
       interactions={[{

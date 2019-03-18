@@ -27,6 +27,7 @@ export const createCluster = (map, layer) => {
         color = '#000000',
       } = {},
     },
+    paint: originalPaint = {},
   } = layer;
   const clusterSourceName = getClusterSourceName(layer.id);
 
@@ -58,6 +59,7 @@ export const createCluster = (map, layer) => {
   });
 
   const paint = {
+    ...originalPaint,
     'circle-radius': [
       'case',
       ['has', 'point_count'],
@@ -67,8 +69,15 @@ export const createCluster = (map, layer) => {
       'case',
       ['has', 'point_count'],
       getPaintExpression(steps, colors),
+      ...(originalPaint['circle-color']
+        ? [
+          ['!', ['has', 'point_count']],
+          originalPaint['circle-color'],
+        ]
+        : []),
       colors[0]],
   };
+
   /**
    * The clustered layer
    */
