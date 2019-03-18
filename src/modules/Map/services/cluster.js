@@ -26,6 +26,7 @@ export const createCluster = (map, layer) => {
         family = ['DIN Offc Pro Medium', 'Arial Unicode MS Bold'],
         color = '#000000',
       } = {},
+      border = 5,
     },
     paint: originalPaint = {},
   } = layer;
@@ -91,21 +92,23 @@ export const createCluster = (map, layer) => {
   /**
    * The border layer
    */
-  map.addLayer({
-    id: `${id}-border`,
-    type: 'circle',
-    source: clusterSourceName,
-    filter: ['has', 'point_count'],
-    paint: {
-      ...paint,
-      'circle-opacity': 0.4,
-      'circle-radius': [
-        'case',
-        ['has', 'point_count'],
-        getPaintExpression(steps, sizes.map(size => size + 5)),
-        sizes[0] + 5],
-    },
-  });
+  if (border) {
+    map.addLayer({
+      id: `${id}-border`,
+      type: 'circle',
+      source: clusterSourceName,
+      filter: ['has', 'point_count'],
+      paint: {
+        ...paint,
+        'circle-opacity': 0.4,
+        'circle-radius': [
+          'case',
+          ['has', 'point_count'],
+          getPaintExpression(steps, sizes.map(size => size + border)),
+          sizes[0] + border],
+      },
+    });
+  }
 
   /**
    * The count layer

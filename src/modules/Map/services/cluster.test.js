@@ -380,3 +380,85 @@ it('should create a cluster with paint values', () => {
     },
   });
 });
+
+it('should create a cluster with border', () => {
+  const map = {
+    addLayer: jest.fn(),
+    addSource: jest.fn(),
+  };
+  const layer = {
+    id: 'layer',
+    source: 'source',
+    'source-layer': 'source-layer',
+    cluster: {
+      steps: [10, 20, 30, 40],
+      sizes: [1, 2, 3, 4, 5],
+      colors: ['red', 'blue', 'green', 'yellow', 'purple'],
+      border: 2,
+    },
+  };
+  createCluster(map, layer);
+
+  expect(map.addLayer.mock.calls[2][0]).toEqual({
+    id: 'layer-border',
+    type: 'circle',
+    source: 'layer-cluster-source',
+    filter: ['has', 'point_count'],
+    paint: {
+      'circle-opacity': 0.4,
+      'circle-radius': [
+        'case',
+        ['has', 'point_count'],
+        ['case',
+          ['<', ['get', 'point_count'], 10],
+          3,
+          ['<', ['get', 'point_count'], 20],
+          4,
+          ['<', ['get', 'point_count'], 30],
+          5,
+          ['<', ['get', 'point_count'], 40],
+          6,
+          7,
+        ],
+        3,
+      ],
+      'circle-color': [
+        'case',
+        ['has', 'point_count'],
+        ['case',
+          ['<', ['get', 'point_count'], 10],
+          'red',
+          ['<', ['get', 'point_count'], 20],
+          'blue',
+          ['<', ['get', 'point_count'], 30],
+          'green',
+          ['<', ['get', 'point_count'], 40],
+          'yellow',
+          'purple',
+        ],
+        'red',
+      ],
+    },
+  });
+});
+
+it('should create a cluster with no border', () => {
+  const map = {
+    addLayer: jest.fn(),
+    addSource: jest.fn(),
+  };
+  const layer = {
+    id: 'layer',
+    source: 'source',
+    'source-layer': 'source-layer',
+    cluster: {
+      steps: [10, 20, 30, 40],
+      sizes: [1, 2, 3, 4, 5],
+      colors: ['red', 'blue', 'green', 'yellow', 'purple'],
+      border: 0,
+    },
+  };
+  createCluster(map, layer);
+
+  expect(map.addLayer).toHaveBeenCalledTimes(3);
+});
