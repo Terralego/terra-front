@@ -22,6 +22,7 @@ export const withMap = WrappedComponent =>
       ),
       onMapInit: PropTypes.func,
       onMapLoaded: PropTypes.func,
+      onMapUpdate: PropTypes.func,
     };
 
     static defaultProps = {
@@ -29,6 +30,7 @@ export const withMap = WrappedComponent =>
       fitBounds: null,
       onMapInit () {},
       onMapLoaded () {},
+      onMapUpdate () {},
     };
 
     state = {
