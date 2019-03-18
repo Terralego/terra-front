@@ -1,5 +1,16 @@
 export const getClusterSourceName = id => `${id}-cluster-source`;
 
+export const getPaintExpression = (steps, values) => ['case',
+  ...[...steps, null].reduce((rules, step, key) =>
+    [
+      ...rules,
+      ...step
+        ? [['<', ['get', 'point_count'], step], values[key]]
+        : [values[key]],
+    ],
+  []),
+];
+
 export const createCluster = (map, layer) => {
   const {
     id,
@@ -15,7 +26,9 @@ export const createCluster = (map, layer) => {
         family = ['DIN Offc Pro Medium', 'Arial Unicode MS Bold'],
         color = '#000000',
       } = {},
+      border = 5,
     },
+    paint: originalPaint = {},
   } = layer;
   const clusterSourceName = getClusterSourceName(layer.id);
 
@@ -46,6 +59,26 @@ export const createCluster = (map, layer) => {
     clusterRadius,
   });
 
+  const paint = {
+    ...originalPaint,
+    'circle-radius': [
+      'case',
+      ['has', 'point_count'],
+      getPaintExpression(steps, sizes),
+      sizes[0]],
+    'circle-color': [
+      'case',
+      ['has', 'point_count'],
+      getPaintExpression(steps, colors),
+      ...(originalPaint['circle-color']
+        ? [
+          ['!', ['has', 'point_count']],
+          originalPaint['circle-color'],
+        ]
+        : []),
+      colors[0]],
+  };
+
   /**
    * The clustered layer
    */
@@ -53,36 +86,33 @@ export const createCluster = (map, layer) => {
     id,
     type: 'circle',
     source: clusterSourceName,
-    paint: {
-      'circle-radius': [
-        'case',
-        ['has', 'point_count'],
-        ['case',
-          ...[...steps, null].reduce((rules, step, key) =>
-            [
-              ...rules,
-              ...step
-                ? [['<', ['get', 'point_count'], step], sizes[key]]
-                : [sizes[key]],
-            ],
-          []),
-        ], sizes[0]],
-      'circle-color': [
-        'case',
-        ['has', 'point_count'],
-        ['case',
-          ...[...steps, null].reduce((rules, step, key) =>
-            [
-              ...rules,
-              ...step
-                ? [['<', ['get', 'point_count'], step], colors[key]]
-                : [colors[key]],
-            ],
-          []),
-        ], colors[0]],
-    },
+    paint: { ...paint },
   });
 
+  /**
+   * The border layer
+   */
+  if (border) {
+    map.addLayer({
+      id: `${id}-border`,
+      type: 'circle',
+      source: clusterSourceName,
+      filter: ['has', 'point_count'],
+      paint: {
+        ...paint,
+        'circle-opacity': 0.4,
+        'circle-radius': [
+          'case',
+          ['has', 'point_count'],
+          getPaintExpression(steps, sizes.map(size => size + border)),
+          sizes[0] + border],
+      },
+    });
+  }
+
+  /**
+   * The count layer
+   */
   map.addLayer({
     id: `${id}-count`,
     type: 'symbol',
@@ -91,16 +121,7 @@ export const createCluster = (map, layer) => {
     layout: {
       'text-field': '{point_count_abbreviated}',
       'text-font': family,
-      'text-size': ['case',
-        ...[...steps, null].reduce((rules, step, key) =>
-          [
-            ...rules,
-            ...step
-              ? [['<', ['get', 'point_count'], step], sizes[key]]
-              : [sizes[key]],
-          ],
-        []),
-      ],
+      'text-size': getPaintExpression(steps, sizes),
       'text-allow-overlap': true,
     },
     paint: {
