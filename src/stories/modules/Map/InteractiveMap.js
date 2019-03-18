@@ -40,9 +40,9 @@ export default () => (
         maxZoom: 16,
         layers: ['terralego-etablissements'],
         items: [
-          { label: 'Mixte', color: '#fe0200', shape: 'circle', radius: 12 },
-          { label: 'Tertiaire supérieur', color: '#6fab46', shape: 'circle', radius: 35 },
-          { label: 'Commerce de gros/Logistique', color: '#fec000', shape: 'circle', radius: 66 },
+          { label: 'Mixte', color: '#fe0200' },
+          { label: 'Tertiaire supérieur', color: '#6fab46' },
+          { label: 'Commerce de gros/Logistique', color: '#fec000' },
         ],
       }]}
       interactions={[{

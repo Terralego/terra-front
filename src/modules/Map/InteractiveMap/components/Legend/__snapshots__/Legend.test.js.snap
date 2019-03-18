@@ -13,19 +13,18 @@ exports[`should render correctly circle 1`] = `
     className="tf-legend__list"
   >
     <div
-      className="tf-legend__item item--circle item--left"
+      className="tf-legend__item tf-legend__item--circle tf-legend__item--left"
     >
       <div
-        className="item__symbol-container"
+        className="tf-legend__symbol-container"
         style={
           Object {
-            "height": "NaNpx",
-            "margin": "0.5rem",
+            "height": NaN,
           }
         }
       >
         <div
-          className="item__symbol"
+          className="tf-legend__symbol"
           style={
             Object {
               "backgroundColor": "red",
@@ -36,25 +35,24 @@ exports[`should render correctly circle 1`] = `
         />
       </div>
       <div
-        className="item__label"
+        className="tf-legend__label"
       >
         Rouge
       </div>
     </div>
     <div
-      className="tf-legend__item item--circle item--left"
+      className="tf-legend__item tf-legend__item--circle tf-legend__item--left"
     >
       <div
-        className="item__symbol-container"
+        className="tf-legend__symbol-container"
         style={
           Object {
-            "height": "NaNpx",
-            "margin": "0.5rem",
+            "height": NaN,
           }
         }
       >
         <div
-          className="item__symbol"
+          className="tf-legend__symbol"
           style={
             Object {
               "backgroundColor": "green",
@@ -65,25 +63,24 @@ exports[`should render correctly circle 1`] = `
         />
       </div>
       <div
-        className="item__label"
+        className="tf-legend__label"
       >
         Vert
       </div>
     </div>
     <div
-      className="tf-legend__item item--circle item--left"
+      className="tf-legend__item tf-legend__item--circle tf-legend__item--left"
     >
       <div
-        className="item__symbol-container"
+        className="tf-legend__symbol-container"
         style={
           Object {
-            "height": "NaNpx",
-            "margin": "0.5rem",
+            "height": NaN,
           }
         }
       >
         <div
-          className="item__symbol"
+          className="tf-legend__symbol"
           style={
             Object {
               "backgroundColor": "blue",
@@ -94,7 +91,7 @@ exports[`should render correctly circle 1`] = `
         />
       </div>
       <div
-        className="item__label"
+        className="tf-legend__label"
       >
         Bleu
       </div>
@@ -116,88 +113,85 @@ exports[`should render correctly square 1`] = `
     className="tf-legend__list"
   >
     <div
-      className="tf-legend__item item--square item--left"
+      className="tf-legend__item tf-legend__item--square tf-legend__item--left"
     >
       <div
-        className="item__symbol-container"
+        className="tf-legend__symbol-container"
         style={
           Object {
-            "height": "NaNpx",
-            "margin": "0.5rem",
+            "height": 32,
           }
         }
       >
         <div
-          className="item__symbol"
+          className="tf-legend__symbol"
           style={
             Object {
               "backgroundColor": "red",
-              "height": undefined,
-              "width": undefined,
+              "height": 16,
+              "width": 16,
             }
           }
         />
       </div>
       <div
-        className="item__label"
+        className="tf-legend__label"
       >
         Rouge
       </div>
     </div>
     <div
-      className="tf-legend__item item--square item--left"
+      className="tf-legend__item tf-legend__item--square tf-legend__item--left"
     >
       <div
-        className="item__symbol-container"
+        className="tf-legend__symbol-container"
         style={
           Object {
-            "height": "NaNpx",
-            "margin": "0.5rem",
+            "height": 32,
           }
         }
       >
         <div
-          className="item__symbol"
+          className="tf-legend__symbol"
           style={
             Object {
               "backgroundColor": "green",
-              "height": undefined,
-              "width": undefined,
+              "height": 16,
+              "width": 16,
             }
           }
         />
       </div>
       <div
-        className="item__label"
+        className="tf-legend__label"
       >
         Vert
       </div>
     </div>
     <div
-      className="tf-legend__item item--square item--left"
+      className="tf-legend__item tf-legend__item--square tf-legend__item--left"
     >
       <div
-        className="item__symbol-container"
+        className="tf-legend__symbol-container"
         style={
           Object {
-            "height": "NaNpx",
-            "margin": "0.5rem",
+            "height": 32,
           }
         }
       >
         <div
-          className="item__symbol"
+          className="tf-legend__symbol"
           style={
             Object {
               "backgroundColor": "blue",
-              "height": undefined,
-              "width": undefined,
+              "height": 16,
+              "width": 16,
             }
           }
         />
       </div>
       <div
-        className="item__label"
+        className="tf-legend__label"
       >
         Bleu
       </div>
@@ -219,59 +213,57 @@ exports[`should render correctly with multi level 1`] = `
     className="tf-legend__list"
   >
     <div
-      className="tf-legend__item item--square item--left"
+      className="tf-legend__item tf-legend__item--square tf-legend__item--left"
     >
       <div
-        className="item__symbol-container"
+        className="tf-legend__symbol-container"
         style={
           Object {
-            "height": "NaNpx",
-            "margin": "0.5rem",
+            "height": 32,
           }
         }
       >
         <div
-          className="item__symbol"
+          className="tf-legend__symbol"
           style={
             Object {
               "backgroundColor": "red",
-              "height": undefined,
-              "width": undefined,
+              "height": 16,
+              "width": 16,
             }
           }
         />
       </div>
       <div
-        className="item__label"
+        className="tf-legend__label"
       >
         level1.1
       </div>
     </div>
     <div
-      className="tf-legend__item item--square item--left"
+      className="tf-legend__item tf-legend__item--square tf-legend__item--left"
     >
       <div
-        className="item__symbol-container"
+        className="tf-legend__symbol-container"
         style={
           Object {
-            "height": "NaNpx",
-            "margin": "0.5rem",
+            "height": 32,
           }
         }
       >
         <div
-          className="item__symbol"
+          className="tf-legend__symbol"
           style={
             Object {
               "backgroundColor": "blue",
-              "height": undefined,
-              "width": undefined,
+              "height": 16,
+              "width": 16,
             }
           }
         />
       </div>
       <div
-        className="item__label"
+        className="tf-legend__label"
       >
         level1.2
       </div>
@@ -288,59 +280,57 @@ exports[`should render correctly with multi level 1`] = `
         className="tf-legend__list"
       >
         <div
-          className="tf-legend__item item--square item--left"
+          className="tf-legend__item tf-legend__item--square tf-legend__item--left"
         >
           <div
-            className="item__symbol-container"
+            className="tf-legend__symbol-container"
             style={
               Object {
-                "height": "NaNpx",
-                "margin": "0.5rem",
+                "height": 32,
               }
             }
           >
             <div
-              className="item__symbol"
+              className="tf-legend__symbol"
               style={
                 Object {
                   "backgroundColor": "red",
-                  "height": undefined,
-                  "width": undefined,
+                  "height": 16,
+                  "width": 16,
                 }
               }
             />
           </div>
           <div
-            className="item__label"
+            className="tf-legend__label"
           >
             level2.1
           </div>
         </div>
         <div
-          className="tf-legend__item item--square item--left"
+          className="tf-legend__item tf-legend__item--square tf-legend__item--left"
         >
           <div
-            className="item__symbol-container"
+            className="tf-legend__symbol-container"
             style={
               Object {
-                "height": "NaNpx",
-                "margin": "0.5rem",
+                "height": 32,
               }
             }
           >
             <div
-              className="item__symbol"
+              className="tf-legend__symbol"
               style={
                 Object {
                   "backgroundColor": "blue",
-                  "height": undefined,
-                  "width": undefined,
+                  "height": 16,
+                  "width": 16,
                 }
               }
             />
           </div>
           <div
-            className="item__label"
+            className="tf-legend__label"
           >
             level2.2
           </div>
@@ -357,59 +347,57 @@ exports[`should render correctly with multi level 1`] = `
             className="tf-legend__list"
           >
             <div
-              className="tf-legend__item item--square item--left"
+              className="tf-legend__item tf-legend__item--square tf-legend__item--left"
             >
               <div
-                className="item__symbol-container"
+                className="tf-legend__symbol-container"
                 style={
                   Object {
-                    "height": "NaNpx",
-                    "margin": "0.5rem",
+                    "height": 32,
                   }
                 }
               >
                 <div
-                  className="item__symbol"
+                  className="tf-legend__symbol"
                   style={
                     Object {
                       "backgroundColor": "red",
-                      "height": undefined,
-                      "width": undefined,
+                      "height": 16,
+                      "width": 16,
                     }
                   }
                 />
               </div>
               <div
-                className="item__label"
+                className="tf-legend__label"
               >
                 level3.1
               </div>
             </div>
             <div
-              className="tf-legend__item item--square item--left"
+              className="tf-legend__item tf-legend__item--square tf-legend__item--left"
             >
               <div
-                className="item__symbol-container"
+                className="tf-legend__symbol-container"
                 style={
                   Object {
-                    "height": "NaNpx",
-                    "margin": "0.5rem",
+                    "height": 32,
                   }
                 }
               >
                 <div
-                  className="item__symbol"
+                  className="tf-legend__symbol"
                   style={
                     Object {
                       "backgroundColor": "blue",
-                      "height": undefined,
-                      "width": undefined,
+                      "height": 16,
+                      "width": 16,
                     }
                   }
                 />
               </div>
               <div
-                className="item__label"
+                className="tf-legend__label"
               >
                 level3.2
               </div>
@@ -426,59 +414,57 @@ exports[`should render correctly with multi level 1`] = `
                 className="tf-legend__list"
               >
                 <div
-                  className="tf-legend__item item--square item--left"
+                  className="tf-legend__item tf-legend__item--square tf-legend__item--left"
                 >
                   <div
-                    className="item__symbol-container"
+                    className="tf-legend__symbol-container"
                     style={
                       Object {
-                        "height": "NaNpx",
-                        "margin": "0.5rem",
+                        "height": 32,
                       }
                     }
                   >
                     <div
-                      className="item__symbol"
+                      className="tf-legend__symbol"
                       style={
                         Object {
                           "backgroundColor": "red",
-                          "height": undefined,
-                          "width": undefined,
+                          "height": 16,
+                          "width": 16,
                         }
                       }
                     />
                   </div>
                   <div
-                    className="item__label"
+                    className="tf-legend__label"
                   >
                     level4.1
                   </div>
                 </div>
                 <div
-                  className="tf-legend__item item--square item--left"
+                  className="tf-legend__item tf-legend__item--square tf-legend__item--left"
                 >
                   <div
-                    className="item__symbol-container"
+                    className="tf-legend__symbol-container"
                     style={
                       Object {
-                        "height": "NaNpx",
-                        "margin": "0.5rem",
+                        "height": 32,
                       }
                     }
                   >
                     <div
-                      className="item__symbol"
+                      className="tf-legend__symbol"
                       style={
                         Object {
                           "backgroundColor": "blue",
-                          "height": undefined,
-                          "width": undefined,
+                          "height": 16,
+                          "width": 16,
                         }
                       }
                     />
                   </div>
                   <div
-                    className="item__label"
+                    className="tf-legend__label"
                   >
                     level4.2
                   </div>
