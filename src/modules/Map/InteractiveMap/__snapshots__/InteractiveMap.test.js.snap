@@ -49,6 +49,9 @@ exports[`snaphsots should render legends 1`] = `
       >
         foo
       </h4>
+      <div
+        className="tf-legend__list"
+      />
     </div>
     <div
       className="tf-legend tf-legend--level-1"
@@ -58,6 +61,9 @@ exports[`snaphsots should render legends 1`] = `
       >
         pwet
       </h4>
+      <div
+        className="tf-legend__list"
+      />
     </div>
   </div>
 </div>

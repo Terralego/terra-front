@@ -7,6 +7,6 @@
   ],
   "presets": [
     "@babel/preset-react",
-    "minify"
+    ["minify", { "builtIns": false }] // to fix babel intersection error with Math.max in storybook: https://github.com/babel/minify/issues/904#issuecomment-464953535
   ]
 }
