@@ -6,7 +6,8 @@ const DEFAULT_RADIUS = 16;
 
 export const Legend = props => {
   const { title, items, level, position } = props;
-  const biggestRadius = items.reduce((int, item) => Math.max(int, item.radius), 0);
+  const biggestRadius = items.reduce((int, item) =>
+    Math.max(int, item.radius || DEFAULT_RADIUS), 0);
 
   return (
     <div className={`tf-legend tf-legend--level-${level}`}>
@@ -16,7 +17,7 @@ export const Legend = props => {
         {title}
       </h4>
       <div className="tf-legend__list">
-        {items.map(({ label, color, items: subItems, shape = 'square', radius }) => (
+        {items.map(({ label, color, items: subItems, shape = 'square', radius = DEFAULT_RADIUS }) => (
           subItems
             ? (
               <Legend
