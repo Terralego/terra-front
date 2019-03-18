@@ -19,7 +19,7 @@ exports[`should render correctly circle 1`] = `
         className="tf-legend__symbol-container"
         style={
           Object {
-            "height": NaN,
+            "height": 16,
           }
         }
       >
@@ -28,8 +28,8 @@ exports[`should render correctly circle 1`] = `
           style={
             Object {
               "backgroundColor": "red",
-              "height": undefined,
-              "width": undefined,
+              "height": 16,
+              "width": 16,
             }
           }
         />
@@ -47,7 +47,7 @@ exports[`should render correctly circle 1`] = `
         className="tf-legend__symbol-container"
         style={
           Object {
-            "height": NaN,
+            "height": 16,
           }
         }
       >
@@ -56,8 +56,8 @@ exports[`should render correctly circle 1`] = `
           style={
             Object {
               "backgroundColor": "green",
-              "height": undefined,
-              "width": undefined,
+              "height": 16,
+              "width": 16,
             }
           }
         />
@@ -75,7 +75,7 @@ exports[`should render correctly circle 1`] = `
         className="tf-legend__symbol-container"
         style={
           Object {
-            "height": NaN,
+            "height": 16,
           }
         }
       >
@@ -84,8 +84,8 @@ exports[`should render correctly circle 1`] = `
           style={
             Object {
               "backgroundColor": "blue",
-              "height": undefined,
-              "width": undefined,
+              "height": 16,
+              "width": 16,
             }
           }
         />
