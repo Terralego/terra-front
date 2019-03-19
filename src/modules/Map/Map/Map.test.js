@@ -473,13 +473,15 @@ it('should debounce cluster creation', () => {
   expect(updateCluster).toHaveBeenCalledWith(map, layer, undefined);
   expect(updateCluster).toHaveBeenCalledTimes(1);
 
-  expect(listeners.length).toBe(4);
+  expect(listeners.length).toBe(5);
   listeners[0].listener();
   expect(updateCluster).toHaveBeenCalledTimes(2);
   listeners[1].listener();
   expect(updateCluster).toHaveBeenCalledTimes(3);
   listeners[2].listener();
   expect(updateCluster).toHaveBeenCalledTimes(4);
+  listeners[3].listener();
+  expect(updateCluster).toHaveBeenCalledTimes(5);
 });
 
 it('should update on map events', () => {
