@@ -130,7 +130,7 @@ export const createCluster = (map, layer) => {
   });
 };
 
-export const updateCluster = (map, layer) => {
+export const updateCluster = (map, layer, onClusterUpdate = ({ features }) => features) => {
   const { id, source, 'source-layer': sourceLayer } = layer;
   const clusterSourceName = getClusterSourceName(id);
 
@@ -142,7 +142,7 @@ export const updateCluster = (map, layer) => {
 
   map.getSource(clusterSourceName).setData({
     type: 'FeatureCollection',
-    features,
+    features: onClusterUpdate({ features, source, sourceLayer }),
   });
 };
 

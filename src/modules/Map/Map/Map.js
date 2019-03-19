@@ -194,11 +194,11 @@ export class MapComponent extends React.Component {
   }
 
   createClusterLayer (layer) {
-    const { map } = this.props;
-    map.on('zoom', () => debouncedUpdateCluster(map, layer));
-    map.on('move', () => debouncedUpdateCluster(map, layer));
-    map.once('load', () => debouncedUpdateCluster(map, layer));
-    debouncedUpdateCluster(map, layer);
+    const { map, onClusterUpdate } = this.props;
+    map.on('zoom', () => debouncedUpdateCluster(map, layer, onClusterUpdate));
+    map.on('move', () => debouncedUpdateCluster(map, layer, onClusterUpdate));
+    map.once('load', () => debouncedUpdateCluster(map, layer, onClusterUpdate));
+    debouncedUpdateCluster(map, layer, onClusterUpdate);
     const listener = ({ isSourceLoaded }) => {
       const { onMapUpdate } = this.props;
       if (isSourceLoaded) {

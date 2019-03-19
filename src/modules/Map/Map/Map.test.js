@@ -470,7 +470,7 @@ it('should debounce cluster creation', () => {
   const instance = new Map({ map });
   const layer = {};
   instance.createClusterLayer(layer);
-  expect(updateCluster).toHaveBeenCalledWith(map, layer);
+  expect(updateCluster).toHaveBeenCalledWith(map, layer, undefined);
   expect(updateCluster).toHaveBeenCalledTimes(1);
 
   expect(listeners.length).toBe(4);
