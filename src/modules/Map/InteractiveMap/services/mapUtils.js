@@ -60,7 +60,7 @@ export const checkContraints = ({
           || map.getLayoutProperty(layerId, 'visibility') === 'none');
     }, true);
     const checkCluster = isCluster === undefined
-      || cluster === isCluster;
+      || !!cluster === !!isCluster;
 
     return prev || (checkZoom && checkLayers && checkCluster);
   }, false);
