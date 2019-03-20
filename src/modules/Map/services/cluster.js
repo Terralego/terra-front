@@ -29,6 +29,7 @@ export const createCluster = (map, layer) => {
       border = 5,
     },
     paint: originalPaint = {},
+    ...layerProps
   } = layer;
   const clusterSourceName = getClusterSourceName(layer.id);
 
@@ -83,6 +84,7 @@ export const createCluster = (map, layer) => {
    * The clustered layer
    */
   map.addLayer({
+    ...layerProps,
     id,
     type: 'circle',
     source: clusterSourceName,
@@ -94,6 +96,7 @@ export const createCluster = (map, layer) => {
    */
   if (border) {
     map.addLayer({
+      ...layerProps,
       id: `${id}-border`,
       type: 'circle',
       source: clusterSourceName,
@@ -114,6 +117,7 @@ export const createCluster = (map, layer) => {
    * The count layer
    */
   map.addLayer({
+    ...layerProps,
     id: `${id}-count`,
     type: 'symbol',
     source: clusterSourceName,
