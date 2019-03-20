@@ -2,8 +2,8 @@ import React from 'react';
 import mapBoxGl from 'mapbox-gl';
 import PropTypes from 'prop-types';
 import 'mapbox-gl/dist/mapbox-gl.css';
+import { debounce } from 'throttle-debounce';
 
-import debounce from 'lodash.debounce';
 import { capitalize } from '../../../utils/strings';
 import { updateCluster } from '../services/cluster';
 
@@ -21,7 +21,7 @@ export function getLayerBeforeId (type, layers) {
   return layers[pos] && layers[pos].id;
 }
 
-const debouncedUpdateCluster = debounce(updateCluster, 500);
+const debouncedUpdateCluster = debounce(500, updateCluster);
 
 export class MapComponent extends React.Component {
   static propTypes = {

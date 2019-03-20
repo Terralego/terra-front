@@ -51,7 +51,11 @@ jest.mock('react-dom', () => {
     render: jest.fn((jsx, el) => el),
   };
 });
-jest.mock('lodash.debounce', () => fn => () => fn({ layerId: 'foo' }));
+jest.mock('throttle-debounce', () => ({
+  debounce: (a, fn) => () => fn({ layerId: 'foo' }),
+  throttle: (a, fn) => () => fn({ layerId: 'foo' }),
+}));
+
 jest.mock('@turf/centroid', () => () => ({ geometry: { coordinates: [0, 0] } }));
 jest.mock('./components/BackgroundStyles', () => () => <p>BackgroundStyles</p>);
 jest.mock('../services/cluster', () => ({
@@ -368,7 +372,7 @@ describe('Interactions', () => {
     });
     await true;
     expect(instance.addHighlight).toHaveBeenCalledWith(
-      { feature: {}, highlightColor: undefined, unique: true },
+      { feature: undefined, highlightColor: undefined, unique: false },
     );
   });
 

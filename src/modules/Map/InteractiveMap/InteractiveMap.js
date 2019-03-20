@@ -2,7 +2,7 @@ import React from 'react';
 import ReactDOM from 'react-dom';
 import PropTypes from 'prop-types';
 import mapBoxGl from 'mapbox-gl';
-import debounce from 'lodash.debounce';
+import { throttle, debounce } from 'throttle-debounce';
 import bbox from '@turf/bbox';
 import centroid from '@turf/centroid';
 
@@ -97,14 +97,16 @@ export class InteractiveMap extends React.Component {
 
   popups = new Map();
 
-  hideTooltip = debounce(({ layerId }) => {
+  hideTooltip = debounce(100, ({ layerId }) => {
     if (!this.popups.has(layerId)) {
       return;
     }
     const { popup } = this.popups.get(layerId);
     popup.remove();
     this.popups.delete(layerId);
-  }, 100);
+  });
+
+  throttledHighlightInteraction = throttle(300, (...props) => this.highlightInteraction(...props));
 
   highlightedLayers = new Map();
 
@@ -364,6 +366,23 @@ export class InteractiveMap extends React.Component {
     });
   }
 
+  highlightInteraction ({ unique, trigger, feature, eventType, highlightColor }) {
+    const uniqueHighlight = unique || ['mouseover', 'mousemove'].includes(trigger);
+    const hasPrevFeatureChanged = this.highlightedFeatureHovered
+      && this.highlightedFeatureHovered !== feature;
+    const hasLeavedFeature = eventType === 'mouseleave' || (hasPrevFeatureChanged && uniqueHighlight);
+
+    if (hasLeavedFeature) {
+      this.removeHighlight({ feature: this.highlightedFeatureHovered });
+    }
+    this.highlightedFeatureHovered = feature;
+    this.addHighlight({
+      unique: uniqueHighlight,
+      feature,
+      highlightColor,
+    });
+  }
+
   async triggerInteraction ({ map, event, feature, layerId, interaction, eventType }) {
     const {
       id, interaction: interactionType, fn,
@@ -406,20 +425,7 @@ export class InteractiveMap extends React.Component {
         this.zoom(feature, step);
         break;
       case INTERACTION_HIGHLIGHT: {
-        const uniqueHighlight = unique || ['mouseover', 'mousemove'].includes(trigger);
-        const hasPrevFeatureChanged = this.highlightedFeatureHovered
-          && this.highlightedFeatureHovered !== feature;
-        const hasLeavedFeature = eventType === 'mouseleave' || (hasPrevFeatureChanged && uniqueHighlight);
-
-        if (hasLeavedFeature) {
-          this.removeHighlight({ feature: this.highlightedFeatureHovered });
-        }
-        this.highlightedFeatureHovered = feature;
-        this.addHighlight({
-          unique: uniqueHighlight,
-          feature,
-          highlightColor,
-        });
+        this.throttledHighlightInteraction({ unique, trigger, feature, eventType, highlightColor });
         break;
       }
       case INTERACTION_FN:
