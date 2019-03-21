@@ -56,12 +56,12 @@ export default () => (
           maxZoom: 16,
         }],
       }, {
-        coin: 'this',
         id: 'terralego-eae',
-        interaction: 'fitZoom',
+        interaction: 'zoom',
+        step: 1,
         constraints: [{
-          minZoom: 1,
-          maxZoom: 14,
+          minZoom: 0,
+          maxZoom: 20,
         }],
       }, {
         id: 'terralego-etablissements',
@@ -73,7 +73,7 @@ export default () => (
         trigger: 'mouseover',
         template: `
   # Établissement
-  
+
   * Siret : {{siret}}
   * Date de création :  {% if date_crea.length > 0 %}{{date_crea}}{% else %}Non connue{% endif %}
   * Raison sociale : {{raison_sociale}}
