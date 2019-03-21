@@ -90,26 +90,6 @@ it('should get interaction on event', () => {
   });
 });
 
-it('should return if queryRenderedFeatures return error', () => {
-  const interactions = [{
-    id: 'foo',
-  }, {
-    id: 'bar',
-    trigger: 'mouseover',
-  }, {
-    id: 'foobar',
-    trigger: 'click',
-  }];
-  const map = {
-    queryRenderedFeatures: new Error(),
-  };
-  const eventType = 'click';
-  const point = [1, 2];
-  const interaction = getInteractionsOnEvent({ eventType, map, point, interactions });
-
-  expect(interaction).toEqual(false);
-});
-
 it('should get interaction on mouseover event', () => {
   const interactions = [{
     id: 'foo',
@@ -218,9 +198,9 @@ describe('should set interactions', () => {
     const callback = () => {};
     setInteractions({ map, interactions, callback });
     expect(listeners.length).toBe(3);
-    expect(listeners[0].event).toBe('mousemove');
-    expect(listeners[1].event).toBe('mouseleave');
-    expect(listeners[1].id).toBe('foo');
+    expect(listeners[0].event).toBe('mouseleave');
+    expect(listeners[1].event).toBe('mousemove');
+    expect(listeners[0].id).toBe('foo');
     expect(listeners[2].event).toBe('mousemove');
   });
 
@@ -302,19 +282,24 @@ describe('should set interactions', () => {
         },
       },
       interaction: interactions[0],
-      eventType: 'mousemove',
+      eventType: 'mouseleave',
     });
     callback.mockClear();
 
     listeners[1].listener(event);
-    expect(listeners[1].event).toBe('mouseleave');
-    expect(listeners[1].id).toBe('foo');
+    expect(listeners[1].event).toBe('mousemove');
+    expect(listeners[1].id).toBe(null);
     expect(callback).toHaveBeenCalledWith({
       event,
       map,
       layerId: 'foo',
       interaction: interactions[0],
-      eventType: 'mouseleave',
+      eventType: 'mousemove',
+      feature: {
+        layer: {
+          id: 'foo',
+        },
+      },
     });
   });
 

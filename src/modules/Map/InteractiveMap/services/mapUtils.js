@@ -1,3 +1,5 @@
+const PREV_STATE = {};
+
 export function toggleLayerVisibility (map, layerId, visibility) {
   map.setLayoutProperty(layerId, 'visibility', visibility);
 }
@@ -72,13 +74,7 @@ export function getInteractionsOnEvent ({
   point,
   interactions: eventInteractions,
 }) {
-  let features;
-
-  try {
-    features = map.queryRenderedFeatures(point);
-  } catch (e) {
-    return false;
-  }
+  const features = map.queryRenderedFeatures(point);
 
   let interactions = false;
 
@@ -118,9 +114,28 @@ export function setInteractions ({ map, interactions, callback }) {
     eventsTypes.delete('mouseover');
   }
 
+  /**
+   * Mouseleave events for mouseover triggers
+   * /!\ this listener MUST be before the mousemove
+   */
+  interactions.forEach(interaction => {
+    const { id, trigger } = interaction;
+    if (trigger !== 'mouseover') return;
+
+    const eventType = 'mouseleave';
+    map.on(eventType, id, event => {
+      const features = map.queryRenderedFeatures(PREV_STATE.point);
+      const feature = features.find(({ layer: { id: layerId } }) => id === layerId);
+      callback({ event, map, layerId: id, interaction, feature, eventType });
+    });
+  });
+
   eventsTypes.forEach(eventType => {
     map.on(eventType, e => {
       const { target, point } = e;
+      if (eventType === 'mousemove') {
+        PREV_STATE.point = point;
+      }
       const interactionsSpec = getInteractionsOnEvent({
         eventType,
         map: target,
@@ -131,22 +146,8 @@ export function setInteractions ({ map, interactions, callback }) {
       if (!interactionsSpec) return;
 
       const { interactions: filteredInteractionsSpec, feature, layerId } = interactionsSpec;
-
       filteredInteractionsSpec.forEach(interaction =>
         callback({ event: e, map, layerId, feature, interaction, eventType }));
-    });
-  });
-
-  /**
-   * Mouseleave events for mouseover triggers
-   */
-  interactions.forEach(interaction => {
-    const { id, trigger } = interaction;
-    if (trigger !== 'mouseover') return;
-
-    const eventType = 'mouseleave';
-    map.on(eventType, id, event => {
-      callback({ event, map, layerId: id, interaction, eventType });
     });
   });
 

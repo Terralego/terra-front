@@ -65,10 +65,7 @@ jest.mock('mapbox-gl', () => {
   };
 });
 
-jest.mock('throttle-debounce', () => ({
-  debounce: (a, fn) => () => fn({ layerId: 'foo' }),
-  throttle: (a, fn) => () => fn({ layerId: 'foo' }),
-}));
+jest.mock('lodash.debounce', () => fn => (...args) => fn(...args));
 
 jest.mock('../services/cluster', () => ({
   updateCluster: jest.fn(),
