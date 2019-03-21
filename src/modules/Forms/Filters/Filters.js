@@ -6,11 +6,13 @@ import Text from '../Controls/Text';
 import Checkboxes from '../Controls/Checkboxes';
 import Range from '../Controls/Range';
 import Switch from '../Controls/Switch';
+import MultiSelect from '../Controls/MultiSelect';
 
 export const TYPE_SINGLE = 'single';
 export const TYPE_MANY = 'many';
 export const TYPE_RANGE = 'range';
 export const TYPE_BOOL = 'boolean';
+export const TYPE_TAGS = 'many-tags';
 
 const DEFAULT_LOCALES = {
   noResults: 'No results',
@@ -29,6 +31,8 @@ export function getComponent (type, values) {
       return Range;
     case TYPE_BOOL:
       return Switch;
+    case TYPE_TAGS:
+      return MultiSelect;
     default:
       return null;
   }
@@ -45,7 +49,7 @@ export class Filters extends React.Component {
       property: PropTypes.string.isRequired,
       label: PropTypes.string,
       placeholder: PropTypes.string,
-      type: PropTypes.oneOf([TYPE_SINGLE, TYPE_MANY, TYPE_RANGE, TYPE_BOOL]).isRequired,
+      type: PropTypes.oneOf([TYPE_SINGLE, TYPE_MANY, TYPE_RANGE, TYPE_BOOL, TYPE_TAGS]).isRequired,
       values: PropTypes.oneOfType([
         PropTypes.arrayOf(PropTypes.string),
         PropTypes.arrayOf(PropTypes.number),

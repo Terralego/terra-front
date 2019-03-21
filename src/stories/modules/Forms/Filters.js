@@ -2,7 +2,7 @@ import React from 'react';
 import { action } from '@storybook/addon-actions';
 import { text, select, number, boolean } from '@storybook/addon-knobs';
 
-import Filters, { TYPE_SINGLE, TYPE_MANY, TYPE_BOOL, TYPE_RANGE } from '../../../modules/Forms/Filters';
+import Filters, { TYPE_SINGLE, TYPE_MANY, TYPE_BOOL, TYPE_RANGE, TYPE_TAGS } from '../../../modules/Forms/Filters';
 
 export class CustomFilters extends React.Component {
   state = {}
@@ -58,7 +58,18 @@ export class CustomFilters extends React.Component {
           max: 100,
           stepSize: 2,
           labelStepSize: 20,
-        }, {
+        },
+        {
+          property: 'many_values_tags',
+          label: 'Test',
+          type: TYPE_TAGS,
+          values: [
+            { id: 1, label: 'développeur' },
+            { id: 2, label: 'UX designer' },
+            { id: 3, label: 'Chef de projet' },
+          ],
+        },
+        {
           property: 'switch_value',
           label: 'Switch label',
           type: TYPE_BOOL,
