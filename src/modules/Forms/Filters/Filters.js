@@ -18,6 +18,7 @@ const DEFAULT_LOCALES = {
   emptySelectItem: 'Nothing',
 };
 
+
 export function getComponent (type, values, display) {
   switch (type) {
     case TYPE_SINGLE:
