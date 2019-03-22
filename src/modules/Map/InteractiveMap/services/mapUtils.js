@@ -1,3 +1,5 @@
+const PREV_STATE = {};
+
 export function toggleLayerVisibility (map, layerId, visibility) {
   map.setLayoutProperty(layerId, 'visibility', visibility);
 }
@@ -66,14 +68,20 @@ export const checkContraints = ({
   }, false);
 };
 
-export function getInteractionOnEvent ({ eventType, map, point, interactions }) {
+export function getInteractionsOnEvent ({
+  eventType,
+  map,
+  point,
+  interactions: eventInteractions,
+}) {
   const features = map.queryRenderedFeatures(point);
-  let interaction = false;
+
+  let interactions = false;
 
   features.some(feature => {
     const { layer: { id: layerId } } = feature;
 
-    const foundInteraction = interactions.find(({ id, trigger = 'click', constraints }) => {
+    const foundInteractions = eventInteractions.filter(({ id, trigger = 'click', constraints }) => {
       const found = id === layerId;
 
       if (constraints && !checkContraints({ map, constraints, feature })) {
@@ -84,10 +92,10 @@ export function getInteractionOnEvent ({ eventType, map, point, interactions }) 
         eventType === (trigger === 'mouseover' ? 'mousemove' : trigger);
     });
 
-    if (!foundInteraction) return false;
+    if (!foundInteractions.length) return false;
 
-    interaction = {
-      interaction: foundInteraction,
+    interactions = {
+      interactions: foundInteractions,
       feature,
       layerId,
     };
@@ -95,7 +103,7 @@ export function getInteractionOnEvent ({ eventType, map, point, interactions }) 
     return true;
   });
 
-  return interaction;
+  return interactions;
 }
 
 export function setInteractions ({ map, interactions, callback }) {
@@ -106,26 +114,9 @@ export function setInteractions ({ map, interactions, callback }) {
     eventsTypes.delete('mouseover');
   }
 
-  eventsTypes.forEach(eventType => {
-    map.on(eventType, e => {
-      const { target, point } = e;
-      const interactionSpec = getInteractionOnEvent({
-        eventType,
-        map: target,
-        point,
-        interactions,
-      });
-
-      if (!interactionSpec) return;
-
-      const { interaction, feature, layerId } = interactionSpec;
-
-      callback({ event: e, map, layerId, feature, interaction, eventType });
-    });
-  });
-
   /**
    * Mouseleave events for mouseover triggers
+   * /!\ this listener MUST be before the mousemove
    */
   interactions.forEach(interaction => {
     const { id, trigger } = interaction;
@@ -133,7 +124,30 @@ export function setInteractions ({ map, interactions, callback }) {
 
     const eventType = 'mouseleave';
     map.on(eventType, id, event => {
-      callback({ event, map, layerId: id, interaction, eventType });
+      const features = map.queryRenderedFeatures(PREV_STATE.point);
+      const feature = features.find(({ layer: { id: layerId } }) => id === layerId);
+      callback({ event, map, layerId: id, interaction, feature, eventType });
+    });
+  });
+
+  eventsTypes.forEach(eventType => {
+    map.on(eventType, e => {
+      const { target, point } = e;
+      if (eventType === 'mousemove') {
+        PREV_STATE.point = point;
+      }
+      const interactionsSpec = getInteractionsOnEvent({
+        eventType,
+        map: target,
+        point,
+        interactions,
+      });
+
+      if (!interactionsSpec) return;
+
+      const { interactions: filteredInteractionsSpec, feature, layerId } = interactionsSpec;
+      filteredInteractionsSpec.forEach(interaction =>
+        callback({ event: e, map, layerId, feature, interaction, eventType }));
     });
   });
 
@@ -142,7 +156,7 @@ export function setInteractions ({ map, interactions, callback }) {
    */
   map.on('mousemove', e => {
     const { target, point } = e;
-    const interactionSpec = getInteractionOnEvent({
+    const interactionsSpec = getInteractionsOnEvent({
       eventType: 'click',
       map: target,
       point,
@@ -150,7 +164,7 @@ export function setInteractions ({ map, interactions, callback }) {
     });
 
     const canvas = target.getCanvas();
-    if (interactionSpec) {
+    if (interactionsSpec) {
       canvas.style.cursor = 'pointer';
     } else {
       canvas.style.cursor = '';
@@ -162,7 +176,7 @@ export default {
   toggleLayerVisibility,
   getOpacityProperty,
   setLayerOpacity,
-  getInteractionOnEvent,
+  getInteractionsOnEvent,
   setInteractions,
   checkContraints,
 };

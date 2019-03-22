@@ -2,8 +2,8 @@ import React from 'react';
 import mapBoxGl from 'mapbox-gl';
 import PropTypes from 'prop-types';
 import 'mapbox-gl/dist/mapbox-gl.css';
-
 import debounce from 'lodash.debounce';
+
 import { capitalize } from '../../../utils/strings';
 import { updateCluster } from '../services/cluster';
 

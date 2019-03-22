@@ -66,6 +66,7 @@ jest.mock('mapbox-gl', () => {
 });
 
 jest.mock('lodash.debounce', () => fn => (...args) => fn(...args));
+
 jest.mock('../services/cluster', () => ({
   updateCluster: jest.fn(),
 }));

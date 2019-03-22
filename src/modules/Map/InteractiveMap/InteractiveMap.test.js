@@ -11,6 +11,8 @@ import InteractiveMap, {
   INTERACTION_FLY_TO,
   INTERACTION_DISPLAY_TOOLTIP,
   INTERACTION_FN,
+  INTERACTION_HIGHLIGHT,
+  getHighlightLayerId,
 } from './InteractiveMap';
 
 jest.mock('@turf/bbox', () => jest.fn());
@@ -50,6 +52,7 @@ jest.mock('react-dom', () => {
   };
 });
 jest.mock('lodash.debounce', () => fn => () => fn({ layerId: 'foo' }));
+
 jest.mock('@turf/centroid', () => () => ({ geometry: { coordinates: [0, 0] } }));
 jest.mock('./components/BackgroundStyles', () => () => <p>BackgroundStyles</p>);
 jest.mock('../services/cluster', () => ({
@@ -349,6 +352,254 @@ describe('Interactions', () => {
     });
   });
 
+  it('should trigger highlight interaction', async () => {
+    const interactions = [];
+    const instance = new InteractiveMap({ interactions });
+    instance.addHighlight = jest.fn();
+    instance.triggerInteraction({
+      event: {},
+      feature: {},
+      layerId: 'foo',
+      interaction: {
+        id: 'foo',
+        interaction: INTERACTION_HIGHLIGHT,
+        trigger: 'mouseover',
+        highlightColor: 'red',
+      },
+      eventType: 'mousemove',
+    });
+    await true;
+    expect(instance.addHighlight).toHaveBeenCalledWith(
+      { feature: {}, highlightColor: 'red', unique: true },
+    );
+  });
+
+  it('should trigger highlight interaction by click', async () => {
+    const interactions = [];
+    const instance = new InteractiveMap({ interactions });
+    instance.addHighlight = jest.fn();
+    instance.triggerInteraction({
+      event: {},
+      feature: { layer: { id: 'pwet' }, properties: { _id: 1 } },
+      interaction: {
+        id: 'foo',
+        interaction: INTERACTION_HIGHLIGHT,
+        trigger: 'click',
+        unique: true,
+      },
+      eventType: 'click',
+    });
+    await true;
+    expect(instance.addHighlight).toHaveBeenCalled();
+  });
+
+  it('should highlight features', async () => {
+    const interactions = [];
+    const instance = new InteractiveMap({ interactions });
+    instance.removeHighlight = jest.fn();
+    instance.map = {};
+    instance.map.getLayer = jest.fn(() => 'fakeLayer');
+    instance.map.addLayer = jest.fn();
+    instance.map.getPaintProperty = jest.fn();
+    instance.map.setFilter = jest.fn();
+    instance.triggerInteraction({
+      event: {},
+      feature: { layer: { id: 'pwet' }, properties: { _id: 1 } },
+      interaction: {
+        id: 'foo',
+        interaction: INTERACTION_HIGHLIGHT,
+        trigger: 'mouseover',
+      },
+      eventType: 'mouseleave',
+    });
+    await true;
+    instance.addHighlight({
+      feature: { layer: { id: 'pwet' }, properties: { _id: 1 } },
+      highlightColor: 'red',
+      unique: true,
+    });
+    expect(instance.highlightedLayers.has('pwet')).toBe(true);
+
+    instance.addHighlight({
+      highlightColor: 'red',
+    });
+    expect(instance.highlightedLayers.size).toEqual(1);
+
+    instance.addHighlight({
+      feature: { layer: { id: 'pwat' }, properties: { _id: 1 } },
+      highlightColor: 'red',
+    });
+    expect(instance.highlightedLayers.size).toEqual(2);
+  });
+
+  it('should highlight selected features', async () => {
+    const interactions = [];
+    const instance = new InteractiveMap({ interactions });
+    instance.map = {};
+    instance.map.setFilter = jest.fn();
+    instance.map.getPaintProperty = jest.fn(() => 'red');
+    instance.map.getLayer = jest.fn(() => true);
+    instance.map.addLayer = jest.fn();
+    instance.triggerInteraction({
+      event: {},
+      feature: { layer: { id: 'pwet' }, properties: { _id: 1 } },
+      interaction: {
+        id: 'foo',
+        interaction: INTERACTION_HIGHLIGHT,
+        trigger: 'mouseover',
+      },
+      eventType: 'mousemove',
+    });
+    await true;
+    instance.addHighlight({ feature: { layer: { id: 'new' }, properties: { _id: 1 } } });
+    expect(instance.map.setFilter).toHaveBeenCalled();
+    expect(instance.map.getPaintProperty).toHaveBeenCalled();
+  });
+
+  it('should remove highlight', async () => {
+    const interactions = [];
+    const instance = new InteractiveMap({ interactions });
+    instance.map = {};
+    instance.map.getLayer = jest.fn(() => true);
+    instance.map.removeLayer = jest.fn();
+    instance.map.getPaintProperty = jest.fn(() => 'red');
+    instance.highlight = jest.fn();
+    instance.triggerInteraction({
+      event: {},
+      feature: { layer: { id: 'pwet' }, properties: { _id: 1 } },
+      interaction: {
+        id: 'foo',
+        interaction: INTERACTION_HIGHLIGHT,
+        trigger: 'mouseover',
+      },
+      eventType: 'mouseleave',
+    });
+    await true;
+    const feature = { layer: { id: 'test' }, properties: { _id: 3 } };
+    instance.addHighlight({
+      feature,
+      highlightColor: 'red',
+    });
+    instance.removeHighlight({ feature });
+    expect(instance.highlightedLayers.has('test')).toEqual(true);
+
+    const newFeat = { layer: { id: 'test' }, properties: { _id: 3 } };
+    instance.addHighlight({
+      feature,
+      highlightColor: 'red',
+    });
+    instance.addHighlight({
+      feature: { ...newFeat, properties: { _id: 15 } },
+    });
+    instance.removeHighlight({ feature: { layer: { id: 'test' }, properties: { _id: 3 } } });
+    expect(instance.highlightedLayers.has('test')).toEqual(true);
+    expect(instance.highlightedLayers.get('test')).toEqual({ highlightColor: undefined, ids: [15] });
+    expect(instance.highlight).toHaveBeenCalledWith();
+  });
+
+  it('should remove nothing', () => {
+    const instance = new InteractiveMap({});
+    instance.map = {};
+    instance.highlightedLayers.set('test1', { ids: [1, 2] });
+    instance.map.addLayer = jest.fn();
+    instance.map.setFilter = jest.fn();
+    instance.map.getPaintProperty = jest.fn();
+    instance.map.getLayer = jest.fn(() => true);
+    instance.map.removeLayer = jest.fn();
+    instance.removeHighlight({
+      feature: {
+        layer: { id: 'test1' },
+        properties: { _id: 3 },
+      },
+    });
+    instance.removeHighlight({
+      feature: {
+        layer: { id: 'test1' },
+        properties: { _id: 4 },
+      },
+    });
+    instance.removeHighlight({});
+    instance.removeHighlight({});
+  });
+
+  it('should not remove highlight layer', () => {
+    const instance = new InteractiveMap({});
+    instance.map = {};
+    instance.map.addLayer = jest.fn();
+    instance.map.setFilter = jest.fn();
+    instance.map.getPaintProperty = jest.fn();
+    instance.map.getLayer = jest.fn(() => false);
+    instance.map.removeLayer = jest.fn();
+    instance.highlightedLayers = new Map();
+    instance.highlightedLayers.set('test1', {
+      ids: [1],
+      highlightColor: 'red',
+    });
+    instance.removeHighlight({
+      feature: {
+        layer: { id: 'test1' },
+        properties: { _id: 1 },
+      },
+    });
+    expect(instance.map.setFilter).toHaveBeenCalled();
+  });
+
+  it('should not crash if map has nothing', () => {
+    const instance = new InteractiveMap({});
+    instance.map = {};
+    instance.map.getLayer = jest.fn(() => false);
+    instance.map.removeLayer = jest.fn();
+    instance.removeHighlight({ feature: { properties: { _id: 2 }, layer: { id: 1 } } });
+  });
+
+  it('should call removeHighlight if new & prev features are differents', async () => {
+    const interactions = [];
+    const instance = new InteractiveMap({ interactions });
+    instance.removeHighlight = jest.fn();
+    instance.addHighlight = jest.fn();
+    instance.triggerInteraction({
+      event: {},
+      feature: { layer: { id: 'pwet' }, properties: { _id: 1 } },
+      interaction: {
+        id: 'foo',
+        interaction: INTERACTION_HIGHLIGHT,
+        trigger: 'mouseover',
+      },
+      eventType: 'mouseleave',
+    });
+    await true;
+    instance.triggerInteraction({
+      event: {},
+      feature: { layer: { id: 'pwout' }, properties: { _id: 2 } },
+      interaction: {
+        id: 'foo',
+        interaction: INTERACTION_HIGHLIGHT,
+        trigger: 'mouseover',
+      },
+      eventType: 'mouseleave',
+    });
+    await true;
+    instance.triggerInteraction({
+      event: {},
+      feature: { layer: { id: 'pwet' }, properties: { _id: 2 } },
+      interaction: {
+        id: 'foo',
+        interaction: INTERACTION_HIGHLIGHT,
+        trigger: 'click',
+        unique: true,
+      },
+      eventType: 'click',
+    });
+    await true;
+  });
+
+  it('should get highlightLayerId', () => {
+    const a = getHighlightLayerId('a', 'line');
+    const b = getHighlightLayerId('b');
+    expect(a).toEqual('line-a-highlight');
+    expect(b).toEqual('fill-b-highlight');
+  });
+
   it('should not trigger interaction', () => {
     const interactions = [];
     const instance = new InteractiveMap({
@@ -599,6 +850,7 @@ describe('Interactions', () => {
       await true;
       expect(instance.hideTooltip).toHaveBeenCalled();
     });
+
     it('should\'nt trigger when tooltip is fixed and hover the tooltip', () => {
       const interactions = [];
       const instance = new InteractiveMap({
@@ -645,6 +897,8 @@ describe('Interactions', () => {
     const interactions = [];
     const instance = new InteractiveMap({
       interactions,
+      addHighlight: jest.fn(),
+      removeHighlight: jest.fn(),
     });
     const map = {};
     const fn = jest.fn();

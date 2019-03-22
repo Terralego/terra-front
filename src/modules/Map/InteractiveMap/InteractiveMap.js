@@ -20,6 +20,7 @@ export const INTERACTION_FLY_TO = 'flyTo';
 export const INTERACTION_FIT_ZOOM = 'fitZoom';
 export const INTERACTION_ZOOM = 'zoom';
 export const INTERACTION_DISPLAY_TOOLTIP = 'displayTooltip';
+export const INTERACTION_HIGHLIGHT = 'highlight';
 export const INTERACTION_FN = 'function';
 
 const generateTooltipContainer = ({ fetchProperties, properties, template, content, history }) => {
@@ -37,6 +38,10 @@ const generateTooltipContainer = ({ fetchProperties, properties, template, conte
   return container;
 };
 
+export const getHighlightLayerId = (layerId, type = 'fill') => `${type}-${layerId}-highlight`;
+const getHighlightLayerIdFill = layerId => getHighlightLayerId(layerId, 'fill');
+const getHighlightLayerIdLine = layerId => getHighlightLayerId(layerId, 'line');
+
 export class InteractiveMap extends React.Component {
   static propTypes = {
     backgroundStyle: PropTypes.oneOfType([
@@ -50,6 +55,7 @@ export class InteractiveMap extends React.Component {
         INTERACTION_FIT_ZOOM,
         INTERACTION_DISPLAY_TOOLTIP,
         INTERACTION_ZOOM,
+        INTERACTION_HIGHLIGHT,
         INTERACTION_FN,
       ]),
       constraints: PropTypes.arrayOf(PropTypes.shape({
@@ -99,6 +105,8 @@ export class InteractiveMap extends React.Component {
     popup.remove();
     this.popups.delete(layerId);
   }, 100);
+
+  highlightedLayers = new Map();
 
   constructor (props) {
     super(props);
@@ -170,6 +178,55 @@ export class InteractiveMap extends React.Component {
 
   fitZoom = ({ feature, map }) =>
     map.fitBounds(bbox({ type: 'FeatureCollection', features: [feature] }));
+
+  removeHighlight = ({
+    feature: {
+      layer: { id: layerId } = {},
+      properties: { _id: featureId } = {},
+    } = {},
+  }) => {
+    const { map } = this;
+    if (!map || !layerId) return;
+
+    const highlightedLayer = this.highlightedLayers.get(layerId);
+
+    if (!highlightedLayer) return;
+
+    const { ids: prevIds } = highlightedLayer;
+
+    const ids = prevIds.filter(id => id !== featureId);
+    if (ids.length === prevIds.length) return;
+
+    this.highlightedLayers.set(layerId, {
+      ...highlightedLayer,
+      ids,
+    });
+    this.highlight();
+  }
+
+  addHighlight = ({
+    feature: {
+      layer: { id: layerId } = {},
+      properties: { _id: id } = {},
+    } = {},
+    highlightColor,
+    unique,
+  }) => {
+    if (!layerId) return;
+
+    const prevLayersState = this.highlightedLayers.get(layerId) || {};
+    const layersState = {
+      ids: [...prevLayersState.ids || []],
+      highlightColor,
+    };
+
+    layersState.ids = unique
+      ? [id]
+      : Array.from(new Set([...layersState.ids, id]));
+
+    this.highlightedLayers.set(layerId, layersState);
+    this.highlight();
+  }
 
   displayTooltip = ({
     layerId,
@@ -249,10 +306,52 @@ export class InteractiveMap extends React.Component {
     });
   }
 
+  highlight () {
+    const { map } = this;
+    this.highlightedLayers.forEach(({ ids, highlightColor }, layerId) => {
+      const { sourceLayer } = map.getLayer(layerId);
+
+      const fillId = getHighlightLayerIdFill(layerId);
+      const lineId = getHighlightLayerIdLine(layerId);
+      const layerColor = highlightColor || map.getPaintProperty(layerId, 'fill-color');
+
+      if (!map.getLayer(fillId)) {
+        map.addLayer({
+          id: fillId,
+          source: 'terralego',
+          type: 'fill',
+          'source-layer': sourceLayer,
+          paint: {
+            'fill-color': layerColor,
+            'fill-outline-color': layerColor,
+            'fill-opacity': 0.4,
+          },
+        });
+      }
+
+      if (!map.getLayer(lineId)) {
+        map.addLayer({
+          id: lineId,
+          source: 'terralego',
+          'source-layer': sourceLayer,
+          type: 'line',
+          paint: {
+            'line-color': layerColor,
+            'line-width': 2,
+          },
+        });
+      }
+
+      map.setFilter(fillId, ['in', '_id', ...ids]);
+      map.setFilter(lineId, ['in', '_id', ...ids]);
+    });
+  }
+
   async triggerInteraction ({ map, event, feature, layerId, interaction, eventType }) {
     const {
       id, interaction: interactionType, fn,
       trigger = 'click', fixed, constraints,
+      highlightColor, unique, highlight,
       zoomConfig, targetZoom, step, ...config
     } = interaction;
     if ((trigger === 'mouseover' && !['mousemove', 'mouseleave'].includes(eventType)) ||
@@ -289,8 +388,28 @@ export class InteractiveMap extends React.Component {
       case INTERACTION_ZOOM:
         this.zoom(feature, step);
         break;
+      case INTERACTION_HIGHLIGHT: {
+        if (eventType === 'mouseleave') {
+          this.removeHighlight({ feature });
+          return;
+        }
+
+        this.addHighlight({
+          feature,
+          unique: unique || eventType === 'mousemove',
+          highlightColor,
+        });
+        break;
+      }
       case INTERACTION_FN:
-        fn({ map, event, layerId, feature, instance: this, clusteredFeatures });
+        fn({
+          map,
+          event,
+          layerId,
+          feature,
+          instance: this,
+          clusteredFeatures,
+        });
         break;
       default:
     }

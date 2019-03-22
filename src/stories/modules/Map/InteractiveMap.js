@@ -46,6 +46,12 @@ export default () => (
         ],
       }]}
       interactions={[{
+        id: 'terralego-eae-sync',
+        interaction: 'highlight',
+        trigger: 'mouseover',
+        // unique: true, // Multiple selection or one by one
+        // highlightColor: 'red', // if not set, it will take the default feature color
+      }, {
         id: 'terralego-eae',
         interaction: 'displayTooltip',
         template: `
