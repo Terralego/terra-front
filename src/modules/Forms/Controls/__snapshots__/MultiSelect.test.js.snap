@@ -1,0 +1,7 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`should deselect item 1`] = `null`;
+
+exports[`should render correctly 1`] = `null`;
+
+exports[`should select item 1`] = `null`;

@@ -3,9 +3,9 @@ import React from 'react';
 import PropTypes from 'prop-types';
 
 import { Button, FormGroup, Intent, MenuItem } from '@blueprintjs/core';
-import { MultiSelect as BPMultiSelect } from '@blueprintjs/select';
+import { MultiSelect } from '@blueprintjs/select';
 
-export class MultiSelect extends React.Component {
+export class af extends React.Component {
   static propTypes = {
     locales: PropTypes.shape({ noResults: PropTypes.string }),
     label: PropTypes.string,
@@ -103,7 +103,7 @@ export class MultiSelect extends React.Component {
       <FormGroup
         label={label}
       >
-        <BPMultiSelect
+        <MultiSelect
           items={values}
           inputValueRenderer={renderInputValue}
           itemRenderer={renderItem}
@@ -125,4 +125,4 @@ export class MultiSelect extends React.Component {
   }
 }
 
-export default MultiSelect;
+export default af;

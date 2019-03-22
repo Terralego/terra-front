@@ -12,27 +12,24 @@ export const TYPE_SINGLE = 'single';
 export const TYPE_MANY = 'many';
 export const TYPE_RANGE = 'range';
 export const TYPE_BOOL = 'boolean';
-export const TYPE_TAGS = 'many-tags';
 
 const DEFAULT_LOCALES = {
   noResults: 'No results',
   emptySelectItem: 'Nothing',
 };
 
-export function getComponent (type, values) {
+export function getComponent (type, display, values) {
   switch (type) {
     case TYPE_SINGLE:
       return Array.isArray(values)
         ? Select
         : Text;
     case TYPE_MANY:
-      return Checkboxes;
+      return (Array.isArray(values) && values.length > 10) || (display === 'select') ? MultiSelect : Checkboxes;
     case TYPE_RANGE:
       return Range;
     case TYPE_BOOL:
       return Switch;
-    case TYPE_TAGS:
-      return MultiSelect;
     default:
       return null;
   }
@@ -49,7 +46,7 @@ export class Filters extends React.Component {
       property: PropTypes.string.isRequired,
       label: PropTypes.string,
       placeholder: PropTypes.string,
-      type: PropTypes.oneOf([TYPE_SINGLE, TYPE_MANY, TYPE_RANGE, TYPE_BOOL, TYPE_TAGS]).isRequired,
+      type: PropTypes.oneOf([TYPE_SINGLE, TYPE_MANY, TYPE_RANGE, TYPE_BOOL]).isRequired,
       values: PropTypes.oneOfType([
         PropTypes.arrayOf(PropTypes.string),
         PropTypes.arrayOf(PropTypes.number),
@@ -59,20 +56,21 @@ export class Filters extends React.Component {
     properties: PropTypes.shape({
       // property: value
     }),
-  }
+  };
 
   static defaultProps = {
     locales: {},
-    onChange () {},
+    onChange () {
+    },
     filters: [],
     properties: {},
     layer: '',
-  }
+  };
 
   onChange = property => value => {
     const { onChange, properties } = this.props;
     onChange({ ...properties, [property]: value });
-  }
+  };
 
   render () {
     const { onChange } = this;
