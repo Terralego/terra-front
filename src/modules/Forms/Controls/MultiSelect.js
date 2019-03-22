@@ -46,7 +46,7 @@ export class af extends React.Component {
   handleClear = () => this.setState({ items: [] });
 
   filterList = (query, items) => items.filter(item =>
-    item.label.toLowerCase().indexOf(query.toLowerCase()) >= 0);
+    item.toLowerCase().indexOf(query.toLowerCase()) >= 0);
 
   selectItem (item) {
     const { items } = this.state;
@@ -64,10 +64,9 @@ export class af extends React.Component {
     this.setState({ items: newItems });
   }
 
+  renderInputValue = item => item;
 
-  renderInputValue = item => item.label;
-
-  renderTag = item => item.label;
+  renderTag = item => item;
 
   renderItem = (item, { modifiers, handleClick }) => {
     if (!modifiers.matchesPredicate) {
@@ -77,9 +76,9 @@ export class af extends React.Component {
       <MenuItem
         active={modifiers.active}
         icon={this.isItemSelected(item) ? 'tick' : 'blank'}
-        key={item.id}
+        key={item}
         onClick={handleClick}
-        text={`${item.label}`}
+        text={item}
         shouldDismissPopover={false}
       />
     );

@@ -18,14 +18,18 @@ const DEFAULT_LOCALES = {
   emptySelectItem: 'Nothing',
 };
 
-export function getComponent (type, display, values) {
+export function getComponent (type, values, display) {
   switch (type) {
     case TYPE_SINGLE:
       return Array.isArray(values)
         ? Select
         : Text;
     case TYPE_MANY:
-      return (Array.isArray(values) && values.length > 10) || (display === 'select') ? MultiSelect : Checkboxes;
+      return (
+        Array.isArray(values) && values.length > 10) ||
+        (display === 'select')
+        ? MultiSelect
+        : Checkboxes;
     case TYPE_RANGE:
       return Range;
     case TYPE_BOOL:
@@ -79,8 +83,8 @@ export class Filters extends React.Component {
 
     return (
       <div>
-        {filters.map(({ type, values, property, ...props }) => {
-          const Component = getComponent(type, values);
+        {filters.map(({ type, values, property, display, ...props }) => {
+          const Component = getComponent(type, values, display);
 
           return (
             <Component

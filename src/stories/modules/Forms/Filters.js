@@ -1,6 +1,6 @@
 import React from 'react';
 import { action } from '@storybook/addon-actions';
-import { text, select, number, boolean } from '@storybook/addon-knobs';
+import { text, select, number, boolean, object, array } from '@storybook/addon-knobs';
 
 import Filters, { TYPE_SINGLE, TYPE_MANY, TYPE_BOOL, TYPE_RANGE } from '../../../modules/Forms/Filters';
 
@@ -32,6 +32,7 @@ export class CustomFilters extends React.Component {
           }, ''),
           Range_values: [number('Range from', 0), number('Range to', 100)],
           switch_value: boolean('Bool initial value'),
+          many_values_select_forced: select('Many values forced as select', ['développeur', 'UX designer', 'Chef de projet']),
         }}
         filters={[{
           property: 'single_value',
@@ -60,15 +61,11 @@ export class CustomFilters extends React.Component {
           labelStepSize: 20,
         },
         {
-          property: 'many_values_tags',
+          property: 'many_values_select_forced',
           label: 'Test',
           type: TYPE_MANY,
           display: 'select',
-          values: [
-            { id: 1, label: 'développeur' },
-            { id: 2, label: 'UX designer' },
-            { id: 3, label: 'Chef de projet' },
-          ],
+          values: ['développeur', 'UX designer', 'Chef de projet'],
         },
         {
           property: 'switch_value',
