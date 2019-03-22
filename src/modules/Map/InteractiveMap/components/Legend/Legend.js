@@ -40,11 +40,17 @@ export const Legend = props => {
                   <div
                     className="tf-legend__symbol"
                     style={{
-                      backgroundColor: color,
                       width: shape === 'circle' ? radius : DEFAULT_RADIUS,
                       height: shape === 'circle' ? radius : DEFAULT_RADIUS,
                     }}
-                  />
+                  >
+                    <svg viewBox="0 0 100 100">
+                      {shape === 'circle'
+                        ? <circle fill={color} cx="50" cy="50" r="50" />
+                        : <rect fill={color} x="0" y="0" width="100" height="100" />
+                      }
+                    </svg>
+                  </div>
                 </div>
                 <div
                   className="tf-legend__label"
