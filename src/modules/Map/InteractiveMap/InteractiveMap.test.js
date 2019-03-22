@@ -2,9 +2,16 @@ import React from 'react';
 import renderer from 'react-test-renderer';
 import ReactDOM from 'react-dom';
 import mapboxGl from 'mapbox-gl';
+import centroid from '@turf/centroid';
 
 import { setInteractions } from './services/mapUtils';
-import InteractiveMap, { INTERACTION_ZOOM, INTERACTION_DISPLAY_TOOLTIP, INTERACTION_FN } from './InteractiveMap';
+import InteractiveMap, {
+  INTERACTION_FIT_ZOOM,
+  INTERACTION_ZOOM,
+  INTERACTION_FLY_TO,
+  INTERACTION_DISPLAY_TOOLTIP,
+  INTERACTION_FN,
+} from './InteractiveMap';
 
 jest.mock('@turf/bbox', () => jest.fn());
 jest.mock('mapbox-gl', () => {
@@ -306,7 +313,7 @@ describe('Interactions', () => {
         layerId: 'foo',
         interaction: {
           id: 'foo',
-          interaction: INTERACTION_ZOOM,
+          interaction: INTERACTION_FIT_ZOOM,
           trigger: 'click',
         },
         eventType: 'click',
@@ -386,6 +393,124 @@ describe('Interactions', () => {
     });
     await true;
     expect(instance.displayTooltip).toHaveBeenCalled();
+  });
+
+  it('should trigger flyTo interaction', async () => {
+    const interactions = [];
+    const instance = new InteractiveMap({ interactions });
+    instance.map = {};
+    instance.map.flyTo = jest.fn();
+    instance.map.getZoom = jest.fn(() => 10);
+    const feature = {
+      type: 'Feature',
+      geometry: {
+        type: 'Polygon',
+        coordinates: [
+          [
+            [
+              -33.83789062499999,
+              60.37042901631508,
+            ],
+            [
+              -39.814453125,
+              55.825973254619015,
+            ],
+          ],
+        ],
+      },
+    };
+    instance.triggerInteraction({
+      event: {},
+      feature,
+      layerId: 'foo',
+      interaction: {
+        id: 'foo',
+        interaction: INTERACTION_ZOOM,
+        trigger: 'click',
+        step: 1,
+      },
+      eventType: 'click',
+    });
+    await true;
+    expect(instance.map.flyTo).toHaveBeenCalledWith({
+      center: centroid(feature).geometry.coordinates,
+      zoom: 11,
+    });
+    instance.triggerInteraction({
+      event: {},
+      feature,
+      layerId: 'foo',
+      interaction: {
+        id: 'foo',
+        interaction: INTERACTION_ZOOM,
+        trigger: 'click',
+      },
+      eventType: 'click',
+    });
+    await true;
+    expect(instance.map.flyTo).toHaveBeenCalledWith({
+      center: centroid(feature).geometry.coordinates,
+      zoom: 11,
+    });
+  });
+
+  it('should trigger zoom interaction', async () => {
+    const interactions = [];
+    const instance = new InteractiveMap({ interactions });
+    instance.map = {};
+    instance.map.flyTo = jest.fn();
+    instance.map.getMinZoom = jest.fn(() => 0);
+    const feature = {
+      type: 'Feature',
+      geometry: {
+        type: 'Polygon',
+        coordinates: [
+          [
+            [
+              -33.83789062499999,
+              60.37042901631508,
+            ],
+            [
+              -39.814453125,
+              55.825973254619015,
+            ],
+          ],
+        ],
+      },
+    };
+    instance.triggerInteraction({
+      event: {},
+      feature,
+      layerId: 'foo',
+      interaction: {
+        id: 'foo',
+        interaction: INTERACTION_FLY_TO,
+        trigger: 'click',
+      },
+      eventType: 'click',
+    });
+    await true;
+    expect(instance.map.flyTo).toHaveBeenCalledWith({
+      center: centroid(feature).geometry.coordinates,
+      zoom: 12,
+    });
+    instance.triggerInteraction({
+      event: {},
+      feature,
+      layerId: 'foo',
+      interaction: {
+        id: 'foo',
+        interaction: INTERACTION_FLY_TO,
+        trigger: 'click',
+        targetZoom: -1,
+      },
+      eventType: 'click',
+    });
+    await true;
+    expect(instance.map.flyTo).toHaveBeenCalledWith({
+      center: centroid(feature).geometry.coordinates,
+      zoom: 1,
+    });
   });
 
   it('should trigger interaction with constraints', async () => {

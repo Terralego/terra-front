@@ -16,7 +16,9 @@ import Tooltip from './components/Tooltip';
 
 import './styles.scss';
 
-export const INTERACTION_ZOOM = 'fitZoom';
+export const INTERACTION_FLY_TO = 'flyTo';
+export const INTERACTION_FIT_ZOOM = 'fitZoom';
+export const INTERACTION_ZOOM = 'zoom';
 export const INTERACTION_DISPLAY_TOOLTIP = 'displayTooltip';
 export const INTERACTION_FN = 'function';
 
@@ -45,8 +47,9 @@ export class InteractiveMap extends React.Component {
       id: PropTypes.string.isRequired,
       trigger: PropTypes.oneOf(['click', 'mouseover']),
       interaction: PropTypes.oneOf([
-        INTERACTION_ZOOM,
+        INTERACTION_FIT_ZOOM,
         INTERACTION_DISPLAY_TOOLTIP,
+        INTERACTION_ZOOM,
         INTERACTION_FN,
       ]),
       constraints: PropTypes.arrayOf(PropTypes.shape({
@@ -229,8 +232,29 @@ export class InteractiveMap extends React.Component {
     popupContent.addEventListener('mouseleave', onMouseLeave);
   }
 
+  flyTo (feature, targetZoom = 12) {
+    const { map } = this;
+    const minZoom = map.getMinZoom() + 1;
+    map.flyTo({
+      center: centroid(feature).geometry.coordinates,
+      zoom: minZoom > targetZoom ? minZoom : targetZoom,
+    });
+  }
+
+  zoom (feature, step = 1) {
+    const { map } = this;
+    map.flyTo({
+      center: centroid(feature).geometry.coordinates,
+      zoom: map.getZoom() + step,
+    });
+  }
+
   async triggerInteraction ({ map, event, feature, layerId, interaction, eventType }) {
-    const { id, interaction: interactionType, fn, trigger = 'click', fixed, constraints, ...config } = interaction;
+    const {
+      id, interaction: interactionType, fn,
+      trigger = 'click', fixed, constraints,
+      zoomConfig, targetZoom, step, ...config
+    } = interaction;
     if ((trigger === 'mouseover' && !['mousemove', 'mouseleave'].includes(eventType)) ||
         (trigger !== 'mouseover' && trigger !== eventType)) return;
 
@@ -256,8 +280,14 @@ export class InteractiveMap extends React.Component {
           ...config,
         });
         break;
+      case INTERACTION_FIT_ZOOM:
+        this.fitZoom({ feature, map, zoomConfig });
+        break;
+      case INTERACTION_FLY_TO:
+        this.flyTo(feature, targetZoom);
+        break;
       case INTERACTION_ZOOM:
-        this.fitZoom({ feature, map });
+        this.zoom(feature, step);
         break;
       case INTERACTION_FN:
         fn({ map, event, layerId, feature, instance: this, clusteredFeatures });
