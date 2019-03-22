@@ -27,12 +27,22 @@ exports[`should render correctly circle 1`] = `
           className="tf-legend__symbol"
           style={
             Object {
-              "backgroundColor": "red",
               "height": 16,
               "width": 16,
             }
           }
-        />
+        >
+          <svg
+            viewBox="0 0 100 100"
+          >
+            <circle
+              cx="50"
+              cy="50"
+              fill="red"
+              r="50"
+            />
+          </svg>
+        </div>
       </div>
       <div
         className="tf-legend__label"
@@ -55,12 +65,22 @@ exports[`should render correctly circle 1`] = `
           className="tf-legend__symbol"
           style={
             Object {
-              "backgroundColor": "green",
               "height": 16,
               "width": 16,
             }
           }
-        />
+        >
+          <svg
+            viewBox="0 0 100 100"
+          >
+            <circle
+              cx="50"
+              cy="50"
+              fill="green"
+              r="50"
+            />
+          </svg>
+        </div>
       </div>
       <div
         className="tf-legend__label"
@@ -83,12 +103,22 @@ exports[`should render correctly circle 1`] = `
           className="tf-legend__symbol"
           style={
             Object {
-              "backgroundColor": "blue",
               "height": 16,
               "width": 16,
             }
           }
-        />
+        >
+          <svg
+            viewBox="0 0 100 100"
+          >
+            <circle
+              cx="50"
+              cy="50"
+              fill="blue"
+              r="50"
+            />
+          </svg>
+        </div>
       </div>
       <div
         className="tf-legend__label"
@@ -127,12 +157,23 @@ exports[`should render correctly square 1`] = `
           className="tf-legend__symbol"
           style={
             Object {
-              "backgroundColor": "red",
               "height": 16,
               "width": 16,
             }
           }
-        />
+        >
+          <svg
+            viewBox="0 0 100 100"
+          >
+            <rect
+              fill="red"
+              height="100"
+              width="100"
+              x="0"
+              y="0"
+            />
+          </svg>
+        </div>
       </div>
       <div
         className="tf-legend__label"
@@ -155,12 +196,23 @@ exports[`should render correctly square 1`] = `
           className="tf-legend__symbol"
           style={
             Object {
-              "backgroundColor": "green",
               "height": 16,
               "width": 16,
             }
           }
-        />
+        >
+          <svg
+            viewBox="0 0 100 100"
+          >
+            <rect
+              fill="green"
+              height="100"
+              width="100"
+              x="0"
+              y="0"
+            />
+          </svg>
+        </div>
       </div>
       <div
         className="tf-legend__label"
@@ -183,12 +235,23 @@ exports[`should render correctly square 1`] = `
           className="tf-legend__symbol"
           style={
             Object {
-              "backgroundColor": "blue",
               "height": 16,
               "width": 16,
             }
           }
-        />
+        >
+          <svg
+            viewBox="0 0 100 100"
+          >
+            <rect
+              fill="blue"
+              height="100"
+              width="100"
+              x="0"
+              y="0"
+            />
+          </svg>
+        </div>
       </div>
       <div
         className="tf-legend__label"
@@ -227,12 +290,23 @@ exports[`should render correctly with multi level 1`] = `
           className="tf-legend__symbol"
           style={
             Object {
-              "backgroundColor": "red",
               "height": 16,
               "width": 16,
             }
           }
-        />
+        >
+          <svg
+            viewBox="0 0 100 100"
+          >
+            <rect
+              fill="red"
+              height="100"
+              width="100"
+              x="0"
+              y="0"
+            />
+          </svg>
+        </div>
       </div>
       <div
         className="tf-legend__label"
@@ -255,12 +329,23 @@ exports[`should render correctly with multi level 1`] = `
           className="tf-legend__symbol"
           style={
             Object {
-              "backgroundColor": "blue",
               "height": 16,
               "width": 16,
             }
           }
-        />
+        >
+          <svg
+            viewBox="0 0 100 100"
+          >
+            <rect
+              fill="blue"
+              height="100"
+              width="100"
+              x="0"
+              y="0"
+            />
+          </svg>
+        </div>
       </div>
       <div
         className="tf-legend__label"
@@ -294,12 +379,23 @@ exports[`should render correctly with multi level 1`] = `
               className="tf-legend__symbol"
               style={
                 Object {
-                  "backgroundColor": "red",
                   "height": 16,
                   "width": 16,
                 }
               }
-            />
+            >
+              <svg
+                viewBox="0 0 100 100"
+              >
+                <rect
+                  fill="red"
+                  height="100"
+                  width="100"
+                  x="0"
+                  y="0"
+                />
+              </svg>
+            </div>
           </div>
           <div
             className="tf-legend__label"
@@ -322,12 +418,23 @@ exports[`should render correctly with multi level 1`] = `
               className="tf-legend__symbol"
               style={
                 Object {
-                  "backgroundColor": "blue",
                   "height": 16,
                   "width": 16,
                 }
               }
-            />
+            >
+              <svg
+                viewBox="0 0 100 100"
+              >
+                <rect
+                  fill="blue"
+                  height="100"
+                  width="100"
+                  x="0"
+                  y="0"
+                />
+              </svg>
+            </div>
           </div>
           <div
             className="tf-legend__label"
@@ -361,12 +468,23 @@ exports[`should render correctly with multi level 1`] = `
                   className="tf-legend__symbol"
                   style={
                     Object {
-                      "backgroundColor": "red",
                       "height": 16,
                       "width": 16,
                     }
                   }
-                />
+                >
+                  <svg
+                    viewBox="0 0 100 100"
+                  >
+                    <rect
+                      fill="red"
+                      height="100"
+                      width="100"
+                      x="0"
+                      y="0"
+                    />
+                  </svg>
+                </div>
               </div>
               <div
                 className="tf-legend__label"
@@ -389,12 +507,23 @@ exports[`should render correctly with multi level 1`] = `
                   className="tf-legend__symbol"
                   style={
                     Object {
-                      "backgroundColor": "blue",
                       "height": 16,
                       "width": 16,
                     }
                   }
-                />
+                >
+                  <svg
+                    viewBox="0 0 100 100"
+                  >
+                    <rect
+                      fill="blue"
+                      height="100"
+                      width="100"
+                      x="0"
+                      y="0"
+                    />
+                  </svg>
+                </div>
               </div>
               <div
                 className="tf-legend__label"
@@ -428,12 +557,23 @@ exports[`should render correctly with multi level 1`] = `
                       className="tf-legend__symbol"
                       style={
                         Object {
-                          "backgroundColor": "red",
                           "height": 16,
                           "width": 16,
                         }
                       }
-                    />
+                    >
+                      <svg
+                        viewBox="0 0 100 100"
+                      >
+                        <rect
+                          fill="red"
+                          height="100"
+                          width="100"
+                          x="0"
+                          y="0"
+                        />
+                      </svg>
+                    </div>
                   </div>
                   <div
                     className="tf-legend__label"
@@ -456,12 +596,23 @@ exports[`should render correctly with multi level 1`] = `
                       className="tf-legend__symbol"
                       style={
                         Object {
-                          "backgroundColor": "blue",
                           "height": 16,
                           "width": 16,
                         }
                       }
-                    />
+                    >
+                      <svg
+                        viewBox="0 0 100 100"
+                      >
+                        <rect
+                          fill="blue"
+                          height="100"
+                          width="100"
+                          x="0"
+                          y="0"
+                        />
+                      </svg>
+                    </div>
                   </div>
                   <div
                     className="tf-legend__label"
