@@ -1,9 +1,6 @@
 import React from 'react';
 import renderer from 'react-test-renderer';
-<<<<<<< HEAD
 import { shallow } from 'enzyme';
-=======
->>>>>>> Add test
 
 import MultiSelect from './MultiSelect';
 
@@ -20,7 +17,6 @@ jest.mock('@blueprintjs/select', () => ({
 }));
 
 jest.mock('@blueprintjs/core', () => ({
-<<<<<<< HEAD
   Button ({ children }) {
     return <div className="Button"> {children} </div>;
   },
@@ -29,16 +25,6 @@ jest.mock('@blueprintjs/core', () => ({
   },
   FormGroup ({ children }) {
     return <div className="FormGroup"> {children} </div>;
-=======
-  Button () {
-    return null;
-  },
-  MenuItem: function BPMenuItem () {
-    return null;
-  },
-  FormGroup () {
-    return null;
->>>>>>> Add test
   },
   Intent: {
     NONE: 'none',
@@ -48,19 +34,13 @@ jest.mock('@blueprintjs/core', () => ({
 it('should render correctly', () => {
   const tree = renderer.create((
     <MultiSelect
-<<<<<<< HEAD
       label="Bouh"
       values={['foo', 'bar']}
-=======
-      label="Pwout"
-      values={[{ id: 1, label: 'foo' }]}
->>>>>>> Add test
     />
   ));
   expect(tree.toJSON()).toMatchSnapshot();
 });
 
-<<<<<<< HEAD
 it('should render filtered items', () => {
   const tree = renderer.create((
     <MultiSelect
@@ -146,29 +126,3 @@ it('should render default locales', () => {
   const wrapper = shallow(<MultiSelect locales={{ foo: 'foo' }} values={['foo', 'bar']} />);
   expect(wrapper.find('BPMultiSelect').props().noResults.props.text).toBe('No results.');
 });
-=======
-it('should select item', () => {
-  const tree = renderer.create((
-    <MultiSelect
-      label="Pwout"
-      values={[{ id: 1, label: 'foo' }, { id: 1, label: 'bar' }, { id: 1, label: 'fooooo' }]}
-    />
-  ));
-  tree.getInstance().selectItem({ id: 1, label: 'fo' });
-  expect(tree.toJSON()).toMatchSnapshot();
-});
-
-it('should deselect item', () => {
-  const tree = renderer.create((
-    <MultiSelect
-      label="Pwout"
-      values={[{ id: 1, label: 'foo' }, { id: 1, label: 'bar' }, { id: 1, label: 'fooooo' }]}
-    />
-  ));
-  tree.getInstance().selectItem({ id: 1, label: 'fo' });
-  // console.log(tree.getInstance())
-  tree.getInstance().deselectItem({ id: 1, label: 'fo' });
-  // console.log(tree.getInstance().state.toEqual([]))
-  expect(tree.toJSON()).toMatchSnapshot();
-});
->>>>>>> Add test
