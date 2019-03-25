@@ -37,5 +37,9 @@ it('should compile custom link', () => {
 
 
 it('should slugify a string', () => {
-  slugify('Hello World'.toLowerCase());
+  shallow(<MarkdownRenderer
+    template="this {{foo|slug}}"
+    foo="Foo bar 42"
+  />);
+  expect(slugify).toHaveBeenCalledWith('foo bar 42');
 });
