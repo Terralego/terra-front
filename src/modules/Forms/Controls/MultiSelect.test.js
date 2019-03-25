@@ -34,7 +34,7 @@ it('should render correctly', () => {
   const tree = renderer.create((
     <MultiSelect
       label="Pwout"
-      values={[{ id: 1, label: 'foo' }]}
+      values={['foo']}
     />
   ));
   expect(tree.toJSON()).toMatchSnapshot();
@@ -44,23 +44,54 @@ it('should select item', () => {
   const tree = renderer.create((
     <MultiSelect
       label="Pwout"
-      values={[{ id: 1, label: 'foo' }, { id: 1, label: 'bar' }, { id: 1, label: 'fooooo' }]}
+      values={['foo', 'bar', 'fooooo']}
     />
   ));
-  tree.getInstance().selectItem({ id: 1, label: 'fo' });
-  expect(tree.toJSON()).toMatchSnapshot();
+  tree.getInstance().selectItem({ id: 1, label: 'fo', value: 'fo' });
+  expect(tree.getInstance().state.selectedItems.length).toEqual(1);
 });
 
 it('should deselect item', () => {
   const tree = renderer.create((
     <MultiSelect
       label="Pwout"
-      values={[{ id: 1, label: 'foo' }, { id: 1, label: 'bar' }, { id: 1, label: 'fooooo' }]}
+      values={['foo', 'bar', 'fooooo']}
     />
   ));
-  tree.getInstance().selectItem({ id: 1, label: 'fo' });
-  // console.log(tree.getInstance())
-  tree.getInstance().deselectItem({ id: 1, label: 'fo' });
-  // console.log(tree.getInstance().state.toEqual([]))
-  expect(tree.toJSON()).toMatchSnapshot();
+  tree.getInstance().selectItem({ id: 1, label: 'fo', value: 'fo' });
+  expect(tree.getInstance().state.selectedItems.length).toEqual(1);
+  tree.getInstance().deselectItem({ id: 1, label: 'fo', value: 'fo' });
+  expect(tree.getInstance().state.selectedItems).toEqual([]);
+});
+
+it('should handle selected/deselect item', () => {
+  const tree = renderer.create((
+    <MultiSelect
+      label="Pwout"
+      values={['foo', 'bar', 'fooooo']}
+    />
+  ));
+  const fo = { id: 1, label: 'fo', value: 'fo' };
+  const fooooo = { id: 2, label: 'fooooo', value: 'fooooo' };
+  tree.getInstance().handleChange(fo);
+  tree.getInstance().handleChange(fooooo);
+  expect(tree.getInstance().state.selectedItems.length).toEqual(2);
+  tree.getInstance().handleChange(fo);
+  expect(tree.getInstance().state.selectedItems).toEqual([fooooo]);
+});
+
+it('should clear all selected items', () => {
+  const tree = renderer.create((
+    <MultiSelect
+      label="Pwout"
+      values={['foo', 'bar', 'fooooo']}
+    />
+  ));
+  const fo = { id: 1, label: 'fo', value: 'fo' };
+  const fooooo = { id: 2, label: 'fooooo', value: 'fooooo' };
+  tree.getInstance().handleChange(fo);
+  tree.getInstance().handleChange(fooooo);
+  expect(tree.getInstance().state.selectedItems.length).toEqual(2);
+  tree.getInstance().handleClear();
+  expect(tree.getInstance().state.selectedItems).toEqual([]);
 });

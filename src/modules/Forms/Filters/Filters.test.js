@@ -46,7 +46,7 @@ it('should build a form', () => {
         type: TYPE_MANY,
         values: ['développeur', 'UX designer', 'Chef de projet'],
       }, {
-        property: 'many_values',
+        property: 'many_values_select_forced',
         label: 'Foo',
         type: TYPE_MANY,
         display: 'select',

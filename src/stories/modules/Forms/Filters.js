@@ -1,22 +1,27 @@
 import React from 'react';
 import { action } from '@storybook/addon-actions';
-import { text, select, number, boolean, object, array } from '@storybook/addon-knobs';
+import { text, select, number, boolean } from '@storybook/addon-knobs';
 
 import Filters, { TYPE_SINGLE, TYPE_MANY, TYPE_BOOL, TYPE_RANGE } from '../../../modules/Forms/Filters';
 
 export class CustomFilters extends React.Component {
-  state = {}
+  state = {};
 
   onChange = properties => {
     action('Filters update', properties);
     this.setState({ properties });
-  }
+  };
 
   render () {
     const { properties } = this.state;
 
+    const locales = {
+      noResults: 'Aucun résultat',
+    };
+
     return (
       <Filters
+        locales={locales}
         onChange={this.onChange}
         properties={properties || {
           single_value: text('single value initial value', ''),
@@ -59,15 +64,13 @@ export class CustomFilters extends React.Component {
           max: 100,
           stepSize: 2,
           labelStepSize: 20,
-        },
-        {
+        }, {
           property: 'many_values_select_forced',
           label: 'Test',
           type: TYPE_MANY,
           display: 'select',
-          values: ['développeur', 'UX designer', 'Chef de projet'],
-        },
-        {
+          values: ['Développeur', 'UX designer', 'Chef de projet'],
+        }, {
           property: 'switch_value',
           label: 'Switch label',
           type: TYPE_BOOL,
