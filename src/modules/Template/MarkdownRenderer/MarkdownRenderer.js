@@ -5,7 +5,7 @@ import slugify from 'slugify';
 import HistoryLink from '../HistoryLink';
 
 const env = nunjucks.configure();
-env.addFilter('slug', value => slugify(value.toLowerCase()));
+env.addFilter('slug', value => slugify(`${value || ''}`.toLowerCase()));
 
 export const MarkdownRenderer = ({ template, content, history, ...props }) => {
   const source = template

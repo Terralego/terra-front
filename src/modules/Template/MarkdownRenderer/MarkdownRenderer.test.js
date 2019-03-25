@@ -43,3 +43,11 @@ it('should slugify a string', () => {
   />);
   expect(slugify).toHaveBeenCalledWith('foo bar 42');
 });
+
+it('should slugify an empty string', () => {
+  shallow(<MarkdownRenderer
+    template="this {{foo|slug}}"
+    foo=""
+  />);
+  expect(slugify).toHaveBeenCalledWith('');
+});
