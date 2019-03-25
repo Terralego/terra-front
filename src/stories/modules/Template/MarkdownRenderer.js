@@ -7,12 +7,11 @@ export default () => (
   <MarkdownRenderer
     template={`
 # {{title}}
-
 {% if displayLogo %}
 ![logo](https://makina-corpus.com/logo.svg)
 {% endif %}
 
-## {{subtitle}}
+## {{subtitle|slug}}
 
 {{text}}
 
