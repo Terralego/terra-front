@@ -55,6 +55,7 @@ export class InteractiveMap extends React.Component {
         INTERACTION_FIT_ZOOM,
         INTERACTION_DISPLAY_TOOLTIP,
         INTERACTION_ZOOM,
+        INTERACTION_FLY_TO,
         INTERACTION_HIGHLIGHT,
         INTERACTION_FN,
       ]),
