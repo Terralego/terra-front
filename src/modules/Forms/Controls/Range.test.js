@@ -1,5 +1,5 @@
 import React from 'react';
-import renderer from 'react-test-renderer';
+import renderer, { act } from 'react-test-renderer';
 import { shallow } from 'enzyme';
 
 import Range from './Range';
@@ -40,4 +40,106 @@ it('should throw an error when values are incorrect', () => {
   const ERROR_MESSAGE =  'Range control: There must be two values and the first must be less than the second';
   expect(() => Range({ value: [10] })).toThrow(ERROR_MESSAGE);
   expect(() => Range({ value: [30, 10] })).toThrow(ERROR_MESSAGE);
+});
+
+it('should manually change value', () => {
+  const onChange = jest.fn();
+  let component;
+  act(() => {
+    component = renderer.create(<Range onChange={onChange} />);
+  });
+
+  const RangeSlider = component.root.find(({ type }) => type.name === 'RangeSlider');
+  const { labelRenderer } = RangeSlider.props;
+
+  expect(labelRenderer('64')).toBe('64');
+
+  let labelEl;
+  act(() => {
+    labelEl = labelRenderer('0');
+  });
+  act(() => labelEl.props.onChange({ target: { value: '42' } }));
+  act(() => labelEl.props.onBlur());
+  expect(onChange).toHaveBeenCalledWith([42, 100]);
+
+  act(() => {
+    labelEl = labelRenderer('100');
+  });
+  act(() => labelEl.props.onChange({ target: { value: '67' } }));
+  act(() => labelEl.props.onBlur());
+  expect(onChange).toHaveBeenCalledWith([0, 67]);
+});
+
+it('should manually update value', () => {
+  const onChange = jest.fn();
+  let component;
+  act(() => {
+    component = renderer.create(<Range onChange={onChange} />);
+  });
+  const RangeSlider = component.root.find(({ type }) => type.name === 'RangeSlider');
+
+  const { labelRenderer } = RangeSlider.props;
+  let labelEl;
+  act(() => {
+    labelEl = labelRenderer('0');
+  });
+
+  act(() => labelEl.props.onChange({ target: { value: '4' } }));
+  act(() => {
+    labelEl = RangeSlider.props.labelRenderer('0');
+  });
+  expect(labelEl.props.html).toBe('4');
+});
+it('should ignore non numeric values', () => {
+  const onChange = jest.fn();
+  let component;
+  act(() => {
+    component = renderer.create(<Range onChange={onChange} />);
+  });
+  const RangeSlider = component.root.find(({ type }) => type.name === 'RangeSlider');
+
+  const { labelRenderer } = RangeSlider.props;
+  let labelEl;
+  act(() => {
+    labelEl = labelRenderer('0');
+  });
+
+  act(() => labelEl.props.onChange({ target: { value: 'a' } }));
+  act(() => {
+    labelEl = RangeSlider.props.labelRenderer('0');
+  });
+  expect(labelEl.props.html).toBe('0');
+});
+
+it('should manually select all', () => {
+  const onChange = jest.fn();
+  let component;
+  act(() => {
+    component = renderer.create(<Range onChange={onChange} />);
+  });
+  const RangeSlider = component.root.find(({ type }) => type.name === 'RangeSlider');
+  const { labelRenderer } = RangeSlider.props;
+
+  let labelEl;
+  act(() => {
+    labelEl = labelRenderer('0');
+  });
+
+  const mockedSelection = {
+    removeAllRanges: jest.fn(),
+    addRange: jest.fn(),
+  };
+  const mockedRange = {
+    selectNodeContents: jest.fn(),
+  };
+  global.getSelection = jest.fn(() => mockedSelection);
+  document.createRange = jest.fn(() => mockedRange);
+  const mockedTarget = {};
+  labelEl.props.onFocus({ target: mockedTarget });
+
+  expect(global.getSelection).toHaveBeenCalled();
+  expect(document.createRange).toHaveBeenCalled();
+  expect(mockedRange.selectNodeContents).toHaveBeenCalledWith(mockedTarget);
+  expect(mockedSelection.removeAllRanges).toHaveBeenCalled();
+  expect(mockedSelection.addRange).toHaveBeenCalledWith(mockedRange);
 });
