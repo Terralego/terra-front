@@ -13,15 +13,13 @@ export const TYPE_SINGLE = 'single';
 export const TYPE_MANY = 'many';
 export const TYPE_RANGE = 'range';
 export const TYPE_BOOL = 'boolean';
-export const TYPE_DATE_RANGE = 'date-range';
 
 const DEFAULT_LOCALES = {
   noResults: 'No results',
   emptySelectItem: 'Nothing',
 };
 
-
-export function getComponent (type, values, display) {
+export function getComponent (type, values, display, format) {
   switch (type) {
     case TYPE_SINGLE:
       return Array.isArray(values)
@@ -30,15 +28,18 @@ export function getComponent (type, values, display) {
     case TYPE_MANY:
       return (
         Array.isArray(values) && values.length > 10) ||
-        (display === 'select')
+          (display === 'select')
         ? MultiSelect
         : Checkboxes;
     case TYPE_RANGE:
-      return Range;
+      switch (format) {
+        case 'date':
+          return DateRangeInput;
+        default:
+          return Range;
+      }
     case TYPE_BOOL:
       return Switch;
-    case TYPE_DATE_RANGE:
-      return DateRangeInput;
     default:
       return null;
   }
@@ -55,7 +56,12 @@ export class Filters extends React.Component {
       property: PropTypes.string.isRequired,
       label: PropTypes.string,
       placeholder: PropTypes.string,
-      type: PropTypes.oneOf([TYPE_SINGLE, TYPE_MANY, TYPE_RANGE, TYPE_BOOL, TYPE_DATE_RANGE]).isRequired,
+      type: PropTypes.oneOf([
+        TYPE_SINGLE,
+        TYPE_MANY,
+        TYPE_RANGE,
+        TYPE_BOOL,
+      ]).isRequired,
       values: PropTypes.oneOfType([
         PropTypes.arrayOf(PropTypes.string),
         PropTypes.arrayOf(PropTypes.number),
@@ -87,8 +93,8 @@ export class Filters extends React.Component {
 
     return (
       <div>
-        {filters.map(({ type, values, property, display, ...props }) => {
-          const Component = getComponent(type, values, display);
+        {filters.map(({ type, values, property, display, format, ...props }) => {
+          const Component = getComponent(type, values, display, format);
 
           return (
             <Component

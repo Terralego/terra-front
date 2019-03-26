@@ -5,61 +5,57 @@ import PropTypes from 'prop-types';
 import { FormGroup } from '@blueprintjs/core';
 import { DateRangeInput as BPDateRangeInput } from '@blueprintjs/datetime';
 
-export class DateRangeInput extends React.Component {
-  static propTypes = {
-    locales: PropTypes.shape({
-      overlappingDatesMessage: PropTypes.string,
-      invalidDateMessage: PropTypes.string,
-    }),
-    label: PropTypes.string,
-    onChange: PropTypes.func,
-    value: PropTypes.arrayOf(PropTypes.instanceOf(Date)),
-  };
+// Date Format
+const formatDate = date => date.toLocaleDateString();
+const parseDate = str => new Date(str);
 
-  static defaultProps = {
-    locales: {
-      overlappingDatesMessage: 'Overlapping date',
-      invalidDateMessage: 'Invalid date.',
-    },
-    label: '',
-    value: [null, null],
-    onChange () {
-    },
-  };
+// Date Error Message
+const defaultOverlappingDatesMessage = 'Overlapping date';
+const defaultInvalidDateMessage = 'Overlapping date';
 
-  formatDate = date => date.toLocaleDateString();
+export const DateRangeInput = ({
+  className,
+  label,
+  value,
+  onChange,
+  locales: { overlappingDatesMessage, invalidDateMessage },
+  ...props
+}) => (
+  <FormGroup
+    label={label}
+  >
+    <BPDateRangeInput
+      className={className}
+      formatDate={formatDate}
+      onChange={onChange}
+      parseDate={parseDate}
+      value={value}
+      overlappingDatesMessage={overlappingDatesMessage || defaultOverlappingDatesMessage}
+      invalidDateMessage={invalidDateMessage || defaultInvalidDateMessage}
+      {...props}
+    />
+  </FormGroup>
+);
 
-  parseDate = str => new Date(str);
+DateRangeInput.propTypes = {
+  locales: PropTypes.shape({
+    overlappingDatesMessage: PropTypes.string,
+    invalidDateMessage: PropTypes.string,
+  }),
+  label: PropTypes.string,
+  onChange: PropTypes.func,
+  value: PropTypes.arrayOf(PropTypes.instanceOf(Date)),
+};
 
-  render () {
-    const {
-      className,
-      label,
-      value,
-      onChange,
-      locales: { overlappingDatesMessage, invalidDateMessage },
-      ...props
-    } = this.props;
-    const { formatDate, parseDate } = this;
-    const defaultOverlappingDatesMessage = 'Overlapping date';
-    const defaultInvalidDateMessage = 'Overlapping date';
-    return (
-      <FormGroup
-        label={label}
-      >
-        <BPDateRangeInput
-          className={className}
-          formatDate={formatDate}
-          onChange={onChange}
-          parseDate={parseDate}
-          value={value}
-          overlappingDatesMessage={overlappingDatesMessage || defaultOverlappingDatesMessage}
-          invalidDateMessage={invalidDateMessage || defaultInvalidDateMessage}
-          {...props}
-        />
-      </FormGroup>
-    );
-  }
-}
+DateRangeInput.defaultProps = {
+  locales: {
+    overlappingDatesMessage: 'Overlapping date',
+    invalidDateMessage: 'Invalid date.',
+  },
+  label: '',
+  value: [null, null],
+  onChange () {
+  },
+};
 
 export default (DateRangeInput);

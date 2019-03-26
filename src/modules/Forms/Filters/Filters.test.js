@@ -9,6 +9,7 @@ import Range from '../Controls/Range';
 import Switch from '../Controls/Switch';
 
 import Filters, { TYPE_SINGLE, TYPE_MANY, TYPE_RANGE, TYPE_BOOL, getComponent } from './Filters';
+import DateRangeInput from '../Controls/DateRangeInput';
 
 jest.mock('@blueprintjs/core', () => ({
   Checkbox: () => <p>Checkbox</p>,
@@ -25,6 +26,7 @@ jest.mock('../Controls/MultiSelect', () => () => <p>ControlMultiSelect</p>);
 jest.mock('../Controls/Select', () => () => <p>ControlSelect</p>);
 jest.mock('../Controls/Checkboxes', () => () => <p>ControlCheckboxes</p>);
 jest.mock('../Controls/Range', () => () => <p>ControlRange</p>);
+jest.mock('../Controls/DateRangeInput', () => () => <p>DateRangeInput</p>);
 
 it('should build a form', () => {
   const tree = renderer.create((
@@ -113,5 +115,6 @@ it('should get component', () => {
   expect(getComponent(TYPE_MANY, ['text', 'text2']) === Checkboxes).toBe(true);
   expect(getComponent(TYPE_BOOL, true) === Switch).toBe(true);
   expect(getComponent(TYPE_RANGE, [10, 90]) === Range).toBe(true);
+  expect(getComponent(TYPE_RANGE, [null, null], null, 'date') === DateRangeInput).toBe(true);
   expect(getComponent('NONE_EXISTING_TYPE', 'text') === null).toBe(true);
 });

@@ -2,7 +2,7 @@ import React from 'react';
 import { action } from '@storybook/addon-actions';
 import { text, select, number, boolean } from '@storybook/addon-knobs';
 
-import Filters, { TYPE_SINGLE, TYPE_MANY, TYPE_BOOL, TYPE_RANGE, TYPE_DATE_RANGE } from '../../../modules/Forms/Filters';
+import Filters, { TYPE_SINGLE, TYPE_MANY, TYPE_BOOL, TYPE_RANGE } from '../../../modules/Forms/Filters';
 
 export class CustomFilters extends React.Component {
   state = {};
@@ -19,7 +19,6 @@ export class CustomFilters extends React.Component {
       noResults: 'Aucun résultat',
     };
 
-    console.log(properties);
     return (
       <Filters
         locales={locales}
@@ -75,6 +74,7 @@ export class CustomFilters extends React.Component {
         }, {
           property: 'date_range',
           label: 'Test',
+          format: 'date',
           contiguousCalendarMonths: false,
           allowSingleDayRange: true,
           locales: {
@@ -89,7 +89,7 @@ export class CustomFilters extends React.Component {
             placeholder: 'Au JJ/MM/AAAA',
             className: 'range-end',
           },
-          type: TYPE_DATE_RANGE,
+          type: TYPE_RANGE,
         }, {
           property: 'switch_value',
           label: 'Switch label',
