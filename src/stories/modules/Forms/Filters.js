@@ -2,7 +2,7 @@ import React from 'react';
 import { action } from '@storybook/addon-actions';
 import { text, select, number, boolean } from '@storybook/addon-knobs';
 
-import Filters, { TYPE_SINGLE, TYPE_MANY, TYPE_BOOL, TYPE_RANGE } from '../../../modules/Forms/Filters';
+import Filters, { TYPE_SINGLE, TYPE_MANY, TYPE_BOOL, TYPE_RANGE, TYPE_DATE_RANGE } from '../../../modules/Forms/Filters';
 
 export class CustomFilters extends React.Component {
   state = {};
@@ -19,6 +19,7 @@ export class CustomFilters extends React.Component {
       noResults: 'Aucun résultat',
     };
 
+    console.log(properties);
     return (
       <Filters
         locales={locales}
@@ -71,6 +72,11 @@ export class CustomFilters extends React.Component {
           display: 'select',
           placeholder: 'Filtres...',
           values: ['Développeur', 'UX designer', 'Chef de projet'],
+        }, {
+          property: 'date_range',
+          label: 'Test',
+          type: TYPE_DATE_RANGE,
+          values: [null, null],
         }, {
           property: 'switch_value',
           label: 'Switch label',
