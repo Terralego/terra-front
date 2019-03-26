@@ -77,6 +77,11 @@ export const withMap = WrappedComponent =>
         preserveDrawingBuffer: navigator.userAgent.toLowerCase().indexOf('firefox') > -1,
       });
 
+      // This allows accessing MapboxGL instance from console (needed for e2e tests)
+      if (this.containerEl.current) {
+        this.containerEl.current.mapboxInstance = map;
+      }
+
       if (fitBounds) {
         map.fitBounds(fitBounds);
       }
