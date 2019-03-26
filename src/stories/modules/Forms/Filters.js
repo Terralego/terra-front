@@ -75,8 +75,21 @@ export class CustomFilters extends React.Component {
         }, {
           property: 'date_range',
           label: 'Test',
+          contiguousCalendarMonths: false,
+          allowSingleDayRange: true,
+          locales: {
+            overlappingDatesMessage: 'Date chevauchante',
+            invalidDateMessage: 'Date invalide',
+          },
+          startInputProps: {
+            placeholder: 'Du JJ/MM/AAAA',
+            className: 'range-start',
+          },
+          endInputProps: {
+            placeholder: 'Au JJ/MM/AAAA',
+            className: 'range-end',
+          },
           type: TYPE_DATE_RANGE,
-          values: [null, null],
         }, {
           property: 'switch_value',
           label: 'Switch label',
