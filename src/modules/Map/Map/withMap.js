@@ -43,6 +43,10 @@ export const withMap = WrappedComponent =>
       this.initMap();
     }
 
+    componentWillUnmount () {
+      this.isUnmount = true;
+    }
+
     get map () {
       const { map } = this.state;
       return map;
@@ -87,6 +91,8 @@ export const withMap = WrappedComponent =>
       }
 
       map.once('style.load', () => {
+        if (this.isUnmount) return;
+
         this.setState({ map });
         onMapLoaded(map);
       });

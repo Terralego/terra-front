@@ -24,10 +24,21 @@ jest.mock('@blueprintjs/core', () => {
 });
 
 it('should render correctly', () => {
-  const tree = new RenderColumn((
-    { value: 'Label1', sortable: true, display: true, index: 1 }
-  ));
+  const tree = new RenderColumn({
+    value: 'Label1', sortable: true, display: true, index: 1,
+  });
   expect(tree).toMatchSnapshot();
+});
+
+it('should render cell with type in className', () => {
+  const instance = new RenderColumn({
+    value: 'Label1', sortable: true, display: true, format: { type: 'number' }, index: 2,
+  });
+  const getCellData = () => 'foo';
+  const sortColumn = a => a;
+  const column = instance.getColumn(getCellData, sortColumn);
+  const cell = column.props.cellRenderer(1, 1);
+  expect(cell.props.className).toMatch('tf-table-cell--number');
 });
 
 it('should renderMenu', () => {
