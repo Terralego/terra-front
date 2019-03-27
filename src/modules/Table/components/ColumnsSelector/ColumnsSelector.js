@@ -2,23 +2,30 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import { Button, Checkbox, Popover, Position, Intent } from '@blueprintjs/core';
 
-export const ColumnsSelector = ({ columns, onChange, icon, position, intent }) => {
-  const options = (
-    <div className="table-columns-selector__options">
-      {columns.map(({ value, display, label = value }, index) => (
-        <Checkbox
-          onChange={event => onChange({ event, index })}
-          key={value}
-          label={label}
-          defaultChecked={display}
-          value={value}
-        />
-      ))}
-    </div>
-  );
+const getToggleState = columns =>
+  // 1 is all checked
+  // 0 is none checked
+  // -1 is underminated
+  columns.reduce((prev, { display }) => {
+    if (prev === -1) return prev;
+    if (prev !== undefined && prev !== +display) return -1;
+    return +display;
+  }, undefined);
+
+const toggleAll = ({ onChange, columns }) => ({ target: { checked } }) => {
+  columns.forEach(({ display }, index) => {
+    if (display === checked) return;
+    onChange({ event: { target: { checked } }, index });
+  });
+};
+
+export const ColumnsSelector = ({
+  columns, onChange, icon, position, intent, locales: { displayAllColumns, hideAllColumns } = {},
+}) => {
+  const toggleState = getToggleState(columns);
+
   return (
     <Popover
-      content={options}
       position={position}
       popoverClassName="table-columns-selector__options-popover"
     >
@@ -27,6 +34,25 @@ export const ColumnsSelector = ({ columns, onChange, icon, position, intent }) =
         minimal
         intent={intent}
       />
+      <div className="table-columns-selector__options">
+        <Checkbox
+          className="table-columns-selector__toggle-all"
+          onChange={toggleAll({ onChange, columns })}
+          key="toggle-all"
+          label={toggleState ? hideAllColumns : displayAllColumns}
+          checked={toggleState > 0}
+          indeterminate={toggleState === -1}
+        />
+        {columns.map(({ value, display, label = value }, index) => (
+          <Checkbox
+            onChange={event => onChange({ event, index })}
+            key={value}
+            label={label}
+            checked={display}
+            value={value}
+          />
+        ))}
+      </div>
     </Popover>
   );
 };

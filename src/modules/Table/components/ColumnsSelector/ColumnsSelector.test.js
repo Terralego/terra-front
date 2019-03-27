@@ -6,9 +6,9 @@ import ColumnsSelector from './ColumnsSelector';
 
 jest.mock('@blueprintjs/core', () => ({
   Button: jest.fn(() => null),
-  Checkbox: function Checkbox () { return null; },
+  Checkbox () { return null; },
   Label: jest.fn(() => null),
-  Popover: function Popover ({ content }) { return content; },
+  Popover ({ children }) { return children; },
   Position: {
     RIGHT_BOTTOM: 'RIGHT_BOTTOM',
   },
@@ -51,6 +51,17 @@ it('should render correctly', () => {
 it('should change item', () => {
   const onChange = jest.fn();
   const wrapper = mount(<ColumnsSelector columns={props.columns} onChange={onChange} />, {});
-  wrapper.find('Checkbox').get(0).props.onChange();
+  wrapper.find('Checkbox').get(1).props.onChange();
   expect(onChange).toHaveBeenCalled();
+});
+
+it('should toggle all', () => {
+  const onChange = jest.fn();
+  const wrapper = mount(<ColumnsSelector columns={props.columns} onChange={onChange} />, {});
+  wrapper.find('Checkbox').get(0).props.onChange({ target: { checked: true } });
+  expect(onChange).toHaveBeenCalledTimes(1);
+
+  onChange.mockClear();
+  wrapper.find('Checkbox').get(0).props.onChange({ target: { checked: false } });
+  expect(onChange).toHaveBeenCalledTimes(2);
 });

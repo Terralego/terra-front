@@ -6,12 +6,13 @@ import ColumnsSelector from '../ColumnsSelector';
 
 import './styles.scss';
 
-export const Header = ({ children, title, columns, onChange }) => (children || (
+export const Header = ({ children, title, columns, onChange, locales }) => (children || (
   <Navbar className="table-header">
     <Navbar.Group>
       <ColumnsSelector
         columns={columns}
         onChange={onChange}
+        locales={locales}
       />
     </Navbar.Group>
     {title && (

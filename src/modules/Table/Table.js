@@ -9,6 +9,8 @@ import './styles.scss';
 const DEFAULT_LOCALES = {
   sortAsc: 'Order asc',
   sortDesc: 'Order desc',
+  displayAllColumns: 'Display all columns',
+  hideAllColumns: 'Hide all columns',
 };
 
 export class Table extends React.Component {
@@ -100,7 +102,7 @@ export class Table extends React.Component {
 
     return (
       <div className="table">
-        <Header title={title} columns={columns} onChange={this.onHeaderChange} />
+        <Header title={title} columns={columns} onChange={this.onHeaderChange} locales={locales} />
         <TableComponent
           {...this.props}
           columns={filteredColumns}
