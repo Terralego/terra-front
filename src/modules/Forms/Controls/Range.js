@@ -93,6 +93,7 @@ export const Range = ({
                 }}
                 html={`${inputValue === undefined ? itemValue : inputValue}`}
                 onBlur={() => setBlured(true)}
+                onClick={selectAll}
                 onFocus={selectAll}
               />
             );
