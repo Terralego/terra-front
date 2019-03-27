@@ -20,6 +20,7 @@ const data = [
   ['fghjkk', 'ghjkl', '23.78'],
   ['abc', 'def', '1'],
   ['fghr', 'bnz', '12'],
+  ['lorem', 'ipsum', '12345.67890'],
 ];
 
 export default () => (

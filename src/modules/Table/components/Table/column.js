@@ -6,6 +6,10 @@ import {
   ColumnHeaderCell,
 } from '@blueprintjs/table';
 
+const formatValue = (value, type) => (type === 'number'
+  ? new Intl.NumberFormat().format(value)
+  : value);
+
 export class RenderColumn {
   constructor (props) {
     this.props = props;
@@ -33,7 +37,7 @@ export class RenderColumn {
 
     const cellRenderer = (rowIndex, columnIndex) => (
       <Cell className={formatType ? `tf-table-cell--${formatType}` : ''}>
-        {getCellData(rowIndex, columnIndex)}
+        {formatValue(getCellData(rowIndex, columnIndex), formatType)}
       </Cell>
     );
 
