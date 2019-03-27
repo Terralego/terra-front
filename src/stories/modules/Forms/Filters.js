@@ -55,9 +55,9 @@ export class CustomFilters extends React.Component {
           values: [10, 40],
           // Belows, props accepted by https://blueprintjs.com/docs/#core/components/sliders.range-slider
           min: 0,
-          max: 100,
-          stepSize: 2,
-          labelStepSize: 20,
+          max: 10000,
+          stepSize: 100,
+          labelStepSize: 1000,
         }, {
           property: 'switch_value',
           label: 'Switch label',
