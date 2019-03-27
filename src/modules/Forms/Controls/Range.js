@@ -12,10 +12,10 @@ const handleManualChange = ({
   onChange, prevMin, prevMax, newMin, newMax, min, max,
 }) => {
   if (newMin !== undefined) {
-    onChange([Math.min(max, Math.min(newMin, prevMax)), prevMax]);
+    onChange([Math.max(min, Math.min(newMin, prevMax)), prevMax]);
   }
   if (newMax !== undefined) {
-    onChange([prevMin, Math.max(min, Math.max(prevMin, newMax))]);
+    onChange([prevMin, Math.min(max, Math.max(prevMin, newMax))]);
   }
 };
 
