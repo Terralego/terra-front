@@ -69,6 +69,7 @@ export class CustomFilters extends React.Component {
           label: 'Test',
           type: TYPE_MANY,
           display: 'select',
+          placeholder: 'Filtres...',
           values: ['Développeur', 'UX designer', 'Chef de projet'],
         }, {
           property: 'switch_value',

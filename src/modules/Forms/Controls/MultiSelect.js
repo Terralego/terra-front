@@ -12,27 +12,35 @@ import { MultiSelect as BPMultiSelect } from '@blueprintjs/select';
 
 export class MultiSelect extends React.Component {
   static propTypes = {
+    value: PropTypes.oneOfType([
+      PropTypes.arrayOf(PropTypes.shape({
+        id: PropTypes.number,
+        label: PropTypes.string,
+        value: PropTypes.string,
+      })),
+      PropTypes.shape({
+        id: PropTypes.number,
+        label: PropTypes.string,
+        value: PropTypes.string,
+      }),
+    ]),
     locales: PropTypes.shape({ noResults: PropTypes.string }),
     label: PropTypes.string,
     onChange: PropTypes.func,
     values: PropTypes.arrayOf(PropTypes.string),
-    placeholder: PropTypes.string,
-    className: PropTypes.string,
   };
 
   static defaultProps = {
     locales: { noResults: 'No results.' },
     label: '',
     values: [],
-    placeholder: 'Filter…',
-    className: 'tf-multiselect',
+    value: [],
     onChange () {
     },
   };
 
   state = {
     items: [],
-    selectedItems: [],
     query: '',
   };
 
@@ -40,36 +48,28 @@ export class MultiSelect extends React.Component {
     this.updateItems();
   }
 
-  getSelectedIndex (item) {
-    const { selectedItems } = this.state;
-    return selectedItems.indexOf(item);
-  }
-
   handleChange = item => {
-    const { onChange } = this.props;
-    if (!this.isItemSelected(item)) {
-      this.selectItem(item);
-      onChange(item);
-    } else {
-      this.deselectItem(this.getSelectedIndex(item));
-      onChange(item);
-    }
+    const { value, onChange } = this.props;
+    const newValue = value.includes(item)
+      ? [...value.filter(val => val !== item)]
+      : [...value, item];
+    onChange(newValue);
   };
 
   handleQueryChange = query => {
     this.setState({ query });
   };
 
-  handleTagRemove = (tag, index) => {
-    this.deselectItem(index);
+  handleTagRemove = tag => {
+    const { value, onChange } = this.props;
+    const newValue = [...value.filter(val => val.value !== tag)];
+    onChange(newValue);
   };
 
-  handleClear = () => this.setState({ selectedItems: [] });
-
-  selectItem (item) {
-    const { selectedItems } = this.state;
-    this.setState({ selectedItems: [...selectedItems, item] });
-  }
+  handleClear = () => {
+    const { onChange } = this.props;
+    onChange([]);
+  };
 
   updateItems () {
     const { values } = this.props;
@@ -79,33 +79,19 @@ export class MultiSelect extends React.Component {
         label: v,
         value: v,
       })),
-    }, () => this.state);
+    });
   }
-
-  isItemSelected (item) {
-    return this.getSelectedIndex(item) !== -1;
-  }
-
-  deselectItem (index) {
-    const { selectedItems } = this.state;
-    const newItems = [...selectedItems];
-    newItems.splice(index, 1);
-    this.setState({ selectedItems: newItems });
-  }
-
-  renderTag = item => item.label;
 
   render () {
     const {
       handleChange,
       handleTagRemove,
       handleQueryChange,
-      renderTag,
     } = this;
-    const { items, query, selectedItems } = this.state;
-    const { placeholder, className, label, locales } = this.props;
+    const { items, query } = this.state;
+    const { placeholder, className, label, locales, value, ...props } = this.props;
 
-    const clearButton = selectedItems.length > 0 ? <Button icon="cross" minimal onClick={this.handleClear} /> : null;
+    const clearButton = value.length > 0 ? <Button icon="cross" minimal onClick={this.handleClear} /> : null;
 
     const filteredItems = query === ''
       ? items
@@ -118,12 +104,12 @@ export class MultiSelect extends React.Component {
         <BPMultiSelect
           resetOnSelect
           items={filteredItems}
-          selectedItems={selectedItems}
+          selectedItems={value}
           className={className}
           noResults={<MenuItem disabled text={locales.noResults} />}
           onItemSelect={handleChange}
           onQueryChange={handleQueryChange}
-          tagRenderer={renderTag}
+          tagRenderer={item => item.label}
           placeholder={placeholder}
           tagInputProps={{
             tagProps: { intent: Intent.NONE, interactive: true },
@@ -139,7 +125,7 @@ export class MultiSelect extends React.Component {
             return (
               <MenuItem
                 active={modifiers.active}
-                icon={this.isItemSelected(item) ? 'tick' : 'blank'}
+                icon={value.includes(item) ? 'tick' : 'blank'}
                 key={item.id}
                 onClick={handleClick}
                 text={item.label}
@@ -147,6 +133,7 @@ export class MultiSelect extends React.Component {
               />
             );
           }}
+          {...props}
         />
       </FormGroup>
     );
