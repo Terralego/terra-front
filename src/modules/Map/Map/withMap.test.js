@@ -66,3 +66,24 @@ it('should fit bounds', () => {
   });
   expect(mapboxgl.map.fitBounds).toHaveBeenCalledWith([[1, 2], [3, 4]]);
 });
+
+it('should not call onMapLoaded if component is unmount', () => {
+  const instance = new ComponentWithMap({
+    onMapInit () {},
+  });
+  instance.setState = jest.fn();
+  instance.componentWillUnmount();
+  instance.initMap();
+  expect(instance.setState).not.toHaveBeenCalled();
+});
+
+it('should set instance in el for debug purpose', () => {
+  const instance = new ComponentWithMap({
+    onMapInit () {},
+    onMapLoaded () {},
+  });
+  instance.setState = () => null;
+  instance.containerEl.current = {};
+  instance.initMap();
+  expect(instance.containerEl.current.mapboxInstance).toBe(mapboxgl.map);
+});
