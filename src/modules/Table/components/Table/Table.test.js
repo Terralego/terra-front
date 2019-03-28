@@ -41,6 +41,9 @@ it('should render with loading', () => {
 it('should get cell data', () => {
   const instance = new Table(props);
   expect(instance.getCellData(1, 0)).toBe('row1-a');
+
+  instance.state.sortedIndexMap = [0];
+  expect(instance.getCellData(1, 0)).toBe('row1-a');
 });
 
 describe('should sort column', () => {
@@ -67,6 +70,14 @@ describe('should sort column', () => {
     instance.sortColumn(3, 'asc', 'date');
     expect(wrapper.state().sortedIndexMap).toEqual([1, 0]);
   });
+});
+
+it('should update sorting', () => {
+  const instance = new Table(props);
+  instance.sortColumn = jest.fn();
+  instance.state.lastSort = [1, 2, 3];
+  instance.componentDidUpdate({ data: [] });
+  expect(instance.sortColumn).toHaveBeenCalledWith(1, 2, 3);
 });
 
 it('should format cell', () => {
