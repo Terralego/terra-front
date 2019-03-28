@@ -9,7 +9,7 @@ env.addFilter('slug', value => slugify(`${value || ''}`.toLowerCase()));
 
 export const MarkdownRenderer = ({ template, content, history, ...props }) => {
   const source = template
-    ? nunjucks.renderString(template, props)
+    ? env.renderString(template, props)
     : content;
 
   return (
