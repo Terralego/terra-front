@@ -42,7 +42,16 @@ export class Table extends React.Component {
 
   state = {
     sortedIndexMap: null,
+    lastSort: [],
   };
+
+  componentDidUpdate ({ data: prevData }) {
+    const { data } = this.props;
+    const { lastSort } = this.state;
+    if (data !== prevData) {
+      this.sortColumn(...lastSort);
+    }
+  }
 
   get columns () {
     const { columns, loading } = this.props;
@@ -87,7 +96,10 @@ export class Table extends React.Component {
       const orderB = order === 'asc' ? b : a;
       return this.compare(data[orderA][columnIndex], data[orderB][columnIndex], type);
     });
-    this.setState({ sortedIndexMap });
+    this.setState({
+      lastSort: [columnIndex, order, type],
+      sortedIndexMap,
+    });
   };
 
   compare = (a, b, type) => {
