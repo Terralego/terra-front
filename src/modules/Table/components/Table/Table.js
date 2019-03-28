@@ -58,7 +58,13 @@ export class Table extends React.Component {
     const { data } = this;
     const { sortedIndexMap: initialSortedIndexMap } = this.state;
     const sortedIndexMap = initialSortedIndexMap || data.map((_, k) => k);
-    const cell = data[sortedIndexMap[rowIndex]][columnIndex];
+
+    if (sortedIndexMap.length === data.length) {
+      const cell = data[sortedIndexMap[rowIndex]][columnIndex];
+      return this.formatCell(cell, columnIndex);
+    }
+
+    const cell = data[rowIndex][columnIndex];
     return this.formatCell(cell, columnIndex);
   };
 
