@@ -19,7 +19,7 @@ export class Range extends React.Component {
 
   static defaultProps = {
     label: '',
-    value: null,
+    value: undefined,
     onChange () {},
     min: DEFAULT_MIN,
     max: DEFAULT_MAX,
