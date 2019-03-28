@@ -12,18 +12,7 @@ import { MultiSelect as BPMultiSelect } from '@blueprintjs/select';
 
 export class MultiSelect extends React.Component {
   static propTypes = {
-    value: PropTypes.oneOfType([
-      PropTypes.arrayOf(PropTypes.shape({
-        id: PropTypes.number,
-        label: PropTypes.string,
-        value: PropTypes.string,
-      })),
-      PropTypes.shape({
-        id: PropTypes.number,
-        label: PropTypes.string,
-        value: PropTypes.string,
-      }),
-    ]),
+    value: PropTypes.oneOfType([PropTypes.arrayOf(PropTypes.string), PropTypes.string]),
     locales: PropTypes.shape({ noResults: PropTypes.string }),
     label: PropTypes.string,
     onChange: PropTypes.func,
@@ -62,7 +51,7 @@ export class MultiSelect extends React.Component {
 
   handleTagRemove = tag => {
     const { value, onChange } = this.props;
-    const newValue = [...value.filter(val => val.value !== tag)];
+    const newValue = [...value.filter(val => val !== tag)];
     onChange(newValue);
   };
 
@@ -74,11 +63,7 @@ export class MultiSelect extends React.Component {
   updateItems () {
     const { values } = this.props;
     this.setState({
-      items: [...values].map((v, index) => ({
-        id: index,
-        label: v,
-        value: v,
-      })),
+      items: [...values],
     });
   }
 
@@ -95,7 +80,7 @@ export class MultiSelect extends React.Component {
 
     const filteredItems = query === ''
       ? items
-      : items.filter(({ label: itemLabel = '' }) => itemLabel.toLowerCase().includes(query.toLowerCase()));
+      : items.filter(item => item.toLowerCase().includes(query.toLowerCase()));
 
     return (
       <FormGroup
@@ -109,7 +94,7 @@ export class MultiSelect extends React.Component {
           noResults={<MenuItem disabled text={locales.noResults} />}
           onItemSelect={handleChange}
           onQueryChange={handleQueryChange}
-          tagRenderer={item => item.label}
+          tagRenderer={item => item}
           placeholder={placeholder}
           tagInputProps={{
             tagProps: { intent: Intent.NONE, interactive: true },
@@ -126,9 +111,9 @@ export class MultiSelect extends React.Component {
               <MenuItem
                 active={modifiers.active}
                 icon={value.includes(item) ? 'tick' : 'blank'}
-                key={item.id}
+                key={item}
                 onClick={handleClick}
-                text={item.label}
+                text={item}
                 shouldDismissPopover={false}
               />
             );
