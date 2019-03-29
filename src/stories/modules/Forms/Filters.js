@@ -17,6 +17,8 @@ export class CustomFilters extends React.Component {
 
     const locales = {
       noResults: 'Aucun résultat',
+      overlappingDatesMessage: 'Date chevauchante',
+      invalidDateMessage: 'Date invalide',
     };
 
     return (
@@ -71,6 +73,21 @@ export class CustomFilters extends React.Component {
           display: 'select',
           placeholder: 'Filtres...',
           values: ['Développeur', 'UX designer', 'Chef de projet'],
+        }, {
+          property: 'date_range',
+          label: 'Test',
+          format: 'date',
+          contiguousCalendarMonths: false,
+          allowSingleDayRange: true,
+          startInputProps: {
+            placeholder: 'Du JJ/MM/AAAA',
+            className: 'range-start',
+          },
+          endInputProps: {
+            placeholder: 'Au JJ/MM/AAAA',
+            className: 'range-end',
+          },
+          type: TYPE_RANGE,
         }, {
           property: 'switch_value',
           label: 'Switch label',
