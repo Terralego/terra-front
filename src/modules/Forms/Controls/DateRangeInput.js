@@ -10,8 +10,10 @@ const formatDate = date => date.toLocaleDateString();
 const parseDate = str => new Date(str);
 
 // Date Error Message
-const DEFAULT_OVERLAPPING_DATES_MESSAGE = 'Overlapping date';
-const DEFAULT_INVALID_DATE_MESSAGE = 'Invalid date';
+const DEFAULT_LOCALES = {
+  overlappingDatesMessage: 'Overlapping date.',
+  invalidDateMessage: 'Invalid date.',
+};
 
 export const DateRangeInput = ({
   className,
@@ -30,8 +32,8 @@ export const DateRangeInput = ({
       onChange={onChange}
       parseDate={parseDate}
       value={value}
-      overlappingDatesMessage={overlappingDatesMessage || DEFAULT_OVERLAPPING_DATES_MESSAGE}
-      invalidDateMessage={invalidDateMessage || DEFAULT_INVALID_DATE_MESSAGE}
+      overlappingDatesMessage={overlappingDatesMessage || DEFAULT_LOCALES.overlappingDatesMessage}
+      invalidDateMessage={invalidDateMessage || DEFAULT_LOCALES.invalidDateMessage}
       {...props}
     />
   </FormGroup>
@@ -49,8 +51,8 @@ DateRangeInput.propTypes = {
 
 DateRangeInput.defaultProps = {
   locales: {
-    overlappingDatesMessage: DEFAULT_OVERLAPPING_DATES_MESSAGE,
-    invalidDateMessage: DEFAULT_INVALID_DATE_MESSAGE,
+    overlappingDatesMessage: DEFAULT_LOCALES.overlappingDatesMessage,
+    invalidDateMessage: DEFAULT_LOCALES.invalidDateMessage,
   },
   label: '',
   value: [null, null],

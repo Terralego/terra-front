@@ -32,12 +32,9 @@ export function getComponent (type, values, display, format) {
         ? MultiSelect
         : Checkboxes;
     case TYPE_RANGE:
-      switch (format) {
-        case 'date':
-          return DateRangeInput;
-        default:
-          return Range;
-      }
+      return format === 'date'
+        ? DateRangeInput
+        : Range;
     case TYPE_BOOL:
       return Switch;
     default:

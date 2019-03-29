@@ -3,7 +3,6 @@ import renderer from 'react-test-renderer';
 import { shallow } from 'enzyme';
 
 import { DateRangeInput } from './DateRangeInput';
-import MultiSelect from './MultiSelect';
 
 jest.mock('@blueprintjs/datetime', () => ({
   DateRangeInput: () => <p>BPDateRangeInput</p>,
@@ -34,17 +33,6 @@ it('should render local error', () => {
   expect(wrapper.find('DateRangeInput').props().invalidDateMessage).toEqual('Date invalide');
 });
 
-it('should render default error', () => {
-  const wrapper = shallow((
-    <DateRangeInput
-      label="Change Values of my range"
-      onChange={() => null}
-    />
-  ));
-  expect(wrapper.find('DateRangeInput').props().overlappingDatesMessage).toEqual('Overlapping date');
-  expect(wrapper.find('DateRangeInput').props().invalidDateMessage).toEqual('Invalid date');
-});
-
 it('should mount & update correctly', () => {
   const onChange = jest.fn();
   const date = new Date();
@@ -72,4 +60,10 @@ it('shoud render date', () => {
   const { parseDate } = wrapper.find('DateRangeInput').props();
   wrapper.find('DateRangeInput').props();
   expect(parseDate(str)).toEqual(new Date(str));
+});
+
+it('should render default locales', () => {
+  const wrapper = shallow(<DateRangeInput locales={{ foo: 'foo' }} />);
+  expect(wrapper.find('DateRangeInput').props().overlappingDatesMessage).toBe('Overlapping date.');
+  expect(wrapper.find('DateRangeInput').props().invalidDateMessage).toBe('Invalid date.');
 });
