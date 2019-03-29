@@ -651,6 +651,7 @@ describe('Interactions', () => {
     const instance = new InteractiveMap({ interactions });
     instance.map = {};
     instance.map.flyTo = jest.fn();
+    instance.map.fire = jest.fn();
     instance.map.getZoom = jest.fn(() => 10);
     const feature = {
       type: 'Feature',
@@ -710,6 +711,7 @@ describe('Interactions', () => {
     const instance = new InteractiveMap({ interactions });
     instance.map = {};
     instance.map.flyTo = jest.fn();
+    instance.map.fire = jest.fn();
     instance.map.getMinZoom = jest.fn(() => 0);
     const feature = {
       type: 'Feature',
