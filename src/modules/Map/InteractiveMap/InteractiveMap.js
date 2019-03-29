@@ -297,6 +297,7 @@ export class InteractiveMap extends React.Component {
       center: centroid(feature).geometry.coordinates,
       zoom: minZoom > targetZoom ? minZoom : targetZoom,
     });
+    map.fire('updateMap');
   }
 
   zoom (feature, step = 1) {
@@ -305,6 +306,7 @@ export class InteractiveMap extends React.Component {
       center: centroid(feature).geometry.coordinates,
       zoom: map.getZoom() + step,
     });
+    map.fire('updateMap');
   }
 
   highlight () {
