@@ -8,8 +8,8 @@ jest.mock('@blueprintjs/select', () => ({
   MultiSelect: function BPMultiSelect ({ items }) {
     return (
       <select multiple>
-        {items.map(({ label, value }) => (
-          <option key={`${value}${label}`} value={value}>{label}</option>
+        {items.map(label => (
+          <option key={label} value={label}>{label}</option>
         ))}
       </select>
     );
@@ -99,27 +99,30 @@ it('should handle tag remove', () => {
 });
 
 it('should render tag', () => {
-  const wrapper = shallow(<MultiSelect />);
+  const wrapper = shallow(<MultiSelect values={['foo', 'bar']} />);
   const { tagRenderer } = wrapper.find('BPMultiSelect').props();
   expect(tagRenderer('foo')).toBe('foo');
 });
 
 it('should render item', () => {
-  const wrapper = shallow(<MultiSelect />);
-  const modifiers = { matchesPredicate: true };
-  const ItemRenderer = ({ item, ...props }) =>
-    wrapper.find('BPMultiSelect').props().itemRenderer(
-      item,
-      {
-        ...props,
-        modifiers: { ...props.modifiers || {} },
-      },
-    );
+  const wrapper = shallow(<MultiSelect values={['foo', 'bar']} />);
+  {
+    const { itemRenderer } = wrapper.find('BPMultiSelect').props();
+    expect(itemRenderer('foo', { modifiers: { matchesPredicate: false } })).toBe(null);
+    expect(itemRenderer('foo', { modifiers: { matchesPredicate: true } })).not.toBe(null);
+    const itemRendered = itemRenderer('foo', { modifiers: { matchesPredicate: true } });
+    expect(itemRendered.type.name).toBe('BPMenuItem');
+    expect(itemRendered.props.icon).toBe('blank');
+  }
+  wrapper.setProps({ value: ['foo'] });
+  {
+    const { itemRenderer } = wrapper.find('BPMultiSelect').props();
+    const itemRendered = itemRenderer('foo', { modifiers: { matchesPredicate: true } });
+    expect(itemRendered.props.icon).toBe('tick');
+  }
+});
 
-  console.log(expect(shallow(
-    <ItemRenderer
-      item={['foo']}
-      {...modifiers}
-    />,
-  ).props()));
+it('should render default locales', () => {
+  const wrapper = shallow(<MultiSelect locales={{ foo: 'foo' }} values={['foo', 'bar']} />);
+  expect(wrapper.find('BPMultiSelect').props().noResults.props.text).toBe('No results.');
 });

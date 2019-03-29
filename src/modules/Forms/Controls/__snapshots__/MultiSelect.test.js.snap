@@ -8,8 +8,16 @@ exports[`should render correctly 1`] = `
   <select
     multiple={true}
   >
-    <option />
-    <option />
+    <option
+      value="foo"
+    >
+      foo
+    </option>
+    <option
+      value="bar"
+    >
+      bar
+    </option>
   </select>
    
 </div>
@@ -23,7 +31,11 @@ exports[`should render filtered items 1`] = `
   <select
     multiple={true}
   >
-    <option />
+    <option
+      value="foo"
+    >
+      foo
+    </option>
   </select>
    
 </div>
@@ -37,8 +49,16 @@ exports[`should render multiple value 1`] = `
   <select
     multiple={true}
   >
-    <option />
-    <option />
+    <option
+      value="foo"
+    >
+      foo
+    </option>
+    <option
+      value="bar"
+    >
+      bar
+    </option>
   </select>
    
 </div>

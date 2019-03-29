@@ -10,22 +10,22 @@ import {
 } from '@blueprintjs/core';
 import { MultiSelect as BPMultiSelect } from '@blueprintjs/select';
 
+const DEFAULT_LOCALES = { noResults: 'No results.' };
+
 export class MultiSelect extends React.Component {
   static propTypes = {
-    value: PropTypes.oneOfType([PropTypes.arrayOf(PropTypes.string), PropTypes.string]),
+    value: PropTypes.arrayOf(PropTypes.string),
     locales: PropTypes.shape({ noResults: PropTypes.string }),
     label: PropTypes.string,
     onChange: PropTypes.func,
-    values: PropTypes.arrayOf(PropTypes.string),
+    values: PropTypes.arrayOf(PropTypes.string).isRequired,
   };
 
   static defaultProps = {
-    locales: { noResults: 'No results.' },
+    locales: DEFAULT_LOCALES,
     label: '',
-    values: [],
     value: [],
-    onChange () {
-    },
+    onChange () {},
   };
 
   state = {
@@ -49,11 +49,7 @@ export class MultiSelect extends React.Component {
     this.setState({ query });
   };
 
-  handleTagRemove = tag => {
-    const { value, onChange } = this.props;
-    const newValue = [...value.filter(val => val !== tag)];
-    onChange(newValue);
-  };
+  handleTagRemove = tag => this.handleChange(tag);
 
   handleClear = () => {
     const { onChange } = this.props;
@@ -74,9 +70,9 @@ export class MultiSelect extends React.Component {
       handleQueryChange,
     } = this;
     const { items, query } = this.state;
-    const { placeholder, className, label, locales, value, ...props } = this.props;
+    const { label, locales, value, ...props } = this.props;
 
-    const clearButton = value.length > 0 ? <Button icon="cross" minimal onClick={this.handleClear} /> : null;
+    const displayClearButton = value.length > 0;
 
     const filteredItems = query === ''
       ? items
@@ -90,16 +86,16 @@ export class MultiSelect extends React.Component {
           resetOnSelect
           items={filteredItems}
           selectedItems={value}
-          className={className}
-          noResults={<MenuItem disabled text={locales.noResults} />}
+          noResults={<MenuItem disabled text={locales.noResults || DEFAULT_LOCALES.noResults} />}
           onItemSelect={handleChange}
           onQueryChange={handleQueryChange}
           tagRenderer={item => item}
-          placeholder={placeholder}
           tagInputProps={{
             tagProps: { intent: Intent.NONE, interactive: true },
             onRemove: handleTagRemove,
-            rightElement: clearButton,
+            rightElement: displayClearButton && (
+              <Button icon="cross" minimal onClick={this.handleClear} />
+            ),
           }}
           itemRenderer={(item, {
             handleClick, modifiers: { matchesPredicate, ...modifiers },

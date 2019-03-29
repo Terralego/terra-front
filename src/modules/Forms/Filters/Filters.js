@@ -64,8 +64,7 @@ export class Filters extends React.Component {
 
   static defaultProps = {
     locales: {},
-    onChange () {
-    },
+    onChange () {},
     filters: [],
     properties: {},
     layer: '',
