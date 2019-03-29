@@ -6,6 +6,7 @@ import Text from '../Controls/Text';
 import Checkboxes from '../Controls/Checkboxes';
 import Range from '../Controls/Range';
 import Switch from '../Controls/Switch';
+import MultiSelect from '../Controls/MultiSelect';
 
 export const TYPE_SINGLE = 'single';
 export const TYPE_MANY = 'many';
@@ -17,14 +18,18 @@ const DEFAULT_LOCALES = {
   emptySelectItem: 'Nothing',
 };
 
-export function getComponent (type, values) {
+export function getComponent (type, values, display) {
   switch (type) {
     case TYPE_SINGLE:
       return Array.isArray(values)
         ? Select
         : Text;
     case TYPE_MANY:
-      return Checkboxes;
+      return (
+        Array.isArray(values) && values.length > 10) ||
+        (display === 'select')
+        ? MultiSelect
+        : Checkboxes;
     case TYPE_RANGE:
       return Range;
     case TYPE_BOOL:
@@ -55,7 +60,7 @@ export class Filters extends React.Component {
     properties: PropTypes.shape({
       // property: value
     }),
-  }
+  };
 
   static defaultProps = {
     locales: {},
@@ -63,12 +68,12 @@ export class Filters extends React.Component {
     filters: [],
     properties: {},
     layer: '',
-  }
+  };
 
   onChange = property => value => {
     const { onChange, properties } = this.props;
     onChange({ ...properties, [property]: value });
-  }
+  };
 
   render () {
     const { onChange } = this;
@@ -77,8 +82,8 @@ export class Filters extends React.Component {
 
     return (
       <div>
-        {filters.map(({ type, values, property, ...props }) => {
-          const Component = getComponent(type, values);
+        {filters.map(({ type, values, property, display, ...props }) => {
+          const Component = getComponent(type, values, display);
 
           return (
             <Component

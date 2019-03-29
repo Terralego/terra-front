@@ -21,6 +21,7 @@ jest.mock('@blueprintjs/core', () => ({
 }));
 
 jest.mock('../Controls/Text', () => () => <p>ControlText</p>);
+jest.mock('../Controls/MultiSelect', () => () => <p>ControlMultiSelect</p>);
 jest.mock('../Controls/Select', () => () => <p>ControlSelect</p>);
 jest.mock('../Controls/Checkboxes', () => () => <p>ControlCheckboxes</p>);
 jest.mock('../Controls/Range', () => () => <p>ControlRange</p>);
@@ -43,6 +44,12 @@ it('should build a form', () => {
         property: 'many_values',
         label: 'Foo',
         type: TYPE_MANY,
+        values: ['développeur', 'UX designer', 'Chef de projet'],
+      }, {
+        property: 'many_values_select_forced',
+        label: 'Foo',
+        type: TYPE_MANY,
+        display: 'select',
         values: ['développeur', 'UX designer', 'Chef de projet'],
       }, {
         property: 'range_values',
