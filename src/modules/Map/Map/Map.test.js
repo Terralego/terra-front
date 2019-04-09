@@ -220,15 +220,23 @@ describe('on properties changes', () => {
       layers: [{
         id: 'layer1',
         type: 'fill',
-      }, {
-        id: 'layer2',
-        type: 'circle',
+      }],
+    };
+    const customStyle2 = {
+      sources: [{
+        id: 'foo',
+        type: 'vector',
+        url: 'somewhere',
+      }],
+      layers: [{
+        id: 'layer1',
+        type: 'fill',
       }],
     };
     const wrapper = shallow(<Map {...props} customStyle={customStyle} />);
     const instance = wrapper.instance();
     jest.spyOn(instance, 'replaceLayers');
-    wrapper.setProps({ customStyle });
+    wrapper.setProps({ customStyle: customStyle2 });
     expect(instance.replaceLayers).not.toHaveBeenCalled();
   });
 

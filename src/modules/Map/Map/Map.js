@@ -149,7 +149,7 @@ export class MapComponent extends React.Component {
       this.toggleRotate();
     }
 
-    if (customStyle !== prevProps.customStyle) {
+    if (JSON.stringify(customStyle) !== JSON.stringify(prevProps.customStyle)) {
       this.replaceLayers(prevProps.customStyle);
     }
   }
