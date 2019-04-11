@@ -1,7 +1,6 @@
 image: node:10.9.0 # Should match .nvmrc content
 
 stages:
-  - install
   - tests
   - build
   - deploy
@@ -16,40 +15,23 @@ before_script:
   - npm --version
   - ls -alh
 
-# Install stage
-
-npm_install:
-  tags: [shared-ci-docker]
-  stage: install
-  script:
-    - npm ci
-  artifacts:
-    paths:
-      - node_modules
-    expire_in: 3 hours
-    name: "node_modules-$(sha1sum package-lock.json | cut -c1-7)"
-
 # Tests stage
 
 npm_test:
   tags: [shared-ci-docker]
   stage: tests
   script:
+    - npm ci
+    - npm run lint
     - npm run coverage
   coverage: /All files[^|]*\|[^|]*\s+([\d\.]+)/
 
-npm_run_lint:
-  tags: [shared-ci-docker]
-  stage: tests
-  script:
-    - npm run lint
-
-# Build stage
 
 npm_run_build:
   tags: [shared-ci-docker]
   stage: build
   script:
+    - npm ci
     - npm run build
   artifacts:
     expire_in: 2 days
@@ -87,6 +69,8 @@ npm_run_deploy:
   stage: publish
   only:
     - tags
+  dependencies:
+    - npm_run_build
   script:
     - echo "//registry.npmjs.org/:_authToken=${NPM_TOKEN}">~/.npmrc
     - scripts/publish.sh

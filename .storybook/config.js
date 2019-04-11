@@ -1,12 +1,12 @@
 import { configure, addDecorator } from '@storybook/react';
 import { withKnobs } from '@storybook/addon-knobs';
-import { configureViewport } from '@storybook/addon-viewport';
+import { withA11y } from '@storybook/addon-a11y';
 
 function loadStories() {
   require('../src/stories');
 }
 
 addDecorator(withKnobs);
-configureViewport();
+addDecorator(withA11y);
 
 configure(loadStories, module);
