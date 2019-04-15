@@ -27,8 +27,9 @@ export const createCluster = (map, layer) => {
         color = '#000000',
       } = {},
       border = 5,
+      paint: clusterPaint = {},
     },
-    paint: originalPaint = {},
+    paint: layerPaint = {},
     ...layerProps
   } = layer;
   const clusterSourceName = getClusterSourceName(layer.id);
@@ -61,23 +62,12 @@ export const createCluster = (map, layer) => {
   });
 
   const paint = {
-    ...originalPaint,
-    'circle-radius': [
-      'case',
-      ['has', 'point_count'],
-      getPaintExpression(steps, sizes),
-      sizes[0]],
-    'circle-color': [
-      'case',
-      ['has', 'point_count'],
-      getPaintExpression(steps, colors),
-      ...(originalPaint['circle-color']
-        ? [
-          ['!', ['has', 'point_count']],
-          originalPaint['circle-color'],
-        ]
-        : []),
-      colors[0]],
+    ...clusterPaint,
+    'circle-radius': getPaintExpression(steps, sizes),
+    'circle-color': getPaintExpression(steps, colors),
+    'circle-stroke-width': border,
+    'circle-stroke-opacity': 0.4,
+    'circle-stroke-color': getPaintExpression(steps, colors),
   };
 
   /**
@@ -88,30 +78,21 @@ export const createCluster = (map, layer) => {
     id,
     type: 'circle',
     source: clusterSourceName,
+    filter: ['has', 'point_count'],
     paint: { ...paint },
   });
 
   /**
-   * The border layer
+   * The no-clustered layer
    */
-  if (border) {
-    map.addLayer({
-      ...layerProps,
-      id: `${id}-border`,
-      type: 'circle',
-      source: clusterSourceName,
-      filter: ['has', 'point_count'],
-      paint: {
-        ...paint,
-        'circle-opacity': 0.4,
-        'circle-radius': [
-          'case',
-          ['has', 'point_count'],
-          getPaintExpression(steps, sizes.map(size => size + border)),
-          sizes[0] + border],
-      },
-    });
-  }
+  map.addLayer({
+    ...layerProps,
+    id: `${id}-unclustered`,
+    type: 'circle',
+    source: clusterSourceName,
+    filter: ['!', ['has', 'point_count']],
+    paint: { ...layerPaint },
+  });
 
   /**
    * The count layer
