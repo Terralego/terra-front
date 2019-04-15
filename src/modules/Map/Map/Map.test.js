@@ -16,7 +16,9 @@ jest.mock('mapbox-gl', () => {
   const off = jest.fn();
   const map = {
     addControl: jest.fn(() => {}),
+    getLayer: jest.fn(() => {}),
     addLayer: jest.fn(() => {}),
+    getSource: jest.fn(() => {}),
     addSource: jest.fn(() => {}),
     removeControl: jest.fn(() => {}),
     removeLayer: jest.fn(() => {}),
@@ -163,7 +165,7 @@ describe('on properties changes', () => {
     const instance = wrapper.instance();
     jest.spyOn(instance, 'createLayers');
     wrapper.setProps({ backgroundStyle: 'foo' });
-    expect(props.map.setStyle).toHaveBeenCalledWith('foo');
+    expect(props.map.setStyle).toHaveBeenCalledWith('foo', { diff: false });
     expect(instance.createLayers).toHaveBeenCalled();
   });
 
@@ -238,6 +240,56 @@ describe('on properties changes', () => {
     jest.spyOn(instance, 'replaceLayers');
     wrapper.setProps({ customStyle: customStyle2 });
     expect(instance.replaceLayers).not.toHaveBeenCalled();
+  });
+
+  it('should remove layers and sources', () => {
+    const map = {
+      getStyle: () => ({ layers: [] }),
+      getSource: jest.fn(() => true),
+      getLayer: jest.fn(() => true),
+      removeSource: jest.fn(),
+      addSource: jest.fn(),
+      removeLayer: jest.fn(),
+    };
+    const instance = new Map({ map });
+    instance.deleteLayers({
+      sources: [{
+        id: 'source1',
+        foo: 'foo',
+      }, {
+        id: 'source2',
+        bar: 'bar',
+      }],
+      layers: [{
+        id: 'layer1',
+        foo: 'foo',
+      }, {
+        id: 'layer2',
+        bar: 'bar',
+      }],
+    });
+    expect(map.getSource).toHaveBeenCalledTimes(2);
+    expect(map.getSource).toHaveBeenCalledWith('source1');
+    expect(map.getSource).toHaveBeenCalledWith('source2');
+    expect(map.getLayer).toHaveBeenCalledTimes(2);
+    expect(map.getLayer).toHaveBeenCalledWith({
+      id: 'layer1',
+      foo: 'foo',
+    });
+    expect(map.getLayer).toHaveBeenCalledWith({
+      id: 'layer2',
+      bar: 'bar',
+    });
+    expect(map.removeSource).toHaveBeenCalledWith('source1', { foo: 'foo' });
+    expect(map.removeSource).toHaveBeenCalledWith('source2', { bar: 'bar' });
+    expect(map.removeLayer).toHaveBeenCalledWith({
+      id: 'layer1',
+      foo: 'foo',
+    }, undefined);
+    expect(map.removeLayer).toHaveBeenCalledWith({
+      id: 'layer2',
+      bar: 'bar',
+    }, undefined);
   });
 
   it('should call addControl on init', () => {
