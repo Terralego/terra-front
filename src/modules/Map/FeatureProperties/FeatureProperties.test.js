@@ -145,3 +145,27 @@ it('should reload properties', () => {
   instance.componentDidUpdate({ properties: {} });
   expect(instance.fetchProperties).toHaveBeenCalled();
 });
+
+it('should not crash when properties is undefined', async () => {
+  const instance = new FeatureProperties({ id: '_id' });
+  instance.setState = () => null;
+  let error;
+  try {
+    await instance.fetchProperties();
+  } catch (e) {
+    error = e;
+  }
+  expect(error).not.toBeDefined();
+});
+
+it('should not crash when properties is falsy', async () => {
+  const instance = new FeatureProperties({ id: '_id', properties: null });
+  instance.setState = () => null;
+  let error;
+  try {
+    await instance.fetchProperties();
+  } catch (e) {
+    error = e;
+  }
+  expect(error).not.toBeDefined();
+});
