@@ -9,6 +9,8 @@ import { updateCluster } from '../services/cluster';
 
 import './Map.scss';
 
+const DEBOUNCED_UPDATE_CLUSTER = new WeakMap();
+
 export function getLayerBeforeId (type, layers) {
   const sameTypes = layers.filter(({ type: lType }) => type === lType);
 
@@ -20,8 +22,6 @@ export function getLayerBeforeId (type, layers) {
 
   return layers[pos] && layers[pos].id;
 }
-
-const debouncedUpdateCluster = debounce(updateCluster, 500);
 
 export class MapComponent extends React.Component {
   static propTypes = {
@@ -194,6 +194,10 @@ export class MapComponent extends React.Component {
   }
 
   createClusterLayer (layer) {
+    if (!DEBOUNCED_UPDATE_CLUSTER.has(layer)) {
+      DEBOUNCED_UPDATE_CLUSTER.set(layer, debounce(updateCluster, 500));
+    }
+    const debouncedUpdateCluster = DEBOUNCED_UPDATE_CLUSTER.get(layer);
     const { map, onClusterUpdate } = this.props;
     map.on('zoom', () => debouncedUpdateCluster(map, layer, onClusterUpdate));
     map.on('move', () => debouncedUpdateCluster(map, layer, onClusterUpdate));
