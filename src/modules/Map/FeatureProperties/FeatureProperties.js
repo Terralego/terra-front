@@ -25,7 +25,9 @@ export class FeatureProperties extends React.Component {
   }
 
   async fetchProperties () {
-    const { id, url, properties } = this.props;
+    const { id, url, properties = {} } = this.props;
+
+    if (!properties) return;
 
     this.setState({
       properties: {
