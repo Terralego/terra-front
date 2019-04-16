@@ -1,7 +1,17 @@
+import { PREFIXES } from './cluster';
+
 const PREV_STATE = {};
 
+export const getLayers = (map, layerId) => {
+  const regexp = new RegExp(`^${layerId}(-(${PREFIXES.join('|')}))?(-[0-9]+)?$`);
+  return map.getStyle().layers
+    .filter(({ id }) => id.match(regexp));
+};
+
 export function toggleLayerVisibility (map, layerId, visibility) {
-  map.setLayoutProperty(layerId, 'visibility', visibility);
+  getLayers(map, layerId)
+    .map(layer => console.log(layer.id) || layer)
+    .forEach(({ id }) => map.setLayoutProperty(id, 'visibility', visibility));
 }
 
 export function getOpacityProperty (type) {
@@ -26,11 +36,13 @@ export function getOpacityProperty (type) {
 }
 
 export function setLayerOpacity (map, layerId, opacity) {
-  const layer = map.getLayer(layerId);
-  const property = getOpacityProperty(layer.type);
-  if (property) {
-    map.setPaintProperty(layerId, property, opacity);
-  }
+  getLayers(map, layerId)
+    .forEach(layer => {
+      const property = getOpacityProperty(layer.type);
+      if (property) {
+        map.setPaintProperty(layer.id, property, opacity);
+      }
+    });
 }
 
 export const checkContraints = ({

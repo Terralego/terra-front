@@ -1,4 +1,7 @@
-export const getClusterSourceName = id => `${id}-cluster-source`;
+export const PREFIX_SOURCE = 'cluster-source';
+export const PREFIX_UNCLUSTERED = 'unclustered';
+export const PREFIX_COUNT = 'count';
+export const PREFIXES = [PREFIX_UNCLUSTERED, PREFIX_COUNT];
 
 export const getPaintExpression = (steps, values) => ['case',
   ...[...steps, null].reduce((rules, step, key) =>
@@ -11,14 +14,15 @@ export const getPaintExpression = (steps, values) => ['case',
   []),
 ];
 
-export const createCluster = (map, layer) => {
+export const createClusterLayers = ({
+  map, layer, radius, minzoom = 0, maxzoom = 24, index,
+}) => {
   const {
     id,
     source,
     'source-layer': sourceLayer,
     cluster: {
       maxZoom: clusterMaxZoom = 16,
-      radius: clusterRadius = 50,
       steps,
       sizes,
       colors,
@@ -32,20 +36,7 @@ export const createCluster = (map, layer) => {
     paint: layerPaint = {},
     ...layerProps
   } = layer;
-  const clusterSourceName = getClusterSourceName(layer.id);
-
-  /**
-   * A ghost layer to force data ro be fetched
-   */
-  map.addLayer({
-    id: `${id}-cluster-data`,
-    type: 'circle',
-    source,
-    'source-layer': sourceLayer,
-    paint: {
-      'circle-color': 'transparent',
-    },
-  });
+  const clusterSourceName = `${layer.id}-${PREFIX_SOURCE}-${index}`;
 
   /**
    * The new source filled with features from tiles converted to geojson
@@ -58,7 +49,7 @@ export const createCluster = (map, layer) => {
     },
     cluster: true,
     clusterMaxZoom,
-    clusterRadius,
+    clusterRadius: radius,
   });
 
   const paint = {
@@ -75,11 +66,13 @@ export const createCluster = (map, layer) => {
    */
   map.addLayer({
     ...layerProps,
-    id,
+    id: `${id}-${index}`,
     type: 'circle',
     source: clusterSourceName,
     filter: ['has', 'point_count'],
     paint: { ...paint },
+    minzoom,
+    maxzoom,
   });
 
   /**
@@ -87,11 +80,13 @@ export const createCluster = (map, layer) => {
    */
   map.addLayer({
     ...layerProps,
-    id: `${id}-unclustered`,
+    id: `${id}-${PREFIX_UNCLUSTERED}-${index}`,
     type: 'circle',
     source: clusterSourceName,
     filter: ['!', ['has', 'point_count']],
     paint: { ...layerPaint },
+    minzoom,
+    maxzoom,
   });
 
   /**
@@ -99,7 +94,7 @@ export const createCluster = (map, layer) => {
    */
   map.addLayer({
     ...layerProps,
-    id: `${id}-count`,
+    id: `${id}-${PREFIX_COUNT}-${index}`,
     type: 'symbol',
     source: clusterSourceName,
     filter: ['has', 'point_count'],
@@ -112,23 +107,57 @@ export const createCluster = (map, layer) => {
     paint: {
       'text-color': color,
     },
+    minzoom,
+    maxzoom,
   });
 };
 
 export const updateCluster = (map, layer, onClusterUpdate = ({ features }) => features) => {
-  const { id, source, 'source-layer': sourceLayer } = layer;
-  const clusterSourceName = getClusterSourceName(id);
+  const {
+    id, source, 'source-layer': sourceLayer,
+    cluster: {
+      radius: clusterRadius,
+    },
+  } = layer;
+
+  const ghostLayerId = `${id}-cluster-data`;
+  if (!map.getLayer(ghostLayerId)) {
+    /**
+     * A ghost layer to force data ro be fetched
+     */
+    map.addLayer({
+      id: `${id}-cluster-data`,
+      type: 'circle',
+      source,
+      'source-layer': sourceLayer,
+      paint: {
+        'circle-color': 'transparent',
+      },
+    });
+  }
 
   const features = map.querySourceFeatures(source, { sourceLayer });
 
-  if (!map.getSource(clusterSourceName)) {
-    createCluster(map, layer);
-  }
-
-  map.getSource(clusterSourceName).setData({
-    type: 'FeatureCollection',
-    features: onClusterUpdate({ features, source, sourceLayer }),
-  });
+  (Array.isArray(clusterRadius)
+    ? [...clusterRadius]
+    : [{ value: clusterRadius }])
+    .forEach(({ value, minzoom, maxzoom }, index) => {
+      const clusterSourceName = `${id}-${PREFIX_SOURCE}-${index}`;
+      if (!map.getSource(clusterSourceName)) {
+        createClusterLayers({
+          map,
+          layer,
+          radius: value,
+          minzoom,
+          maxzoom,
+          index,
+        });
+      }
+      map.getSource(clusterSourceName).setData({
+        type: 'FeatureCollection',
+        features: onClusterUpdate({ features, source, sourceLayer }),
+      });
+    });
 };
 
 export const getClusteredFeatures = (map, feature = {}) => new Promise((resolve, reject) => {

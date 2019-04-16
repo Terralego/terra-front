@@ -188,6 +188,7 @@ export class MapComponent extends React.Component {
       map.addSource(id, sourceAttrs);
     });
     layers.forEach(layer => {
+      console.log('layer adding', map.getSource('terralego'));
       if (layer.cluster) return this.createClusterLayer(layer);
       const { type } = layer;
       const beforeId = getLayerBeforeId(type, allLayers);

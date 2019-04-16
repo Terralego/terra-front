@@ -6,7 +6,7 @@ import debounce from 'lodash.debounce';
 import bbox from '@turf/bbox';
 import centroid from '@turf/centroid';
 
-import { setInteractions } from './services/mapUtils';
+import { setInteractions } from '../services/mapUtils';
 import { getClusteredFeatures } from '../services/cluster';
 import MapComponent from '../Map';
 import BackgroundStyles from './components/BackgroundStyles';
@@ -136,6 +136,7 @@ export class InteractiveMap extends React.Component {
   }
 
   onMapInit = map => {
+    console.log(map);
     const { onMapInit = () => {} } = this.props;
     onMapInit(map);
   };
