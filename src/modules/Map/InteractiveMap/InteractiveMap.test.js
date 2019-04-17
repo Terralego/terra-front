@@ -161,7 +161,7 @@ describe('map', () => {
     instance.onMapLoaded(map);
     expect(instance.map).toBe(map);
     expect(instance.setInteractions).toHaveBeenCalled();
-    expect(instance.filterLegendsByZoom).toHaveBeenCalled();
+    expect(instance.filterLegendsByZoom).not.toHaveBeenCalled();
   });
 
   it('should return filtered legends', () => {
