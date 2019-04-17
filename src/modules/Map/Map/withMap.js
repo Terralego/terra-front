@@ -64,6 +64,7 @@ export const withMap = WrappedComponent =>
         fitBounds,
         onMapInit,
         onMapLoaded,
+        hash,
       } = this.props;
 
       mapBoxGl.accessToken = accessToken;
@@ -77,6 +78,7 @@ export const withMap = WrappedComponent =>
         maxZoom,
         minZoom,
         maxBounds,
+        hash,
         // below fix Firefox bug for printing http://fuzzytolerance.info/blog/2016/07/01/Printing-Mapbox-GL-JS-maps-in-Firefox/
         preserveDrawingBuffer: navigator.userAgent.toLowerCase().indexOf('firefox') > -1,
       });
