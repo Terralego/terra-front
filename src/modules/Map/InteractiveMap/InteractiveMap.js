@@ -138,16 +138,18 @@ export class InteractiveMap extends React.Component {
   onMapInit = map => {
     const { onMapInit = () => {} } = this.props;
     onMapInit(map);
-  }
+  };
 
   onMapLoaded = map => {
-    const { onMapLoaded = () => {} } = this.props;
+    const { onMapLoaded = () => {}, legends } = this.props;
     this.map = map;
-    map.on('zoom', this.filterLegendsByZoom);
+    if (legends && legends.length) {
+      map.on('zoomend', this.filterLegendsByZoom);
+      this.filterLegendsByZoom();
+    }
     this.setInteractions();
-    this.filterLegendsByZoom();
     onMapLoaded(map);
-  }
+  };
 
   onBackgroundChange = selectedBackgroundStyle => {
     this.setState({ selectedBackgroundStyle });
@@ -175,7 +177,7 @@ export class InteractiveMap extends React.Component {
         ((zoom === 0 && minZoom === 0) || zoom > minZoom) && zoom <= maxZoom);
 
     this.setState({ legends: filteredLegends });
-  }
+  };
 
   fitZoom = ({ feature, map }) =>
     map.fitBounds(bbox({ type: 'FeatureCollection', features: [feature] }));
