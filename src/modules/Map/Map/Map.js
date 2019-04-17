@@ -129,8 +129,8 @@ export class MapComponent extends React.Component {
     }
 
     if (prevProps.backgroundStyle !== backgroundStyle) {
-      map.setStyle(backgroundStyle);
       map.once('style.load', () => this.backgroundChanged(backgroundStyle));
+      map.setStyle(backgroundStyle, { diff: false });
     }
 
     if (displayScaleControl !== prevProps.displayScaleControl) {
@@ -184,7 +184,9 @@ export class MapComponent extends React.Component {
   createLayers () {
     const { map, customStyle: { sources = [], layers = [] } } = this.props;
     const { layers: allLayers } = map.getStyle();
-    sources.forEach(({ id, ...sourceAttrs }) => map.addSource(id, sourceAttrs));
+    sources.forEach(({ id, ...sourceAttrs }) => {
+      map.addSource(id, sourceAttrs);
+    });
     layers.forEach(layer => {
       if (layer.cluster) return this.createClusterLayer(layer);
       const { type } = layer;
@@ -217,10 +219,13 @@ export class MapComponent extends React.Component {
   deleteLayers ({ sources, layers }) {
     const { map } = this.props;
     const { layers: allLayers } = map.getStyle();
-
-    sources.forEach(({ id, ...sourceAttrs }) => map.removeSource(id, sourceAttrs));
+    sources.forEach(({ id, ...sourceAttrs }) => {
+      if (!map.getSource(id)) return;
+      map.removeSource(id, sourceAttrs);
+    });
     layers.forEach(layer => {
       const { type } = layer;
+      if (!map.getLayer(layer)) return;
       const beforeId = getLayerBeforeId(type, allLayers);
       map.removeLayer(layer, beforeId);
     });
