@@ -1,4 +1,5 @@
 import {
+  getLayers,
   toggleLayerVisibility,
   getOpacityProperty,
   setLayerOpacity,
@@ -7,15 +8,88 @@ import {
   checkContraints,
 } from './mapUtils';
 
+const getStyle = jest.fn(() => ({
+  layers: [{
+    id: 'foo',
+    type: 'fill',
+    paint: {
+      'fill-opacity': 1,
+    },
+  }, {
+    id: 'layer-0',
+    type: 'fill',
+    paint: {
+      'fill-opacity': 1,
+    },
+  }, {
+    id: 'layer-unclustered-0',
+    type: 'fill',
+    paint: {
+      'fill-opacity': 1,
+    },
+  }, {
+    id: 'layer-count-0',
+    type: 'fill',
+    paint: {
+      'fill-opacity': 1,
+    },
+  }, {
+    id: 'bar',
+  }],
+}));
+
+it('should get all layers related to main one', () => {
+  const map = {
+    getStyle,
+  };
+
+  expect(getLayers(map, 'foo')).toEqual([{
+    id: 'foo',
+    type: 'fill',
+    paint: {
+      'fill-opacity': 1,
+    },
+  }]);
+  expect(getLayers(map, 'bar')).toEqual([{
+    id: 'bar',
+  }]);
+
+  expect(getLayers(map, 'layer')).toEqual([{
+    id: 'layer-0',
+    type: 'fill',
+    paint: {
+      'fill-opacity': 1,
+    },
+  }, {
+    id: 'layer-unclustered-0',
+    type: 'fill',
+    paint: {
+      'fill-opacity': 1,
+    },
+  }, {
+    id: 'layer-count-0',
+    type: 'fill',
+    paint: {
+      'fill-opacity': 1,
+    },
+  }]);
+});
+
 it('should toggle layer visibility', () => {
   const map = {
     setLayoutProperty: jest.fn(),
+    getStyle,
   };
   toggleLayerVisibility(map, 'foo', 'visible');
   expect(map.setLayoutProperty).toHaveBeenCalledWith('foo', 'visibility', 'visible');
   map.setLayoutProperty.mockClear();
   toggleLayerVisibility(map, 'foo', 'none');
   expect(map.setLayoutProperty).toHaveBeenCalledWith('foo', 'visibility', 'none');
+  map.setLayoutProperty.mockClear();
+  toggleLayerVisibility(map, 'layer', 'visible');
+  expect(map.setLayoutProperty).toHaveBeenCalledWith('layer-0', 'visibility', 'visible');
+  expect(map.setLayoutProperty).toHaveBeenCalledWith('layer-unclustered-0', 'visibility', 'visible');
+  expect(map.setLayoutProperty).toHaveBeenCalledWith('layer-count-0', 'visibility', 'visible');
 });
 
 it('should get opacity property', () => {
@@ -31,21 +105,14 @@ it('should get opacity property', () => {
 
 it('should set layer opacity', () => {
   const map = {
-    getLayer: jest.fn(() => ({ type: 'line' })),
     setPaintProperty: jest.fn(),
+    getStyle,
   };
-  setLayerOpacity(map, 'foo', 42);
-  expect(map.getLayer).toHaveBeenCalledWith('foo');
-  expect(map.setPaintProperty).toHaveBeenCalledWith('foo', 'line-opacity', 42);
-});
+  setLayerOpacity(map, 'foo', 0);
+  expect(map.setPaintProperty).toHaveBeenCalledWith('foo', 'fill-opacity', 0);
+  map.setPaintProperty.mockClear();
 
-it('should not set layer opacity', () => {
-  const map = {
-    getLayer: jest.fn(() => ({ type: 'bar' })),
-    setPaintProperty: jest.fn(),
-  };
-  setLayerOpacity(map, 'foo', 42);
-  expect(map.getLayer).toHaveBeenCalledWith('foo');
+  setLayerOpacity(map, 'bar', 1);
   expect(map.setPaintProperty).not.toHaveBeenCalled();
 });
 
@@ -60,6 +127,7 @@ it('should get interaction on event', () => {
     trigger: 'click',
   }];
   const map = {
+    getStyle,
     queryRenderedFeatures: jest.fn(() => [{
       layer: {
         id: 'foo',
@@ -101,6 +169,7 @@ it('should get interaction on mouseover event', () => {
     id: 'foobar',
   }];
   const map = {
+    getStyle,
     queryRenderedFeatures: jest.fn(() => [{
       layer: {
         id: 'foo',
@@ -140,6 +209,7 @@ it('should get no interaction on event', () => {
     trigger: 'click',
   }];
   const map = {
+    getStyle,
     queryRenderedFeatures: jest.fn(() => [{
       layer: {
         id: 'foo',
@@ -162,6 +232,7 @@ it('should get no interaction on event', () => {
 describe('should set interactions', () => {
   let listeners = [];
   const map = {
+    getStyle,
     on: jest.fn((event, id, listener) => listeners.push({
       event,
       listener: listener || id,
@@ -502,6 +573,7 @@ it('should check contraints', () => {
 
 it('should get interactions responding to constraints', () => {
   const map = {
+    getStyle,
     getZoom: () => 3,
     queryRenderedFeatures: () => [{
       layer: {
@@ -530,6 +602,7 @@ it('should get interactions responding to constraints', () => {
 
 it('should get multiple interactions', () => {
   const map = {
+    getStyle,
     getZoom: () => 3,
     queryRenderedFeatures: () => [{
       layer: {

@@ -4,7 +4,7 @@ import ReactDOM from 'react-dom';
 import mapboxGl from 'mapbox-gl';
 import centroid from '@turf/centroid';
 
-import { setInteractions } from './services/mapUtils';
+import { setInteractions } from '../services/mapUtils';
 import InteractiveMap, {
   INTERACTION_FIT_ZOOM,
   INTERACTION_ZOOM,
@@ -38,7 +38,7 @@ jest.mock('mapbox-gl', () => {
   };
 });
 jest.mock('../Map', () => function MapComponent () { return null; });
-jest.mock('./services/mapUtils', () => ({
+jest.mock('../services/mapUtils', () => ({
   toggleLayerVisibility: jest.fn(),
   setLayerOpacity: jest.fn(),
   setInteractions: jest.fn(),

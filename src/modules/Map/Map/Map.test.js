@@ -2,7 +2,6 @@ import React from 'react';
 import renderer from 'react-test-renderer';
 import { shallow } from 'enzyme';
 import mapboxgl from 'mapbox-gl';
-import debounce from 'lodash.debounce';
 
 import { MapComponent as Map, getLayerBeforeId } from './Map';
 import { updateCluster } from '../services/cluster';
@@ -544,26 +543,6 @@ it('should debounce cluster creation', () => {
   expect(updateCluster).toHaveBeenCalledTimes(4);
   listeners[3].listener();
   expect(updateCluster).toHaveBeenCalledTimes(5);
-});
-
-it('should have different debounce functions for each cluster', () => {
-  const map = {
-    on () {},
-    once () {},
-  };
-  const instance = new Map({ map });
-  const layer1 = { id: 'foo' };
-  const layer2 = { id: 'bar' };
-  instance.createClusterLayer(layer1);
-  expect(debounce).toHaveBeenCalledTimes(1);
-  instance.createClusterLayer(layer1);
-  expect(debounce).toHaveBeenCalledTimes(1);
-  instance.createClusterLayer(layer2);
-  expect(debounce).toHaveBeenCalledTimes(2);
-  instance.createClusterLayer(layer2);
-  expect(debounce).toHaveBeenCalledTimes(2);
-  instance.createClusterLayer(layer1);
-  expect(debounce).toHaveBeenCalledTimes(2);
 });
 
 it('should update on map events', () => {
