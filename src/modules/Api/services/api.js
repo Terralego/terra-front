@@ -22,7 +22,7 @@ export class Api {
 
   listeners = [];
 
-  async request (endpoint, { method = GET, querystring, body, headers = DEFAULT_HEADERS } = {}) {
+  async request (endpoint, { method = GET, querystring, body, headers = DEFAULT_HEADERS, responseType = 'json' } = {}) {
     const url = this.buildUrl({ endpoint, querystring });
 
     log('request start: ', url);
@@ -37,7 +37,7 @@ export class Api {
     if (response.status < 200 || response.status > 299) {
       throw await this.handleError(response);
     }
-    return this.handleSuccess(response);
+    return this.handleSuccess(response, responseType);
   }
 
   buildUrl ({ endpoint, querystring }) {
@@ -66,10 +66,10 @@ export class Api {
     return error;
   }
 
-  async handleSuccess (response) {
+  async handleSuccess (response, responseType) {
     let data;
     try {
-      data = await response.json();
+      data = await response[responseType]();
     } catch (e) {
       //
     }
