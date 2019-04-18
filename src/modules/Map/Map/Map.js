@@ -2,14 +2,11 @@ import React from 'react';
 import mapBoxGl from 'mapbox-gl';
 import PropTypes from 'prop-types';
 import 'mapbox-gl/dist/mapbox-gl.css';
-import debounce from 'lodash.debounce';
 
 import { capitalize } from '../../../utils/strings';
 import { updateCluster } from '../services/cluster';
 
 import './Map.scss';
-
-const DEBOUNCED_UPDATE_CLUSTER = new WeakMap();
 
 export function getLayerBeforeId (type, layers) {
   const sameTypes = layers.filter(({ type: lType }) => type === lType);
@@ -184,11 +181,8 @@ export class MapComponent extends React.Component {
   createLayers () {
     const { map, customStyle: { sources = [], layers = [] } } = this.props;
     const { layers: allLayers } = map.getStyle();
-    sources.forEach(({ id, ...sourceAttrs }) => {
-      map.addSource(id, sourceAttrs);
-    });
+    sources.forEach(({ id, ...sourceAttrs }) => map.addSource(id, sourceAttrs));
     layers.forEach(layer => {
-      console.log('layer adding', map.getSource('terralego'));
       if (layer.cluster) return this.createClusterLayer(layer);
       const { type } = layer;
       const beforeId = getLayerBeforeId(type, allLayers);
@@ -197,16 +191,12 @@ export class MapComponent extends React.Component {
   }
 
   createClusterLayer (layer) {
-    if (!DEBOUNCED_UPDATE_CLUSTER.has(layer)) {
-      DEBOUNCED_UPDATE_CLUSTER.set(layer, debounce(updateCluster, 500));
-    }
-    const debouncedUpdateCluster = DEBOUNCED_UPDATE_CLUSTER.get(layer);
     const { map, onClusterUpdate } = this.props;
-    map.on('zoom', () => debouncedUpdateCluster(map, layer, onClusterUpdate));
-    map.on('move', () => debouncedUpdateCluster(map, layer, onClusterUpdate));
-    map.on('refreshCluster', () => debouncedUpdateCluster(map, layer, onClusterUpdate));
-    map.once('load', () => debouncedUpdateCluster(map, layer, onClusterUpdate));
-    debouncedUpdateCluster(map, layer, onClusterUpdate);
+    map.on('zoomend', () => updateCluster(map, layer, onClusterUpdate));
+    map.on('movend', () => updateCluster(map, layer, onClusterUpdate));
+    map.on('refreshCluster', () => updateCluster(map, layer, onClusterUpdate));
+    map.once('load', () => updateCluster(map, layer, onClusterUpdate));
+    updateCluster(map, layer, onClusterUpdate);
     const listener = ({ isSourceLoaded }) => {
       const { onMapUpdate } = this.props;
       if (isSourceLoaded) {
