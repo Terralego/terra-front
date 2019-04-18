@@ -22,7 +22,7 @@ export const createClusterLayers = ({
     source,
     'source-layer': sourceLayer,
     cluster: {
-      maxZoom: clusterMaxZoom = 16,
+      maxZoom: clusterMaxZoom = Math.floor(map.getMaxZoom()) + 1,
       steps,
       sizes,
       colors,
@@ -50,7 +50,7 @@ export const createClusterLayers = ({
     cluster: true,
     clusterMaxZoom,
     clusterRadius: radius,
-    maxzoom: 24,
+    maxzoom: clusterMaxZoom,
   });
 
   const paint = {
@@ -115,7 +115,9 @@ export const createClusterLayers = ({
 
 export const updateCluster = (map, layer, onClusterUpdate = ({ features }) => features) => {
   const {
-    id, source, 'source-layer': sourceLayer,
+    id,
+    source,
+    'source-layer': sourceLayer,
     minzoom: layerMinzoom = 0,
     maxzoom: layerMaxzoom = 24,
     cluster: {
@@ -126,7 +128,7 @@ export const updateCluster = (map, layer, onClusterUpdate = ({ features }) => fe
   const ghostLayerId = `${id}-cluster-data`;
   if (!map.getLayer(ghostLayerId)) {
     /**
-     * A ghost layer to force data ro be fetched
+     * A ghost layer to force data to be fetched
      */
     map.addLayer({
       id: `${id}-cluster-data`,

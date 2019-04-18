@@ -136,7 +136,6 @@ export class InteractiveMap extends React.Component {
   }
 
   onMapInit = map => {
-    console.log(map);
     const { onMapInit = () => {} } = this.props;
     onMapInit(map);
   };
