@@ -10,7 +10,6 @@ export const getLayers = (map, layerId) => {
 
 export function toggleLayerVisibility (map, layerId, visibility) {
   getLayers(map, layerId)
-    .map(layer => console.log(layer.id) || layer)
     .forEach(({ id }) => map.setLayoutProperty(id, 'visibility', visibility));
 }
 
@@ -94,9 +93,9 @@ export function getInteractionsOnEvent ({
     const { layer: { id: layerId } } = feature;
 
     const foundInteractions = eventInteractions.filter(({ id, trigger = 'click', constraints }) => {
-      const found = id === layerId;
+      const found = getLayers(map, id).find(({ id: compatibleId }) => layerId === compatibleId);
 
-      if (constraints && !checkContraints({ map, constraints, feature })) {
+      if (!found || (constraints && !checkContraints({ map, constraints, feature }))) {
         return false;
       }
 

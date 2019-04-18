@@ -50,6 +50,7 @@ export const createClusterLayers = ({
     cluster: true,
     clusterMaxZoom,
     clusterRadius: radius,
+    maxzoom: 24,
   });
 
   const paint = {
@@ -115,6 +116,8 @@ export const createClusterLayers = ({
 export const updateCluster = (map, layer, onClusterUpdate = ({ features }) => features) => {
   const {
     id, source, 'source-layer': sourceLayer,
+    minzoom: layerMinzoom = 0,
+    maxzoom: layerMaxzoom = 24,
     cluster: {
       radius: clusterRadius,
     },
@@ -141,7 +144,7 @@ export const updateCluster = (map, layer, onClusterUpdate = ({ features }) => fe
   (Array.isArray(clusterRadius)
     ? [...clusterRadius]
     : [{ value: clusterRadius }])
-    .forEach(({ value, minzoom, maxzoom }, index) => {
+    .forEach(({ value, minzoom = layerMinzoom, maxzoom = layerMaxzoom }, index) => {
       const clusterSourceName = `${id}-${PREFIX_SOURCE}-${index}`;
       if (!map.getSource(clusterSourceName)) {
         createClusterLayers({
@@ -160,14 +163,12 @@ export const updateCluster = (map, layer, onClusterUpdate = ({ features }) => fe
     });
 };
 
-export const getClusteredFeatures = (map, feature = {}) => new Promise((resolve, reject) => {
+export const getClusteredFeatures = (map, feature = {}) => new Promise(resolve => {
   const { source, properties: { cluster, cluster_id: clusterId } = {} } = feature;
   if (!cluster) resolve(null);
   else {
-    map.getSource(source).getClusterLeaves(clusterId, -1, 0, (err, features) => {
-      if (err) reject(err);
-      else resolve(features);
-    });
+    map.getSource(source).getClusterLeaves(clusterId, -1, 0, (err, features = null) =>
+      resolve(features));
   }
 });
 
