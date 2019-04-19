@@ -1,5 +1,4 @@
 import {
-  getDayDate,
   formatDay,
   formatMonthTitle,
   formatWeekdayLong,
@@ -7,11 +6,6 @@ import {
   getFirstDayOfWeek,
   getMonths,
 } from './localeUtils';
-
-it('should get day date', () => {
-  Array.from({ length: 7 }).map((_, day) =>
-    expect(getDayDate(day).getDay()).toBe(day));
-});
 
 it('should format day', () => {
   expect(formatDay(new Date('2019-01-01'), 'en')).toBe('1/1/2019');
@@ -34,6 +28,10 @@ it('should format week day long', () => {
 it('should format week day short', () => {
   ['Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat'].map((day, i) =>
     expect(formatWeekdayShort(i, 'en')).toBe(day));
+});
+
+it('should fail to format invalid week day', () => {
+  expect(formatWeekdayShort(42, 'en')).toBeNull();
 });
 
 it('should get first day of week', () => {
