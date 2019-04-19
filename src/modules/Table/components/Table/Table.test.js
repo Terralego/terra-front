@@ -17,10 +17,12 @@ const props = {
     { value: 'col1', sortable: true },
     { value: 'col2', sortable: false },
     { value: 'col3', sortable: true, format: { type: 'number' } },
-    { value: 'col4', sortable: true, format: { type: 'date' } }],
+    { value: 'col4', sortable: true, format: { type: 'date' } },
+    { value: 'col5', sortable: true, format: { type: 'integer' } },
+  ],
   data: [
-    ['row1-z', 'row2-b', '10', '04-12-2018'],
-    ['row1-a', 'row2-y', '3', '10-10-2015'],
+    ['row1-z', 'row2-b', '10', '04-12-2018', '10.2'],
+    ['row1-a', 'row2-y', '0.004', '10-10-2015', '12'],
   ],
 };
 
@@ -85,6 +87,9 @@ it('should format cell', () => {
   const instance = wrapper.instance();
   expect(instance.formatCell('col1-row1', 0)).toBe('col1-row1');
   expect(instance.formatCell('04-12-2018', 3)).toBe('mocked date');
+  expect(instance.formatCell('10', 2)).toBe(10);
+  expect(instance.formatCell('0.004', 2)).toBe(0.004);
+  expect(instance.formatCell('10.2', 4)).toBe(10);
   expect(global.Date.prototype.toLocaleDateString).toHaveBeenCalled();
 });
 
