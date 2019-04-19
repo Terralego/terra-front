@@ -37,6 +37,8 @@ export async function refreshToken () {
     method: POST,
     body: { token: currentToken },
   });
+  Api.token = token;
+  global.localStorage.setItem(TOKEN_KEY, token);
   return token;
 }
 

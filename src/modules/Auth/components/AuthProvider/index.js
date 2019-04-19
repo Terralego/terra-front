@@ -51,7 +51,7 @@ export class AuthProvider extends React.Component {
     const expireAt = new Date(exp * 1000);
     const now = new Date(Date.now());
     // Delay is 10 seconds before to be sure to not miss it
-    const delay = expireAt - now - 10000;
+    const delay = expireAt - now - 1000 * 60;
     clearTimeout(this.delayTimeout);
     this.delayTimeout = setTimeout(() => this.refreshToken(), delay);
   }
