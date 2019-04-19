@@ -21,6 +21,7 @@ export class AuthProvider extends React.Component {
 
     const { user } = this.extractTokenData(token);
     this.state = { authenticated: true, user };
+    this.refreshToken();
   }
 
   authAction = async ({ login, password }) => {
