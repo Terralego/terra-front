@@ -89,6 +89,7 @@ it('should create cluster layers', () => {
     type: 'circle',
     filter: ['!', ['has', 'point_count']],
     paint: {},
+    layout: {},
     minzoom: 0,
     maxzoom: 24,
   });
@@ -211,6 +212,7 @@ it('should create cluster layers with custom paint', () => {
     paint: {
       'circle-color': 'red',
     },
+    layout: {},
     minzoom: 0,
     maxzoom: 24,
   });
