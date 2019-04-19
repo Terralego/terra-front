@@ -42,6 +42,14 @@ export const getHighlightLayerId = (layerId, type = 'fill') => `${type}-${layerI
 const getHighlightLayerIdFill = layerId => getHighlightLayerId(layerId, 'fill');
 const getHighlightLayerIdLine = layerId => getHighlightLayerId(layerId, 'line');
 
+const getUniqueLegends = legends => {
+  const uniques = [];
+  legends.forEach(legend => uniques.find(({ title, items }) =>
+    title === legend.title && items.length === legend.items.length)
+      || uniques.push(legend));
+  return uniques;
+};
+
 export class InteractiveMap extends React.Component {
   static propTypes = {
     backgroundStyle: PropTypes.oneOfType([
@@ -458,7 +466,7 @@ export class InteractiveMap extends React.Component {
         />
         {!!legends.length && (
           <div className="interactive-map__legends">
-            {legends
+            {getUniqueLegends(legends)
               .map(legend => (
                 <Legend
                   key={`${legend.title}${legend.items}`}
