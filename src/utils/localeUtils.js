@@ -1,13 +1,5 @@
 const ONE_DAY = 1000 * 60 * 60 * 24;
 
-export const getDayDate = day => {
-  let date = new Date('2019-01-01');
-  while (true) {
-    date = new Date(+date + ONE_DAY);
-    if (date.getDay() === day) return date;
-  }
-};
-
 export const formatDay = (day, locale) => {
   const date = new Date(day);
   return date.toLocaleDateString(locale);
@@ -20,11 +12,20 @@ export const formatMonthTitle = (month, locale) => {
   return label.substr(0, 1).toUpperCase() + label.substr(1);
 };
 
-export const formatWeekdayLong = (i, locale) =>
-  getDayDate(i).toLocaleDateString(locale, { weekday: 'long' });
+export const formatWeekday = format => (weekDay, locale) => {
+  let date = new Date('1970-01-01');
+  for (let i = 0, len = 7; i < len; i += 1) {
+    date = new Date(+date + ONE_DAY);
+    if (date.getDay() === weekDay) {
+      return date.toLocaleDateString(locale, { weekday: format });
+    }
+  }
+  return null;
+};
 
-export const formatWeekdayShort = (i, locale) =>
-  getDayDate(i).toLocaleDateString(locale, { weekday: 'short' });
+export const formatWeekdayLong = formatWeekday('long');
+
+export const formatWeekdayShort = formatWeekday('short');
 
 export const getFirstDayOfWeek = locale => {
   if (locale === 'fr') return 1;
