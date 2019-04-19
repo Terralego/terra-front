@@ -123,6 +123,9 @@ describe('snaphsots', () => {
         minZoom: 0,
         maxZoom: 20,
         items: [],
+      }, {
+        title: 'foo',
+        items: [],
       }],
     });
     const tree = wrapper.toJSON();
