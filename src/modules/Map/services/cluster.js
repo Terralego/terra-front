@@ -34,6 +34,7 @@ export const createClusterLayers = ({
       paint: clusterPaint = {},
     },
     paint: layerPaint = {},
+    layout: layerLayout = {},
     ...layerProps
   } = layer;
   const clusterSourceName = `${layer.id}-${PREFIX_SOURCE}-${index}`;
@@ -80,12 +81,13 @@ export const createClusterLayers = ({
    * The no-clustered layer
    */
   map.addLayer({
+    type: 'circle',
     ...layerProps,
     id: `${id}-${PREFIX_UNCLUSTERED}-${index}`,
-    type: 'circle',
     source: clusterSourceName,
     filter: ['!', ['has', 'point_count']],
     paint: { ...layerPaint },
+    layout: { ...layerLayout },
     minzoom,
     maxzoom,
   });
