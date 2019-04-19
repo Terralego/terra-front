@@ -83,6 +83,10 @@ export class Table extends React.Component {
     switch (type) {
       case 'date':
         return new Date(cell).toLocaleDateString();
+      case 'number':
+        return Number(cell);
+      case 'integer':
+        return Number.parseInt(cell, 10);
       default:
         return cell;
     }
@@ -105,6 +109,7 @@ export class Table extends React.Component {
   compare = (a, b, type) => {
     switch (type) {
       case 'number':
+      case 'integer':
         return a - b;
       case 'date':
         return new Date(a) - new Date(b);
