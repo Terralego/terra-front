@@ -193,7 +193,7 @@ export class MapComponent extends React.Component {
   createClusterLayer (layer) {
     const { map, onClusterUpdate } = this.props;
     map.on('zoomend', () => updateCluster(map, layer, onClusterUpdate));
-    map.on('movend', () => updateCluster(map, layer, onClusterUpdate));
+    map.on('moveend', () => updateCluster(map, layer, onClusterUpdate));
     map.on('refreshCluster', () => updateCluster(map, layer, onClusterUpdate));
     map.once('load', () => updateCluster(map, layer, onClusterUpdate));
     updateCluster(map, layer, onClusterUpdate);
