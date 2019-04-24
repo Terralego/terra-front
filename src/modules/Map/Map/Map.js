@@ -33,6 +33,7 @@ export class MapComponent extends React.Component {
     displaySearchControl: PropTypes.bool,
     onSearch: PropTypes.func,
     renderSearchResults: PropTypes.func,
+    onSearchResultClick: PropTypes.func,
     maxZoom: PropTypes.number,
     minZoom: PropTypes.number,
     maxBounds: PropTypes.oneOfType([PropTypes.arrayOf(PropTypes.array), PropTypes.bool]),
@@ -85,6 +86,9 @@ export class MapComponent extends React.Component {
     flyTo: {},
     customStyle: {},
     onBackgroundChange () {},
+    onSearchResultClick (result) {
+      return this.zoomOnSearchResult(result);
+    },
   };
 
   mapListeners = [];
@@ -177,6 +181,8 @@ export class MapComponent extends React.Component {
 
     this.createLayers();
 
+    this.toggleSearchControl();
+
     this.toggleDisplayScaleControl(displayScaleControl);
 
     this.toggleNavigationControl(displayNavigationControl);
@@ -184,8 +190,6 @@ export class MapComponent extends React.Component {
     this.toggleAttributionControl(displayAttributionControl);
 
     this.toggleRotate();
-
-    this.toggleSearchControl();
   }
 
   backgroundChanged (backgroundStyle) {
@@ -284,15 +288,31 @@ export class MapComponent extends React.Component {
   }
 
   toggleSearchControl () {
-    const { map, displaySearchControl, onSearch, renderSearchResults } = this.props;
+    const {
+      map,
+      displaySearchControl,
+      onSearch,
+      renderSearchResults,
+      onSearchResultClick,
+    } = this.props;
 
     if (!displaySearchControl && this.searchControl) {
       map.removeControl(this.searchControl);
     }
     if (displaySearchControl) {
-      this.searchControl = new SearchControl();
+      this.searchControl = new SearchControl({
+        ...this.props,
+        onSearch,
+        renderSearchResults,
+        onResultClick: onSearchResultClick.bind(this),
+      });
       map.addControl(this.searchControl, 'top-right');
     }
+  }
+
+  zoomOnSearchResult ({ center }) {
+    const { map } = this.props;
+    map.setCenter(center);
   }
 
   render () {

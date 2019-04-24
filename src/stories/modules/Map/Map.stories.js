@@ -1,14 +1,17 @@
 import React from 'react';
 import { storiesOf } from '@storybook/react';
 
-import { select, number, array, object, boolean } from '@storybook/addon-knobs';
+import { select, number, array, object } from '@storybook/addon-knobs';
 
 import Map from '../../../modules/Map/Map';
+import leftInfoButtonStyles from '../../leftInfosButtonStyles';
 
 Map.displayName = 'Map';
 
-storiesOf('Modules/Map/', module).add('Map', () => (
-  <div style={{ width: '100vw', height: '100vh' }}>
+storiesOf('Modules/Map/', module).add('Map component', () => (
+  <div
+    style={{ width: '100vw', height: '100vh' }}
+  >
     <Map
       accessToken="pk.eyJ1IjoibWFraW5hY29ycHVzIiwiYSI6ImNqY3E4ZTNwcTFta3ozMm80d2xzY29wM2MifQ.Nwl_FHrWAIQ46s_lY0KNiQ"
       backgroundStyle={select(
@@ -43,7 +46,10 @@ storiesOf('Modules/Map/', module).add('Map', () => (
       ])} // Should be tried with https://boundingbox.klokantech.com/
       flyTo={object('flyTo', {})}
       zoom={5} // set default zoom
-      displaySearchControl={boolean('Display search', true)}
     />
   </div>
-));
+), {
+  info: {
+    styles: leftInfoButtonStyles,
+  },
+});

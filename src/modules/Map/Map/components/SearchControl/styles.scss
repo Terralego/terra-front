@@ -1,0 +1,79 @@
+@import "node_modules/@blueprintjs/core/lib/scss/variables";
+
+.mapboxgl-ctrl-search {
+  position: relative;
+  overflow: visible;
+
+  &__input {
+    position: absolute;
+    top: 0;
+    right: 0;
+    width: 0;
+    transition: width .2s ease-in;
+    overflow: hidden;
+    border-radius: 4px;
+
+    &--expanded {
+      width: 20rem;
+    }
+
+    .bp3-input:focus {
+      box-shadow: none;
+    }
+  }
+
+  .search-input {
+    padding: 0;
+  }
+  .search-results {
+    padding: 0;
+    border-radius: 0 0 4px 4px;
+    z-index: 1;
+    position: relative;
+
+    &__title {
+      padding: .5rem .7rem;
+      border-bottom: 1px solid $pt-dark-divider-black;
+    }
+  
+    &__group {
+      .bp3-divider {
+        border-color: $pt-dark-divider-white;
+        margin: 0;
+      }
+    }
+
+    &__group-title,
+    &__item {
+      padding: .5rem .7rem;
+      margin: 0;
+    }
+
+    &__list {
+      margin: 0;
+      padding: 0;
+      list-style: none;
+    }
+
+    &__item {
+      &--active {
+        padding: 0;
+      }
+
+      button {
+        cursor: pointer;
+        border: 0;
+        background: inherit;
+        color: inherit;
+        padding: .5rem .7rem;
+        width: 100%;
+        text-align: left;
+      }
+
+      &--active:hover,
+      &--selected {
+        background-color: $pt-intent-primary;
+      }
+    }
+  }
+}
