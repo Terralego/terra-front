@@ -5,6 +5,8 @@ import { withInfo} from '@storybook/addon-info';
 
 function loadStories() {
   require('../src/stories');
+  const req = require.context('../src/stories', true, /\.stories\.js$/);
+  req.keys().forEach(filename => req(filename));
 }
 
 // It is important to declare this decorator as the first decorator, otherwise it won't work well.

@@ -1,10 +1,13 @@
 import React from 'react';
+import { storiesOf } from '@storybook/react';
 
 import { select, number, array, object } from '@storybook/addon-knobs';
 
 import Map from '../../../modules/Map/Map';
 
-export default () => (
+Map.displayName = 'Map';
+
+storiesOf('Modules/Map/', module).add('Map', () => (
   <div style={{ width: '100vw', height: '100vh' }}>
     <Map
       accessToken="pk.eyJ1IjoibWFraW5hY29ycHVzIiwiYSI6ImNqY3E4ZTNwcTFta3ozMm80d2xzY29wM2MifQ.Nwl_FHrWAIQ46s_lY0KNiQ"
@@ -42,4 +45,4 @@ export default () => (
       zoom={5} // set default zoom
     />
   </div>
-);
+));
