@@ -2,6 +2,7 @@
   "name": "@terralego/core",
   "version": "1.0.0",
   "private": false,
+  "license": "ISC",
   "dependencies": {
     "@blueprintjs/core": "^3.15.1",
     "@blueprintjs/datetime": "^3.9.0",
