@@ -1,7 +1,7 @@
 import React from 'react';
 import { storiesOf } from '@storybook/react';
 
-import { select, number, array, object } from '@storybook/addon-knobs';
+import { select, number, array, object, boolean } from '@storybook/addon-knobs';
 
 import Map from '../../../modules/Map/Map';
 
@@ -43,6 +43,7 @@ storiesOf('Modules/Map/', module).add('Map', () => (
       ])} // Should be tried with https://boundingbox.klokantech.com/
       flyTo={object('flyTo', {})}
       zoom={5} // set default zoom
+      displaySearchControl={boolean('Display search', true)}
     />
   </div>
 ));
