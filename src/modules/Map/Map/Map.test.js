@@ -5,6 +5,7 @@ import mapboxgl from 'mapbox-gl';
 
 import { MapComponent as Map, getLayerBeforeId } from './Map';
 import { updateCluster } from '../services/cluster';
+import SearchControl from './components/SearchControl';
 
 const props = {
   map: mapboxgl.Map(),
@@ -569,4 +570,92 @@ it('should update on map events', () => {
 
   expect(onMapUpdate).toHaveBeenCalled();
   expect(map.off).toHaveBeenCalled();
+});
+
+describe('search control integration', () => {
+  const map = {
+    removeControl: jest.fn(),
+    addControl: jest.fn(),
+    setCenter: jest.fn(),
+  };
+
+  beforeEach(() => {
+    map.removeControl.mockClear();
+    map.addControl.mockClear();
+    map.setCenter.mockClear();
+  });
+
+  it('should have a default onSearchResultClick prop', () => {
+    const wrapper = shallow(<Map {...props} />);
+    const instance = wrapper.instance();
+    instance.focusOnSearchResult = jest.fn();
+    const result = {};
+    instance.props.onSearchResultClick.bind(instance)(result);
+    expect(instance.focusOnSearchResult).toHaveBeenCalledWith(result);
+  });
+
+  it('should update search control state', () => {
+    const instance = new Map({});
+    instance.props = { displaySearchControl: true };
+    instance.toggleSearchControl = jest.fn();
+    instance.updateMapProperties({ displaySearchControl: false });
+    expect(instance.toggleSearchControl).toHaveBeenCalled();
+  });
+
+  it('should not hide search control if not visible', () => {
+    const instance = new Map({});
+    instance.props = {
+      map,
+      displaySearchControl: false,
+    };
+    instance.toggleSearchControl();
+    expect(map.removeControl).not.toHaveBeenCalled();
+    expect(map.addControl).not.toHaveBeenCalled();
+  });
+
+  it('should hide search control if visible', () => {
+    const instance = new Map({});
+    instance.props = {
+      map,
+      displaySearchControl: false,
+    };
+    instance.searchControl = {};
+    instance.toggleSearchControl();
+    expect(map.removeControl).toHaveBeenCalledWith(instance.searchControl);
+    expect(map.addControl).not.toHaveBeenCalled();
+  });
+
+  it('should not show search control if visible', () => {
+    const instance = new Map({});
+    instance.props = {
+      map,
+      displaySearchControl: true,
+    };
+    instance.searchControl = {};
+    instance.toggleSearchControl();
+    expect(map.removeControl).not.toHaveBeenCalled();
+    expect(map.addControl).not.toHaveBeenCalled();
+  });
+
+  it('should show search control if not visible', () => {
+    const instance = new Map({});
+    const onSearchResultClick = () => {};
+    onSearchResultClick.bind = jest.fn();
+    instance.props = {
+      map,
+      displaySearchControl: true,
+      onSearchResultClick,
+    };
+    instance.toggleSearchControl();
+    expect(map.removeControl).not.toHaveBeenCalled();
+    expect(map.addControl).toHaveBeenCalledWith(instance.searchControl, 'top-right');
+    expect(onSearchResultClick.bind).toHaveBeenCalledWith(instance);
+    expect(instance.searchControl.constructor).toBe(SearchControl);
+  });
+
+  it('should focus on search result', () => {
+    const instance = new Map({ map });
+    instance.focusOnSearchResult({ center: [1, 2] });
+    expect(map.setCenter).toHaveBeenCalledWith([1, 2]);
+  });
 });

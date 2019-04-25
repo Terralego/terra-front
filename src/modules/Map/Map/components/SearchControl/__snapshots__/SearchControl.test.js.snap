@@ -1,0 +1,112 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`should render 1`] = `
+Array [
+  <button
+    aria-label="terralego.map.search_control.button_label"
+    className="mapboxgl-ctrl-icon"
+    onClick={[Function]}
+    title="terralego.map.search_control.button_label"
+    type="button"
+  >
+    <span
+      className="bp3-icon bp3-icon-search"
+      icon="search"
+    >
+      <svg
+        data-icon="search"
+        height={16}
+        viewBox="0 0 16 16"
+        width={16}
+      >
+        <desc>
+          search
+        </desc>
+        <path
+          d="M15.55 13.43l-2.67-2.68a6.94 6.94 0 0 0 1.11-3.76c0-3.87-3.13-7-7-7s-7 3.13-7 7 3.13 7 7 7c1.39 0 2.68-.42 3.76-1.11l2.68 2.67a1.498 1.498 0 1 0 2.12-2.12zm-8.56-1.44c-2.76 0-5-2.24-5-5s2.24-5 5-5 5 2.24 5 5-2.24 5-5 5z"
+          fillRule="evenodd"
+        />
+      </svg>
+    </span>
+  </button>,
+  <div
+    className="mapboxgl-ctrl-search__input"
+  >
+    <div
+      className="bp3-card bp3-elevation-0 search-input"
+    >
+      <div
+        className="bp3-input-group"
+      >
+        <input
+          className="bp3-input"
+          onChange={[Function]}
+          onKeyDown={[Function]}
+          style={
+            Object {
+              "paddingRight": 10,
+            }
+          }
+          type="text"
+          value=""
+        />
+        <span
+          className="bp3-input-action"
+        >
+          <button
+            className="bp3-button"
+            onClick={[Function]}
+            onKeyDown={[Function]}
+            onKeyUp={[Function]}
+            type="button"
+          >
+            <span
+              className="bp3-icon bp3-icon-small-cross"
+              icon="small-cross"
+            >
+              <svg
+                data-icon="small-cross"
+                height={16}
+                viewBox="0 0 16 16"
+                width={16}
+              >
+                <desc>
+                  small-cross
+                </desc>
+                <path
+                  d="M9.41 8l2.29-2.29c.19-.18.3-.43.3-.71a1.003 1.003 0 0 0-1.71-.71L8 6.59l-2.29-2.3a1.003 1.003 0 0 0-1.42 1.42L6.59 8 4.3 10.29c-.19.18-.3.43-.3.71a1.003 1.003 0 0 0 1.71.71L8 9.41l2.29 2.29c.18.19.43.3.71.3a1.003 1.003 0 0 0 .71-1.71L9.41 8z"
+                  fillRule="evenodd"
+                />
+              </svg>
+            </span>
+          </button>
+        </span>
+      </div>
+    </div>
+    <div
+      renderSearchResults={[Function]}
+      results={
+        Array [
+          Object {
+            "group": "foo",
+            "results": Array [
+              Object {
+                "label": "foo1",
+              },
+              Object {
+                "label": "foo2",
+              },
+            ],
+          },
+          Object {
+            "group": "bar",
+            "results": Array [],
+          },
+        ]
+      }
+    >
+      SearchResults
+    </div>
+  </div>,
+]
+`;

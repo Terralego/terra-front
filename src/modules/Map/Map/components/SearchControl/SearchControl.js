@@ -3,7 +3,6 @@ import ReactDOM from 'react-dom';
 import classnames from 'classnames';
 import { Icon } from '@blueprintjs/core';
 import debounce from 'lodash.debounce';
-
 import SearchInput from './SearchInput';
 
 import translateMock from '../../../../../utils/translate';
@@ -80,20 +79,6 @@ export class SearchControl extends React.Component {
     this.debouncedSearch();
   }
 
-  search = async () => {
-    const { onSearch } = this.props;
-    const { query } = this.state;
-
-    if (query.length < 3) {
-      this.setState({ results: null, selected: -1 });
-      return;
-    }
-
-    const results = await onSearch(query, this.map);
-
-    this.setState({ results: results || true });
-  }
-
   onKeyPress = ({ key }) => {
     const results = this.flatResults;
     if (!results) return;
@@ -114,6 +99,20 @@ export class SearchControl extends React.Component {
       const { onResultClick } = this.props;
       onResultClick(selectedResult);
     }
+  }
+
+  async search () {
+    const { onSearch } = this.props;
+    const { query } = this.state;
+
+    if (query.length < 3) {
+      this.setState({ results: null, selected: -1 });
+      return;
+    }
+
+    const results = await onSearch(query, this.map);
+
+    this.setState({ results: results || true });
   }
 
   selectResultItem (dir) {

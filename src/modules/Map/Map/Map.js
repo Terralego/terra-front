@@ -87,7 +87,7 @@ export class MapComponent extends React.Component {
     customStyle: {},
     onBackgroundChange () {},
     onSearchResultClick (result) {
-      return this.zoomOnSearchResult(result);
+      return this.focusOnSearchResult(result);
     },
   };
 
@@ -299,7 +299,7 @@ export class MapComponent extends React.Component {
     if (!displaySearchControl && this.searchControl) {
       map.removeControl(this.searchControl);
     }
-    if (displaySearchControl) {
+    if (displaySearchControl && !this.searchControl) {
       this.searchControl = new SearchControl({
         ...this.props,
         onSearch,
@@ -310,7 +310,7 @@ export class MapComponent extends React.Component {
     }
   }
 
-  zoomOnSearchResult ({ center }) {
+  focusOnSearchResult ({ center }) {
     const { map } = this.props;
     map.setCenter(center);
   }

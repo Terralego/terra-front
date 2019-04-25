@@ -5,11 +5,11 @@ import { Card, Divider } from '@blueprintjs/core';
 import translateMock from '../../../../../utils/translate';
 
 export const SearchResults = ({
-  results,
+  results = [],
   onClick,
   maxResults = 2,
   translate = translateMock,
-  selected,
+  selected = -1,
 }) => (
   <Card className="search-results">
     <p className="search-results__title">
