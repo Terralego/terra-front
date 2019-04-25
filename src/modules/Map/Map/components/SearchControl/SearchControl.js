@@ -50,7 +50,7 @@ export class SearchControl extends React.Component {
 
   get flatResults () {
     const { results } = this.state;
-    return results && results.reduce((all, { results: groupResults }) => [
+    return Array.isArray(results) && results.reduce((all, { results: groupResults }) => [
       ...all,
       ...groupResults,
     ], []);
@@ -163,7 +163,7 @@ export class SearchControl extends React.Component {
               query={query}
               onKeyPress={this.onKeyPress}
             />
-            {results && (
+            {Array.isArray(results) && (
               <SearchResults
                 {...this.props}
                 results={results}
