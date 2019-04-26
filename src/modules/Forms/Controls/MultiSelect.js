@@ -9,6 +9,7 @@ import {
 } from '@blueprintjs/core';
 import { MultiSelect as BPMultiSelect } from '@blueprintjs/select';
 
+import { onKeyPress } from '../../../utils/event';
 
 const DEFAULT_LOCALES = { noResults: 'No results.' };
 
@@ -74,6 +75,7 @@ export class MultiSelect extends React.Component {
       label,
       locales,
       value,
+      isPreventSubmit,
       ...props
     } = this.props;
 
@@ -86,6 +88,8 @@ export class MultiSelect extends React.Component {
     return (
       <div
         className="control-container"
+        onKeyPress={isPreventSubmit ? onKeyPress : null}
+        role="presentation"
       >
         <p className="control-label">{label}</p>
         <BPMultiSelect
