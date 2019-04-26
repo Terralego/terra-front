@@ -6,8 +6,6 @@ import { Select as BPSelect } from '@blueprintjs/select';
 
 import { onKeyPress } from '../../../utils/event';
 
-import './index.scss';
-
 export class Select extends React.Component {
   static propTypes = {
     locales: PropTypes.shape({ noResults: PropTypes.string }),
