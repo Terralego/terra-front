@@ -21,14 +21,15 @@ export class SearchControl extends React.Component {
   debouncedSearch = debounce(() => this.search(), 200);
 
   componentDidMount () {
-    global.addEventListener('click', this.listener = e => {
+    this.listener = ({ target }) => {
       const { container } = this.props;
       const { query } = this.state;
 
-      if (query || container.contains(e.target)) return;
+      if (query || container.contains(target)) return;
 
       this.toggle(false);
-    });
+    };
+    global.addEventListener('click', this.listener);
   }
 
   componentWillUnmount () {
@@ -58,6 +59,7 @@ export class SearchControl extends React.Component {
 
   toggle = state => this.setState(({ visible }) => {
     if (visible && state !== true) {
+      // SetTimeout because of css animation
       setTimeout(() => this.setState({ visible: false }), 500);
       return ({ expanded: false, results: null, selected: -1, query: '' });
     }
