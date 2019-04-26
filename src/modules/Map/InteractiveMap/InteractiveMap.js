@@ -119,7 +119,7 @@ export class InteractiveMap extends React.Component {
 
   constructor (props) {
     super(props);
-    const { backgroundStyle } = props;
+    const { backgroundStyle, map } = props;
     this.state = {
       selectedBackgroundStyle: Array.isArray(backgroundStyle)
         ? backgroundStyle[0].url
@@ -146,6 +146,16 @@ export class InteractiveMap extends React.Component {
   onMapInit = map => {
     const { onMapInit = () => {} } = this.props;
     onMapInit(map);
+    map.triggerInteraction = ({ interaction, feature }) => {
+      this.triggerInteraction({
+        map,
+        event: {},
+        feature,
+        layerId: feature.layer.id,
+        interaction,
+        eventType: interaction.trigger || 'click',
+      });
+    };
   };
 
   onMapLoaded = map => {
