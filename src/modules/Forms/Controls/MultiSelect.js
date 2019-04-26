@@ -7,7 +7,7 @@ import {
   Intent,
   MenuItem,
 } from '@blueprintjs/core';
-import { MultiSelect as BPMultiSelect, Select as BPSelect } from '@blueprintjs/select';
+import { MultiSelect as BPMultiSelect } from '@blueprintjs/select';
 
 import { onKeyPress } from '../../../utils/event';
 
@@ -20,12 +20,14 @@ export class MultiSelect extends React.Component {
     label: PropTypes.string,
     onChange: PropTypes.func,
     values: PropTypes.arrayOf(PropTypes.string).isRequired,
+    isPreventSubmit: PropTypes.bool,
   };
 
   static defaultProps = {
     locales: DEFAULT_LOCALES,
     label: '',
     value: [],
+    isPreventSubmit: true,
     onChange () {},
   };
 

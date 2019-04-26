@@ -126,3 +126,9 @@ it('should render default locales', () => {
   const wrapper = shallow(<MultiSelect locales={{ foo: 'foo' }} values={['foo', 'bar']} />);
   expect(wrapper.find('BPMultiSelect').props().noResults.props.text).toBe('No results.');
 });
+
+it('should prevent submit event in parent', () => {
+  const wrapper = shallow(<MultiSelect values={['foo', 'bar']} isPreventSubmit={false} />);
+  const div = wrapper.find('.control-container');
+  expect(div.props().onKeyPress).toBe(null);
+});
