@@ -6,6 +6,9 @@ import 'mapbox-gl/dist/mapbox-gl.css';
 import { capitalize } from '../../../utils/strings';
 import { updateCluster } from '../services/cluster';
 
+import SearchControl from './components/SearchControl';
+import SearchResults from './components/SearchResults';
+
 import './Map.scss';
 
 export function getLayerBeforeId (type, layers) {
@@ -27,6 +30,10 @@ export class MapComponent extends React.Component {
     displayScaleControl: PropTypes.bool,
     displayNavigationControl: PropTypes.bool,
     displayAttributionControl: PropTypes.bool,
+    displaySearchControl: PropTypes.bool,
+    onSearch: PropTypes.func,
+    renderSearchResults: PropTypes.func,
+    onSearchResultClick: PropTypes.func,
     maxZoom: PropTypes.number,
     minZoom: PropTypes.number,
     maxBounds: PropTypes.oneOfType([PropTypes.arrayOf(PropTypes.array), PropTypes.bool]),
@@ -69,6 +76,9 @@ export class MapComponent extends React.Component {
     displayScaleControl: true,
     displayNavigationControl: true,
     displayAttributionControl: true,
+    displaySearchControl: false,
+    onSearch () {},
+    renderSearchResults: SearchResults,
     maxZoom: 20,
     minZoom: 0,
     maxBounds: false,
@@ -76,6 +86,7 @@ export class MapComponent extends React.Component {
     flyTo: {},
     customStyle: {},
     onBackgroundChange () {},
+    onSearchResultClick: null,
   };
 
   mapListeners = [];
@@ -105,6 +116,7 @@ export class MapComponent extends React.Component {
       displayScaleControl,
       displayNavigationControl,
       displayAttributionControl,
+      displaySearchControl,
       minZoom,
       maxBounds,
       rotate,
@@ -149,6 +161,36 @@ export class MapComponent extends React.Component {
     if (JSON.stringify(customStyle) !== JSON.stringify(prevProps.customStyle)) {
       this.replaceLayers(prevProps.customStyle);
     }
+
+    if (prevProps.displaySearchControl !== displaySearchControl) {
+      this.toggleSearchControl();
+    }
+  }
+
+  focusOnSearchResult = ({ center, bounds }) => {
+    const { map } = this.props;
+    if (bounds) {
+      map.fitBounds(bounds, {
+        padding: 10,
+      });
+      return;
+    }
+    if (center) {
+      map.setCenter(center);
+    }
+  }
+
+  onSearchResultClick = result => {
+    const { onSearchResultClick, map } = this.props;
+    if (onSearchResultClick) {
+      onSearchResultClick({
+        result,
+        map,
+        focusOnSearchResult: this.focusOnSearchResult,
+      });
+    } else {
+      this.focusOnSearchResult(result);
+    }
   }
 
   async initMapProperties () {
@@ -162,6 +204,8 @@ export class MapComponent extends React.Component {
     mapBoxGl.accessToken = accessToken;
 
     this.createLayers();
+
+    this.toggleSearchControl();
 
     this.toggleDisplayScaleControl(displayScaleControl);
 
@@ -264,6 +308,28 @@ export class MapComponent extends React.Component {
       map.touchZoomRotate.enableRotation();
     } else {
       map.touchZoomRotate.disableRotation();
+    }
+  }
+
+  toggleSearchControl () {
+    const {
+      map,
+      displaySearchControl,
+      onSearch,
+      renderSearchResults,
+    } = this.props;
+
+    if (!displaySearchControl && this.searchControl) {
+      map.removeControl(this.searchControl);
+    }
+    if (displaySearchControl && !this.searchControl) {
+      this.searchControl = new SearchControl({
+        ...this.props,
+        onSearch,
+        renderSearchResults,
+        onResultClick: this.onSearchResultClick,
+      });
+      map.addControl(this.searchControl, 'top-right');
     }
   }
 

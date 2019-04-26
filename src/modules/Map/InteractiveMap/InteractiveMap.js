@@ -146,6 +146,15 @@ export class InteractiveMap extends React.Component {
   onMapInit = map => {
     const { onMapInit = () => {} } = this.props;
     onMapInit(map);
+    map.triggerInteraction = ({ interaction, feature }) =>
+      this.triggerInteraction({
+        map,
+        event: {},
+        feature,
+        layerId: feature.layer.id,
+        interaction,
+        eventType: interaction.trigger || 'click',
+      });
   };
 
   onMapLoaded = map => {

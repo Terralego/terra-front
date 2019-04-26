@@ -1,0 +1,216 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`should render empty result 1`] = `
+<div
+  className="bp3-card bp3-elevation-0 search-results"
+>
+  <p
+    className="search-results__title"
+  >
+    terralego.map.search_results.title
+  </p>
+</div>
+`;
+
+exports[`should render results 1`] = `
+<div
+  className="bp3-card bp3-elevation-0 search-results"
+>
+  <p
+    className="search-results__title"
+  >
+    terralego.map.search_results.title
+  </p>
+  <div
+    className="search-results__group"
+  >
+    <p
+      className="search-results__group-title"
+    >
+      empty
+    </p>
+    <p
+      className="search-results__item"
+    >
+      terralego.map.search_results.no_result
+    </p>
+    <div
+      className="bp3-divider"
+    />
+  </div>
+  <div
+    className="search-results__group"
+  >
+    <p
+      className="search-results__group-title"
+    >
+      foo
+    </p>
+    <ul
+      className="search-results__list"
+    >
+      <li
+        className="search-results__item search-results__item--active"
+      >
+        <button
+          onClick={[Function]}
+          type="button"
+        >
+          foo 1
+        </button>
+      </li>
+    </ul>
+    <div
+      className="bp3-divider"
+    />
+  </div>
+  <div
+    className="search-results__group"
+  >
+    <p
+      className="search-results__group-title"
+    >
+      bar
+    </p>
+    <ul
+      className="search-results__list"
+    >
+      <li
+        className="search-results__item search-results__item--active"
+      >
+        <button
+          onClick={[Function]}
+          type="button"
+        >
+          bar 1
+        </button>
+      </li>
+      <li
+        className="search-results__item search-results__item--active"
+      >
+        <button
+          onClick={[Function]}
+          type="button"
+        >
+          bar 2
+        </button>
+      </li>
+      <li
+        className="search-results__item search-results__item--active"
+      >
+        <button
+          onClick={[Function]}
+          type="button"
+        >
+          bar 3
+        </button>
+      </li>
+      <li
+        className="search-results__item search-results__item--active"
+      >
+        <button
+          onClick={[Function]}
+          type="button"
+        >
+          bar 4
+        </button>
+      </li>
+      <li
+        className="search-results__item search-results__item--active"
+      >
+        <button
+          onClick={[Function]}
+          type="button"
+        >
+          bar 5
+        </button>
+      </li>
+      <li
+        className="search-results__item search-results__item--more"
+      >
+        …
+      </li>
+    </ul>
+  </div>
+</div>
+`;
+
+exports[`should render results with selected item 1`] = `
+<div
+  className="bp3-card bp3-elevation-0 search-results"
+>
+  <p
+    className="search-results__title"
+  >
+    terralego.map.search_results.title
+  </p>
+  <div
+    className="search-results__group"
+  >
+    <p
+      className="search-results__group-title"
+    >
+      bar
+    </p>
+    <ul
+      className="search-results__list"
+    >
+      <li
+        className="search-results__item search-results__item--active"
+      >
+        <button
+          onClick={[Function]}
+          type="button"
+        >
+          bar 1
+        </button>
+      </li>
+      <li
+        className="search-results__item search-results__item--active"
+      >
+        <button
+          onClick={[Function]}
+          type="button"
+        >
+          bar 2
+        </button>
+      </li>
+      <li
+        className="search-results__item search-results__item--active search-results__item--selected"
+      >
+        <button
+          onClick={[Function]}
+          type="button"
+        >
+          bar 3
+        </button>
+      </li>
+      <li
+        className="search-results__item search-results__item--active"
+      >
+        <button
+          onClick={[Function]}
+          type="button"
+        >
+          bar 4
+        </button>
+      </li>
+      <li
+        className="search-results__item search-results__item--active"
+      >
+        <button
+          onClick={[Function]}
+          type="button"
+        >
+          bar 5
+        </button>
+      </li>
+      <li
+        className="search-results__item search-results__item--more"
+      >
+        …
+      </li>
+    </ul>
+  </div>
+</div>
+`;

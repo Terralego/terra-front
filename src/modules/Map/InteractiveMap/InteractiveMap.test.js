@@ -156,6 +156,30 @@ describe('map', () => {
     expect(onMapInit).not.toHaveBeenCalled();
   });
 
+  it('should add a method to map in init', () => {
+    const map = {};
+    const instance = new InteractiveMap({});
+    instance.onMapInit(map);
+    expect(map.triggerInteraction).toEqual(expect.any(Function));
+
+    instance.triggerInteraction = jest.fn();
+    const interaction = {};
+    const feature = {
+      layer: {
+        id: 'foo',
+      },
+    };
+    map.triggerInteraction({ interaction, feature });
+    expect(instance.triggerInteraction).toHaveBeenCalledWith({
+      map,
+      event: expect.any(Object),
+      feature,
+      layerId: 'foo',
+      interaction,
+      eventType: 'click',
+    });
+  });
+
   it('should load map', () => {
     const instance = new InteractiveMap({});
     const map = { on: jest.fn() };
