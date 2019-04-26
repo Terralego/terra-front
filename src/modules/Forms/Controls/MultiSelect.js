@@ -7,7 +7,7 @@ import {
   Intent,
   MenuItem,
 } from '@blueprintjs/core';
-import { MultiSelect as BPMultiSelect } from '@blueprintjs/select';
+import { MultiSelect as BPMultiSelect, Select as BPSelect } from '@blueprintjs/select';
 
 import { onKeyPress } from '../../../utils/event';
 
@@ -100,6 +100,7 @@ export class MultiSelect extends React.Component {
           onItemSelect={handleChange}
           onQueryChange={handleQueryChange}
           tagRenderer={item => item}
+          popoverProps={{ usePortal: false }}
           tagInputProps={{
             tagProps: { intent: Intent.NONE, interactive: true },
             onRemove: handleTagRemove,
