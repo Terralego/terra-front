@@ -6,6 +6,13 @@ import { Select as BPSelect } from '@blueprintjs/select';
 
 import './index.scss';
 
+// Prevent trigger parent onSubmit when press enter
+function onKeyPress (event) {
+  if (event.which === 13 /* Enter */) {
+    event.preventDefault();
+  }
+}
+
 export class Select extends React.Component {
   static propTypes = {
     locales: PropTypes.shape({ noResults: PropTypes.string }),
@@ -13,20 +20,22 @@ export class Select extends React.Component {
     onChange: PropTypes.func,
     values: PropTypes.arrayOf(PropTypes.string),
     placeholder: PropTypes.string,
-  }
+    isPreventSubmit: PropTypes.bool,
+  };
 
   static defaultProps = {
     locales: { noResults: 'No results.' },
     label: '',
     values: [],
     placeholder: 'Filter…',
+    isPreventSubmit: true,
     onChange () {},
-  }
+  };
 
   state = {
     items: [],
     query: '',
-  }
+  };
 
   componentDidMount () {
     this.updateItems();
@@ -43,11 +52,11 @@ export class Select extends React.Component {
   handleChange = ({ value }) => {
     const { onChange } = this.props;
     onChange(value);
-  }
+  };
 
   handleQueryChange = query => {
     this.setState({ query });
-  }
+  };
 
   updateItems () {
     const { values, locales: { emptySelectItem } } = this.props;
@@ -65,6 +74,7 @@ export class Select extends React.Component {
       values,
       locales: { noResults, emptySelectItem },
       placeholder,
+      isPreventSubmit,
       value,
     } = this.props;
     const { items, query } = this.state;
@@ -75,7 +85,11 @@ export class Select extends React.Component {
       : items.filter(({ label: itemLabel = '' }) => itemLabel.toLowerCase().includes(query.toLowerCase()));
 
     return (
-      <div className="control-container">
+      <div
+        className="control-container"
+        onKeyPress={isPreventSubmit ? onKeyPress : null}
+        role="presentation"
+      >
         <p className="control-label">{label}</p>
         <BPSelect
           popoverProps={{ usePortal: false }}
