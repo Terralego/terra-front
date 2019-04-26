@@ -76,6 +76,7 @@ export class Select extends React.Component {
       placeholder,
       isPreventSubmit,
       value,
+      ...props
     } = this.props;
     const { items, query } = this.state;
     const { handleChange } = this;
@@ -118,6 +119,7 @@ export class Select extends React.Component {
           )}
           noResults={<MenuItem disabled text={noResults} />}
           onItemSelect={handleChange}
+          {...props}
         >
           <Button text={value || emptySelectItem} rightIcon="double-caret-vertical" />
         </BPSelect>
