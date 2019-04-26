@@ -119,7 +119,7 @@ export class InteractiveMap extends React.Component {
 
   constructor (props) {
     super(props);
-    const { backgroundStyle, map } = props;
+    const { backgroundStyle } = props;
     this.state = {
       selectedBackgroundStyle: Array.isArray(backgroundStyle)
         ? backgroundStyle[0].url
