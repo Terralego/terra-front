@@ -4,11 +4,11 @@ import PropTypes from 'prop-types';
 
 import {
   Button,
-  FormGroup,
   Intent,
   MenuItem,
 } from '@blueprintjs/core';
 import { MultiSelect as BPMultiSelect } from '@blueprintjs/select';
+
 
 const DEFAULT_LOCALES = { noResults: 'No results.' };
 
@@ -70,7 +70,12 @@ export class MultiSelect extends React.Component {
       handleQueryChange,
     } = this;
     const { items, query } = this.state;
-    const { label, locales, value, ...props } = this.props;
+    const {
+      label,
+      locales,
+      value,
+      ...props
+    } = this.props;
 
     const displayClearButton = value.length > 0;
 
@@ -79,9 +84,10 @@ export class MultiSelect extends React.Component {
       : items.filter(item => item.toLowerCase().includes(query.toLowerCase()));
 
     return (
-      <FormGroup
-        label={label}
+      <div
+        className="control-container"
       >
+        <p className="control-label">{label}</p>
         <BPMultiSelect
           resetOnSelect
           items={filteredItems}
@@ -116,7 +122,7 @@ export class MultiSelect extends React.Component {
           }}
           {...props}
         />
-      </FormGroup>
+      </div>
     );
   }
 }
