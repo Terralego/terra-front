@@ -146,8 +146,9 @@ export class MapComponent extends React.Component {
       this.toggleDisplayScaleControl(displayScaleControl);
     }
 
-    if (displayNavigationControl !== prevProps.displayNavigationControl) {
-      this.toggleNavigationControl(displayNavigationControl);
+    if (displayNavigationControl !== prevProps.displayNavigationControl ||
+        prevProps.displaySearchControl !== displaySearchControl) {
+      this.resetTopLeftControls();
     }
 
     if (displayAttributionControl !== prevProps.displayAttributionControl) {
@@ -160,10 +161,6 @@ export class MapComponent extends React.Component {
 
     if (JSON.stringify(customStyle) !== JSON.stringify(prevProps.customStyle)) {
       this.replaceLayers(prevProps.customStyle);
-    }
-
-    if (prevProps.displaySearchControl !== displaySearchControl) {
-      this.toggleSearchControl();
     }
   }
 
@@ -197,7 +194,6 @@ export class MapComponent extends React.Component {
     const {
       accessToken,
       displayScaleControl,
-      displayNavigationControl,
       displayAttributionControl,
     } = this.props;
 
@@ -205,11 +201,9 @@ export class MapComponent extends React.Component {
 
     this.createLayers();
 
-    this.toggleSearchControl();
+    this.resetTopLeftControls();
 
     this.toggleDisplayScaleControl(displayScaleControl);
-
-    this.toggleNavigationControl(displayNavigationControl);
 
     this.toggleAttributionControl(displayAttributionControl);
 
@@ -271,6 +265,13 @@ export class MapComponent extends React.Component {
     this.createLayers();
   }
 
+  resetTopLeftControls () {
+    const { displayNavigationControl } = this.props;
+
+    this.toggleSearchControl();
+    this.toggleNavigationControl(displayNavigationControl);
+  }
+
   toggleControl (display, control) {
     const { map } = this.props;
     const controlAttributeName = `${control}Control`;
@@ -284,8 +285,9 @@ export class MapComponent extends React.Component {
     if (display) {
       if (this[controlAttributeName]) {
         map.removeControl(this[controlAttributeName]);
+      } else {
+        this[controlAttributeName] = new mapBoxGl[controlMethod]();
       }
-      this[controlAttributeName] = new mapBoxGl[controlMethod]();
       map.addControl(this[controlAttributeName]);
     }
   }
@@ -329,6 +331,7 @@ export class MapComponent extends React.Component {
         renderSearchResults,
         onResultClick: this.onSearchResultClick,
       });
+      console.log('add', this.searchControl, 'top-right');
       map.addControl(this.searchControl, 'top-right');
     }
   }
