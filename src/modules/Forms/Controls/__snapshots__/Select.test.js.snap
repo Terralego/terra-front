@@ -3,6 +3,8 @@
 exports[`should render correctly 1`] = `
 <div
   className="control-container"
+  onKeyPress={[Function]}
+  role="presentation"
 >
   <p
     className="control-label"
@@ -25,6 +27,8 @@ exports[`should render correctly 1`] = `
 exports[`should render correctly with query 1`] = `
 <div
   className="control-container"
+  onKeyPress={[Function]}
+  role="presentation"
 >
   <p
     className="control-label"
