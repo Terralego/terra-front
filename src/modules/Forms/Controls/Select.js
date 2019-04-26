@@ -4,14 +4,9 @@ import classnames from 'classnames';
 import { MenuItem, Button } from '@blueprintjs/core';
 import { Select as BPSelect } from '@blueprintjs/select';
 
-import './index.scss';
+import { onKeyPress } from '../../../utils/event';
 
-// Prevent trigger parent onSubmit when press enter
-function onKeyPress (event) {
-  if (event.which === 13 /* Enter */) {
-    event.preventDefault();
-  }
-}
+import './index.scss';
 
 export class Select extends React.Component {
   static propTypes = {

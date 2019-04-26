@@ -51,13 +51,15 @@ it('should update items', () => {
   instance.props.values = ['foo'];
   instance.componentDidUpdate({ values: prevValues });
   expect(instance.setState).toHaveBeenCalledWith({
-    items: [{
-      value: '',
-      label: 'empty',
-    }, {
-      value: 'foo',
-      label: 'foo',
-    }],
+    items: [
+      {
+        value: '',
+        label: 'empty',
+      }, {
+        value: 'foo',
+        label: 'foo',
+      },
+    ],
   });
 });
 
@@ -106,4 +108,10 @@ it('should handle query change', () => {
   instance.setState = jest.fn();
   instance.handleQueryChange('foo');
   expect(instance.setState).toHaveBeenCalledWith({ query: 'foo' });
+});
+
+it('should prevent submit event in parent', () => {
+  const wrapper = shallow(<Select values={['foo', 'bar']} isPreventSubmit={false} />);
+  const div = wrapper.find('.control-container');
+  expect(div.props().onKeyPress).toBe(null);
 });
