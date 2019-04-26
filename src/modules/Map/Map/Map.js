@@ -86,9 +86,7 @@ export class MapComponent extends React.Component {
     flyTo: {},
     customStyle: {},
     onBackgroundChange () {},
-    onSearchResultClick (result) {
-      return this.focusOnSearchResult(result);
-    },
+    onSearchResultClick: null,
   };
 
   mapListeners = [];
@@ -166,6 +164,32 @@ export class MapComponent extends React.Component {
 
     if (prevProps.displaySearchControl !== displaySearchControl) {
       this.toggleSearchControl();
+    }
+  }
+
+  focusOnSearchResult = ({ center, bounds }) => {
+    const { map } = this.props;
+    if (bounds) {
+      map.fitBounds(bounds, {
+        padding: 10,
+      });
+      return;
+    }
+    if (center) {
+      map.setCenter(center);
+    }
+  }
+
+  onSearchResultClick = result => {
+    const { onSearchResultClick, map } = this.props;
+    if (onSearchResultClick) {
+      onSearchResultClick({
+        result,
+        map,
+        focusOnSearchResult: this.focusOnSearchResult,
+      });
+    } else {
+      this.focusOnSearchResult(result);
     }
   }
 
@@ -293,7 +317,6 @@ export class MapComponent extends React.Component {
       displaySearchControl,
       onSearch,
       renderSearchResults,
-      onSearchResultClick,
     } = this.props;
 
     if (!displaySearchControl && this.searchControl) {
@@ -304,15 +327,10 @@ export class MapComponent extends React.Component {
         ...this.props,
         onSearch,
         renderSearchResults,
-        onResultClick: onSearchResultClick.bind(this),
+        onResultClick: this.onSearchResultClick,
       });
       map.addControl(this.searchControl, 'top-right');
     }
-  }
-
-  focusOnSearchResult ({ center }) {
-    const { map } = this.props;
-    map.setCenter(center);
   }
 
   render () {
