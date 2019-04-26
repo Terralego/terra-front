@@ -3,7 +3,6 @@ import classnames from 'classnames';
 
 import PropTypes from 'prop-types';
 
-import { FormGroup } from '@blueprintjs/core';
 import { DateRangeInput as BPDateRangeInput } from '@blueprintjs/datetime';
 
 import localeUtils from '../../../utils/localeUtils';
@@ -36,9 +35,10 @@ export const DateRangeInput = ({
   shortcuts = false,
   ...props
 }) => (
-  <FormGroup
-    label={label}
+  <div
+    className="control-container"
   >
+    <p className="control-label">{label}</p>
     <BPDateRangeInput
       className={classnames('tf-control-date-range', className)}
       formatDate={formatDate}
@@ -61,7 +61,7 @@ export const DateRangeInput = ({
       }}
       {...props}
     />
-  </FormGroup>
+  </div>
 );
 
 DateRangeInput.propTypes = {
