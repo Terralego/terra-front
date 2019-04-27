@@ -589,9 +589,9 @@ describe('search control integration', () => {
   it('should update search control state', () => {
     const instance = new Map({});
     instance.props = { displaySearchControl: true };
-    instance.toggleSearchControl = jest.fn();
+    instance.resetTopLeftControls = jest.fn();
     instance.updateMapProperties({ displaySearchControl: false });
-    expect(instance.toggleSearchControl).toHaveBeenCalled();
+    expect(instance.resetTopLeftControls).toHaveBeenCalled();
   });
 
   it('should not hide search control if not visible', () => {
