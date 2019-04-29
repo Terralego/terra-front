@@ -4,7 +4,7 @@ import classnames from 'classnames';
 import { MenuItem, Button } from '@blueprintjs/core';
 import { Select as BPSelect } from '@blueprintjs/select';
 
-import { onKeyPress } from '../../../utils/event';
+import { preventEnterKeyPress } from '../../../utils/event';
 
 export class Select extends React.Component {
   static propTypes = {
@@ -13,7 +13,7 @@ export class Select extends React.Component {
     onChange: PropTypes.func,
     values: PropTypes.arrayOf(PropTypes.string),
     placeholder: PropTypes.string,
-    isPreventSubmit: PropTypes.bool,
+    isSubmissionPrevented: PropTypes.bool,
   };
 
   static defaultProps = {
@@ -21,7 +21,7 @@ export class Select extends React.Component {
     label: '',
     values: [],
     placeholder: 'Filter…',
-    isPreventSubmit: true,
+    isSubmissionPrevented: true,
     onChange () {},
   };
 
@@ -67,7 +67,7 @@ export class Select extends React.Component {
       values,
       locales: { noResults, emptySelectItem },
       placeholder,
-      isPreventSubmit,
+      isSubmissionPrevented,
       value,
       ...props
     } = this.props;
@@ -81,7 +81,7 @@ export class Select extends React.Component {
     return (
       <div
         className="control-container"
-        onKeyPress={isPreventSubmit ? onKeyPress : null}
+        onKeyPress={isSubmissionPrevented ? preventEnterKeyPress : null}
         role="presentation"
       >
         <p className="control-label">{label}</p>
