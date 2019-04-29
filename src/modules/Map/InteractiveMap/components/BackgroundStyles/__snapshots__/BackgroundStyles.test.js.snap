@@ -1,11 +1,11 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
 exports[`should render correctly 1`] = `
-<p
+<span
   className="Popover"
 >
-  <p>
+  <span>
     Button
-  </p>
-</p>
+  </span>
+</span>
 `;

@@ -8,11 +8,10 @@ import centroid from '@turf/centroid';
 
 import { setInteractions } from '../services/mapUtils';
 import { getClusteredFeatures } from '../services/cluster';
-import MapComponent from '../Map';
+import MapComponent, { CONTROLS_TOP_RIGHT, DEFAULT_CONTROLS } from '../Map';
 import BackgroundStyles from './components/BackgroundStyles';
 import Legend from './components/Legend';
 import Tooltip from './components/Tooltip';
-
 
 import './styles.scss';
 
@@ -128,11 +127,17 @@ export class InteractiveMap extends React.Component {
     };
   }
 
+  componentDidMount () {
+    this.insertBackgroundStyleControl();
+  }
+
   componentDidUpdate ({
     interactions: prevInteractions,
     legends: prevLegends,
+    controls: prevControls,
+    backgroundStyle: prevBackgroundStyle,
   }) {
-    const { interactions, legends } = this.props;
+    const { interactions, legends, controls, backgroundStyle } = this.props;
 
     if (interactions !== prevInteractions) {
       this.setInteractions();
@@ -140,6 +145,11 @@ export class InteractiveMap extends React.Component {
 
     if (legends !== prevLegends) {
       this.filterLegendsByZoom();
+    }
+
+    if (controls !== prevControls ||
+        backgroundStyle !== prevBackgroundStyle) {
+      this.insertBackgroundStyleControl();
     }
   }
 
@@ -439,6 +449,23 @@ export class InteractiveMap extends React.Component {
     }
   }
 
+  insertBackgroundStyleControl () {
+    const { controls = DEFAULT_CONTROLS, backgroundStyle } = this.props;
+    const { selectedBackgroundStyle } = this.state;
+
+    if (typeof backgroundStyle !== 'string' &&
+       !controls.find(({ control }) => control.constructor === BackgroundStyles)) {
+      this.setState({ controls: [...controls, {
+        control: new BackgroundStyles({
+          onChange: this.onBackgroundChange,
+          styles: backgroundStyle,
+          selected: selectedBackgroundStyle,
+        }),
+        position: CONTROLS_TOP_RIGHT,
+      }] });
+    }
+  }
+
   render () {
     const {
       layersTree,
@@ -449,11 +476,10 @@ export class InteractiveMap extends React.Component {
       ...mapProps
     } = this.props;
 
-    const { selectedBackgroundStyle, legends } = this.state;
+    const { selectedBackgroundStyle, legends, controls } = this.state;
     const {
       onMapInit,
       onMapLoaded,
-      onBackgroundChange,
     } = this;
 
     return (
@@ -461,19 +487,13 @@ export class InteractiveMap extends React.Component {
         className="interactive-map"
         style={style}
       >
-        {typeof backgroundStyle !== 'string' && (
-          <BackgroundStyles
-            onChange={onBackgroundChange}
-            styles={backgroundStyle}
-            selected={selectedBackgroundStyle}
-          />
-        )}
         <MapComponent
           {...mapProps}
           backgroundStyle={selectedBackgroundStyle}
           onMapInit={onMapInit}
           onMapLoaded={onMapLoaded}
           onBackgroundChange={onStyleChange}
+          controls={controls}
         />
         {!!legends.length && (
           <div className="interactive-map__legends">

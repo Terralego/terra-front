@@ -1,22 +1,23 @@
 import React from 'react';
+import ReactDOM from 'react-dom';
 import renderer from 'react-test-renderer';
 import BackgroundStyles from '.';
 
 jest.mock('@blueprintjs/core', () => ({
   Radio () {
-    return <p>Radio</p>;
+    return <span>Radio</span>;
   },
   RadioGroup ({ children }) {
-    return <p className="RadioGroup">{children}</p>;
+    return <span className="RadioGroup">{children}</span>;
   },
   Button () {
-    return <p>Button</p>;
+    return <span>Button</span>;
   },
   Icon () {
-    return <p>Icon</p>;
+    return <span>Icon</span>;
   },
   Popover ({ children }) {
-    return <p className="Popover">{children}</p>;
+    return <span className="Popover">{children}</span>;
   },
 }));
 it('should render correctly', () => {
@@ -57,4 +58,32 @@ it('should change value', () => {
   const instance = new BackgroundStyles({ onChange });
   instance.onChange({ target: { value: 'foo' } });
   expect(onChange).toHaveBeenCalledWith('foo');
+});
+
+it('should be added on map', () => {
+  jest.spyOn(ReactDOM, 'render');
+  const map = {};
+  const instance = new BackgroundStyles({
+    styles: [{
+      label: 'foo',
+      value: 'mapbox:foo',
+    }],
+    selected: 'bar',
+    onChange () {},
+  });
+  instance.onAdd(map);
+  expect(ReactDOM.render).toHaveBeenCalled();
+  expect(instance.container.className).toBe('mapboxgl-ctrl mapboxgl-ctrl-group mapboxgl-ctrl-search');
+});
+
+it('should be removed from map', () => {
+  const instance = new BackgroundStyles();
+  instance.container = {
+    parentNode: {
+      removeChild: jest.fn(),
+    },
+  };
+  instance.onRemove();
+  expect(instance.container.parentNode.removeChild).toHaveBeenCalledWith(instance.container);
+  expect(instance.map).not.toBeDefined();
 });

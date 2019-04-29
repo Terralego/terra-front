@@ -1,4 +1,5 @@
 import React from 'react';
+import ReactDOM from 'react-dom';
 import PropTypes from 'prop-types';
 import { Radio, RadioGroup, Button, Icon, Popover } from '@blueprintjs/core';
 
@@ -6,16 +7,35 @@ import './styles.scss';
 
 export class BackgroundStyles extends React.Component {
   static propTypes = {
-    styles: PropTypes.oneOfType([
-      PropTypes.arrayOf(PropTypes.objectOf(PropTypes.string)),
-      PropTypes.string,
-    ]).isRequired,
+    styles: PropTypes.arrayOf(PropTypes.shape({
+      label: PropTypes.string,
+      value: PropTypes.string,
+    })).isRequired,
     selected: PropTypes.string.isRequired,
     onChange: PropTypes.func.isRequired,
   }
 
   state = {
     showRadioGroup: false,
+  }
+
+  onAdd (map) {
+    this.map = map;
+    this.container = document.createElement('div');
+    this.container.className = 'mapboxgl-ctrl mapboxgl-ctrl-group mapboxgl-ctrl-search';
+    ReactDOM.render(
+      <BackgroundStyles
+        container={this.container}
+        {...this.props}
+      />,
+      this.container,
+    );
+    return this.container;
+  }
+
+  onRemove () {
+    this.container.parentNode.removeChild(this.container);
+    delete this.map;
   }
 
   toggleSelector = () => {
