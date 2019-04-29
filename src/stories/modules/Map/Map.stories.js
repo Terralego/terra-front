@@ -1,9 +1,12 @@
 import React from 'react';
 import { storiesOf } from '@storybook/react';
 
-import { select, number, array, object } from '@storybook/addon-knobs';
+import { select, number, array, object, boolean } from '@storybook/addon-knobs';
 
-import Map from '../../../modules/Map/Map';
+import Map, {
+  CONTROLS_TOP_RIGHT, CONTROLS_BOTTOM_LEFT, CONTROLS_BOTTOM_RIGHT,
+  CONTROL_NAVIGATION, CONTROL_SCALE, CONTROL_ATTRIBUTION,
+} from '../../../modules/Map/Map';
 import leftInfoButtonStyles from '../../leftInfosButtonStyles';
 
 Map.displayName = 'Map';
@@ -24,21 +27,16 @@ storiesOf('Modules/Map/', module).add('Map component', () => (
         ],
         'mapbox://styles/mapbox/light-v9',
       )}
-      displayScaleControl={select(
-        'displayScaleControl',
-        [true, false],
-        true,
-      )}
-      displayNavigationControl={select(
-        'displayNavigationControl',
-        [true, false],
-        true,
-      )}
-      displayAttributionControl={select(
-        'displayAttributionControl',
-        [true, false],
-        true,
-      )}
+      controls={[boolean('Display attribution', true) && {
+        control: CONTROL_ATTRIBUTION,
+        position: CONTROLS_BOTTOM_RIGHT,
+      }, boolean('Display navigation', true) && {
+        control: CONTROL_NAVIGATION,
+        position: CONTROLS_TOP_RIGHT,
+      }, boolean('Display scale', true) && {
+        control: CONTROL_SCALE,
+        position: CONTROLS_BOTTOM_LEFT,
+      }].filter(a => a)}
       maxZoom={number('maxZoom', 20)}
       minZoom={number('minZoom', 0)}
       maxBounds={array('maxBounds', [
