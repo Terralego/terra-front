@@ -32,15 +32,12 @@ const onSearch = () => new Promise(resolve => {
     results: [{
       label: 'Parc d\'activité de Fontvieille',
       center: [5.4859932, 43.3271871],
-      bounds: [],
     }, {
       label: 'Parc d\'activité du Grand Rhone',
       center: [4.6289983, 43.7061469],
-      bounds: [],
     }, {
       label: 'Technopole Agroparc',
       center: [4.8902474, 43.9164238],
-      bounds: [],
     }],
   }]), 500);
 });

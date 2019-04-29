@@ -15,6 +15,7 @@ export class SearchControl extends React.Component {
     expanded: false,
     query: '',
     results: null,
+    displayResults: false,
     selected: -1,
   };
 
@@ -23,9 +24,15 @@ export class SearchControl extends React.Component {
   componentDidMount () {
     this.listener = ({ target }) => {
       const { container } = this.props;
-      const { query } = this.state;
+      const { query, displayResults } = this.state;
 
-      if (query || container.contains(target)) return;
+      if (container.contains(target)) return;
+
+      if (displayResults) {
+        this.toggleResultsDisplay(false);
+      }
+
+      if (query) return;
 
       this.toggle(false);
     };
@@ -83,6 +90,9 @@ export class SearchControl extends React.Component {
 
   onKeyPress = ({ key }) => {
     const results = this.flatResults;
+
+    this.toggleResultsDisplay(true);
+
     if (!results) return;
 
     if (key === 'Escape') {
@@ -98,9 +108,16 @@ export class SearchControl extends React.Component {
       const { selected } = this.state;
       const selectedResult = results[selected];
       if (!selectedResult) return;
-      const { onResultClick } = this.props;
-      onResultClick(selectedResult);
+      this.clickOnResult(selectedResult);
     }
+  }
+
+  toggleResultsDisplay = state => this.setState({ displayResults: state });
+
+  clickOnResult = result => {
+    const { onResultClick } = this.props;
+    onResultClick(result);
+    this.toggleResultsDisplay(false);
   }
 
   async search () {
@@ -108,13 +125,13 @@ export class SearchControl extends React.Component {
     const { query } = this.state;
 
     if (query.length < 3) {
-      this.setState({ results: null, selected: -1 });
+      this.setState({ displayResults: false, results: null, selected: -1 });
       return;
     }
 
     const results = await onSearch(query, this.map);
 
-    this.setState({ results: results || true });
+    this.setState({ displayResults: true, results });
   }
 
   selectResultItem (dir) {
@@ -136,10 +153,9 @@ export class SearchControl extends React.Component {
   render () {
     const {
       renderSearchResults: SearchResults,
-      onResultClick,
       translate = translateMock,
     } = this.props;
-    const { visible, expanded, query, results, selected } = this.state;
+    const { visible, expanded, query, displayResults, results, selected } = this.state;
 
     return (
       <>
@@ -162,14 +178,15 @@ export class SearchControl extends React.Component {
               {...this.props}
               onChange={this.onChange}
               onClose={this.close}
+              onFocus={() => this.toggleResultsDisplay(true)}
               query={query}
               onKeyPress={this.onKeyPress}
             />
-            {Array.isArray(results) && (
+            {displayResults && Array.isArray(results) && (
               <SearchResults
                 {...this.props}
                 results={results}
-                onClick={onResultClick}
+                onClick={this.clickOnResult}
                 selected={this.flatResults[selected]}
               />
             )}

@@ -331,7 +331,6 @@ export class MapComponent extends React.Component {
         renderSearchResults,
         onResultClick: this.onSearchResultClick,
       });
-      console.log('add', this.searchControl, 'top-right');
       map.addControl(this.searchControl, 'top-right');
     }
   }
