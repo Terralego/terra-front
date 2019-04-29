@@ -5,7 +5,6 @@ import mapboxgl from 'mapbox-gl';
 
 import { MapComponent as Map, getLayerBeforeId } from './Map';
 import { updateCluster } from '../services/cluster';
-import SearchControl from './components/SearchControl';
 
 const props = {
   map: mapboxgl.Map(),
