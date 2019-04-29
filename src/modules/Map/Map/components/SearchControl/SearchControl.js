@@ -116,7 +116,10 @@ export class SearchControl extends React.Component {
 
   clickOnResult = result => {
     const { onResultClick } = this.props;
-    onResultClick(result);
+    onResultClick({
+      result,
+      setQuery: query => this.setState({ query }),
+    });
     this.toggleResultsDisplay(false);
   }
 

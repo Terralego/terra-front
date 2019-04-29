@@ -177,11 +177,12 @@ export class MapComponent extends React.Component {
     }
   }
 
-  onSearchResultClick = result => {
+  onSearchResultClick = ({ result, ...rest }) => {
     const { onSearchResultClick, map } = this.props;
     if (onSearchResultClick) {
       onSearchResultClick({
         result,
+        ...rest,
         map,
         focusOnSearchResult: this.focusOnSearchResult,
       });
