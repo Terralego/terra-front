@@ -2,6 +2,7 @@ import React from 'react';
 
 import PropTypes from 'prop-types';
 
+import classnames from 'classnames';
 import {
   Button,
   Intent,
@@ -78,6 +79,7 @@ export class MultiSelect extends React.Component {
       locales,
       value,
       isSubmissionPrevented,
+      className,
       ...props
     } = this.props;
 
@@ -95,6 +97,7 @@ export class MultiSelect extends React.Component {
       >
         <p className="control-label">{label}</p>
         <BPMultiSelect
+          className={classnames('tf-multiselect', className)}
           resetOnSelect
           items={filteredItems}
           selectedItems={value}
