@@ -24,13 +24,11 @@ export class SearchControl extends React.Component {
   componentDidMount () {
     this.listener = ({ target }) => {
       const { container } = this.props;
-      const { query, displayResults } = this.state;
+      const { query } = this.state;
 
       if (container.contains(target)) return;
 
-      if (displayResults) {
-        this.toggleResultsDisplay(false);
-      }
+      this.toggleResultsDisplay(false);
 
       if (query) return;
 
@@ -134,7 +132,7 @@ export class SearchControl extends React.Component {
 
     const results = await onSearch(query, this.map);
 
-    this.setState({ displayResults: true, results });
+    this.setState({ displayResults: !!results, results });
   }
 
   selectResultItem (dir) {

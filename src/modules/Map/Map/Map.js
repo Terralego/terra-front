@@ -20,6 +20,17 @@ export const CONTROL_NAVIGATION = 'NavigationControl';
 export const CONTROL_SCALE = 'ScaleControl';
 export const CONTROL_SEARCH = 'SearchControl';
 
+export const DEFAULT_CONTROLS = [{
+  control: CONTROL_ATTRIBUTION,
+  position: CONTROLS_BOTTOM_RIGHT,
+}, {
+  control: CONTROL_NAVIGATION,
+  position: CONTROLS_TOP_RIGHT,
+}, {
+  control: CONTROL_SCALE,
+  position: CONTROLS_BOTTOM_LEFT,
+}];
+
 export function getLayerBeforeId (type, layers) {
   const sameTypes = layers.filter(({ type: lType }) => type === lType);
 
@@ -108,16 +119,7 @@ export class MapComponent extends React.Component {
     customStyle: {},
     onBackgroundChange () {},
     onSearchResultClick: null,
-    controls: [{
-      control: CONTROL_ATTRIBUTION,
-      position: CONTROLS_BOTTOM_RIGHT,
-    }, {
-      control: CONTROL_NAVIGATION,
-      position: CONTROLS_TOP_RIGHT,
-    }, {
-      control: CONTROL_SCALE,
-      position: CONTROLS_BOTTOM_LEFT,
-    }],
+    controls: DEFAULT_CONTROLS,
   };
 
   controls = [];

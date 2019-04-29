@@ -41,6 +41,7 @@ Array [
         <input
           className="bp3-input"
           onChange={[Function]}
+          onFocus={[Function]}
           onKeyDown={[Function]}
           style={
             Object {
@@ -84,6 +85,7 @@ Array [
       </div>
     </div>
     <div
+      onClick={[Function]}
       renderSearchResults={[Function]}
       results={
         Array [

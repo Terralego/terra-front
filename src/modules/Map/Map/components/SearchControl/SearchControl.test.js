@@ -16,6 +16,7 @@ it('should render', () => {
   );
   tree.getInstance().setState({
     visible: true,
+    displayResults: true,
     results: [{
       group: 'foo',
       results: [{
@@ -68,6 +69,7 @@ it('should close control on click', () => {
   const wrapper = shallow(<SearchControl />);
   const instance = wrapper.instance();
   instance.toggle = jest.fn();
+  instance.toggleResultsDisplay = jest.fn();
 
   instance.props = {
     container: {
@@ -98,6 +100,15 @@ it('should close control on click', () => {
   instance.state = {};
   instance.listener({ target: null });
   expect(instance.toggle).toHaveBeenCalled();
+
+  instance.props = {
+    container: {
+      contains: () => true,
+    },
+  };
+  instance.state = { query: 'abc', displayResults: true };
+  instance.listener({ target: null });
+  expect(instance.toggleResultsDisplay).toHaveBeenCalledWith(false);
 });
 
 it('should remove listener on unmount', () => {
@@ -243,7 +254,10 @@ it('should handle key press', () => {
   instance.selectResultItem.mockClear();
 
   instance.onKeyPress({ key: 'Enter' });
-  expect(onResultClick).toHaveBeenCalledWith(selected);
+  expect(onResultClick).toHaveBeenCalledWith({
+    result: selected,
+    setQuery: expect.any(Function),
+  });
   expect(instance.toggle).not.toHaveBeenCalled();
   expect(instance.selectResultItem).not.toHaveBeenCalled();
   onResultClick.mockClear();
@@ -275,18 +289,26 @@ it('should search', async () => {
 
   instance.state.query = 'ab';
   await instance.search();
-  expect(instance.setState).toHaveBeenCalledWith({ results: null, selected: -1 });
+  expect(instance.setState).toHaveBeenCalledWith({
+    displayResults: false, results: null, selected: -1,
+  });
 
   instance.state.query = 'abc';
   await instance.search();
   expect(onSearch).toHaveBeenCalledWith('abc', instance.map);
-  expect(instance.setState).toHaveBeenCalledWith({ results });
+  expect(instance.setState).toHaveBeenCalledWith({
+    displayResults: true,
+    results,
+  });
 
   instance.state.query = 'abc';
   instance.props.onSearch = jest.fn();
   await instance.search();
   expect(onSearch).toHaveBeenCalledWith('abc', instance.map);
-  expect(instance.setState).toHaveBeenCalledWith({ results: true });
+  expect(instance.setState).toHaveBeenCalledWith({
+    displayResults: false,
+    results: undefined,
+  });
 });
 
 it('should select result item', () => {
@@ -321,4 +343,30 @@ it('should select result item', () => {
   expect(stateCallback({ selected: 2 })).toEqual({ selected: 1 });
   expect(stateCallback({ selected: 1 })).toEqual({ selected: 0 });
   expect(stateCallback({ selected: 0 })).toEqual({ selected: 3 });
+});
+
+it('should click on result', () => {
+  let expectedSetQuery;
+  const onResultClick = jest.fn(({ setQuery }) => {
+    expectedSetQuery = setQuery;
+  });
+  const instance = new SearchControl({ onResultClick });
+  instance.setState = jest.fn();
+  const result = {};
+  instance.clickOnResult(result);
+  expect(onResultClick).toHaveBeenCalledWith({
+    result,
+    setQuery: expect.any(Function),
+  });
+  expectedSetQuery('foo');
+  expect(instance.setState).toHaveBeenCalledWith({ query: 'foo' });
+});
+
+it('should display results on focus', () => {
+  const wrapper = shallow(<SearchControl />);
+  const instance = wrapper.instance();
+  instance.setState({ visible: true });
+  instance.toggleResultsDisplay = jest.fn();
+  wrapper.find('SearchInput').props().onFocus();
+  expect(instance.toggleResultsDisplay).toHaveBeenCalled();
 });
