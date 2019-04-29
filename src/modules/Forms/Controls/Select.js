@@ -69,6 +69,7 @@ export class Select extends React.Component {
       placeholder,
       isSubmissionPrevented,
       value,
+      className,
       ...props
     } = this.props;
     const { items, query } = this.state;
@@ -86,6 +87,7 @@ export class Select extends React.Component {
       >
         <p className="control-label">{label}</p>
         <BPSelect
+          className={classnames('tf-select', className)}
           popoverProps={{ usePortal: false }}
           items={filteredItems}
           filterable={values.length > 9}
