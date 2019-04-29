@@ -1,15 +1,5 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
-exports[`snaphsots should render background style selector 1`] = `
-<div
-  className="interactive-map"
->
-  <p>
-    BackgroundStyles
-  </p>
-</div>
-`;
-
 exports[`snaphsots should render correctly 1`] = `
 <div
   className="interactive-map"

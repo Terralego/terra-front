@@ -14,6 +14,7 @@ import InteractiveMap, {
   INTERACTION_HIGHLIGHT,
   getHighlightLayerId,
 } from './InteractiveMap';
+import BackgroundStyles from './components/BackgroundStyles';
 
 jest.mock('@turf/bbox', () => jest.fn());
 jest.mock('mapbox-gl', () => {
@@ -37,7 +38,12 @@ jest.mock('mapbox-gl', () => {
     Popup,
   };
 });
-jest.mock('../Map', () => function MapComponent () { return null; });
+jest.mock('../Map', () => {
+  function MapComponent () { return null; }
+  MapComponent.CONTROLS_TOP_RIGHT = 'top-right';
+  MapComponent.DEFAULT_CONTROLS = [];
+  return MapComponent;
+});
 jest.mock('../services/mapUtils', () => ({
   toggleLayerVisibility: jest.fn(),
   setLayerOpacity: jest.fn(),
@@ -54,7 +60,10 @@ jest.mock('react-dom', () => {
 jest.mock('lodash.debounce', () => fn => () => fn({ layerId: 'foo' }));
 
 jest.mock('@turf/centroid', () => () => ({ geometry: { coordinates: [0, 0] } }));
-jest.mock('./components/BackgroundStyles', () => () => <p>BackgroundStyles</p>);
+// eslint-disable-next-line react/prefer-stateless-function
+jest.mock('./components/BackgroundStyles', () => class BackgroundStylesMock {
+
+});
 jest.mock('../services/cluster', () => ({
   getClusteredFeatures: jest.fn(),
 }));
@@ -129,15 +138,6 @@ describe('snaphsots', () => {
       }],
     });
     const tree = wrapper.toJSON();
-    expect(tree).toMatchSnapshot();
-  });
-
-  it('should render background style selector', () => {
-    const tree = renderer.create((
-      <InteractiveMap
-        backgroundStyle={[{ label: 'foo', url: 'mapbox://foo' }, { label: 'bar', url: 'mapbox://bar' }]}
-      />
-    )).toJSON();
     expect(tree).toMatchSnapshot();
   });
 });
@@ -265,6 +265,36 @@ describe('map', () => {
     const selectedBackgroundStyle = 'foo';
     instance.onBackgroundChange(selectedBackgroundStyle);
     expect(instance.setState).toHaveBeenCalledWith({ selectedBackgroundStyle });
+  });
+
+  it('should update controls', () => {
+    const instance = new InteractiveMap({});
+    instance.insertBackgroundStyleControl = jest.fn();
+    instance.componentDidUpdate({ backgroundStyle: [] });
+    expect(instance.insertBackgroundStyleControl).toHaveBeenCalled();
+  });
+
+  it('should add background styles control', () => {
+    const backgroundStyle = [{}, {}];
+    const selectedBackgroundStyle = 1;
+    const instance = new InteractiveMap({ backgroundStyle });
+    instance.state = { selectedBackgroundStyle };
+    instance.setState = jest.fn();
+    instance.insertBackgroundStyleControl();
+    expect(instance.setState).toHaveBeenCalledWith({
+      controls: [{
+        control: expect.any(BackgroundStyles),
+        position: 'top-right',
+      }],
+    });
+
+    instance.setState.mockClear();
+    instance.props.controls = [{
+      control: new BackgroundStyles({}),
+      position: 'top-right',
+    }];
+    instance.insertBackgroundStyleControl();
+    expect(instance.setState).not.toHaveBeenCalled();
   });
 });
 

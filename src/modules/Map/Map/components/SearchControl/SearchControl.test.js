@@ -46,7 +46,6 @@ it('should be added on map', () => {
 
 it('should be removed from map', () => {
   const instance = new SearchControl();
-  jest.spyOn(ReactDOM, 'render');
   instance.container = {
     parentNode: {
       removeChild: jest.fn(),
