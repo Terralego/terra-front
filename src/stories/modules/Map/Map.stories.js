@@ -8,6 +8,7 @@ import Map, {
   CONTROL_NAVIGATION, CONTROL_SCALE, CONTROL_ATTRIBUTION,
 } from '../../../modules/Map/Map';
 import leftInfoButtonStyles from '../../leftInfosButtonStyles';
+import doc from './Map.md';
 
 Map.displayName = 'Map';
 
@@ -48,6 +49,7 @@ storiesOf('Modules/Map/', module).add('Map component', () => (
   </div>
 ), {
   info: {
+    text: doc,
     styles: leftInfoButtonStyles,
   },
 });
