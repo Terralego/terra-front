@@ -4,7 +4,7 @@ import { Classes } from '@blueprintjs/core';
 
 import { boolean } from '@storybook/addon-knobs';
 
-import Map from '../../../modules/Map/Map';
+import Map, { CONTROLS_TOP_RIGHT, CONTROL_SEARCH, CONTROL_NAVIGATION } from '../../../modules/Map/Map';
 import doc from './MapSearch.md';
 import leftInfoButtonStyles from '../../leftInfosButtonStyles';
 
@@ -32,15 +32,12 @@ const onSearch = () => new Promise(resolve => {
     results: [{
       label: 'Parc d\'activité de Fontvieille',
       center: [5.4859932, 43.3271871],
-      bounds: [],
     }, {
       label: 'Parc d\'activité du Grand Rhone',
       center: [4.6289983, 43.7061469],
-      bounds: [],
     }, {
       label: 'Technopole Agroparc',
       center: [4.8902474, 43.9164238],
-      bounds: [],
     }],
   }]), 500);
 });
@@ -58,6 +55,13 @@ storiesOf('Modules/Map/', module).add('Search in Map', () => (
       maxBounds={[[-5.7283633634, 42.114925591], [8.8212564471, 51.3236272327]]} // Should be tried with https://boundingbox.klokantech.com/
       zoom={10} // set default zoom
       displaySearchControl={boolean('Display search', true)}
+      controls={[boolean('Display search', true) && {
+        control: CONTROL_SEARCH,
+        position: CONTROLS_TOP_RIGHT,
+      }, {
+        control: CONTROL_NAVIGATION,
+        position: CONTROLS_TOP_RIGHT,
+      }].filter(a => a)}
       onSearch={onSearch}
       translate={t}
     />

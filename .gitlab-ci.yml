@@ -17,12 +17,18 @@ before_script:
 
 # Tests stage
 
+npm_lint:
+  tags: [shared-ci-docker]
+  stage: tests
+  script:
+    - npm ci
+    - npm run lint  
+
 npm_test:
   tags: [shared-ci-docker]
   stage: tests
   script:
     - npm ci
-    - npm run lint
     - npm run coverage
   coverage: /All files[^|]*\|[^|]*\s+([\d\.]+)/
 
@@ -47,6 +53,8 @@ build_story_book:
   script:
     - npm ci
     - npm run build-storybook
+  only:
+    - master
   artifacts:
     expire_in: 3 days
     paths:
@@ -58,7 +66,7 @@ deploy_story_book:
   dependencies:
     - build_story_book
   only:
-    - v2
+    - master
   script:
     - npx --package netlify-cli netlify deploy --site=$NETLIFY_SITE_ID --auth=$NETLIFY_ACCESS_TOKEN  --dir=./storybook-static --prod
 

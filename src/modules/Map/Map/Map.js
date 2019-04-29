@@ -3,13 +3,33 @@ import mapBoxGl from 'mapbox-gl';
 import PropTypes from 'prop-types';
 import 'mapbox-gl/dist/mapbox-gl.css';
 
-import { capitalize } from '../../../utils/strings';
 import { updateCluster } from '../services/cluster';
 
 import SearchControl from './components/SearchControl';
 import SearchResults from './components/SearchResults';
 
 import './Map.scss';
+
+export const CONTROLS_TOP_LEFT = 'top-left';
+export const CONTROLS_TOP_RIGHT = 'top-right';
+export const CONTROLS_BOTTOM_LEFT = 'bottom-left';
+export const CONTROLS_BOTTOM_RIGHT = 'bottom-right';
+
+export const CONTROL_ATTRIBUTION = 'AttributionControl';
+export const CONTROL_NAVIGATION = 'NavigationControl';
+export const CONTROL_SCALE = 'ScaleControl';
+export const CONTROL_SEARCH = 'SearchControl';
+
+export const DEFAULT_CONTROLS = [{
+  control: CONTROL_ATTRIBUTION,
+  position: CONTROLS_BOTTOM_RIGHT,
+}, {
+  control: CONTROL_NAVIGATION,
+  position: CONTROLS_TOP_RIGHT,
+}, {
+  control: CONTROL_SCALE,
+  position: CONTROLS_BOTTOM_LEFT,
+}];
 
 export function getLayerBeforeId (type, layers) {
   const sameTypes = layers.filter(({ type: lType }) => type === lType);
@@ -27,17 +47,33 @@ export class MapComponent extends React.Component {
   static propTypes = {
     // Mapbox general config
     accessToken: PropTypes.string,
-    displayScaleControl: PropTypes.bool,
-    displayNavigationControl: PropTypes.bool,
-    displayAttributionControl: PropTypes.bool,
-    displaySearchControl: PropTypes.bool,
     onSearch: PropTypes.func,
     renderSearchResults: PropTypes.func,
     onSearchResultClick: PropTypes.func,
     maxZoom: PropTypes.number,
     minZoom: PropTypes.number,
-    maxBounds: PropTypes.oneOfType([PropTypes.arrayOf(PropTypes.array), PropTypes.bool]),
+    maxBounds: PropTypes.oneOfType([
+      PropTypes.arrayOf(PropTypes.array),
+      PropTypes.bool,
+    ]),
     rotate: PropTypes.bool,
+    controls: PropTypes.arrayOf(PropTypes.shape({
+      position: PropTypes.oneOf([
+        CONTROLS_BOTTOM_LEFT,
+        CONTROLS_BOTTOM_RIGHT,
+        CONTROLS_TOP_LEFT,
+        CONTROLS_TOP_RIGHT,
+      ]).isRequired,
+      control: PropTypes.oneOfType([
+        PropTypes.oneOf([
+          CONTROL_ATTRIBUTION,
+          CONTROL_NAVIGATION,
+          CONTROL_SCALE,
+          CONTROL_SEARCH,
+        ]),
+        PropTypes.func,
+      ]).isRequired,
+    })),
 
     // Action to fly out to coordinates
     flyTo: PropTypes.shape({
@@ -73,10 +109,6 @@ export class MapComponent extends React.Component {
 
   static defaultProps = {
     accessToken: '',
-    displayScaleControl: true,
-    displayNavigationControl: true,
-    displayAttributionControl: true,
-    displaySearchControl: false,
     onSearch () {},
     renderSearchResults: SearchResults,
     maxZoom: 20,
@@ -87,7 +119,10 @@ export class MapComponent extends React.Component {
     customStyle: {},
     onBackgroundChange () {},
     onSearchResultClick: null,
+    controls: DEFAULT_CONTROLS,
   };
+
+  controls = [];
 
   mapListeners = [];
 
@@ -113,10 +148,7 @@ export class MapComponent extends React.Component {
       maxZoom,
       backgroundStyle,
       customStyle,
-      displayScaleControl,
-      displayNavigationControl,
-      displayAttributionControl,
-      displaySearchControl,
+      controls,
       minZoom,
       maxBounds,
       rotate,
@@ -142,17 +174,8 @@ export class MapComponent extends React.Component {
       map.setStyle(backgroundStyle, { diff: false });
     }
 
-    if (displayScaleControl !== prevProps.displayScaleControl) {
-      this.toggleDisplayScaleControl(displayScaleControl);
-    }
-
-    if (displayNavigationControl !== prevProps.displayNavigationControl ||
-        prevProps.displaySearchControl !== displaySearchControl) {
-      this.resetTopLeftControls();
-    }
-
-    if (displayAttributionControl !== prevProps.displayAttributionControl) {
-      this.toggleAttributionControl(displayAttributionControl);
+    if (controls !== prevProps.controls) {
+      this.resetControls();
     }
 
     if (rotate !== prevProps.rotate) {
@@ -177,11 +200,12 @@ export class MapComponent extends React.Component {
     }
   }
 
-  onSearchResultClick = result => {
+  onSearchResultClick = ({ result, ...rest }) => {
     const { onSearchResultClick, map } = this.props;
     if (onSearchResultClick) {
       onSearchResultClick({
         result,
+        ...rest,
         map,
         focusOnSearchResult: this.focusOnSearchResult,
       });
@@ -193,19 +217,14 @@ export class MapComponent extends React.Component {
   async initMapProperties () {
     const {
       accessToken,
-      displayScaleControl,
-      displayAttributionControl,
+      controls,
     } = this.props;
 
     mapBoxGl.accessToken = accessToken;
 
     this.createLayers();
 
-    this.resetTopLeftControls();
-
-    this.toggleDisplayScaleControl(displayScaleControl);
-
-    this.toggleAttributionControl(displayAttributionControl);
+    this.resetControls(controls);
 
     this.toggleRotate();
   }
@@ -265,45 +284,6 @@ export class MapComponent extends React.Component {
     this.createLayers();
   }
 
-  resetTopLeftControls () {
-    const { displayNavigationControl } = this.props;
-
-    this.toggleSearchControl();
-    this.toggleNavigationControl(displayNavigationControl);
-  }
-
-  toggleControl (display, control) {
-    const { map } = this.props;
-    const controlAttributeName = `${control}Control`;
-    const controlMethod = capitalize(controlAttributeName);
-
-    if (this[controlAttributeName] && !display) {
-      map.removeControl(this[controlAttributeName]);
-      delete this[controlAttributeName];
-    }
-
-    if (display) {
-      if (this[controlAttributeName]) {
-        map.removeControl(this[controlAttributeName]);
-      } else {
-        this[controlAttributeName] = new mapBoxGl[controlMethod]();
-      }
-      map.addControl(this[controlAttributeName]);
-    }
-  }
-
-  toggleAttributionControl (display) {
-    return this.toggleControl(display, 'attribution');
-  }
-
-  toggleNavigationControl (display) {
-    return this.toggleControl(display, 'navigation');
-  }
-
-  toggleDisplayScaleControl (display) {
-    return this.toggleControl(display, 'scale');
-  }
-
   toggleRotate () {
     const { map, rotate } = this.props;
     if (rotate) {
@@ -313,27 +293,38 @@ export class MapComponent extends React.Component {
     }
   }
 
-  toggleSearchControl () {
-    const {
-      map,
-      displaySearchControl,
-      onSearch,
-      renderSearchResults,
-    } = this.props;
-
-    if (!displaySearchControl && this.searchControl) {
-      map.removeControl(this.searchControl);
-    }
-    if (displaySearchControl && !this.searchControl) {
-      this.searchControl = new SearchControl({
-        ...this.props,
-        onSearch,
-        renderSearchResults,
-        onResultClick: this.onSearchResultClick,
-      });
-      console.log('add', this.searchControl, 'top-right');
-      map.addControl(this.searchControl, 'top-right');
-    }
+  resetControls () {
+    const { controls, map } = this.props;
+    // Remove all previous controls
+    this.controls.forEach(control => map.removeControl(control));
+    this.controls = [];
+    // Add new controls
+    controls.forEach(({ position, control }) => {
+      switch (control) {
+        case CONTROL_SEARCH: {
+          const {
+            onSearch,
+            renderSearchResults,
+          } = this.props;
+          const controlInstance = new SearchControl({
+            ...this.props,
+            onSearch,
+            renderSearchResults,
+            onResultClick: this.onSearchResultClick,
+          });
+          this.controls.push(controlInstance);
+          map.addControl(controlInstance, position);
+          break;
+        }
+        default: {
+          const controlInstance = typeof control === 'string'
+            ? new mapBoxGl[control]()
+            : control;
+          this.controls.push(controlInstance);
+          map.addControl(controlInstance, position);
+        }
+      }
+    });
   }
 
   render () {

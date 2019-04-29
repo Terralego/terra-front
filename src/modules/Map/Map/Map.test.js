@@ -5,7 +5,6 @@ import mapboxgl from 'mapbox-gl';
 
 import { MapComponent as Map, getLayerBeforeId } from './Map';
 import { updateCluster } from '../services/cluster';
-import SearchControl from './components/SearchControl';
 
 const props = {
   map: mapboxgl.Map(),
@@ -292,120 +291,6 @@ describe('on properties changes', () => {
       bar: 'bar',
     }, undefined);
   });
-
-  it('should call addControl on init', () => {
-    const wrapper = shallow(<Map {...props} />);
-    const instance = wrapper.instance();
-    expect(props.map.addControl).toHaveBeenCalledWith(instance.scaleControl);
-    expect(props.map.addControl).toHaveBeenCalledWith(instance.navigationControl);
-    expect(props.map.addControl).toHaveBeenCalledWith(instance.attributionControl);
-    expect(props.map.addControl).toHaveBeenCalledTimes(3);
-  });
-
-  it('should not call removeControl on init', () => {
-    shallow(<Map {...props} />);
-    expect(props.map.removeControl).toHaveBeenCalledTimes(0);
-  });
-
-  it('should call addControl if true or removeControl if false', () => {
-    const wrapper = shallow(<Map {...props} />);
-
-    wrapper.setProps({ displayScaleControl: false });
-    wrapper.setProps({ displayNavigationControl: false });
-    wrapper.setProps({ displayAttributionControl: false });
-    expect(props.map.addControl).toHaveBeenCalledTimes(3);
-    expect(props.map.removeControl).toHaveBeenCalledTimes(3);
-
-    wrapper.setProps({ displayScaleControl: true });
-    wrapper.setProps({ displayNavigationControl: true });
-    wrapper.setProps({ displayAttributionControl: true });
-    expect(props.map.addControl).toHaveBeenCalledTimes(6);
-    expect(props.map.removeControl).toHaveBeenCalledTimes(3);
-  });
-});
-
-it('should toggle attribution control', () => {
-  const instance = new Map({ ...props }, {});
-  instance.toggleAttributionControl(false);
-  expect(props.map.removeControl).not.toHaveBeenCalled();
-  props.map.removeControl.mockClear();
-  props.map.addControl.mockClear();
-
-  instance.toggleAttributionControl(true);
-  expect(props.map.addControl).toHaveBeenCalledWith(instance.attributionControl);
-  props.map.removeControl.mockClear();
-  props.map.addControl.mockClear();
-
-  const { attributionControl } = instance;
-  instance.toggleAttributionControl(false);
-  expect(props.map.removeControl).toHaveBeenCalledWith(attributionControl);
-  expect(props.map.addControl).not.toHaveBeenCalled();
-
-  instance.toggleAttributionControl(true);
-  instance.toggleAttributionControl(true);
-  const { attributionControl: attributionControl2 } = instance;
-  expect(props.map.removeControl).toHaveBeenCalledWith(attributionControl2);
-  expect(props.map.addControl).toHaveBeenCalledWith(instance.attributionControl);
-});
-
-it('should toggle scale control', () => {
-  const instance = new Map({ ...props }, {});
-  instance.toggleDisplayScaleControl(false);
-  expect(props.map.removeControl).not.toHaveBeenCalled();
-  props.map.removeControl.mockClear();
-  props.map.addControl.mockClear();
-
-  instance.toggleDisplayScaleControl(true);
-  expect(props.map.addControl).toHaveBeenCalledWith(instance.scaleControl);
-  props.map.removeControl.mockClear();
-  props.map.addControl.mockClear();
-
-  const { scaleControl } = instance;
-  instance.toggleDisplayScaleControl(false);
-  expect(props.map.removeControl).toHaveBeenCalledWith(scaleControl);
-  expect(props.map.addControl).not.toHaveBeenCalled();
-
-  instance.toggleDisplayScaleControl(true);
-  instance.toggleDisplayScaleControl(true);
-  const { scaleControl: scaleControl2 } = instance;
-  expect(props.map.removeControl).toHaveBeenCalledWith(scaleControl2);
-  expect(props.map.addControl).toHaveBeenCalledWith(instance.scaleControl);
-});
-
-it('should toggle navigation control', () => {
-  const instance = new Map({ ...props }, {});
-  instance.toggleNavigationControl(false);
-  expect(props.map.removeControl).not.toHaveBeenCalled();
-  props.map.removeControl.mockClear();
-  props.map.addControl.mockClear();
-
-  instance.toggleNavigationControl(true);
-  expect(props.map.addControl).toHaveBeenCalledWith(instance.navigationControl);
-  props.map.removeControl.mockClear();
-  props.map.addControl.mockClear();
-
-  const { navigationControl } = instance;
-  instance.toggleNavigationControl(false);
-  expect(props.map.removeControl).toHaveBeenCalledWith(navigationControl);
-  expect(props.map.addControl).not.toHaveBeenCalled();
-
-  instance.toggleNavigationControl(true);
-  instance.toggleNavigationControl(true);
-  const { navigationControl: navigationControl2 } = instance;
-  expect(props.map.removeControl).toHaveBeenCalledWith(navigationControl2);
-  expect(props.map.addControl).toHaveBeenCalledWith(instance.navigationControl);
-});
-
-it('should exec toggleControl', () => {
-  const instance = shallow(<Map {...props} />).instance();
-  jest.spyOn(instance, 'toggleControl');
-  instance.toggleNavigationControl(false);
-  instance.toggleNavigationControl(true);
-  instance.toggleAttributionControl(false);
-  instance.toggleAttributionControl(true);
-  instance.toggleDisplayScaleControl(false);
-  instance.toggleDisplayScaleControl(true);
-  expect(instance.toggleControl).toHaveBeenCalledTimes(6);
 });
 
 it('should toggle rotate', () => {
@@ -572,7 +457,7 @@ it('should update on map events', () => {
   expect(map.off).toHaveBeenCalled();
 });
 
-describe('search control integration', () => {
+describe('controls', () => {
   const map = {
     removeControl: jest.fn(),
     addControl: jest.fn(),
@@ -586,59 +471,66 @@ describe('search control integration', () => {
     map.setCenter.mockClear();
   });
 
+  it('should update controls', () => {
+    const instance = new Map({});
+    instance.resetControls = jest.fn();
+    instance.props.controls = [{}];
+    instance.updateMapProperties({ controls: [] });
+    expect(instance.resetControls).toHaveBeenCalled();
+  });
+
+  it('should reset controls', () => {
+    const instance = new Map({ map });
+    class CustomControl {
+      // eslint-disable-next-line class-methods-use-this
+      onAdd () {}
+
+      // eslint-disable-next-line class-methods-use-this
+      onRemove () {}
+    }
+    instance.props.controls = [{
+      control: 'NavigationControl',
+      position: 'top-right',
+    }, {
+      control: 'AttributionControl',
+      position: 'bottom-right',
+    }, {
+      control: 'ScaleControl',
+      position: 'bottom-left',
+    }, {
+      control: CustomControl,
+      position: 'top-left',
+    }];
+    instance.resetControls();
+
+    expect(map.addControl).toHaveBeenCalledTimes(4);
+    expect(map.addControl).toHaveBeenCalledWith(instance.controls[0], 'top-right');
+    expect(map.addControl).toHaveBeenCalledWith(instance.controls[1], 'bottom-right');
+    expect(map.addControl).toHaveBeenCalledWith(instance.controls[2], 'bottom-left');
+    expect(map.addControl).toHaveBeenCalledWith(instance.controls[3], 'top-left');
+    expect(map.removeControl).not.toHaveBeenCalled();
+
+    instance.resetControls();
+
+    expect(map.removeControl).toHaveBeenCalledTimes(4);
+    expect(map.removeControl).toHaveBeenCalledWith(instance.controls[0]);
+    expect(map.removeControl).toHaveBeenCalledWith(instance.controls[1]);
+    expect(map.removeControl).toHaveBeenCalledWith(instance.controls[2]);
+    expect(map.removeControl).toHaveBeenCalledWith(instance.controls[3]);
+  });
+
+
   it('should update search control state', () => {
     const instance = new Map({});
-    instance.props = { displaySearchControl: true };
-    instance.resetTopLeftControls = jest.fn();
-    instance.updateMapProperties({ displaySearchControl: false });
-    expect(instance.resetTopLeftControls).toHaveBeenCalled();
-  });
-
-  it('should not hide search control if not visible', () => {
-    const instance = new Map({});
     instance.props = {
       map,
-      displaySearchControl: false,
+      controls: [{
+        control: 'SearchControl',
+        position: 'top-right',
+      }],
     };
-    instance.toggleSearchControl();
-    expect(map.removeControl).not.toHaveBeenCalled();
-    expect(map.addControl).not.toHaveBeenCalled();
-  });
-
-  it('should hide search control if visible', () => {
-    const instance = new Map({});
-    instance.props = {
-      map,
-      displaySearchControl: false,
-    };
-    instance.searchControl = {};
-    instance.toggleSearchControl();
-    expect(map.removeControl).toHaveBeenCalledWith(instance.searchControl);
-    expect(map.addControl).not.toHaveBeenCalled();
-  });
-
-  it('should not show search control if visible', () => {
-    const instance = new Map({});
-    instance.props = {
-      map,
-      displaySearchControl: true,
-    };
-    instance.searchControl = {};
-    instance.toggleSearchControl();
-    expect(map.removeControl).not.toHaveBeenCalled();
-    expect(map.addControl).not.toHaveBeenCalled();
-  });
-
-  it('should show search control if not visible', () => {
-    const instance = new Map({});
-    instance.props = {
-      map,
-      displaySearchControl: true,
-    };
-    instance.toggleSearchControl();
-    expect(map.removeControl).not.toHaveBeenCalled();
-    expect(map.addControl).toHaveBeenCalledWith(instance.searchControl, 'top-right');
-    expect(instance.searchControl.constructor).toBe(SearchControl);
+    instance.resetControls();
+    expect(map.addControl).toHaveBeenCalledWith(instance.controls[0], 'top-right');
   });
 
   it('should focus on search result', () => {
@@ -661,12 +553,12 @@ describe('search control integration', () => {
     const instance = new Map({ map });
     instance.focusOnSearchResult = jest.fn();
     const result = {};
-    instance.onSearchResultClick(result);
+    instance.onSearchResultClick({ result });
     expect(instance.focusOnSearchResult).toHaveBeenCalledWith(result);
     instance.focusOnSearchResult.mockClear();
 
     instance.props.onSearchResultClick = jest.fn();
-    instance.onSearchResultClick(result);
+    instance.onSearchResultClick({ result });
     expect(instance.props.onSearchResultClick).toHaveBeenCalledWith({
       result,
       map,
