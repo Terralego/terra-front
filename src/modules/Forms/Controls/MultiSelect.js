@@ -9,7 +9,7 @@ import {
 } from '@blueprintjs/core';
 import { MultiSelect as BPMultiSelect } from '@blueprintjs/select';
 
-import { onKeyPress } from '../../../utils/event';
+import { preventEnterKeyPress } from '../../../utils/event';
 
 const DEFAULT_LOCALES = { noResults: 'No results.' };
 
@@ -20,14 +20,14 @@ export class MultiSelect extends React.Component {
     label: PropTypes.string,
     onChange: PropTypes.func,
     values: PropTypes.arrayOf(PropTypes.string).isRequired,
-    isPreventSubmit: PropTypes.bool,
+    isSubmissionPrevented: PropTypes.bool,
   };
 
   static defaultProps = {
     locales: DEFAULT_LOCALES,
     label: '',
     value: [],
-    isPreventSubmit: true,
+    isSubmissionPrevented: true,
     onChange () {},
   };
 
@@ -77,7 +77,7 @@ export class MultiSelect extends React.Component {
       label,
       locales,
       value,
-      isPreventSubmit,
+      isSubmissionPrevented,
       ...props
     } = this.props;
 
@@ -90,7 +90,7 @@ export class MultiSelect extends React.Component {
     return (
       <div
         className="control-container"
-        onKeyPress={isPreventSubmit ? onKeyPress : null}
+        onKeyPress={isSubmissionPrevented ? preventEnterKeyPress : null}
         role="presentation"
       >
         <p className="control-label">{label}</p>

@@ -128,7 +128,7 @@ it('should render default locales', () => {
 });
 
 it('should prevent submit event in parent', () => {
-  const wrapper = shallow(<MultiSelect values={['foo', 'bar']} isPreventSubmit={false} />);
+  const wrapper = shallow(<MultiSelect values={['foo', 'bar']} isSubmissionPrevented={false} />);
   const div = wrapper.find('.control-container');
   expect(div.props().onKeyPress).toBe(null);
 });
