@@ -15,6 +15,7 @@ export class AbstractMapControl extends React.Component {
   }
 
   onRemove () {
+    ReactDOM.unmountComponentAtNode(this.container);
     this.container.parentNode.removeChild(this.container);
     delete this.map;
   }

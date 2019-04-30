@@ -134,6 +134,11 @@ export class MapComponent extends React.Component {
     this.updateMapProperties(prevProps);
   }
 
+  componentWillUnmount () {
+    const { map } = this.props;
+    this.controls.forEach(control => map.removeControl(control));
+  }
+
   // TODO : move to WidgetMap
   updateFlyTo = (prevFlyToConfig, flyToConfig) => {
     if (prevFlyToConfig !== flyToConfig) {
