@@ -182,9 +182,11 @@ export class InteractiveMap extends React.Component {
 
   onBackgroundChange = selectedBackgroundStyle => {
     this.setState({ selectedBackgroundStyle });
-    this.backgroundStyleControl.setProps({
-      selected: selectedBackgroundStyle,
-    });
+    if (this.backgroundStyleControl) {
+      this.backgroundStyleControl.setProps({
+        selected: selectedBackgroundStyle,
+      });
+    }
   };
 
   getOriginalTarget = ({ originalEvent }) =>

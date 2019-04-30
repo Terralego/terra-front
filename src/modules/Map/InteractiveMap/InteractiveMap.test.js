@@ -267,6 +267,19 @@ describe('map', () => {
     expect(instance.setState).toHaveBeenCalledWith({ selectedBackgroundStyle });
   });
 
+  it('should change background style and update map control', () => {
+    const instance = new InteractiveMap({});
+    instance.setState = () => {};
+    const selectedBackgroundStyle = 'foo';
+    instance.backgroundStyleControl = {
+      setProps: jest.fn(),
+    };
+    instance.onBackgroundChange(selectedBackgroundStyle);
+    expect(instance.backgroundStyleControl.setProps).toHaveBeenCalledWith({
+      selected: selectedBackgroundStyle,
+    });
+  });
+
   it('should update controls', () => {
     const instance = new InteractiveMap({});
     instance.insertBackgroundStyleControl = jest.fn();

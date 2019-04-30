@@ -1,5 +1,4 @@
 import React from 'react';
-import ReactDOM from 'react-dom';
 import renderer from 'react-test-renderer';
 import { shallow } from 'enzyme';
 
@@ -30,30 +29,6 @@ it('should render', () => {
     }],
   });
   expect(tree.toJSON()).toMatchSnapshot();
-});
-
-it('should be added on map', () => {
-  const instance = new SearchControl();
-  const map = {};
-  jest.spyOn(ReactDOM, 'render');
-  instance.onAdd(map);
-  expect(instance.map).toBe(map);
-  expect(instance.container.constructor).toBe(HTMLDivElement);
-  expect(instance.container.className).toBe('mapboxgl-ctrl mapboxgl-ctrl-group mapboxgl-ctrl-search');
-  expect(ReactDOM.render).toHaveBeenCalled();
-  expect(ReactDOM.render.mock.calls[0][1]).toBe(instance.container);
-});
-
-it('should be removed from map', () => {
-  const instance = new SearchControl();
-  instance.container = {
-    parentNode: {
-      removeChild: jest.fn(),
-    },
-  };
-  instance.onRemove();
-  expect(instance.container.parentNode.removeChild).toHaveBeenCalledWith(instance.container);
-  expect(instance.map).not.toBeDefined();
 });
 
 it('should add listener on mount', () => {

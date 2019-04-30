@@ -21,6 +21,7 @@ export class AbstractMapControl extends React.Component {
   }
 
   setProps (props) {
+    this.props = this.props || {};
     Object.keys(props).forEach(key => {
       this.props[key] = props[key];
     });
