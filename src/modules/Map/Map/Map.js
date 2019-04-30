@@ -71,7 +71,10 @@ export class MapComponent extends React.Component {
           CONTROL_SCALE,
           CONTROL_SEARCH,
         ]),
-        PropTypes.func,
+        PropTypes.shape({
+          onAdd: PropTypes.func,
+          onRemove: PropTypes.func,
+        }),
       ]).isRequired,
     })),
 
