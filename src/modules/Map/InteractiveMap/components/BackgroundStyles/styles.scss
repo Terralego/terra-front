@@ -1,3 +1,5 @@
+@import "node_modules/@blueprintjs/core/lib/scss/variables";
+
 .radioGroup {
   padding: 10px;
   line-height: 2em;
@@ -22,4 +24,22 @@
       margin-left: -12px;
     }
   }
+}
+.mapboxgl-ctrl-background-styles {
+  position: relative;
+
+  .bp3-popover-wrapper {
+    position: absolute;
+    top: 0;
+    left: 0;
+    bottom: 0;
+    right: 0;
+    line-height: 30px;
+  }
+  .bp3-icon svg {
+    fill: #333;
+  }
+}
+.bp3-dark .mapboxgl-ctrl-background-styles .bp3-icon svg {
+  fill: $pt-dark-text-color;
 }

@@ -317,6 +317,23 @@ describe('map', () => {
       controls: instance.props.controls,
     });
   });
+
+  it('should add background styles control to default', () => {
+    const backgroundStyle = [{}, {}];
+    const selectedBackgroundStyle = 1;
+    const instance = new InteractiveMap({
+      backgroundStyle,
+    });
+    instance.state = { selectedBackgroundStyle };
+    instance.setState = jest.fn();
+    instance.insertBackgroundStyleControl();
+    expect(instance.setState).toHaveBeenCalledWith({
+      controls: [{
+        control: expect.any(BackgroundStyles),
+        position: 'top-right',
+      }],
+    });
+  });
 });
 
 describe('Interactions', () => {

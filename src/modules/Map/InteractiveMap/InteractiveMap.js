@@ -8,7 +8,7 @@ import centroid from '@turf/centroid';
 
 import { setInteractions } from '../services/mapUtils';
 import { getClusteredFeatures } from '../services/cluster';
-import MapComponent, { DEFAULT_CONTROLS } from '../Map';
+import MapComponent, { CONTROLS_TOP_RIGHT, DEFAULT_CONTROLS } from '../Map';
 import BackgroundStyles from './components/BackgroundStyles';
 import Legend from './components/Legend';
 import Tooltip from './components/Tooltip';
@@ -50,6 +50,11 @@ const getUniqueLegends = legends => {
       || uniques.push(legend));
   return uniques;
 };
+
+export const DEFAULT_INTERACTIVE_MAP_CONTROLS = [...DEFAULT_CONTROLS, {
+  control: CONTROL_BACKGROUND_STYLES,
+  position: CONTROLS_TOP_RIGHT,
+}];
 
 export class InteractiveMap extends React.Component {
   static propTypes = {
@@ -457,7 +462,7 @@ export class InteractiveMap extends React.Component {
   }
 
   insertBackgroundStyleControl () {
-    const { controls = DEFAULT_CONTROLS, backgroundStyle } = this.props;
+    const { controls = DEFAULT_INTERACTIVE_MAP_CONTROLS, backgroundStyle } = this.props;
     const { selectedBackgroundStyle } = this.state;
 
     try {
