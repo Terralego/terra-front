@@ -2,23 +2,15 @@
 
 exports[`should render 1`] = `
 <div
-  className="bp3-form-group"
+  className="control-container"
 >
-  <label
-    className="bp3-label"
+  <p
+    className="control-label"
   >
     My range
-     
-    <span
-      className="bp3-text-muted"
-    />
-  </label>
-  <div
-    className="bp3-form-content"
-  >
-    <p>
-      BPDateRangeInput
-    </p>
-  </div>
+  </p>
+  <p>
+    BPDateRangeInput
+  </p>
 </div>
 `;
