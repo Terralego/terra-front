@@ -71,7 +71,10 @@ export class MapComponent extends React.Component {
           CONTROL_SCALE,
           CONTROL_SEARCH,
         ]),
-        PropTypes.func,
+        PropTypes.shape({
+          onAdd: PropTypes.func,
+          onRemove: PropTypes.func,
+        }),
       ]).isRequired,
     })),
 
@@ -132,6 +135,11 @@ export class MapComponent extends React.Component {
 
   componentDidUpdate (prevProps) {
     this.updateMapProperties(prevProps);
+  }
+
+  componentWillUnmount () {
+    const { map } = this.props;
+    this.controls.forEach(control => map.removeControl(control));
   }
 
   // TODO : move to WidgetMap

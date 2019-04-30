@@ -519,6 +519,13 @@ describe('controls', () => {
     expect(map.removeControl).toHaveBeenCalledWith(instance.controls[3]);
   });
 
+  it('should reset on unmount', () => {
+    const instance = new Map({ map });
+    instance.controls = [{}, {}];
+    instance.componentWillUnmount();
+    expect(map.removeControl).toHaveBeenCalledTimes(2);
+  });
+
 
   it('should update search control state', () => {
     const instance = new Map({});

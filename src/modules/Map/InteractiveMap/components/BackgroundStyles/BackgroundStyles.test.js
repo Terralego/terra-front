@@ -1,5 +1,4 @@
 import React from 'react';
-import ReactDOM from 'react-dom';
 import renderer from 'react-test-renderer';
 import BackgroundStyles from '.';
 
@@ -58,32 +57,4 @@ it('should change value', () => {
   const instance = new BackgroundStyles({ onChange });
   instance.onChange({ target: { value: 'foo' } });
   expect(onChange).toHaveBeenCalledWith('foo');
-});
-
-it('should be added on map', () => {
-  jest.spyOn(ReactDOM, 'render');
-  const map = {};
-  const instance = new BackgroundStyles({
-    styles: [{
-      label: 'foo',
-      value: 'mapbox:foo',
-    }],
-    selected: 'bar',
-    onChange () {},
-  });
-  instance.onAdd(map);
-  expect(ReactDOM.render).toHaveBeenCalled();
-  expect(instance.container.className).toBe('mapboxgl-ctrl mapboxgl-ctrl-group mapboxgl-ctrl-search');
-});
-
-it('should be removed from map', () => {
-  const instance = new BackgroundStyles();
-  instance.container = {
-    parentNode: {
-      removeChild: jest.fn(),
-    },
-  };
-  instance.onRemove();
-  expect(instance.container.parentNode.removeChild).toHaveBeenCalledWith(instance.container);
-  expect(instance.map).not.toBeDefined();
 });

@@ -1,15 +1,17 @@
 import React from 'react';
-import ReactDOM from 'react-dom';
 import classnames from 'classnames';
 import { Icon } from '@blueprintjs/core';
 import debounce from 'lodash.debounce';
 import SearchInput from './SearchInput';
 
+import AbstractMapControl from '../../../helpers/AbstractMapControl';
 import translateMock from '../../../../../utils/translate';
 
 import './styles.scss';
 
-export class SearchControl extends React.Component {
+export class SearchControl extends AbstractMapControl {
+  static containerClassName = 'mapboxgl-ctrl mapboxgl-ctrl-group mapboxgl-ctrl-search'
+
   state = {
     visible: false,
     expanded: false,
@@ -39,19 +41,6 @@ export class SearchControl extends React.Component {
 
   componentWillUnmount () {
     global.removeEventListener('click', this.listener);
-  }
-
-  onAdd (map) {
-    this.map = map;
-    this.container = document.createElement('div');
-    this.container.className = 'mapboxgl-ctrl mapboxgl-ctrl-group mapboxgl-ctrl-search';
-    ReactDOM.render(<SearchControl container={this.container} {...this.props} />, this.container);
-    return this.container;
-  }
-
-  onRemove () {
-    this.container.parentNode.removeChild(this.container);
-    delete this.map;
   }
 
   get flatResults () {

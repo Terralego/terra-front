@@ -182,6 +182,11 @@ export class InteractiveMap extends React.Component {
 
   onBackgroundChange = selectedBackgroundStyle => {
     this.setState({ selectedBackgroundStyle });
+    if (this.backgroundStyleControl) {
+      this.backgroundStyleControl.setProps({
+        selected: selectedBackgroundStyle,
+      });
+    }
   };
 
   getOriginalTarget = ({ originalEvent }) =>
@@ -454,13 +459,14 @@ export class InteractiveMap extends React.Component {
     const { selectedBackgroundStyle } = this.state;
 
     if (typeof backgroundStyle !== 'string' &&
-       !controls.find(({ control }) => control.constructor === BackgroundStyles)) {
+       !controls.find(({ control }) => control instanceof BackgroundStyles)) {
+      this.backgroundStyleControl = new BackgroundStyles({
+        onChange: this.onBackgroundChange,
+        styles: backgroundStyle,
+        selected: selectedBackgroundStyle,
+      });
       this.setState({ controls: [...controls, {
-        control: new BackgroundStyles({
-          onChange: this.onBackgroundChange,
-          styles: backgroundStyle,
-          selected: selectedBackgroundStyle,
-        }),
+        control: this.backgroundStyleControl,
         position: CONTROLS_TOP_RIGHT,
       }] });
     }
