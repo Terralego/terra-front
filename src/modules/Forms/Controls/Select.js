@@ -4,7 +4,7 @@ import classnames from 'classnames';
 import { MenuItem, Button } from '@blueprintjs/core';
 import { Select as BPSelect } from '@blueprintjs/select';
 
-import './index.scss';
+import { preventEnterKeyPress } from '../../../utils/event';
 
 export class Select extends React.Component {
   static propTypes = {
@@ -13,20 +13,22 @@ export class Select extends React.Component {
     onChange: PropTypes.func,
     values: PropTypes.arrayOf(PropTypes.string),
     placeholder: PropTypes.string,
-  }
+    isSubmissionPrevented: PropTypes.bool,
+  };
 
   static defaultProps = {
     locales: { noResults: 'No results.' },
     label: '',
     values: [],
     placeholder: 'Filter…',
+    isSubmissionPrevented: true,
     onChange () {},
-  }
+  };
 
   state = {
     items: [],
     query: '',
-  }
+  };
 
   componentDidMount () {
     this.updateItems();
@@ -43,11 +45,11 @@ export class Select extends React.Component {
   handleChange = ({ value }) => {
     const { onChange } = this.props;
     onChange(value);
-  }
+  };
 
   handleQueryChange = query => {
     this.setState({ query });
-  }
+  };
 
   updateItems () {
     const { values, locales: { emptySelectItem } } = this.props;
@@ -65,7 +67,10 @@ export class Select extends React.Component {
       values,
       locales: { noResults, emptySelectItem },
       placeholder,
+      isSubmissionPrevented,
       value,
+      className,
+      ...props
     } = this.props;
     const { items, query } = this.state;
     const { handleChange } = this;
@@ -75,9 +80,14 @@ export class Select extends React.Component {
       : items.filter(({ label: itemLabel = '' }) => itemLabel.toLowerCase().includes(query.toLowerCase()));
 
     return (
-      <div className="control-container">
+      <div
+        className="control-container"
+        onKeyPress={isSubmissionPrevented ? preventEnterKeyPress : null}
+        role="presentation"
+      >
         <p className="control-label">{label}</p>
         <BPSelect
+          className={classnames('tf-select', className)}
           popoverProps={{ usePortal: false }}
           items={filteredItems}
           filterable={values.length > 9}
@@ -104,6 +114,7 @@ export class Select extends React.Component {
           )}
           noResults={<MenuItem disabled text={noResults} />}
           onItemSelect={handleChange}
+          {...props}
         >
           <Button text={value || emptySelectItem} rightIcon="double-caret-vertical" />
         </BPSelect>
