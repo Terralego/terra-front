@@ -459,7 +459,7 @@ export class InteractiveMap extends React.Component {
     const { selectedBackgroundStyle } = this.state;
 
     if (typeof backgroundStyle !== 'string' &&
-       !controls.find(({ control }) => control.constructor === BackgroundStyles)) {
+       !controls.find(({ control }) => control instanceof BackgroundStyles)) {
       this.backgroundStyleControl = new BackgroundStyles({
         onChange: this.onBackgroundChange,
         styles: backgroundStyle,
