@@ -1,6 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import { Radio, RadioGroup, Button, Icon, Popover } from '@blueprintjs/core';
+import { Radio, RadioGroup, Icon, Popover } from '@blueprintjs/core';
 
 import AbstractMapControl from '../../../helpers/AbstractMapControl';
 import './styles.scss';
@@ -15,16 +15,7 @@ export class BackgroundStyles extends AbstractMapControl {
     onChange: PropTypes.func.isRequired,
   }
 
-  static containerClassName = 'mapboxgl-ctrl mapboxgl-ctrl-group mapboxgl-ctrl-search';
-
-  state = {
-    showRadioGroup: false,
-  }
-
-  toggleSelector = () => {
-    const { showRadioGroup } = this.state;
-    this.setState({ showRadioGroup: !showRadioGroup });
-  }
+  static containerClassName = 'mapboxgl-ctrl mapboxgl-ctrl-group mapboxgl-ctrl-background-styles';
 
   onChange = ({ target: { value } }) => {
     const { onChange } = this.props;
@@ -33,34 +24,37 @@ export class BackgroundStyles extends AbstractMapControl {
 
   render () {
     const { styles, selected } = this.props;
-    const { toggleSelector, onChange } = this;
+    const { onChange } = this;
 
     return (
-      <Popover
-        className="bp3-dark popoverPos"
-        content={(
-          <div className="radioGroup">
-            <RadioGroup
-              label="Fond de carte"
-              onChange={onChange}
-              selectedValue={selected}
-            >
-              {styles.map(({ label, url }) => (
-                <Radio
-                  className="bgLayer-radio"
-                  key={`${label}${url}`}
-                  label={label}
-                  value={url}
-                />
-              ))}
-            </RadioGroup>
-          </div>
-        )}
+      <button
+        className="mapboxgl-ctrl-icon"
+        type="button"
       >
-        <Button onClick={toggleSelector}>
-          {<Icon icon="layers" />}
-        </Button>
-      </Popover>
+        <Popover
+          className="popoverPos"
+          content={(
+            <div className="radioGroup">
+              <RadioGroup
+                label="Fond de carte"
+                onChange={onChange}
+                selectedValue={selected}
+              >
+                {styles.map(({ label, url }) => (
+                  <Radio
+                    className="bgLayer-radio"
+                    key={`${label}${url}`}
+                    label={label}
+                    value={url}
+                  />
+                ))}
+              </RadioGroup>
+            </div>
+          )}
+        >
+          <Icon icon="layers" />
+        </Popover>
+      </button>
     );
   }
 }

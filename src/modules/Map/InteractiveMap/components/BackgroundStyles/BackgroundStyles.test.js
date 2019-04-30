@@ -31,27 +31,6 @@ it('should render correctly', () => {
   expect(tree).toMatchSnapshot();
 });
 
-it('should toggle selector', () => {
-  const instance = new BackgroundStyles({});
-  instance.setState = jest.fn();
-  instance.state = {
-    showRadioGroup: false,
-  };
-  instance.toggleSelector();
-  expect(instance.setState).toHaveBeenCalledWith({
-    showRadioGroup: true,
-  });
-  instance.setState.mockClear();
-
-  instance.state = {
-    showRadioGroup: true,
-  };
-  instance.toggleSelector();
-  expect(instance.setState).toHaveBeenCalledWith({
-    showRadioGroup: false,
-  });
-});
-
 it('should change value', () => {
   const onChange = jest.fn();
   const instance = new BackgroundStyles({ onChange });

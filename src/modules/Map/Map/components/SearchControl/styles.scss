@@ -12,6 +12,7 @@
     transition: width .2s ease-in;
     overflow: hidden;
     border-radius: 4px;
+    box-shadow: 0 0 0 1px rgba(16, 22, 26, 0.4);
 
     &--expanded {
       width: 20rem;

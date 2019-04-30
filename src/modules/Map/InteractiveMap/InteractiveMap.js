@@ -22,6 +22,8 @@ export const INTERACTION_DISPLAY_TOOLTIP = 'displayTooltip';
 export const INTERACTION_HIGHLIGHT = 'highlight';
 export const INTERACTION_FN = 'function';
 
+export const CONTROL_BACKGROUND_STYLES = 'BackgroundStylesControl';
+
 const generateTooltipContainer = ({ fetchProperties, properties, template, content, history }) => {
   const container = document.createElement('div');
   ReactDOM.render(
@@ -48,6 +50,11 @@ const getUniqueLegends = legends => {
       || uniques.push(legend));
   return uniques;
 };
+
+export const DEFAULT_INTERACTIVE_MAP_CONTROLS = [...DEFAULT_CONTROLS, {
+  control: CONTROL_BACKGROUND_STYLES,
+  position: CONTROLS_TOP_RIGHT,
+}];
 
 export class InteractiveMap extends React.Component {
   static propTypes = {
@@ -455,20 +462,25 @@ export class InteractiveMap extends React.Component {
   }
 
   insertBackgroundStyleControl () {
-    const { controls = DEFAULT_CONTROLS, backgroundStyle } = this.props;
+    const { controls = DEFAULT_INTERACTIVE_MAP_CONTROLS, backgroundStyle } = this.props;
     const { selectedBackgroundStyle } = this.state;
 
-    if (typeof backgroundStyle !== 'string' &&
-       !controls.find(({ control }) => control instanceof BackgroundStyles)) {
+    try {
+      if (typeof backgroundStyle === 'string') throw new Error('Single background');
+      const backgroundStyleControl = controls.find(({ control }) =>
+        control === CONTROL_BACKGROUND_STYLES);
+
+      if (!backgroundStyleControl) throw new Error('BackgroundStyleControl not found');
+
       this.backgroundStyleControl = new BackgroundStyles({
         onChange: this.onBackgroundChange,
         styles: backgroundStyle,
         selected: selectedBackgroundStyle,
       });
-      this.setState({ controls: [...controls, {
-        control: this.backgroundStyleControl,
-        position: CONTROLS_TOP_RIGHT,
-      }] });
+      backgroundStyleControl.control = this.backgroundStyleControl;
+      this.setState({ controls: [...controls] });
+    } catch (e) {
+      this.setState({ controls });
     }
   }
 
