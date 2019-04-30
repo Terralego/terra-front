@@ -8,7 +8,7 @@ import centroid from '@turf/centroid';
 
 import { setInteractions } from '../services/mapUtils';
 import { getClusteredFeatures } from '../services/cluster';
-import MapComponent, { CONTROLS_TOP_RIGHT, DEFAULT_CONTROLS } from '../Map';
+import MapComponent, { DEFAULT_CONTROLS } from '../Map';
 import BackgroundStyles from './components/BackgroundStyles';
 import Legend from './components/Legend';
 import Tooltip from './components/Tooltip';
@@ -21,6 +21,8 @@ export const INTERACTION_ZOOM = 'zoom';
 export const INTERACTION_DISPLAY_TOOLTIP = 'displayTooltip';
 export const INTERACTION_HIGHLIGHT = 'highlight';
 export const INTERACTION_FN = 'function';
+
+export const CONTROL_BACKGROUND_STYLES = 'BackgroundStylesControl';
 
 const generateTooltipContainer = ({ fetchProperties, properties, template, content, history }) => {
   const container = document.createElement('div');
@@ -458,17 +460,22 @@ export class InteractiveMap extends React.Component {
     const { controls = DEFAULT_CONTROLS, backgroundStyle } = this.props;
     const { selectedBackgroundStyle } = this.state;
 
-    if (typeof backgroundStyle !== 'string' &&
-       !controls.find(({ control }) => control instanceof BackgroundStyles)) {
+    try {
+      if (typeof backgroundStyle === 'string') throw new Error('Single background');
+      const backgroundStyleControl = controls.find(({ control }) =>
+        control === CONTROL_BACKGROUND_STYLES);
+
+      if (!backgroundStyleControl) throw new Error('BackgroundStyleControl not found');
+
       this.backgroundStyleControl = new BackgroundStyles({
         onChange: this.onBackgroundChange,
         styles: backgroundStyle,
         selected: selectedBackgroundStyle,
       });
-      this.setState({ controls: [...controls, {
-        control: this.backgroundStyleControl,
-        position: CONTROLS_TOP_RIGHT,
-      }] });
+      backgroundStyleControl.control = this.backgroundStyleControl;
+      this.setState({ controls: [...controls] });
+    } catch (e) {
+      this.setState({ controls });
     }
   }
 

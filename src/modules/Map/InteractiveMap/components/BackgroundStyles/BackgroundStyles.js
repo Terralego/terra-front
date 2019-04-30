@@ -15,7 +15,7 @@ export class BackgroundStyles extends AbstractMapControl {
     onChange: PropTypes.func.isRequired,
   }
 
-  static containerClassName = 'mapboxgl-ctrl mapboxgl-ctrl-group mapboxgl-ctrl-search';
+  static containerClassName = 'mapboxgl-ctrl mapboxgl-ctrl-group mapboxgl-ctrl-background-styles';
 
   state = {
     showRadioGroup: false,

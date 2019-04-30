@@ -290,7 +290,13 @@ describe('map', () => {
   it('should add background styles control', () => {
     const backgroundStyle = [{}, {}];
     const selectedBackgroundStyle = 1;
-    const instance = new InteractiveMap({ backgroundStyle });
+    const instance = new InteractiveMap({
+      backgroundStyle,
+      controls: [{
+        control: 'BackgroundStylesControl',
+        position: 'top-right',
+      }],
+    });
     instance.state = { selectedBackgroundStyle };
     instance.setState = jest.fn();
     instance.insertBackgroundStyleControl();
@@ -307,7 +313,9 @@ describe('map', () => {
       position: 'top-right',
     }];
     instance.insertBackgroundStyleControl();
-    expect(instance.setState).not.toHaveBeenCalled();
+    expect(instance.setState).toHaveBeenCalledWith({
+      controls: instance.props.controls,
+    });
   });
 });
 
