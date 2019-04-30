@@ -2,13 +2,15 @@ import React from 'react';
 
 import PropTypes from 'prop-types';
 
+import classnames from 'classnames';
 import {
   Button,
-  FormGroup,
   Intent,
   MenuItem,
 } from '@blueprintjs/core';
 import { MultiSelect as BPMultiSelect } from '@blueprintjs/select';
+
+import { preventEnterKeyPress } from '../../../utils/event';
 
 const DEFAULT_LOCALES = { noResults: 'No results.' };
 
@@ -19,12 +21,14 @@ export class MultiSelect extends React.Component {
     label: PropTypes.string,
     onChange: PropTypes.func,
     values: PropTypes.arrayOf(PropTypes.string).isRequired,
+    isSubmissionPrevented: PropTypes.bool,
   };
 
   static defaultProps = {
     locales: DEFAULT_LOCALES,
     label: '',
     value: [],
+    isSubmissionPrevented: true,
     onChange () {},
   };
 
@@ -70,7 +74,14 @@ export class MultiSelect extends React.Component {
       handleQueryChange,
     } = this;
     const { items, query } = this.state;
-    const { label, locales, value, ...props } = this.props;
+    const {
+      label,
+      locales,
+      value,
+      isSubmissionPrevented,
+      className,
+      ...props
+    } = this.props;
 
     const displayClearButton = value.length > 0;
 
@@ -79,10 +90,14 @@ export class MultiSelect extends React.Component {
       : items.filter(item => item.toLowerCase().includes(query.toLowerCase()));
 
     return (
-      <FormGroup
-        label={label}
+      <div
+        className="control-container"
+        onKeyPress={isSubmissionPrevented ? preventEnterKeyPress : null}
+        role="presentation"
       >
+        <p className="control-label">{label}</p>
         <BPMultiSelect
+          className={classnames('tf-multiselect', className)}
           resetOnSelect
           items={filteredItems}
           selectedItems={value}
@@ -90,6 +105,7 @@ export class MultiSelect extends React.Component {
           onItemSelect={handleChange}
           onQueryChange={handleQueryChange}
           tagRenderer={item => item}
+          popoverProps={{ usePortal: false }}
           tagInputProps={{
             tagProps: { intent: Intent.NONE, interactive: true },
             onRemove: handleTagRemove,
@@ -116,7 +132,7 @@ export class MultiSelect extends React.Component {
           }}
           {...props}
         />
-      </FormGroup>
+      </div>
     );
   }
 }

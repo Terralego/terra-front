@@ -2,9 +2,15 @@
 
 exports[`should render correctly 1`] = `
 <div
-  className="FormGroup"
+  className="control-container"
+  onKeyPress={[Function]}
+  role="presentation"
 >
-   
+  <p
+    className="control-label"
+  >
+    Bouh
+  </p>
   <select
     multiple={true}
   >
@@ -19,15 +25,20 @@ exports[`should render correctly 1`] = `
       bar
     </option>
   </select>
-   
 </div>
 `;
 
 exports[`should render filtered items 1`] = `
 <div
-  className="FormGroup"
+  className="control-container"
+  onKeyPress={[Function]}
+  role="presentation"
 >
-   
+  <p
+    className="control-label"
+  >
+    Bouh
+  </p>
   <select
     multiple={true}
   >
@@ -37,15 +48,20 @@ exports[`should render filtered items 1`] = `
       foo
     </option>
   </select>
-   
 </div>
 `;
 
 exports[`should render multiple value 1`] = `
 <div
-  className="FormGroup"
+  className="control-container"
+  onKeyPress={[Function]}
+  role="presentation"
 >
-   
+  <p
+    className="control-label"
+  >
+    Bouh
+  </p>
   <select
     multiple={true}
   >
@@ -60,6 +76,5 @@ exports[`should render multiple value 1`] = `
       bar
     </option>
   </select>
-   
 </div>
 `;
