@@ -4,7 +4,7 @@ import ReactDOM from 'react-dom';
 import mapboxGl from 'mapbox-gl';
 import centroid from '@turf/centroid';
 
-import { setInteractions } from '../services/mapUtils';
+import { setInteractions, fitZoom } from '../services/mapUtils';
 import InteractiveMap, {
   INTERACTION_FIT_ZOOM,
   INTERACTION_ZOOM,
@@ -40,6 +40,7 @@ jest.mock('mapbox-gl', () => {
 });
 jest.mock('../Map', () => {
   function MapComponent () { return null; }
+
   MapComponent.CONTROLS_TOP_RIGHT = 'top-right';
   MapComponent.DEFAULT_CONTROLS = [];
   return MapComponent;
@@ -48,6 +49,7 @@ jest.mock('../services/mapUtils', () => ({
   toggleLayerVisibility: jest.fn(),
   setLayerOpacity: jest.fn(),
   setInteractions: jest.fn(),
+  fitZoom: jest.fn(),
   checkContraints: () => true,
 }));
 jest.mock('react-dom', () => {
@@ -112,7 +114,22 @@ describe('snaphsots', () => {
   it('should render legends', () => {
     const wrapper = renderer.create((
       <InteractiveMap
-        legends={[{
+        legends={[
+          {
+            title: 'foo',
+            items: [],
+          }, {
+            title: 'pwet',
+            minZoom: 0,
+            maxZoom: 20,
+            items: [],
+          },
+        ]}
+      />
+    ));
+    wrapper.getInstance().setState({
+      legends: [
+        {
           title: 'foo',
           items: [],
         }, {
@@ -120,22 +137,11 @@ describe('snaphsots', () => {
           minZoom: 0,
           maxZoom: 20,
           items: [],
-        }]}
-      />
-    ));
-    wrapper.getInstance().setState({
-      legends: [{
-        title: 'foo',
-        items: [],
-      }, {
-        title: 'pwet',
-        minZoom: 0,
-        maxZoom: 20,
-        items: [],
-      }, {
-        title: 'foo',
-        items: [],
-      }],
+        }, {
+          title: 'foo',
+          items: [],
+        },
+      ],
     });
     const tree = wrapper.toJSON();
     expect(tree).toMatchSnapshot();
@@ -292,26 +298,32 @@ describe('map', () => {
     const selectedBackgroundStyle = 1;
     const instance = new InteractiveMap({
       backgroundStyle,
-      controls: [{
-        control: 'BackgroundStylesControl',
-        position: 'top-right',
-      }],
+      controls: [
+        {
+          control: 'BackgroundStylesControl',
+          position: 'top-right',
+        },
+      ],
     });
     instance.state = { selectedBackgroundStyle };
     instance.setState = jest.fn();
     instance.insertBackgroundStyleControl();
     expect(instance.setState).toHaveBeenCalledWith({
-      controls: [{
-        control: expect.any(BackgroundStyles),
-        position: 'top-right',
-      }],
+      controls: [
+        {
+          control: expect.any(BackgroundStyles),
+          position: 'top-right',
+        },
+      ],
     });
 
     instance.setState.mockClear();
-    instance.props.controls = [{
-      control: new BackgroundStyles({}),
-      position: 'top-right',
-    }];
+    instance.props.controls = [
+      {
+        control: new BackgroundStyles({}),
+        position: 'top-right',
+      },
+    ];
     instance.insertBackgroundStyleControl();
     expect(instance.setState).toHaveBeenCalledWith({
       controls: instance.props.controls,
@@ -328,10 +340,12 @@ describe('map', () => {
     instance.setState = jest.fn();
     instance.insertBackgroundStyleControl();
     expect(instance.setState).toHaveBeenCalledWith({
-      controls: [{
-        control: expect.any(BackgroundStyles),
-        position: 'top-right',
-      }],
+      controls: [
+        {
+          control: expect.any(BackgroundStyles),
+          position: 'top-right',
+        },
+      ],
     });
   });
 });
@@ -380,12 +394,11 @@ describe('Interactions', () => {
   });
 
   describe('fitZoom interaction', () => {
-    it('should trigger fitZoom interaction', () => {
+    it('should trigger fitZoom interaction', async () => {
       const interactions = [];
       const instance = new InteractiveMap({
         interactions,
       });
-      const map = { fitBounds: jest.fn() };
       const feature = {
         type: 'Feature',
         geometry: {
@@ -405,7 +418,6 @@ describe('Interactions', () => {
         },
       };
       instance.triggerInteraction({
-        map,
         event: {},
         feature,
         layerId: 'foo',
@@ -416,34 +428,8 @@ describe('Interactions', () => {
         },
         eventType: 'click',
       });
-    });
-
-    it('should call bbox & fitBounds', () => {
-      const interactions = [];
-      const instance = new InteractiveMap({
-        interactions,
-      });
-      const map = { fitBounds: jest.fn() };
-      const feature = {
-        type: 'Feature',
-        geometry: {
-          type: 'Polygon',
-          coordinates: [
-            [
-              [
-                -33.83789062499999,
-                60.37042901631508,
-              ],
-              [
-                -39.814453125,
-                55.825973254619015,
-              ],
-            ],
-          ],
-        },
-      };
-      instance.fitZoom({ feature, map });
-      expect(map.fitBounds).toHaveBeenCalled();
+      await true;
+      expect(fitZoom).toHaveBeenCalled();
     });
   });
 
@@ -1070,9 +1056,11 @@ describe('Interactions', () => {
 
     instance.displayTooltip({
       layerId: 'foo',
-      features: [{
-        properties: {},
-      }],
+      features: [
+        {
+          properties: {},
+        },
+      ],
       event: {
         lngLat: { lng: 3, lat: 4 },
       },

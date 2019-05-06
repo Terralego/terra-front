@@ -3,10 +3,9 @@ import ReactDOM from 'react-dom';
 import PropTypes from 'prop-types';
 import mapBoxGl from 'mapbox-gl';
 import debounce from 'lodash.debounce';
-import bbox from '@turf/bbox';
 import centroid from '@turf/centroid';
 
-import { setInteractions } from '../services/mapUtils';
+import { setInteractions, fitZoom } from '../services/mapUtils';
 import { getClusteredFeatures } from '../services/cluster';
 import MapComponent, { CONTROLS_TOP_RIGHT, DEFAULT_CONTROLS } from '../Map';
 import BackgroundStyles from './components/BackgroundStyles';
@@ -220,9 +219,6 @@ export class InteractiveMap extends React.Component {
     this.setState({ legends: filteredLegends });
   };
 
-  fitZoom = ({ feature, map }) =>
-    map.fitBounds(bbox({ type: 'FeatureCollection', features: [feature] }));
-
   removeHighlight = ({
     feature: {
       layer: { id: layerId } = {},
@@ -426,7 +422,7 @@ export class InteractiveMap extends React.Component {
         });
         break;
       case INTERACTION_FIT_ZOOM:
-        this.fitZoom({ feature, map, zoomConfig });
+        fitZoom({ feature, map, zoomConfig });
         break;
       case INTERACTION_FLY_TO:
         this.flyTo(feature, targetZoom);

@@ -1,3 +1,5 @@
+import bbox from '@turf/bbox';
+
 import { PREFIXES } from './cluster';
 
 const PREV_STATE = {};
@@ -184,6 +186,10 @@ export function setInteractions ({ map, interactions, callback }) {
   });
 }
 
+export function fitZoom ({ feature, map }) {
+  map.fitBounds(bbox({ type: 'FeatureCollection', features: [feature] }));
+}
+
 export default {
   toggleLayerVisibility,
   getOpacityProperty,
@@ -191,4 +197,5 @@ export default {
   getInteractionsOnEvent,
   setInteractions,
   checkContraints,
+  fitZoom,
 };

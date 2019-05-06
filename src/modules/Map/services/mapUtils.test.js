@@ -6,6 +6,7 @@ import {
   getInteractionsOnEvent,
   setInteractions,
   checkContraints,
+  fitZoom,
 } from './mapUtils';
 
 const getStyle = jest.fn(() => ({
@@ -627,4 +628,29 @@ it('should get multiple interactions', () => {
   }];
   const interaction = getInteractionsOnEvent({ eventType: 'click', map, points: [], interactions });
   expect(interaction.interactions).toEqual(interactions);
+});
+
+it('should call fitBounds', () => {
+  const map = { fitBounds: jest.fn() };
+
+  const feature = {
+    type: 'Feature',
+    geometry: {
+      type: 'Polygon',
+      coordinates: [
+        [
+          [
+            -33.83789062499999,
+            60.37042901631508,
+          ],
+          [
+            -39.814453125,
+            55.825973254619015,
+          ],
+        ],
+      ],
+    },
+  };
+  fitZoom({ feature, map });
+  expect(map.fitBounds).toHaveBeenCalled();
 });
