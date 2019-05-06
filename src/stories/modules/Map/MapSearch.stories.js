@@ -10,7 +10,7 @@ import leftInfoButtonStyles from '../../leftInfosButtonStyles';
 
 Map.displayName = 'Map';
 
-function t (key) {
+function t (key, params) {
   switch (key) {
     case 'terralego.map.search_results.title':
       return 'Résultats de recherche';
@@ -18,6 +18,8 @@ function t (key) {
       return 'Pas de résultat';
     case 'terralego.map.search_control.button_label':
       return 'Rechercher';
+    case 'terralego.map.search_results.group_total':
+      return `(${params.count} result found)`;
     default:
       return key;
   }
@@ -29,7 +31,17 @@ const onSearch = () => new Promise(resolve => {
     results: [],
   }, {
     group: 'EAE',
+    total: 42,
     results: [{
+      label: 'Parc d\'activité de Fontvieille',
+      center: [5.4859932, 43.3271871],
+    }, {
+      label: 'Parc d\'activité du Grand Rhone',
+      center: [4.6289983, 43.7061469],
+    }, {
+      label: 'Technopole Agroparc',
+      center: [4.8902474, 43.9164238],
+    }, {
       label: 'Parc d\'activité de Fontvieille',
       center: [5.4859932, 43.3271871],
     }, {

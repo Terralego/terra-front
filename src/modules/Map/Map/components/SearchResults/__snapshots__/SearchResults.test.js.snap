@@ -71,6 +71,10 @@ exports[`should render results 1`] = `
       className="search-results__group-title"
     >
       bar
+       
+      <em>
+        terralego.map.search_results.group_total
+      </em>
     </p>
     <ul
       className="search-results__list"

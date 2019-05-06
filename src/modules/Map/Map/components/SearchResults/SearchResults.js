@@ -7,7 +7,7 @@ import translateMock from '../../../../../utils/translate';
 export const SearchResults = ({
   results = [],
   onClick,
-  maxResults = 2,
+  maxResults = 5,
   translate = translateMock,
   selected = -1,
 }) => (
@@ -15,12 +15,22 @@ export const SearchResults = ({
     <p className="search-results__title">
       {translate('terralego.map.search_results.title')}
     </p>
-    {results.map(({ group, results: resultsItems }, index) => (
+    {results.map(({ group, total, results: resultsItems }, index) => (
       <div
         key={group}
         className="search-results__group"
       >
-        <p className="search-results__group-title">{group}</p>
+        <p className="search-results__group-title">
+          {group}
+          {total && (
+            <>
+              &nbsp;
+              <em>
+                {translate('terralego.map.search_results.group_total', { count: total })}
+              </em>
+            </>
+          )}
+        </p>
         {resultsItems.length
           ? (
             <ul className="search-results__list">
