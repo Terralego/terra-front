@@ -499,7 +499,6 @@ export class InteractiveMap extends React.Component {
       onMapInit,
       onMapLoaded,
     } = this;
-
     return (
       <div
         className="interactive-map"
