@@ -31,10 +31,17 @@
     border-radius: 0 0 4px 4px;
     z-index: 1;
     position: relative;
+    opacity: .95;
 
     &__title {
       padding: .5rem .7rem;
       border-bottom: 1px solid $pt-dark-divider-black;
+      font-size: 120%;
+    }
+
+    &__groups {
+      overflow: auto;
+      max-height: 60vh;
     }
   
     &__group {
@@ -48,6 +55,11 @@
     &__item {
       padding: .5rem .7rem;
       margin: 0;
+    }
+
+    &__group-title {
+      font-weight: 500;
+      font-size: 110%;
     }
 
     &__list {
