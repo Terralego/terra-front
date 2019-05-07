@@ -119,9 +119,11 @@ export class SearchControl extends AbstractMapControl {
       return;
     }
 
+    this.setState({ loading: true });
+
     const results = await onSearch(query, this.map);
 
-    this.setState({ displayResults: !!results, results });
+    this.setState({ displayResults: !!results, results, loading: false });
   }
 
   selectResultItem (dir) {
@@ -145,7 +147,7 @@ export class SearchControl extends AbstractMapControl {
       renderSearchResults: SearchResults,
       translate = translateMock,
     } = this.props;
-    const { visible, expanded, query, displayResults, results, selected } = this.state;
+    const { visible, expanded, query, displayResults, results, selected, loading } = this.state;
 
     return (
       <>
@@ -171,6 +173,7 @@ export class SearchControl extends AbstractMapControl {
               onFocus={() => this.toggleResultsDisplay(true)}
               query={query}
               onKeyPress={this.onKeyPress}
+              loading={loading}
             />
             {displayResults && Array.isArray(results) && (
               <SearchResults
