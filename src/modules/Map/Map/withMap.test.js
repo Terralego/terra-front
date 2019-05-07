@@ -52,7 +52,15 @@ it('should have a map getter', () => {
 });
 
 it('should fit bounds', () => {
-  shallow(<ComponentWithMap backgroundStyle={{}} fitBounds={[[1, 2], [3, 4]]} />);
+  shallow(
+    <ComponentWithMap
+      backgroundStyle={{}}
+      fitBounds={{
+        coordinates: [[1, 2], [3, 4]],
+        padding: { top: 10, bottom: 10, left: 10, right: 10 },
+      }}
+    />,
+  );
   expect(mapboxgl.Map).toHaveBeenCalledWith({
     container: null,
     attributionControl: false,
@@ -64,7 +72,10 @@ it('should fit bounds', () => {
     maxBounds: undefined,
     preserveDrawingBuffer: false,
   });
-  expect(mapboxgl.map.fitBounds).toHaveBeenCalledWith([[1, 2], [3, 4]]);
+  expect(mapboxgl.map.fitBounds).toHaveBeenCalledWith(
+    [[1, 2], [3, 4]],
+    { padding: { top: 10, bottom: 10, left: 10, right: 10 } },
+  );
 });
 
 it('should not call onMapLoaded if component is unmount', () => {

@@ -16,10 +16,22 @@ export const withMap = WrappedComponent =>
         }),
       ]).isRequired,
       zoom: PropTypes.number,
-      fitBounds: PropTypes.arrayOf(
-        PropTypes.array,
-        PropTypes.array,
-      ),
+      fitBounds: PropTypes.shape({
+        coordinates: PropTypes.arrayOf(
+          PropTypes.array,
+          PropTypes.array,
+        ),
+        padding: PropTypes.shape({
+          top: PropTypes.number,
+          bottom: PropTypes.number,
+          left: PropTypes.number,
+          right: PropTypes.number,
+        }),
+        offset: PropTypes.arrayOf(
+          PropTypes.number,
+          PropTypes.number,
+        ),
+      }),
       onMapInit: PropTypes.func,
       onMapLoaded: PropTypes.func,
       onMapUpdate: PropTypes.func,
@@ -89,7 +101,8 @@ export const withMap = WrappedComponent =>
       }
 
       if (fitBounds) {
-        map.fitBounds(fitBounds);
+        const { coordinates, ...fitBoundsParams } = fitBounds;
+        map.fitBounds(coordinates, fitBoundsParams);
       }
 
       map.once('style.load', () => {
