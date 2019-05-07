@@ -24,6 +24,7 @@ it('should render results', () => {
         }],
       }, {
         group: 'bar',
+        total: 42,
         results: [{
           label: 'bar 1',
         }, {
