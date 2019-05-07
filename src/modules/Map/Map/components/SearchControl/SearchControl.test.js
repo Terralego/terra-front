@@ -268,13 +268,20 @@ it('should search', async () => {
   });
 
   instance.state.query = 'abc';
-  await instance.search();
+  const searching = instance.search();
+  expect(instance.setState).toHaveBeenCalledWith({ loading: true });
+  instance.setState.mockClear();
+
+  await searching;
+
   expect(onSearch).toHaveBeenCalledWith('abc', instance.map);
   expect(instance.setState).toHaveBeenCalledWith({
     displayResults: true,
     results,
+    loading: false,
   });
 
+  instance.setState.mockClear();
   instance.state.query = 'abc';
   instance.props.onSearch = jest.fn();
   await instance.search();
@@ -282,6 +289,7 @@ it('should search', async () => {
   expect(instance.setState).toHaveBeenCalledWith({
     displayResults: false,
     results: undefined,
+    loading: false,
   });
 });
 

@@ -560,13 +560,13 @@ describe('controls', () => {
     const instance = new Map({ map });
     instance.focusOnSearchResult = jest.fn();
     const result = {};
-    instance.onSearchResultClick({ result });
+    instance.onSearchResultClick()({ result });
     expect(instance.focusOnSearchResult).toHaveBeenCalledWith(result);
     instance.focusOnSearchResult.mockClear();
 
-    instance.props.onSearchResultClick = jest.fn();
-    instance.onSearchResultClick({ result });
-    expect(instance.props.onSearchResultClick).toHaveBeenCalledWith({
+    const onSearchResultClick = jest.fn();
+    instance.onSearchResultClick(onSearchResultClick)({ result });
+    expect(onSearchResultClick).toHaveBeenCalledWith({
       result,
       map,
       focusOnSearchResult: instance.focusOnSearchResult,

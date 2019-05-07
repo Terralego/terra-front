@@ -206,10 +206,10 @@ export class MapComponent extends React.Component {
     }
   }
 
-  onSearchResultClick = ({ result, ...rest }) => {
-    const { onSearchResultClick, map } = this.props;
-    if (onSearchResultClick) {
-      onSearchResultClick({
+  onSearchResultClick = onResultClick => ({ result, ...rest }) => {
+    const { map } = this.props;
+    if (onResultClick) {
+      onResultClick({
         result,
         ...rest,
         map,
@@ -310,10 +310,9 @@ export class MapComponent extends React.Component {
         case CONTROL_SEARCH: {
           const controlInstance = new SearchControl({
             ...this.props,
-            onSearch: () => null,
             renderSearchResults: SearchResults,
             ...params,
-            onResultClick: this.onSearchResultClick,
+            onResultClick: this.onSearchResultClick(params.onSearchResultClick),
           });
           this.controls.push(controlInstance);
           map.addControl(controlInstance, position);
