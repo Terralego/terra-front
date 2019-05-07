@@ -1,4 +1,5 @@
 import React from 'react';
+import PropTypes from 'prop-types';
 import classnames from 'classnames';
 import { Icon } from '@blueprintjs/core';
 import debounce from 'lodash.debounce';
@@ -10,7 +11,24 @@ import translateMock from '../../../../../utils/translate';
 import './styles.scss';
 
 export class SearchControl extends AbstractMapControl {
-  static containerClassName = 'mapboxgl-ctrl mapboxgl-ctrl-group mapboxgl-ctrl-search'
+  static containerClassName = 'mapboxgl-ctrl mapboxgl-ctrl-group mapboxgl-ctrl-search';
+
+  static propTypes = {
+    /** Function called when user submit input. Takes query as parameter */
+    onSearch: PropTypes.func,
+    /** Function called when user click on a result item. Takes result object as parameter */
+    onResultClick: PropTypes.func,
+    /** Function used to render the search results. Default to bundled component */
+    renderSearchResults: PropTypes.func,
+    /** Function used to translate wording. Takes key and object of options as parameters */
+    translate: PropTypes.func,
+  }
+
+  static defaultProps = {
+    onSearch () {},
+    onResultClick () {},
+    translate: translateMock,
+  }
 
   state = {
     visible: false,
@@ -119,9 +137,11 @@ export class SearchControl extends AbstractMapControl {
       return;
     }
 
+    this.setState({ loading: true });
+
     const results = await onSearch(query, this.map);
 
-    this.setState({ displayResults: !!results, results });
+    this.setState({ displayResults: !!results, results, loading: false });
   }
 
   selectResultItem (dir) {
@@ -143,9 +163,9 @@ export class SearchControl extends AbstractMapControl {
   render () {
     const {
       renderSearchResults: SearchResults,
-      translate = translateMock,
+      translate,
     } = this.props;
-    const { visible, expanded, query, displayResults, results, selected } = this.state;
+    const { visible, expanded, query, displayResults, results, selected, loading } = this.state;
 
     return (
       <>
@@ -171,6 +191,7 @@ export class SearchControl extends AbstractMapControl {
               onFocus={() => this.toggleResultsDisplay(true)}
               query={query}
               onKeyPress={this.onKeyPress}
+              loading={loading}
             />
             {displayResults && Array.isArray(results) && (
               <SearchResults

@@ -9,6 +9,9 @@ exports[`should render empty result 1`] = `
   >
     terralego.map.search_results.title
   </p>
+  <div
+    className="search-results__groups"
+  />
 </div>
 `;
 
@@ -22,119 +25,123 @@ exports[`should render results 1`] = `
     terralego.map.search_results.title
   </p>
   <div
-    className="search-results__group"
+    className="search-results__groups"
   >
-    <p
-      className="search-results__group-title"
-    >
-      empty
-    </p>
-    <p
-      className="search-results__item"
-    >
-      terralego.map.search_results.no_result
-    </p>
     <div
-      className="bp3-divider"
-    />
-  </div>
-  <div
-    className="search-results__group"
-  >
-    <p
-      className="search-results__group-title"
+      className="search-results__group"
     >
-      foo
-    </p>
-    <ul
-      className="search-results__list"
-    >
-      <li
-        className="search-results__item search-results__item--active"
+      <p
+        className="search-results__group-title"
       >
-        <button
-          onClick={[Function]}
-          type="button"
-        >
-          foo 1
-        </button>
-      </li>
-    </ul>
+        empty
+      </p>
+      <p
+        className="search-results__item"
+      >
+        terralego.map.search_results.no_result
+      </p>
+      <div
+        className="bp3-divider"
+      />
+    </div>
     <div
-      className="bp3-divider"
-    />
-  </div>
-  <div
-    className="search-results__group"
-  >
-    <p
-      className="search-results__group-title"
+      className="search-results__group"
     >
-      bar
-       
-      <em>
-        terralego.map.search_results.group_total
-      </em>
-    </p>
-    <ul
-      className="search-results__list"
+      <p
+        className="search-results__group-title"
+      >
+        foo
+      </p>
+      <ul
+        className="search-results__list"
+      >
+        <li
+          className="search-results__item search-results__item--active"
+        >
+          <button
+            onClick={[Function]}
+            type="button"
+          >
+            foo 1
+          </button>
+        </li>
+      </ul>
+      <div
+        className="bp3-divider"
+      />
+    </div>
+    <div
+      className="search-results__group"
     >
-      <li
-        className="search-results__item search-results__item--active"
+      <p
+        className="search-results__group-title"
       >
-        <button
-          onClick={[Function]}
-          type="button"
+        bar
+         
+        <em>
+          terralego.map.search_results.group_total
+        </em>
+      </p>
+      <ul
+        className="search-results__list"
+      >
+        <li
+          className="search-results__item search-results__item--active"
         >
-          bar 1
-        </button>
-      </li>
-      <li
-        className="search-results__item search-results__item--active"
-      >
-        <button
-          onClick={[Function]}
-          type="button"
+          <button
+            onClick={[Function]}
+            type="button"
+          >
+            bar 1
+          </button>
+        </li>
+        <li
+          className="search-results__item search-results__item--active"
         >
-          bar 2
-        </button>
-      </li>
-      <li
-        className="search-results__item search-results__item--active"
-      >
-        <button
-          onClick={[Function]}
-          type="button"
+          <button
+            onClick={[Function]}
+            type="button"
+          >
+            bar 2
+          </button>
+        </li>
+        <li
+          className="search-results__item search-results__item--active"
         >
-          bar 3
-        </button>
-      </li>
-      <li
-        className="search-results__item search-results__item--active"
-      >
-        <button
-          onClick={[Function]}
-          type="button"
+          <button
+            onClick={[Function]}
+            type="button"
+          >
+            bar 3
+          </button>
+        </li>
+        <li
+          className="search-results__item search-results__item--active"
         >
-          bar 4
-        </button>
-      </li>
-      <li
-        className="search-results__item search-results__item--active"
-      >
-        <button
-          onClick={[Function]}
-          type="button"
+          <button
+            onClick={[Function]}
+            type="button"
+          >
+            bar 4
+          </button>
+        </li>
+        <li
+          className="search-results__item search-results__item--active"
         >
-          bar 5
-        </button>
-      </li>
-      <li
-        className="search-results__item search-results__item--more"
-      >
-        …
-      </li>
-    </ul>
+          <button
+            onClick={[Function]}
+            type="button"
+          >
+            bar 5
+          </button>
+        </li>
+        <li
+          className="search-results__item search-results__item--more"
+        >
+          …
+        </li>
+      </ul>
+    </div>
   </div>
 </div>
 `;
@@ -149,72 +156,76 @@ exports[`should render results with selected item 1`] = `
     terralego.map.search_results.title
   </p>
   <div
-    className="search-results__group"
+    className="search-results__groups"
   >
-    <p
-      className="search-results__group-title"
+    <div
+      className="search-results__group"
     >
-      bar
-    </p>
-    <ul
-      className="search-results__list"
-    >
-      <li
-        className="search-results__item search-results__item--active"
+      <p
+        className="search-results__group-title"
       >
-        <button
-          onClick={[Function]}
-          type="button"
+        bar
+      </p>
+      <ul
+        className="search-results__list"
+      >
+        <li
+          className="search-results__item search-results__item--active"
         >
-          bar 1
-        </button>
-      </li>
-      <li
-        className="search-results__item search-results__item--active"
-      >
-        <button
-          onClick={[Function]}
-          type="button"
+          <button
+            onClick={[Function]}
+            type="button"
+          >
+            bar 1
+          </button>
+        </li>
+        <li
+          className="search-results__item search-results__item--active"
         >
-          bar 2
-        </button>
-      </li>
-      <li
-        className="search-results__item search-results__item--active search-results__item--selected"
-      >
-        <button
-          onClick={[Function]}
-          type="button"
+          <button
+            onClick={[Function]}
+            type="button"
+          >
+            bar 2
+          </button>
+        </li>
+        <li
+          className="search-results__item search-results__item--active search-results__item--selected"
         >
-          bar 3
-        </button>
-      </li>
-      <li
-        className="search-results__item search-results__item--active"
-      >
-        <button
-          onClick={[Function]}
-          type="button"
+          <button
+            onClick={[Function]}
+            type="button"
+          >
+            bar 3
+          </button>
+        </li>
+        <li
+          className="search-results__item search-results__item--active"
         >
-          bar 4
-        </button>
-      </li>
-      <li
-        className="search-results__item search-results__item--active"
-      >
-        <button
-          onClick={[Function]}
-          type="button"
+          <button
+            onClick={[Function]}
+            type="button"
+          >
+            bar 4
+          </button>
+        </li>
+        <li
+          className="search-results__item search-results__item--active"
         >
-          bar 5
-        </button>
-      </li>
-      <li
-        className="search-results__item search-results__item--more"
-      >
-        …
-      </li>
-    </ul>
+          <button
+            onClick={[Function]}
+            type="button"
+          >
+            bar 5
+          </button>
+        </li>
+        <li
+          className="search-results__item search-results__item--more"
+        >
+          …
+        </li>
+      </ul>
+    </div>
   </div>
 </div>
 `;

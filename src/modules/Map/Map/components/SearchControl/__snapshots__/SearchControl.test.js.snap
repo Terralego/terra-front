@@ -86,6 +86,8 @@ Array [
     </div>
     <div
       onClick={[Function]}
+      onResultClick={[Function]}
+      onSearch={[Function]}
       renderSearchResults={[Function]}
       results={
         Array [
@@ -106,6 +108,7 @@ Array [
           },
         ]
       }
+      translate={[Function]}
     >
       SearchResults
     </div>

@@ -47,9 +47,6 @@ export class MapComponent extends React.Component {
   static propTypes = {
     // Mapbox general config
     accessToken: PropTypes.string,
-    onSearch: PropTypes.func,
-    renderSearchResults: PropTypes.func,
-    onSearchResultClick: PropTypes.func,
     maxZoom: PropTypes.number,
     minZoom: PropTypes.number,
     maxBounds: PropTypes.oneOfType([
@@ -76,6 +73,10 @@ export class MapComponent extends React.Component {
           onRemove: PropTypes.func,
         }),
       ]).isRequired,
+      // For CONTROL_SEARCH only
+      onSearch: PropTypes.func,
+      renderSearchResults: PropTypes.func,
+      onSearchResultClick: PropTypes.func,
     })),
 
     // Action to fly out to coordinates
@@ -112,8 +113,6 @@ export class MapComponent extends React.Component {
 
   static defaultProps = {
     accessToken: '',
-    onSearch () {},
-    renderSearchResults: SearchResults,
     maxZoom: 20,
     minZoom: 0,
     maxBounds: false,
@@ -121,7 +120,6 @@ export class MapComponent extends React.Component {
     flyTo: {},
     customStyle: {},
     onBackgroundChange () {},
-    onSearchResultClick: null,
     controls: DEFAULT_CONTROLS,
   };
 
@@ -208,10 +206,10 @@ export class MapComponent extends React.Component {
     }
   }
 
-  onSearchResultClick = ({ result, ...rest }) => {
-    const { onSearchResultClick, map } = this.props;
-    if (onSearchResultClick) {
-      onSearchResultClick({
+  onSearchResultClick = onResultClick => ({ result, ...rest }) => {
+    const { map } = this.props;
+    if (onResultClick) {
+      onResultClick({
         result,
         ...rest,
         map,
@@ -307,18 +305,14 @@ export class MapComponent extends React.Component {
     this.controls.forEach(control => map.removeControl(control));
     this.controls = [];
     // Add new controls
-    controls.forEach(({ position, control }) => {
+    controls.forEach(({ position, control, ...params }) => {
       switch (control) {
         case CONTROL_SEARCH: {
-          const {
-            onSearch,
-            renderSearchResults,
-          } = this.props;
           const controlInstance = new SearchControl({
             ...this.props,
-            onSearch,
-            renderSearchResults,
-            onResultClick: this.onSearchResultClick,
+            renderSearchResults: SearchResults,
+            ...params,
+            onResultClick: this.onSearchResultClick(params.onSearchResultClick),
           });
           this.controls.push(controlInstance);
           map.addControl(controlInstance, position);

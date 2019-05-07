@@ -104,15 +104,16 @@ export const withMap = WrappedComponent =>
     }
 
     render () {
+      const { className, ...props } = this.props;
       const { map } = this.state;
 
       return (
         <div
           ref={this.containerEl}
-          className="tf-map"
+          className={`tf-map ${className}`}
         >
           {map &&
-            <WrappedComponent map={map} {...this.props} />
+            <WrappedComponent map={map} {...props} />
           }
         </div>
       );
