@@ -159,6 +159,24 @@ it('should toggle results', () => {
   expect(inputMock.focus).toHaveBeenCalled();
 });
 
+it('should not toggle if unmount', () => {
+  const instance = new SearchControl();
+  let stateCallback;
+  instance.setState = jest.fn(fn => { stateCallback = fn; });
+
+  instance.toggle();
+  instance.setState.mockClear();
+  stateCallback({ visible: true });
+  instance.isUnmount = true;
+  jest.runAllTimers();
+  expect(instance.setState).not.toHaveBeenCalled();
+
+  stateCallback({ visible: false });
+  instance.isUnmount = true;
+  jest.runAllTimers();
+  expect(instance.setState).not.toHaveBeenCalled();
+});
+
 it('should force toggle results', () => {
   const instance = new SearchControl();
   let stateCallback;
@@ -291,6 +309,19 @@ it('should search', async () => {
     results: undefined,
     loading: false,
   });
+});
+
+it('should not search if unmount', async () => {
+  const results = [];
+  const onSearch = jest.fn(() => results);
+  const instance = new SearchControl({ onSearch });
+  instance.state.query = 'abc';
+  instance.setState = jest.fn();
+  const search = instance.search();
+  instance.isUnmount = true;
+  instance.setState.mockClear();
+  await search;
+  expect(instance.setState).not.toHaveBeenCalled();
 });
 
 it('should select result item', () => {

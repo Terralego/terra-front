@@ -1,0 +1,14 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`should render correctly 1`] = `
+<div
+  className="layers-tree-subitems-list"
+>
+  <p>
+    Radio
+  </p>
+  <p>
+    Radio
+  </p>
+</div>
+`;

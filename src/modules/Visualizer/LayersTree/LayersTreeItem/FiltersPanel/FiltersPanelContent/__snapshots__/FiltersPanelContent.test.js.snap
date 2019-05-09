@@ -1,0 +1,303 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`should render correctly 1`] = `
+Array [
+  <div
+    className="filters-panel bp3-dark"
+    style={
+      Object {
+        "left": undefined,
+      }
+    }
+  >
+    <div
+      className="filters-panel__arrow"
+      style={
+        Object {
+          "top": undefined,
+        }
+      }
+    />
+    <div
+      className="filters-panel__content"
+    >
+      <div
+        className="filters-panel__header"
+      >
+        <h2
+          className="filters-panel__title"
+        >
+          Filtrer
+        </h2>
+      </div>
+      <div
+        className="filters-panel__form"
+      >
+        <div />
+      </div>
+    </div>
+  </div>,
+  <div
+    className="filters-panel bp3-dark"
+    style={
+      Object {
+        "left": undefined,
+      }
+    }
+  >
+    <div
+      className="filters-panel__arrow"
+      style={
+        Object {
+          "top": undefined,
+        }
+      }
+    />
+    <div
+      className="filters-panel__content"
+    >
+      <div
+        className="filters-panel__header"
+      >
+        <h2
+          className="filters-panel__title"
+        >
+          Filtrer
+        </h2>
+      </div>
+      <div
+        className="filters-panel__form"
+      >
+        <div />
+      </div>
+    </div>
+  </div>,
+  <div
+    className="filters-panel bp3-dark"
+    style={
+      Object {
+        "left": 84,
+      }
+    }
+  >
+    <div
+      className="filters-panel__arrow"
+      style={
+        Object {
+          "top": undefined,
+        }
+      }
+    />
+    <div
+      className="filters-panel__content"
+    >
+      <div
+        className="filters-panel__header"
+      >
+        <h2
+          className="filters-panel__title"
+        >
+          Filtrer
+        </h2>
+      </div>
+      <div
+        className="filters-panel__form"
+      >
+        <div>
+          <div
+            className="control-container control--range range"
+          >
+            <p
+              className="control-label"
+            >
+              
+            </p>
+            <div
+              className="bp3-slider"
+              onMouseDown={[Function]}
+              onTouchStart={[Function]}
+            >
+              <div
+                className="bp3-slider-track"
+              >
+                <div
+                  className="bp3-slider-progress"
+                  style={
+                    Object {
+                      "left": "0.00%",
+                      "right": "100.00%",
+                      "top": 0,
+                    }
+                  }
+                />
+                <div
+                  className="bp3-slider-progress bp3-intent-primary"
+                  style={
+                    Object {
+                      "left": "0.00%",
+                      "right": "100.00%",
+                      "top": 0,
+                    }
+                  }
+                />
+                <div
+                  className="bp3-slider-progress"
+                  style={
+                    Object {
+                      "left": "0.00%",
+                      "right": "100.00%",
+                      "top": 0,
+                    }
+                  }
+                />
+              </div>
+              <div
+                className="bp3-slider-axis"
+              >
+                <div
+                  className="bp3-slider-label"
+                  style={
+                    Object {
+                      "left": "0.00%",
+                    }
+                  }
+                >
+                  <div
+                    className="range__manual"
+                    contentEditable={true}
+                    dangerouslySetInnerHTML={
+                      Object {
+                        "__html": "0",
+                      }
+                    }
+                    onBlur={[Function]}
+                    onChange={[Function]}
+                    onClick={[Function]}
+                    onFocus={[Function]}
+                    onInput={[Function]}
+                    onKeyDown={[Function]}
+                  />
+                </div>
+                <div
+                  className="bp3-slider-label"
+                  style={
+                    Object {
+                      "left": "0.00%",
+                    }
+                  }
+                >
+                  <div
+                    className="range__manual"
+                    contentEditable={true}
+                    dangerouslySetInnerHTML={
+                      Object {
+                        "__html": "100",
+                      }
+                    }
+                    onBlur={[Function]}
+                    onChange={[Function]}
+                    onClick={[Function]}
+                    onFocus={[Function]}
+                    onInput={[Function]}
+                    onKeyDown={[Function]}
+                  />
+                </div>
+              </div>
+              <span
+                className="bp3-slider-handle bp3-start"
+                onKeyDown={[Function]}
+                onKeyUp={[Function]}
+                onMouseDown={[Function]}
+                onTouchStart={[Function]}
+                style={
+                  Object {
+                    "left": "calc(0.00% - 0px)",
+                  }
+                }
+                tabIndex={0}
+              >
+                <span
+                  className="bp3-slider-label"
+                >
+                  <div
+                    className="range__manual"
+                    contentEditable={true}
+                    dangerouslySetInnerHTML={
+                      Object {
+                        "__html": "0",
+                      }
+                    }
+                    onBlur={[Function]}
+                    onChange={[Function]}
+                    onClick={[Function]}
+                    onFocus={[Function]}
+                    onInput={[Function]}
+                    onKeyDown={[Function]}
+                  />
+                </span>
+              </span>
+              <span
+                className="bp3-slider-handle bp3-end"
+                onKeyDown={[Function]}
+                onKeyUp={[Function]}
+                onMouseDown={[Function]}
+                onTouchStart={[Function]}
+                style={
+                  Object {
+                    "left": "calc(0.00% - 0px)",
+                  }
+                }
+                tabIndex={0}
+              >
+                <span
+                  className="bp3-slider-label"
+                >
+                  <div
+                    className="range__manual"
+                    contentEditable={true}
+                    dangerouslySetInnerHTML={
+                      Object {
+                        "__html": "100",
+                      }
+                    }
+                    onBlur={[Function]}
+                    onChange={[Function]}
+                    onClick={[Function]}
+                    onFocus={[Function]}
+                    onInput={[Function]}
+                    onKeyDown={[Function]}
+                  />
+                </span>
+              </span>
+            </div>
+          </div>
+          <div
+            className="control-container"
+          >
+            <p
+              className="control-label"
+            >
+              
+            </p>
+            <div
+              className="bp3-input-group"
+            >
+              <input
+                className="bp3-input"
+                onChange={[Function]}
+                style={
+                  Object {
+                    "paddingRight": 10,
+                  }
+                }
+                type="text"
+                value=""
+              />
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>,
+]
+`;

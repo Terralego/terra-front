@@ -21,11 +21,19 @@ export class AuthProvider extends React.Component {
 
     const { user } = this.extractTokenData(token);
     this.state = { authenticated: true, user };
+  }
+
+  componentDidMount () {
     this.refreshToken();
+  }
+
+  componentWillUnmount () {
+    this.isUnmount = true;
   }
 
   authAction = async ({ login, password }) => {
     const token = await obtainToken(login, password);
+    if (this.isUnmount) return;
     const { user } = this.extractTokenData(token);
     this.setState({ authenticated: true, user });
   };
@@ -34,7 +42,7 @@ export class AuthProvider extends React.Component {
     await createToken(properties);
   }
 
-  logoutAction = async () => {
+  logoutAction = () => {
     invalidToken();
     this.setState({ authenticated: false, user: null });
   }
@@ -59,9 +67,11 @@ export class AuthProvider extends React.Component {
   async refreshToken () {
     try {
       const token = await refreshToken();
+      if (this.isUnmount) return;
       const { user } = this.extractTokenData(token);
       this.setState({ authenticated: true, user });
     } catch (e) {
+      if (this.isUnmount) return;
       this.setState({ authenticated: false, user: null });
     }
   }
