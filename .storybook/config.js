@@ -2,7 +2,8 @@ import { configure, addDecorator, addParameters } from '@storybook/react';
 import { withKnobs } from '@storybook/addon-knobs';
 import { withA11y } from '@storybook/addon-a11y';
 import { withInfo} from '@storybook/addon-info';
-
+import ThemeSwitcher from './ThemeSwitcher';
+import './styles.scss';
 function loadStories() {
   require('../src/stories');
   const req = require.context('../src/stories', true, /\.stories\.js$/);
@@ -16,6 +17,7 @@ addDecorator(withInfo({
 }));
 addDecorator(withKnobs);
 addDecorator(withA11y);
+addDecorator(ThemeSwitcher);
 
 
 configure(loadStories, module);
