@@ -408,12 +408,14 @@ it('should check contraints', () => {
   expect(checkContraints({
     map: {
       getZoom: () => 2,
+      getStyle,
     },
   })).toBe(true);
 
   expect(checkContraints({
     map: {
       getZoom: () => 2,
+      getStyle,
     },
     constraints: [],
   })).toBe(true);
@@ -421,6 +423,7 @@ it('should check contraints', () => {
   expect(checkContraints({
     map: {
       getZoom: () => 2,
+      getStyle,
     },
     constraints: [{ minZoom: 1, maxZoom: 2 }],
   })).toBe(true);
@@ -428,18 +431,21 @@ it('should check contraints', () => {
   expect(checkContraints({
     map: {
       getZoom: () => 2,
+      getStyle,
     },
     constraints: [{ minZoom: 1, maxZoom: 3 }],
   })).toBe(true);
   expect(checkContraints({
     map: {
       getZoom: () => 3,
+      getStyle,
     },
     constraints: [{ minZoom: 1, maxZoom: 2 }],
   })).toBe(false);
   expect(checkContraints({
     map: {
       getZoom: () => 3,
+      getStyle,
     },
     constraints: [{ minZoom: 4, maxZoom: 5 }],
   })).toBe(false);
@@ -447,16 +453,16 @@ it('should check contraints', () => {
   expect(checkContraints({
     map: {
       getZoom: () => 2,
-      getLayer: () => ({}),
+      getStyle,
       getLayoutProperty: () => 'visible',
     },
     constraints: [{ withLayers: ['foo-bar*34"/fgù%'] }],
-  })).toBe(true);
+  })).toBe(false);
 
   expect(checkContraints({
     map: {
       getZoom: () => 2,
-      getLayer: () => undefined,
+      getStyle,
       getLayoutProperty: () => 'none',
     },
     constraints: [{ withLayers: ['foo'] }],
@@ -465,16 +471,16 @@ it('should check contraints', () => {
   expect(checkContraints({
     map: {
       getZoom: () => 2,
-      getLayer: layerId => (layerId === 'bar' ? {} : undefined),
+      getStyle,
       getLayoutProperty: () => 'visible',
     },
-    constraints: [{ withLayers: ['bar', 'foo'] }],
+    constraints: [{ withLayers: ['bar', 'not-present'] }],
   })).toBe(false);
 
   expect(checkContraints({
     map: {
       getZoom: () => 2,
-      getLayer: () => ({}),
+      getStyle,
       getLayoutProperty: layerId => (layerId === 'foo' ? 'visible' : 'none'),
     },
     constraints: [{ withLayers: ['foo', '!bar'] }],
@@ -483,7 +489,7 @@ it('should check contraints', () => {
   expect(checkContraints({
     map: {
       getZoom: () => 2,
-      getLayer: () => ({}),
+      getStyle,
       getLayoutProperty: layerId => (layerId === 'foo' ? 'visible' : 'none'),
     },
     constraints: [{ minZoom: 1, maxZoom: 3, withLayers: ['foo', '!bar'] }],
@@ -492,7 +498,7 @@ it('should check contraints', () => {
   expect(checkContraints({
     map: {
       getZoom: () => 2,
-      getLayer: () => ({}),
+      getStyle,
       getLayoutProperty: layerId => (layerId === 'foo' ? 'visible' : 'none'),
     },
     constraints: [{ minZoom: 1, maxZoom: 3, withLayers: ['foo', '!bar'] }],
@@ -501,6 +507,7 @@ it('should check contraints', () => {
   expect(checkContraints({
     map: {
       getZoom: () => 2,
+      getStyle,
     },
     constraints: [{ isCluster: true }],
     feature: {
@@ -513,6 +520,7 @@ it('should check contraints', () => {
   expect(checkContraints({
     map: {
       getZoom: () => 2,
+      getStyle,
     },
     constraints: [{ isCluster: false }],
     feature: {
@@ -525,7 +533,7 @@ it('should check contraints', () => {
   expect(checkContraints({
     map: {
       getZoom: () => 2,
-      getLayer: () => ({}),
+      getStyle,
       getLayoutProperty: layerId => (layerId === 'bar' ? 'visible' : 'none'),
     },
     constraints: [{ isCluster: true, withLayers: ['bar', '!foo'] }],
@@ -539,7 +547,7 @@ it('should check contraints', () => {
   expect(checkContraints({
     map: {
       getZoom: () => 2,
-      getLayer: () => ({}),
+      getStyle,
       getLayoutProperty: layerId => (layerId === 'bar' ? 'visible' : 'none'),
     },
     constraints: [
@@ -556,7 +564,7 @@ it('should check contraints', () => {
   expect(checkContraints({
     map: {
       getZoom: () => 2,
-      getLayer: () => ({}),
+      getStyle,
       getLayoutProperty: layerId => (layerId === 'bar' ? 'visible' : 'none'),
     },
     constraints: [
