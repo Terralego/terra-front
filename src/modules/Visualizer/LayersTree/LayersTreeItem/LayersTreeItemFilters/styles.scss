@@ -1,0 +1,10 @@
+.layersTreeItemFilter {
+  margin: 0 -0.2rem 0.5rem;
+  &__tag {
+    margin: 0.2rem;
+    max-width: calc(100% - 1rem);
+    .bp3-text-overflow-ellipsis {
+      white-space: inherit;
+    }
+  }
+}

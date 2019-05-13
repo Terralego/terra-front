@@ -59,6 +59,7 @@ export class SearchControl extends AbstractMapControl {
 
   componentWillUnmount () {
     global.removeEventListener('click', this.listener);
+    this.isUnmount = true;
   }
 
   get flatResults () {
@@ -72,11 +73,15 @@ export class SearchControl extends AbstractMapControl {
   toggle = state => this.setState(({ visible }) => {
     if (visible && state !== true) {
       // SetTimeout because of css animation
-      setTimeout(() => this.setState({ visible: false }), 500);
+      setTimeout(() => {
+        if (this.isUnmount) return;
+        this.setState({ visible: false });
+      }, 500);
       return ({ expanded: false, results: null, selected: -1, query: '' });
     }
     if (!visible && state !== false) {
       setTimeout(() => {
+        if (this.isUnmount) return;
         const { container } = this.props;
         this.setState({ expanded: true });
         container.querySelector('input').focus();
@@ -141,6 +146,7 @@ export class SearchControl extends AbstractMapControl {
 
     const results = await onSearch(query, this.map);
 
+    if (this.isUnmount) return;
     this.setState({ displayResults: !!results, results, loading: false });
   }
 

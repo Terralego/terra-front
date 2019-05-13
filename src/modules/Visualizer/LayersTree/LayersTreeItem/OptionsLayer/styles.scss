@@ -1,0 +1,18 @@
+.layerNode-Option-Container {
+  padding: 8px 4px;
+  
+  .bp3-slider {
+    width: calc(100% - 0.8rem);
+  }
+}
+
+.layerNode-Option-slider-label {
+  font-family: "SFProText-Light", Arial, Helvetica, sans-serif;
+  font-size: 12px;
+  color: #F5F8FA;
+  line-height: 15px;
+}
+
+.layerNode-Option-button:not(:last-of-type) {
+  margin-right: 12px;
+}

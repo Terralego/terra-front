@@ -37,7 +37,7 @@ export const SearchResults = ({
               <ul className="search-results__list">
                 {resultsItems.slice(0, 5).map(item => (
                   <li
-                    key={item.id}
+                    key={`${item.label}${item.id}`}
                     className={classnames({
                       'search-results__item': true,
                       'search-results__item--active': true,

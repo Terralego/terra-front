@@ -1,0 +1,137 @@
+$transitionSpeed: 0.15s;
+
+.filters-panel {
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  display: none;
+  opacity: 0;
+  transition:
+    opacity $transitionSpeed ease-in,
+    transform $transitionSpeed ease-in;
+  width: 300px;
+  z-index: 11;
+  margin-left: 18px;
+  background: #394B59;
+  box-shadow:
+    0 0 0 1px rgba(16,22,26,0.20),
+    0 2px 4px 0 rgba(16,22,26,0.40),
+    0 8px 24px 0 rgba(16,22,26,0.40);
+  transform: scale3d(.9, .9, .9);
+  max-height: 100vh;
+  
+  &--visible {
+    opacity: 1;
+    transform: scale3d(1, 1, 1);
+  }
+
+  &--animate {
+    display: block;
+  }
+
+  &__arrow {
+    $width: 32px;
+    background: rgba($color: #10161A, $alpha: 0.4);
+    display: block;
+    position: absolute;
+    margin-top: -2px;
+    left: -$width/2;
+    width: $width;
+    height: 32px;
+    z-index: 12;
+    transform: rotate(45deg);
+    border-radius: 3px;
+
+    &::after {
+      content: '';
+      background-color: #394B59;
+      width: 100%;
+      height: 100%;
+      transform: translate(1px, -1px);
+      display: block;
+    }
+  }
+
+  &__content {
+    z-index: 13;
+    position: relative;
+    padding-top: 50px;
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+  }
+
+  &__title {
+    margin-top: 0;
+    padding: 0 0.7rem;
+    font-weight: 300;
+    letter-spacing: 1.25px;
+  }
+
+  &__form {
+    flex: auto;
+    padding: 0 0.7rem;
+    overflow: auto;
+  }
+
+  &__form::-webkit-scrollbar {
+    width: 8px;
+  }
+
+  .control-container {
+    padding: 0 0 10px;
+  }
+
+  .bp3-select-popover .bp3-menu {
+    max-width: 400px;
+    max-height: 300px;
+    overflow: auto;
+    padding: 0;
+  }
+
+  .bp3-control.bp3-checkbox {
+    padding: 0 14px;
+  }
+
+  .bp3-slider {
+    margin: 0 1rem;
+    width: calc(100% - 2rem);
+    min-width: auto;
+  }
+
+  .control-container__item--empty {
+    opacity: .2;
+  }
+
+  .tf-control-date-range {
+    .bp3-control-group {
+      width: calc(100% - .5rem);
+    }
+    .bp3-control-group > * {
+      flex: inherit;
+    }
+    .bp3-input-group:nth-child(1) .bp3-input {
+      margin-right: .5rem;
+    }
+    .bp3-input-group:nth-child(2) .bp3-input {
+      margin-left: .5rem;
+    }
+  }
+}
+
+// Styles relative to DarkTheme
+.bp3-dark {
+  .filters-panel {
+    &__form {
+      scrollbar-color: #202B33 #30404D;
+    }
+
+    &__form::-webkit-scrollbar-track {
+      background-color: #30404D;
+    }
+    
+    &__form::-webkit-scrollbar-thumb {
+      background-color: #202B33;
+    }
+  }
+}

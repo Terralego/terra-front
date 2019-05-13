@@ -1,0 +1,173 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`should render 1`] = `
+<div
+  className="layersTreeItemFilter"
+>
+  <span
+    className="bp3-tag layersTreeItemFilter__tag"
+  >
+    <span
+      className="bp3-text-overflow-ellipsis bp3-fill"
+    >
+      : foo
+    </span>
+    <button
+      className="bp3-tag-remove"
+      onClick={[Function]}
+      type="button"
+    >
+      <span
+        className="bp3-icon bp3-icon-small-cross"
+        icon="small-cross"
+      >
+        <svg
+          data-icon="small-cross"
+          height={16}
+          viewBox="0 0 16 16"
+          width={16}
+        >
+          <desc>
+            small-cross
+          </desc>
+          <path
+            d="M9.41 8l2.29-2.29c.19-.18.3-.43.3-.71a1.003 1.003 0 0 0-1.71-.71L8 6.59l-2.29-2.3a1.003 1.003 0 0 0-1.42 1.42L6.59 8 4.3 10.29c-.19.18-.3.43-.3.71a1.003 1.003 0 0 0 1.71.71L8 9.41l2.29 2.29c.18.19.43.3.71.3a1.003 1.003 0 0 0 .71-1.71L9.41 8z"
+            fillRule="evenodd"
+          />
+        </svg>
+      </span>
+    </button>
+  </span>
+  <span
+    className="bp3-tag layersTreeItemFilter__tag"
+  >
+    <span
+      className="bp3-text-overflow-ellipsis bp3-fill"
+    >
+      : foo,bar
+    </span>
+    <button
+      className="bp3-tag-remove"
+      onClick={[Function]}
+      type="button"
+    >
+      <span
+        className="bp3-icon bp3-icon-small-cross"
+        icon="small-cross"
+      >
+        <svg
+          data-icon="small-cross"
+          height={16}
+          viewBox="0 0 16 16"
+          width={16}
+        >
+          <desc>
+            small-cross
+          </desc>
+          <path
+            d="M9.41 8l2.29-2.29c.19-.18.3-.43.3-.71a1.003 1.003 0 0 0-1.71-.71L8 6.59l-2.29-2.3a1.003 1.003 0 0 0-1.42 1.42L6.59 8 4.3 10.29c-.19.18-.3.43-.3.71a1.003 1.003 0 0 0 1.71.71L8 9.41l2.29 2.29c.18.19.43.3.71.3a1.003 1.003 0 0 0 .71-1.71L9.41 8z"
+            fillRule="evenodd"
+          />
+        </svg>
+      </span>
+    </button>
+  </span>
+  <span
+    className="bp3-tag layersTreeItemFilter__tag"
+  >
+    <span
+      className="bp3-text-overflow-ellipsis bp3-fill"
+    >
+      : Entre 2 et 42
+    </span>
+    <button
+      className="bp3-tag-remove"
+      onClick={[Function]}
+      type="button"
+    >
+      <span
+        className="bp3-icon bp3-icon-small-cross"
+        icon="small-cross"
+      >
+        <svg
+          data-icon="small-cross"
+          height={16}
+          viewBox="0 0 16 16"
+          width={16}
+        >
+          <desc>
+            small-cross
+          </desc>
+          <path
+            d="M9.41 8l2.29-2.29c.19-.18.3-.43.3-.71a1.003 1.003 0 0 0-1.71-.71L8 6.59l-2.29-2.3a1.003 1.003 0 0 0-1.42 1.42L6.59 8 4.3 10.29c-.19.18-.3.43-.3.71a1.003 1.003 0 0 0 1.71.71L8 9.41l2.29 2.29c.18.19.43.3.71.3a1.003 1.003 0 0 0 .71-1.71L9.41 8z"
+            fillRule="evenodd"
+          />
+        </svg>
+      </span>
+    </button>
+  </span>
+  <span
+    className="bp3-tag layersTreeItemFilter__tag"
+  >
+    <span
+      className="bp3-text-overflow-ellipsis bp3-fill"
+    >
+      : Entre le mocked date et le mocked date
+    </span>
+    <button
+      className="bp3-tag-remove"
+      onClick={[Function]}
+      type="button"
+    >
+      <span
+        className="bp3-icon bp3-icon-small-cross"
+        icon="small-cross"
+      >
+        <svg
+          data-icon="small-cross"
+          height={16}
+          viewBox="0 0 16 16"
+          width={16}
+        >
+          <desc>
+            small-cross
+          </desc>
+          <path
+            d="M9.41 8l2.29-2.29c.19-.18.3-.43.3-.71a1.003 1.003 0 0 0-1.71-.71L8 6.59l-2.29-2.3a1.003 1.003 0 0 0-1.42 1.42L6.59 8 4.3 10.29c-.19.18-.3.43-.3.71a1.003 1.003 0 0 0 1.71.71L8 9.41l2.29 2.29c.18.19.43.3.71.3a1.003 1.003 0 0 0 .71-1.71L9.41 8z"
+            fillRule="evenodd"
+          />
+        </svg>
+      </span>
+    </button>
+  </span>
+  <span
+    className="bp3-tag layersTreeItemFilter__tag"
+  >
+    <button
+      className="bp3-tag-remove"
+      onClick={[Function]}
+      type="button"
+    >
+      <span
+        className="bp3-icon bp3-icon-small-cross"
+        icon="small-cross"
+      >
+        <svg
+          data-icon="small-cross"
+          height={16}
+          viewBox="0 0 16 16"
+          width={16}
+        >
+          <desc>
+            small-cross
+          </desc>
+          <path
+            d="M9.41 8l2.29-2.29c.19-.18.3-.43.3-.71a1.003 1.003 0 0 0-1.71-.71L8 6.59l-2.29-2.3a1.003 1.003 0 0 0-1.42 1.42L6.59 8 4.3 10.29c-.19.18-.3.43-.3.71a1.003 1.003 0 0 0 1.71.71L8 9.41l2.29 2.29c.18.19.43.3.71.3a1.003 1.003 0 0 0 .71-1.71L9.41 8z"
+            fillRule="evenodd"
+          />
+        </svg>
+      </span>
+    </button>
+  </span>
+</div>
+`;
