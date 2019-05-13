@@ -64,14 +64,15 @@ export const checkContraints = ({
 
       const visible = match[1] !== '!';
       const layerId = match[2];
-
-      return prevCheck
-        && visible
-        ? (map.getLayer(layerId) !== undefined
-          && map.getLayoutProperty(layerId, 'visibility') === 'visible')
-        : (!map.getLayer(layerId)
-          || map.getLayoutProperty(layerId, 'visibility') === 'none');
+      return prevCheck && visible
+        ? getLayers(map, layerId).reduce((subCheck, { id }) =>
+          (subCheck ||
+          map.getLayoutProperty(id, 'visibility') === 'visible'), false)
+        : getLayers(map, layerId).reduce((subCheck, { id }) =>
+          (subCheck &&
+          map.getLayoutProperty(id, 'visibility') === 'none'), true);
     }, true);
+
     const checkCluster = isCluster === undefined
       || !!cluster === !!isCluster;
 
