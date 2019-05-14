@@ -40,7 +40,6 @@ jest.mock('mapbox-gl', () => {
 });
 jest.mock('../Map', () => {
   function MapComponent () { return null; }
-
   MapComponent.CONTROLS_TOP_RIGHT = 'top-right';
   MapComponent.DEFAULT_CONTROLS = [];
   return MapComponent;
@@ -114,22 +113,7 @@ describe('snaphsots', () => {
   it('should render legends', () => {
     const wrapper = renderer.create((
       <InteractiveMap
-        legends={[
-          {
-            title: 'foo',
-            items: [],
-          }, {
-            title: 'pwet',
-            minZoom: 0,
-            maxZoom: 20,
-            items: [],
-          },
-        ]}
-      />
-    ));
-    wrapper.getInstance().setState({
-      legends: [
-        {
+        legends={[{
           title: 'foo',
           items: [],
         }, {
@@ -137,11 +121,22 @@ describe('snaphsots', () => {
           minZoom: 0,
           maxZoom: 20,
           items: [],
-        }, {
-          title: 'foo',
-          items: [],
-        },
-      ],
+        }]}
+      />
+    ));
+    wrapper.getInstance().setState({
+      legends: [{
+        title: 'foo',
+        items: [],
+      }, {
+        title: 'pwet',
+        minZoom: 0,
+        maxZoom: 20,
+        items: [],
+      }, {
+        title: 'foo',
+        items: [],
+      }],
     });
     const tree = wrapper.toJSON();
     expect(tree).toMatchSnapshot();
@@ -298,32 +293,26 @@ describe('map', () => {
     const selectedBackgroundStyle = 1;
     const instance = new InteractiveMap({
       backgroundStyle,
-      controls: [
-        {
-          control: 'BackgroundStylesControl',
-          position: 'top-right',
-        },
-      ],
+      controls: [{
+        control: 'BackgroundStylesControl',
+        position: 'top-right',
+      }],
     });
     instance.state = { selectedBackgroundStyle };
     instance.setState = jest.fn();
     instance.insertBackgroundStyleControl();
     expect(instance.setState).toHaveBeenCalledWith({
-      controls: [
-        {
-          control: expect.any(BackgroundStyles),
-          position: 'top-right',
-        },
-      ],
+      controls: [{
+        control: expect.any(BackgroundStyles),
+        position: 'top-right',
+      }],
     });
 
     instance.setState.mockClear();
-    instance.props.controls = [
-      {
-        control: new BackgroundStyles({}),
-        position: 'top-right',
-      },
-    ];
+    instance.props.controls = [{
+      control: new BackgroundStyles({}),
+      position: 'top-right',
+    }];
     instance.insertBackgroundStyleControl();
     expect(instance.setState).toHaveBeenCalledWith({
       controls: instance.props.controls,
@@ -340,12 +329,10 @@ describe('map', () => {
     instance.setState = jest.fn();
     instance.insertBackgroundStyleControl();
     expect(instance.setState).toHaveBeenCalledWith({
-      controls: [
-        {
-          control: expect.any(BackgroundStyles),
-          position: 'top-right',
-        },
-      ],
+      controls: [{
+        control: expect.any(BackgroundStyles),
+        position: 'top-right',
+      }],
     });
   });
 });
@@ -1056,11 +1043,9 @@ describe('Interactions', () => {
 
     instance.displayTooltip({
       layerId: 'foo',
-      features: [
-        {
-          properties: {},
-        },
-      ],
+      features: [{
+        properties: {},
+      }],
       event: {
         lngLat: { lng: 3, lat: 4 },
       },
