@@ -81,12 +81,14 @@ export const withMap = WrappedComponent =>
 
       mapBoxGl.accessToken = accessToken;
 
+      const hasHash = hash && !!global.location.hash;
+
       const map = new mapBoxGl.Map({
         container: this.containerEl.current,
         attributionControl: false,
         style,
-        center,
-        zoom,
+        center: (hasHash ? undefined : center),
+        zoom: (hasHash ? undefined : zoom),
         maxZoom,
         minZoom,
         maxBounds,
@@ -100,7 +102,7 @@ export const withMap = WrappedComponent =>
         this.containerEl.current.mapboxInstance = map;
       }
 
-      if (fitBounds) {
+      if (!hasHash && fitBounds) {
         const { coordinates, ...fitBoundsParams } = fitBounds;
         map.fitBounds(coordinates, fitBoundsParams);
       }
