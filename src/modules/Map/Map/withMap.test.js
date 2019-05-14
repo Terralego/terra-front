@@ -98,3 +98,38 @@ it('should set instance in el for debug purpose', () => {
   instance.initMap();
   expect(instance.containerEl.current.mapboxInstance).toBe(mapboxgl.map);
 });
+
+it('should not set center and fitbounds if hash is present', () => {
+  mapboxgl.Map.mockClear();
+  mapboxgl.map.fitBounds.mockClear();
+  const wrapper = shallow(
+    <ComponentWithMap
+      center={[1, 2]}
+      fitBounds={{ coordinates: [] }}
+      hash
+    />,
+  );
+  const instance = wrapper.instance();
+  expect(mapboxgl.Map).toHaveBeenCalled();
+  expect(mapboxgl.Map.mock.calls[0][0].zoom).toBe(9);
+  expect(mapboxgl.Map.mock.calls[0][0].center).toEqual([1, 2]);
+  expect(mapboxgl.map.fitBounds).toHaveBeenCalled();
+  mapboxgl.Map.mockClear();
+  mapboxgl.map.fitBounds.mockClear();
+
+  global.location.hash = '#hash';
+  instance.initMap();
+  expect(mapboxgl.Map).toHaveBeenCalled();
+  expect(mapboxgl.Map.mock.calls[0][0].zoom).not.toBeDefined();
+  expect(mapboxgl.Map.mock.calls[0][0].center).not.toBeDefined();
+  expect(mapboxgl.map.fitBounds).not.toHaveBeenCalled();
+  mapboxgl.Map.mockClear();
+  mapboxgl.map.fitBounds.mockClear();
+
+  wrapper.setProps({ hash: false });
+  instance.initMap();
+  expect(mapboxgl.Map).toHaveBeenCalled();
+  expect(mapboxgl.Map.mock.calls[0][0].zoom).toBe(9);
+  expect(mapboxgl.Map.mock.calls[0][0].center).toEqual([1, 2]);
+  expect(mapboxgl.map.fitBounds).toHaveBeenCalled();
+});
