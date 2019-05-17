@@ -33,6 +33,9 @@ export function getToken () {
 
 export async function refreshToken () {
   const currentToken = getToken();
+  if (currentToken === null) {
+    return null;
+  }
   const { token } = await Api.request(ENDPOINT_REFRESH_TOKEN, {
     method: POST,
     body: { token: currentToken },
