@@ -47,14 +47,14 @@ export class LayersTreeProvider extends React.Component {
     this.initLayersState();
   }
 
-  componentDidUpdate ({ initialState: newInitialState, layersTree: newLayersTree }) {
+  componentDidUpdate ({ initialState: prevInitialState, layersTree: prevLayersTree }) {
     const { initialState, layersTree } = this.props;
 
-    if (initialState !== newInitialState) {
-      this.resetLayerState(newInitialState);
+    if (initialState !== prevInitialState) {
+      this.resetLayerState(initialState);
     }
 
-    if (layersTree !== newLayersTree) {
+    if (layersTree !== prevLayersTree) {
       this.initLayersState();
     }
   }

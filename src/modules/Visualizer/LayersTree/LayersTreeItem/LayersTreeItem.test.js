@@ -95,6 +95,10 @@ it('should render correctly', () => {
         isTableActive
         total={42}
       />
+      <LayersTreeItem
+        layer={{ label: 'hidden' }}
+        hidden
+      />
     </>
   ));
   const a = tree.root.findAll(({ type }) => type === LayersTreeItem);
