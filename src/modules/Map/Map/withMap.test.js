@@ -20,16 +20,16 @@ const Component = jest.fn(() => null);
 const ComponentWithMap = withMap(Component);
 
 it('should render correctly', () => {
-  const tree = renderer.create(<ComponentWithMap backgroundStyle={{}} />).toJSON();
+  const tree = renderer.create(<ComponentWithMap backgroundStyle="" />).toJSON();
   expect(tree).toMatchSnapshot();
 });
 
 it('should have a map', () => {
-  shallow(<ComponentWithMap backgroundStyle={{}} />);
+  shallow(<ComponentWithMap backgroundStyle="" />);
   expect(mapboxgl.Map).toHaveBeenCalledWith({
     container: null,
     attributionControl: false,
-    style: {},
+    style: '',
     center: undefined,
     zoom: 9,
     maxZoom: undefined,
@@ -41,20 +41,20 @@ it('should have a map', () => {
   expect(Component).toHaveBeenCalled();
   const attrs = Component.mock.calls[0][0];
   expect(attrs.map).toBe(mapboxgl.map);
-  expect(attrs.backgroundStyle).toEqual({});
+  expect(attrs.backgroundStyle).toEqual('');
   expect(attrs.fitBounds).toBe(null);
   expect(attrs.zoom).toEqual(9);
 });
 
 it('should have a map getter', () => {
-  const wrapper = shallow(<ComponentWithMap backgroundStyle={{}} />);
+  const wrapper = shallow(<ComponentWithMap backgroundStyle="" />);
   expect(wrapper.instance().map).toBe(mapboxgl.map);
 });
 
 it('should fit bounds', () => {
   shallow(
     <ComponentWithMap
-      backgroundStyle={{}}
+      backgroundStyle=""
       fitBounds={{
         coordinates: [[1, 2], [3, 4]],
         padding: { top: 10, bottom: 10, left: 10, right: 10 },
@@ -64,7 +64,7 @@ it('should fit bounds', () => {
   expect(mapboxgl.Map).toHaveBeenCalledWith({
     container: null,
     attributionControl: false,
-    style: {},
+    style: '',
     center: undefined,
     zoom: 9,
     maxZoom: undefined,
@@ -104,6 +104,7 @@ it('should not set center and fitbounds if hash is present', () => {
   mapboxgl.map.fitBounds.mockClear();
   const wrapper = shallow(
     <ComponentWithMap
+      backgroundStyle=""
       center={[1, 2]}
       fitBounds={{ coordinates: [] }}
       hash

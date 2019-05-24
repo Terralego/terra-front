@@ -5,8 +5,9 @@ import LayersTreeItem from '../LayersTreeItem';
 
 export const LayersTreeGroup = ({
   title,
-  layers,
-}) => (
+  layer: { layers },
+  isHidden,
+}) => (isHidden ? null : (
   <div className="layers-tree-group">
     <H5>{title}</H5>
     {layers.map(layer => (
@@ -16,6 +17,6 @@ export const LayersTreeGroup = ({
       />
     ))}
   </div>
-);
+));
 
 export default LayersTreeGroup;

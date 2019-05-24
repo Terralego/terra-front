@@ -86,6 +86,19 @@ Array [
     </p>
     <div
       className="layerNode-options"
+    />
+  </div>,
+  <p>
+    LayersTreeItemFilters
+  </p>,
+  <div
+    className="layerNode-label-container"
+  >
+    <p>
+      Switch
+    </p>
+    <div
+      className="layerNode-options"
     >
       <p>
         Tag

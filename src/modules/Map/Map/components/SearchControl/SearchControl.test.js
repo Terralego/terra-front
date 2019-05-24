@@ -219,6 +219,7 @@ it('should handle key press', () => {
     }],
     selected: 0,
   };
+  instance.setState = jest.fn();
   instance.toggle = jest.fn();
   instance.selectResultItem = jest.fn();
 

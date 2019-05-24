@@ -102,7 +102,6 @@ export class LayersTreeItem extends React.Component {
       layer: {
         label,
         sublayers,
-        displayed,
         filters,
         filters: { form } = {},
         widgets = [],
@@ -111,9 +110,10 @@ export class LayersTreeItem extends React.Component {
       opacity,
       isTableActive,
       total,
+      hidden,
     } = this.props;
 
-    if (displayed === false) return null;
+    if (hidden) return null;
 
     const {
       isOptionsOpen, isFilterVisible,

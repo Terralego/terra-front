@@ -42,10 +42,12 @@ it('should update', () => {
   expect(instance.resetLayerState).not.toHaveBeenCalled();
   expect(instance.initLayersState).not.toHaveBeenCalled();
 
-  instance.componentDidUpdate({ initialState: {} });
-  expect(instance.resetLayerState).toHaveBeenCalledWith({});
+  instance.props.initialState = {};
+  instance.componentDidUpdate({ });
+  expect(instance.resetLayerState).toHaveBeenCalledWith(instance.props.initialState);
 
-  instance.componentDidUpdate({ layersTree: [] });
+  instance.props.layersTree = [];
+  instance.componentDidUpdate({ });
   expect(instance.initLayersState).toHaveBeenCalledWith();
 });
 

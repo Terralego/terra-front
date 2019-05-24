@@ -9,6 +9,7 @@ export default connectLayersTree(({ getLayerState, setLayerState }, { layer }) =
     filters: filtersValues = {},
     widgets = [],
     total,
+    hidden,
   } = getLayerState({ layer });
   return {
     isActive,
@@ -18,5 +19,6 @@ export default connectLayersTree(({ getLayerState, setLayerState }, { layer }) =
     widgets,
     setLayerState,
     total,
+    hidden,
   };
 })(LayersTreeItem);

@@ -13,14 +13,29 @@ jest.mock('../LayersTreeItem', () => function LayersTreeItem () {
 
 it('should render correctly', () => {
   const tree = renderer.create((
-    <LayersTreeGroup
-      title="Group 1"
-      layers={[{
-        label: 'Layer 1',
-      }, {
-        label: 'Layer 2',
-      }]}
-    />
+    <>
+      <LayersTreeGroup
+        title="Group 1"
+        layer={{
+          layers: [{
+            label: 'Layer 1',
+          }, {
+            label: 'Layer 2',
+          }],
+        }}
+      />
+      <LayersTreeGroup
+        title="Group 1"
+        layer={{
+          layers: [{
+            label: 'Layer 1',
+          }, {
+            label: 'Layer 2',
+          }],
+        }}
+        isHidden
+      />
+    </>
   )).toJSON();
   expect(tree).toMatchSnapshot();
 });

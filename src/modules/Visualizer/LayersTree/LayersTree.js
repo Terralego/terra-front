@@ -7,14 +7,14 @@ import LayerProps from '../types/Layer';
 
 import './styles.scss';
 
-export const LayersTree = ({ layersTree = [] }) => (
+export const LayersTree = ({ layersTree }) => (
   <div className="layerstree-panel-list">
     {layersTree.map(layer => (layer.group
       ? (
         <LayersTreeGroup
           key={layer.group}
           title={layer.group}
-          {...layer}
+          layer={layer}
         />
       )
       : (
