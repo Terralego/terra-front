@@ -4,6 +4,4 @@ import { connectAuthProvider } from '../../services/context';
 
 export default connectTerraFrontProvider({
   '*': 'modules.Auth.components.LoginForm',
-})(connectAuthProvider(({
-  authAction,
-}) => ({ authAction }))(LoginForm));
+})(connectAuthProvider('authAction')(LoginForm));

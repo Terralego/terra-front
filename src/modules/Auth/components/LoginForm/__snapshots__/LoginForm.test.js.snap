@@ -19,7 +19,7 @@ exports[`should render correctly 1`] = `
         <span
           className="bp3-text-muted"
         >
-          (required)
+          required
         </span>
       </label>
       <div
@@ -61,7 +61,7 @@ exports[`should render correctly 1`] = `
         <span
           className="bp3-text-muted"
         >
-          (required)
+          required
         </span>
       </label>
       <div
@@ -100,7 +100,7 @@ exports[`should render correctly 1`] = `
       <span
         className="bp3-button-text"
       >
-        Connexion
+        Signin
       </span>
     </button>
   </form>
@@ -126,7 +126,7 @@ exports[`should render with errors 1`] = `
         <span
           className="bp3-text-muted"
         >
-          (required)
+          required
         </span>
       </label>
       <div
@@ -168,7 +168,7 @@ exports[`should render with errors 1`] = `
         <span
           className="bp3-text-muted"
         >
-          (required)
+          required
         </span>
       </label>
       <div
@@ -207,7 +207,7 @@ exports[`should render with errors 1`] = `
       <span
         className="bp3-button-text"
       >
-        Connexion
+        Signin
       </span>
     </button>
   </form>

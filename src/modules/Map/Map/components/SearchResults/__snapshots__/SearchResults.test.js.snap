@@ -7,7 +7,7 @@ exports[`should render empty result 1`] = `
   <p
     className="search-results__title"
   >
-    terralego.map.search_results.title
+    Search results
   </p>
   <div
     className="search-results__groups"
@@ -22,7 +22,7 @@ exports[`should render results 1`] = `
   <p
     className="search-results__title"
   >
-    terralego.map.search_results.title
+    Search results
   </p>
   <div
     className="search-results__groups"
@@ -38,7 +38,7 @@ exports[`should render results 1`] = `
       <p
         className="search-results__item"
       >
-        terralego.map.search_results.no_result
+        No result
       </p>
       <div
         className="bp3-divider"
@@ -79,7 +79,7 @@ exports[`should render results 1`] = `
         bar
          
         <em>
-          terralego.map.search_results.group_total
+          some results found
         </em>
       </p>
       <ul
@@ -153,7 +153,7 @@ exports[`should render results with selected item 1`] = `
   <p
     className="search-results__title"
   >
-    terralego.map.search_results.title
+    Search results
   </p>
   <div
     className="search-results__groups"

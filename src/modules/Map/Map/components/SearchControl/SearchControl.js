@@ -27,7 +27,9 @@ export class SearchControl extends AbstractMapControl {
   static defaultProps = {
     onSearch () {},
     onResultClick () {},
-    translate: translateMock,
+    translate: translateMock({
+      'terralego.map.search_control.button_label': 'Search',
+    }),
   }
 
   state = {
