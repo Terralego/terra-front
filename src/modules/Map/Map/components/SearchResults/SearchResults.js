@@ -8,7 +8,11 @@ export const SearchResults = ({
   results = [],
   onClick,
   maxResults = 5,
-  translate = translateMock,
+  translate = translateMock({
+    'terralego.map.search_results.title': 'Search results',
+    'terralego.map.search_results.group_total': 'some results found',
+    'terralego.map.search_results.no_result': 'No result',
+  }),
   selected = -1,
 }) => (
   <Card className="search-results">

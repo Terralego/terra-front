@@ -43,11 +43,11 @@ export class LoginForm extends React.Component {
   }
 
   render () {
-    const { render: Render } = this.props;
+    const { render: Render, ...rest } = this.props;
     const { errorLogin, errorPassword } = this.state;
     const { submit, setLogin, setPassword } = this;
     const props = {
-      submit, setLogin, setPassword, errorLogin, errorPassword,
+      submit, setLogin, setPassword, errorLogin, errorPassword, ...rest,
     };
 
     return <Render {...props} />;

@@ -3,10 +3,10 @@
 exports[`should render 1`] = `
 Array [
   <button
-    aria-label="terralego.map.search_control.button_label"
+    aria-label="Search"
     className="mapboxgl-ctrl-icon"
     onClick={[Function]}
-    title="terralego.map.search_control.button_label"
+    title="Search"
     type="button"
   >
     <span

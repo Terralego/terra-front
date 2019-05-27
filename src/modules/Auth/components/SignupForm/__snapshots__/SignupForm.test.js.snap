@@ -19,7 +19,7 @@ exports[`should render correctly 1`] = `
         <span
           className="bp3-text-muted"
         >
-          (required)
+          required
         </span>
       </label>
       <div
@@ -56,12 +56,12 @@ exports[`should render correctly 1`] = `
         className="bp3-label"
         htmlFor="password"
       >
-        Password
+        Email
          
         <span
           className="bp3-text-muted"
         >
-          (required)
+          required
         </span>
       </label>
       <div
@@ -75,7 +75,7 @@ exports[`should render correctly 1`] = `
             className="bp3-input"
             id="password"
             onChange={[Function]}
-            placeholder="Password"
+            placeholder="Email"
             style={
               Object {
                 "paddingRight": 10,
@@ -87,7 +87,7 @@ exports[`should render correctly 1`] = `
         <div
           className="bp3-form-helper-text"
         >
-          Type your password
+          Type your email
         </div>
       </div>
     </div>
@@ -100,7 +100,7 @@ exports[`should render correctly 1`] = `
       <span
         className="bp3-button-text"
       >
-        Inscription
+        Create account
       </span>
     </button>
   </form>
@@ -126,7 +126,7 @@ exports[`should render with errors 1`] = `
         <span
           className="bp3-text-muted"
         >
-          (required)
+          required
         </span>
       </label>
       <div
@@ -163,12 +163,12 @@ exports[`should render with errors 1`] = `
         className="bp3-label"
         htmlFor="password"
       >
-        Password
+        Email
          
         <span
           className="bp3-text-muted"
         >
-          (required)
+          required
         </span>
       </label>
       <div
@@ -182,7 +182,7 @@ exports[`should render with errors 1`] = `
             className="bp3-input"
             id="password"
             onChange={[Function]}
-            placeholder="Password"
+            placeholder="Email"
             style={
               Object {
                 "paddingRight": 10,
@@ -194,7 +194,7 @@ exports[`should render with errors 1`] = `
         <div
           className="bp3-form-helper-text"
         >
-          Type your password
+          Type your email
         </div>
       </div>
     </div>
@@ -207,7 +207,7 @@ exports[`should render with errors 1`] = `
       <span
         className="bp3-button-text"
       >
-        Inscription
+        Create account
       </span>
     </button>
   </form>
