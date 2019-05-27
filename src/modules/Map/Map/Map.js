@@ -7,6 +7,7 @@ import { updateCluster } from '../services/cluster';
 
 import SearchControl from './components/SearchControl';
 import SearchResults from './components/SearchResults';
+import CaptureControl from './components/CaptureControl';
 
 import './Map.scss';
 
@@ -19,6 +20,7 @@ export const CONTROL_ATTRIBUTION = 'AttributionControl';
 export const CONTROL_NAVIGATION = 'NavigationControl';
 export const CONTROL_SCALE = 'ScaleControl';
 export const CONTROL_SEARCH = 'SearchControl';
+export const CONTROL_CAPTURE = 'CaptureControl';
 
 export const DEFAULT_CONTROLS = [{
   control: CONTROL_ATTRIBUTION,
@@ -313,6 +315,15 @@ export class MapComponent extends React.Component {
             renderSearchResults: SearchResults,
             ...params,
             onResultClick: this.onSearchResultClick(params.onSearchResultClick),
+          });
+          this.controls.push(controlInstance);
+          map.addControl(controlInstance, position);
+          break;
+        }
+        case CONTROL_CAPTURE: {
+          const controlInstance = new CaptureControl({
+            ...this.props,
+            ...params,
           });
           this.controls.push(controlInstance);
           map.addControl(controlInstance, position);
