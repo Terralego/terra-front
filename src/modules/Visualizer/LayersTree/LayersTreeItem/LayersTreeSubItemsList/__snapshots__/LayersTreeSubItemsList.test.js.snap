@@ -1,14 +1,107 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
-exports[`should render correctly 1`] = `
-<div
-  className="layers-tree-subitems-list"
->
-  <p>
-    Radio
-  </p>
-  <p>
-    Radio
-  </p>
+exports[`should render correctly sublayers list in radioboxes  1`] = `
+<div>
+  <div
+    className="layers-tree-subitems-list"
+  >
+    <div>
+      <label
+        className="bp3-control bp3-radio"
+      >
+        <input
+          checked={true}
+          name="Blueprint3.RadioGroup-0"
+          onChange={[Function]}
+          type="radio"
+          value={0}
+        />
+        <span
+          className="bp3-control-indicator"
+        />
+        sublayer1
+      </label>
+      <label
+        className="bp3-control bp3-radio"
+      >
+        <input
+          checked={false}
+          name="Blueprint3.RadioGroup-0"
+          onChange={[Function]}
+          type="radio"
+          value={1}
+        />
+        <span
+          className="bp3-control-indicator"
+        />
+        sublayer2
+      </label>
+    </div>
+  </div>
+</div>
+`;
+
+exports[`should render correctly sublayers list in select  1`] = `
+<div>
+  <div
+    className="layers-tree-subitems-list"
+  >
+    <div
+      className="control-container"
+      onKeyPress={[Function]}
+      role="presentation"
+    >
+      <p
+        className="control-label"
+      >
+        
+      </p>
+      <span
+        className="bp3-popover-wrapper tf-select"
+      >
+        <span
+          className="bp3-popover-target"
+          onClick={[Function]}
+        >
+          <div
+            className=""
+            onKeyDown={[Function]}
+          >
+            <button
+              className="bp3-button"
+              onKeyDown={[Function]}
+              onKeyUp={[Function]}
+              type="button"
+            >
+              <span
+                className="bp3-button-text"
+              >
+                sublayer1
+              </span>
+              <span
+                className="bp3-icon bp3-icon-double-caret-vertical"
+                icon="double-caret-vertical"
+              >
+                <svg
+                  data-icon="double-caret-vertical"
+                  height={16}
+                  viewBox="0 0 16 16"
+                  width={16}
+                >
+                  <desc>
+                    double-caret-vertical
+                  </desc>
+                  <path
+                    d="M5 7h6a1.003 1.003 0 0 0 .71-1.71l-3-3C8.53 2.11 8.28 2 8 2s-.53.11-.71.29l-3 3A1.003 1.003 0 0 0 5 7zm6 2H5a1.003 1.003 0 0 0-.71 1.71l3 3c.18.18.43.29.71.29s.53-.11.71-.29l3-3A1.003 1.003 0 0 0 11 9z"
+                    fillRule="evenodd"
+                  />
+                </svg>
+              </span>
+            </button>
+          </div>
+        </span>
+      </span>
+    </div>
+  </div>
 </div>
 `;

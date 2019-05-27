@@ -53,7 +53,7 @@ it('should update items', () => {
   expect(instance.setState).toHaveBeenCalledWith({
     items: [
       {
-        value: '',
+        value: null,
         label: 'empty',
       }, {
         value: 'foo',

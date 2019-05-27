@@ -13,8 +13,10 @@ exports[`should render correctly 1`] = `
   </p>
   <select>
     <option
-      value=""
-    />
+      value={null}
+    >
+      
+    </option>
     <option
       value="foo"
     >

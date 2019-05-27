@@ -11,7 +11,12 @@ export class Select extends React.Component {
     locales: PropTypes.shape({ noResults: PropTypes.string }),
     label: PropTypes.string,
     onChange: PropTypes.func,
-    values: PropTypes.arrayOf(PropTypes.string),
+    values: PropTypes.arrayOf(
+      PropTypes.oneOfType([
+        PropTypes.string ||
+        PropTypes.shape({ label: PropTypes.string, value: PropTypes.string }),
+      ]),
+    ),
     placeholder: PropTypes.string,
     isSubmissionPrevented: PropTypes.bool,
   };
@@ -52,11 +57,11 @@ export class Select extends React.Component {
   };
 
   updateItems () {
-    const { values, locales: { emptySelectItem } } = this.props;
+    const { values, locales: { emptySelectItem = '' } } = this.props;
     this.setState({
-      items: ['', ...values].map(v => ({
-        label: (v === '' ? emptySelectItem : v),
-        value: v,
+      items: [{ label: emptySelectItem, value: null }, ...values].map(item => ({
+        label: item.label !== undefined ? item.label : item,
+        value: item.value !== undefined ? item.value : item,
       })),
     });
   }
@@ -72,13 +77,12 @@ export class Select extends React.Component {
       className,
       ...props
     } = this.props;
+
     const { items, query } = this.state;
     const { handleChange } = this;
-
     const filteredItems = query === ''
       ? items
       : items.filter(({ label: itemLabel = '' }) => itemLabel.toLowerCase().includes(query.toLowerCase()));
-
     return (
       <div
         className="control-container"
