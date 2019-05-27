@@ -4,7 +4,6 @@ import '@blueprintjs/core/lib/css/blueprint.css';
 import '@blueprintjs/datetime/lib/css/blueprint-datetime.css';
 
 import './summary';
-import './modules/Auth';
 import './modules/Map';
 import './modules/Template';
 import './modules/Table';
