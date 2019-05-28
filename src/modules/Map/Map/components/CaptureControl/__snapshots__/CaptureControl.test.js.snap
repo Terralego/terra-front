@@ -2,10 +2,10 @@
 
 exports[`should render 1`] = `
 <button
-  aria-label="terralego.map.capture_control.button_label"
+  aria-label={[Function]}
   className="mapboxgl-capture"
   onClick={[Function]}
-  title="terralego.map.capture_control.button_label"
+  title={[Function]}
   type="button"
 >
   <span
