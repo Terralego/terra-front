@@ -1,6 +1,10 @@
 .control-container {
-  padding: 5px;
+  padding: .25rem;
 }
 .control--range .range__manual {
   width: auto;
+}
+
+.control-label {
+  margin-bottom: 0.5rem;
 }

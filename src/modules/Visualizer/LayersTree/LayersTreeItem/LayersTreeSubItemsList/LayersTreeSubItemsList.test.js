@@ -58,30 +58,7 @@ it('should render correctly sublayers list in select ', () => {
   expect(tree).toMatchSnapshot();
 });
 
-
-it('should change selection with radioboxes', () => {
-  const layer = {
-    label: 'layer',
-    sublayers: [{
-      label: 'sublayer1',
-    }, {
-      label: 'sublayer2',
-    }],
-  };
-  const selectSublayer = jest.fn();
-  const instance = new LayersTreeSubItemsList({
-    layer,
-    sublayers: layer.sublayers,
-    layerState: { sublayers: [true, false] },
-    selectSublayer,
-  });
-  instance.onSelectionChange({ target: { value: 1 } });
-  expect(selectSublayer).toHaveBeenCalledWith({
-    layer, sublayer: 1,
-  });
-});
-
-it('should change selection with select', () => {
+it('should change selection', () => {
   const layer = {
     label: 'layer',
     sublayers: [{
@@ -98,7 +75,7 @@ it('should change selection with select', () => {
     layerState: { sublayers: [true, false] },
     selectSublayer,
   });
-  instance.onSelectionChangeWithSelect(sublayerindex);
+  instance.onSelectionChange(sublayerindex);
   expect(selectSublayer).toHaveBeenCalledWith({
     layer, sublayer: 0,
   });

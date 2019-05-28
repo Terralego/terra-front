@@ -16,6 +16,14 @@
   &:first-of-type {
     border-top: 1px solid rgba(32, 43, 51, 0.5);
   }
+
+  .control-container {
+    width: calc(100);
+    padding: 0.35rem;
+    margin: 0 .25rem .25rem 0;
+    background-color: #394B59;
+    border: 0.01rem solid #293742;
+  }
 }
 
 .layerNode-options {
@@ -56,9 +64,15 @@
   }
 }
 
-.layers-tree-subitems-list {
-  margin-left: 0.8rem;
-  margin-top: 0.5rem;
+.layerstree-subitems-list {
+  .bp3-popover-target, button {
+    width: calc(100%);
+    outline: none;
+  }
+  button {
+    display: flex;
+    justify-content: space-between;
+  }
 }
 
 .layerNode-options__buttons {

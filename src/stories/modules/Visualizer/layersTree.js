@@ -77,7 +77,7 @@ export default [{
     label: 'Couche 4',
   }],
 }, {
-  label: 'Variantes',
+  label: 'Variantes 1',
   sublayers: [{
     label: 'Couche 5',
   }, {
@@ -85,12 +85,21 @@ export default [{
   }, {
     label: 'Couche 7',
   }, {
-    label: 'Couche 6',
+    label: 'Couche 8',
   }, {
-    label: 'Couche 7',
+    label: 'Couche 9',
   }, {
-    label: 'Couche 6',
+    label: 'Couche 10',
   }, {
-    label: 'Couche 7',
+    label: 'Couche 11',
+  }],
+}, {
+  label: 'Variantes 2',
+  sublayers: [{
+    label: 'Couche 12',
+  }, {
+    label: 'Couche 13',
+  }, {
+    label: 'Couche 14',
   }],
 }];

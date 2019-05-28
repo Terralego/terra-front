@@ -5,17 +5,12 @@ import Select from '../../../../Forms/Controls/Select';
 
 
 export class LayersTreeSubItemsList extends React.Component {
-  onSelectionChange = ({ target: { value: sublayer } }) => {
+  onSelectionChange = sublayerindex => {
     const { layer, selectSublayer } = this.props;
 
-    selectSublayer({ layer, sublayer: +sublayer });
-  }
-
-  onSelectionChangeWithSelect = sublayerindex => {
-    const { layer, selectSublayer } = this.props;
     selectSublayer({
       layer,
-      sublayer: sublayerindex,
+      sublayer: +sublayerindex,
     });
   }
 
@@ -26,35 +21,28 @@ export class LayersTreeSubItemsList extends React.Component {
       layerState,
     } = this.props;
 
-    const { onSelectionChange, onSelectionChangeWithSelect } = this;
+    const { onSelectionChange } = this;
 
     const selectedValue = layerState.sublayers.reduce((sublayersValue, selected, k) =>
       ((sublayersValue === undefined || selected)
         ? +k
         : sublayersValue), undefined);
+    const lotOfItems = sublayers.length > 5;
+    const Component = lotOfItems ? Select : Radios;
+    const value = lotOfItems
+      ? sublayers[selectedValue].label
+      : selectedValue;
+
     return (
-      <div className="layers-tree-subitems-list">
-        {sublayers.length <= 5
-          ? (
-            <Radios
-              onChange={onSelectionChange}
-              value={selectedValue}
-              sublayers={sublayers}
-            />
-          ) : (
-            <Select
-              label=""
-              onChange={onSelectionChangeWithSelect}
-              values={sublayers.map(({ label }, value) => ({
-                label,
-                value,
-              }))}
-              placeholder="Selectionner une variable"
-              value={sublayers[selectedValue].label || 'Selectionner une variable'}
-            />
-          )
-        }
-      </div>
+      <Component
+        className="layerstree-subitems-list"
+        onChange={onSelectionChange}
+        values={sublayers.map(({ label }, index) => ({
+          label,
+          value: index,
+        }))}
+        value={value}
+      />
     );
   }
 }

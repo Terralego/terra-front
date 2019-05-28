@@ -14,9 +14,12 @@ export class Select extends React.Component {
     values: PropTypes.arrayOf(
       PropTypes.oneOfType([
         PropTypes.string,
-        PropTypes.shape({ label: PropTypes.string, value: PropTypes.string }),
+        PropTypes.shape({
+          label: PropTypes.string.isRequired,
+          value: PropTypes.any.isRequired,
+        }),
       ]),
-    ),
+    ).isRequired,
     placeholder: PropTypes.string,
     isSubmissionPrevented: PropTypes.bool,
   };
@@ -24,7 +27,6 @@ export class Select extends React.Component {
   static defaultProps = {
     locales: { noResults: 'No results.' },
     label: '',
-    values: [],
     placeholder: 'Filter…',
     isSubmissionPrevented: true,
     onChange () {},
@@ -58,11 +60,14 @@ export class Select extends React.Component {
 
   updateItems () {
     const { values, locales: { emptySelectItem = '' } } = this.props;
+
     this.setState({
-      items: [{ label: emptySelectItem, value: null }, ...values].map(item => ({
-        label: item.label !== undefined ? item.label : item,
-        value: item.value !== undefined ? item.value : item,
-      })),
+      items: [{ label: emptySelectItem, value: null }, ...values].map(item => (typeof item === 'object'
+        ? item
+        : {
+          label: item,
+          value: item,
+        })),
     });
   }
 
