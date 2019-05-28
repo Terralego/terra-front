@@ -84,11 +84,13 @@ export default [{
     label: 'Couche 6',
   }, {
     label: 'Couche 7',
-  // }, {
-  //   label: 'Couche 8',
-  // }, {
-  //   label: 'Couche 9',
-  // }, {
-  //   label: 'Couche 10',
+  }, {
+    label: 'Couche 6',
+  }, {
+    label: 'Couche 7',
+  }, {
+    label: 'Couche 6',
+  }, {
+    label: 'Couche 7',
   }],
 }];

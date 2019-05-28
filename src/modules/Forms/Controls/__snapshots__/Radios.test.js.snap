@@ -6,9 +6,8 @@ exports[`should render correctly 1`] = `
     className="bp3-control bp3-radio"
   >
     <input
-      checked={true}
+      checked={false}
       name="Blueprint3.RadioGroup-0"
-      onChange={[Function]}
       type="radio"
       value={0}
     />
@@ -23,7 +22,6 @@ exports[`should render correctly 1`] = `
     <input
       checked={false}
       name="Blueprint3.RadioGroup-0"
-      onChange={[Function]}
       type="radio"
       value={1}
     />

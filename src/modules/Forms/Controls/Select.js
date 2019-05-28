@@ -13,7 +13,7 @@ export class Select extends React.Component {
     onChange: PropTypes.func,
     values: PropTypes.arrayOf(
       PropTypes.oneOfType([
-        PropTypes.string ||
+        PropTypes.string,
         PropTypes.shape({ label: PropTypes.string, value: PropTypes.string }),
       ]),
     ),

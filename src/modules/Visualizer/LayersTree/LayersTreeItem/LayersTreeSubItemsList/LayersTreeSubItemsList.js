@@ -26,26 +26,25 @@ export class LayersTreeSubItemsList extends React.Component {
       layerState,
     } = this.props;
 
-    const { onSelectionChange } = this;
+    const { onSelectionChange, onSelectionChangeWithSelect } = this;
 
     const selectedValue = layerState.sublayers.reduce((sublayersValue, selected, k) =>
       ((sublayersValue === undefined || selected)
         ? +k
         : sublayersValue), undefined);
-
     return (
       <div className="layers-tree-subitems-list">
         {sublayers.length <= 5
           ? (
             <Radios
-              onSelectionChange={onSelectionChange}
-              selectedValue={selectedValue}
+              onChange={onSelectionChange}
+              value={selectedValue}
               sublayers={sublayers}
             />
           ) : (
             <Select
               label=""
-              onChange={this.onSelectionChangeWithSelect}
+              onChange={onSelectionChangeWithSelect}
               values={sublayers.map(({ label }, value) => ({
                 label,
                 value,

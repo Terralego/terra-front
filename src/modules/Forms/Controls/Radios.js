@@ -1,24 +1,24 @@
 import React from 'react';
 
-import { RadioGroup as BPRadioGroup, Radio as BPRadio } from '@blueprintjs/core';
+import { RadioGroup, Radio } from '@blueprintjs/core';
 
 export const Radios = ({
   sublayers,
-  onSelectionChange,
-  selectedValue,
+  onChange,
+  value,
 }) => (
-  <BPRadioGroup
-    onChange={onSelectionChange}
-    selectedValue={selectedValue}
+  <RadioGroup
+    onChange={onChange}
+    selectedValue={value}
   >
     {sublayers.map(({ label }, k) => (
-      <BPRadio
+      <Radio
         key={label}
         label={label}
         value={k}
       />
     ))}
-  </BPRadioGroup>
+  </RadioGroup>
 );
 
 export default Radios;
