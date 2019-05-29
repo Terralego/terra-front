@@ -3,8 +3,8 @@ import { storiesOf } from '@storybook/react';
 
 import { boolean } from '@storybook/addon-knobs';
 
-import Map, { CONTROLS_TOP_RIGHT, CONTROL_CAPTURE, CONTROL_NAVIGATION } from '../../../modules/Map/Map';
-import leftInfoButtonStyles from '../../leftInfosButtonStyles';
+import Map, { CONTROLS_TOP_RIGHT, CONTROL_CAPTURE, CONTROL_NAVIGATION } from '../../../../modules/Map/Map';
+import leftInfoButtonStyles from '../../../leftInfosButtonStyles';
 
 Map.displayName = 'Map';
 
@@ -17,7 +17,7 @@ function t (key) {
   }
 }
 
-storiesOf('Modules/Map/', module).add('Capture in Map', () => (
+storiesOf('Modules/Map/Controls', module).add('Capture', () => (
   <div
     style={{ width: '100vw', height: '100vh' }}
   >

@@ -553,6 +553,19 @@ describe('controls', () => {
     expect(map.addControl).toHaveBeenCalledWith(instance.controls[0], 'top-right');
   });
 
+  it('should update draw control state', () => {
+    const instance = new Map({});
+    instance.props = {
+      map,
+      controls: [{
+        control: 'DrawControl',
+        position: 'top-left',
+      }],
+    };
+    instance.resetControls();
+    expect(map.addControl).toHaveBeenCalledWith(instance.controls[0], 'top-left');
+  });
+
   it('should focus on search result', () => {
     const instance = new Map({ map });
 
