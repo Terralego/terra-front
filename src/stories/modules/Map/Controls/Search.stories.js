@@ -1,12 +1,11 @@
 import React from 'react';
 import { storiesOf } from '@storybook/react';
-import { Classes } from '@blueprintjs/core';
 
 import { boolean } from '@storybook/addon-knobs';
 
-import Map, { CONTROLS_TOP_RIGHT, CONTROL_SEARCH, CONTROL_NAVIGATION } from '../../../modules/Map/Map';
-import doc from './MapSearch.md';
-import leftInfoButtonStyles from '../../leftInfosButtonStyles';
+import Map, { CONTROLS_TOP_RIGHT, CONTROL_SEARCH, CONTROL_NAVIGATION } from '../../../../modules/Map/Map';
+import doc from './Search.md';
+import leftInfoButtonStyles from '../../../leftInfosButtonStyles';
 
 Map.displayName = 'Map';
 
@@ -54,10 +53,9 @@ const onSearch = () => new Promise(resolve => {
   }]), 500);
 });
 
-storiesOf('Modules/Map/', module).add('Search in Map', () => (
+storiesOf('Modules/Map/Controls', module).add('Search', () => (
   <div
     style={{ width: '100vw', height: '100vh' }}
-    className={boolean('Dark theme', true) ? Classes.DARK : ''}
   >
     <Map
       accessToken="pk.eyJ1IjoibWFraW5hY29ycHVzIiwiYSI6ImNqY3E4ZTNwcTFta3ozMm80d2xzY29wM2MifQ.Nwl_FHrWAIQ46s_lY0KNiQ"

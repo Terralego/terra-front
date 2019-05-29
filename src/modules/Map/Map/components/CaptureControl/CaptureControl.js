@@ -29,7 +29,7 @@ export class CaptureControl extends AbstractMapControl {
     const { translate } = this.props;
     return (
       <button
-        className="mapboxgl-capture"
+        className="mapboxgl-ctrl-icon"
         type="button"
         onClick={this.captureScreen}
         title={translate('terralego.map.capture_control.button_label')}
