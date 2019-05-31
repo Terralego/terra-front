@@ -1,7 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import classnames from 'classnames';
-import { Button, Card, Switch, Elevation, Tag } from '@blueprintjs/core';
+import { Button, Card, Switch, Elevation, Tag, Tooltip } from '@blueprintjs/core';
 
 import LayerFetchValues from './LayerFetchValues';
 import LayersTreeSubItemsList from './LayersTreeSubItemsList';
@@ -130,13 +130,18 @@ export class LayersTreeItem extends React.Component {
         elevation={Elevation.ZERO}
         style={{ opacity: isActive ? 1 : 0.7 }}
       >
-        <div className="layerNode-label-container">
-          <Switch
-            checked={!!isActive}
-            label={label}
-            onChange={onActiveChange}
-          />
-          <div className="layerNode-options">
+        <div className="layerNode-label">
+          <Tooltip
+            content={label}
+            hoverOpenDelay={2000}
+          >
+            <Switch
+              checked={!!isActive}
+              label={label}
+              onChange={onActiveChange}
+            />
+          </Tooltip>
+          <div className="layerNode-total">
             {isActive && totalResult && (
             <Tag
               intent="primary"
@@ -145,6 +150,8 @@ export class LayersTreeItem extends React.Component {
                 {total}
             </Tag>
             )}
+          </div>
+          <div className="layerNode-options">
             {(isActive && widgets && !!widgets.length) && (
               widgets.map(widget => (
                 <Button

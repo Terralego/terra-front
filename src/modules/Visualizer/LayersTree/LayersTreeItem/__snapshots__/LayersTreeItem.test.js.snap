@@ -3,11 +3,14 @@
 exports[`should render correctly 1`] = `
 Array [
   <div
-    className="layerNode-label-container"
+    className="layerNode-label"
   >
     <p>
-      Switch
+      Tooltip
     </p>
+    <div
+      className="layerNode-total"
+    />
     <div
       className="layerNode-options"
     >
@@ -20,11 +23,14 @@ Array [
     LayersTreeItemFilters
   </p>,
   <div
-    className="layerNode-label-container"
+    className="layerNode-label"
   >
     <p>
-      Switch
+      Tooltip
     </p>
+    <div
+      className="layerNode-total"
+    />
     <div
       className="layerNode-options"
     />
@@ -33,11 +39,14 @@ Array [
     LayersTreeItemFilters
   </p>,
   <div
-    className="layerNode-label-container"
+    className="layerNode-label"
   >
     <p>
-      Switch
+      Tooltip
     </p>
+    <div
+      className="layerNode-total"
+    />
     <div
       className="layerNode-options"
     >
@@ -53,11 +62,14 @@ Array [
     LayersTreeItemFilters
   </p>,
   <div
-    className="layerNode-label-container"
+    className="layerNode-label"
   >
     <p>
-      Switch
+      Tooltip
     </p>
+    <div
+      className="layerNode-total"
+    />
     <div
       className="layerNode-options"
     >
@@ -79,11 +91,14 @@ Array [
     LayersTreeItemFilters
   </p>,
   <div
-    className="layerNode-label-container"
+    className="layerNode-label"
   >
     <p>
-      Switch
+      Tooltip
     </p>
+    <div
+      className="layerNode-total"
+    />
     <div
       className="layerNode-options"
     />
@@ -92,17 +107,21 @@ Array [
     LayersTreeItemFilters
   </p>,
   <div
-    className="layerNode-label-container"
+    className="layerNode-label"
   >
     <p>
-      Switch
+      Tooltip
     </p>
     <div
-      className="layerNode-options"
+      className="layerNode-total"
     >
       <p>
         Tag
       </p>
+    </div>
+    <div
+      className="layerNode-options"
+    >
       <p>
         Button
       </p>

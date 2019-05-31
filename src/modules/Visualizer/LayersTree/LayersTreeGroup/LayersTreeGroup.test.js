@@ -6,7 +6,14 @@ jest.mock('@blueprintjs/core', () => ({
   H5 ({ children }) {
     return children;
   },
+  Button () {
+    return <p>Button</p>;
+  },
+  Collapse ({ children }) {
+    return children;
+  },
 }));
+
 jest.mock('../LayersTreeItem', () => function LayersTreeItem () {
   return <p>LayersTreeItem</p>;
 });

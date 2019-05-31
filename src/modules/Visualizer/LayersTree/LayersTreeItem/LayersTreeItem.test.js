@@ -20,6 +20,9 @@ jest.mock('@blueprintjs/core', () => ({
   Tag () {
     return <p>Tag</p>;
   },
+  Tooltip () {
+    return <p>Tooltip</p>;
+  },
 }));
 
 jest.mock('@blueprintjs/select', () => ({
