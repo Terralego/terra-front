@@ -2,10 +2,10 @@
 
 exports[`should render 1`] = `
 <button
-  aria-label={[Function]}
+  aria-label="Capture map"
   className="mapboxgl-ctrl-icon"
   onClick={[Function]}
-  title={[Function]}
+  title="Capture map"
   type="button"
 >
   <span

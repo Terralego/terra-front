@@ -16,7 +16,9 @@ export class CaptureControl extends AbstractMapControl {
   }
 
   static defaultProps = {
-    translate: translateMock,
+    translate: translateMock({
+      'terralego.map.capture_control.button_label': 'Capture map',
+    }),
   }
 
   captureScreen = async () => {
