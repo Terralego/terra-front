@@ -87,7 +87,8 @@ export class Select extends React.Component {
     const { handleChange } = this;
     const filteredItems = query === ''
       ? items
-      : items.filter(({ label: itemLabel = '' }) => itemLabel.toLowerCase().includes(query.toLowerCase()));
+      : items.filter(({ label: itemLabel }) =>
+        itemLabel.toLowerCase().includes(query.toLowerCase()));
     return (
       <div
         className="control-container"
