@@ -2,9 +2,16 @@
 
 exports[`should render correctly 1`] = `
 <div
-  className="layers-tree-group"
+  className="layerstree-group"
 >
-  Group 1
+  <div
+    className="layerstree-group__label"
+  >
+    <p>
+      Button
+    </p>
+    Group 1
+  </div>
   <p>
     LayersTreeItem
   </p>

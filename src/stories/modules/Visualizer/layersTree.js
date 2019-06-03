@@ -1,7 +1,7 @@
 import { TYPE_SINGLE, TYPE_MANY, TYPE_RANGE, TYPE_BOOL } from '../../../modules/Forms/Filters/index';
 
 export default [{
-  label: 'Couche 1',
+  label: 'Très long nom de couche',
   initialState: {
     active: true,
   },
@@ -64,7 +64,7 @@ export default [{
     component: 'synthesis',
   }],
 }, {
-  label: 'Couche 2',
+  label: 'un extrèmement long long nom de couche',
   initialState: {
     active: true,
     opacity: 0.2,
