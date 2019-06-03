@@ -9,6 +9,7 @@ import SearchControl from './components/SearchControl';
 import SearchResults from './components/SearchResults';
 import CaptureControl from './components/CaptureControl';
 import DrawControl from './components/DrawControl';
+import PrintControl from './components/PrintControl';
 
 import './Map.scss';
 
@@ -23,6 +24,7 @@ export const CONTROL_SCALE = 'ScaleControl';
 export const CONTROL_SEARCH = 'SearchControl';
 export const CONTROL_CAPTURE = 'CaptureControl';
 export const CONTROL_DRAW = 'DrawControl';
+export const CONTROL_PRINT = 'PrintControl';
 
 export const DEFAULT_CONTROLS = [{
   control: CONTROL_ATTRIBUTION,
@@ -333,6 +335,15 @@ export class MapComponent extends React.Component {
         }
         case CONTROL_DRAW: {
           const controlInstance = new DrawControl({
+            map,
+            ...params,
+          });
+          this.controls.push(controlInstance);
+          map.addControl(controlInstance, position);
+          break;
+        }
+        case CONTROL_PRINT: {
+          const controlInstance = new PrintControl({
             map,
             ...params,
           });
