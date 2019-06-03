@@ -4,15 +4,30 @@ import { storiesOf } from '@storybook/react';
 import { boolean } from '@storybook/addon-knobs';
 import { action } from '@storybook/addon-actions';
 
-import Map, { CONTROLS_TOP_RIGHT, CONTROLS_TOP_LEFT, CONTROL_DRAW, CONTROL_CAPTURE, CONTROL_NAVIGATION } from '../../../modules/Map/Map';
+import Map, {
+  CONTROLS_TOP_RIGHT,
+  CONTROLS_TOP_LEFT,
+  CONTROL_DRAW,
+  CONTROL_CAPTURE,
+  CONTROL_NAVIGATION,
+  CONTROL_SEARCH,
+} from '../../../modules/Map/Map';
 import leftInfoButtonStyles from '../../leftInfosButtonStyles';
 
 import doc from './MapControls.md';
 
 Map.displayName = 'Map';
 
-const t = key => {
+const t = (key, params) => {
   switch (key) {
+    case 'terralego.map.search_results.title':
+      return 'Résultats de recherche';
+    case 'terralego.map.search_results.no_result':
+      return 'Pas de résultat';
+    case 'terralego.map.search_control.button_label':
+      return 'Rechercher';
+    case 'terralego.map.search_results.group_total':
+      return `(${params.count} result found)`;
     case 'terralego.map.capture_control.button_label':
       return 'capture';
     default:
@@ -20,8 +35,38 @@ const t = key => {
   }
 };
 
+const onSearch = () => new Promise(resolve => {
+  setTimeout(() => resolve([{
+    group: 'Points d\'échanges intermodaux',
+    results: [],
+  }, {
+    group: 'EAE',
+    total: 42,
+    results: [{
+      label: 'Parc d\'activité de Fontvieille',
+      center: [5.4859932, 43.3271871],
+    }, {
+      label: 'Parc d\'activité du Grand Rhone',
+      center: [4.6289983, 43.7061469],
+    }, {
+      label: 'Technopole Agroparc',
+      center: [4.8902474, 43.9164238],
+    }, {
+      label: 'Autre Parc d\'activité de Fontvieille',
+      center: [5.4859932, 43.3271871],
+    }, {
+      label: 'Autre Parc d\'activité du Grand Rhone',
+      center: [4.6289983, 43.7061469],
+    }, {
+      label: 'Autre Technopole Agroparc',
+      center: [4.8902474, 43.9164238],
+    }],
+  }]), 500);
+});
+
 const onChange = event => {
   const title = 'Trigger action:';
+  // eslint-disable-next-line no-console
   console.log(event);
   action(title)(event.type);
 };
@@ -37,7 +82,12 @@ storiesOf('Modules/Map/Controls', module).add('Toggle map controls ', () => (
       minZoom={0}
       maxBounds={[[-5.7283633634, 42.114925591], [8.8212564471, 51.3236272327]]} // Should be tried with https://boundingbox.klokantech.com/
       zoom={10} // set default zoom
-      controls={[{
+      controls={[boolean('Display search', true) && {
+        control: CONTROL_SEARCH,
+        position: CONTROLS_TOP_RIGHT,
+        onSearch,
+        onSearchResultClick: ({ result }) => action('Click on search result')(result),
+      }, {
         control: CONTROL_NAVIGATION,
         position: CONTROLS_TOP_RIGHT,
       }, boolean('Display capture', true) && {
