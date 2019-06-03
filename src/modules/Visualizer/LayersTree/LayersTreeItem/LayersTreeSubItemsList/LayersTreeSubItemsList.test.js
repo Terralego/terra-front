@@ -3,26 +3,18 @@ import renderer from 'react-test-renderer';
 
 import LayersTreeSubItemsList from './LayersTreeSubItemsList';
 
-jest.mock('@blueprintjs/core', () => ({
-  RadioGroup ({ children }) {
-    return children;
-  },
-  Radio () {
-    return <p>Radio</p>;
-  },
-}));
 
-it('should render correctly', () => {
+it('should render correctly sublayers list in radioboxes ', () => {
   const layer = {
     label: 'layer',
     sublayers: [{
-      label: 'sublayer1',
+      label: 'sublayer1', value: 'sublayer1',
     }, {
       label: 'sublayer2',
     }],
   };
   const tree = renderer.create((
-    <>
+    <div>
       <LayersTreeSubItemsList
         layer={layer}
         sublayers={layer.sublayers}
@@ -30,7 +22,38 @@ it('should render correctly', () => {
           sublayers: [true, false],
         }}
       />
-    </>
+    </div>
+  )).toJSON();
+  expect(tree).toMatchSnapshot();
+});
+
+it('should render correctly sublayers list in select ', () => {
+  const layer = {
+    label: 'layer',
+    sublayers: [{
+      label: 'sublayer1', value: 'sublayer1',
+    }, {
+      label: 'sublayer2', value: 'sublayer2',
+    }, {
+      label: 'sublayer3', value: 'sublayer3',
+    }, {
+      label: 'sublayer4', value: 'sublayer4',
+    }, {
+      label: 'sublayer5', value: 'sublayer5',
+    }, {
+      label: 'sublayer6', value: 'sublayer6',
+    }],
+  };
+  const tree = renderer.create((
+    <div>
+      <LayersTreeSubItemsList
+        layer={layer}
+        sublayers={layer.sublayers}
+        layerState={{
+          sublayers: [true, false],
+        }}
+      />
+    </div>
   )).toJSON();
   expect(tree).toMatchSnapshot();
 });
@@ -45,14 +68,15 @@ it('should change selection', () => {
     }],
   };
   const selectSublayer = jest.fn();
+  const sublayerindex = 0;
   const instance = new LayersTreeSubItemsList({
     layer,
     sublayers: layer.sublayers,
     layerState: { sublayers: [true, false] },
     selectSublayer,
   });
-  instance.onSelectionChange({ target: { value: 1 } });
+  instance.onSelectionChange(sublayerindex);
   expect(selectSublayer).toHaveBeenCalledWith({
-    layer, sublayer: 1,
+    layer, sublayer: 0,
   });
 });

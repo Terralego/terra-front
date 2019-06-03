@@ -1,0 +1,38 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`should render correctly 1`] = `
+<div
+  className="control-container"
+>
+  <label
+    className="bp3-control bp3-radio"
+  >
+    <input
+      checked={true}
+      name="Blueprint3.RadioGroup-0"
+      onChange={[Function]}
+      type="radio"
+      value={0}
+    />
+    <span
+      className="bp3-control-indicator"
+    />
+    Foo
+  </label>
+  <label
+    className="bp3-control bp3-radio"
+  >
+    <input
+      checked={false}
+      name="Blueprint3.RadioGroup-0"
+      onChange={[Function]}
+      type="radio"
+      value={1}
+    />
+    <span
+      className="bp3-control-indicator"
+    />
+    Bar
+  </label>
+</div>
+`;
