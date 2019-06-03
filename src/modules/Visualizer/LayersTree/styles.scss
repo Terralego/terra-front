@@ -1,6 +1,6 @@
-$font-color: #F5F8FA;
 $font-medium: "SFProText-Medium", Arial, Helvetica, sans-serif;
 $font-default: "SFProText-Light", Arial, Helvetica, sans-serif;
+$font-color: #F5F8FA;
 $active-button-color: #5a91b3;
 
 .layerstree-panel-list {
@@ -26,14 +26,6 @@ $active-button-color: #5a91b3;
     color: $font-color;
     font-weight: 500;
     margin: 0;
-  }
-
-  .control-container {
-    width: calc(100);
-    padding: 0.35rem;
-    margin: 0 .25rem .25rem 0;
-    background-color: #394B59;
-    border: 0.01rem solid #293742;
   }
 }
 
@@ -67,14 +59,17 @@ $active-button-color: #5a91b3;
   }
 }
 
-.layerNode-subitems-list {
-  padding: .2rem 0 .1rem .4rem;
+.control-container {
+  margin: 0 .25rem 0 0;
+  background-color: #394B59;
+  padding: .35rem;
 }
 
 .layerstree-subitems-list {
   .bp3-popover-target, button {
-    width: calc(100%);
+    width: 100%;
     outline: none;
+    margin: auto;
   }
   button {
     display: flex;
@@ -89,6 +84,7 @@ $active-button-color: #5a91b3;
   align-items: center;
   opacity: 0;
 }
+
 .layerNode-container:hover {
   .layerNode-options {
     opacity: 1;
@@ -112,12 +108,14 @@ $active-button-color: #5a91b3;
     transition: .2s ease-in filter;
   }
 }
+
 .layerNode-options__buttons--active {
   background: radial-gradient($active-button-color 0, transparent 55%) !important;
   .icon {
     filter: invert(.5) sepia(1) saturate(5) hue-rotate(175deg);
   }
 }
+
 .layerNode-widgets__buttons--active {
   background: radial-gradient($active-button-color 0, transparent 55%) !important;
   svg {
@@ -131,7 +129,7 @@ $active-button-color: #5a91b3;
   min-height: 18px;
   height: 18px;
   padding: 0;
-  svg{
+  svg {
     width: 14px;
     height: 14px;
   }
