@@ -22,6 +22,7 @@ const t = key => {
 
 const onChange = event => {
   const title = 'Trigger action:';
+  // eslint-disable-next-line no-console
   console.log(event);
   action(title)(event.type);
 };
