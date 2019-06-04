@@ -1,12 +1,25 @@
 import bbox from '@turf/bbox';
+import moize from 'moize';
 
 import { PREFIXES } from './cluster';
 
 const PREV_STATE = {};
 
+const getStyle = moize(map => map.getStyle(), {
+  maxAge: 1000,
+  isSerialized: true,
+  serializer: map => {
+    const id = map.id || Math.random();
+    // Need to identify map object to lightweight serialization
+    // eslint-disable-next-line no-param-reassign
+    map.id = id;
+    return id;
+  },
+});
+
 export const getLayers = (map, layerId) => {
   const regexp = new RegExp(`^${layerId}(-(${PREFIXES.join('|')}))?(-[0-9]+)?$`);
-  return map.getStyle().layers
+  return getStyle(map).layers
     .filter(({ id }) => id.match(regexp));
 };
 
