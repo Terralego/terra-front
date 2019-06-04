@@ -4,6 +4,7 @@ import {
   setLayerStateAction,
   filterLayersFromLayersState,
   hasTable,
+  hasWidget,
   layersTreeStatesHaveChanged,
   isCluster,
 } from './layersTreeUtils';
@@ -120,6 +121,7 @@ const layersTreeFilters = [{
   }, {
     label: 'label2.2',
     layers: ['layer2.2'],
+    widgets: [{}],
   }],
 }];
 const layersTreeFilterState = new Map();
@@ -128,7 +130,13 @@ layersTreeFilterState.set(layersTreeFilters[1].layers[0], { active: true });
 layersTreeFilterState.set(layersTreeFilters[1].layers[1], { active: false });
 layersTreeFilterState.set(layersTreeFilters[2], { active: true, sublayers: [true, false] });
 layersTreeFilterState.set(layersTreeFilters[3].layers[0], { active: true, table: true });
-layersTreeFilterState.set(layersTreeFilters[3].layers[1], { active: true });
+layersTreeFilterState.set(
+  layersTreeFilters[3].layers[1],
+  {
+    active: true,
+    widgets: [layersTreeFilters[3].layers[1].widgets[0]],
+  },
+);
 
 it('should init layers state', () => {
   const layersTreeState = initLayersStateAction(layersTree);
@@ -225,8 +233,12 @@ it('if have filters, should return an array of active layers', () => {
   expect(filterLayersFromLayersState(layersTreeState)).toEqual([]);
 });
 
-it('should return the layer table state', () => {
+it('should tell is there is a table active', () => {
   expect(hasTable(layersTreeFilterState)).toBe(true);
+});
+
+fit('should tell is there is a widget active', () => {
+  expect(hasWidget(layersTreeFilterState)).toBe(true);
 });
 
 it('should return true if the layersTree state has changed', () => {

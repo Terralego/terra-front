@@ -84,10 +84,15 @@ export const filterLayersFromLayersState = (layersTreeState, check) =>
 export const hasTable = layersTreeState =>
   filterLayersFromLayersState(layersTreeState, ({ table }) => table).length > 0;
 
+export const hasWidget = layersTreeState =>
+  filterLayersStatesFromLayersState(layersTreeState, ({ widgets = [] }) => widgets.length > 0)
+    .length > 0;
+
 export default {
   initLayersStateAction,
   selectSublayerAction,
   setLayerStateAction,
   filterLayersFromLayersState,
   hasTable,
+  hasWidget,
 };
