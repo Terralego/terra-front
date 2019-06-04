@@ -242,6 +242,7 @@ it('should toggle widgets', () => {
   const instance = new LayersTreeItem({ layer, setLayerState });
 
   instance.toggleWidgets(widget)();
+  instance.setState = jest.fn();
   expect(setLayerState).toHaveBeenCalledWith({
     layer,
     state: {
@@ -257,6 +258,7 @@ it('should toggle widgets', () => {
       widgets: [],
     },
   });
+  expect(instance.setState).toHaveBeenCalledWith({ isWidgetActive: true });
 });
 
 it('should reset filters panel listener', () => {
