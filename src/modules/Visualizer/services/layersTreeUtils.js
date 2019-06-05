@@ -1,5 +1,7 @@
 import { PREFIX_SOURCE } from '../../Map/services/cluster';
 
+export const INITIAL_FILTERS = new Map();
+
 export const isCluster = (source, layerId) => !!source.match(new RegExp(`^${layerId}-${PREFIX_SOURCE}-[0-9]+`));
 
 export function initLayersStateAction (layersTree) {
@@ -88,6 +90,62 @@ export const hasWidget = layersTreeState =>
   filterLayersStatesFromLayersState(layersTreeState, ({ widgets = [] }) => widgets.length > 0)
     .length > 0;
 
+export const filterFeatures = (
+  map,
+  features/* = [ { layer: String, features: [id1, id2, …] } ] */,
+  layersTreeState,
+) => {
+  Array.from(layersTreeState).forEach(([{
+    layers, filters: { layer } = {},
+  }, {
+    active,
+  }]) => {
+    if (!active || !layers) return;
+    const layerFeatures = features
+      .find(({ layer: fLayer }) => fLayer === layer);
+    const { features: ids = [] } = layerFeatures || {};
+
+    const filter = ids.length ? ['match', ['get', '_id'], ids, true, false] : null;
+    layers.forEach(layerId => {
+      const paintLayer = map.getLayer(layerId);
+      if (!paintLayer) return;
+
+      if (isCluster(paintLayer.source, layerId)) {
+        // Force to upgrade cluster data
+        map.fire('refreshCluster');
+        return;
+      }
+
+      if (!INITIAL_FILTERS.has(layerId)) {
+        INITIAL_FILTERS.set(layerId, map.getFilter(layerId));
+      }
+      map.setFilter(layerId, layerFeatures ? filter : INITIAL_FILTERS.get(layerId));
+    });
+  });
+};
+
+export const resetFilters = (map, layersTreeState) => {
+  Array.from(layersTreeState).forEach(([{
+    layers = [], filters,
+  }]) => {
+    if (!filters) return;
+
+    layers.forEach(layerId => {
+      const paintLayer = map.getLayer(layerId);
+
+      if (!map.getLayer(layerId)) return;
+
+      if (isCluster(paintLayer.source, layerId)) {
+        // Force to upgrade cluster data
+        map.fire('refreshCluster');
+        return;
+      }
+      if (!INITIAL_FILTERS.has(layerId)) return;
+      map.setFilter(layerId, INITIAL_FILTERS.get(layerId));
+    });
+  });
+};
+
 export default {
   initLayersStateAction,
   selectSublayerAction,
@@ -95,4 +153,6 @@ export default {
   filterLayersFromLayersState,
   hasTable,
   hasWidget,
+  filterFeatures,
+  resetFilters,
 };
