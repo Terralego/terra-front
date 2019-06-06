@@ -120,6 +120,7 @@ export function getInteractionsOnEvent ({
   return interactions;
 }
 
+const listenerWaiter = {};
 export function setInteractions ({ map, interactions, callback }) {
   const eventsTypes = new Set(interactions.reduce((triggers, { trigger = 'click' }) => [...triggers, trigger], []));
 
@@ -144,24 +145,28 @@ export function setInteractions ({ map, interactions, callback }) {
     });
   });
 
+  const listener = (e, eventType) => {
+    const { target, point } = e;
+    if (eventType === 'mousemove') {
+      PREV_STATE.point = point;
+    }
+    const interactionsSpec = getInteractionsOnEvent({
+      eventType,
+      map: target,
+      point,
+      interactions,
+    });
+
+    if (!interactionsSpec) return;
+
+    const { interactions: filteredInteractionsSpec, feature, layerId } = interactionsSpec;
+    filteredInteractionsSpec.forEach(interaction =>
+      callback({ event: e, map, layerId, feature, interaction, eventType }));
+  };
   eventsTypes.forEach(eventType => {
     map.on(eventType, e => {
-      const { target, point } = e;
-      if (eventType === 'mousemove') {
-        PREV_STATE.point = point;
-      }
-      const interactionsSpec = getInteractionsOnEvent({
-        eventType,
-        map: target,
-        point,
-        interactions,
-      });
-
-      if (!interactionsSpec) return;
-
-      const { interactions: filteredInteractionsSpec, feature, layerId } = interactionsSpec;
-      filteredInteractionsSpec.forEach(interaction =>
-        callback({ event: e, map, layerId, feature, interaction, eventType }));
+      clearTimeout(listenerWaiter[eventType]);
+      listenerWaiter[eventType] = setTimeout(() => listener(e, eventType), eventType === 'mousemove' ? 200 : 100);
     });
   });
 

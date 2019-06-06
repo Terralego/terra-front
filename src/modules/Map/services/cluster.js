@@ -137,11 +137,15 @@ export const updateCluster = (map, layer, onClusterUpdate = ({ features }) => fe
       type: 'circle',
       source,
       'source-layer': sourceLayer,
+      minzoom: layerMinzoom,
+      maxzoom: layerMaxzoom,
       paint: {
         'circle-color': 'transparent',
       },
     });
   }
+  const zoom = map.getZoom();
+  if (layerMinzoom > zoom || layerMaxzoom < zoom) return;
 
   const features = map.querySourceFeatures(source, { sourceLayer });
 
