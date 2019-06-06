@@ -4,8 +4,12 @@ import {
   setLayerStateAction,
   filterLayersFromLayersState,
   hasTable,
+  hasWidget,
   layersTreeStatesHaveChanged,
   isCluster,
+  filterFeatures,
+  resetFilters,
+  INITIAL_FILTERS,
 } from './layersTreeUtils';
 
 const layersTree = [{
@@ -120,6 +124,7 @@ const layersTreeFilters = [{
   }, {
     label: 'label2.2',
     layers: ['layer2.2'],
+    widgets: [{}],
   }],
 }];
 const layersTreeFilterState = new Map();
@@ -128,7 +133,13 @@ layersTreeFilterState.set(layersTreeFilters[1].layers[0], { active: true });
 layersTreeFilterState.set(layersTreeFilters[1].layers[1], { active: false });
 layersTreeFilterState.set(layersTreeFilters[2], { active: true, sublayers: [true, false] });
 layersTreeFilterState.set(layersTreeFilters[3].layers[0], { active: true, table: true });
-layersTreeFilterState.set(layersTreeFilters[3].layers[1], { active: true });
+layersTreeFilterState.set(
+  layersTreeFilters[3].layers[1],
+  {
+    active: true,
+    widgets: [layersTreeFilters[3].layers[1].widgets[0]],
+  },
+);
 
 it('should init layers state', () => {
   const layersTreeState = initLayersStateAction(layersTree);
@@ -225,8 +236,12 @@ it('if have filters, should return an array of active layers', () => {
   expect(filterLayersFromLayersState(layersTreeState)).toEqual([]);
 });
 
-it('should return the layer table state', () => {
+it('should tell is there is a table active', () => {
   expect(hasTable(layersTreeFilterState)).toBe(true);
+});
+
+it('should tell is there is a widget active', () => {
+  expect(hasWidget(layersTreeFilterState)).toBe(true);
 });
 
 it('should return true if the layersTree state has changed', () => {
@@ -258,4 +273,100 @@ it('should return true if the layersTree state has changed', () => {
 it('should be a cluster', () => {
   expect(isCluster('test-cluster-source-0', 'test')).toBe(true);
   expect(isCluster('test-source', 'test')).toBe(false);
+});
+
+it('should filter features', () => {
+  const map = {
+    getLayer: jest.fn(layerId => (layerId === 'unknownlayer'
+      ? undefined
+      : {
+        source: layerId === 'cluster' ? `${layerId}-cluster-source-0` : 'source',
+      })),
+    getFilter: jest.fn(() => ['prev', 'filter']),
+    setFilter: jest.fn(),
+    fire: jest.fn(),
+  };
+  const layer1 = {
+    label: 'foo',
+    layers: ['foo', 'unknownlayer'],
+    filters: {
+      layer: 'foo',
+    },
+  };
+  const layer2 = {
+    label: 'bar',
+    layers: ['bar'],
+  };
+  const layer3 = {
+    label: 'cluster',
+    layers: ['cluster'],
+    filters: {
+      layer: 'cluster',
+    },
+  };
+  const ltState = new Map();
+  ltState.set(layer1, { active: true });
+  ltState.set(layer2, { active: false });
+  ltState.set(layer3, { active: true });
+
+  filterFeatures(map, [{ layer: 'bar', features: ['1', '2'] }], ltState);
+  expect(map.fire).toHaveBeenCalledWith('refreshCluster');
+  expect(map.setFilter).toHaveBeenCalledWith('foo', ['prev', 'filter']);
+  expect(map.setFilter).toHaveBeenCalledTimes(1);
+
+  map.setFilter.mockClear();
+  map.fire.mockClear();
+  ltState.set(layer3, { active: false });
+  filterFeatures(map, [{ layer: 'foo', features: ['1', '2'] }], ltState);
+  expect(map.fire).not.toHaveBeenCalled();
+  expect(map.setFilter).toHaveBeenCalledWith('foo', ['match', ['get', '_id'], ['1', '2'], true, false]);
+  expect(map.setFilter).toHaveBeenCalledTimes(1);
+
+  INITIAL_FILTERS.clear();
+});
+
+it('should reset filters', () => {
+  const map = {
+    getLayer: jest.fn(layerId => (layerId === 'unknownlayer'
+      ? undefined
+      : {
+        source: layerId === 'cluster' ? `${layerId}-cluster-source-0` : 'source',
+      })),
+    getFilter: jest.fn(() => ['prev', 'filter']),
+    setFilter: jest.fn(),
+    fire: jest.fn(),
+  };
+  const layer1 = {
+    label: 'foo',
+    layers: ['foo', 'unknownlayer'],
+    filters: {
+      layer: 'foo',
+    },
+  };
+  const layer2 = {
+    label: 'bar',
+    layers: ['bar'],
+  };
+  const layer3 = {
+    label: 'cluster',
+    layers: ['cluster'],
+    filters: {
+      layer: 'cluster',
+    },
+  };
+  const layer4 = {
+    label: 'empty',
+  };
+  const ltState = new Map();
+  ltState.set(layer1, { active: true });
+  ltState.set(layer2, { active: false });
+  ltState.set(layer3, { active: true });
+  ltState.set(layer4, {});
+  resetFilters(map, ltState);
+  expect(map.fire).toHaveBeenCalledTimes(1);
+  expect(map.setFilter).not.toHaveBeenCalled();
+
+  INITIAL_FILTERS.set('foo', ['prev', 'filter']);
+  resetFilters(map, ltState);
+  expect(map.setFilter).toHaveBeenCalledWith('foo', ['prev', 'filter']);
 });
