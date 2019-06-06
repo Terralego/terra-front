@@ -39,6 +39,8 @@ const getStyle = jest.fn(() => ({
   }],
 }));
 
+jest.useFakeTimers();
+
 it('should get all layers related to main one', () => {
   const map = {
     getStyle,
@@ -299,6 +301,8 @@ describe('should set interactions', () => {
 
     setInteractions({ map, interactions, callback });
     listeners[0].listener(event);
+    jest.runAllTimers();
+
     expect(callback).toHaveBeenCalledWith({
       event,
       map,
@@ -324,6 +328,8 @@ describe('should set interactions', () => {
 
     setInteractions({ map, interactions, callback });
     listeners[0].listener(event);
+    jest.runAllTimers();
+
     expect(callback).not.toHaveBeenCalled();
   });
 
@@ -344,6 +350,8 @@ describe('should set interactions', () => {
     setInteractions({ map, interactions, callback });
 
     listeners[0].listener(event);
+    jest.runAllTimers();
+
     expect(callback).toHaveBeenCalledWith({
       event,
       map,
@@ -359,6 +367,8 @@ describe('should set interactions', () => {
     callback.mockClear();
 
     listeners[1].listener(event);
+    jest.runAllTimers();
+
     expect(listeners[1].event).toBe('mousemove');
     expect(listeners[1].id).toBe(null);
     expect(callback).toHaveBeenCalledWith({
@@ -392,6 +402,7 @@ describe('should set interactions', () => {
     setInteractions({ map, interactions, callback });
 
     listeners[1].listener({ target: map, point: [1, 2] });
+    jest.runAllTimers();
 
     expect(map.getCanvas).toHaveBeenCalled();
     expect(canvas.style.cursor).toBe('pointer');
@@ -399,6 +410,7 @@ describe('should set interactions', () => {
     map.queryRenderedFeatures = () => [];
 
     listeners[1].listener({ target: map, point: [1, 2] });
+    jest.runAllTimers();
 
     expect(map.getCanvas).toHaveBeenCalled();
     expect(canvas.style.cursor).toBe('');

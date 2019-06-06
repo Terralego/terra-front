@@ -15,6 +15,7 @@ it('should create cluster layers', () => {
     addLayer: jest.fn(),
     addSource: jest.fn(),
     getMaxZoom: jest.fn(() => 18),
+    getZoom: () => 4,
   };
   const layer = {
     id: 'layer',
@@ -120,11 +121,27 @@ it('should create cluster layers', () => {
   });
 });
 
+it('should not update cluster if zoom is out of range', () => {
+  const map = {
+    getZoom: () => 4,
+    getLayer: () => true,
+    querySourceFeatures: jest.fn(),
+  };
+
+  updateCluster(map, {
+    id: 'foo',
+    minzoom: 10,
+    cluster: {},
+  });
+  expect(map.querySourceFeatures).not.toHaveBeenCalled();
+});
+
 it('should create cluster layers with custom paint', () => {
   const map = {
     addLayer: jest.fn(),
     addSource: jest.fn(),
     getMaxZoom: jest.fn(() => 18),
+    getZoom: () => 4,
   };
   const layer = {
     id: 'layer',
@@ -254,6 +271,7 @@ it('should update cluster first time with single radius', () => {
     getLayer: jest.fn(() => {}),
     getSource: jest.fn(() => sourceMock),
     querySourceFeatures: jest.fn(() => []),
+    getZoom: () => 4,
   };
   const layer = {
     id: 'layer',
@@ -279,6 +297,8 @@ it('should update cluster first time with single radius', () => {
     paint: {
       'circle-color': 'transparent',
     },
+    minzoom: 0,
+    maxzoom: 24,
   });
   expect(map.getSource).toHaveBeenCalledTimes(2);
   expect(map.getSource).toHaveBeenCalledWith('layer-cluster-source-0');
@@ -306,6 +326,7 @@ it('should update cluster next time', () => {
     getLayer: jest.fn(() => layerMock),
     getSource: jest.fn(() => sourceMock),
     querySourceFeatures: jest.fn(() => []),
+    getZoom: () => 4,
   };
   const layer = {
     id: 'layer',
@@ -341,6 +362,7 @@ it('should update cluster with many radius', () => {
       return sourcesMock[source];
     }),
     querySourceFeatures: jest.fn(() => []),
+    getZoom: () => 4,
   };
   const layer = {
     id: 'layer',
@@ -375,6 +397,7 @@ it('should get clustered features', async () => {
   };
   const map = {
     getSource: jest.fn(() => sourceMock),
+    getZoom: () => 4,
   };
   const features = await getClusteredFeatures(map, {
     source: 'source',

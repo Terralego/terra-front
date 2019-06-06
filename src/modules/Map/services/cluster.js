@@ -138,7 +138,7 @@ export const updateCluster = (map, layer, onClusterUpdate = ({ features }) => fe
       source,
       'source-layer': sourceLayer,
       minzoom: layerMinzoom,
-      maxoom: layerMaxzoom,
+      maxzoom: layerMaxzoom,
       paint: {
         'circle-color': 'transparent',
       },
