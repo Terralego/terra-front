@@ -153,7 +153,10 @@ export class LayersTreeItem extends React.Component {
             </Tag>
             )}
           </div>
-          <div className={classnames(isTableActive || isFilterVisible || isOptionsOpen || isWidgetActive ? 'layerNode-options--active' : 'layerNode-options')}>
+          <div className={classnames('layerNode-options',
+            { 'layerNode-options--active': isTableActive || isFilterVisible || isOptionsOpen || isWidgetActive,
+            })}
+          >
             {(isActive && widgets && !!widgets.length) && (
               widgets.map(widget => (
                 <Button

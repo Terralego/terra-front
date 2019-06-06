@@ -120,7 +120,7 @@ Array [
       </p>
     </div>
     <div
-      className="layerNode-options--active"
+      className="layerNode-options layerNode-options--active"
     >
       <p>
         Button
