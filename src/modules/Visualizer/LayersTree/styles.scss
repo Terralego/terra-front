@@ -4,7 +4,7 @@ $font-color: #F5F8FA;
 $active-button-color: #5a91b3;
 
 .layerstree-panel-list {
-  max-width: 20rem;
+  max-width: 100%;
   padding: .5rem 0 .5rem .5rem  ;
 }
 
@@ -42,6 +42,7 @@ $active-button-color: #5a91b3;
 }
 .layerNode-label {
   display: flex;
+  align-items: center;
   min-height: 1.9rem;
 
   .bp3-popover-wrapper, .bp3-popover-target {
@@ -78,20 +79,27 @@ $active-button-color: #5a91b3;
 }
 
 .layerNode-options {
-  display: flex;
   flex-direction: row;
   justify-content: flex-end;
   align-items: center;
-  opacity: 0;
+  display: none;
+  background:linear-gradient(to left, #30404d, 98%, transparent);
 }
 
 .layerNode-container:hover {
   .layerNode-options {
-    opacity: 1;
+    display: flex;
   }
 }
 
-.layerNode-options__buttons {
+.layerNode-options--active {
+  display: flex;
+  flex-direction: row;
+  justify-content: flex-end;
+  align-items: center;
+}
+
+.layerNode-options__buttons, .layerNode-widgets__buttons {
   margin: 0;
   min-width: 24px;
   min-height: 24px;
@@ -109,16 +117,9 @@ $active-button-color: #5a91b3;
   }
 }
 
-.layerNode-options__buttons--active {
+.layerNode-options__buttons--active, .layerNode-widgets__buttons--active {
   background: radial-gradient($active-button-color 0, transparent 55%) !important;
-  .icon {
-    filter: invert(.5) sepia(1) saturate(5) hue-rotate(175deg);
-  }
-}
-
-.layerNode-widgets__buttons--active {
-  background: radial-gradient($active-button-color 0, transparent 55%) !important;
-  svg {
+  .icon, svg {
     filter: invert(.5) sepia(1) saturate(5) hue-rotate(175deg);
   }
 }

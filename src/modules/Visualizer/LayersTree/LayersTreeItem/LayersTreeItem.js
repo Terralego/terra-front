@@ -34,6 +34,7 @@ export class LayersTreeItem extends React.Component {
   state = {
     isOptionsOpen: false,
     isFilterVisible: false,
+    isWidgetActive: false,
   }
 
   componentWillUnmount () {
@@ -76,12 +77,13 @@ export class LayersTreeItem extends React.Component {
   toggleWidgets = widget => () => {
     const { layer, widgets: prevWidgets = [], setLayerState } = this.props;
     const contains = this.isWidgetActive(widget);
+    const { isWidgetActive } = this.state;
     const widgets = [
       ...(contains
         ? prevWidgets.filter(w => w !== widget)
         : [...prevWidgets, widget]),
     ];
-
+    this.setState({ isWidgetActive: !isWidgetActive });
     setLayerState({ layer, state: { widgets } });
   }
 
@@ -116,14 +118,14 @@ export class LayersTreeItem extends React.Component {
     if (hidden) return null;
 
     const {
-      isOptionsOpen, isFilterVisible,
+      isOptionsOpen, isFilterVisible, isWidgetActive,
     } = this.state;
     const {
       onActiveChange, onOpacityChange, toggleFilters, toggleTable, getFilterPanelRef, toggleWidgets,
     } = this;
 
     const totalResult = typeof (total) === 'number';
-
+    const hasSomeOptionActive = isTableActive || isFilterVisible || isOptionsOpen || isWidgetActive;
     return (
       <Card
         className={classnames('layerNode-container', { 'options-hidden': isActive })}
@@ -151,7 +153,7 @@ export class LayersTreeItem extends React.Component {
             </Tag>
             )}
           </div>
-          <div className="layerNode-options">
+          <div className={classnames('layerNode-options', { 'layerNode-options--active': hasSomeOptionActive })}>
             {(isActive && widgets && !!widgets.length) && (
               widgets.map(widget => (
                 <Button
@@ -197,7 +199,7 @@ export class LayersTreeItem extends React.Component {
             )}
             {isActive && (
               <Button
-                className="layerNode-options__buttons"
+                className={classnames('layerNode-options__buttons', { 'layerNode-options__buttons--active': isOptionsOpen })}
                 id="button-more-vertical"
                 icon="more"
                 minimal
