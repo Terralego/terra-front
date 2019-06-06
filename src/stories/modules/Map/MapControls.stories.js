@@ -4,19 +4,21 @@ import { storiesOf } from '@storybook/react';
 import { boolean } from '@storybook/addon-knobs';
 import { action } from '@storybook/addon-actions';
 
-import Map, {
+import {
   CONTROLS_TOP_RIGHT,
   CONTROLS_TOP_LEFT,
   CONTROL_DRAW,
   CONTROL_CAPTURE,
   CONTROL_NAVIGATION,
   CONTROL_SEARCH,
+  CONTROL_PRINT,
 } from '../../../modules/Map/Map';
+import InteractiveMap, {
+  CONTROL_BACKGROUND_STYLES,
+} from '../../../modules/Map/InteractiveMap';
 import leftInfoButtonStyles from '../../leftInfosButtonStyles';
 
 import doc from './MapControls.md';
-
-Map.displayName = 'Map';
 
 const t = (key, params) => {
   switch (key) {
@@ -75,9 +77,9 @@ storiesOf('Modules/Map/Controls', module).add('Toggle map controls ', () => (
   <div
     style={{ width: '100vw', height: '100vh' }}
   >
-    <Map
+    <InteractiveMap
       accessToken="pk.eyJ1IjoibWFraW5hY29ycHVzIiwiYSI6ImNqY3E4ZTNwcTFta3ozMm80d2xzY29wM2MifQ.Nwl_FHrWAIQ46s_lY0KNiQ"
-      backgroundStyle="mapbox://styles/mapbox/light-v9"
+      backgroundStyle={[{ label: 'light', url: 'mapbox://styles/mapbox/light-v9' }, { label: 'light aussi', url: 'mapbox://styles/mapbox/light-v9' }]}
       maxZoom={20}
       minZoom={0}
       maxBounds={[[-5.7283633634, 42.114925591], [8.8212564471, 51.3236272327]]} // Should be tried with https://boundingbox.klokantech.com/
@@ -90,8 +92,14 @@ storiesOf('Modules/Map/Controls', module).add('Toggle map controls ', () => (
       }, {
         control: CONTROL_NAVIGATION,
         position: CONTROLS_TOP_RIGHT,
+      }, boolean('Display background styles', true) && {
+        control: CONTROL_BACKGROUND_STYLES,
+        position: CONTROLS_TOP_RIGHT,
       }, boolean('Display capture', true) && {
         control: CONTROL_CAPTURE,
+        position: CONTROLS_TOP_RIGHT,
+      }, boolean('Display print', true) && {
+        control: CONTROL_PRINT,
         position: CONTROLS_TOP_RIGHT,
       }, boolean('Display draw tools', false) && {
         control: CONTROL_DRAW,

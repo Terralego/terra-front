@@ -2,6 +2,7 @@
 
 exports[`should render 1`] = `
 <button
+  className="mapboxgl-ctrl-icon"
   onClick={[MockFunction]}
   type="button"
 >

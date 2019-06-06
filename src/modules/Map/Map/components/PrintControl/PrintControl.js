@@ -11,6 +11,7 @@ export class PrintControl extends AbstractMapControl {
   render () {
     return (
       <button
+        className="mapboxgl-ctrl-icon"
         type="button"
         onClick={global.print}
       >
