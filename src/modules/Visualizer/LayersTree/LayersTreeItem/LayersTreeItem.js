@@ -125,7 +125,7 @@ export class LayersTreeItem extends React.Component {
     } = this;
 
     const totalResult = typeof (total) === 'number';
-
+    const hasSomeOptionActive = isTableActive || isFilterVisible || isOptionsOpen || isWidgetActive;
     return (
       <Card
         className={classnames('layerNode-container', { 'options-hidden': isActive })}
@@ -153,10 +153,7 @@ export class LayersTreeItem extends React.Component {
             </Tag>
             )}
           </div>
-          <div className={classnames('layerNode-options',
-            { 'layerNode-options--active': isTableActive || isFilterVisible || isOptionsOpen || isWidgetActive,
-            })}
-          >
+          <div className={classnames('layerNode-options', { 'layerNode-options--active': hasSomeOptionActive })}>
             {(isActive && widgets && !!widgets.length) && (
               widgets.map(widget => (
                 <Button

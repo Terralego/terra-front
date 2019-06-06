@@ -33,7 +33,7 @@ const fetchPropertyRange = async (layer, { property }) => {
 
 storiesOf('Modules/Visualizer/LayersTree', module).add('Component', () => (
   <div style={{
-    maxWidth: '30rem',
+    maxWidth: '20rem',
   }}
   >
     <div style={{
