@@ -2,10 +2,13 @@ import React from 'react';
 import PropTypes from 'prop-types';
 
 import { RadioGroup, Radio } from '@blueprintjs/core';
+import formatValues from './formatValues';
 
 export class Radios extends React.Component {
   static propTypes = {
     onChange: PropTypes.func,
+    // Prop is used in getDerivedStateFromProps
+    // eslint-disable-next-line react/no-unused-prop-types
     values: PropTypes.arrayOf(
       PropTypes.oneOfType([
         PropTypes.string,
@@ -25,16 +28,26 @@ export class Radios extends React.Component {
     value: 0,
   };
 
+  static getDerivedStateFromProps ({ values }) {
+    if (!values) return null;
+
+    return {
+      values: formatValues(values),
+    };
+  }
+
+  state = {
+    values: [],
+  }
+
   handleChange = ({ target: { value } }) => {
     const { onChange } = this.props;
     onChange(value);
   };
 
   render () {
-    const {
-      values,
-      value,
-    } = this.props;
+    const { value } = this.props;
+    const { values } = this.state;
 
     return (
       <RadioGroup

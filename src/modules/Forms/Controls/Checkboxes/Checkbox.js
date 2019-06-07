@@ -5,6 +5,7 @@ import { Checkbox as BPCheckbox } from '@blueprintjs/core';
 export class Checkbox extends React.Component {
   static propTypes = {
     value: PropTypes.string,
+    label: PropTypes.string,
     checked: PropTypes.bool,
     onToggle: PropTypes.func,
   };
@@ -13,6 +14,7 @@ export class Checkbox extends React.Component {
     onToggle () {},
     checked: false,
     value: '',
+    label: '',
   };
 
   onToggle = () => {
@@ -21,9 +23,9 @@ export class Checkbox extends React.Component {
   }
 
   render () {
-    const { value, checked } = this.props;
+    const { value, label, checked } = this.props;
     const { onToggle } = this;
-    return <BPCheckbox onChange={onToggle} label={value} checked={checked} />;
+    return <BPCheckbox onChange={onToggle} label={label || value} checked={checked} />;
   }
 }
 

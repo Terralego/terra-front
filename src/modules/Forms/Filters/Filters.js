@@ -8,6 +8,7 @@ import Range from '../Controls/Range';
 import Switch from '../Controls/Switch';
 import MultiSelect from '../Controls/MultiSelect';
 import DateRangeInput from '../Controls/DateRangeInput';
+import Control from './Control';
 
 export const TYPE_SINGLE = 'single';
 export const TYPE_MANY = 'many';
@@ -46,6 +47,7 @@ export class Filters extends React.Component {
   static propTypes = {
     locales: PropTypes.shape({
       noResults: PropTypes.string,
+      emptySelectItem: PropTypes.string,
     }),
     onChange: PropTypes.func,
     layer: PropTypes.string,
@@ -90,22 +92,19 @@ export class Filters extends React.Component {
 
     return (
       <div>
-        {filters.map(({ type, values, property, display, format, ...props }) => {
-          const Component = getComponent(type, values, display, format);
-
-          return (
-            <Component
-              {...props}
-              key={property}
-              type={type}
-              values={values}
-              property={property}
-              onChange={onChange(property)}
-              locales={locales}
-              value={properties[property]}
-            />
-          );
-        })}
+        {filters.map(({ type, values, property, display, format, ...props }) => (
+          <Control
+            {...props}
+            component={getComponent(type, values, display, format)}
+            key={property}
+            type={type}
+            values={values}
+            property={property}
+            onChange={onChange(property)}
+            locales={locales}
+            value={properties[property]}
+          />
+        ))}
       </div>
     );
   }

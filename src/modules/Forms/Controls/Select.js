@@ -5,6 +5,7 @@ import { MenuItem, Button } from '@blueprintjs/core';
 import { Select as BPSelect } from '@blueprintjs/select';
 
 import { preventEnterKeyPress } from '../../../utils/event';
+import formatValues from './formatValues';
 
 export class Select extends React.Component {
   static propTypes = {
@@ -32,22 +33,18 @@ export class Select extends React.Component {
     onChange () {},
   };
 
+  static getDerivedStateFromProps ({ values }) {
+    if (!values) return null;
+
+    return {
+      values: formatValues(values),
+    };
+  }
+
   state = {
-    items: [],
+    values: [],
     query: '',
   };
-
-  componentDidMount () {
-    this.updateItems();
-  }
-
-  componentDidUpdate ({ values: prevValues }) {
-    const { values } = this.props;
-
-    if (values !== prevValues) {
-      this.updateItems();
-    }
-  }
 
   handleChange = ({ value }) => {
     const { onChange } = this.props;
@@ -58,23 +55,9 @@ export class Select extends React.Component {
     this.setState({ query });
   };
 
-  updateItems () {
-    const { values, locales: { emptySelectItem = '' } } = this.props;
-
-    this.setState({
-      items: [{ label: emptySelectItem, value: null }, ...values].map(item => (typeof item === 'object'
-        ? item
-        : {
-          label: item,
-          value: item,
-        })),
-    });
-  }
-
   render () {
     const {
       label,
-      values,
       locales: { noResults, emptySelectItem },
       placeholder,
       isSubmissionPrevented,
@@ -83,12 +66,13 @@ export class Select extends React.Component {
       ...props
     } = this.props;
 
-    const { items, query } = this.state;
+    const { values, query } = this.state;
     const { handleChange } = this;
     const filteredItems = query === ''
-      ? items
-      : items.filter(({ label: itemLabel }) =>
+      ? values
+      : values.filter(({ label: itemLabel }) =>
         itemLabel.toLowerCase().includes(query.toLowerCase()));
+
     return (
       <div
         className="control-container"
