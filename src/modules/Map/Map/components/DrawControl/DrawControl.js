@@ -52,6 +52,42 @@ export class DrawControl {
       map.on('draw.update', onDrawUpdate);
     }
 
+    // eslint-disable-next-line no-param-reassign
+    map.draw = this.draw;
+
+    const prevOnRemove = this.draw.onRemove;
+
+    this.draw.onRemove = () => {
+      if (onDrawActionable) {
+        map.off('draw.actionable', onDrawActionable);
+      }
+      if (onDrawCombine) {
+        map.off('draw.combine', onDrawCombine);
+      }
+      if (onDrawCreate) {
+        map.off('draw.create', onDrawCreate);
+      }
+      if (onDrawDelete) {
+        map.off('draw.delete', onDrawDelete);
+      }
+      if (onDrawModeChange) {
+        map.off('draw.modechange', onDrawModeChange);
+      }
+      if (onDrawRender) {
+        map.off('draw.render', onDrawRender);
+      }
+      if (onDrawSelectionChange) {
+        map.off('draw.selectionchange', onDrawSelectionChange);
+      }
+      if (onDrawUncombine) {
+        map.off('draw.uncombine', onDrawUncombine);
+      }
+      if (onDrawUpdate) {
+        map.off('draw.update', onDrawUpdate);
+      }
+      prevOnRemove(map);
+    };
+
     return this.draw;
   }
 }
