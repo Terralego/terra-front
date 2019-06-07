@@ -44,6 +44,7 @@ jest.mock('mapbox-gl', () => {
       fn(map);
       return off;
     }),
+    fire: jest.fn(),
     getStyle: jest.fn(() => ({ layers: [{ id: 'foo' }, { id: 'bar' }] })),
     touchZoomRotate: {
       enableRotation: jest.fn(),
@@ -463,6 +464,7 @@ describe('controls', () => {
     addControl: jest.fn(),
     setCenter: jest.fn(),
     fitBounds: jest.fn(),
+    fire: jest.fn((event, item) => item),
   };
 
   beforeEach(() => {
@@ -508,6 +510,11 @@ describe('controls', () => {
     expect(map.addControl).toHaveBeenCalledWith(instance.controls[1], 'bottom-right');
     expect(map.addControl).toHaveBeenCalledWith(instance.controls[2], 'bottom-left');
     expect(map.addControl).toHaveBeenCalledWith(instance.controls[3], 'top-left');
+    expect(map.fire).toHaveBeenCalledTimes(4);
+    expect(map.fire).toHaveBeenCalledWith('control_added', { control: instance.props.controls[0].control });
+    expect(map.fire).toHaveBeenCalledWith('control_added', { control: instance.props.controls[1].control });
+    expect(map.fire).toHaveBeenCalledWith('control_added', { control: instance.props.controls[2].control });
+    expect(map.fire).toHaveBeenCalledWith('control_added', { control: instance.props.controls[3].control });
     expect(map.removeControl).not.toHaveBeenCalled();
 
     instance.resetControls();

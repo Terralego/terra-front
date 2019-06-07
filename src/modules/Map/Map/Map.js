@@ -359,6 +359,7 @@ export class MapComponent extends React.Component {
           map.addControl(controlInstance, position);
         }
       }
+      map.fire('control_added', { control });
     });
   }
 
