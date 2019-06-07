@@ -35,3 +35,16 @@ it('should mount & update correctly', () => {
   wrapper.instance().onToggle('foo');
   expect(onChange).toHaveBeenCalledWith([]);
 });
+
+it('should update values', () => {
+  expect(Checkboxes.getDerivedStateFromProps({ })).toBe(null);
+  expect(Checkboxes.getDerivedStateFromProps({ values: ['foo', 'bar'] })).toEqual({
+    values: [{
+      value: 'foo',
+      label: 'foo',
+    }, {
+      value: 'bar',
+      label: 'bar',
+    }],
+  });
+});

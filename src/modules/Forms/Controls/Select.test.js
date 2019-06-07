@@ -43,26 +43,6 @@ it('should render correctly with query', () => {
   expect(tree.toJSON()).toMatchSnapshot();
 });
 
-it('should update items', () => {
-  const instance = new Select({ values: [], locales: { emptySelectItem: 'empty' } });
-
-  instance.setState = jest.fn();
-  const prevValues = instance.props.values;
-  instance.props.values = ['foo'];
-  instance.componentDidUpdate({ values: prevValues });
-  expect(instance.setState).toHaveBeenCalledWith({
-    items: [
-      {
-        value: null,
-        label: 'empty',
-      }, {
-        value: 'foo',
-        label: 'foo',
-      },
-    ],
-  });
-});
-
 it('should handle change', () => {
   const onChange = jest.fn();
   const instance = new Select({ onChange });
@@ -114,4 +94,17 @@ it('should prevent submit event in parent', () => {
   const wrapper = shallow(<Select values={['foo', 'bar']} isSubmissionPrevented={false} />);
   const div = wrapper.find('.control-container');
   expect(div.props().onKeyPress).toBe(null);
+});
+
+it('should update values', () => {
+  expect(Select.getDerivedStateFromProps({ })).toBe(null);
+  expect(Select.getDerivedStateFromProps({ values: ['foo', 'bar'] })).toEqual({
+    values: [{
+      value: 'foo',
+      label: 'foo',
+    }, {
+      value: 'bar',
+      label: 'bar',
+    }],
+  });
 });

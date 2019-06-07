@@ -20,3 +20,16 @@ it('should handle change', () => {
   instance.handleChange({ target: { value: 'foo' } });
   expect(onChange).toHaveBeenCalledWith('foo');
 });
+
+it('should update values', () => {
+  expect(Radios.getDerivedStateFromProps({ })).toBe(null);
+  expect(Radios.getDerivedStateFromProps({ values: ['foo', 'bar'] })).toEqual({
+    values: [{
+      value: 'foo',
+      label: 'foo',
+    }, {
+      value: 'bar',
+      label: 'bar',
+    }],
+  });
+});
