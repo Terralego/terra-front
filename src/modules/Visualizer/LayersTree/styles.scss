@@ -38,25 +38,31 @@ $active-button-color: #5a91b3;
   font-size: 14px;
   color: $font-color;
   letter-spacing: 1px;
-  line-height: 1.2rem;
+  line-height: 1.2rem; 
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+
+  span {
+    width: 100%;
+  }
 }
-.layerNode-label {
+.layerNode__content {
   display: flex;
   align-items: center;
   min-height: 1.9rem;
+  width: calc(100% - .25rem);
+  outline: none;
 
-  .bp3-popover-wrapper, .bp3-popover-target {
+  span {
     width: 100%;
-    overflow: hidden;
-  }
-
-  label {
-    flex: 1;
-    margin: 0;
-    line-height: 1.8rem;
     overflow: hidden;
     white-space: nowrap;
     text-overflow: ellipsis;
+  }
+
+  label {
+    margin: 0 0 0 0;
   }
 }
 
@@ -82,13 +88,20 @@ $active-button-color: #5a91b3;
   flex-direction: row;
   justify-content: flex-end;
   align-items: center;
-  display: none;
-  background:linear-gradient(to left, #30404d, 98%, transparent);
+  display: flex;//none;
+  min-height: 1.9rem;
+  background-color: linear-gradient(to left, #30404d, 98%, transparent); //#30404d;
+  padding-left: .25rem;
+}
+
+.layerNode-total {
+  margin-left: .25rem;
 }
 
 .layerNode-container:hover {
   .layerNode-options {
     display: flex;
+    align-items: center;
   }
 }
 
@@ -99,39 +112,27 @@ $active-button-color: #5a91b3;
   align-items: center;
 }
 
-.layerNode-options__buttons, .layerNode-widgets__buttons {
-  margin: 0;
-  min-width: 24px;
-  min-height: 24px;
-  height: 24px;
+.layerNode-options__buttons {
+  margin: 0 .2rem;
+  min-width: 1.2rem;
+  min-height: 1.2rem;
   padding: 0;
   outline: none;
-  span {
-    display: flex;
-  }
-  .icon {
-    width: 14px;
-    height: 14px;
-    padding: 0;
-    transition: .2s ease-in filter;
-  }
 }
 
-.layerNode-options__buttons--active, .layerNode-widgets__buttons--active {
+.layerNode-options__buttons--active {
   background: radial-gradient($active-button-color 0, transparent 55%) !important;
-  .icon, svg {
+  svg {
     filter: invert(.5) sepia(1) saturate(5) hue-rotate(175deg);
   }
 }
 
 #button-more-vertical {
   transform: rotate(90deg);
-  min-width: 18px;
-  min-height: 18px;
-  height: 18px;
-  padding: 0;
+  margin-left: 0rem;
+  min-width: .9rem;
+  min-height: .3rem;
   svg {
-    width: 14px;
-    height: 14px;
+    width: .8rem;
   }
 }

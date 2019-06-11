@@ -7,8 +7,6 @@ import LayerFetchValues from './LayerFetchValues';
 import LayersTreeSubItemsList from './LayersTreeSubItemsList';
 import OptionsLayer from './OptionsLayer';
 import FiltersPanel from './FiltersPanel';
-import filterIcon from './assets/filter.svg';
-import tableIcon from './assets/table.svg';
 import LayersTreeItemFilters from './LayersTreeItemFilters';
 import LayerProps from '../../types/Layer';
 
@@ -132,95 +130,101 @@ export class LayersTreeItem extends React.Component {
         elevation={Elevation.ZERO}
         style={{ opacity: isActive ? 1 : 0.7 }}
       >
-        <div className="layerNode-label">
-          <Tooltip
-            content={label}
-            hoverOpenDelay={2000}
-          >
+        <Tooltip
+          content={label}
+          hoverOpenDelay={2000}
+        >
+          <div className="layerNode__content">
             <Switch
               checked={!!isActive}
-              label={label}
               onChange={onActiveChange}
             />
-          </Tooltip>
-          <div className="layerNode-total">
-            {isActive && totalResult && (
-            <Tag
-              intent="primary"
-              round
-            >
-                {total}
-            </Tag>
-            )}
-          </div>
-          <div className={classnames('layerNode-options', { 'layerNode-options--active': hasSomeOptionActive })}>
-            {(isActive && widgets && !!widgets.length) && (
-              widgets.map(widget => (
-                <Button
-                  key={widget.component}
-                  className={classnames({
-                    'layerNode-widgets__buttons': true,
-                    'layerNode-widgets__buttons--active': this.isWidgetActive(widget),
-                  })}
-                  onClick={toggleWidgets(widget)}
-                  minimal
-                  icon="selection"
-                />
-              ))
-            )}
-            {isActive && filters
-              && (
-              <Button
-                className={classnames('layerNode-options__buttons', { 'layerNode-options__buttons--active': isTableActive })}
-                onClick={toggleTable}
-                minimal
-              >
-                <img className="icon" src={tableIcon} alt={isTableActive ? 'Fermer le tableau' : 'Ouvrir le tableau'} title="table" />
-              </Button>
-              )
-            }
-            {isActive && form && (
-              <FiltersPanel
-                visible={isFilterVisible}
-                onMount={getFilterPanelRef}
-                layer={layer}
-              >
-                {isFilterVisible && (
-                  <LayerFetchValues layer={layer} isFilterVisible={isFilterVisible} />
-                )}
-                <Button
-                  className={classnames('layerNode-options__buttons', { 'layerNode-options__buttons--active': isFilterVisible })}
-                  onClick={toggleFilters}
-                  minimal
+            <span>{label}</span>
+            <div className="layerNode-total">
+              {isActive && totalResult && (
+                <Tag
+                  intent="primary"
+                  round
                 >
-                  <img className="icon" src={filterIcon} alt={isFilterVisible ? 'Fermer le panneau des filtres' : 'Ouvrir le panneau des filtres'} title="filter" />
-                </Button>
-              </FiltersPanel>
-            )}
-            {isActive && (
-              <Button
-                className={classnames('layerNode-options__buttons', { 'layerNode-options__buttons--active': isOptionsOpen })}
-                id="button-more-vertical"
-                icon="more"
-                minimal
-                onClick={this.handleOptionPanel}
-              />
-            )}
+                  {total}
+                </Tag>
+              )}
+            </div>
+            <div className={classnames('layerNode-options', { 'layerNode-options--active': hasSomeOptionActive })}>
+              {(isActive && widgets && !!widgets.length) && (
+                widgets.map(widget => (
+                  <Button
+                    key={widget.component}
+                    className={classnames({
+                      'layerNode-options__buttons': true,
+                      'layerNode-options__buttons--active': this.isWidgetActive(widget),
+                    })}
+                    onClick={toggleWidgets(widget)}
+                    minimal
+                    icon="selection"
+                    title="widget synthèse"
+                  />
+                ))
+              )}
+              {isActive && filters && (
+                <Button
+                  className={classnames('layerNode-options__buttons', { 'layerNode-options__buttons--active': isTableActive })}
+                  onClick={toggleTable}
+                  minimal
+                  icon="th"
+                  alt={isTableActive ? 'Fermer le tableau' : 'Ouvrir le tableau'}
+                  title="table"
+                />
+              )}
+              {isActive && form && (
+                <FiltersPanel
+                  visible={isFilterVisible}
+                  onMount={getFilterPanelRef}
+                  layer={layer}
+                >
+                  {isFilterVisible && (
+                    <LayerFetchValues layer={layer} isFilterVisible={isFilterVisible} />
+                  )}
+                  <Button
+                    className={classnames('layerNode-options__buttons', { 'layerNode-options__buttons--active': isFilterVisible })}
+                    onClick={toggleFilters}
+                    minimal
+                    icon="filter"
+                    alt={isFilterVisible ? 'Fermer le panneau des filtres' : 'Ouvrir le panneau des filtres'}
+                    title="filter"
+                  />
+                </FiltersPanel>
+              )}
+              {isActive && (
+                <Button
+                  className={classnames('layerNode-options__buttons', { 'layerNode-options__buttons--active': isOptionsOpen })}
+                  id="button-more-vertical"
+                  icon="more"
+                  minimal
+                  onClick={this.handleOptionPanel}
+                  title="options d'affichage"
+                />
+              )}
+            </div>
+
           </div>
-        </div>
-        {isActive && sublayers && (
-          <LayersTreeSubItemsList
-            layer={layer}
-            sublayers={sublayers}
-          />
-        )}
+        </Tooltip>
         {isOptionsOpen && isActive && (
           <OptionsLayer
             onOpacityChange={onOpacityChange}
             opacity={opacity}
           />
         )}
-        <LayersTreeItemFilters layer={layer} />
+        <div>
+          <LayersTreeItemFilters layer={layer} />
+          {isActive && sublayers && (
+            <LayersTreeSubItemsList
+              layer={layer}
+              sublayers={sublayers}
+            />
+          )}
+
+        </div>
       </Card>
     );
   }
