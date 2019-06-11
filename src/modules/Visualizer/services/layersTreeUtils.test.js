@@ -325,6 +325,41 @@ it('should filter features', () => {
   INITIAL_FILTERS.clear();
 });
 
+it('should filter features on sublayers', () => {
+  const map = {
+    getLayer: jest.fn(layerId => (layerId === 'unknownlayer'
+      ? undefined
+      : {
+        source: layerId === 'cluster' ? `${layerId}-cluster-source-0` : 'source',
+      })),
+    getFilter: jest.fn(() => ['prev', 'filter']),
+    setFilter: jest.fn(),
+    fire: jest.fn(),
+  };
+  const layer1 = {
+    label: 'foo',
+    sublayers: [{
+      label: 'foo',
+      layers: ['foo'],
+    }, {
+      label: 'bar',
+      layers: ['bar'],
+    }],
+    filters: {
+      layer: 'foo',
+    },
+  };
+  const ltState = new Map();
+  ltState.set(layer1, { active: true });
+
+  filterFeatures(map, [{ layer: 'bar', features: ['1', '2'] }], ltState);
+  expect(map.setFilter).toHaveBeenCalledWith('bar', ['prev', 'filter']);
+  expect(map.setFilter).toHaveBeenCalledWith('foo', ['prev', 'filter']);
+  expect(map.setFilter).toHaveBeenCalledTimes(2);
+
+  INITIAL_FILTERS.clear();
+});
+
 it('should reset filters', () => {
   const map = {
     getLayer: jest.fn(layerId => (layerId === 'unknownlayer'
