@@ -4,17 +4,19 @@ import { H5, Button, Collapse } from '@blueprintjs/core';
 import LayersTreeItem from '../LayersTreeItem';
 
 export class LayersTreeGroup extends React.Component {
-  state= {
-    isOpen: true,
-  }
+  // Get open from layer if not set default value
+  // eslint-disable-next-line
+  state = this.props.layer.initialState || {
+    open: true,
+  };
 
   handleClick = () => {
-    const { isOpen } = this.state;
-    this.setState({ isOpen: !isOpen });
+    const { open } = this.state;
+    this.setState({ open: !open });
   };
 
   render () {
-    const { isOpen } = this.state;
+    const { open } = this.state;
     const {
       title,
       layer: { layers },
@@ -29,13 +31,13 @@ export class LayersTreeGroup extends React.Component {
             <Button
               className="layerstree-group__label-button"
               onClick={handleClick}
-              icon={isOpen ? 'chevron-down' : 'chevron-right'}
+              icon={open ? 'chevron-down' : 'chevron-right'}
               minimal
             />
             <H5>{title}</H5>
           </div>
           <Collapse
-            isOpen={isOpen}
+            isOpen={open}
           >
             {layers.map(layer => (
               <LayersTreeItem

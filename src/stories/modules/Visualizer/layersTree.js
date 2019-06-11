@@ -71,6 +71,9 @@ export default [{
   },
 }, {
   group: 'Groupées',
+  initialState: {
+    active: false,
+  },
   layers: [{
     label: 'Couche 3',
   }, {
