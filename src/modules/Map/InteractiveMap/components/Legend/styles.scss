@@ -1,11 +1,17 @@
+@import "node_modules/@blueprintjs/core/lib/scss/variables";
+
 .tf-legend {
   box-shadow: 0 1px 3px 0 rgba(16,22,26,0.40);
   border-radius: 2px;
-  background: #F5F8FA;
+  background: $pt-app-background-color;
   padding: .5rem;
   margin-top: 1rem;
   display: flex;
   flex-direction: column;
+
+  .bp3-dark & {
+    background: $pt-dark-app-background-color;
+  }
 
   > .tf-legend {
     border: 0;
