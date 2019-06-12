@@ -2,139 +2,56 @@
 
 exports[`should render correctly 1`] = `
 Array [
-  <div
-    className="layerNode-label"
-  >
+  <p>
+    Tooltip
+  </p>,
+  <div>
     <p>
-      Tooltip
+      LayersTreeItemFilters
     </p>
-    <div
-      className="layerNode-total"
-    />
-    <div
-      className="layerNode-options"
-    >
-      <p>
-        Button
-      </p>
-    </div>
   </div>,
   <p>
-    LayersTreeItemFilters
+    Tooltip
   </p>,
-  <div
-    className="layerNode-label"
-  >
+  <div>
     <p>
-      Tooltip
+      LayersTreeItemFilters
     </p>
-    <div
-      className="layerNode-total"
-    />
-    <div
-      className="layerNode-options"
-    />
   </div>,
   <p>
-    LayersTreeItemFilters
+    Tooltip
   </p>,
-  <div
-    className="layerNode-label"
-  >
+  <div>
     <p>
-      Tooltip
+      LayersTreeItemFilters
     </p>
-    <div
-      className="layerNode-total"
-    />
-    <div
-      className="layerNode-options"
-    >
-      <p>
-        Button
-      </p>
-    </div>
+    <p>
+      LayersTreeSubItemsList
+    </p>
   </div>,
   <p>
-    LayersTreeSubItemsList
+    Tooltip
   </p>,
-  <p>
-    LayersTreeItemFilters
-  </p>,
-  <div
-    className="layerNode-label"
-  >
+  <div>
     <p>
-      Tooltip
+      LayersTreeItemFilters
     </p>
-    <div
-      className="layerNode-total"
-    />
-    <div
-      className="layerNode-options"
-    >
-      <p>
-        Button
-      </p>
-      <p>
-        Button
-      </p>
-      <p>
-        FiltersPanel
-      </p>
-      <p>
-        Button
-      </p>
-    </div>
   </div>,
   <p>
-    LayersTreeItemFilters
+    Tooltip
   </p>,
-  <div
-    className="layerNode-label"
-  >
+  <div>
     <p>
-      Tooltip
+      LayersTreeItemFilters
     </p>
-    <div
-      className="layerNode-total"
-    />
-    <div
-      className="layerNode-options"
-    />
   </div>,
   <p>
-    LayersTreeItemFilters
+    Tooltip
   </p>,
-  <div
-    className="layerNode-label"
-  >
+  <div>
     <p>
-      Tooltip
+      LayersTreeItemFilters
     </p>
-    <div
-      className="layerNode-total"
-    >
-      <p>
-        Tag
-      </p>
-    </div>
-    <div
-      className="layerNode-options layerNode-options--active"
-    >
-      <p>
-        Button
-      </p>
-      <p>
-        FiltersPanel
-      </p>
-      <p>
-        Button
-      </p>
-    </div>
   </div>,
-  <p>
-    LayersTreeItemFilters
-  </p>,
 ]
 `;
