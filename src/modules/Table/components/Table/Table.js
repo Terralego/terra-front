@@ -32,7 +32,9 @@ export class Table extends React.Component {
       editable: PropTypes.bool,
       format: PropTypes.shape({ type: PropTypes.string }),
     }).isRequired).isRequired,
-    data: PropTypes.arrayOf(PropTypes.arrayOf(PropTypes.string)).isRequired,
+    data: PropTypes.arrayOf(
+      PropTypes.arrayOf(PropTypes.oneOfType([PropTypes.string, PropTypes.number])),
+    ).isRequired,
     onSelection: PropTypes.func,
   };
 
