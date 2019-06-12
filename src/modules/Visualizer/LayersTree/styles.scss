@@ -11,6 +11,12 @@ $active-button-color: #5a91b3;
 .layerstree-group {
   margin: 1.2rem 0;
 
+  &--active {
+    .bp3-collapse-body {
+      transform: inherit !important;
+    }
+  }
+
   &__label {
     display: flex;
     align-items: center;
