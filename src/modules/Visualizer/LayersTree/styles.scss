@@ -44,15 +44,13 @@ $active-button-color: #5a91b3;
   font-size: 14px;
   color: $font-color;
   letter-spacing: 1px;
-  line-height: 1.2rem; 
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-
-  span {
-    width: 100%;
-  }
+  line-height: 1.2rem;
 }
+
+.layerNode__tooltip span {
+  width: 100%;
+}
+
 .layerNode__content {
   display: flex;
   align-items: center;
