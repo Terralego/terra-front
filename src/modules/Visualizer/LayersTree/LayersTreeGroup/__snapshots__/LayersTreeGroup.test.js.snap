@@ -3,7 +3,7 @@
 exports[`should render correctly 1`] = `
 Array [
   <div
-    className="layerstree-group"
+    className="layerstree-group layerstree-group--active"
   >
     <div
       className="layerstree-group__label"

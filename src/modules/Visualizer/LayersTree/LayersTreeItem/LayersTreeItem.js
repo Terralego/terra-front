@@ -133,6 +133,7 @@ export class LayersTreeItem extends React.Component {
         <Tooltip
           content={label}
           hoverOpenDelay={2000}
+          className="layerNode__tooltip"
         >
           <div className="layerNode__content">
             <Switch
@@ -215,7 +216,7 @@ export class LayersTreeItem extends React.Component {
             opacity={opacity}
           />
         )}
-        <div>
+        <>
           <LayersTreeItemFilters layer={layer} />
           {isActive && sublayers && (
             <LayersTreeSubItemsList
@@ -224,7 +225,7 @@ export class LayersTreeItem extends React.Component {
             />
           )}
 
-        </div>
+        </>
       </Card>
     );
   }

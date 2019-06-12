@@ -1,5 +1,6 @@
 import React from 'react';
 import { H5, Button, Collapse } from '@blueprintjs/core';
+import classnames from 'classnames';
 
 import LayersTreeItem from '../LayersTreeItem';
 
@@ -26,7 +27,11 @@ export class LayersTreeGroup extends React.Component {
     const { handleClick } = this;
     return (
       isHidden ? null : (
-        <div className="layerstree-group">
+        <div
+          className={classnames('layerstree-group', {
+            'layerstree-group--active': open,
+          })}
+        >
           <div className="layerstree-group__label">
             <Button
               className="layerstree-group__label-button"

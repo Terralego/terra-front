@@ -75,6 +75,47 @@ export default [{
     active: false,
   },
   layers: [{
+    label: 'Variantes 1',
+    sublayers: [{
+      label: 'Couche 5',
+    }, {
+      label: 'Couche 6',
+    }, {
+      label: 'Couche 7',
+    }, {
+      label: 'Couche 8',
+    }, {
+      label: 'Couche 9',
+    }, {
+      label: 'Couche 10',
+    }, {
+      label: 'Couche 11',
+    }],
+  }, {
+    label: 'Couche 3',
+  }, {
+    label: 'Couche 4',
+  }],
+}, {
+  group: 'Groupées',
+  layers: [{
+    label: 'Variantes 1',
+    sublayers: [{
+      label: 'Couche 5',
+    }, {
+      label: 'Couche 6',
+    }, {
+      label: 'Couche 7',
+    }, {
+      label: 'Couche 8',
+    }, {
+      label: 'Couche 9',
+    }, {
+      label: 'Couche 10',
+    }, {
+      label: 'Couche 11',
+    }],
+  }, {
     label: 'Couche 3',
   }, {
     label: 'Couche 4',

@@ -5,53 +5,41 @@ Array [
   <p>
     Tooltip
   </p>,
-  <div>
-    <p>
-      LayersTreeItemFilters
-    </p>
-  </div>,
+  <p>
+    LayersTreeItemFilters
+  </p>,
   <p>
     Tooltip
   </p>,
-  <div>
-    <p>
-      LayersTreeItemFilters
-    </p>
-  </div>,
+  <p>
+    LayersTreeItemFilters
+  </p>,
   <p>
     Tooltip
   </p>,
-  <div>
-    <p>
-      LayersTreeItemFilters
-    </p>
-    <p>
-      LayersTreeSubItemsList
-    </p>
-  </div>,
+  <p>
+    LayersTreeItemFilters
+  </p>,
+  <p>
+    LayersTreeSubItemsList
+  </p>,
   <p>
     Tooltip
   </p>,
-  <div>
-    <p>
-      LayersTreeItemFilters
-    </p>
-  </div>,
+  <p>
+    LayersTreeItemFilters
+  </p>,
   <p>
     Tooltip
   </p>,
-  <div>
-    <p>
-      LayersTreeItemFilters
-    </p>
-  </div>,
+  <p>
+    LayersTreeItemFilters
+  </p>,
   <p>
     Tooltip
   </p>,
-  <div>
-    <p>
-      LayersTreeItemFilters
-    </p>
-  </div>,
+  <p>
+    LayersTreeItemFilters
+  </p>,
 ]
 `;
