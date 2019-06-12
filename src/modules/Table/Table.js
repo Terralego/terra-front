@@ -17,7 +17,9 @@ export class Table extends React.Component {
   static propTypes = {
     columns: PropTypes.arrayOf(PropTypes.oneOfType([PropTypes.object, PropTypes.string]))
       .isRequired,
-    data: PropTypes.arrayOf(PropTypes.arrayOf(PropTypes.string)).isRequired,
+    data: PropTypes.arrayOf(
+      PropTypes.arrayOf(PropTypes.oneOfType([PropTypes.string, PropTypes.number])),
+    ).isRequired,
     title: PropTypes.oneOfType([
       PropTypes.string,
       PropTypes.element,
