@@ -36,6 +36,19 @@ it('should render correctly', () => {
       <LayersTreeGroup
         title="Group 1"
         layer={{
+          initialState: {
+            open: false,
+          },
+          layers: [{
+            label: 'Layer 1',
+          }, {
+            label: 'Layer 2',
+          }],
+        }}
+      />
+      <LayersTreeGroup
+        title="Group 1"
+        layer={{
           layers: [{
             label: 'Layer 1',
           }, {
@@ -54,40 +67,49 @@ it('should change layers group state', () => {
     <LayersTreeGroup
       title="Group 1"
       layer={{
+        initialState: {
+          open: false,
+        },
         layers: [{
           label: 'Layer 1',
         }, {
           label: 'Layer 2',
         }],
       }}
-      isOpen
     />
   ));
-  expect(wrapper.state().isOpen).toEqual(true);
+  expect(wrapper.instance().state.open).toEqual(false);
   wrapper.setState({
-    isOpen: false,
+    open: true,
   });
-  expect(wrapper.state().isOpen).toEqual(false);
+  expect(wrapper.state().open).toEqual(true);
 });
 
 it('should open group panel', () => {
-  const instance = new LayersTreeGroup({});
+  const instance = new LayersTreeGroup({
+    layer: [{
+      label: 'Layer 1',
+      initialState: {
+        open: true,
+      },
+    }],
+  });
   instance.setState = jest.fn();
 
   instance.state = {
-    isOpen: true,
+    open: true,
   };
   instance.handleClick();
   expect(instance.setState).toHaveBeenCalledWith({
-    isOpen: false,
+    open: false,
   });
   instance.setState.mockClear();
 
   instance.state = {
-    isOpen: false,
+    open: false,
   };
   instance.handleClick();
   expect(instance.setState).toHaveBeenCalledWith({
-    isOpen: true,
+    open: true,
   });
 });

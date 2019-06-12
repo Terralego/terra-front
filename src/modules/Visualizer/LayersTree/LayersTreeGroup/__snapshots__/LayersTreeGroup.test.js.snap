@@ -1,22 +1,42 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
 exports[`should render correctly 1`] = `
-<div
-  className="layerstree-group"
->
+Array [
   <div
-    className="layerstree-group__label"
+    className="layerstree-group"
   >
+    <div
+      className="layerstree-group__label"
+    >
+      <p>
+        Button
+      </p>
+      Group 1
+    </div>
     <p>
-      Button
+      LayersTreeItem
     </p>
-    Group 1
-  </div>
-  <p>
-    LayersTreeItem
-  </p>
-  <p>
-    LayersTreeItem
-  </p>
-</div>
+    <p>
+      LayersTreeItem
+    </p>
+  </div>,
+  <div
+    className="layerstree-group"
+  >
+    <div
+      className="layerstree-group__label"
+    >
+      <p>
+        Button
+      </p>
+      Group 1
+    </div>
+    <p>
+      LayersTreeItem
+    </p>
+    <p>
+      LayersTreeItem
+    </p>
+  </div>,
+]
 `;
