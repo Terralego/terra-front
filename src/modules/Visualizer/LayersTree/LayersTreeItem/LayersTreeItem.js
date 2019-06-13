@@ -124,6 +124,8 @@ export class LayersTreeItem extends React.Component {
 
     const totalResult = typeof (total) === 'number';
     const hasSomeOptionActive = isTableActive || isFilterVisible || isOptionsOpen || isWidgetActive;
+    const htmlID = btoa(JSON.stringify(layer));
+
     return (
       <Card
         className={classnames('layerNode-container', { 'options-hidden': isActive })}
@@ -139,8 +141,9 @@ export class LayersTreeItem extends React.Component {
             <Switch
               checked={!!isActive}
               onChange={onActiveChange}
+              id={`toggle-${htmlID}`}
             />
-            <span>{label}</span>
+            <label htmlFor={`toggle-${htmlID}`}>{label}</label>
             <div className="layerNode-total">
               {isActive && totalResult && (
                 <Tag
