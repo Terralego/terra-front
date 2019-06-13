@@ -58,14 +58,14 @@ $active-button-color: #5a91b3;
   width: calc(100% - .25rem);
   outline: none;
 
-  span {
+  .layerNode__label {
     width: 100%;
     overflow: hidden;
     white-space: nowrap;
     text-overflow: ellipsis;
   }
 
-  label {
+  .bp3-switch {
     margin: 0 0 0 0;
   }
 }
@@ -116,27 +116,28 @@ $active-button-color: #5a91b3;
   align-items: center;
 }
 
-.layerNode-options__buttons {
+.layerNode-options__button {
   margin: 0 .2rem;
-  min-width: 1.2rem;
-  min-height: 1.2rem;
+  min-width: 1.25rem;
+  min-height: 1.25rem;
   padding: 0;
   outline: none;
-}
 
-.layerNode-options__buttons--active {
-  background: radial-gradient($active-button-color 0, transparent 55%) !important;
-  svg {
-    filter: invert(.5) sepia(1) saturate(5) hue-rotate(175deg);
+  .bp3-icon {
+    padding: 0.125rem;
+  }
+
+  &--more {
+    transform: rotate(90deg);
+    svg {
+      transform: scale(0.8);
+    }
   }
 }
 
-#button-more-vertical {
-  transform: rotate(90deg);
-  margin-left: 0rem;
-  min-width: .9rem;
-  min-height: .3rem;
+.layerNode-options__button--active {
+  background: radial-gradient($active-button-color 0, transparent 55%) !important;
   svg {
-    width: .8rem;
+    filter: invert(.5) sepia(1) saturate(5) hue-rotate(175deg);
   }
 }
