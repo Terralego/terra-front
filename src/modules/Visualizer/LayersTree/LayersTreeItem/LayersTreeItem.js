@@ -124,7 +124,8 @@ export class LayersTreeItem extends React.Component {
 
     const totalResult = typeof (total) === 'number';
     const hasSomeOptionActive = isTableActive || isFilterVisible || isOptionsOpen || isWidgetActive;
-    const htmlID = btoa(JSON.stringify(layer));
+
+    const htmlID = btoa(JSON.stringify(layer).replace(/\W/g, ''));
 
     return (
       <Card
@@ -143,7 +144,7 @@ export class LayersTreeItem extends React.Component {
               onChange={onActiveChange}
               id={`toggle-${htmlID}`}
             />
-            <label htmlFor={`toggle-${htmlID}`}>{label}</label>
+            <label className="layerNode__label" htmlFor={`toggle-${htmlID}`}>{label}</label>
             <div className="layerNode-total">
               {isActive && totalResult && (
                 <Tag
@@ -160,8 +161,8 @@ export class LayersTreeItem extends React.Component {
                   <Button
                     key={widget.component}
                     className={classnames({
-                      'layerNode-options__buttons': true,
-                      'layerNode-options__buttons--active': this.isWidgetActive(widget),
+                      'layerNode-options__button': true,
+                      'layerNode-options__button--active': this.isWidgetActive(widget),
                     })}
                     onClick={toggleWidgets(widget)}
                     minimal
@@ -172,7 +173,7 @@ export class LayersTreeItem extends React.Component {
               )}
               {isActive && filters && (
                 <Button
-                  className={classnames('layerNode-options__buttons', { 'layerNode-options__buttons--active': isTableActive })}
+                  className={classnames('layerNode-options__button', { 'layerNode-options__button--active': isTableActive })}
                   onClick={toggleTable}
                   minimal
                   icon="th"
@@ -190,7 +191,7 @@ export class LayersTreeItem extends React.Component {
                     <LayerFetchValues layer={layer} isFilterVisible={isFilterVisible} />
                   )}
                   <Button
-                    className={classnames('layerNode-options__buttons', { 'layerNode-options__buttons--active': isFilterVisible })}
+                    className={classnames('layerNode-options__button', { 'layerNode-options__button--active': isFilterVisible })}
                     onClick={toggleFilters}
                     minimal
                     icon="filter"
@@ -201,8 +202,7 @@ export class LayersTreeItem extends React.Component {
               )}
               {isActive && (
                 <Button
-                  className={classnames('layerNode-options__buttons', { 'layerNode-options__buttons--active': isOptionsOpen })}
-                  id="button-more-vertical"
+                  className={classnames('layerNode-options__button', 'layerNode-options__button--more', { 'layerNode-options__button--active': isOptionsOpen })}
                   icon="more"
                   minimal
                   onClick={this.handleOptionPanel}
