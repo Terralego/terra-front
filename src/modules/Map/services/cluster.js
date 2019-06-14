@@ -145,14 +145,11 @@ export const updateCluster = (map, layer, onClusterUpdate = ({ features }) => fe
     });
   }
   const zoom = map.getZoom();
-  if (layerMinzoom > zoom || layerMaxzoom < zoom) return;
 
-  const features = map.querySourceFeatures(source, { sourceLayer });
-
-  (Array.isArray(clusterRadius)
+  const sources = (Array.isArray(clusterRadius)
     ? [...clusterRadius]
     : [{ value: clusterRadius }])
-    .forEach(({ value, minzoom = layerMinzoom, maxzoom = layerMaxzoom }, index) => {
+    .map(({ value, minzoom = layerMinzoom, maxzoom = layerMaxzoom }, index) => {
       const clusterSourceName = `${id}-${PREFIX_SOURCE}-${index}`;
       if (!map.getSource(clusterSourceName)) {
         createClusterLayers({
@@ -164,11 +161,19 @@ export const updateCluster = (map, layer, onClusterUpdate = ({ features }) => fe
           index,
         });
       }
-      map.getSource(clusterSourceName).setData({
-        type: 'FeatureCollection',
-        features: onClusterUpdate({ features, source, sourceLayer }),
-      });
+      return clusterSourceName;
     });
+
+  if (layerMinzoom > zoom || layerMaxzoom < zoom) return;
+
+  const features = map.querySourceFeatures(source, { sourceLayer });
+
+  sources.forEach(clusterSourceName => {
+    map.getSource(clusterSourceName).setData({
+      type: 'FeatureCollection',
+      features: onClusterUpdate({ features, source, sourceLayer }),
+    });
+  });
 };
 
 export const getClusteredFeatures = (map, feature = {}) => new Promise(resolve => {

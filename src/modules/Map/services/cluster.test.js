@@ -125,13 +125,32 @@ it('should not update cluster if zoom is out of range', () => {
   const map = {
     getZoom: () => 4,
     getLayer: () => true,
+    getSource: jest.fn(),
+    getMaxZoom: jest.fn(() => 18),
+    addSource: jest.fn(),
+    addLayer: jest.fn(),
     querySourceFeatures: jest.fn(),
   };
 
   updateCluster(map, {
     id: 'foo',
     minzoom: 10,
-    cluster: {},
+    cluster: {
+      radius: 25,
+      steps: [10, 20, 30, 40],
+      sizes: [1, 2, 3, 4, 5],
+      colors: ['red', 'blue', 'green', 'yellow', 'purple'],
+      font: {
+        family: ['Comic Sans MS'],
+        color: 'red',
+      },
+      paint: {
+        'circle-pitch-scale': 'map',
+      },
+    },
+    paint: {
+      'circle-color': 'red',
+    },
   });
   expect(map.querySourceFeatures).not.toHaveBeenCalled();
 });
