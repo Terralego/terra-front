@@ -672,7 +672,3 @@ it('should call fitBounds', () => {
   fitZoom({ feature, map });
   expect(map.fitBounds).toHaveBeenCalled();
 });
-
-it('should ignore interaction when layer is not visible', () => {
-
-});
