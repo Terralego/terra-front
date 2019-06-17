@@ -1,6 +1,6 @@
 import React from 'react';
 
-import MarkdownRenderer from '../../../../Template/MarkdownRenderer';
+import Template from '../../../../Template/Template';
 import FeatureProperties from '../../../FeatureProperties';
 
 export const Tooltip = ({ fetch, properties, ...props }) => (
@@ -9,7 +9,7 @@ export const Tooltip = ({ fetch, properties, ...props }) => (
     properties={properties}
   >
     {allProperties => (
-      <MarkdownRenderer
+      <Template
         {...props}
         {...allProperties}
       />
