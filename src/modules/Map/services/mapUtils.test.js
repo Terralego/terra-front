@@ -131,6 +131,7 @@ it('should get interaction on event', () => {
   }];
   const map = {
     getStyle,
+    getLayoutProperty: jest.fn(() => 'visible'),
     queryRenderedFeatures: jest.fn(() => [{
       layer: {
         id: 'foo',
@@ -173,6 +174,7 @@ it('should get interaction on mouseover event', () => {
   }];
   const map = {
     getStyle,
+    getLayoutProperty: jest.fn(() => 'visible'),
     queryRenderedFeatures: jest.fn(() => [{
       layer: {
         id: 'foo',
@@ -213,6 +215,7 @@ it('should get no interaction on event', () => {
   }];
   const map = {
     getStyle,
+    getLayoutProperty: jest.fn(() => 'visible'),
     queryRenderedFeatures: jest.fn(() => [{
       layer: {
         id: 'foo',
@@ -236,6 +239,7 @@ describe('should set interactions', () => {
   let listeners = [];
   const map = {
     getStyle,
+    getLayoutProperty: jest.fn(() => 'visible'),
     on: jest.fn((event, id, listener) => listeners.push({
       event,
       listener: listener || id,
@@ -595,6 +599,7 @@ it('should check contraints', () => {
 it('should get interactions responding to constraints', () => {
   const map = {
     getStyle,
+    getLayoutProperty: jest.fn(() => 'visible'),
     getZoom: () => 3,
     queryRenderedFeatures: () => [{
       layer: {
@@ -624,6 +629,7 @@ it('should get interactions responding to constraints', () => {
 it('should get multiple interactions', () => {
   const map = {
     getStyle,
+    getLayoutProperty: jest.fn(() => 'visible'),
     getZoom: () => 3,
     queryRenderedFeatures: () => [{
       layer: {
@@ -665,4 +671,8 @@ it('should call fitBounds', () => {
   };
   fitZoom({ feature, map });
   expect(map.fitBounds).toHaveBeenCalled();
+});
+
+it('should ignore interaction when layer is not visible', () => {
+
 });

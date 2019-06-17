@@ -96,7 +96,9 @@ export function getInteractionsOnEvent ({
     const { layer: { id: layerId } } = feature;
 
     const foundInteractions = eventInteractions.filter(({ id, trigger = 'click', constraints }) => {
-      const found = getLayers(map, id).find(({ id: compatibleId }) => layerId === compatibleId);
+      const found = getLayers(map, id).find(({ id: compatibleId }) =>
+        layerId === compatibleId &&
+        map.getLayoutProperty(compatibleId, 'visibility') === 'visible');
 
       if (!found || (constraints && !checkContraints({ map, constraints, feature }))) {
         return false;
