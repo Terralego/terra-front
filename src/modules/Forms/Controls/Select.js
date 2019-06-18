@@ -1,7 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import classnames from 'classnames';
-import { MenuItem, Button } from '@blueprintjs/core';
+import { MenuItem, Button, Position } from '@blueprintjs/core';
 import { Select as BPSelect } from '@blueprintjs/select';
 
 import { preventEnterKeyPress } from '../../../utils/event';
@@ -82,7 +82,7 @@ export class Select extends React.Component {
         <p className="control-label">{label}</p>
         <BPSelect
           className={classnames('tf-select', className)}
-          popoverProps={{ usePortal: false }}
+          popoverProps={{ usePortal: false, position: Position.BOTTOM_LEFT, minimal: true }}
           items={filteredItems}
           filterable={values.length > 9}
           inputProps={{ placeholder }}

@@ -18,6 +18,9 @@ jest.mock('@blueprintjs/select', () => ({
 jest.mock('@blueprintjs/core', () => ({
   Button () { return null; },
   MenuItem: function BPMenuItem () { return null; },
+  Position: {
+    BOTTOM_LEFT: 'foo',
+  },
 }));
 
 it('should render correctly', () => {
