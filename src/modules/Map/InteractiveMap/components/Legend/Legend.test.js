@@ -70,3 +70,21 @@ describe('should render correctly', () => {
     expect(tree).toMatchSnapshot();
   });
 });
+
+it('should render a manual legend', () => {
+  const template =
+`# Hello World
+
+<square color="red" /> foo  
+<square color="green" /> bar  
+
+<circle color="red" /> foo  
+<circle color="green" /> bar  
+`;
+  const tree = renderer.create(
+    <Legend
+      content={template}
+    />,
+  );
+  expect(tree.toJSON()).toMatchSnapshot();
+});

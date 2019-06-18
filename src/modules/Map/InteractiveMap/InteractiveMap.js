@@ -487,6 +487,7 @@ export class InteractiveMap extends React.Component {
       interactions,
       backgroundStyle,
       onStyleChange,
+      history,
       ...mapProps
     } = this.props;
 
@@ -514,6 +515,7 @@ export class InteractiveMap extends React.Component {
               .map(legend => (
                 <Legend
                   key={`${legend.title}${legend.items}`}
+                  history={history}
                   {...legend}
                 />
               ))}

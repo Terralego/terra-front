@@ -1,0 +1,74 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`should compile custom link 1`] = `
+Array [
+  <p>
+    <a
+      data-is-history-link={true}
+      href="/"
+    >
+      foo
+    </a>
+  </p>,
+  "
+",
+]
+`;
+
+exports[`should compile from a template 1`] = `
+Array [
+  <p>
+    This FOO is a BAR
+  </p>,
+  "
+",
+]
+`;
+
+exports[`should display content 1`] = `
+Array [
+  <p>
+    Hello World
+  </p>,
+  "
+",
+]
+`;
+
+exports[`should not compile custom link 1`] = `
+Array [
+  <p>
+    <a
+      href="foo"
+    >
+      foo
+    </a>
+  </p>,
+  "
+",
+]
+`;
+
+exports[`should process custom tags with full spec 1`] = `
+Array [
+  <p>
+    <div>
+      Hello world
+    </div>
+  </p>,
+  "
+",
+]
+`;
+
+exports[`should process custom tags with simple spec 1`] = `
+Array [
+  <p>
+    <div>
+      Hello world
+    </div>
+  </p>,
+  "
+",
+]
+`;
