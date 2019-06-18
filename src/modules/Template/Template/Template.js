@@ -34,13 +34,18 @@ export const Template = ({
         <HistoryLink {...node.attribs} history={history}>{children}</HistoryLink>
       ),
     }, ...customComponents.map(spec => {
-      const { component: Component } = spec;
+      const { tagName, autoClose, component: Component } = spec;
       return spec.processNode
         ? spec
         : {
           replaceChildren: false,
-          shouldProcessNode: node => node.name && node.name === spec.tagName,
-          processNode: (node, children) => <Component {...node.attribs}>{children}</Component>,
+          shouldProcessNode: node => node.name && node.name === tagName,
+          processNode: (node, children) => (
+            <>
+              <Component {...node.attribs}>{!autoClose && children}</Component>
+              {autoClose && children}
+            </>
+          ),
           ...spec,
         };
     }), {
@@ -74,6 +79,8 @@ Template.propTypes = {
     processNode: PropTypes.func,
     /** Shortcut to declare a tagname with a single string */
     tagName: PropTypes.string,
+    /** Tag is autoclose */
+    autoClose: PropTypes.bool,
     /** Shortcut to declare a component with a single function */
     component: PropTypes.func,
   })),

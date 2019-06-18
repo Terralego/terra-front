@@ -1,5 +1,122 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
+exports[`should render a manual legend 1`] = `
+<div
+  className="tf-legend tf-legend--level-1"
+>
+  <h4
+    className="tf-legend__title"
+  />
+  <div
+    className="tf-legend__list"
+  >
+    <h1
+      id="hello-world"
+    >
+      Hello World
+    </h1>
+    
+
+    <p>
+      <div
+        className="tf-legend__symbol"
+        style={
+          Object {
+            "height": 10,
+            "width": 10,
+          }
+        }
+      >
+        <svg
+          viewBox="0 0 100 100"
+        >
+          <rect
+            fill="red"
+            height="100"
+            width="100"
+            x="0"
+            y="0"
+          />
+        </svg>
+      </div>
+       foo
+      <br />
+      <div
+        className="tf-legend__symbol"
+        style={
+          Object {
+            "height": 10,
+            "width": 10,
+          }
+        }
+      >
+        <svg
+          viewBox="0 0 100 100"
+        >
+          <rect
+            fill="green"
+            height="100"
+            width="100"
+            x="0"
+            y="0"
+          />
+        </svg>
+      </div>
+       bar  
+    </p>
+    
+
+    <p>
+      <div
+        className="tf-legend__symbol"
+        style={
+          Object {
+            "height": 10,
+            "width": 10,
+          }
+        }
+      >
+        <svg
+          viewBox="0 0 100 100"
+        >
+          <circle
+            cx="50"
+            cy="50"
+            fill="red"
+            r="50"
+          />
+        </svg>
+      </div>
+       foo
+      <br />
+      <div
+        className="tf-legend__symbol"
+        style={
+          Object {
+            "height": 10,
+            "width": 10,
+          }
+        }
+      >
+        <svg
+          viewBox="0 0 100 100"
+        >
+          <circle
+            cx="50"
+            cy="50"
+            fill="green"
+            r="50"
+          />
+        </svg>
+      </div>
+       bar  
+    </p>
+    
+
+  </div>
+</div>
+`;
+
 exports[`should render correctly circle 1`] = `
 <div
   className="tf-legend tf-legend--level-1"
