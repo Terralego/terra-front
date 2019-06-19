@@ -85,7 +85,7 @@ it('should render correctly', () => {
         opacity={1}
       />
       <LayersTreeItem
-        layer={{ label: 'sublayers', filters: { form: [] }, widgets: [{ component: 'foo' }] }}
+        layer={{ label: 'sublayers', filters: { form: [], fields: [] }, widgets: [{ component: 'foo' }] }}
         isActive
         isTableActive={false}
       />
@@ -93,7 +93,12 @@ it('should render correctly', () => {
         layer={{ label: 'sublayers', displayed: false }}
       />
       <LayersTreeItem
-        layer={{ label: 'sublayers', filters: { form: [] } }}
+        layer={{ label: 'sublayers', filters: { form: [], fields: [{ label: 'foo' }] } }}
+        isActive
+        isTableActive={false}
+      />
+      <LayersTreeItem
+        layer={{ label: 'sublayers', filters: { form: [], fields: [{ label: 'foo' }] } }}
         isActive
         isTableActive
         total={42}
