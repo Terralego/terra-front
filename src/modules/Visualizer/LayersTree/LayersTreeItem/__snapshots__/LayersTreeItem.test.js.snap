@@ -41,5 +41,11 @@ Array [
   <p>
     LayersTreeItemFilters
   </p>,
+  <p>
+    Tooltip
+  </p>,
+  <p>
+    LayersTreeItemFilters
+  </p>,
 ]
 `;

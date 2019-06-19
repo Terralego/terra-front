@@ -6,7 +6,9 @@ exports[`should render a manual legend 1`] = `
 >
   <h4
     className="tf-legend__title"
-  />
+  >
+    foo
+  </h4>
   <div
     className="tf-legend__list"
   >

@@ -83,6 +83,7 @@ it('should render a manual legend', () => {
 `;
   const tree = renderer.create(
     <Legend
+      title="foo"
       content={template}
     />,
   );

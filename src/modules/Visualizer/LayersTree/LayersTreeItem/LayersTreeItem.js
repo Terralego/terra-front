@@ -102,8 +102,7 @@ export class LayersTreeItem extends React.Component {
       layer: {
         label,
         sublayers,
-        filters,
-        filters: { form } = {},
+        filters: { form, fields } = {},
         widgets = [],
       },
       isActive,
@@ -126,6 +125,7 @@ export class LayersTreeItem extends React.Component {
     const hasSomeOptionActive = isTableActive || isFilterVisible || isOptionsOpen || isWidgetActive;
 
     const htmlID = btoa(JSON.stringify(layer).replace(/\W/g, ''));
+    const displayTableButton = fields && fields.length;
 
     return (
       <Card
@@ -171,7 +171,7 @@ export class LayersTreeItem extends React.Component {
                   />
                 ))
               )}
-              {isActive && filters && (
+              {isActive && displayTableButton && (
                 <Button
                   className={classnames('layerNode-options__button', { 'layerNode-options__button--active': isTableActive })}
                   onClick={toggleTable}
