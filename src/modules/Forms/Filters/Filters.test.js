@@ -23,7 +23,11 @@ jest.mock('@blueprintjs/core', () => ({
 
 jest.mock('../Controls/Text', () => () => <p>ControlText</p>);
 jest.mock('../Controls/MultiSelect', () => () => <p>ControlMultiSelect</p>);
-jest.mock('../Controls/Select', () => () => <p>ControlSelect</p>);
+jest.mock('../Controls/Select', () => ({ initialContent }) => (
+  <p>
+    {initialContent === null ? 'ControlSelect with initialContent set to null' : 'ControlSelect'}
+  </p>
+));
 jest.mock('../Controls/Checkboxes', () => () => <p>ControlCheckboxes</p>);
 jest.mock('../Controls/Range', () => () => <p>ControlRange</p>);
 jest.mock('../Controls/DateRangeInput', () => () => <p>DateRangeInput</p>);
@@ -42,6 +46,12 @@ it('should build a form', () => {
         label: 'Vocations',
         type: TYPE_SINGLE,
         values: ['développeur', 'UX designer', 'Chef de projet'],
+      }, {
+        property: 'shitload_of_values',
+        label: 'Shitload',
+        type: TYPE_SINGLE,
+        display: 'select',
+        values: Array(101),
       }, {
         property: 'many_values',
         label: 'Foo',

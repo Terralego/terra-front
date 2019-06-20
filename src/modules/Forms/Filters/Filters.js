@@ -103,6 +103,7 @@ export class Filters extends React.Component {
             onChange={onChange(property)}
             locales={locales}
             value={properties[property]}
+            initialContent={values && values.length > 100 ? null : undefined}
           />
         ))}
       </div>

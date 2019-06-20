@@ -9,6 +9,9 @@ exports[`should build a form 1`] = `
     ControlSelect
   </p>
   <p>
+    ControlSelect with initialContent set to null
+  </p>
+  <p>
     ControlCheckboxes
   </p>
   <p>
