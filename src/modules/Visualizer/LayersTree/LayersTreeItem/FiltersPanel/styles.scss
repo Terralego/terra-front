@@ -1,4 +1,8 @@
 $transitionSpeed: 0.15s;
+$breakpoints-phone: 320px;
+$breakpoints-tablet: 768px;
+$breakpoints-desktop: 1024px;
+$scaleRatio: 1.25;
 
 .filters-panel {
   position: absolute;
@@ -9,9 +13,9 @@ $transitionSpeed: 0.15s;
   transition:
     opacity $transitionSpeed ease-in,
     transform $transitionSpeed ease-in;
-  width: 300px;
+  width: 18rem;
   z-index: 11;
-  margin-left: 18px;
+  margin-left: 2.25rem;
   background: #394B59;
   box-shadow:
     0 0 0 1px rgba(16,22,26,0.20),
@@ -30,17 +34,17 @@ $transitionSpeed: 0.15s;
   }
 
   &__arrow {
-    $width: 32px;
+    $width: 2rem;
     background: rgba($color: #10161A, $alpha: 0.4);
     display: block;
     position: absolute;
-    margin-top: -2px;
+    margin-top: -0.125rem;
     left: -$width/2;
     width: $width;
-    height: 32px;
+    height: 2rem;
     z-index: 12;
     transform: rotate(45deg);
-    border-radius: 3px;
+    border-radius: 0.19rem;
 
     &::after {
       content: '';
@@ -55,7 +59,7 @@ $transitionSpeed: 0.15s;
   &__content {
     z-index: 13;
     position: relative;
-    padding-top: 50px;
+    padding-top: .5rem;
     height: 100%;
     display: flex;
     flex-direction: column;
@@ -65,7 +69,7 @@ $transitionSpeed: 0.15s;
     margin-top: 0;
     padding: 0 0.7rem;
     font-weight: 300;
-    letter-spacing: 1.25px;
+    letter-spacing: .08rem;
   }
 
   &__form {
@@ -75,22 +79,28 @@ $transitionSpeed: 0.15s;
   }
 
   &__form::-webkit-scrollbar {
-    width: 8px;
+    width: .5rem;
   }
 
   .control-container {
-    padding: 0 0 10px;
+    padding: 0 0 .6rem;
+  }
+
+  .control-label { 
+    border-top: .5px solid #293742;
+    padding-top: .3rem;
+    margin: 1rem 0;
   }
 
   .bp3-select-popover .bp3-menu {
-    max-width: 400px;
-    max-height: 300px;
+    max-width: 25rem;
+    max-height: 18rem;
     overflow: auto;
     padding: 0;
   }
 
   .bp3-control.bp3-checkbox {
-    padding: 0 14px;
+    padding: 0 1rem;
   }
 
   .bp3-slider {
@@ -132,6 +142,79 @@ $transitionSpeed: 0.15s;
     
     &__form::-webkit-scrollbar-thumb {
       background-color: #202B33;
+    }
+  }
+}
+
+@media(min-width: $breakpoints-tablet) and (max-width: $breakpoints-desktop) and (orientation: landscape) {
+  .filters-panel {
+    width: 18rem / $scaleRatio;
+    margin-left: 2.25rem;
+    
+    &__arrow {
+      $width: 2rem / $scaleRatio;
+      margin-top: -0.125rem / $scaleRatio;
+      left: -$width/2;
+      width: $width;
+      height: 2rem / $scaleRatio;
+    }
+
+    &__title {
+      font-size: 1.5rem / $scaleRatio;
+      margin-top: 0;
+      padding: 0 0.7rem / $scaleRatio;
+      font-weight: 300;
+      letter-spacing: .08rem / $scaleRatio;
+    }
+
+    &__form {
+      padding: 0 0.7rem / $scaleRatio;
+    }
+
+    &__form::-webkit-scrollbar {
+      width: .5rem / $scaleRatio;
+    }
+
+    .control-container {
+      padding: 0 0 1.5rem;
+      font-size: .875rem / $scaleRatio;
+    }
+
+    .control-label {
+      font-size: .875rem / $scaleRatio;
+      border-top: .5px solid #293742;
+      padding-top: .3rem;
+      margin-bottom: 1rem;
+    }
+
+    .bp3-select-popover .bp3-menu {
+      max-width: 40rem / $scaleRatio;
+      max-height: 30rem / $scaleRatio;
+      font-size: .875rem / $scaleRatio;
+    }
+
+    .bp3-control.bp3-checkbox {
+      padding: 0 1rem / $scaleRatio;
+      font-size: .875rem / $scaleRatio;
+    }
+
+    .bp3-slider {
+      margin: 0 1rem / $scaleRatio;
+      width: calc(100% - 2rem / $scaleRatio);
+    }
+
+    .tf-control-date-range {
+      .bp3-control-group {
+        width: calc(100% - .5rem / $scaleRatio);
+      }
+      .bp3-input-group:nth-child(1) .bp3-input {
+        margin-right: .5rem / $scaleRatio;
+        font-size: .875rem / $scaleRatio;
+      }
+      .bp3-input-group:nth-child(2) .bp3-input {
+        margin-left: .5rem / $scaleRatio;
+        font-size: .875rem / $scaleRatio;
+      }
     }
   }
 }

@@ -5,14 +5,9 @@ Array [
   <div
     className="layerstree-group layerstree-group--active"
   >
-    <div
-      className="layerstree-group__label"
-    >
-      <p>
-        Button
-      </p>
-      Group 1
-    </div>
+    <p>
+      Button
+    </p>
     <p>
       LayersTreeItem
     </p>
@@ -23,14 +18,9 @@ Array [
   <div
     className="layerstree-group"
   >
-    <div
-      className="layerstree-group__label"
-    >
-      <p>
-        Button
-      </p>
-      Group 1
-    </div>
+    <p>
+      Button
+    </p>
     <p>
       LayersTreeItem
     </p>

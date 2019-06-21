@@ -1,22 +1,51 @@
+$breakpoints-phone: 320px;
+$breakpoints-tablet: 768px;
+$breakpoints-desktop: 1024px;
+$scaleRatio: 1.25;
+
 .layerNode-Option-Container {
   width: 100%;
-  padding: 8px 4px;
+  padding: .5rem 0;
   
   .bp3-slider {
-    width: calc(100% - 0.8rem);
+    width: calc(100% - .5rem);
     span {
-      width: 16px;
+      width: 1rem;
     }
   }
 }
 
 .layerNode-Option-slider-label {
   font-family: "SFProText-Light", Arial, Helvetica, sans-serif;
-  font-size: 12px;
+  font-size: .75rem;
   color: #F5F8FA;
-  line-height: 15px;
+  line-height: .9rem;
+  margin-bottom: .25rem;
 }
 
 .layerNode-Option-button:not(:last-of-type) {
-  margin-right: 12px;
+  margin-right: .75rem;
+}
+
+@media(min-width: $breakpoints-tablet) and (max-width: $breakpoints-desktop) and (orientation: landscape) {
+  .layerNode-Option-Container {
+    padding: .5rem / $scaleRatio 0;
+    
+    .bp3-slider {
+      width: calc(100% - .5rem / $scaleRatio);
+      span {
+        width: 1rem / $scaleRatio;
+      }
+    }
+  }
+  
+  .layerNode-Option-slider-label {
+    font-size: .75rem / $scaleRatio;
+    line-height: .9rem / $scaleRatio;
+    margin-bottom: .25rem / $scaleRatio;
+  }
+  
+  .layerNode-Option-button:not(:last-of-type) {
+    margin-right: .75rem / $scaleRatio;
+  }
 }

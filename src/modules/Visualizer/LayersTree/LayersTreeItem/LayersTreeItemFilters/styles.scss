@@ -1,3 +1,8 @@
+$breakpoints-phone: 320px;
+$breakpoints-tablet: 768px;
+$breakpoints-desktop: 1024px;
+$scaleRatio: 1.25;
+
 .layersTreeItemFilter {
   margin: 0 -0.2rem 0.5rem;
   &__tag {
@@ -5,6 +10,25 @@
     max-width: calc(100% - 1rem);
     .bp3-text-overflow-ellipsis {
       white-space: inherit;
+    }
+  }
+}
+
+@media(min-width: $breakpoints-tablet) and (max-width: $breakpoints-desktop) and (orientation: landscape) {
+  .layersTreeItemFilter {
+    margin: 0;
+    &__tag {
+      padding: .25rem .25rem .25rem .5rem;
+      margin: 1rem 0 0 0;
+      max-width: calc(100% - 1rem / $scaleRatio);
+      .bp3-text-overflow-ellipsis {
+        white-space: inherit;
+        font-size: .75rem /$scaleRatio;
+      }
+      .bp3-tag-remove {
+        padding: .5rem;
+
+      }
     }
   }
 }

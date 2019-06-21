@@ -32,15 +32,14 @@ export class LayersTreeGroup extends React.Component {
             'layerstree-group--active': open,
           })}
         >
-          <div className="layerstree-group__label">
-            <Button
-              className="layerstree-group__label-button"
-              onClick={handleClick}
-              icon={open ? 'chevron-down' : 'chevron-right'}
-              minimal
-            />
+          <Button
+            className="layerstree-group__label-button"
+            onClick={handleClick}
+            icon={open ? 'chevron-down' : 'chevron-right'}
+            minimal
+          >
             <H5>{title}</H5>
-          </div>
+          </Button>
           <Collapse
             isOpen={open}
           >

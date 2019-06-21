@@ -1,14 +1,14 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import classnames from 'classnames';
-import { Button, Card, Switch, Elevation, Tag, Tooltip } from '@blueprintjs/core';
+import { Card, Switch, Elevation, Tag, Tooltip } from '@blueprintjs/core';
 
-import LayerFetchValues from './LayerFetchValues';
 import LayersTreeSubItemsList from './LayersTreeSubItemsList';
 import OptionsLayer from './OptionsLayer';
-import FiltersPanel from './FiltersPanel';
 import LayersTreeItemFilters from './LayersTreeItemFilters';
 import LayerProps from '../../types/Layer';
+import LayersTreeItemOptionsDesktop from './LayersTreeItemOptionsDesktop';
+import LayersTreeItemOptionsMobile from './LayersTreeItemOptionsMobile/LayersTreeItemOptionsMobile';
 
 export class LayersTreeItem extends React.Component {
   static propTypes = {
@@ -17,7 +17,6 @@ export class LayersTreeItem extends React.Component {
     opacity: PropTypes.number,
     isTableActive: PropTypes.bool,
     total: PropTypes.number,
-
     setLayerState: PropTypes.func,
   };
 
@@ -33,6 +32,7 @@ export class LayersTreeItem extends React.Component {
     isOptionsOpen: false,
     isFilterVisible: false,
     isWidgetActive: false,
+    isDesktopDevice: false,
   }
 
   componentWillUnmount () {
@@ -90,6 +90,7 @@ export class LayersTreeItem extends React.Component {
     return widgets.includes(widget);
   }
 
+
   resetFilterPanelListener () {
     if (this.clickListener) {
       document.body.removeEventListener('mousedown', this.clickListener);
@@ -115,10 +116,16 @@ export class LayersTreeItem extends React.Component {
     if (hidden) return null;
 
     const {
-      isOptionsOpen, isFilterVisible, isWidgetActive,
+      isOptionsOpen, isFilterVisible, isWidgetActive, isDesktopDevice,
     } = this.state;
     const {
-      onActiveChange, onOpacityChange, toggleFilters, toggleTable, getFilterPanelRef, toggleWidgets,
+      onActiveChange,
+      onOpacityChange,
+      toggleFilters,
+      toggleTable,
+      getFilterPanelRef,
+      toggleWidgets,
+      handleOptionPanel,
     } = this;
 
     const totalResult = typeof (total) === 'number';
@@ -133,86 +140,77 @@ export class LayersTreeItem extends React.Component {
         elevation={Elevation.ZERO}
         style={{ opacity: isActive ? 1 : 0.7 }}
       >
-        <Tooltip
-          content={label}
-          hoverOpenDelay={2000}
-          className="layerNode__tooltip"
+        <div className={
+          classnames(
+            { 'layerNode__content--desktop': isDesktopDevice },
+            { 'layerNode__content--mobile': !isDesktopDevice },
+          )
+        }
         >
-          <div className="layerNode__content">
+          <div className="layerNode__content-switch-label">
             <Switch
               checked={!!isActive}
               onChange={onActiveChange}
               id={`toggle-${htmlID}`}
             />
-            <label className="layerNode__label" htmlFor={`toggle-${htmlID}`}>{label}</label>
+            <Tooltip
+              content={label}
+              hoverOpenDelay={2000}
+              className="layerNode__tooltip"
+            >
+              <label className="layerNode__label" htmlFor={`toggle-${htmlID}`}>{label}</label>
+            </Tooltip>
             <div className="layerNode-total">
               {isActive && totalResult && (
-                <Tag
-                  intent="primary"
-                  round
-                >
-                  {total}
-                </Tag>
+              <Tag
+                intent="primary"
+                round
+              >
+                {total}
+              </Tag>
               )}
             </div>
-            <div className={classnames('layerNode-options', { 'layerNode-options--active': hasSomeOptionActive })}>
-              {(isActive && widgets && !!widgets.length) && (
-                widgets.map(widget => (
-                  <Button
-                    key={widget.component}
-                    className={classnames({
-                      'layerNode-options__button': true,
-                      'layerNode-options__button--active': this.isWidgetActive(widget),
-                    })}
-                    onClick={toggleWidgets(widget)}
-                    minimal
-                    icon="selection"
-                    title="widget synthèse"
-                  />
-                ))
-              )}
-              {isActive && displayTableButton && (
-                <Button
-                  className={classnames('layerNode-options__button', { 'layerNode-options__button--active': isTableActive })}
-                  onClick={toggleTable}
-                  minimal
-                  icon="th"
-                  alt={isTableActive ? 'Fermer le tableau' : 'Ouvrir le tableau'}
-                  title="table"
-                />
-              )}
-              {isActive && form && (
-                <FiltersPanel
-                  visible={isFilterVisible}
-                  onMount={getFilterPanelRef}
-                  layer={layer}
-                >
-                  {isFilterVisible && (
-                    <LayerFetchValues layer={layer} isFilterVisible={isFilterVisible} />
-                  )}
-                  <Button
-                    className={classnames('layerNode-options__button', { 'layerNode-options__button--active': isFilterVisible })}
-                    onClick={toggleFilters}
-                    minimal
-                    icon="filter"
-                    alt={isFilterVisible ? 'Fermer le panneau des filtres' : 'Ouvrir le panneau des filtres'}
-                    title="filter"
-                  />
-                </FiltersPanel>
-              )}
-              {isActive && (
-                <Button
-                  className={classnames('layerNode-options__button', 'layerNode-options__button--more', { 'layerNode-options__button--active': isOptionsOpen })}
-                  icon="more"
-                  minimal
-                  onClick={this.handleOptionPanel}
-                  title="options d'affichage"
-                />
-              )}
-            </div>
-
           </div>
-        </Tooltip>
+          {isActive && (
+            isDesktopDevice
+              ? (
+                <LayersTreeItemOptionsDesktop
+                  hasSomeOptionActive={hasSomeOptionActive}
+                  isOptionsOpen={isOptionsOpen}
+                  handleOptionPanel={handleOptionPanel}
+                  layer={layer}
+                  toggleFilters={toggleFilters}
+                  isFilterVisible={isFilterVisible}
+                  getFilterPanelRef={getFilterPanelRef}
+                  form={form}
+                  toggleTable={toggleTable}
+                  isTableActive={isTableActive}
+                  displayTableButton={displayTableButton}
+                  toggleWidgets={toggleWidgets}
+                  widgets={widgets}
+                  isWidgetActive={isWidgetActive}
+                />
+              )
+              : (
+                <LayersTreeItemOptionsMobile
+                  hasSomeOptionActive={hasSomeOptionActive}
+                  isOptionsOpen={isOptionsOpen}
+                  handleOptionPanel={handleOptionPanel}
+                  layer={layer}
+                  toggleFilters={toggleFilters}
+                  isFilterVisible={isFilterVisible}
+                  getFilterPanelRef={getFilterPanelRef}
+                  form={form}
+                  toggleTable={toggleTable}
+                  isTableActive={isTableActive}
+                  displayTableButton={displayTableButton}
+                  toggleWidgets={toggleWidgets}
+                  widgets={widgets}
+                  isWidgetActive={isWidgetActive}
+                />
+              )
+          )}
+        </div>
         {isOptionsOpen && isActive && (
           <OptionsLayer
             onOpacityChange={onOpacityChange}
@@ -227,7 +225,6 @@ export class LayersTreeItem extends React.Component {
               sublayers={sublayers}
             />
           )}
-
         </>
       </Card>
     );
