@@ -19,11 +19,10 @@ export class RenderColumn {
     const {
       index,
       locales: { sortAsc: labelSortAsc, sortDesc: labelSortDesc } = {},
-      format: { type } = {},
     } = this.props; // eslint-disable-line react/no-this-in-sfc
 
-    const sortAsc = () => sortColumn(index, 'asc', type);
-    const sortDesc = () => sortColumn(index, 'desc', type);
+    const sortAsc = () => sortColumn(index, 'asc');
+    const sortDesc = () => sortColumn(index, 'desc');
     return (
       <Menu>
         <MenuItem icon="sort-alphabetical" onClick={sortAsc} text={labelSortAsc} />

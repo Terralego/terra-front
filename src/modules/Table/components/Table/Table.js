@@ -36,10 +36,18 @@ export class Table extends React.Component {
       PropTypes.arrayOf(PropTypes.oneOfType([PropTypes.string, PropTypes.number])),
     ).isRequired,
     onSelection: PropTypes.func,
+    initialSort: PropTypes.shape({
+      columnIndex: PropTypes.number.isRequired,
+      asc: PropTypes.bool,
+    }),
   };
 
   static defaultProps = {
     onSelection () {},
+    initialSort: {
+      columnIndex: 0,
+      asc: true,
+    },
   };
 
   state = {
@@ -63,6 +71,16 @@ export class Table extends React.Component {
   get data () {
     const { data, loading } = this.props;
     return loading ? LOADING_DATA : data;
+  }
+
+  get defaultColumnIndex () {
+    const { initialSort: { columnIndex } } = this.props;
+    return columnIndex;
+  }
+
+  get defaultOrder () {
+    const { initialSort: { asc } } = this.props;
+    return asc ? 'asc' : 'desc';
   }
 
   getCellData = (rowIndex, columnIndex) => {
@@ -94,8 +112,12 @@ export class Table extends React.Component {
     }
   }
 
-  sortColumn = (columnIndex, order, type) => {
-    const { data } = this.props;
+  sortColumn = (columnIndex = this.defaultColumnIndex, order = this.defaultOrder) => {
+    const { data, columns } = this.props;
+    if (!columns.length || !data.length) {
+      return;
+    }
+    const { format: { type } = {} } = columns[columnIndex];
     const sortedIndexMap = data.map((_, i) => i);
     sortedIndexMap.sort((a, b) => {
       const orderA = order === 'asc' ? a : b;
@@ -103,7 +125,7 @@ export class Table extends React.Component {
       return this.compare(data[orderA][columnIndex], data[orderB][columnIndex], type);
     });
     this.setState({
-      lastSort: [columnIndex, order, type],
+      lastSort: [columnIndex, order],
       sortedIndexMap,
     });
   };

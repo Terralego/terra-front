@@ -30,6 +30,10 @@ export class Table extends React.Component {
       sortDesc: PropTypes.string,
     }),
     loading: PropTypes.bool,
+    initialSort: PropTypes.shape({
+      columnIndex: PropTypes.number.isRequired,
+      asc: PropTypes.bool,
+    }),
   };
 
   static defaultProps = {
@@ -37,7 +41,11 @@ export class Table extends React.Component {
     locales: {},
     Header: HeaderComponent,
     loading: false,
-  }
+    initialSort: {
+      columnIndex: 0,
+      asc: true,
+    },
+  };
 
   state = {
     columns: [],
@@ -98,7 +106,7 @@ export class Table extends React.Component {
 
   render () {
     const { columns } = this.state;
-    const { Header, title, locales: customLocales, loading } = this.props;
+    const { Header, title, locales: customLocales, loading, initialSort } = this.props;
     const locales = { ...DEFAULT_LOCALES, ...customLocales };
     const { filteredColumns, filteredData } = this;
 
@@ -111,6 +119,7 @@ export class Table extends React.Component {
           data={filteredData}
           locales={locales}
           loading={loading}
+          initialSort={initialSort}
         />
       </div>
     );
