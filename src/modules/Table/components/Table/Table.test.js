@@ -64,22 +64,24 @@ describe('should sort column', () => {
   });
 
   it('Type number', () => {
-    instance.sortColumn(2, 'asc', 'number');
+    instance.sortColumn(2, 'asc');
     expect(wrapper.state().sortedIndexMap).toEqual([1, 0]);
+    expect(wrapper.state().lastSort).toEqual([2, 'asc']);
   });
 
   it('Type date', () => {
-    instance.sortColumn(3, 'asc', 'date');
+    instance.sortColumn(3, 'asc');
     expect(wrapper.state().sortedIndexMap).toEqual([1, 0]);
+    expect(wrapper.state().lastSort).toEqual([3, 'asc']);
   });
 });
 
 it('should update sorting', () => {
   const instance = new Table(props);
   instance.sortColumn = jest.fn();
-  instance.state.lastSort = [1, 2, 3];
+  instance.state.lastSort = [1, 2];
   instance.componentDidUpdate({ data: [] });
-  expect(instance.sortColumn).toHaveBeenCalledWith(1, 2, 3);
+  expect(instance.sortColumn).toHaveBeenCalledWith(1, 2);
 });
 
 it('should format cell', () => {
