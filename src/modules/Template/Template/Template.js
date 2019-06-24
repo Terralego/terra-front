@@ -9,6 +9,7 @@ import HistoryLink from '../HistoryLink';
 
 const DEFAULT_ENV = nunjucks.configure();
 DEFAULT_ENV.addFilter('slug', value => slugify(`${value || ''}`.toLowerCase()));
+DEFAULT_ENV.addFilter('formatNumber', (value, locale) => new Intl.NumberFormat(locale).format(value));
 
 export const Template = ({
   env = DEFAULT_ENV,
