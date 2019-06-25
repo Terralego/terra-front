@@ -116,7 +116,7 @@ export class Table extends React.Component {
 
   sortColumn = (columnIndex = this.defaultColumnIndex, order = this.defaultOrder) => {
     const { data, columns } = this.props;
-    if (!columns.length || !data.length) {
+    if (!columns.length) {
       return;
     }
     const { format: { type } = {} } = columns[columnIndex];
