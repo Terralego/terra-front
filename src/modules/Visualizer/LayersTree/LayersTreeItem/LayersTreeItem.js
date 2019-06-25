@@ -125,7 +125,7 @@ export class LayersTreeItem extends React.Component {
     const hasSomeOptionActive = isTableActive || isFilterVisible || isOptionsOpen || isWidgetActive;
 
     const htmlID = btoa(JSON.stringify(layer).replace(/\W/g, ''));
-    const displayTableButton = fields && fields.length;
+    const displayTableButton = fields && !!fields.length;
 
     return (
       <Card
