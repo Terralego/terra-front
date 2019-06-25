@@ -31,12 +31,16 @@ export class RenderColumn {
     );
   }
 
-  getColumn (getCellData, sortColumn) {
+  getColumn (getCellData, sortColumn, renderCell) {
     const { value, label = value, index, sortable, format: { type: formatType = '' } = {} } = this.props;
 
     const cellRenderer = (rowIndex, columnIndex) => (
       <Cell className={formatType ? `tf-table-cell--${formatType}` : ''}>
-        {formatValue(getCellData(rowIndex, columnIndex), formatType)}
+        {renderCell(
+          formatValue(getCellData(rowIndex, columnIndex), formatType),
+          rowIndex,
+          columnIndex,
+        )}
       </Cell>
     );
 

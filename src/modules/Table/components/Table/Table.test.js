@@ -49,7 +49,6 @@ it('should get cell data', () => {
 });
 
 describe('should sort column', () => {
-  // const sortDesc = jest.fn((a, b) => b.toString().localeCompare(a));
   const wrapper = shallow(<Table {...props} />);
   const instance = wrapper.instance();
   it('ASC and DESC', () => {
@@ -58,6 +57,7 @@ describe('should sort column', () => {
     instance.sortColumn(1, 'desc');
     expect(wrapper.state().sortedIndexMap).toEqual([1, 0]);
   });
+
   it('Type string', () => {
     instance.sortColumn(1, 'asc');
     expect(wrapper.state().sortedIndexMap).toEqual([0, 1]);
@@ -74,6 +74,26 @@ describe('should sort column', () => {
     expect(wrapper.state().sortedIndexMap).toEqual([1, 0]);
     expect(wrapper.state().lastSort).toEqual([3, 'asc']);
   });
+
+  it('default sort', () => {
+    instance.sortColumn();
+    expect(wrapper.state().sortedIndexMap).toEqual([1, 0]);
+    expect(wrapper.state().lastSort).toEqual([0, 'asc']);
+  });
+
+  it('default sort with initial sort defined to DESC', () => {
+    wrapper.setProps({ initialSort: { asc: false, columnIndex: 0 } });
+    instance.sortColumn();
+    expect(wrapper.state().sortedIndexMap).toEqual([0, 1]);
+    expect(wrapper.state().lastSort).toEqual([0, 'desc']);
+  });
+});
+
+it('should not sort column', () => {
+  const wrapper = shallow(<Table columns={[]} data={props.data} />);
+  const instance = wrapper.instance();
+  instance.sortColumn();
+  expect(wrapper.state().sortedIndexMap).toEqual(null);
 });
 
 it('should update sorting', () => {
@@ -101,6 +121,12 @@ it('should get columns', () => {
   expect(instance.columns).toBe(columns);
   instance.props.loading = true;
   expect(instance.columns).toBe(LOADING_COLS);
+});
+
+it('should give default renderCell', () => {
+  const wrapper = shallow(<Table {...props} />);
+  const instance = wrapper.instance();
+  expect(instance.props.renderCell()).toEqual(undefined);
 });
 
 it('should get data', () => {
