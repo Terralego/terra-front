@@ -103,6 +103,12 @@ it('should get columns', () => {
   expect(instance.columns).toBe(LOADING_COLS);
 });
 
+it('should give default renderCell', () => {
+  const wrapper = shallow(<Table {...props} />);
+  const instance = wrapper.instance();
+  expect(instance.props.renderCell()).toEqual(undefined);
+});
+
 it('should get data', () => {
   const data = [];
   const instance = new Table({ data });

@@ -40,6 +40,7 @@ export class Table extends React.Component {
       columnIndex: PropTypes.number.isRequired,
       asc: PropTypes.bool,
     }),
+    renderCell: PropTypes.func,
   };
 
   static defaultProps = {
@@ -48,6 +49,7 @@ export class Table extends React.Component {
       columnIndex: 0,
       asc: true,
     },
+    renderCell: children => children,
   };
 
   state = {
@@ -153,10 +155,10 @@ export class Table extends React.Component {
   };
 
   render () {
-    const { locales, loading } = this.props;
+    const { locales, loading, renderCell } = this.props;
     const { columns, data, onSelection } = this;
     const cols = getColumns({ columns, locales })
-      .map(col => col.getColumn(this.getCellData, this.sortColumn));
+      .map(col => col.getColumn(this.getCellData, this.sortColumn, renderCell));
     return (
       <BluePrintTable
         className="component-table"

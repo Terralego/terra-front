@@ -36,7 +36,8 @@ it('should render cell with type in className', () => {
   });
   const getCellData = () => 'foo';
   const sortColumn = a => a;
-  const column = instance.getColumn(getCellData, sortColumn);
+  const renderCell = children => children;
+  const column = instance.getColumn(getCellData, sortColumn, renderCell);
   const cell = column.props.cellRenderer(1, 1);
   expect(cell.props.className).toMatch('tf-table-cell--number');
 });
@@ -58,7 +59,8 @@ it('should get column', () => {
   const instance = new RenderColumn({ value: 'Label1', sortable: true, display: true, index: 1 }, {});
   const sortColumn = jest.fn();
   const getCellData = jest.fn(() => 2);
-  const GetColumn = () => instance.getColumn(getCellData, sortColumn);
+  const renderCell = children => children;
+  const GetColumn = () => instance.getColumn(getCellData, sortColumn, renderCell);
   const wrapper = shallow(<GetColumn sortColumn={sortColumn} />);
   const column = wrapper.find('Column');
   expect(column.length).toBe(1);
@@ -89,8 +91,9 @@ it('should render menu in column header', () => {
     sortable: true,
   });
   const sortColumn = 1;
+  const renderCell = children => children;
   instance.renderMenu = jest.fn();
-  const ColumnRenderer = () => instance.getColumn(null, sortColumn);
+  const ColumnRenderer = () => instance.getColumn(null, sortColumn, renderCell);
   const wrapper = shallow(<ColumnRenderer />);
   expect(wrapper.find('Column').length).toBe(1);
   const { columnHeaderCellRenderer: ColumnHeaderCellRenderer } = wrapper.find('Column').get(0).props;

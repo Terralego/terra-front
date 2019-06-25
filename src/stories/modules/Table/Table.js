@@ -28,8 +28,9 @@ export default () => (
     <Table
       columns={object('Columns', columns)}
       data={object('Data', data)}
-      loading={boolean('Loading ?', false)}
+      loading={boolean('Loading?', false)}
       onSelection={value => action('selectedRows')(value.join(','))}
+      renderCell={(children, x, y) => (boolean('Display cell coordinates?', false) ? <>[{x},{y}]: {children}</> : children)}
     />
   </div>
 );
