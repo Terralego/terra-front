@@ -30,7 +30,7 @@ export default () => (
       data={object('Data', data)}
       loading={boolean('Loading?', false)}
       onSelection={value => action('selectedRows')(value.join(','))}
-      renderCell={(children, x, y) => (boolean('Display cell coordinates?', false) ? <>[{x},{y}]: {children}</> : children)}
+      renderCell={({ children, originalRowIndex, columnIndex }) => (boolean('Display cell coordinates?', false) ? <>[{originalRowIndex},{columnIndex}]: {children}</> : children)}
     />
   </div>
 );
