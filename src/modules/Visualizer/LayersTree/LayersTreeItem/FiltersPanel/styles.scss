@@ -149,7 +149,7 @@ $scaleRatio: 1.25;
 @media(min-width: $breakpoints-tablet) and (max-width: $breakpoints-desktop) and (orientation: landscape) {
   .filters-panel {
     width: 18rem / $scaleRatio;
-    margin-left: 2.25rem;
+    margin-left: 6.5rem;
     
     &__arrow {
       $width: 2rem / $scaleRatio;

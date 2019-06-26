@@ -7,8 +7,8 @@ import LayersTreeSubItemsList from './LayersTreeSubItemsList';
 import OptionsLayer from './OptionsLayer';
 import LayersTreeItemFilters from './LayersTreeItemFilters';
 import LayerProps from '../../types/Layer';
-import LayersTreeItemOptionsDesktop from './LayersTreeItemOptionsDesktop';
-import LayersTreeItemOptionsMobile from './LayersTreeItemOptionsMobile/LayersTreeItemOptionsMobile';
+import LayersTreeItemOptions from './LayersTreeItemOptions';
+import withDeviceSize from './withDeviceSize';
 
 export class LayersTreeItem extends React.Component {
   static propTypes = {
@@ -18,6 +18,7 @@ export class LayersTreeItem extends React.Component {
     isTableActive: PropTypes.bool,
     total: PropTypes.number,
     setLayerState: PropTypes.func,
+    isTabletSized: PropTypes.bool,
   };
 
   static defaultProps = {
@@ -26,13 +27,13 @@ export class LayersTreeItem extends React.Component {
     isTableActive: false,
     total: null,
     setLayerState () {},
+    isTabletSized: false,
   }
 
   state = {
     isOptionsOpen: false,
     isFilterVisible: false,
     isWidgetActive: false,
-    isDesktopDevice: false,
   }
 
   componentWillUnmount () {
@@ -111,12 +112,13 @@ export class LayersTreeItem extends React.Component {
       isTableActive,
       total,
       hidden,
+      isTabletSized,
     } = this.props;
 
     if (hidden) return null;
 
     const {
-      isOptionsOpen, isFilterVisible, isWidgetActive, isDesktopDevice,
+      isOptionsOpen, isFilterVisible, isWidgetActive,
     } = this.state;
     const {
       onActiveChange,
@@ -142,12 +144,18 @@ export class LayersTreeItem extends React.Component {
       >
         <div className={
           classnames(
-            { 'layerNode__content--desktop': isDesktopDevice },
-            { 'layerNode__content--mobile': !isDesktopDevice },
+            { 'layerNode__content--desktop': !isTabletSized },
+            { 'layerNode__content--mobile': isTabletSized },
           )
         }
         >
-          <div className="layerNode__content-switch-label">
+          <div className={
+            classnames(
+              { 'layerNode__content--desktop-switch-label': !isTabletSized },
+              { 'layerNode__content--mobile-switch-label': isTabletSized },
+            )
+          }
+          >
             <Switch
               checked={!!isActive}
               onChange={onActiveChange}
@@ -172,43 +180,22 @@ export class LayersTreeItem extends React.Component {
             </div>
           </div>
           {isActive && (
-            isDesktopDevice
-              ? (
-                <LayersTreeItemOptionsDesktop
-                  hasSomeOptionActive={hasSomeOptionActive}
-                  isOptionsOpen={isOptionsOpen}
-                  handleOptionPanel={handleOptionPanel}
-                  layer={layer}
-                  toggleFilters={toggleFilters}
-                  isFilterVisible={isFilterVisible}
-                  getFilterPanelRef={getFilterPanelRef}
-                  form={form}
-                  toggleTable={toggleTable}
-                  isTableActive={isTableActive}
-                  displayTableButton={displayTableButton}
-                  toggleWidgets={toggleWidgets}
-                  widgets={widgets}
-                  isWidgetActive={isWidgetActive}
-                />
-              )
-              : (
-                <LayersTreeItemOptionsMobile
-                  hasSomeOptionActive={hasSomeOptionActive}
-                  isOptionsOpen={isOptionsOpen}
-                  handleOptionPanel={handleOptionPanel}
-                  layer={layer}
-                  toggleFilters={toggleFilters}
-                  isFilterVisible={isFilterVisible}
-                  getFilterPanelRef={getFilterPanelRef}
-                  form={form}
-                  toggleTable={toggleTable}
-                  isTableActive={isTableActive}
-                  displayTableButton={displayTableButton}
-                  toggleWidgets={toggleWidgets}
-                  widgets={widgets}
-                  isWidgetActive={isWidgetActive}
-                />
-              )
+          <LayersTreeItemOptions
+            hasSomeOptionActive={hasSomeOptionActive}
+            isOptionsOpen={isOptionsOpen}
+            handleOptionPanel={handleOptionPanel}
+            layer={layer}
+            toggleFilters={toggleFilters}
+            isFilterVisible={isFilterVisible}
+            getFilterPanelRef={getFilterPanelRef}
+            form={form}
+            toggleTable={toggleTable}
+            isTableActive={isTableActive}
+            displayTableButton={displayTableButton}
+            toggleWidgets={toggleWidgets}
+            widgets={widgets}
+            isWidgetActive={isWidgetActive}
+          />
           )}
         </div>
         {isOptionsOpen && isActive && (
@@ -231,4 +218,4 @@ export class LayersTreeItem extends React.Component {
   }
 }
 
-export default LayersTreeItem;
+export default withDeviceSize(LayersTreeItem);

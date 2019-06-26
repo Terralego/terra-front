@@ -13,6 +13,7 @@ $scaleRatio: 1.25;
 }
 
 .layerstree-group {
+    margin-top: .75rem;
   &--active {
     .bp3-collapse-body {
       transform: inherit !important;
@@ -62,45 +63,49 @@ $scaleRatio: 1.25;
   width: 100%;
 }
 
-.layerNode__content {
-  padding: 0;
-  outline: none;
-  
+.layerNode__content--desktop {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+
   &-switch-label {
     display: flex;
+    overflow: hidden;
+    white-space: nowrap;
+    text-overflow: ellipsis;
   }
 
-  &--desktop {
-    display: flex;
-    flex-direction: row;
-    justify-content: space-between;
-  }
-
-  &--mobile {
-    display: flex;
-    flex-direction: column;
-    align-items: stretch;
-    justify-content: center;
+  .layerNode__tooltip {  
+    width: 100%;
+    .layerNode__label {
+      display: flex;
+      overflow: hidden;
+      text-overflow: ellipsis;
+    }
   }
 }
-
-.layerNode__tooltip .layerNode__label {
-  width: 100%;
-  overflow: hidden;
-  white-space: nowrap;
-  text-overflow: ellipsis;
+.layerNode__content--mobile {
+  display: flex;
+  flex-direction: column;
+  align-items: stretch;
+  justify-content: center;
+  &-switch-label {
+    display: flex;
+    width: 100%;
+    padding: 0 0 .5rem 0,
+  }
+}
+.control-container {
+  padding: 1rem 0 0 0;
 }
 
 .bp3-switch {
   margin: 0 0 0 0;
-}
-
-.control-container {
-  padding: 1.5rem 0 0 0;
+  outline: none;
 }
 
 .layerstree-subitems-list {
-  .bp3-popover-target, button {
+  .bp3-popover-target, div button {
     width: 100%;
     outline: none;
     margin: auto;
@@ -130,12 +135,6 @@ $scaleRatio: 1.25;
         transform: scale(0.75);
       }
     }
-    &--active {
-      background: radial-gradient($active-button-color 0, transparent 55%) !important;
-      svg {
-        filter: invert(.5) sepia(1) saturate(5) hue-rotate(175deg);
-      }
-    }
   }
 
   &--desktop {
@@ -144,20 +143,27 @@ $scaleRatio: 1.25;
     .layerNode-options__button--more {
       transform: rotate(90deg);
     }
+
+    .layerNode-options__button--active {
+      background: radial-gradient($active-button-color 0, transparent 55%) !important;
+      svg {
+        filter: invert(.5) sepia(1) saturate(5) hue-rotate(175deg);
+      }
+    }
   }
 
   &--mobile {
     display: flex;
-    align-content: center;
-    justify-content: space-between;
-    padding: 1rem 0 0 0;
+    flex-flow: row wrap;
+    justify-content: space-around;
+    padding: .25rem 0;
+    border-top: 1px solid #293742;
+    border-radius: 2px;
+    background-color: #2937429a;
   }
 
   &--active {
     display: flex;
-    flex-direction: row;
-    justify-content: flex-end;
-    align-items: center;
   }
 }
 
@@ -166,9 +172,10 @@ $scaleRatio: 1.25;
   display: flex;
   flex-direction: column;
   outline: none;
+  font-size: .65rem;
   .bp3-icon {
-    padding-bottom: .5rem;
-    margin: 0;  
+    padding-bottom: .25rem;
+    margin: 0;
   }
 }
 
@@ -211,18 +218,20 @@ $scaleRatio: 1.25;
   }
 
   .layerNode-container {
-    padding: 1rem .5rem;
+    padding: .75rem .5rem .25rem .5rem;
     font-size: .875rem / $scaleRatio;
     letter-spacing: 0.06rem / $scaleRatio;
+    overflow: hidden;
+    white-space: inherit;
 
     .control-container {
-      padding: 1rem 0 0 0;
+      padding: .5rem 0 .5rem 0;
 
       .bp3-control {
         margin-bottom: 1.5rem;
       }
       .bp3-control:last-child {
-        margin-bottom: .5rem;
+        margin-bottom: .25rem;
       }
       .bp3-radio:first-child {
         margin-top: .75rem;

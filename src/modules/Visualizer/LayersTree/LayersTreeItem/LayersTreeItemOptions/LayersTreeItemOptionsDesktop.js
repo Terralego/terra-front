@@ -28,6 +28,27 @@ const LayersTreeItemOptionsDesktop = ({
       { 'layerNode-options--active': hasSomeOptionActive },
     )}
   >
+    {(widgets && !!widgets.length) && (
+      widgets.map(widget => (
+        <Tooltip
+          content={isWidgetActive ? `Fermer le widget ${widget.component}` : `Ouvrir le widget ${widget.component}`}
+          className="layerNode__tooltip"
+        >
+          <Button
+            key={widget.component}
+            className={classnames({
+              'layerNode-options__button': true,
+              'layerNode-options__button--active': () => isWidgetActive(widget),
+            })}
+            onClick={() => toggleWidgets(widget)}
+            minimal
+            icon="selection"
+            title={`widget ${widget.component}`}
+          />
+        </Tooltip>
+      ))
+    )
+}
     {displayTableButton && (
     <Tooltip
       content={isTableActive ? 'Fermer le tableau' : 'Ouvrir le tableau'}
@@ -97,26 +118,3 @@ const LayersTreeItemOptionsDesktop = ({
 );
 
 export default LayersTreeItemOptionsDesktop;
-
-
-// {(widgets && !!widgets.length) && (
-//   widgets.map(widget => (
-//     <Tooltip
-//       content={isWidgetActive ? `Fermer le widget ${widget.component}` : `Ouvrir le widget ${widget.component}`}
-//       className="layerNode__tooltip"
-//     >
-//       <Button
-//         key={widget.component}
-//         className={classnames({
-//           'layerNode-options__button': true,
-//           'layerNode-options__button--active': isWidgetActive(widget),
-//         })}
-//         onClick={toggleWidgets(widget)}
-//         minimal
-//         icon="selection"
-//         title={`widget ${widget.component}`}
-//       />
-//     </Tooltip>
-//   ))
-// )
-// }

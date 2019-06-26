@@ -58,7 +58,6 @@ export class FiltersPanel extends React.Component {
       />,
       document.body,
     );
-
     return (
       <div ref={containerRef}>
         {children}

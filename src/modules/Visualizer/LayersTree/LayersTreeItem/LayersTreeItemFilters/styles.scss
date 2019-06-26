@@ -4,7 +4,7 @@ $breakpoints-desktop: 1024px;
 $scaleRatio: 1.25;
 
 .layersTreeItemFilter {
-  margin: 0 -0.2rem 0.5rem;
+  margin: .5rem -0.2rem 0.15rem;
   &__tag {
     margin: 0.2rem;
     max-width: calc(100% - 1rem);
@@ -27,7 +27,6 @@ $scaleRatio: 1.25;
       }
       .bp3-tag-remove {
         padding: .5rem;
-
       }
     }
   }

@@ -5,7 +5,7 @@ import { Button } from '@blueprintjs/core';
 import LayerFetchValues from '../LayerFetchValues';
 import FiltersPanel from '../FiltersPanel';
 
-const LayersTreeItemOptionsMobile = ({
+const LayersTreeItemOptionsTablet = ({
   hasSomeOptionActive,
   isOptionsOpen,
   handleOptionPanel,
@@ -28,22 +28,40 @@ const LayersTreeItemOptionsMobile = ({
       { 'layerNode-options--active': hasSomeOptionActive },
     )}
   >
+    {(widgets && !!widgets.length) && (
+      widgets.map(widget => (
+        <Button
+          key={widget.component}
+          className={classnames({
+            'layerNode-options__button': true,
+            'layerNode-options__button--active': () => isWidgetActive(widget),
+          })}
+          onClick={() => toggleWidgets(widget)}
+          minimal
+          icon="selection"
+          title={`widget ${widget.component}`}
+        >
+          {widget.component}
+        </Button>
+      ))
+    )
+}
     {displayTableButton && (
-      <Button
-        className={
+    <Button
+      className={
         classnames(
           'layerNode-options__button',
           { 'layerNode-options__button--active': isTableActive },
         )
       }
-        onClick={toggleTable}
-        minimal
-        icon="th"
-        alt={isTableActive ? 'Fermer le tableau' : 'Ouvrir le tableau'}
-        title="table"
-      >
+      onClick={toggleTable}
+      minimal
+      icon="th"
+      alt={isTableActive ? 'Fermer le tableau' : 'Ouvrir le tableau'}
+      title="table"
+    >
       table
-      </Button>
+    </Button>
     )}
     {form && (
     <FiltersPanel
@@ -87,27 +105,4 @@ const LayersTreeItemOptionsMobile = ({
   </div>
 );
 
-export default LayersTreeItemOptionsMobile;
-
-
-// {(widgets && !!widgets.length) && (
-//   widgets.map(widget => (
-//     <Tooltip
-//       content={isWidgetActive ? `Fermer le widget ${widget.component}` : `Ouvrir le widget ${widget.component}`}
-//       className="layerNode__tooltip"
-//     >
-//       <Button
-//         key={widget.component}
-//         className={classnames({
-//           'layerNode-options__button': true,
-//           'layerNode-options__button--active': isWidgetActive(widget),
-//         })}
-//         onClick={toggleWidgets(widget)}
-//         minimal
-//         icon="selection"
-//         title={`widget ${widget.component}`}
-//       />
-//     </Tooltip>
-//   ))
-// )
-// }
+export default LayersTreeItemOptionsTablet;
