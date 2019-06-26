@@ -31,18 +31,22 @@ export class RenderColumn {
     );
   }
 
-  getColumn (getCellData, sortColumn, renderCell) {
+  getColumn (getCellData, sortColumn, renderCell, sortedIndexMap) {
     const { value, label = value, index, sortable, format: { type: formatType = '' } = {} } = this.props;
 
-    const cellRenderer = (rowIndex, columnIndex) => (
-      <Cell className={formatType ? `tf-table-cell--${formatType}` : ''}>
-        {renderCell(
-          formatValue(getCellData(rowIndex, columnIndex), formatType),
-          rowIndex,
-          columnIndex,
-        )}
-      </Cell>
-    );
+    const cellRenderer = (rowIndex, columnIndex) => {
+      const sortedIndex = (sortedIndexMap || [])[rowIndex];
+      return (
+        <Cell className={formatType ? `tf-table-cell--${formatType}` : ''}>
+          {renderCell({
+            children: formatValue(getCellData(rowIndex, columnIndex), formatType),
+            originalRowIndex: sortedIndex !== undefined ? sortedIndex : rowIndex,
+            rowIndex,
+            columnIndex,
+          })}
+        </Cell>
+      );
+    };
 
     const columnHeaderCellRenderer = () => (
       <ColumnHeaderCell

@@ -126,7 +126,7 @@ it('should get columns', () => {
 it('should give default renderCell', () => {
   const wrapper = shallow(<Table {...props} />);
   const instance = wrapper.instance();
-  expect(instance.props.renderCell()).toEqual(undefined);
+  expect(instance.props.renderCell({ children: 'foo' })).toBe('foo');
 });
 
 it('should get data', () => {

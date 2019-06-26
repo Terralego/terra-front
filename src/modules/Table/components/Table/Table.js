@@ -49,7 +49,7 @@ export class Table extends React.Component {
       columnIndex: 0,
       asc: true,
     },
-    renderCell: children => children,
+    renderCell: ({ children }) => children,
   };
 
   state = {
@@ -156,9 +156,10 @@ export class Table extends React.Component {
 
   render () {
     const { locales, loading, renderCell } = this.props;
+    const { sortedIndexMap } = this.state;
     const { columns, data, onSelection } = this;
     const cols = getColumns({ columns, locales })
-      .map(col => col.getColumn(this.getCellData, this.sortColumn, renderCell));
+      .map(col => col.getColumn(this.getCellData, this.sortColumn, renderCell, sortedIndexMap));
     return (
       <BluePrintTable
         className="component-table"
