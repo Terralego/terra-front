@@ -23,7 +23,12 @@ export class CaptureControl extends AbstractMapControl {
 
   captureScreen = async () => {
     const { map } = this.props;
-    const blob = await new Promise(resolve => map.getCanvas().toBlob(resolve));
+    const blob = await new Promise(async resolve => {
+      map.once('render', () =>
+        map.getCanvas().toBlob(resolve));
+      // trigger render
+      await map.setBearing(map.getBearing());
+    });
     saveAs(blob, 'map_screenshot.png');
   }
 
