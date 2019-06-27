@@ -1,36 +1,36 @@
 import React from 'react';
 
-export const withDeviceSize = WrappedComponent =>
-  class WithDeviceSize extends React.Component {
-    state = {
-      width: 0,
-      height: 0,
-    };
 
+const DESKTOP_BREAKPOINT = 1025;
+const PHONE_BREAKPOINT = 414;
+
+export const withDeviceSize = ({
+  desktop = DESKTOP_BREAKPOINT,
+  phone = PHONE_BREAKPOINT,
+} = {}) => WrappedComponent =>
+  class WithDeviceSize extends React.Component {
     componentDidMount () {
       this.updateWindowDimensions();
-      window.addEventListener('resize', this.updateWindowDimensions);
+      global.addEventListener('resize', this.updateWindowDimensions);
     }
 
     componentWillUnmount () {
-      window.removeEventListener('resize', this.updateWindowDimensions);
+      global.removeEventListener('resize', this.updateWindowDimensions);
     }
 
     updateWindowDimensions = () => {
-      this.setState({ width: window.innerWidth, height: window.innerHeight });
+      this.forceUpdate();
     };
 
     render () {
       const { ...props } = this.props;
-      const { width, height } = this.state;
+      const width = global.innerWidth;
 
       return (
         <WrappedComponent
           {...props}
-          windowWidth={width}
-          windowHeight={height}
-          isTabletSized={width < 1025}
-          isMobileSize={width < 321}
+          isMobileSized={width < desktop}
+          isPhoneSized={width <= phone}
         />
       );
     }

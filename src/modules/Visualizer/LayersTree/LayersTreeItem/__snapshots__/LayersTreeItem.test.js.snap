@@ -3,10 +3,10 @@
 exports[`should render correctly 1`] = `
 Array [
   <div
-    className="layerNode__content--mobile"
+    className="layerNode__content--desktop"
   >
     <div
-      className="layerNode__content--mobile-switch-label"
+      className="layerNode__content--desktop-switch-label"
     >
       <p>
         Switch
@@ -30,10 +30,10 @@ Array [
     LayersTreeItemFilters
   </p>,
   <div
-    className="layerNode__content--mobile"
+    className="layerNode__content--desktop"
   >
     <div
-      className="layerNode__content--mobile-switch-label"
+      className="layerNode__content--desktop-switch-label"
     >
       <p>
         Switch
@@ -50,10 +50,10 @@ Array [
     LayersTreeItemFilters
   </p>,
   <div
-    className="layerNode__content--mobile"
+    className="layerNode__content--desktop"
   >
     <div
-      className="layerNode__content--mobile-switch-label"
+      className="layerNode__content--desktop-switch-label"
     >
       <p>
         Switch
@@ -80,64 +80,10 @@ Array [
     LayersTreeSubItemsList
   </p>,
   <div
-    className="layerNode__content--mobile"
+    className="layerNode__content--desktop"
   >
     <div
-      className="layerNode__content--mobile-switch-label"
-    >
-      <p>
-        Switch
-      </p>
-      <p>
-        Tooltip
-      </p>
-      <div
-        className="layerNode-total"
-      />
-    </div>
-    <div
-      className="layerNode-options layerNode-options--mobile"
-    >
-      <p>
-        Button
-      </p>
-      0
-      <p>
-        FiltersPanel
-      </p>
-      <p>
-        Button
-      </p>
-    </div>
-  </div>,
-  <p>
-    LayersTreeItemFilters
-  </p>,
-  <div
-    className="layerNode__content--mobile"
-  >
-    <div
-      className="layerNode__content--mobile-switch-label"
-    >
-      <p>
-        Switch
-      </p>
-      <p>
-        Tooltip
-      </p>
-      <div
-        className="layerNode-total"
-      />
-    </div>
-  </div>,
-  <p>
-    LayersTreeItemFilters
-  </p>,
-  <div
-    className="layerNode__content--mobile"
-  >
-    <div
-      className="layerNode__content--mobile-switch-label"
+      className="layerNode__content--desktop-switch-label"
     >
       <p>
         Switch
@@ -167,10 +113,63 @@ Array [
     LayersTreeItemFilters
   </p>,
   <div
-    className="layerNode__content--mobile"
+    className="layerNode__content--desktop"
   >
     <div
-      className="layerNode__content--mobile-switch-label"
+      className="layerNode__content--desktop-switch-label"
+    >
+      <p>
+        Switch
+      </p>
+      <p>
+        Tooltip
+      </p>
+      <div
+        className="layerNode-total"
+      />
+    </div>
+  </div>,
+  <p>
+    LayersTreeItemFilters
+  </p>,
+  <div
+    className="layerNode__content--desktop"
+  >
+    <div
+      className="layerNode__content--desktop-switch-label"
+    >
+      <p>
+        Switch
+      </p>
+      <p>
+        Tooltip
+      </p>
+      <div
+        className="layerNode-total"
+      />
+    </div>
+    <div
+      className="layerNode-options layerNode-options--mobile layerNode-options--active"
+    >
+      <p>
+        Button
+      </p>
+      <p>
+        FiltersPanel
+      </p>
+      <p>
+        Button
+      </p>
+    </div>
+  </div>,
+  <p>
+    LayersTreeItemFilters
+  </p>,
+  <div
+    className="layerNode__content--desktop"
+  >
+    <div
+      className="layerNode__content--desktop-switch-label"
     >
       <p>
         Switch

@@ -18,7 +18,7 @@ export class LayersTreeItem extends React.Component {
     isTableActive: PropTypes.bool,
     total: PropTypes.number,
     setLayerState: PropTypes.func,
-    isTabletSized: PropTypes.bool,
+    isMobileSized: PropTypes.bool,
   };
 
   static defaultProps = {
@@ -27,13 +27,13 @@ export class LayersTreeItem extends React.Component {
     isTableActive: false,
     total: null,
     setLayerState () {},
-    isTabletSized: false,
+    isMobileSized: false,
   }
 
   state = {
     isOptionsOpen: false,
     isFilterVisible: false,
-    isWidgetActive: false,
+    hasWidgetActive: false,
   }
 
   componentWillUnmount () {
@@ -76,17 +76,19 @@ export class LayersTreeItem extends React.Component {
   toggleWidgets = widget => () => {
     const { layer, widgets: prevWidgets = [], setLayerState } = this.props;
     const contains = this.isWidgetActive(widget);
-    const { isWidgetActive } = this.state;
+    const { hasWidgetActive } = this.state;
     const widgets = [
       ...(contains
         ? prevWidgets.filter(w => w !== widget)
         : [...prevWidgets, widget]),
     ];
-    this.setState({ isWidgetActive: !isWidgetActive });
+
+    this.setState({ hasWidgetActive: !hasWidgetActive });
+
     setLayerState({ layer, state: { widgets } });
   }
 
-  isWidgetActive (widget) {
+  isWidgetActive = widget => {
     const { widgets = [] } = this.props;
     return widgets.includes(widget);
   }
@@ -112,13 +114,13 @@ export class LayersTreeItem extends React.Component {
       isTableActive,
       total,
       hidden,
-      isTabletSized,
+      isMobileSized,
     } = this.props;
 
     if (hidden) return null;
 
     const {
-      isOptionsOpen, isFilterVisible, isWidgetActive,
+      isOptionsOpen, isFilterVisible, hasWidgetActive,
     } = this.state;
     const {
       onActiveChange,
@@ -128,10 +130,12 @@ export class LayersTreeItem extends React.Component {
       getFilterPanelRef,
       toggleWidgets,
       handleOptionPanel,
+      isWidgetActive,
     } = this;
 
     const totalResult = typeof (total) === 'number';
-    const hasSomeOptionActive = isTableActive || isFilterVisible || isOptionsOpen || isWidgetActive;
+    const hasSomeOptionActive =
+    isTableActive || isFilterVisible || isOptionsOpen || hasWidgetActive;
 
     const htmlID = btoa(JSON.stringify(layer).replace(/\W/g, ''));
     const displayTableButton = fields && !!fields.length;
@@ -144,15 +148,15 @@ export class LayersTreeItem extends React.Component {
       >
         <div className={
           classnames(
-            { 'layerNode__content--desktop': !isTabletSized },
-            { 'layerNode__content--mobile': isTabletSized },
+            { 'layerNode__content--desktop': !isMobileSized },
+            { 'layerNode__content--mobile': isMobileSized },
           )
         }
         >
           <div className={
             classnames(
-              { 'layerNode__content--desktop-switch-label': !isTabletSized },
-              { 'layerNode__content--mobile-switch-label': isTabletSized },
+              { 'layerNode__content--desktop-switch-label': !isMobileSized },
+              { 'layerNode__content--mobile-switch-label': isMobileSized },
             )
           }
           >
@@ -218,4 +222,4 @@ export class LayersTreeItem extends React.Component {
   }
 }
 
-export default withDeviceSize(LayersTreeItem);
+export default withDeviceSize()(LayersTreeItem);

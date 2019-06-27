@@ -34,9 +34,9 @@ const LayersTreeItemOptionsTablet = ({
           key={widget.component}
           className={classnames({
             'layerNode-options__button': true,
-            'layerNode-options__button--active': () => isWidgetActive(widget),
+            'layerNode-options__button--active': isWidgetActive(widget),
           })}
-          onClick={() => toggleWidgets(widget)}
+          onClick={toggleWidgets(widget)}
           minimal
           icon="selection"
           title={`widget ${widget.component}`}

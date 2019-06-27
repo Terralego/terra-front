@@ -27,9 +27,9 @@ $scaleRatio: 1.25;
   margin-right: .75rem;
 }
 
-@media(min-width: $breakpoints-tablet) and (max-width: $breakpoints-desktop) and (orientation: landscape) {
+@media(min-width: $breakpoints-phone) and (max-width: $breakpoints-desktop) {
   .layerNode-Option-Container {
-    padding: .5rem / $scaleRatio 0;
+    padding: 1rem 0;
     
     .bp3-slider {
       width: calc(100% - .5rem / $scaleRatio);

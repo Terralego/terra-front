@@ -38,9 +38,9 @@ const LayersTreeItemOptionsDesktop = ({
             key={widget.component}
             className={classnames({
               'layerNode-options__button': true,
-              'layerNode-options__button--active': () => isWidgetActive(widget),
+              'layerNode-options__button--active': isWidgetActive(widget),
             })}
-            onClick={() => toggleWidgets(widget)}
+            onClick={toggleWidgets(widget)}
             minimal
             icon="selection"
             title={`widget ${widget.component}`}
@@ -50,24 +50,24 @@ const LayersTreeItemOptionsDesktop = ({
     )
 }
     {displayTableButton && (
-    <Tooltip
-      content={isTableActive ? 'Fermer le tableau' : 'Ouvrir le tableau'}
-      className="layerNode__tooltip"
-    >
-      <Button
-        className={
+      <Tooltip
+        content={isTableActive ? 'Fermer le tableau' : 'Ouvrir le tableau'}
+        className="layerNode__tooltip"
+      >
+        <Button
+          className={
         classnames(
           'layerNode-options__button',
           { 'layerNode-options__button--active': isTableActive },
         )
       }
-        onClick={toggleTable}
-        minimal
-        icon="th"
-        alt={isTableActive ? 'Fermer le tableau' : 'Ouvrir le tableau'}
-        title="table"
-      />
-    </Tooltip>
+          onClick={toggleTable}
+          minimal
+          icon="th"
+          alt={isTableActive ? 'Fermer le tableau' : 'Ouvrir le tableau'}
+          title="table"
+        />
+      </Tooltip>
     )}
     {form && (
     <FiltersPanel

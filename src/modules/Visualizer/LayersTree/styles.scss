@@ -13,7 +13,7 @@ $scaleRatio: 1.25;
 }
 
 .layerstree-group {
-    margin-top: .75rem;
+  margin-top: .75rem;
   &--active {
     .bp3-collapse-body {
       transform: inherit !important;
@@ -92,7 +92,8 @@ $scaleRatio: 1.25;
   &-switch-label {
     display: flex;
     width: 100%;
-    padding: 0 0 .5rem 0,
+    padding: 0 0 .5rem 0;
+    font-size: .875rem / $scaleRatio;
   }
 }
 .control-container {
@@ -155,11 +156,21 @@ $scaleRatio: 1.25;
   &--mobile {
     display: flex;
     flex-flow: row wrap;
-    justify-content: space-around;
+    justify-content: flex-end;
     padding: .25rem 0;
     border-top: 1px solid #293742;
     border-radius: 2px;
     background-color: #2937429a;
+    
+    .layerNode-options__button {
+      width: 4.06rem;
+    }
+    .layerNode-options__button--active {
+      background: radial-gradient(circle at 50% 1.05rem, $active-button-color 0, transparent 40%) !important;
+      svg {
+        filter: invert(.5) sepia(1) saturate(5) hue-rotate(175deg);
+      }
+    }
   }
 
   &--active {
@@ -193,11 +204,10 @@ $scaleRatio: 1.25;
   }
 }
 
-@media(min-width: $breakpoints-tablet) and (max-width: $breakpoints-desktop) and (orientation: landscape) {
+@media(min-width: $breakpoints-phone) and (max-width: $breakpoints-desktop){
   
   .layerstree-group {
-    padding: 1rem 0 1rem 0;
-
+    
     &--active {
       .bp3-collapse-body {
         padding: .5rem / $scaleRatio;
@@ -211,10 +221,6 @@ $scaleRatio: 1.25;
         font-weight: 400;
       }
     }
-  }
-
-  .layerstree-group:first-of-type {
-    padding: 0 0 1rem 0;
   }
 
   .layerNode-container {
@@ -235,6 +241,11 @@ $scaleRatio: 1.25;
       }
       .bp3-radio:first-child {
         margin-top: .75rem;
+      }
+      .bp3-select-popover .bp3-menu {
+        .control-container__item li {
+          padding: .5rem;
+        }
       }
     }
   }

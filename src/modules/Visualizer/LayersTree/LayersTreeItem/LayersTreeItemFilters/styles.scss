@@ -14,7 +14,7 @@ $scaleRatio: 1.25;
   }
 }
 
-@media(min-width: $breakpoints-tablet) and (max-width: $breakpoints-desktop) and (orientation: landscape) {
+@media(min-width: $breakpoints-phone) and (max-width: $breakpoints-desktop){
   .layersTreeItemFilter {
     margin: 0;
     &__tag {

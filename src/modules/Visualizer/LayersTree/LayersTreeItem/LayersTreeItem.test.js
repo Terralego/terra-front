@@ -2,7 +2,7 @@ import React from 'react';
 import renderer from 'react-test-renderer';
 import { shallow } from 'enzyme';
 
-import LayersTreeItem from './LayersTreeItem';
+import { LayersTreeItem } from './LayersTreeItem';
 
 jest.mock('@blueprintjs/core', () => ({
   Button () {
@@ -263,7 +263,7 @@ it('should toggle widgets', () => {
       widgets: [],
     },
   });
-  expect(instance.setState).toHaveBeenCalledWith({ isWidgetActive: true });
+  expect(instance.setState).toHaveBeenCalledWith({ hasWidgetActive: true });
 });
 
 it('should reset filters panel listener', () => {

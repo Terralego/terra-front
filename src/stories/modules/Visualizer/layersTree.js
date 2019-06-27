@@ -6,7 +6,10 @@ export default [{
     active: true,
   },
   filters: {
-    fields: [],
+    fields: [{
+      label: 'foo',
+      property: 'foo',
+    }],
     form: [{
       label: 'Single value',
       property: 'single',

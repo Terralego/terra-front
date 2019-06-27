@@ -78,7 +78,7 @@ $scaleRatio: 1.25;
     overflow: auto;
   }
 
-  &__form::-webkit-scrollbar {
+  &__form::-webkit-scrollbar, .bp3-select-popover .bp3-menu::-webkit-scrollbar {
     width: .5rem;
   }
 
@@ -132,24 +132,24 @@ $scaleRatio: 1.25;
 // Styles relative to DarkTheme
 .bp3-dark {
   .filters-panel {
-    &__form {
+    &__form, .bp3-select-popover .bp3-menu {
       scrollbar-color: #202B33 #30404D;
     }
 
-    &__form::-webkit-scrollbar-track {
+    &__form::-webkit-scrollbar-track , .bp3-select-popover .bp3-menu::-webkit-scrollbar-track {
       background-color: #30404D;
     }
     
-    &__form::-webkit-scrollbar-thumb {
+    &__form::-webkit-scrollbar-thumb, .bp3-select-popover .bp3-menu::-webkit-scrollbar-thumb {
       background-color: #202B33;
     }
   }
 }
 
-@media(min-width: $breakpoints-tablet) and (max-width: $breakpoints-desktop) and (orientation: landscape) {
+@media(min-width: $breakpoints-phone) and (max-width: $breakpoints-desktop){
   .filters-panel {
     width: 18rem / $scaleRatio;
-    margin-left: 6.5rem;
+    margin-left: 5.5rem;
     
     &__arrow {
       $width: 2rem / $scaleRatio;
@@ -171,7 +171,7 @@ $scaleRatio: 1.25;
       padding: 0 0.7rem / $scaleRatio;
     }
 
-    &__form::-webkit-scrollbar {
+    &__form::-webkit-scrollbar, .bp3-select-popover .bp3-menu::-webkit-scrollbar  {
       width: .5rem / $scaleRatio;
     }
 
@@ -191,6 +191,10 @@ $scaleRatio: 1.25;
       max-width: 40rem / $scaleRatio;
       max-height: 30rem / $scaleRatio;
       font-size: .875rem / $scaleRatio;
+      
+      .control-container__item li {
+        padding: .5rem;
+      }
     }
 
     .bp3-control.bp3-checkbox {

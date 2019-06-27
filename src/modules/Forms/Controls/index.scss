@@ -19,7 +19,7 @@ $scaleRatio: 1.25;
   }
 }
 
-@media(min-width: $breakpoints-tablet) and (max-width: $breakpoints-desktop) and (orientation: landscape) {
+@media(min-width: $breakpoints-phone) and (max-width: $breakpoints-desktop) {
   .control-label {
     .bp3-popover-wrapper .tf-multiselect {
       font-size: .875rem / $scaleRatio;
