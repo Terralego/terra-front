@@ -14,6 +14,11 @@ $scaleRatio: 1.25;
 
 .layerstree-group {
   margin-top: .75rem;
+  margin-left: .5rem;
+
+  .layerstree-group--0 {
+    margin-left: 0;
+  }
 
   &--active {
     .bp3-collapse-body {

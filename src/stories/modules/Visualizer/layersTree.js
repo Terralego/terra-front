@@ -73,63 +73,46 @@ export default [{
     opacity: 0.2,
   },
 }, {
-  group: 'Groupées',
+  group: 'Groupées inclusives',
   initialState: {
     active: false,
   },
   layers: [{
     label: 'Variantes 1',
     sublayers: [{
-      label: 'Couche 5',
+      label: 'Couche 1.1',
     }, {
-      label: 'Couche 6',
+      label: 'Couche 1.2',
     }, {
-      label: 'Couche 7',
+      label: 'Couche 1.3',
     }, {
-      label: 'Couche 8',
+      label: 'Couche 1.4',
     }, {
-      label: 'Couche 9',
+      label: 'Couche 1.5',
     }, {
-      label: 'Couche 10',
+      label: 'Couche 1.6',
     }, {
-      label: 'Couche 11',
+      label: 'Couche 1.7',
     }],
   }, {
-    label: 'Couche 3',
+    label: 'Couche 2',
   }, {
-    label: 'Couche 4',
+    label: 'Couche 3',
   }],
 }, {
-  group: 'Groupées',
+  group: 'Groupées exclusive with radio',
+  type: 'exclusive',
   layers: [{
-    label: 'Variantes 1',
-    sublayers: [{
-      label: 'Couche 5',
-    }, {
-      label: 'Couche 6',
-    }, {
-      label: 'Couche 7',
-    }, {
-      label: 'Couche 8',
-    }, {
-      label: 'Couche 9',
-    }, {
-      label: 'Couche 10',
-    }, {
-      label: 'Couche 11',
-    }],
-  }, {
-    label: 'Couche 3',
-  }, {
     label: 'Couche 4',
-  }],
-}, {
-  label: 'Variantes 1',
-  sublayers: [{
+  }, {
     label: 'Couche 5',
   }, {
     label: 'Couche 6',
-  }, {
+  }],
+}, {
+  group: 'Groupées exclusive with select',
+  type: 'exclusive',
+  layers: [{
     label: 'Couche 7',
   }, {
     label: 'Couche 8',
@@ -139,14 +122,27 @@ export default [{
     label: 'Couche 10',
   }, {
     label: 'Couche 11',
+  }, {
+    label: 'Couche 12',
   }],
 }, {
-  label: 'Variantes 2',
-  sublayers: [{
-    label: 'Couche 12',
+  group: 'Nested',
+  layers: [{
+    group: 'Very nested',
+    layers: [{
+      label: 'Couche 14',
+    }, {
+      group: 'Very very nested',
+      layers: [{
+        group: 'We need to go deeper',
+        layers: [{
+          label: '=_=',
+        }, {
+          label: 'Couche 15',
+        }],
+      }],
+    }],
   }, {
     label: 'Couche 13',
-  }, {
-    label: 'Couche 14',
   }],
 }];

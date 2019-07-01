@@ -5,11 +5,13 @@ import classnames from 'classnames';
 import LayersTreeItem from '../LayersTreeItem';
 
 export class LayersTreeGroup extends React.Component {
-  // Get open from layer if not set default value
-  // eslint-disable-next-line
-  state = this.props.layer.initialState || {
-    open: true,
-  };
+  constructor (props) {
+    super(props);
+    const { layer: { initialState }, initialOpen: open = true } = props;
+    this.state = initialState || {
+      open,
+    };
+  }
 
   handleClick = () => {
     const { open } = this.state;
@@ -22,15 +24,20 @@ export class LayersTreeGroup extends React.Component {
       title,
       layer: { layers },
       isHidden,
+      level = 0,
     } = this.props;
 
     const { handleClick } = this;
     return (
       isHidden ? null : (
         <div
-          className={classnames('layerstree-group', {
-            'layerstree-group--active': open,
-          })}
+          className={classnames(
+            'layerstree-group',
+            `layerstree-group--${level}`,
+            {
+              'layerstree-group--active': open,
+            },
+          )}
         >
           <Button
             className="layerstree-group__label-button"
@@ -43,12 +50,22 @@ export class LayersTreeGroup extends React.Component {
           <Collapse
             isOpen={open}
           >
-            {layers.map(layer => (
-              <LayersTreeItem
-                key={layer.label}
-                layer={layer}
-              />
-            ))}
+            {layers.map(layer => (layer.group
+              ? (
+                <LayersTreeGroup
+                  key={layer.group}
+                  title={layer.group}
+                  layer={layer}
+                  initialOpen={false}
+                  level={level + 1}
+                />
+              )
+              : (
+                <LayersTreeItem
+                  key={layer.label}
+                  layer={layer}
+                />
+              )))}
           </Collapse>
         </div>
       )

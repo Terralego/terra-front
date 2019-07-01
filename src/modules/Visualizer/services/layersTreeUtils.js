@@ -28,7 +28,9 @@ export function initLayersStateAction (layersTree) {
       return layersStateMap;
     }, map);
   }
-  return reduceLayers(layersTree, layersTreeState);
+  const a = reduceLayers(layersTree, layersTreeState);
+  console.log(a);
+  return a;
 }
 
 export function setLayerStateAction (layer, layerState, prevLayersTreeState) {
