@@ -106,3 +106,12 @@ it('should process custom tags with full spec', () => {
   );
   expect(tree.toJSON()).toMatchSnapshot();
 });
+
+it('should format number', () => {
+  const tree = renderer.create(
+    <Template
+      template={'foo {{42000.123 | formatNumber(\'en\')}}'}
+    />,
+  );
+  expect(tree.toJSON()).toMatchSnapshot();
+});
