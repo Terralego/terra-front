@@ -101,7 +101,7 @@ export default [{
   }],
 }, {
   group: 'Groupées exclusive with radio',
-  type: 'exclusive',
+  exclusive: true,
   layers: [{
     label: 'Couche 4',
   }, {
@@ -111,7 +111,7 @@ export default [{
   }],
 }, {
   group: 'Groupées exclusive with select',
-  type: 'exclusive',
+  exclusive: true,
   layers: [{
     label: 'Couche 7',
   }, {
@@ -124,6 +124,23 @@ export default [{
     label: 'Couche 11',
   }, {
     label: 'Couche 12',
+  }],
+}, {
+  group: 'Groupées exclusive with radio and groups',
+  exclusive: true,
+  layers: [{
+    label: 'Couche 4',
+  }, {
+    label: 'Couche 5',
+  }, {
+    group: 'Group',
+    layers: [{
+      label: 'Couche 7',
+    }, {
+      label: 'Couche 8',
+    }],
+  }, {
+    label: 'Couche 6',
   }],
 }, {
   group: 'Nested',

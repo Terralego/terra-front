@@ -17,6 +17,7 @@ import LayersTreeItemOptions from './LayersTreeItemOptions';
 import withDeviceSize from './withDeviceSize';
 import WarningZoom from './WarningZoom';
 import { displayWarningAccordingToZoom } from '../../services/warningZoom';
+import LayersTreeExclusiveItemsList from './LayersTreeExclusiveItemsList';
 
 export class LayersTreeItem extends React.Component {
   static propTypes = {
@@ -103,7 +104,6 @@ export class LayersTreeItem extends React.Component {
     return widgets.includes(widget);
   }
 
-
   resetFilterPanelListener () {
     if (this.clickListener) {
       document.body.removeEventListener('mousedown', this.clickListener);
@@ -114,10 +114,14 @@ export class LayersTreeItem extends React.Component {
     const {
       layer,
       layer: {
-        label,
+        group,
+        label = group,
+        // DEPRECATED
         sublayers,
+        layers,
         filters: { form, fields } = {},
         widgets = [],
+        exclusive,
       },
       isActive,
       opacity,
@@ -205,6 +209,11 @@ export class LayersTreeItem extends React.Component {
               )}
             </div>
           </div>
+          {isActive && exclusive && (
+            <LayersTreeExclusiveItemsList
+              layer={layer}
+            />
+          )}
           {isActive && !isPhoneSized && (
           <LayersTreeItemOptions
             hasSomeOptionActive={hasSomeOptionActive}
@@ -232,6 +241,7 @@ export class LayersTreeItem extends React.Component {
         )}
         <>
           <LayersTreeItemFilters layer={layer} />
+          {/* DEPRECATED */}
           {isActive && sublayers && (
             <LayersTreeSubItemsList
               layer={layer}

@@ -1,10 +1,19 @@
 import React from 'react';
+import PropTypes from 'prop-types';
 import { H5, Button, Collapse } from '@blueprintjs/core';
 import classnames from 'classnames';
 
 import LayersTreeItem from '../LayersTreeItem';
 
 export class LayersTreeGroup extends React.Component {
+  static propTypes = {
+    title: PropTypes.string.isRequired,
+    layer: PropTypes.shape({
+      label: PropTypes.string,
+      group: PropTypes.string,
+    }).isRequired,
+  };
+
   constructor (props) {
     super(props);
     const { layer: { initialState }, initialOpen: open = true } = props;
@@ -22,12 +31,13 @@ export class LayersTreeGroup extends React.Component {
     const { open } = this.state;
     const {
       title,
-      layer: { layers },
+      layer: { layers, exclusive },
       isHidden,
       level = 0,
     } = this.props;
 
     const { handleClick } = this;
+
     return (
       isHidden ? null : (
         <div
@@ -50,7 +60,7 @@ export class LayersTreeGroup extends React.Component {
           <Collapse
             isOpen={open}
           >
-            {layers.map(layer => (layer.group
+            {layers.map(layer => ((layer.group && !exclusive)
               ? (
                 <LayersTreeGroup
                   key={layer.group}
@@ -64,6 +74,7 @@ export class LayersTreeGroup extends React.Component {
                 <LayersTreeItem
                   key={layer.label}
                   layer={layer}
+                  exclusive={exclusive}
                 />
               )))}
           </Collapse>

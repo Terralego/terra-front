@@ -20,6 +20,7 @@ export function initLayersStateAction (layersTree) {
       initialState.opacity = initialState.opacity === undefined
         ? 1
         : initialState.opacity;
+
       layersStateMap.set(layer, {
         active: false,
         opacity: 1,
@@ -28,18 +29,35 @@ export function initLayersStateAction (layersTree) {
       return layersStateMap;
     }, map);
   }
-  const a = reduceLayers(layersTree, layersTreeState);
-  console.log(a);
-  return a;
+  return reduceLayers(layersTree, layersTreeState);
+}
+
+export function setGroupLayerStateAction (layer, layerState, prevLayersTreeState) {
+  const { layers } = layer;
+  let layersTreeState = prevLayersTreeState;
+
+  layers.forEach((sublayer, index) => {
+    const newLayerState = { ...layerState };
+    if (newLayerState.active && index > 0) {
+      newLayerState.active = false;
+    }
+    // One must be before the other
+    // eslint-disable-next-line no-use-before-define
+    layersTreeState = setLayerStateAction(sublayer, newLayerState, layersTreeState);
+  });
+  return layersTreeState;
 }
 
 export function setLayerStateAction (layer, layerState, prevLayersTreeState) {
+  if (layer.group) return setGroupLayerStateAction(layer, layerState, prevLayersTreeState);
+
   const layersTreeState = new Map(prevLayersTreeState);
   const prevLayerState = layersTreeState.get(layer);
   const newLayerState = { ...layerState };
 
   if (!prevLayerState) return prevLayersTreeState;
 
+  // DEPRECATED
   if (prevLayerState.sublayers && !prevLayerState.sublayers.find(sl => sl)) {
     newLayerState.sublayers = [...prevLayerState.sublayers];
     newLayerState.sublayers[0] = true;

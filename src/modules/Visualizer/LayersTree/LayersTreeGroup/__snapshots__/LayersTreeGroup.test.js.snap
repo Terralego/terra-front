@@ -3,7 +3,7 @@
 exports[`should render correctly 1`] = `
 Array [
   <div
-    className="layerstree-group layerstree-group--active"
+    className="layerstree-group layerstree-group--0 layerstree-group--active"
   >
     <p>
       Button
@@ -16,7 +16,7 @@ Array [
     </p>
   </div>,
   <div
-    className="layerstree-group"
+    className="layerstree-group layerstree-group--0"
   >
     <p>
       Button
