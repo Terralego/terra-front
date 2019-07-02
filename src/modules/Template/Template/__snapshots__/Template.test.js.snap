@@ -35,6 +35,16 @@ Array [
 ]
 `;
 
+exports[`should format number 1`] = `
+Array [
+  <p>
+    foo 42,000.123
+  </p>,
+  "
+",
+]
+`;
+
 exports[`should not compile custom link 1`] = `
 Array [
   <p>

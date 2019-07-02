@@ -101,3 +101,25 @@ it('should render menu in column header', () => {
   columnHeaderWrapper.props().menuRenderer();
   expect(instance.renderMenu).toHaveBeenCalledWith(sortColumn);
 });
+
+it('should render cell with sorted index', () => {
+  const instance = new RenderColumn({
+    value: 'foo',
+    index: 0,
+    sortable: true,
+  });
+  const sortColumn = 1;
+  const getCellData = jest.fn(() => 'foo');
+  const renderCell = jest.fn();
+
+  const ColumnRenderer = () => instance.getColumn(getCellData, sortColumn, renderCell, [3, 2, 1]);
+  const wrapper = shallow(<ColumnRenderer />);
+  const { cellRenderer } = wrapper.find('Column').get(0).props;
+  cellRenderer(0, 0);
+  expect(renderCell).toHaveBeenCalledWith({
+    children: 'foo',
+    originalRowIndex: 3,
+    rowIndex: 0,
+    columnIndex: 0,
+  });
+});
