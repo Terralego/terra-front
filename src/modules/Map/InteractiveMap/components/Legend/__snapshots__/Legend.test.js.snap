@@ -41,11 +41,8 @@ exports[`should render a manual legend 1`] = `
           />
         </svg>
       </div>
-       foo  
-    </p>
-    
-
-    <p>
+       foo
+      <br />
       <div
         className="tf-legend__symbol"
         style={
@@ -92,11 +89,8 @@ exports[`should render a manual legend 1`] = `
           />
         </svg>
       </div>
-       foo  
-    </p>
-    
-
-    <p>
+       foo
+      <br />
       <div
         className="tf-legend__symbol"
         style={
