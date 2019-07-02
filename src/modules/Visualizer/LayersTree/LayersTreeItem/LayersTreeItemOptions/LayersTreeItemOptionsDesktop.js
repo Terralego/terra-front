@@ -31,11 +31,11 @@ const LayersTreeItemOptionsDesktop = ({
     {(widgets && !!widgets.length) && (
       widgets.map(widget => (
         <Tooltip
-          content={isWidgetActive ? `Fermer le widget ${widget.component}` : `Ouvrir le widget ${widget.component}`}
-          className="layerNode__tooltip"
+          key={widget.component}
+          content={isWidgetActive(widget) ? `Fermer le widget ${widget.component}` : `Ouvrir le widget ${widget.component}`}
+          className="layerNode__tooltip widgets"
         >
           <Button
-            key={widget.component}
             className={classnames({
               'layerNode-options__button': true,
               'layerNode-options__button--active': isWidgetActive(widget),
@@ -52,7 +52,7 @@ const LayersTreeItemOptionsDesktop = ({
     {displayTableButton && (
       <Tooltip
         content={isTableActive ? 'Fermer le tableau' : 'Ouvrir le tableau'}
-        className="layerNode__tooltip"
+        className="layerNode__tooltip table"
       >
         <Button
           className={
@@ -80,7 +80,7 @@ const LayersTreeItemOptionsDesktop = ({
       )}
       <Tooltip
         content={isFilterVisible ? 'Fermer les filtres' : 'Ouvrir les filtres'}
-        className="layerNode__tooltip"
+        className="layerNode__tooltip filters"
       >
         <Button
           className={
@@ -98,7 +98,7 @@ const LayersTreeItemOptionsDesktop = ({
     )}
     <Tooltip
       content={isOptionsOpen ? 'Fermer les options' : 'Ouvrir les options'}
-      className="layerNode__tooltip"
+      className="layerNode__tooltip options"
     >
       <Button
         className={

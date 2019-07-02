@@ -1,0 +1,227 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`should render default options 1`] = `
+<div
+  className="layerNode-options layerNode-options--desktop"
+>
+  <span
+    className="bp3-popover-wrapper layerNode__tooltip options"
+  >
+    <span
+      className="bp3-popover-target"
+      onBlur={[Function]}
+      onFocus={[Function]}
+      onMouseEnter={[Function]}
+      onMouseLeave={[Function]}
+    >
+      <button
+        className="bp3-button bp3-minimal layerNode-options__button layerNode-options__button--more"
+        onKeyDown={[Function]}
+        onKeyUp={[Function]}
+        tabIndex={0}
+        title="options d'affichage"
+        type="button"
+      >
+        <span
+          className="bp3-icon bp3-icon-more"
+          icon="more"
+        >
+          <svg
+            data-icon="more"
+            height={16}
+            viewBox="0 0 16 16"
+            width={16}
+          >
+            <desc>
+              more
+            </desc>
+            <path
+              d="M2 6.03a2 2 0 1 0 0 4 2 2 0 1 0 0-4zM14 6.03a2 2 0 1 0 0 4 2 2 0 1 0 0-4zM8 6.03a2 2 0 1 0 0 4 2 2 0 1 0 0-4z"
+              fillRule="evenodd"
+            />
+          </svg>
+        </span>
+      </button>
+    </span>
+  </span>
+</div>
+`;
+
+exports[`should render no tooltip if empty widget empty 1`] = `
+<div
+  className="layerNode-options layerNode-options--desktop"
+>
+  <span
+    className="bp3-popover-wrapper layerNode__tooltip options"
+  >
+    <span
+      className="bp3-popover-target"
+      onBlur={[Function]}
+      onFocus={[Function]}
+      onMouseEnter={[Function]}
+      onMouseLeave={[Function]}
+    >
+      <button
+        className="bp3-button bp3-minimal layerNode-options__button layerNode-options__button--more"
+        onKeyDown={[Function]}
+        onKeyUp={[Function]}
+        tabIndex={0}
+        title="options d'affichage"
+        type="button"
+      >
+        <span
+          className="bp3-icon bp3-icon-more"
+          icon="more"
+        >
+          <svg
+            data-icon="more"
+            height={16}
+            viewBox="0 0 16 16"
+            width={16}
+          >
+            <desc>
+              more
+            </desc>
+            <path
+              d="M2 6.03a2 2 0 1 0 0 4 2 2 0 1 0 0-4zM14 6.03a2 2 0 1 0 0 4 2 2 0 1 0 0-4zM8 6.03a2 2 0 1 0 0 4 2 2 0 1 0 0-4z"
+              fillRule="evenodd"
+            />
+          </svg>
+        </span>
+      </button>
+    </span>
+  </span>
+</div>
+`;
+
+exports[`should render with proporties 1`] = `
+<div
+  className="layerNode-options layerNode-options--desktop"
+>
+  <span
+    className="bp3-popover-wrapper layerNode__tooltip widgets"
+  >
+    <span
+      className="bp3-popover-target"
+      onBlur={[Function]}
+      onFocus={[Function]}
+      onMouseEnter={[Function]}
+      onMouseLeave={[Function]}
+    >
+      <button
+        className="bp3-button bp3-minimal layerNode-options__button layerNode-options__button--active"
+        onClick={true}
+        onKeyDown={[Function]}
+        onKeyUp={[Function]}
+        tabIndex={0}
+        title="widget foo"
+        type="button"
+      >
+        <span
+          className="bp3-icon bp3-icon-selection"
+          icon="selection"
+        >
+          <svg
+            data-icon="selection"
+            height={16}
+            viewBox="0 0 16 16"
+            width={16}
+          >
+            <desc>
+              selection
+            </desc>
+            <path
+              d="M8 0C3.58 0 0 3.58 0 8s3.58 8 8 8 8-3.58 8-8-3.58-8-8-8zm0 14c-3.31 0-6-2.69-6-6s2.69-6 6-6 6 2.69 6 6-2.69 6-6 6zm0-9C6.34 5 5 6.34 5 8s1.34 3 3 3 3-1.34 3-3-1.34-3-3-3z"
+              fillRule="evenodd"
+            />
+          </svg>
+        </span>
+      </button>
+    </span>
+  </span>
+  <span
+    className="bp3-popover-wrapper layerNode__tooltip table"
+  >
+    <span
+      className="bp3-popover-target"
+      onBlur={[Function]}
+      onFocus={[Function]}
+      onMouseEnter={[Function]}
+      onMouseLeave={[Function]}
+    >
+      <button
+        alt="Ouvrir le tableau"
+        className="bp3-button bp3-minimal layerNode-options__button"
+        onKeyDown={[Function]}
+        onKeyUp={[Function]}
+        tabIndex={0}
+        title="table"
+        type="button"
+      >
+        <span
+          className="bp3-icon bp3-icon-th"
+          icon="th"
+        >
+          <svg
+            data-icon="th"
+            height={16}
+            viewBox="0 0 16 16"
+            width={16}
+          >
+            <desc>
+              th
+            </desc>
+            <path
+              d="M15 1H1c-.6 0-1 .5-1 1v12c0 .6.4 1 1 1h14c.6 0 1-.4 1-1V2c0-.5-.4-1-1-1zM6 13H2v-2h4v2zm0-3H2V8h4v2zm0-3H2V5h4v2zm8 6H7v-2h7v2zm0-3H7V8h7v2zm0-3H7V5h7v2z"
+              fillRule="evenodd"
+            />
+          </svg>
+        </span>
+      </button>
+    </span>
+  </span>
+  <p>
+    FiltersPanel
+  </p>
+  <span
+    className="bp3-popover-wrapper layerNode__tooltip options"
+  >
+    <span
+      className="bp3-popover-target"
+      onBlur={[Function]}
+      onFocus={[Function]}
+      onMouseEnter={[Function]}
+      onMouseLeave={[Function]}
+    >
+      <button
+        className="bp3-button bp3-minimal layerNode-options__button layerNode-options__button--more"
+        onKeyDown={[Function]}
+        onKeyUp={[Function]}
+        tabIndex={0}
+        title="options d'affichage"
+        type="button"
+      >
+        <span
+          className="bp3-icon bp3-icon-more"
+          icon="more"
+        >
+          <svg
+            data-icon="more"
+            height={16}
+            viewBox="0 0 16 16"
+            width={16}
+          >
+            <desc>
+              more
+            </desc>
+            <path
+              d="M2 6.03a2 2 0 1 0 0 4 2 2 0 1 0 0-4zM14 6.03a2 2 0 1 0 0 4 2 2 0 1 0 0-4zM8 6.03a2 2 0 1 0 0 4 2 2 0 1 0 0-4z"
+              fillRule="evenodd"
+            />
+          </svg>
+        </span>
+      </button>
+    </span>
+  </span>
+</div>
+`;
