@@ -133,7 +133,7 @@ Array [
     LayersTreeItemFilters
   </p>,
   <div
-    className="layerNode__content--desktop"
+    className="layerNode__content--desktop layerNode__content--desktop--active"
   >
     <div
       className="layerNode__content--desktop-switch-label"
@@ -166,7 +166,7 @@ Array [
     LayersTreeItemFilters
   </p>,
   <div
-    className="layerNode__content--desktop"
+    className="layerNode__content--desktop layerNode__content--desktop--active"
   >
     <div
       className="layerNode__content--desktop-switch-label"

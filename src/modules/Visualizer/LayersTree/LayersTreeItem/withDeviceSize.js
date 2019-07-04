@@ -2,7 +2,7 @@ import React from 'react';
 
 
 const DESKTOP_BREAKPOINT = 1025;
-const PHONE_BREAKPOINT = 414;
+const PHONE_BREAKPOINT = 559;
 
 export const withDeviceSize = ({
   desktop = DESKTOP_BREAKPOINT,

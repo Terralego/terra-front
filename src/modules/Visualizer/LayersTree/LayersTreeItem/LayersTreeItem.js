@@ -19,6 +19,7 @@ export class LayersTreeItem extends React.Component {
     total: PropTypes.number,
     setLayerState: PropTypes.func,
     isMobileSized: PropTypes.bool,
+    isPhoneSized: PropTypes.bool,
   };
 
   static defaultProps = {
@@ -28,6 +29,7 @@ export class LayersTreeItem extends React.Component {
     total: null,
     setLayerState () {},
     isMobileSized: false,
+    isPhoneSized: false,
   }
 
   state = {
@@ -115,6 +117,7 @@ export class LayersTreeItem extends React.Component {
       total,
       hidden,
       isMobileSized,
+      isPhoneSized,
     } = this.props;
 
     if (hidden) return null;
@@ -149,6 +152,7 @@ export class LayersTreeItem extends React.Component {
         <div className={
           classnames(
             { 'layerNode__content--desktop': !isMobileSized },
+            { 'layerNode__content--desktop--active': !isMobileSized && hasSomeOptionActive },
             { 'layerNode__content--mobile': isMobileSized },
           )
         }
@@ -183,7 +187,7 @@ export class LayersTreeItem extends React.Component {
               )}
             </div>
           </div>
-          {isActive && (
+          {isActive && !isPhoneSized && (
           <LayersTreeItemOptions
             hasSomeOptionActive={hasSomeOptionActive}
             isOptionsOpen={isOptionsOpen}

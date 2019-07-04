@@ -17,9 +17,9 @@ $scaleRatio: 1.25;
   &--active {
     .bp3-collapse-body {
       transform: inherit !important;
-      padding: .5rem;
+      padding: .3rem;
     background-color: #394B59;
-    border: 1px solid #293742;
+    border: 1px solid #0000001f;
     } 
   }
 
@@ -51,7 +51,7 @@ $scaleRatio: 1.25;
 
 .layerNode-container {
   padding: .35rem .25rem;
-  border: 1px solid #293742;
+  border: 1px solid #0000001f;
   border-radius: 0;
   font-family: $font-default;
   font-size: .875rem;
@@ -75,7 +75,6 @@ $scaleRatio: 1.25;
     width: 100%;
   }
 
-
   .layerNode__tooltip {  
     width: 100%;
     flex: auto;
@@ -89,6 +88,21 @@ $scaleRatio: 1.25;
     }
   }
 }
+.layerNode__content--desktop--active {
+  max-height: 1.2rem;
+  .layerNode__content--desktop-switch-label {
+    min-width: 0;
+    display: flex;
+  }
+  .layerNode__tooltip {
+    height: 1.2rem;
+  }
+  .layerNode-options--desktop {
+    max-width: 7.5rem;
+    padding-left: .25rem;
+  }
+}
+
 .layerNode__content--mobile {
   display: flex;
   flex-direction: column;
@@ -123,8 +137,7 @@ $scaleRatio: 1.25;
 }
 
 .layerNode-options {
-  background-color: linear-gradient(to left, #30404d, 98%, transparent); //#30404d;
-
+  background-color: transparent;
   
   &__button {
     margin: 0 .2rem;
@@ -164,9 +177,9 @@ $scaleRatio: 1.25;
     flex-flow: row wrap;
     justify-content: flex-end;
     padding: .25rem 0;
-    border-top: 1px solid #293742;
+    border-top: 1px solid #0000001f;
     border-radius: 2px;
-    background-color: #2937429a;
+    background-color: #0000001f;
     
     .layerNode-options__button {
       width: 4.06rem;
@@ -212,6 +225,7 @@ $scaleRatio: 1.25;
     align-items: stretch;
     max-height: 1.2rem;
     padding-left: .25rem;
+    max-width: 7.5rem;
   }
 }
 
