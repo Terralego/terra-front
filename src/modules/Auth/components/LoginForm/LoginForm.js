@@ -3,7 +3,7 @@ import PropTypes from 'prop-types';
 
 import render from './LoginFormRenderer';
 
-import './styles.css';
+import './styles.scss';
 
 export class LoginForm extends React.Component {
   static propTypes = {
@@ -37,6 +37,7 @@ export class LoginForm extends React.Component {
         this.setState({
           errorLogin: !!error.data.email,
           errorPassword: !!error.data.password,
+          errorGeneric: !error.data.email && !error.data.password,
         });
       }
     }
@@ -44,10 +45,10 @@ export class LoginForm extends React.Component {
 
   render () {
     const { render: Render, ...rest } = this.props;
-    const { errorLogin, errorPassword } = this.state;
+    const { errorLogin, errorPassword, errorGeneric } = this.state;
     const { submit, setLogin, setPassword } = this;
     const props = {
-      submit, setLogin, setPassword, errorLogin, errorPassword, ...rest,
+      submit, setLogin, setPassword, errorLogin, errorPassword, errorGeneric, ...rest,
     };
 
     return <Render {...props} />;

@@ -1,7 +1,8 @@
 import React from 'react';
 import { storiesOf } from '@storybook/react';
-import { boolean } from '@storybook/addon-knobs';
+import { boolean, text } from '@storybook/addon-knobs';
 
+import { ApiProvider } from '../../../modules/Api';
 import AuthProvider, { LoginForm, SignupForm } from '../../../modules/Auth';
 import LoginFormPure from '../../../modules/Auth/components/LoginForm/LoginForm';
 import SignupFormPure from '../../../modules/Auth/components/SignupForm/SignupForm';
@@ -16,9 +17,11 @@ SignupForm.displayName = 'SignupForm';
 SignupFormPure.displayName = 'SignupForm';
 
 storiesOf('Modules/Auth/Forms', module).add('Signin', () => (
-  <AuthProvider>
-    <LoginForm />
-  </AuthProvider>
+  <ApiProvider host={text('api host', 'https://dev-terralego-paca.makina-corpus.net/api')}>
+    <AuthProvider>
+      <LoginForm />
+    </AuthProvider>
+  </ApiProvider>
 ), {
   info: {
     text: loginDoc,

@@ -1,10 +1,10 @@
 import React from 'react';
-import { Card, FormGroup, InputGroup, Button, Intent } from '@blueprintjs/core';
+import { Card, FormGroup, InputGroup, Button, Intent, Callout } from '@blueprintjs/core';
 
 import translateMock from '../../../../utils/translate';
 
 export const LoginFormRenderer = ({
-  submit, setLogin, setPassword, errorLogin, errorPassword,
+  submit, setLogin, setPassword, errorLogin, errorPassword, errorGeneric,
   translate = translateMock({
     'auth.loginform.email.invalid': 'Invalid email',
     'auth.loginform.email.help': 'Type your email',
@@ -17,9 +17,15 @@ export const LoginFormRenderer = ({
     'auth.loginform.password.info': 'required',
     'auth.loginform.password.placeholder': 'Password',
     'auth.loginform.submit': 'Signin',
+    'auth.loginform.error_generic': 'Invalid credentials',
   }),
 }) => (
   <Card className="login-form">
+    {errorGeneric && (
+      <Callout className="login-form__callout" intent={Intent.DANGER}>
+        {translate('auth.loginform.error_generic')}
+      </Callout>
+    )}
     <form
       onSubmit={submit}
     >
@@ -31,6 +37,7 @@ export const LoginFormRenderer = ({
         intent={errorLogin ? Intent.WARNING : null}
       >
         <InputGroup
+          type="email"
           id="login"
           placeholder={translate('auth.loginform.email.placeholder')}
           onChange={setLogin}
