@@ -1,4 +1,8 @@
 .signup-form {
   max-width: 40rem;
   margin: auto;
+
+  &__callout {
+    margin-bottom: 1rem;
+  }
 }

@@ -36,7 +36,7 @@ exports[`should render correctly 1`] = `
                 "paddingRight": 10,
               }
             }
-            type="text"
+            type="email"
           />
         </div>
         <div
@@ -53,7 +53,7 @@ exports[`should render correctly 1`] = `
         className="bp3-label"
         htmlFor="password"
       >
-        Email
+        Password
          
         <span
           className="bp3-text-muted"
@@ -71,7 +71,7 @@ exports[`should render correctly 1`] = `
             autoComplete="current-password"
             className="bp3-input"
             id="password"
-            placeholder="Email"
+            placeholder="Password"
             style={
               Object {
                 "paddingRight": 10,
@@ -83,7 +83,7 @@ exports[`should render correctly 1`] = `
         <div
           className="bp3-form-helper-text"
         >
-          Type your email
+          Type your password
         </div>
       </div>
     </div>
@@ -139,7 +139,7 @@ exports[`should render with errors 1`] = `
                 "paddingRight": 10,
               }
             }
-            type="text"
+            type="email"
           />
         </div>
         <div
@@ -156,7 +156,7 @@ exports[`should render with errors 1`] = `
         className="bp3-label"
         htmlFor="password"
       >
-        Email
+        Password
          
         <span
           className="bp3-text-muted"
@@ -174,7 +174,7 @@ exports[`should render with errors 1`] = `
             autoComplete="current-password"
             className="bp3-input"
             id="password"
-            placeholder="Email"
+            placeholder="Password"
             style={
               Object {
                 "paddingRight": 10,
@@ -186,7 +186,7 @@ exports[`should render with errors 1`] = `
         <div
           className="bp3-form-helper-text"
         >
-          Type your email
+          Type your password
         </div>
       </div>
     </div>

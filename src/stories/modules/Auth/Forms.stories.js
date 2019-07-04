@@ -17,7 +17,7 @@ SignupForm.displayName = 'SignupForm';
 SignupFormPure.displayName = 'SignupForm';
 
 storiesOf('Modules/Auth/Forms', module).add('Signin', () => (
-  <ApiProvider host={text('api host', 'https://dev-terralego-paca.makina-corpus.net/api')}>
+  <ApiProvider host={text('api host', '')}>
     <AuthProvider>
       <LoginForm />
     </AuthProvider>
@@ -30,11 +30,13 @@ storiesOf('Modules/Auth/Forms', module).add('Signin', () => (
 });
 
 storiesOf('Modules/Auth/Forms', module).add('Signup', () => (
-  <AuthProvider>
-    <SignupForm
-      showPassword={boolean('Show password', true)}
-    />
-  </AuthProvider>
+  <ApiProvider host={text('api host', '')}>
+    <AuthProvider>
+      <SignupForm
+        showPassword={boolean('Show password', true)}
+      />
+    </AuthProvider>
+  </ApiProvider>
 ), {
   info: {
     text: signupDoc,
