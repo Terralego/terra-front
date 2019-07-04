@@ -194,7 +194,8 @@ export function setInteractions ({ map, interactions, callback }) {
 }
 
 export function fitZoom ({ feature, map }) {
-  map.fitBounds(bbox({ type: 'FeatureCollection', features: [feature] }));
+  const features = feature.length ? feature : [feature];
+  map.fitBounds(bbox({ type: 'FeatureCollection', features }));
 }
 
 export default {
