@@ -1,6 +1,6 @@
 import { getLayers } from '../../../../Map/services/mapUtils';
 
-function getMinMax (values, minThreshold = 0, maxThreshold = 24) {
+export function getMinMax (values, minThreshold = 0, maxThreshold = 24) {
   return values.reduce((
     { minzoom: prevMinZoom, maxzoom: prevMaxZoom },
     { minzoom = minThreshold, maxzoom = maxThreshold },
