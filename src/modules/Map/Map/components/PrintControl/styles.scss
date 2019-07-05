@@ -1,5 +1,23 @@
-.print-button {
-  @media print {
-    display: none;
-  }
+.visualizer__print {
+  margin: 0 auto;
+}
+
+.visualizer .visualizer__print .mapboxgl-ctrl-top-left,
+.visualizer .visualizer__print .mapboxgl-ctrl-bottom-left {
+  transform: none;
+}
+
+.visualizer .visualizer__print .tf-legend {
+  // See https://github.com/niklasvh/html2canvas/issues/1856
+  box-shadow: none;
+}
+
+.visualizer__print--portrait {
+  max-width: 21cm;
+  max-height: 29.7cm;
+}
+
+.visualizer__print--landscape {
+  max-height: 21cm;
+  max-width: 29.7cm;
 }

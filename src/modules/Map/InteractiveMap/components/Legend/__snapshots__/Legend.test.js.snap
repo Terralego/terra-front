@@ -22,15 +22,11 @@ exports[`should render a manual legend 1`] = `
     <p>
       <div
         className="tf-legend__symbol"
-        style={
-          Object {
-            "height": 10,
-            "width": 10,
-          }
-        }
       >
         <svg
+          height={10}
           viewBox="0 0 100 100"
+          width={10}
         >
           <rect
             fill="red"
@@ -45,15 +41,11 @@ exports[`should render a manual legend 1`] = `
       <br />
       <div
         className="tf-legend__symbol"
-        style={
-          Object {
-            "height": 10,
-            "width": 10,
-          }
-        }
       >
         <svg
+          height={10}
           viewBox="0 0 100 100"
+          width={10}
         >
           <rect
             fill="green"
@@ -71,15 +63,11 @@ exports[`should render a manual legend 1`] = `
     <p>
       <div
         className="tf-legend__symbol"
-        style={
-          Object {
-            "height": 10,
-            "width": 10,
-          }
-        }
       >
         <svg
+          height={10}
           viewBox="0 0 100 100"
+          width={10}
         >
           <circle
             cx="50"
@@ -93,15 +81,11 @@ exports[`should render a manual legend 1`] = `
       <br />
       <div
         className="tf-legend__symbol"
-        style={
-          Object {
-            "height": 10,
-            "width": 10,
-          }
-        }
       >
         <svg
+          height={10}
           viewBox="0 0 100 100"
+          width={10}
         >
           <circle
             cx="50"
@@ -144,15 +128,11 @@ exports[`should render correctly circle 1`] = `
       >
         <div
           className="tf-legend__symbol"
-          style={
-            Object {
-              "height": 16,
-              "width": 16,
-            }
-          }
         >
           <svg
+            height={16}
             viewBox="0 0 100 100"
+            width={16}
           >
             <circle
               cx="50"
@@ -182,15 +162,11 @@ exports[`should render correctly circle 1`] = `
       >
         <div
           className="tf-legend__symbol"
-          style={
-            Object {
-              "height": 16,
-              "width": 16,
-            }
-          }
         >
           <svg
+            height={16}
             viewBox="0 0 100 100"
+            width={16}
           >
             <circle
               cx="50"
@@ -220,15 +196,11 @@ exports[`should render correctly circle 1`] = `
       >
         <div
           className="tf-legend__symbol"
-          style={
-            Object {
-              "height": 16,
-              "width": 16,
-            }
-          }
         >
           <svg
+            height={16}
             viewBox="0 0 100 100"
+            width={16}
           >
             <circle
               cx="50"
@@ -274,15 +246,11 @@ exports[`should render correctly square 1`] = `
       >
         <div
           className="tf-legend__symbol"
-          style={
-            Object {
-              "height": 16,
-              "width": 16,
-            }
-          }
         >
           <svg
+            height={16}
             viewBox="0 0 100 100"
+            width={16}
           >
             <rect
               fill="red"
@@ -313,15 +281,11 @@ exports[`should render correctly square 1`] = `
       >
         <div
           className="tf-legend__symbol"
-          style={
-            Object {
-              "height": 16,
-              "width": 16,
-            }
-          }
         >
           <svg
+            height={16}
             viewBox="0 0 100 100"
+            width={16}
           >
             <rect
               fill="green"
@@ -352,15 +316,11 @@ exports[`should render correctly square 1`] = `
       >
         <div
           className="tf-legend__symbol"
-          style={
-            Object {
-              "height": 16,
-              "width": 16,
-            }
-          }
         >
           <svg
+            height={16}
             viewBox="0 0 100 100"
+            width={16}
           >
             <rect
               fill="blue"
@@ -407,15 +367,11 @@ exports[`should render correctly with multi level 1`] = `
       >
         <div
           className="tf-legend__symbol"
-          style={
-            Object {
-              "height": 16,
-              "width": 16,
-            }
-          }
         >
           <svg
+            height={16}
             viewBox="0 0 100 100"
+            width={16}
           >
             <rect
               fill="red"
@@ -446,15 +402,11 @@ exports[`should render correctly with multi level 1`] = `
       >
         <div
           className="tf-legend__symbol"
-          style={
-            Object {
-              "height": 16,
-              "width": 16,
-            }
-          }
         >
           <svg
+            height={16}
             viewBox="0 0 100 100"
+            width={16}
           >
             <rect
               fill="blue"
@@ -496,15 +448,11 @@ exports[`should render correctly with multi level 1`] = `
           >
             <div
               className="tf-legend__symbol"
-              style={
-                Object {
-                  "height": 16,
-                  "width": 16,
-                }
-              }
             >
               <svg
+                height={16}
                 viewBox="0 0 100 100"
+                width={16}
               >
                 <rect
                   fill="red"
@@ -535,15 +483,11 @@ exports[`should render correctly with multi level 1`] = `
           >
             <div
               className="tf-legend__symbol"
-              style={
-                Object {
-                  "height": 16,
-                  "width": 16,
-                }
-              }
             >
               <svg
+                height={16}
                 viewBox="0 0 100 100"
+                width={16}
               >
                 <rect
                   fill="blue"
@@ -585,15 +529,11 @@ exports[`should render correctly with multi level 1`] = `
               >
                 <div
                   className="tf-legend__symbol"
-                  style={
-                    Object {
-                      "height": 16,
-                      "width": 16,
-                    }
-                  }
                 >
                   <svg
+                    height={16}
                     viewBox="0 0 100 100"
+                    width={16}
                   >
                     <rect
                       fill="red"
@@ -624,15 +564,11 @@ exports[`should render correctly with multi level 1`] = `
               >
                 <div
                   className="tf-legend__symbol"
-                  style={
-                    Object {
-                      "height": 16,
-                      "width": 16,
-                    }
-                  }
                 >
                   <svg
+                    height={16}
                     viewBox="0 0 100 100"
+                    width={16}
                   >
                     <rect
                       fill="blue"
@@ -674,15 +610,11 @@ exports[`should render correctly with multi level 1`] = `
                   >
                     <div
                       className="tf-legend__symbol"
-                      style={
-                        Object {
-                          "height": 16,
-                          "width": 16,
-                        }
-                      }
                     >
                       <svg
+                        height={16}
                         viewBox="0 0 100 100"
+                        width={16}
                       >
                         <rect
                           fill="red"
@@ -713,15 +645,11 @@ exports[`should render correctly with multi level 1`] = `
                   >
                     <div
                       className="tf-legend__symbol"
-                      style={
-                        Object {
-                          "height": 16,
-                          "width": 16,
-                        }
-                      }
                     >
                       <svg
+                        height={16}
                         viewBox="0 0 100 100"
+                        width={16}
                       >
                         <rect
                           fill="blue"
