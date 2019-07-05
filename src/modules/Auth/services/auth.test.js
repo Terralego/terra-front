@@ -32,6 +32,13 @@ it('should add a listener to Api', () => {
   expect(Api.on).toHaveBeenCalled();
 });
 
+
+it('should not refresh token', async done => {
+  const token = await refreshToken();
+  expect(token).toBe(null);
+  done();
+});
+
 it('should request a token', async done => {
   const token = await obtainToken('foo@bar', 'bar');
   expect(Api.request).toHaveBeenCalledWith('auth/obtain-token/', {
