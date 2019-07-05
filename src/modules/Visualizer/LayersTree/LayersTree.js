@@ -21,7 +21,6 @@ export const LayersTree = ({ layersTree }) => (
         <LayersTreeItem
           key={layer.label}
           layer={layer}
-
         />
       )
     ))}

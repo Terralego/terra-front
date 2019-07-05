@@ -60,10 +60,10 @@ export class LayersTreeGroup extends React.Component {
           <Collapse
             isOpen={open}
           >
-            {layers.map(layer => ((layer.group && !exclusive)
+            {layers.map(layer => ((layer.group && !layer.exclusive)
               ? (
                 <LayersTreeGroup
-                  key={layer.group}
+                  key={`${layer.group}${level}`}
                   title={layer.group}
                   layer={layer}
                   initialOpen={false}
