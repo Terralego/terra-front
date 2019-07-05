@@ -116,9 +116,6 @@ export class LayersTreeItem extends React.Component {
       layer: {
         group,
         label = group,
-        // DEPRECATED
-        sublayers,
-        layers,
         filters: { form, fields } = {},
         widgets = [],
         exclusive,
@@ -239,16 +236,7 @@ export class LayersTreeItem extends React.Component {
             opacity={opacity}
           />
         )}
-        <>
-          <LayersTreeItemFilters layer={layer} />
-          {/* DEPRECATED */}
-          {isActive && sublayers && (
-            <LayersTreeSubItemsList
-              layer={layer}
-              sublayers={sublayers}
-            />
-          )}
-        </>
+        <LayersTreeItemFilters layer={layer} />
       </Card>
     );
   }

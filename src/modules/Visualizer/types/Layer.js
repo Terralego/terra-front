@@ -5,10 +5,6 @@ import { TYPE_SINGLE, TYPE_MANY, TYPE_RANGE, TYPE_BOOL } from '../../Forms/Filte
 export default PropTypes.shape({
   /** Layer's label */
   label: PropTypes.string,
-  /**  Sublayers definition. These layers should be unique */
-  sublayers: PropTypes.arrayOf(PropTypes.shape({
-    /** Same as LayerProps */
-  })),
   /** Initial layer state */
   initialState: PropTypes.shape({
     active: PropTypes.bool,

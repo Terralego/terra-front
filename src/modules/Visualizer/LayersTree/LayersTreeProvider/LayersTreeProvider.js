@@ -4,7 +4,6 @@ import PropTypes from 'prop-types';
 import context from './context';
 import {
   initLayersStateAction,
-  selectSublayerAction,
   setLayerStateAction,
 } from '../../services/layersTreeUtils';
 
@@ -74,12 +73,6 @@ export class LayersTreeProvider extends React.Component {
     return layersTreeState.get(layer) || {};
   }
 
-  selectSublayer = ({ layer, sublayer }) => {
-    this.resetState(({ layersTreeState }) => ({
-      layersTreeState: selectSublayerAction(layer, sublayer, layersTreeState),
-    }));
-  }
-
   fetchPropertyValues = async (layer, property) => {
     const { fetchPropertyValues } = this.props;
     const { layersTreeState } = this.state;
@@ -146,7 +139,7 @@ export class LayersTreeProvider extends React.Component {
     } = this.props;
     const { layersTreeState } = this.state;
     const {
-      initLayersState, setLayerState, getLayerState, selectSublayer,
+      initLayersState, setLayerState, getLayerState,
       fetchPropertyValues,
       fetchPropertyRange,
     } = this;
@@ -157,7 +150,6 @@ export class LayersTreeProvider extends React.Component {
       initLayersState,
       setLayerState,
       getLayerState,
-      selectSublayer,
       fetchPropertyValues,
       fetchPropertyRange,
     };
