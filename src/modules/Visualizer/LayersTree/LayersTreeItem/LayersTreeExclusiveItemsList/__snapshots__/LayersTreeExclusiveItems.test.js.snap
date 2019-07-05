@@ -1,7 +1,7 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
-exports[`should render correctly sublayers list in radioboxes  1`] = `
-<div>
+exports[`should render 1`] = `
+Array [
   <div
     className="control-container"
   >
@@ -18,7 +18,7 @@ exports[`should render correctly sublayers list in radioboxes  1`] = `
       <span
         className="bp3-control-indicator"
       />
-      sublayer1
+      foo
     </label>
     <label
       className="bp3-control bp3-radio"
@@ -33,14 +33,9 @@ exports[`should render correctly sublayers list in radioboxes  1`] = `
       <span
         className="bp3-control-indicator"
       />
-      sublayer2
+      bar
     </label>
-  </div>
-</div>
-`;
-
-exports[`should render correctly sublayers list in select  1`] = `
-<div>
+  </div>,
   <div
     className="control-container"
     onKeyPress={[Function]}
@@ -71,7 +66,7 @@ exports[`should render correctly sublayers list in select  1`] = `
             <span
               className="bp3-button-text"
             >
-              sublayer1
+              foo
             </span>
             <span
               className="bp3-icon bp3-icon-double-caret-vertical"
@@ -96,6 +91,6 @@ exports[`should render correctly sublayers list in select  1`] = `
         </div>
       </span>
     </span>
-  </div>
-</div>
+  </div>,
+]
 `;

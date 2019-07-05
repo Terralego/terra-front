@@ -9,7 +9,6 @@ import {
   Tooltip,
 } from '@blueprintjs/core';
 
-import LayersTreeSubItemsList from './LayersTreeSubItemsList';
 import OptionsLayer from './OptionsLayer';
 import LayersTreeItemFilters from './LayersTreeItemFilters';
 import LayerProps from '../../types/Layer';

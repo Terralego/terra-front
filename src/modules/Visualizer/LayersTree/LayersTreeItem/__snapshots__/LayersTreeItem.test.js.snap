@@ -82,9 +82,6 @@ Array [
   <p>
     LayersTreeItemFilters
   </p>,
-  <p>
-    LayersTreeSubItemsList
-  </p>,
   <div
     className="layerNode__content--desktop"
   >
@@ -232,6 +229,38 @@ Array [
         className="layerNode-total"
       />
     </div>
+    <div
+      className="layerNode-options layerNode-options--mobile"
+    >
+      <p>
+        Button
+      </p>
+    </div>
+  </div>,
+  <p>
+    LayersTreeItemFilters
+  </p>,
+  <div
+    className="layerNode__content--desktop"
+  >
+    <div
+      className="layerNode__content--desktop-switch-label"
+    >
+      <p
+        className=""
+      >
+        Switch
+      </p>
+      <p>
+        Tooltip
+      </p>
+      <div
+        className="layerNode-total"
+      />
+    </div>
+    <p>
+      RadioGroup
+    </p>
     <div
       className="layerNode-options layerNode-options--mobile"
     >

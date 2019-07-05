@@ -28,5 +28,22 @@ Array [
       LayersTreeItem
     </p>
   </div>,
+  <div
+    className="layerstree-group layerstree-group--0 layerstree-group--active"
+  >
+    <p>
+      Button
+    </p>
+    <p>
+      LayersTreeItem
+    </p>
+    <div
+      className="layerstree-group layerstree-group--1"
+    >
+      <p>
+        Button
+      </p>
+    </div>
+  </div>,
 ]
 `;

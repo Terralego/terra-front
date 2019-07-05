@@ -57,6 +57,23 @@ it('should submit form with failure', async done => {
   done();
 });
 
+it('should submit form with generic error', async () => {
+  const authAction = jest.fn(() => {
+    const error = new Error();
+    error.data = {};
+    throw error;
+  });
+  const wrapper = shallow(<LoginForm
+    authAction={authAction}
+  />);
+
+  await wrapper.instance().submit({ preventDefault () {} });
+
+  expect(wrapper.state().errorLogin).toBe(false);
+  expect(wrapper.state().errorPassword).toBe(false);
+  expect(wrapper.state().errorGeneric).toBe(true);
+});
+
 it('should submit form with failure and invalid error', async done => {
   const authAction = jest.fn(() => {
     const error = new Error();

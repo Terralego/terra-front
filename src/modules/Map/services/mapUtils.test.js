@@ -671,4 +671,8 @@ it('should call fitBounds', () => {
   };
   fitZoom({ feature, map });
   expect(map.fitBounds).toHaveBeenCalled();
+  map.fitBounds.mockClear();
+
+  fitZoom({ feature: [feature], map });
+  expect(map.fitBounds).toHaveBeenCalled();
 });
