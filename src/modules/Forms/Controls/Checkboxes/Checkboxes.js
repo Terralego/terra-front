@@ -14,6 +14,8 @@ export class Checkboxes extends React.Component {
     };
   }
 
+  state = {}
+
   onToggle = toggledValue => {
     const { value, onChange } = this.props;
     const newValue = value.includes(toggledValue)

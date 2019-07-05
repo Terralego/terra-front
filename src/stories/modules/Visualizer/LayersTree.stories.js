@@ -37,7 +37,7 @@ storiesOf('Modules/Visualizer/LayersTree', module).add('Component', () => (
   }}
   >
     <div style={{
-      backgroundColor: '#30404d',
+      backgroundColor: '#44535F',
     }}
     >
       <LayersTreeSingle

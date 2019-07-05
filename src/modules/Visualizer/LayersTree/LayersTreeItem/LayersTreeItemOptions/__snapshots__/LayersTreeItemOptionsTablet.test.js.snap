@@ -1,0 +1,40 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`should render correctly 1`] = `
+<div
+  className="layerNode-options layerNode-options--mobile"
+>
+  <button
+    className="bp3-button bp3-minimal layerNode-options__button layerNode-options__button--more"
+    onKeyDown={[Function]}
+    onKeyUp={[Function]}
+    title="options d'affichage"
+    type="button"
+  >
+    <span
+      className="bp3-icon bp3-icon-more"
+      icon="more"
+    >
+      <svg
+        data-icon="more"
+        height={16}
+        viewBox="0 0 16 16"
+        width={16}
+      >
+        <desc>
+          more
+        </desc>
+        <path
+          d="M2 6.03a2 2 0 1 0 0 4 2 2 0 1 0 0-4zM14 6.03a2 2 0 1 0 0 4 2 2 0 1 0 0-4zM8 6.03a2 2 0 1 0 0 4 2 2 0 1 0 0-4z"
+          fillRule="evenodd"
+        />
+      </svg>
+    </span>
+    <span
+      className="bp3-button-text"
+    >
+      options
+    </span>
+  </button>
+</div>
+`;

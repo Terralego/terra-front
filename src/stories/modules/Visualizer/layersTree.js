@@ -6,7 +6,10 @@ export default [{
     active: true,
   },
   filters: {
-    fields: [],
+    fields: [{
+      label: 'foo',
+      property: 'foo',
+    }],
     form: [{
       label: 'Single value',
       property: 'single',
@@ -20,12 +23,12 @@ export default [{
       label: 'Many values from a short list',
       property: 'short-many-enum',
       type: TYPE_MANY,
-      values: ['foo', 'bar'],
+      values: ['foo', 'bar', 'kit', 'kat'],
     }, {
       label: 'Many values from a short list displayed as a select',
       property: 'short-many-enum-as-select',
       type: TYPE_MANY,
-      values: ['foo', 'bar'],
+      values: ['foo', 'bar', 'kit', 'kat'],
       display: 'select',
     }, {
       label: 'Many values from a long list',

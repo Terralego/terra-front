@@ -41,11 +41,11 @@ export const Template = ({
         : {
           replaceChildren: false,
           shouldProcessNode: node => node.name && node.name === tagName,
-          processNode: (node, children) => (
-            <>
+          processNode: (node, children, index) => (
+            <React.Fragment key={index}>
               <Component {...node.attribs}>{!autoClose && children}</Component>
               {autoClose && children}
-            </>
+            </React.Fragment>
           ),
           ...spec,
         };

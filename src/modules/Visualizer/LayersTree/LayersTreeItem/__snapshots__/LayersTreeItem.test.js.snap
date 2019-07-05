@@ -2,48 +2,203 @@
 
 exports[`should render correctly 1`] = `
 Array [
-  <p>
-    Tooltip
-  </p>,
+  <div
+    className="layerNode__content--desktop"
+  >
+    <div
+      className="layerNode__content--desktop-switch-label"
+    >
+      <p>
+        Switch
+      </p>
+      <p>
+        Tooltip
+      </p>
+      <div
+        className="layerNode-total"
+      />
+    </div>
+    <div
+      className="layerNode-options layerNode-options--mobile"
+    >
+      <p>
+        Button
+      </p>
+    </div>
+  </div>,
   <p>
     LayersTreeItemFilters
   </p>,
-  <p>
-    Tooltip
-  </p>,
+  <div
+    className="layerNode__content--desktop"
+  >
+    <div
+      className="layerNode__content--desktop-switch-label"
+    >
+      <p>
+        Switch
+      </p>
+      <p>
+        Tooltip
+      </p>
+      <div
+        className="layerNode-total"
+      />
+    </div>
+  </div>,
   <p>
     LayersTreeItemFilters
   </p>,
-  <p>
-    Tooltip
-  </p>,
+  <div
+    className="layerNode__content--desktop"
+  >
+    <div
+      className="layerNode__content--desktop-switch-label"
+    >
+      <p>
+        Switch
+      </p>
+      <p>
+        Tooltip
+      </p>
+      <div
+        className="layerNode-total"
+      />
+    </div>
+    <div
+      className="layerNode-options layerNode-options--mobile"
+    >
+      <p>
+        Button
+      </p>
+    </div>
+  </div>,
   <p>
     LayersTreeItemFilters
   </p>,
   <p>
     LayersTreeSubItemsList
   </p>,
-  <p>
-    Tooltip
-  </p>,
+  <div
+    className="layerNode__content--desktop"
+  >
+    <div
+      className="layerNode__content--desktop-switch-label"
+    >
+      <p>
+        Switch
+      </p>
+      <p>
+        Tooltip
+      </p>
+      <div
+        className="layerNode-total"
+      />
+    </div>
+    <div
+      className="layerNode-options layerNode-options--mobile"
+    >
+      <p>
+        Button
+      </p>
+      <p>
+        FiltersPanel
+      </p>
+      <p>
+        Button
+      </p>
+    </div>
+  </div>,
   <p>
     LayersTreeItemFilters
   </p>,
-  <p>
-    Tooltip
-  </p>,
+  <div
+    className="layerNode__content--desktop"
+  >
+    <div
+      className="layerNode__content--desktop-switch-label"
+    >
+      <p>
+        Switch
+      </p>
+      <p>
+        Tooltip
+      </p>
+      <div
+        className="layerNode-total"
+      />
+    </div>
+  </div>,
   <p>
     LayersTreeItemFilters
   </p>,
-  <p>
-    Tooltip
-  </p>,
+  <div
+    className="layerNode__content--desktop layerNode__content--desktop--active"
+  >
+    <div
+      className="layerNode__content--desktop-switch-label"
+    >
+      <p>
+        Switch
+      </p>
+      <p>
+        Tooltip
+      </p>
+      <div
+        className="layerNode-total"
+      />
+    </div>
+    <div
+      className="layerNode-options layerNode-options--mobile layerNode-options--active"
+    >
+      <p>
+        Button
+      </p>
+      <p>
+        FiltersPanel
+      </p>
+      <p>
+        Button
+      </p>
+    </div>
+  </div>,
   <p>
     LayersTreeItemFilters
   </p>,
-  <p>
-    Tooltip
-  </p>,
+  <div
+    className="layerNode__content--desktop layerNode__content--desktop--active"
+  >
+    <div
+      className="layerNode__content--desktop-switch-label"
+    >
+      <p>
+        Switch
+      </p>
+      <p>
+        Tooltip
+      </p>
+      <div
+        className="layerNode-total"
+      >
+        <p>
+          Tag
+        </p>
+      </div>
+    </div>
+    <div
+      className="layerNode-options layerNode-options--mobile layerNode-options--active"
+    >
+      <p>
+        Button
+      </p>
+      <p>
+        FiltersPanel
+      </p>
+      <p>
+        Button
+      </p>
+    </div>
+  </div>,
   <p>
     LayersTreeItemFilters
   </p>,

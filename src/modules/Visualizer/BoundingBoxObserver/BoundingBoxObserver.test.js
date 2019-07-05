@@ -17,17 +17,15 @@ jest.mock('resize-observer-polyfill', () => {
 });
 
 it('should observe children', () => {
-  let expected;
   const onChange = jest.fn();
   const wrapper = shallow(
     <BoundingBoxObserver
       onChange={onChange}
     >
-      {({ ref }) => { expected = ref; }}
+      {() => null}
     </BoundingBoxObserver>,
   );
   const instance = wrapper.instance();
-  expect(expected).toBe(instance.ref);
   expect(ResizeObserver).toHaveBeenCalled();
   expect(instance.ro.observe).toHaveBeenCalledWith(instance.ref.current);
 
@@ -47,13 +45,11 @@ it('should disconnect observer on unmount', () => {
 });
 
 it('should observe children component', () => {
-  let expected;
-  const Test = ({ ref }) => { expected = ref; };
+  const Test = () => null;
   const wrapper = shallow(
     <BoundingBoxObserver
       as={Test}
     />,
   );
-  const test = wrapper.find('Test');
-  expect(expected).toBe(test.props().ref);
+  expect(wrapper.find('Test')).toBeDefined();
 });
