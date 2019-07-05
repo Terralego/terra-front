@@ -7,7 +7,6 @@ import {
   Elevation,
   Tag,
   Tooltip,
-  Intent,
 } from '@blueprintjs/core';
 
 import LayersTreeSubItemsList from './LayersTreeSubItemsList';
@@ -16,6 +15,7 @@ import LayersTreeItemFilters from './LayersTreeItemFilters';
 import LayerProps from '../../types/Layer';
 import LayersTreeItemOptions from './LayersTreeItemOptions';
 import withDeviceSize from './withDeviceSize';
+import WarningZoom from './WarningZoom';
 import { displayWarningAccordingToZoom } from './utils/warningZoom';
 
 export class LayersTreeItem extends React.Component {
@@ -175,27 +175,18 @@ export class LayersTreeItem extends React.Component {
             )
           }
           >
-            {(display && isActive) ? (
-              <Tooltip
-                className="layerNode-tooltip-warning"
-                content={(<p>Visible à partir du zoom {minZoomLayer}</p>)}
-                intent={Intent.WARNING}
-                usePortal={false}
-              >
-                <Switch
-                  className="warning-zoom"
-                  checked={!!isActive}
-                  onChange={onActiveChange}
-                  id={`toggle-${htmlID}`}
-                />
-              </Tooltip>
-            ) : (
+            <WarningZoom
+              display={display}
+              isActive={isActive}
+              minZoomLayer={minZoomLayer}
+            >
               <Switch
+                className={classnames({ 'warning-zoom': display && isActive })}
                 checked={!!isActive}
                 onChange={onActiveChange}
                 id={`toggle-${htmlID}`}
               />
-            )}
+            </WarningZoom>
             <Tooltip
               content={label}
               hoverOpenDelay={2000}

@@ -59,14 +59,14 @@ $scaleRatio: 1.25;
   color: $font-color;
   letter-spacing: 0.06rem;
 
-  .layerNode__tooltip .bp3-popover-target .layerNode__content .warning-zoom .bp3-control-indicator {
+  .layerNode-tooltip-warning .bp3-popover-target .bp3-switch.warning-zoom .bp3-control-indicator {
     background: #9EB4C1;
 
     &::after {
       content: '!';
       position: absolute;
-      left: 19px;
-      font-size: 12px;
+      left: 18px;
+      font-size: 13px;
       font-weight: bold;
     }
   }
