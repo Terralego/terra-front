@@ -2,6 +2,8 @@ import React from 'react';
 import classnames from 'classnames';
 import { Button } from '@blueprintjs/core';
 
+import translateMock from '../../../../../utils/translate';
+
 import LayerFetchValues from '../LayerFetchValues';
 import FiltersPanel from '../FiltersPanel';
 
@@ -20,6 +22,20 @@ const LayersTreeItemOptionsTablet = ({
   toggleWidgets,
   widgets,
   isWidgetActive,
+  translate = translateMock({
+    'layerstree.itemOptions.open': 'open',
+    'layerstree.itemOptions.close': 'close',
+    'layerstree.itemOptions.widget.label': 'widget',
+    'layerstree.itemOptions.table.label': 'table',
+    'layerstree.itemOptions.table.open': 'open table',
+    'layerstree.itemOptions.table.close': 'close table',
+    'layerstree.itemOptions.filter.label': 'filters',
+    'layerstree.itemOptions.filter.open': 'open filters',
+    'layerstree.itemOptions.filter.close': 'close filters',
+    'layerstree.itemOptions.options.label': 'options',
+    'layerstree.itemOptions.options.open': 'open options',
+    'layerstree.itemOptions.options.close': 'close options',
+  }),
 }) => (
   <div
     className={classnames(
@@ -40,10 +56,35 @@ const LayersTreeItemOptionsTablet = ({
           minimal
           icon="selection"
           title={`widget ${widget.component}`}
+          alt={isWidgetActive(widget)
+            ? `${translate('layerstree.itemOptions.close')} ${widget.component}`
+            : `${translate('layerstree.itemOptions.open')} ${widget.component}`
+          }
         >
           {widget.component}
         </Button>
       ))
+    )
+}
+    {displayTableButton && (
+    <Button
+      className={
+        classnames(
+          'layerNode-options__button',
+          { 'layerNode-options__button--active': isTableActive },
+        )
+      }
+      onClick={toggleTable}
+      minimal
+      icon="th"
+      title={translate('layerstree.itemOptions.table.title')}
+      alt={isTableActive
+        ? translate('layerstree.itemOptions.table.close')
+        : translate('layerstree.itemOptions.table.open')
+      }
+    >
+      {translate('layerstree.itemOptions.table.label')}
+    </Button>
     )}
     {displayTableButton && (
       <Button
@@ -55,11 +96,14 @@ const LayersTreeItemOptionsTablet = ({
         }
         onClick={toggleTable}
         minimal
-        icon="th"
-        alt={isTableActive ? 'Fermer le tableau' : 'Ouvrir le tableau'}
-        title="table"
+        icon="filter"
+        title={translate('layerstree.itemOptions.filter.label')}
+        alt={isFilterVisible
+          ? translate('layerstree.itemOptions.filter.close')
+          : translate('layerstree.itemOptions.filter.open')
+        }
       >
-        table
+        {translate('layerstree.itemOptions.filter.label')}
       </Button>
     )}
     {form && (
@@ -95,11 +139,14 @@ const LayersTreeItemOptionsTablet = ({
       icon="more"
       minimal
       onClick={handleOptionPanel}
-      title="options d'affichage"
+      title={translate('layerstree.itemOptions.options.label')}
+      alt={isOptionsOpen
+        ? translate('layerstree.itemOptions.options.close')
+        : translate('layerstree.itemOptions.options.open')
+      }
     >
-      options
+      {translate('layerstree.itemOptions.options.label')}
     </Button>
   </div>
 );
-
 export default LayersTreeItemOptionsTablet;

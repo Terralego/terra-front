@@ -1,15 +1,16 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
-exports[`should render correctly 1`] = `
+exports[`should render correctly with widget 1`] = `
 Array [
   <div
     className="layerstree-node-content__options layerstree-node-content__options--mobile"
   >
     <button
+      alt="open options"
       className="bp3-button bp3-minimal layerstree-node-content__options__button layerstree-node-content__options__button--more"
       onKeyDown={[Function]}
       onKeyUp={[Function]}
-      title="options d'affichage"
+      title="options"
       type="button"
     >
       <span
@@ -42,45 +43,14 @@ Array [
     className="layerstree-node-content__options layerstree-node-content__options--mobile"
   >
     <p>
-      LayerFetchValues
+      FiltersPanel
     </p>
     <button
-      className="bp3-button bp3-minimal layerstree-node-content__options__button layerstree-node-content__options__button--active"
-      onKeyDown={[Function]}
-      onKeyUp={[Function]}
-      title="filter"
-      type="button"
-    >
-      <span
-        className="bp3-icon bp3-icon-filter"
-        icon="filter"
-      >
-        <svg
-          data-icon="filter"
-          height={16}
-          viewBox="0 0 16 16"
-          width={16}
-        >
-          <desc>
-            filter
-          </desc>
-          <path
-            d="M13.99.99h-12a1.003 1.003 0 0 0-.71 1.71l4.71 4.71V14a1.003 1.003 0 0 0 1.71.71l2-2c.18-.18.29-.43.29-.71V7.41L14.7 2.7a1.003 1.003 0 0 0-.71-1.71z"
-            fillRule="evenodd"
-          />
-        </svg>
-      </span>
-      <span
-        className="bp3-button-text"
-      >
-        filtres
-      </span>
-    </button>
-    <button
+      alt="open options"
       className="bp3-button bp3-minimal layerstree-node-content__options__button layerstree-node-content__options__button--more"
       onKeyDown={[Function]}
       onKeyUp={[Function]}
-      title="options d'affichage"
+      title="options"
       type="button"
     >
       <span

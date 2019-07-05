@@ -50,7 +50,7 @@ it('should open widget', () => {
       toggleWidgets={jest.fn(() => true)}
     />
   ));
-  expect(wrapper.find('.widgets').props().content).toBe('Ouvrir le widget foo');
+  expect(wrapper.find('.widgets').props().content).toBe('open foo');
 });
 
 it('should close table', () => {
@@ -61,7 +61,7 @@ it('should close table', () => {
     />
   ));
   expect(wrapper.find('.table').props().content).toBe('Fermer le tableau');
-  expect(wrapper.find('.table').dive().find('.layerstree-node-content__options__button').props().alt).toBe('Fermer le tableau');
+  expect(wrapper.find('.table').dive().find('.layerstree-node-content__options__button').props().alt).toBe('close table');
 });
 
 it('should close form', () => {
@@ -71,7 +71,7 @@ it('should close form', () => {
       isFilterVisible
     />
   ));
-  expect(wrapper.find('.filters').props().content).toBe('Fermer les filtres');
+  expect(wrapper.find('.filters').props().content).toBe('close filters');
 });
 
 it('should close options', () => {
@@ -80,5 +80,5 @@ it('should close options', () => {
       isOptionsOpen
     />
   ));
-  expect(wrapper.find('.options').props().content).toBe('Fermer les options');
+  expect(wrapper.find('.options').props().content).toBe('close options');
 });
