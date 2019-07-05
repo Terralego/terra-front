@@ -39,7 +39,7 @@ exports[`should render correctly 1`] = `
                 "paddingRight": 10,
               }
             }
-            type="text"
+            type="email"
           />
         </div>
         <div
@@ -146,7 +146,7 @@ exports[`should render with errors 1`] = `
                 "paddingRight": 10,
               }
             }
-            type="text"
+            type="email"
           />
         </div>
         <div

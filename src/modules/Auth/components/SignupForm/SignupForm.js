@@ -3,7 +3,7 @@ import PropTypes from 'prop-types';
 
 import render from './SignupFormRenderer';
 
-import './styles.css';
+import './styles.scss';
 
 export class SignupForm extends React.Component {
   static propTypes = {
@@ -26,6 +26,7 @@ export class SignupForm extends React.Component {
     event.preventDefault();
     const { onCreate } = this.props;
     const properties = { ...this.state };
+
     this.setState(state => ({
       errors: {
         ...Object.keys(state).reduce((acc, curr) => ({ ...acc, [curr]: false }), {}),
@@ -39,6 +40,7 @@ export class SignupForm extends React.Component {
       await signupAction(properties);
       this.setState({
         done: true,
+        sentMail: properties.email,
       });
       onCreate();
     } catch (error) {
@@ -56,11 +58,11 @@ export class SignupForm extends React.Component {
 
   render () {
     const { render: Render, ...rest } = this.props;
-    const { errors, done, loading } = this.state;
+    const { errors, done, loading, sentMail } = this.state;
     const { setSignupProperty, submit } = this;
 
     const props = {
-      setSignupProperty, submit, errors, done, loading, ...rest,
+      setSignupProperty, submit, errors, done, loading, sentMail, ...rest,
     };
 
     return (

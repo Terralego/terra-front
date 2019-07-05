@@ -1,5 +1,5 @@
 import React from 'react';
-import { Card, FormGroup, InputGroup, Button, Intent } from '@blueprintjs/core';
+import { Card, FormGroup, InputGroup, Button, Intent, Callout } from '@blueprintjs/core';
 
 import translateMock from '../../../../utils/translate';
 
@@ -9,21 +9,29 @@ export const SignupFormRenderer = ({
   errors: { email, password } = {},
   showPassword,
   loading,
+  done,
+  sentMail,
   translate = translateMock({
     'auth.signupform.email.invalid': 'Invalid email',
     'auth.signupform.email.help': 'Type your email',
     'auth.signupform.email.label': 'Email',
     'auth.signupform.email.info': 'required',
     'auth.signupform.email.placeholder': 'Email',
-    'auth.signupform.password.invalid': 'Invalid email',
-    'auth.signupform.password.help': 'Type your email',
-    'auth.signupform.password.label': 'Email',
+    'auth.signupform.password.invalid': 'Password is required',
+    'auth.signupform.password.help': 'Type your password',
+    'auth.signupform.password.label': 'Password',
     'auth.signupform.password.info': 'required',
-    'auth.signupform.password.placeholder': 'Email',
+    'auth.signupform.password.placeholder': 'Password',
     'auth.signupform.submit': 'Create account',
+    'auth.signupform.submitSuccess': 'Email sent to {{email}}',
   }),
 }) => (
   <Card className="signup-form">
+    {done && (
+      <Callout className="signup-form__callout" intent={Intent.SUCCESS}>
+        {translate('auth.signupform.submitSuccess', { email: sentMail })}
+      </Callout>
+    )}
     <form
       onSubmit={submit}
     >
@@ -35,6 +43,7 @@ export const SignupFormRenderer = ({
         intent={email ? Intent.WARNING : null}
       >
         <InputGroup
+          type="email"
           id="email"
           placeholder={translate('auth.signupform.email.placeholder')}
           onChange={setSignupProperty}
