@@ -11,8 +11,8 @@ jest.mock('@blueprintjs/core', () => ({
   Card ({ children }) {
     return children;
   },
-  Switch () {
-    return <p>Switch</p>;
+  Switch ({ className }) {
+    return <p className={className}>Switch</p>;
   },
   Elevation: {
     TWO: 'two',
@@ -22,6 +22,9 @@ jest.mock('@blueprintjs/core', () => ({
   },
   Tooltip () {
     return <p>Tooltip</p>;
+  },
+  Intent: {
+    WARNING: 'warning',
   },
 }));
 
@@ -55,6 +58,12 @@ jest.mock('react-dom', () => ({
 jest.mock('./FiltersPanel', () => function FiltersPanel () {
   return <p>FiltersPanel</p>;
 });
+
+jest.mock('../../services/warningZoom', () => ({
+  displayWarningAccordingToZoom (map) {
+    return { minZoomLayer: 14, display: map && true };
+  },
+}));
 
 it('should render correctly', () => {
   const tree = renderer.create((
@@ -106,6 +115,11 @@ it('should render correctly', () => {
       <LayersTreeItem
         layer={{ label: 'hidden' }}
         hidden
+      />
+      <LayersTreeItem
+        layer={{ label: 'warning' }}
+        isActive
+        map
       />
     </>
   ));
