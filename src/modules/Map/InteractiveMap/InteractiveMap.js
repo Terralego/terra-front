@@ -277,6 +277,7 @@ export class InteractiveMap extends React.Component {
     content,
     unique,
     fixed,
+    anchor,
     fetchProperties = {},
     clusteredFeatures,
     element,
@@ -310,6 +311,7 @@ export class InteractiveMap extends React.Component {
     }
     const popup = new mapBoxGl.Popup({
       className,
+      anchor,
     });
     popup.once('close', () => this.popups.delete(layerId));
     this.popups.set(layerId, { popup, content: container.innerHTML });
