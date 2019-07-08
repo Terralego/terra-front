@@ -3,10 +3,10 @@
 exports[`should render correctly 1`] = `
 Array [
   <div
-    className="layerNode-options layerNode-options--mobile"
+    className="layerstree-node-content__options layerstree-node-content__options--mobile"
   >
     <button
-      className="bp3-button bp3-minimal layerNode-options__button layerNode-options__button--more"
+      className="bp3-button bp3-minimal layerstree-node-content__options__button layerstree-node-content__options__button--more"
       onKeyDown={[Function]}
       onKeyUp={[Function]}
       title="options d'affichage"
@@ -39,13 +39,13 @@ Array [
     </button>
   </div>,
   <div
-    className="layerNode-options layerNode-options--mobile"
+    className="layerstree-node-content__options layerstree-node-content__options--mobile"
   >
     <p>
       LayerFetchValues
     </p>
     <button
-      className="bp3-button bp3-minimal layerNode-options__button layerNode-options__button--active"
+      className="bp3-button bp3-minimal layerstree-node-content__options__button layerstree-node-content__options__button--active"
       onKeyDown={[Function]}
       onKeyUp={[Function]}
       title="filter"
@@ -77,7 +77,7 @@ Array [
       </span>
     </button>
     <button
-      className="bp3-button bp3-minimal layerNode-options__button layerNode-options__button--more"
+      className="bp3-button bp3-minimal layerstree-node-content__options__button layerstree-node-content__options__button--more"
       onKeyDown={[Function]}
       onKeyUp={[Function]}
       title="options d'affichage"

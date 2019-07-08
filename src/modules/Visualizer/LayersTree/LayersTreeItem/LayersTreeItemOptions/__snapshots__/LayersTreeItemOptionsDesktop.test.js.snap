@@ -2,10 +2,10 @@
 
 exports[`should render default options 1`] = `
 <div
-  className="layerNode-options layerNode-options--desktop"
+  className="layerstree-node-content__options layerstree-node-content__options--desktop"
 >
   <span
-    className="bp3-popover-wrapper layerNode__tooltip options"
+    className="bp3-popover-wrapper layerstree-node-content__options__tooltip options"
   >
     <span
       className="bp3-popover-target"
@@ -15,7 +15,7 @@ exports[`should render default options 1`] = `
       onMouseLeave={[Function]}
     >
       <button
-        className="bp3-button bp3-minimal layerNode-options__button layerNode-options__button--more"
+        className="bp3-button bp3-minimal layerstree-node-content__options__button layerstree-node-content__options__button--more"
         onKeyDown={[Function]}
         onKeyUp={[Function]}
         tabIndex={0}
@@ -49,10 +49,10 @@ exports[`should render default options 1`] = `
 
 exports[`should render no tooltip if empty widget empty 1`] = `
 <div
-  className="layerNode-options layerNode-options--desktop"
+  className="layerstree-node-content__options layerstree-node-content__options--desktop"
 >
   <span
-    className="bp3-popover-wrapper layerNode__tooltip options"
+    className="bp3-popover-wrapper layerstree-node-content__options__tooltip options"
   >
     <span
       className="bp3-popover-target"
@@ -62,7 +62,7 @@ exports[`should render no tooltip if empty widget empty 1`] = `
       onMouseLeave={[Function]}
     >
       <button
-        className="bp3-button bp3-minimal layerNode-options__button layerNode-options__button--more"
+        className="bp3-button bp3-minimal layerstree-node-content__options__button layerstree-node-content__options__button--more"
         onKeyDown={[Function]}
         onKeyUp={[Function]}
         tabIndex={0}
@@ -96,10 +96,10 @@ exports[`should render no tooltip if empty widget empty 1`] = `
 
 exports[`should render with proporties 1`] = `
 <div
-  className="layerNode-options layerNode-options--desktop"
+  className="layerstree-node-content__options layerstree-node-content__options--desktop"
 >
   <span
-    className="bp3-popover-wrapper layerNode__tooltip widgets"
+    className="bp3-popover-wrapper layerstree-node-content__options__tooltip widgets"
   >
     <span
       className="bp3-popover-target"
@@ -109,7 +109,7 @@ exports[`should render with proporties 1`] = `
       onMouseLeave={[Function]}
     >
       <button
-        className="bp3-button bp3-minimal layerNode-options__button layerNode-options__button--active"
+        className="bp3-button bp3-minimal layerstree-node-content__options__button layerstree-node-content__options__button--active"
         onClick={true}
         onKeyDown={[Function]}
         onKeyUp={[Function]}
@@ -140,7 +140,7 @@ exports[`should render with proporties 1`] = `
     </span>
   </span>
   <span
-    className="bp3-popover-wrapper layerNode__tooltip table"
+    className="bp3-popover-wrapper layerstree-node-content__options__tooltip table"
   >
     <span
       className="bp3-popover-target"
@@ -151,7 +151,7 @@ exports[`should render with proporties 1`] = `
     >
       <button
         alt="Ouvrir le tableau"
-        className="bp3-button bp3-minimal layerNode-options__button"
+        className="bp3-button bp3-minimal layerstree-node-content__options__button"
         onKeyDown={[Function]}
         onKeyUp={[Function]}
         tabIndex={0}
@@ -184,7 +184,7 @@ exports[`should render with proporties 1`] = `
     FiltersPanel
   </p>
   <span
-    className="bp3-popover-wrapper layerNode__tooltip options"
+    className="bp3-popover-wrapper layerstree-node-content__options__tooltip options"
   >
     <span
       className="bp3-popover-target"
@@ -194,7 +194,7 @@ exports[`should render with proporties 1`] = `
       onMouseLeave={[Function]}
     >
       <button
-        className="bp3-button bp3-minimal layerNode-options__button layerNode-options__button--more"
+        className="bp3-button bp3-minimal layerstree-node-content__options__button layerstree-node-content__options__button--more"
         onKeyDown={[Function]}
         onKeyUp={[Function]}
         tabIndex={0}

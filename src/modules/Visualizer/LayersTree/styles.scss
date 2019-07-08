@@ -14,7 +14,6 @@ $scaleRatio: 1.25;
 
 .layerstree-group {
   margin-top: .75rem;
-  margin-left: .5rem;
 
   .layerstree-group--0 {
     margin-left: 0;
@@ -24,9 +23,10 @@ $scaleRatio: 1.25;
     .bp3-collapse-body {
       transform: inherit !important;
       padding: .3rem;
-      background-color: #394B59;
-      border: 1px solid #0000001f;
-    }
+    background-color: #394B59;
+    border: 1px solid #0000001f;
+    box-shadow: none;
+    } 
   }
 
   &__label-button {
@@ -55,7 +55,7 @@ $scaleRatio: 1.25;
   }
 }
 
-.layerNode-container {
+.layerstree-node {
   padding: .35rem .25rem;
   border: 1px solid #0000001f;
   border-radius: 0;
@@ -63,206 +63,198 @@ $scaleRatio: 1.25;
   font-size: .875rem;
   color: $font-color;
   letter-spacing: 0.06rem;
-
-  .layerNode-tooltip-warning .bp3-popover-target .bp3-switch.warning-zoom .bp3-control-indicator {
-    background: #9EB4C1;
-
-    &::after {
-      content: '!';
-      position: absolute;
-      left: 18px;
-      font-size: 13px;
-      font-weight: bold;
-    }
-  }
-}
-
-/* Override Blueprintjs */
-.bp3-dark .bp3-control.bp3-switch.warning-zoom:hover input:checked ~ .bp3-control-indicator {
-  background: darken(#9EB4C1, 10%);
-}
-
-.layerNode__tooltip > span {
-  width: 100%;
-  height: 1.2rem;
-}
-
-.layerNode__content--desktop {
-  display: flex;
-  flex-direction: row;
-  justify-content: space-between;
-
-  &-switch-label {
-    display: flex;
-    align-items: center;
-    width: 100%;
-  }
-
-  .layerNode__tooltip {
-    width: 100%;
-    flex: auto;
-    min-width: 0;
-    height: 1.2rem;
-
-    & > .bp3-popover-target {
-      max-width: 100%;
-      overflow: hidden;
-      text-overflow: ellipsis;
-      white-space: nowrap;
-    }
-  }
-}
-
-.layerNode__content--desktop--active {
-  max-height: 1.2rem;
-
-  .layerNode__content--desktop-switch-label {
-    min-width: 0;
-    display: flex;
-  }
-
-  .layerNode__tooltip {
-    height: 1.2rem;
-  }
-
-  .layerNode-options--desktop {
-    max-width: 7.5rem;
-    padding-left: .25rem;
-  }
-}
-
-.layerNode__content--mobile {
   display: flex;
   flex-direction: column;
-  align-items: stretch;
-  justify-content: center;
-
-  &-switch-label {
-    display: flex;
-    width: 100%;
-    padding: 0 0 .5rem 0;
-    font-size: .875rem / $scaleRatio;
-  }
-}
-
-.control-container {
-  padding: 1rem 0 0 0;
-}
-
-.bp3-switch {
-  margin: 0 0 0 0;
-  outline: none;
-}
-
-.layerstree-subitems-list {
-  .bp3-popover-target, div button {
-    width: 100%;
-    outline: none;
-    margin: auto;
-  }
-
-  button {
-    display: flex;
-    justify-content: space-between;
-  }
-}
-
-.layerNode-options {
-  background-color: transparent;
-
-  &__button {
-    margin: 0 .2rem;
-    min-width: 1.125rem;
-    min-height: 1.125rem;
-    padding: 0;
-    outline: none;
-
-    .bp3-icon {
-      padding: 0.05rem;
-    }
-
-    &--more {
-      svg {
-        transform: scale(0.75);
-      }
-    }
-  }
-
-  &--desktop {
-    display: none;
-
-    .layerNode-options__button--more {
-      transform: rotate(90deg);
-    }
-
-    .layerNode-options__button--active {
-      background: radial-gradient($active-button-color 0, transparent 55%) !important;
-
-      svg {
-        filter: invert(.5) sepia(1) saturate(5) hue-rotate(175deg);
-      }
-    }
-  }
-
-  &--mobile {
-    display: flex;
-    flex-flow: row wrap;
-    justify-content: flex-end;
-    padding: .25rem 0;
-    border-top: 1px solid #0000001f;
-    border-radius: 2px;
-    background-color: #0000001f;
-
-    .layerNode-options__button {
-      width: 4.06rem;
-    }
-
-    .layerNode-options__button--active {
-      background: radial-gradient(circle at 50% 1.05rem, $active-button-color 0, transparent 40%) !important;
-
-      svg {
-        filter: invert(.5) sepia(1) saturate(5) hue-rotate(175deg);
-      }
-    }
-  }
-
-  &--active {
-    display: flex;
-  }
-}
-
-.layerNode-options--mobile .layerNode-options__button {
-  padding: .5rem;
-  display: flex;
-  flex-direction: column;
-  outline: none;
-  font-size: .65rem;
-
-  .bp3-icon {
-    padding-bottom: .25rem;
-    margin: 0;
-  }
-}
-
-.layerNode-total {
-  margin-left: .25rem;
-}
-
-.layerNode-container:hover {
-  .layerNode__content--desktop-switch-label {
-    min-width: 0;
-    display: flex;
-  }
-
-  .layerNode-options--desktop {
+  box-shadow: none;
+   
+  .layerstree-node-content {
     display: flex;
     flex-direction: row;
-    justify-content: flex-end;
-    align-items: stretch;
-    max-height: 1.2rem;
-    padding-left: .25rem;
-    max-width: 7.5rem;
+    
+    .layerstree-node-content__item-tooltip-warning .bp3-popover-target .bp3-switch.warning-zoom .bp3-control-indicator {
+      background: #9EB4C1;
+  
+      &::after {
+        content: '!';
+        position: absolute;
+        left: 18px;
+        font-size: 13px;
+        font-weight: bold;
+      }
+    }
+    /* Override Blueprintjs */
+    .bp3-dark .bp3-control.bp3-switch.warning-zoom:hover input:checked ~ .bp3-control-indicator {
+      background: darken(#9EB4C1, 10%);
+    }
+    &__item {
+      display: flex;
+      flex-direction: column;
+      flex-grow: 2;
+      min-width: 0;
+
+      &-label {
+        min-width: 0;
+        display: flex;
+        height: 1.2rem;
+
+        &__tooltip {  
+          width: 100%;
+          flex: auto;
+          min-width: 0;
+          height: 1.2rem;
+
+          & > .bp3-popover-target {
+            max-width: 100%;
+            overflow: hidden;
+            text-overflow: ellipsis;
+            white-space: nowrap;
+          }
+        }
+        &__total {
+          margin-left: .25rem;
+        }
+      }
+    }
+    &__subitems-list {
+      padding: .75rem 0 0 0;
+      order: 2;
+      .bp3-popover-target, div button {
+        width: 100%;
+        outline: none;
+        margin: auto;
+      }
+      button {
+        display: flex;
+        justify-content: space-between;
+      }
+    }
+    &__options {
+      background-color: transparent;
+      max-width: 7.5rem;
+      padding-left: .25rem;
+      align-items: baseline;
+      height: 1.2rem;
+
+      &--desktop {
+        display: none;
+      }
+
+      &--active {
+        display: flex;
+      }
+      
+      &__button {
+        margin: 0 .2rem;
+        min-width: 1.125rem;
+        min-height: 1.125rem;
+        padding: 0;
+        outline: none;
+      
+        .bp3-icon {
+          padding: 0.05rem;
+        }
+      
+        &--more {
+          transform: rotate(90deg);
+          svg {
+            transform: scale(0.75);
+          }
+        }
+        &--active {
+          background: radial-gradient($active-button-color 0, transparent 55%) !important;
+          svg {
+            filter: invert(.5) sepia(1) saturate(5) hue-rotate(175deg);
+          }
+        }
+      }
+    }     
+    &:hover {
+      .layerstree-node-content {
+        &__item {
+          min-width: 0;
+          display: flex;
+        }
+        &__options--desktop {
+          background-color: transparent;
+          display: flex;
+          flex-direction: row;
+          justify-content: flex-end;
+          align-items: baseline;
+          max-height: 1.2rem;
+          padding-left: .25rem;
+          max-width: 7.5rem;
+        }
+      }
+    }
+
+    &--mobile {
+      display: flex;
+      flex-direction: column;
+      width: 100%;
+      font-size: .875rem / $scaleRatio;
+
+      .layerstree-node-content{
+        &__item {
+          &-label {
+            &__tooltip {  
+              width: 100%;
+              flex: auto;
+              min-width: 0;
+              height: 1.2rem;
+    
+              & > .bp3-popover-target {
+                max-width: 100%;
+                overflow: auto;
+                text-overflow: inherit;
+                white-space: inherit;
+              }
+            }
+            &--mobile {
+              min-width: 0;
+              padding: 0 0 .5rem 0;
+              display: flex;
+              order: 1;
+            }
+          }
+        }
+        &__options--mobile {
+          max-width: 100%;
+          height: auto;
+          display: flex;
+          order: 3;
+          justify-content: flex-end;
+          padding: .25rem 0;
+          border-top: 1px solid #0000001f;
+          border-radius: 2px;
+        }
+        &__options__button {
+          width: 4.06rem;
+          flex-direction: column;
+          outline: none;
+          font-size: .65rem;
+          padding: .5rem;
+          margin: 0 .25rem;
+
+          .bp3-icon {
+            padding-bottom: .25rem;
+            margin: 0;
+          }
+          &--more {
+            transform: rotate(0deg);
+          }
+          &--active {
+            background: radial-gradient(circle at 50% 1.05rem, $active-button-color 0, transparent 40%) !important;
+            svg {
+              filter: invert(.5) sepia(1) saturate(5) hue-rotate(175deg);
+            }
+          }
+        }
+      }
+    }
   }
+}
+.bp3-switch {
+  margin: 0 0 0 0;
 }
 
 @media(min-width: $breakpoints-phone) and (max-width: $breakpoints-desktop) {
@@ -284,16 +276,15 @@ $scaleRatio: 1.25;
     }
   }
 
-  .layerNode-container {
-    padding: .75rem .5rem .25rem .5rem;
+  .layerstree-node-content {
+    padding: .5rem 0 0 0;
+    width: 100%;
     font-size: .875rem / $scaleRatio;
     letter-spacing: 0.06rem / $scaleRatio;
-    overflow: hidden;
-    white-space: inherit;
 
     .control-container {
       padding: .5rem 0 .5rem 0;
-
+    
       .bp3-control {
         margin-bottom: 1.5rem;
       }
@@ -312,10 +303,5 @@ $scaleRatio: 1.25;
         }
       }
     }
-  }
-
-  .layerNode__content {
-    display: flex;
-    flex-direction: column;
   }
 }

@@ -3,7 +3,7 @@
 exports[`should render 1`] = `
 Array [
   <div
-    className="control-container"
+    className="control-container layerstree-node-content__subitems-list"
   >
     <label
       className="bp3-control bp3-radio"
@@ -47,7 +47,7 @@ Array [
       
     </p>
     <span
-      className="bp3-popover-wrapper tf-select layerstree-subitems-list"
+      className="bp3-popover-wrapper tf-select layerstree-node-content__subitems-list"
     >
       <span
         className="bp3-popover-target"

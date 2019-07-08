@@ -23,9 +23,9 @@ const LayersTreeItemOptionsDesktop = ({
 }) => (
   <div
     className={classnames(
-      'layerNode-options',
-      'layerNode-options--desktop',
-      { 'layerNode-options--active': hasSomeOptionActive },
+      'layerstree-node-content__options',
+      'layerstree-node-content__options--desktop',
+      { 'layerstree-node-content__options--active': hasSomeOptionActive },
     )}
   >
     {(widgets && !!widgets.length) && (
@@ -33,12 +33,12 @@ const LayersTreeItemOptionsDesktop = ({
         <Tooltip
           key={widget.component}
           content={isWidgetActive(widget) ? `Fermer le widget ${widget.component}` : `Ouvrir le widget ${widget.component}`}
-          className="layerNode__tooltip widgets"
+          className="layerstree-node-content__options__tooltip widgets"
         >
           <Button
             className={classnames({
-              'layerNode-options__button': true,
-              'layerNode-options__button--active': isWidgetActive(widget),
+              'layerstree-node-content__options__button': true,
+              'layerstree-node-content__options__button--active': isWidgetActive(widget),
             })}
             onClick={toggleWidgets(widget)}
             minimal
@@ -52,13 +52,13 @@ const LayersTreeItemOptionsDesktop = ({
     {displayTableButton && (
       <Tooltip
         content={isTableActive ? 'Fermer le tableau' : 'Ouvrir le tableau'}
-        className="layerNode__tooltip table"
+        className="layerstree-node-content__options__tooltip table"
       >
         <Button
           className={
         classnames(
-          'layerNode-options__button',
-          { 'layerNode-options__button--active': isTableActive },
+          'layerstree-node-content__options__button',
+          { 'layerstree-node-content__options__button--active': isTableActive },
         )
       }
           onClick={toggleTable}
@@ -80,13 +80,13 @@ const LayersTreeItemOptionsDesktop = ({
       )}
       <Tooltip
         content={isFilterVisible ? 'Fermer les filtres' : 'Ouvrir les filtres'}
-        className="layerNode__tooltip filters"
+        className="layerstree-node-content__options__tooltip filters"
       >
         <Button
           className={
         classnames(
-          'layerNode-options__button',
-          { 'layerNode-options__button--active': isFilterVisible },
+          'layerstree-node-content__options__button',
+          { 'layerstree-node-content__options__button--active': isFilterVisible },
         )}
           onClick={toggleFilters}
           minimal
@@ -98,14 +98,14 @@ const LayersTreeItemOptionsDesktop = ({
     )}
     <Tooltip
       content={isOptionsOpen ? 'Fermer les options' : 'Ouvrir les options'}
-      className="layerNode__tooltip options"
+      className="layerstree-node-content__options__tooltip options"
     >
       <Button
         className={
         classnames(
-          'layerNode-options__button',
-          'layerNode-options__button--more',
-          { 'layerNode-options__button--active': isOptionsOpen },
+          'layerstree-node-content__options__button',
+          'layerstree-node-content__options__button--more',
+          { 'layerstree-node-content__options__button--active': isOptionsOpen },
         )
       }
         icon="more"

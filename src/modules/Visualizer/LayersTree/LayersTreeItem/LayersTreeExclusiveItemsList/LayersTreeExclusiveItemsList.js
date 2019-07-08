@@ -17,7 +17,7 @@ export const LayersTreeExclusiveItemsList = ({
 
   return (
     <Component
-      className="layerstree-subitems-list"
+      className="layerstree-node-content__subitems-list"
       onChange={onChange}
       values={layers.filter(({ label }) => label).map(({ label }, index) => ({
         label,

@@ -20,7 +20,7 @@ export const WarningZoom = props => {
   if (!display || !isActive) return children;
   return (
     <Tooltip
-      className="layerNode-tooltip-warning"
+      className="layerstree-node-content__item-tooltip-warning"
       content={(<span>{translate('visualizer.layerstree.warningzoom.message', { minzoom: minZoomLayer })}</span>)}
       intent={Intent.WARNING}
       usePortal={false}

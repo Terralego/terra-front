@@ -23,9 +23,9 @@ const LayersTreeItemOptionsTablet = ({
 }) => (
   <div
     className={classnames(
-      'layerNode-options',
-      'layerNode-options--mobile',
-      { 'layerNode-options--active': hasSomeOptionActive },
+      'layerstree-node-content__options',
+      'layerstree-node-content__options--mobile',
+      { 'layerstree-node-content__options--active': hasSomeOptionActive },
     )}
   >
     {(widgets && !!widgets.length) && (
@@ -33,8 +33,8 @@ const LayersTreeItemOptionsTablet = ({
         <Button
           key={widget.component}
           className={classnames({
-            'layerNode-options__button': true,
-            'layerNode-options__button--active': isWidgetActive(widget),
+            'layerstree-node-content__options__button': true,
+            'layerstree-node-content__options__button--active': isWidgetActive(widget),
           })}
           onClick={toggleWidgets(widget)}
           minimal
@@ -49,8 +49,8 @@ const LayersTreeItemOptionsTablet = ({
       <Button
         className={
           classnames(
-            'layerNode-options__button',
-            { 'layerNode-options__button--active': isTableActive },
+            'layerstree-node-content__options__button',
+            { 'layerstree-node-content__options__button--active': isTableActive },
           )
         }
         onClick={toggleTable}
@@ -74,8 +74,8 @@ const LayersTreeItemOptionsTablet = ({
         <Button
           className={
           classnames(
-            'layerNode-options__button',
-            { 'layerNode-options__button--active': isFilterVisible },
+            'layerstree-node-content__options__button',
+            { 'layerstree-node-content__options__button--active': isFilterVisible },
           )}
           onClick={toggleFilters}
           minimal
@@ -88,9 +88,9 @@ const LayersTreeItemOptionsTablet = ({
     )}
     <Button
       className={classnames(
-        'layerNode-options__button',
-        'layerNode-options__button--more',
-        { 'layerNode-options__button--active': isOptionsOpen },
+        'layerstree-node-content__options__button',
+        'layerstree-node-content__options__button--more',
+        { 'layerstree-node-content__options__button--active': isOptionsOpen },
       )}
       icon="more"
       minimal
