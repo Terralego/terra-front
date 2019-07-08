@@ -16,7 +16,7 @@ import LayerProps from '../../types/Layer';
 import LayersTreeItemOptions from './LayersTreeItemOptions';
 import withDeviceSize from './withDeviceSize';
 import WarningZoom from './WarningZoom';
-import { displayWarningAccordingToZoom } from './utils/warningZoom';
+import { displayWarningAccordingToZoom } from '../../services/warningZoom';
 
 export class LayersTreeItem extends React.Component {
   static propTypes = {

@@ -1,4 +1,4 @@
-import { getLayers } from '../../../../Map/services/mapUtils';
+import { getLayers } from '../../Map/services/mapUtils';
 
 export function getMinMax (values, minThreshold = 0, maxThreshold = 24) {
   return values.reduce((
