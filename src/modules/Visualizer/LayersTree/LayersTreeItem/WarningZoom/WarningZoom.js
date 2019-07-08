@@ -7,16 +7,21 @@ import {
 import translateMock from '../../../../../utils/translate';
 
 export const WarningZoom = props => {
-  const { display, isActive, minZoomLayer, children } = props;
-  const translate = translateMock({
-    'visualizer.layerstree.warningzoom.message': `Visible à partir du zoom ${minZoomLayer}`,
-  });
+  const {
+    display,
+    isActive,
+    minZoomLayer,
+    children,
+    translate = translateMock({
+      'visualizer.layerstree.warningzoom.message': 'Visible from zoom {{minzoom}}',
+    }),
+  } = props;
 
   if (!display || !isActive) return children;
   return (
     <Tooltip
       className="layerNode-tooltip-warning"
-      content={(<span>{translate('visualizer.layerstree.warningzoom.message')}</span>)}
+      content={(<span>{translate('visualizer.layerstree.warningzoom.message', { minzoom: minZoomLayer })}</span>)}
       intent={Intent.WARNING}
       usePortal={false}
     >
