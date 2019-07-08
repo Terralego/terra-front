@@ -8,7 +8,9 @@ Array [
     <div
       className="layerNode__content--desktop-switch-label"
     >
-      <p>
+      <p
+        className=""
+      >
         Switch
       </p>
       <p>
@@ -35,7 +37,9 @@ Array [
     <div
       className="layerNode__content--desktop-switch-label"
     >
-      <p>
+      <p
+        className=""
+      >
         Switch
       </p>
       <p>
@@ -55,7 +59,9 @@ Array [
     <div
       className="layerNode__content--desktop-switch-label"
     >
-      <p>
+      <p
+        className=""
+      >
         Switch
       </p>
       <p>
@@ -85,7 +91,9 @@ Array [
     <div
       className="layerNode__content--desktop-switch-label"
     >
-      <p>
+      <p
+        className=""
+      >
         Switch
       </p>
       <p>
@@ -118,7 +126,9 @@ Array [
     <div
       className="layerNode__content--desktop-switch-label"
     >
-      <p>
+      <p
+        className=""
+      >
         Switch
       </p>
       <p>
@@ -138,7 +148,9 @@ Array [
     <div
       className="layerNode__content--desktop-switch-label"
     >
-      <p>
+      <p
+        className=""
+      >
         Switch
       </p>
       <p>
@@ -171,7 +183,9 @@ Array [
     <div
       className="layerNode__content--desktop-switch-label"
     >
-      <p>
+      <p
+        className=""
+      >
         Switch
       </p>
       <p>
@@ -194,6 +208,33 @@ Array [
       <p>
         FiltersPanel
       </p>
+      <p>
+        Button
+      </p>
+    </div>
+  </div>,
+  <p>
+    LayersTreeItemFilters
+  </p>,
+  <div
+    className="layerNode__content--desktop"
+  >
+    <div
+      className="layerNode__content--desktop-switch-label"
+    >
+      <p>
+        Tooltip
+      </p>
+      <p>
+        Tooltip
+      </p>
+      <div
+        className="layerNode-total"
+      />
+    </div>
+    <div
+      className="layerNode-options layerNode-options--mobile"
+    >
       <p>
         Button
       </p>

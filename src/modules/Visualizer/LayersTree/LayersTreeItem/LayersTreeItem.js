@@ -1,7 +1,13 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import classnames from 'classnames';
-import { Card, Switch, Elevation, Tag, Tooltip } from '@blueprintjs/core';
+import {
+  Card,
+  Switch,
+  Elevation,
+  Tag,
+  Tooltip,
+} from '@blueprintjs/core';
 
 import LayersTreeSubItemsList from './LayersTreeSubItemsList';
 import OptionsLayer from './OptionsLayer';
@@ -9,6 +15,8 @@ import LayersTreeItemFilters from './LayersTreeItemFilters';
 import LayerProps from '../../types/Layer';
 import LayersTreeItemOptions from './LayersTreeItemOptions';
 import withDeviceSize from './withDeviceSize';
+import WarningZoom from './WarningZoom';
+import { displayWarningAccordingToZoom } from '../../services/warningZoom';
 
 export class LayersTreeItem extends React.Component {
   static propTypes = {
@@ -118,9 +126,12 @@ export class LayersTreeItem extends React.Component {
       hidden,
       isMobileSized,
       isPhoneSized,
+      map,
     } = this.props;
 
     if (hidden) return null;
+
+    const { display, minZoomLayer } = displayWarningAccordingToZoom(map, layer);
 
     const {
       isOptionsOpen, isFilterVisible, hasWidgetActive,
@@ -164,11 +175,18 @@ export class LayersTreeItem extends React.Component {
             )
           }
           >
-            <Switch
-              checked={!!isActive}
-              onChange={onActiveChange}
-              id={`toggle-${htmlID}`}
-            />
+            <WarningZoom
+              display={display}
+              isActive={isActive}
+              minZoomLayer={minZoomLayer}
+            >
+              <Switch
+                className={classnames({ 'warning-zoom': display && isActive })}
+                checked={!!isActive}
+                onChange={onActiveChange}
+                id={`toggle-${htmlID}`}
+              />
+            </WarningZoom>
             <Tooltip
               content={label}
               hoverOpenDelay={2000}

@@ -14,13 +14,14 @@ $scaleRatio: 1.25;
 
 .layerstree-group {
   margin-top: .75rem;
+
   &--active {
     .bp3-collapse-body {
       transform: inherit !important;
       padding: .3rem;
-    background-color: #394B59;
-    border: 1px solid #0000001f;
-    } 
+      background-color: #394B59;
+      border: 1px solid #0000001f;
+    }
   }
 
   &__label-button {
@@ -57,9 +58,26 @@ $scaleRatio: 1.25;
   font-size: .875rem;
   color: $font-color;
   letter-spacing: 0.06rem;
+
+  .layerNode-tooltip-warning .bp3-popover-target .bp3-switch.warning-zoom .bp3-control-indicator {
+    background: #9EB4C1;
+
+    &::after {
+      content: '!';
+      position: absolute;
+      left: 18px;
+      font-size: 13px;
+      font-weight: bold;
+    }
+  }
 }
 
-.layerNode__tooltip span {
+/* Override Blueprintjs */
+.bp3-dark .bp3-control.bp3-switch.warning-zoom:hover input:checked ~ .bp3-control-indicator {
+  background: darken(#9EB4C1, 10%);
+}
+
+.layerNode__tooltip > span {
   width: 100%;
   height: 1.2rem;
 }
@@ -75,11 +93,12 @@ $scaleRatio: 1.25;
     width: 100%;
   }
 
-  .layerNode__tooltip {  
+  .layerNode__tooltip {
     width: 100%;
     flex: auto;
     min-width: 0;
     height: 1.2rem;
+
     & > .bp3-popover-target {
       max-width: 100%;
       overflow: hidden;
@@ -88,15 +107,19 @@ $scaleRatio: 1.25;
     }
   }
 }
+
 .layerNode__content--desktop--active {
   max-height: 1.2rem;
+
   .layerNode__content--desktop-switch-label {
     min-width: 0;
     display: flex;
   }
+
   .layerNode__tooltip {
     height: 1.2rem;
   }
+
   .layerNode-options--desktop {
     max-width: 7.5rem;
     padding-left: .25rem;
@@ -108,6 +131,7 @@ $scaleRatio: 1.25;
   flex-direction: column;
   align-items: stretch;
   justify-content: center;
+
   &-switch-label {
     display: flex;
     width: 100%;
@@ -115,6 +139,7 @@ $scaleRatio: 1.25;
     font-size: .875rem / $scaleRatio;
   }
 }
+
 .control-container {
   padding: 1rem 0 0 0;
 }
@@ -130,6 +155,7 @@ $scaleRatio: 1.25;
     outline: none;
     margin: auto;
   }
+
   button {
     display: flex;
     justify-content: space-between;
@@ -138,18 +164,18 @@ $scaleRatio: 1.25;
 
 .layerNode-options {
   background-color: transparent;
-  
+
   &__button {
     margin: 0 .2rem;
     min-width: 1.125rem;
     min-height: 1.125rem;
     padding: 0;
     outline: none;
-  
+
     .bp3-icon {
       padding: 0.05rem;
     }
-  
+
     &--more {
       svg {
         transform: scale(0.75);
@@ -166,6 +192,7 @@ $scaleRatio: 1.25;
 
     .layerNode-options__button--active {
       background: radial-gradient($active-button-color 0, transparent 55%) !important;
+
       svg {
         filter: invert(.5) sepia(1) saturate(5) hue-rotate(175deg);
       }
@@ -180,12 +207,14 @@ $scaleRatio: 1.25;
     border-top: 1px solid #0000001f;
     border-radius: 2px;
     background-color: #0000001f;
-    
+
     .layerNode-options__button {
       width: 4.06rem;
     }
+
     .layerNode-options__button--active {
       background: radial-gradient(circle at 50% 1.05rem, $active-button-color 0, transparent 40%) !important;
+
       svg {
         filter: invert(.5) sepia(1) saturate(5) hue-rotate(175deg);
       }
@@ -203,6 +232,7 @@ $scaleRatio: 1.25;
   flex-direction: column;
   outline: none;
   font-size: .65rem;
+
   .bp3-icon {
     padding-bottom: .25rem;
     margin: 0;
@@ -218,6 +248,7 @@ $scaleRatio: 1.25;
     min-width: 0;
     display: flex;
   }
+
   .layerNode-options--desktop {
     display: flex;
     flex-direction: row;
@@ -229,16 +260,16 @@ $scaleRatio: 1.25;
   }
 }
 
-@media(min-width: $breakpoints-phone) and (max-width: $breakpoints-desktop){
-  
+@media(min-width: $breakpoints-phone) and (max-width: $breakpoints-desktop) {
+
   .layerstree-group {
-    
+
     &--active {
       .bp3-collapse-body {
         padding: .5rem / $scaleRatio;
-      } 
+      }
     }
-  
+
     &__label-button {
       H5 {
         font-size: 0.9rem / $scaleRatio;
@@ -261,12 +292,15 @@ $scaleRatio: 1.25;
       .bp3-control {
         margin-bottom: 1.5rem;
       }
+
       .bp3-control:last-child {
         margin-bottom: .25rem;
       }
+
       .bp3-radio:first-child {
         margin-top: .75rem;
       }
+
       .bp3-select-popover .bp3-menu {
         .control-container__item li {
           padding: .5rem;
@@ -274,6 +308,7 @@ $scaleRatio: 1.25;
       }
     }
   }
+
   .layerNode__content {
     display: flex;
     flex-direction: column;

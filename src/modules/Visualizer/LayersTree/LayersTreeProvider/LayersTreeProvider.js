@@ -133,6 +133,7 @@ export class LayersTreeProvider extends React.Component {
     const {
       children,
       layersTree,
+      map,
     } = this.props;
     const { layersTreeState } = this.state;
     const {
@@ -141,6 +142,7 @@ export class LayersTreeProvider extends React.Component {
       fetchPropertyRange,
     } = this;
     const value = {
+      map,
       layersTree,
       layersTreeState,
       initLayersState,

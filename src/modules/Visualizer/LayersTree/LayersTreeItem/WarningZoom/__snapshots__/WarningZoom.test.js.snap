@@ -1,0 +1,13 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`should render with warning 1`] = `
+<p>
+  foo
+</p>
+`;
+
+exports[`should render without warning 1`] = `
+<p>
+  foo
+</p>
+`;
