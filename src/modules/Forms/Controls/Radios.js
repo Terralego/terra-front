@@ -46,7 +46,7 @@ export class Radios extends React.Component {
   };
 
   render () {
-    const { value, className } = this.props;
+    const { value, className = '' } = this.props;
     const { values } = this.state;
 
     return (

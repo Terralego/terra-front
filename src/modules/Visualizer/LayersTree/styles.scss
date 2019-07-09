@@ -23,9 +23,9 @@ $scaleRatio: 1.25;
     .bp3-collapse-body {
       transform: inherit !important;
       padding: .3rem;
-    background-color: #394B59;
-    border: 1px solid #0000001f;
-    box-shadow: none;
+      background-color: #394B59;
+      border: 1px solid #0000001f;
+      box-shadow: none;
     } 
   }
 
@@ -254,7 +254,7 @@ $scaleRatio: 1.25;
   }
 }
 .bp3-switch {
-  margin: 0 0 0 0;
+  margin: 0;
 }
 
 @media(min-width: $breakpoints-phone) and (max-width: $breakpoints-desktop) {
