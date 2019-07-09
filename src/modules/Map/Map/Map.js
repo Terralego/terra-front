@@ -111,7 +111,22 @@ export class MapComponent extends React.Component {
         layout: PropTypes.shape({
           visibility: PropTypes.oneOf(['visible', 'none']),
         }),
-        asCluster: PropTypes.bool,
+        cluster: PropTypes.shape({
+          radius: PropTypes.oneOfType([
+            PropTypes.number,
+            PropTypes.arrayOf(PropTypes.shape({
+              value: PropTypes.number,
+              maxzoom: PropTypes.number,
+            })),
+          ]),
+          steps: PropTypes.arrayOf(PropTypes.number),
+          size: PropTypes.arrayOf(PropTypes.number),
+          colors: PropTypes.arrayOf(PropTypes.string),
+          font: PropTypes.shape({
+            color: PropTypes.string,
+          }),
+          border: PropTypes.number,
+        }),
       })),
     }),
 
