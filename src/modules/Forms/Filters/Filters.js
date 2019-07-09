@@ -9,6 +9,7 @@ import Switch from '../Controls/Switch';
 import MultiSelect from '../Controls/MultiSelect';
 import DateRangeInput from '../Controls/DateRangeInput';
 import Control from './Control';
+import translateMock from '../../../utils/translate';
 
 export const TYPE_SINGLE = 'single';
 export const TYPE_MANY = 'many';
@@ -65,11 +66,16 @@ export class Filters extends React.Component {
         PropTypes.arrayOf(PropTypes.string),
         PropTypes.arrayOf(PropTypes.number),
         PropTypes.bool,
+        PropTypes.arrayOf(PropTypes.shape({
+          label: PropTypes.string,
+          value: PropTypes.oneOfType([PropTypes.string, PropTypes.number]),
+        })),
       ]),
     })),
     properties: PropTypes.shape({
       // property: value
     }),
+    translate: PropTypes.func,
   };
 
   static defaultProps = {
@@ -78,6 +84,9 @@ export class Filters extends React.Component {
     filters: [],
     properties: {},
     layer: '',
+    translate: translateMock({
+      'terralego.form.filter.select_placeholder': 'Enter a query first',
+    }),
   };
 
   onChange = property => value => {
@@ -87,7 +96,7 @@ export class Filters extends React.Component {
 
   render () {
     const { onChange } = this;
-    const { properties, filters, locales: customLocales } = this.props;
+    const { properties, filters, locales: customLocales, translate } = this.props;
     const locales = { ...DEFAULT_LOCALES, ...customLocales };
 
     return (
@@ -103,7 +112,10 @@ export class Filters extends React.Component {
             onChange={onChange(property)}
             locales={locales}
             value={properties[property]}
-            initialContent={values && values.length > 100 ? null : undefined}
+            initialContent={(values && values.length > 250)
+              ? translate('terralego.form.filter.select_placeholder')
+              : null
+            }
           />
         ))}
       </div>
