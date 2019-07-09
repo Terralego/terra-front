@@ -23,8 +23,8 @@ const LayersTreeItemOptionsDesktop = ({
   widgets,
   isWidgetActive,
   translate = translateMock({
-    'layerstree.itemOptions.open': 'open',
-    'layerstree.itemOptions.close': 'close',
+    'layerstree.itemOptions.widget.open': 'open widget',
+    'layerstree.itemOptions.widget.close': 'close widget',
     'layerstree.itemOptions.widget.label': 'widget',
     'layerstree.itemOptions.table.label': 'table',
     'layerstree.itemOptions.table.open': 'open table',
@@ -49,10 +49,7 @@ const LayersTreeItemOptionsDesktop = ({
         <Tooltip
           key={widget.component}
           className="layerstree-node-content__options__tooltip widgets"
-          content={isWidgetActive(widget)
-            ? `${translate('layerstree.itemOptions.close')} ${widget.component}`
-            : `${translate('layerstree.itemOptions.open')} ${widget.component}`
-          }
+          content={translate(`layerstree.itemOptions.widget.${isWidgetActive(widget) ? 'close' : 'open'}`, { widget: widget.component })}
         >
           <Button
             className={classnames({
@@ -63,22 +60,15 @@ const LayersTreeItemOptionsDesktop = ({
             minimal
             icon="selection"
             title={`widget ${widget.component}`}
-            alt={isWidgetActive(widget)
-              ? `${translate('layerstree.itemOptions.close')} ${widget.component}`
-              : `${translate('layerstree.itemOptions.open')} ${widget.component}`
-            }
+            alt={translate(`layerstree.itemOptions.widget.${isWidgetActive(widget) ? 'close' : 'open'}`, { widget: widget.component })}
           />
         </Tooltip>
       ))
-    )
-}
+    )}
     {displayTableButton && (
       <Tooltip
         className="layerstree-node-content__options__tooltip table"
-        content={isTableActive
-          ? translate('layerstree.itemOptions.table.close')
-          : translate('layerstree.itemOptions.table.open')
-        }
+        content={translate(`layerstree.itemOptions.table.${isTableActive ? 'close' : 'open'}`)}
       >
         <Button
           className={
@@ -91,10 +81,7 @@ const LayersTreeItemOptionsDesktop = ({
           minimal
           icon="th"
           title={translate('layerstree.itemOptions.table.title')}
-          alt={isTableActive
-            ? translate('layerstree.itemOptions.table.close')
-            : translate('layerstree.itemOptions.table.open')
-          }
+          alt={translate(`layerstree.itemOptions.table.${isTableActive ? 'close' : 'open'}`)}
         />
       </Tooltip>
     )}
@@ -108,10 +95,7 @@ const LayersTreeItemOptionsDesktop = ({
       <LayerFetchValues layer={layer} isFilterVisible={isFilterVisible} />
       )}
       <Tooltip
-        content={isFilterVisible
-          ? translate('layerstree.itemOptions.filter.close')
-          : translate('layerstree.itemOptions.filter.open')
-        }
+        content={translate(`layerstree.itemOptions.filter.${isFilterVisible ? 'close' : 'open'}`)}
         className="layerstree-node-content__options__tooltip filters"
       >
         <Button
@@ -124,37 +108,26 @@ const LayersTreeItemOptionsDesktop = ({
           minimal
           icon="filter"
           title={translate('layerstree.itemOptions.filter.label')}
-          alt={isFilterVisible
-            ? translate('layerstree.itemOptions.filter.close')
-            : translate('layerstree.itemOptions.filter.open')
-          }
+          alt={translate(`layerstree.itemOptions.filter.${isFilterVisible ? 'close' : 'open'}`)}
         />
       </Tooltip>
     </FiltersPanel>
     )}
     <Tooltip
-      content={isOptionsOpen
-        ? translate('layerstree.itemOptions.options.close')
-        : translate('layerstree.itemOptions.options.open')
-      }
-      className="layerstree-node-content__options__tooltip options"
+      content={translate(`layerstree.itemOptions.options.${isOptionsOpen ? 'close' : 'open'}`)}
+      className="layerNode__tooltip options"
     >
       <Button
         className={
-        classnames(
-          'layerstree-node-content__options__button',
-          'layerstree-node-content__options__button--more',
-          { 'layerstree-node-content__options__button--active': isOptionsOpen },
-        )
-      }
+          classnames(
+            'layerstree-node-content__options__button',
+            { 'layerstree-node-content__options__button--active': isOptionsOpen },
+          )}
         icon="more"
         minimal
         onClick={handleOptionPanel}
         title={translate('layerstree.itemOptions.options.label')}
-        alt={isOptionsOpen
-          ? translate('layerstree.itemOptions.options.close')
-          : translate('layerstree.itemOptions.options.open')
-        }
+        alt={translate(`layerstree.itemOptions.options.${isOptionsOpen ? 'close' : 'open'}`)}
       />
     </Tooltip>
   </div>

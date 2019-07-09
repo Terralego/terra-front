@@ -81,4 +81,5 @@ it('should close options', () => {
     />
   ));
   expect(wrapper.find('.options').props().content).toBe('close options');
+  expect(wrapper.find('.options').dive().find('.layerNode-options__button').props().alt).toBe('close options');
 });
