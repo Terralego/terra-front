@@ -286,6 +286,7 @@ export class MapComponent extends React.Component {
       const { onMapUpdate } = this.props;
       if (isSourceLoaded) {
         onMapUpdate(map);
+        updateCluster(map, layer, onClusterUpdate);
         map.off('sourcedata', listener);
       }
     };
