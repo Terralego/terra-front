@@ -16,7 +16,11 @@ export class SyncedMap extends React.Component {
 
     return React.Children.map(children, child =>
       React.cloneElement(child, {
-        onMapInit: getMap,
+        onMapInit: map => {
+          getMap(map);
+          const { onMapInit } = child.props;
+          onMapInit && onMapInit(map);
+        },
       }));
   }
 }
