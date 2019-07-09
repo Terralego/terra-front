@@ -25,7 +25,7 @@ jest.mock('../Controls/Text', () => () => <p>ControlText</p>);
 jest.mock('../Controls/MultiSelect', () => () => <p>ControlMultiSelect</p>);
 jest.mock('../Controls/Select', () => ({ initialContent }) => (
   <p>
-    {initialContent === null ? 'ControlSelect with initialContent set to null' : 'ControlSelect'}
+    {initialContent ? `ControlSelect with initialContent set to ${initialContent}` : 'ControlSelect'}
   </p>
 ));
 jest.mock('../Controls/Checkboxes', () => () => <p>ControlCheckboxes</p>);
@@ -51,7 +51,7 @@ it('should build a form', () => {
         label: 'Shitload',
         type: TYPE_SINGLE,
         display: 'select',
-        values: Array(101),
+        values: Array(251),
       }, {
         property: 'many_values',
         label: 'Foo',
