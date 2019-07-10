@@ -426,7 +426,7 @@ describe('Interactions', () => {
     instance.addHighlight = jest.fn();
     instance.triggerInteraction({
       event: {},
-      feature: {},
+      feature: { properties: { _id: 42 } },
       layerId: 'foo',
       interaction: {
         id: 'foo',
@@ -438,7 +438,7 @@ describe('Interactions', () => {
     });
     await true;
     expect(instance.addHighlight).toHaveBeenCalledWith(
-      { feature: {}, highlightColor: 'red', unique: true },
+      { featureId: 42, layerId: 'foo', highlightColor: 'red', unique: true },
     );
   });
 
@@ -448,7 +448,8 @@ describe('Interactions', () => {
     instance.addHighlight = jest.fn();
     instance.triggerInteraction({
       event: {},
-      feature: { layer: { id: 'pwet' }, properties: { _id: 1 } },
+      feature: { properties: { _id: 1 } },
+      layerId: 'pwet',
       interaction: {
         id: 'foo',
         interaction: INTERACTION_HIGHLIGHT,
@@ -472,7 +473,8 @@ describe('Interactions', () => {
     instance.map.setFilter = jest.fn();
     instance.triggerInteraction({
       event: {},
-      feature: { layer: { id: 'pwet' }, properties: { _id: 1 } },
+      feature: { properties: { _id: 1 } },
+      layerId: 'pwet',
       interaction: {
         id: 'foo',
         interaction: INTERACTION_HIGHLIGHT,
@@ -482,9 +484,11 @@ describe('Interactions', () => {
     });
     await true;
     instance.addHighlight({
-      feature: { layer: { id: 'pwet' }, properties: { _id: 1 } },
+      feature: { properties: { _id: 1 } },
+      layerId: 'pwet',
       highlightColor: 'red',
       unique: true,
+      source: 'fakeSource',
     });
     expect(instance.highlightedLayers.has('pwet')).toBe(true);
 
@@ -494,8 +498,10 @@ describe('Interactions', () => {
     expect(instance.highlightedLayers.size).toEqual(1);
 
     instance.addHighlight({
-      feature: { layer: { id: 'pwat' }, properties: { _id: 1 } },
+      feature: { properties: { _id: 1 } },
+      layerId: 'pouet',
       highlightColor: 'red',
+      source: 'fakeSource',
     });
     expect(instance.highlightedLayers.size).toEqual(2);
   });
@@ -510,7 +516,8 @@ describe('Interactions', () => {
     instance.map.addLayer = jest.fn();
     instance.triggerInteraction({
       event: {},
-      feature: { layer: { id: 'pwet' }, properties: { _id: 1 } },
+      feature: { properties: { _id: 1 } },
+      layerId: 'pwet',
       interaction: {
         id: 'foo',
         interaction: INTERACTION_HIGHLIGHT,
@@ -519,7 +526,8 @@ describe('Interactions', () => {
       eventType: 'mousemove',
     });
     await true;
-    instance.addHighlight({ feature: { layer: { id: 'new' }, properties: { _id: 1 } } });
+
+    instance.addHighlight({ layerId: 'new', featureId: 1, source: 'fakeSource' });
     expect(instance.map.setFilter).toHaveBeenCalled();
     expect(instance.map.getPaintProperty).toHaveBeenCalled();
   });
@@ -534,7 +542,8 @@ describe('Interactions', () => {
     instance.highlight = jest.fn();
     instance.triggerInteraction({
       event: {},
-      feature: { layer: { id: 'pwet' }, properties: { _id: 1 } },
+      feature: { properties: { _id: 1 } },
+      layerId: 'pwet',
       interaction: {
         id: 'foo',
         interaction: INTERACTION_HIGHLIGHT,
@@ -543,25 +552,34 @@ describe('Interactions', () => {
       eventType: 'mouseleave',
     });
     await true;
-    const feature = { layer: { id: 'test' }, properties: { _id: 3 } };
+
+    const layerId = 'test';
+    const featureId = 3;
+    const source = 'fakeSource';
+
     instance.addHighlight({
-      feature,
+      layerId,
+      featureId,
+      source,
       highlightColor: 'red',
     });
-    instance.removeHighlight({ feature });
+    instance.removeHighlight({ layerId, featureId });
     expect(instance.highlightedLayers.has('test')).toEqual(true);
 
-    const newFeat = { layer: { id: 'test' }, properties: { _id: 3 } };
     instance.addHighlight({
-      feature,
+      layerId,
+      featureId,
+      source,
       highlightColor: 'red',
     });
     instance.addHighlight({
-      feature: { ...newFeat, properties: { _id: 15 } },
+      layerId,
+      source,
+      featureId: 15,
     });
-    instance.removeHighlight({ feature: { layer: { id: 'test' }, properties: { _id: 3 } } });
+    instance.removeHighlight({ layerId, featureId: 3 });
     expect(instance.highlightedLayers.has('test')).toEqual(true);
-    expect(instance.highlightedLayers.get('test')).toEqual({ highlightColor: undefined, ids: [15] });
+    expect(instance.highlightedLayers.get('test')).toEqual({ layersState: { highlightColor: undefined, ids: [15] }, propertyId: '_id', source: 'fakeSource' });
     expect(instance.highlight).toHaveBeenCalledWith();
   });
 
@@ -575,16 +593,12 @@ describe('Interactions', () => {
     instance.map.getLayer = jest.fn(() => true);
     instance.map.removeLayer = jest.fn();
     instance.removeHighlight({
-      feature: {
-        layer: { id: 'test1' },
-        properties: { _id: 3 },
-      },
+      layerId: 'test1',
+      featureId: 3,
     });
     instance.removeHighlight({
-      feature: {
-        layer: { id: 'test1' },
-        properties: { _id: 4 },
-      },
+      layerId: 'test1',
+      featureId: 4,
     });
     instance.removeHighlight({});
     instance.removeHighlight({});
@@ -600,14 +614,14 @@ describe('Interactions', () => {
     instance.map.removeLayer = jest.fn();
     instance.highlightedLayers = new Map();
     instance.highlightedLayers.set('test1', {
-      ids: [1],
-      highlightColor: 'red',
+      layersState: {
+        ids: [1],
+        highlightColor: 'red',
+      },
     });
     instance.removeHighlight({
-      feature: {
-        layer: { id: 'test1' },
-        properties: { _id: 1 },
-      },
+      layerId: 'test1',
+      featureId: 1,
     });
     expect(instance.map.setFilter).toHaveBeenCalled();
   });
