@@ -204,12 +204,12 @@ $scaleRatio: 1.25;
 
     .bp3-slider {
       margin: 0 1rem / $scaleRatio;
-      width: calc(100% - 2rem / $scaleRatio);
+      width: calc(100% - 2rem / #{$scaleRatio});
     }
 
     .tf-control-date-range {
       .bp3-control-group {
-        width: calc(100% - .5rem / $scaleRatio);
+        width: calc(100% - .5rem / #{$scaleRatio});
       }
       .bp3-input-group:nth-child(1) .bp3-input {
         margin-right: .5rem / $scaleRatio;
