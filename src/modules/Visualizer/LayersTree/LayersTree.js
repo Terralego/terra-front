@@ -9,7 +9,7 @@ import './styles.scss';
 
 export const LayersTree = ({ layersTree }) => (
   <div className="layerstree-panel-list">
-    {layersTree.map(layer => (layer.group
+    {layersTree.map(layer => ((layer.group && !layer.exclusive)
       ? (
         <LayersTreeGroup
           key={layer.group}

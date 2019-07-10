@@ -1,14 +1,16 @@
 import React from 'react';
 import renderer from 'react-test-renderer';
-import SignupFormRenderer from './SignupFormRenderer';
+
+import LoginFormRenderer from './LoginFormRenderer';
 
 it('should render correctly', () => {
   const tree = renderer
     .create(
       <>
-        <SignupFormRenderer showPassword />
-        <SignupFormRenderer done />
-        <SignupFormRenderer showPassword errors={{ email: true, password: true }} />
+        <LoginFormRenderer />
+        <LoginFormRenderer
+          errorGeneric
+        />
       </>,
     )
     .toJSON();

@@ -2,7 +2,7 @@
 
 exports[`should render correctly 1`] = `
 <div
-  className="control-container"
+  className="control-container "
 >
   <label
     className="bp3-control bp3-radio"

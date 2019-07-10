@@ -9,7 +9,6 @@ import {
   Tooltip,
 } from '@blueprintjs/core';
 
-import LayersTreeSubItemsList from './LayersTreeSubItemsList';
 import OptionsLayer from './OptionsLayer';
 import LayersTreeItemFilters from './LayersTreeItemFilters';
 import LayerProps from '../../types/Layer';
@@ -17,6 +16,7 @@ import LayersTreeItemOptions from './LayersTreeItemOptions';
 import withDeviceSize from './withDeviceSize';
 import WarningZoom from './WarningZoom';
 import { displayWarningAccordingToZoom } from '../../services/warningZoom';
+import LayersTreeExclusiveItemsList from './LayersTreeExclusiveItemsList';
 
 export class LayersTreeItem extends React.Component {
   static propTypes = {
@@ -103,7 +103,6 @@ export class LayersTreeItem extends React.Component {
     return widgets.includes(widget);
   }
 
-
   resetFilterPanelListener () {
     if (this.clickListener) {
       document.body.removeEventListener('mousedown', this.clickListener);
@@ -114,10 +113,11 @@ export class LayersTreeItem extends React.Component {
     const {
       layer,
       layer: {
-        label,
-        sublayers,
+        group,
+        label = group,
         filters: { form, fields } = {},
         widgets = [],
+        exclusive,
       },
       isActive,
       opacity,
@@ -156,54 +156,66 @@ export class LayersTreeItem extends React.Component {
 
     return (
       <Card
-        className={classnames('layerNode-container', { 'options-hidden': isActive })}
+        className={classnames('layerstree-node', { 'options-hidden': isActive })}
         elevation={Elevation.ZERO}
         style={{ opacity: isActive ? 1 : 0.7 }}
       >
         <div className={
           classnames(
-            { 'layerNode__content--desktop': !isMobileSized },
-            { 'layerNode__content--desktop--active': !isMobileSized && hasSomeOptionActive },
-            { 'layerNode__content--mobile': isMobileSized },
+            { 'layerstree-node-content': !isMobileSized },
+            { 'layerstree-node-content--desktop--active': !isMobileSized && hasSomeOptionActive },
+            { 'layerstree-node-content--mobile': isMobileSized },
           )
         }
         >
           <div className={
             classnames(
-              { 'layerNode__content--desktop-switch-label': !isMobileSized },
-              { 'layerNode__content--mobile-switch-label': isMobileSized },
+              { 'layerstree-node-content__item': !isMobileSized },
+              { 'layerstree-node-content__item--mobile': isMobileSized },
             )
           }
           >
-            <WarningZoom
-              display={display}
-              isActive={isActive}
-              minZoomLayer={minZoomLayer}
+            <div className={
+            classnames(
+              { 'layerstree-node-content__item-label': !isMobileSized },
+              { 'layerstree-node-content__item-label--mobile': isMobileSized },
+            )
+          }
             >
-              <Switch
-                className={classnames({ 'warning-zoom': display && isActive })}
-                checked={!!isActive}
-                onChange={onActiveChange}
-                id={`toggle-${htmlID}`}
-              />
-            </WarningZoom>
-            <Tooltip
-              content={label}
-              hoverOpenDelay={2000}
-              className="layerNode__tooltip"
-            >
-              <label className="layerNode__label" htmlFor={`toggle-${htmlID}`}>{label}</label>
-            </Tooltip>
-            <div className="layerNode-total">
-              {isActive && totalResult && (
-              <Tag
-                intent="primary"
-                round
+              <WarningZoom
+                display={display}
+                isActive={isActive}
+                minZoomLayer={minZoomLayer}
               >
-                {total}
-              </Tag>
-              )}
+                <Switch
+                  checked={!!isActive}
+                  onChange={onActiveChange}
+                  id={`toggle-${htmlID}`}
+                />
+              </WarningZoom>
+              <Tooltip
+                content={label}
+                hoverOpenDelay={2000}
+                className="layerstree-node-content__item-label__tooltip"
+              >
+                <label className="layerstree-node-content__item-label__label" htmlFor={`toggle-${htmlID}`}>{label}</label>
+              </Tooltip>
+              <div className="layerstree-node-content__item-label__total">
+                {isActive && totalResult && (
+                <Tag
+                  intent="primary"
+                  round
+                >
+                  {total}
+                </Tag>
+                )}
+              </div>
             </div>
+            {isActive && exclusive && (
+              <LayersTreeExclusiveItemsList
+                layer={layer}
+              />
+            )}
           </div>
           {isActive && !isPhoneSized && (
           <LayersTreeItemOptions
@@ -230,15 +242,7 @@ export class LayersTreeItem extends React.Component {
             opacity={opacity}
           />
         )}
-        <>
-          <LayersTreeItemFilters layer={layer} />
-          {isActive && sublayers && (
-            <LayersTreeSubItemsList
-              layer={layer}
-              sublayers={sublayers}
-            />
-          )}
-        </>
+        <LayersTreeItemFilters layer={layer} />
       </Card>
     );
   }

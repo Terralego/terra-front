@@ -68,7 +68,8 @@ export class PrintControl extends AbstractMapControl {
     isOpen: nextOpenedState,
   }, this.setClasses);
 
-  handleDisposition = orientation => this.setState({ orientation }, this.setClasses);
+  handleDisposition = ({ target: { value: orientation } }) =>
+    this.setState({ orientation }, this.setClasses);
 
   beginGeneration = () => this.setState({ isExporting: true }, async () => {
     const { orientation } = this.state;
@@ -100,9 +101,7 @@ export class PrintControl extends AbstractMapControl {
             <>
               <RadioGroup
                 label="Disposition"
-                onChange={
-                  event => this.handleDisposition(event.currentTarget.value)
-                }
+                onChange={this.handleDisposition}
                 selectedValue={orientation}
               >
                 <Radio

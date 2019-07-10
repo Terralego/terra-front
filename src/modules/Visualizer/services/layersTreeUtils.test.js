@@ -1,6 +1,5 @@
 import {
   initLayersStateAction,
-  selectSublayerAction,
   setLayerStateAction,
   filterLayersFromLayersState,
   hasTable,
@@ -37,13 +36,6 @@ const layersTree = [{
   initialState: {
     active: true,
   },
-  sublayers: [{
-    label: 'sublayer3.1',
-    layers: ['layer3.1'],
-  }, {
-    label: 'sublayer3.2',
-    layers: ['layer3.2'],
-  }],
 }, {
   group: 'group4',
   layers: [{
@@ -51,13 +43,6 @@ const layersTree = [{
     initialState: {
       active: false,
     },
-    sublayers: [{
-      label: 'sublayer4.1.1',
-      layers: ['layer4.1.1'],
-    }, {
-      label: 'sublayer4.1.2',
-      layers: ['layer4.1.2'],
-    }],
   }, {
     label: 'label4.2',
     initialState: {
@@ -70,10 +55,10 @@ const initialLayersTreeState = new Map();
 initialLayersTreeState.set(layersTree[0], { active: true, opacity: 0.3 });
 initialLayersTreeState.set(layersTree[1].layers[0], { active: true, opacity: 0 });
 initialLayersTreeState.set(layersTree[1].layers[1], { active: false, opacity: 1 });
-initialLayersTreeState.set(layersTree[2], { active: true, opacity: 1, sublayers: [true, false] });
+initialLayersTreeState.set(layersTree[2], { active: true, opacity: 1 });
 initialLayersTreeState.set(
   layersTree[3].layers[0],
-  { active: false, opacity: 1, sublayers: [false, false] },
+  { active: false, opacity: 1 },
 );
 initialLayersTreeState.set(layersTree[3].layers[1], { active: false, opacity: 1 });
 
@@ -159,7 +144,6 @@ it('should set layer state', () => {
     active: true,
     opacity: 1,
     table: true,
-    sublayers: [true, false],
   });
 });
 
@@ -194,28 +178,6 @@ it('should set layer state and initial sublayers', () => {
     newLayersTreeState1,
   );
   expect(newLayersTreeState3).toBe(newLayersTreeState3);
-});
-
-it('should select sublayer', () => {
-  const newLayersTreeState1 = selectSublayerAction(layersTree[2], 0, initialLayersTreeState);
-
-  expect(newLayersTreeState1).not.toBe(initialLayersTreeState);
-  expect(newLayersTreeState1.get(layersTree[2])).toEqual({
-    active: true,
-    opacity: 1,
-    sublayers: [true, false],
-    table: false,
-  });
-
-  const newLayersTreeState2 = selectSublayerAction(layersTree[2], 1, initialLayersTreeState);
-
-  expect(newLayersTreeState2).not.toBe(newLayersTreeState1);
-  expect(newLayersTreeState2.get(layersTree[2])).toEqual({
-    active: true,
-    opacity: 1,
-    sublayers: [false, true],
-    table: false,
-  });
 });
 
 it('should return an empty array', () => {
@@ -325,41 +287,6 @@ it('should filter features', () => {
   INITIAL_FILTERS.clear();
 });
 
-it('should filter features on sublayers', () => {
-  const map = {
-    getLayer: jest.fn(layerId => (layerId === 'unknownlayer'
-      ? undefined
-      : {
-        source: layerId === 'cluster' ? `${layerId}-cluster-source-0` : 'source',
-      })),
-    getFilter: jest.fn(() => ['prev', 'filter']),
-    setFilter: jest.fn(),
-    fire: jest.fn(),
-  };
-  const layer1 = {
-    label: 'foo',
-    sublayers: [{
-      label: 'foo',
-      layers: ['foo'],
-    }, {
-      label: 'bar',
-      layers: ['bar'],
-    }],
-    filters: {
-      layer: 'foo',
-    },
-  };
-  const ltState = new Map();
-  ltState.set(layer1, { active: true });
-
-  filterFeatures(map, [{ layer: 'bar', features: ['1', '2'] }], ltState);
-  expect(map.setFilter).toHaveBeenCalledWith('bar', ['prev', 'filter']);
-  expect(map.setFilter).toHaveBeenCalledWith('foo', ['prev', 'filter']);
-  expect(map.setFilter).toHaveBeenCalledTimes(2);
-
-  INITIAL_FILTERS.clear();
-});
-
 it('should reset filters', () => {
   const map = {
     getLayer: jest.fn(layerId => (layerId === 'unknownlayer'
@@ -404,4 +331,31 @@ it('should reset filters', () => {
   INITIAL_FILTERS.set('foo', ['prev', 'filter']);
   resetFilters(map, ltState);
   expect(map.setFilter).toHaveBeenCalledWith('foo', ['prev', 'filter']);
+});
+
+it('should set group state', () => {
+  const layer = {
+    group: 'foo',
+    layers: [{
+      label: 'foo1',
+    }, {
+      label: 'foo2',
+    }],
+  };
+  const layerState = {
+    active: true,
+  };
+  const prevLayerState = new Map([
+    [layer, {}],
+    [layer.layers[0], {}],
+    [layer.layers[1], {}],
+  ]);
+  const newLayersTreeState = setLayerStateAction(layer, layerState, prevLayerState);
+
+  expect(newLayersTreeState.get(layer.layers[0])).toEqual({
+    active: true,
+  });
+  expect(newLayersTreeState.get(layer.layers[1])).toEqual({
+    active: false,
+  });
 });

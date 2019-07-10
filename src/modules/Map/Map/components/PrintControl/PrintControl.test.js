@@ -2,14 +2,22 @@ import React from 'react';
 import renderer from 'react-test-renderer';
 
 import PrintControl from './PrintControl';
+import exportPdf from './export';
 
 jest.mock('jspdf', () => ({
   default: jest.fn(),
 }));
 jest.mock('html2canvas', () => jest.fn());
+jest.mock('./export', () => jest.fn());
 
 it('should render', () => {
   const tree = renderer.create(<PrintControl />);
+  expect(tree.toJSON()).toMatchSnapshot();
+});
+
+it('should render exporting', () => {
+  const tree = renderer.create(<PrintControl />);
+  tree.getInstance().setState({ isExporting: true });
   expect(tree.toJSON()).toMatchSnapshot();
 });
 
@@ -39,4 +47,73 @@ it('should resize map', () => {
   expect(map.resize).toHaveBeenCalled();
   expect(instance.popoverRef.current.reposition).toHaveBeenCalled();
   expect(container.className).toBe('visualizer visualizer-class visualizer__print visualizer__print--landscape');
+});
+
+it('should handle disposition', () => {
+  const instance = new PrintControl({});
+  instance.setState = jest.fn();
+  instance.handleDisposition({ target: { value: 'portrait' } });
+  expect(instance.setState).toHaveBeenCalledWith({
+    orientation: 'portrait',
+  }, instance.setClasses);
+});
+
+it('should begin generation', async () => {
+  const map = {};
+  const instance = new PrintControl({ map });
+  instance.state = {
+    orientation: 'portrait',
+  };
+  instance.setState = jest.fn();
+  instance.beginGeneration();
+
+  expect(instance.setState).toHaveBeenCalledWith({
+    isExporting: true,
+  }, expect.any(Function));
+
+  const callback = instance.setState.mock.calls[0][1];
+  instance.setState.mockClear();
+
+  await callback();
+
+  expect(exportPdf).toHaveBeenCalledWith(map, 'portrait');
+
+  expect(instance.setState).toHaveBeenCalledWith({
+    isOpen: false,
+    isExporting: false,
+  }, instance.setClasses);
+});
+
+it('should set classes', () => {
+  const container = {
+    className: '',
+  };
+  const map = {
+    resize: jest.fn(),
+    getContainer: () => ({ parentElement: container }),
+  };
+
+  const instance = new PrintControl({ map });
+  instance.popoverRef = {
+    current: {
+      reposition: jest.fn(),
+    },
+  };
+  instance.state = {
+    orientation: 'portrait',
+    isOpen: true,
+  };
+  instance.setClasses();
+
+  expect(instance.popoverRef.current.reposition).toHaveBeenCalled();
+  expect(map.resize).toHaveBeenCalled();
+  expect(container.className).toBe('visualizer__print visualizer__print--portrait');
+
+  instance.state = {
+    orientation: 'landscape',
+    isOpen: true,
+  };
+  instance.setClasses();
+
+  expect(container.className).toBe('visualizer__print visualizer__print--landscape');
 });

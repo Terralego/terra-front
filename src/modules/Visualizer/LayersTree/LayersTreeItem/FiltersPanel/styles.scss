@@ -149,7 +149,7 @@ $scaleRatio: 1.25;
 @media(min-width: $breakpoints-phone) and (max-width: $breakpoints-desktop){
   .filters-panel {
     width: 18rem / $scaleRatio;
-    margin-left: 5.5rem;
+    margin-left: 5.4rem;
     
     &__arrow {
       $width: 2rem / $scaleRatio;

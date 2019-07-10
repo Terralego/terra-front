@@ -1,15 +1,26 @@
 import React from 'react';
+import PropTypes from 'prop-types';
 import { H5, Button, Collapse } from '@blueprintjs/core';
 import classnames from 'classnames';
 
 import LayersTreeItem from '../LayersTreeItem';
 
 export class LayersTreeGroup extends React.Component {
-  // Get open from layer if not set default value
-  // eslint-disable-next-line
-  state = this.props.layer.initialState || {
-    open: true,
+  static propTypes = {
+    title: PropTypes.string.isRequired,
+    layer: PropTypes.shape({
+      label: PropTypes.string,
+      group: PropTypes.string,
+    }).isRequired,
   };
+
+  constructor (props) {
+    super(props);
+    const { layer: { initialState }, initialOpen: open = true } = props;
+    this.state = initialState || {
+      open,
+    };
+  }
 
   handleClick = () => {
     const { open } = this.state;
@@ -20,17 +31,23 @@ export class LayersTreeGroup extends React.Component {
     const { open } = this.state;
     const {
       title,
-      layer: { layers },
+      layer: { layers, exclusive },
       isHidden,
+      level = 0,
     } = this.props;
 
     const { handleClick } = this;
+
     return (
       isHidden ? null : (
         <div
-          className={classnames('layerstree-group', {
-            'layerstree-group--active': open,
-          })}
+          className={classnames(
+            'layerstree-group',
+            `layerstree-group--${level}`,
+            {
+              'layerstree-group--active': open,
+            },
+          )}
         >
           <Button
             className="layerstree-group__label-button"
@@ -43,12 +60,23 @@ export class LayersTreeGroup extends React.Component {
           <Collapse
             isOpen={open}
           >
-            {layers.map(layer => (
-              <LayersTreeItem
-                key={layer.label}
-                layer={layer}
-              />
-            ))}
+            {layers.map(layer => ((layer.group && !layer.exclusive)
+              ? (
+                <LayersTreeGroup
+                  key={`${layer.group}${level}`}
+                  title={layer.group}
+                  layer={layer}
+                  initialOpen={false}
+                  level={level + 1}
+                />
+              )
+              : (
+                <LayersTreeItem
+                  key={layer.label}
+                  layer={layer}
+                  exclusive={exclusive}
+                />
+              )))}
           </Collapse>
         </div>
       )

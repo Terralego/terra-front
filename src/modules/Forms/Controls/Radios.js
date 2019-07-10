@@ -46,12 +46,12 @@ export class Radios extends React.Component {
   };
 
   render () {
-    const { value } = this.props;
+    const { value, className = '' } = this.props;
     const { values } = this.state;
 
     return (
       <RadioGroup
-        className="control-container"
+        className={`control-container ${className}`}
         onChange={this.handleChange}
         selectedValue={value}
       >

@@ -2,6 +2,7 @@ import React from 'react';
 import renderer from 'react-test-renderer';
 import { shallow } from 'enzyme';
 
+import LayersTreeProvider from '../LayersTreeProvider';
 import { LayersTreeItem } from './LayersTreeItem';
 
 jest.mock('@blueprintjs/core', () => ({
@@ -26,6 +27,12 @@ jest.mock('@blueprintjs/core', () => ({
   Intent: {
     WARNING: 'warning',
   },
+  Radio () {
+    return <p>Radio</p>;
+  },
+  RadioGroup () {
+    return <p>RadioGroup</p>;
+  },
 }));
 
 jest.mock('@blueprintjs/select', () => ({
@@ -42,9 +49,6 @@ jest.mock('@blueprintjs/datetime', () => ({
 
 jest.mock('./OptionsLayer', () => function OptionsLayer () {
   return <p>OptionsLayer</p>;
-});
-jest.mock('./LayersTreeSubItemsList', () => function LayersTreeSubItemsList () {
-  return <p>LayersTreeSubItemsList</p>;
 });
 
 jest.mock('./LayersTreeItemFilters', () => function LayersTreeItemFilters () {
@@ -67,7 +71,7 @@ jest.mock('../../services/warningZoom', () => ({
 
 it('should render correctly', () => {
   const tree = renderer.create((
-    <>
+    <LayersTreeProvider>
       <LayersTreeItem
         layer={{
           label: 'foo',
@@ -121,7 +125,19 @@ it('should render correctly', () => {
         isActive
         map
       />
-    </>
+      <LayersTreeItem
+        layer={{
+          group: 'group 1',
+          exclusive: true,
+          layers: [{
+            label: 'layer 1',
+          }, {
+            label: 'layer 2',
+          }],
+        }}
+        isActive
+      />
+    </LayersTreeProvider>
   ));
   const a = tree.root.findAll(({ type }) => type === LayersTreeItem);
   a[5].instance.setState({ isFilterVisible: true });

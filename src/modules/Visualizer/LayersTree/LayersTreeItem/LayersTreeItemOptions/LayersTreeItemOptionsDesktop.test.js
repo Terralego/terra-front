@@ -61,7 +61,7 @@ it('should close table', () => {
     />
   ));
   expect(wrapper.find('.table').props().content).toBe('Fermer le tableau');
-  expect(wrapper.find('.table').dive().find('.layerNode-options__button').props().alt).toBe('Fermer le tableau');
+  expect(wrapper.find('.table').dive().find('.layerstree-node-content__options__button').props().alt).toBe('Fermer le tableau');
 });
 
 it('should close form', () => {

@@ -23,9 +23,9 @@ const LayersTreeItemOptionsTablet = ({
 }) => (
   <div
     className={classnames(
-      'layerNode-options',
-      'layerNode-options--mobile',
-      { 'layerNode-options--active': hasSomeOptionActive },
+      'layerstree-node-content__options',
+      'layerstree-node-content__options--mobile',
+      { 'layerstree-node-content__options--active': hasSomeOptionActive },
     )}
   >
     {(widgets && !!widgets.length) && (
@@ -33,8 +33,8 @@ const LayersTreeItemOptionsTablet = ({
         <Button
           key={widget.component}
           className={classnames({
-            'layerNode-options__button': true,
-            'layerNode-options__button--active': isWidgetActive(widget),
+            'layerstree-node-content__options__button': true,
+            'layerstree-node-content__options__button--active': isWidgetActive(widget),
           })}
           onClick={toggleWidgets(widget)}
           minimal
@@ -44,63 +44,60 @@ const LayersTreeItemOptionsTablet = ({
           {widget.component}
         </Button>
       ))
-    )
-}
-    {displayTableButton && (
-    <Button
-      className={
-        classnames(
-          'layerNode-options__button',
-          { 'layerNode-options__button--active': isTableActive },
-        )
-      }
-      onClick={toggleTable}
-      minimal
-      icon="th"
-      alt={isTableActive ? 'Fermer le tableau' : 'Ouvrir le tableau'}
-      title="table"
-    >
-      table
-    </Button>
     )}
-    {form && (
-    <FiltersPanel
-      visible={isFilterVisible}
-      onMount={getFilterPanelRef}
-      layer={layer}
-    >
-      {isFilterVisible && (
-      <LayerFetchValues layer={layer} isFilterVisible={isFilterVisible} />
-      )}
+    {displayTableButton && (
       <Button
         className={
-        classnames(
-          'layerNode-options__button',
-          { 'layerNode-options__button--active': isFilterVisible },
-        )}
-        onClick={toggleFilters}
+          classnames(
+            'layerstree-node-content__options__button',
+            { 'layerstree-node-content__options__button--active': isTableActive },
+          )
+        }
+        onClick={toggleTable}
         minimal
-        icon="filter"
-        title="filter"
+        icon="th"
+        alt={isTableActive ? 'Fermer le tableau' : 'Ouvrir le tableau'}
+        title="table"
       >
-      filtres
+        table
       </Button>
-    </FiltersPanel>
+    )}
+    {form && (
+      <FiltersPanel
+        visible={isFilterVisible}
+        onMount={getFilterPanelRef}
+        layer={layer}
+      >
+        {isFilterVisible && (
+          <LayerFetchValues layer={layer} isFilterVisible={isFilterVisible} />
+        )}
+        <Button
+          className={
+          classnames(
+            'layerstree-node-content__options__button',
+            { 'layerstree-node-content__options__button--active': isFilterVisible },
+          )}
+          onClick={toggleFilters}
+          minimal
+          icon="filter"
+          title="filter"
+        >
+        filtres
+        </Button>
+      </FiltersPanel>
     )}
     <Button
-      className={
-        classnames(
-          'layerNode-options__button',
-          'layerNode-options__button--more',
-          { 'layerNode-options__button--active': isOptionsOpen },
-        )
-        }
+      className={classnames(
+        'layerstree-node-content__options__button',
+        'layerstree-node-content__options__button--more',
+        { 'layerstree-node-content__options__button--active': isOptionsOpen },
+      )}
       icon="more"
       minimal
       onClick={handleOptionPanel}
       title="options d'affichage"
     >
-    options
+      options
     </Button>
   </div>
 );

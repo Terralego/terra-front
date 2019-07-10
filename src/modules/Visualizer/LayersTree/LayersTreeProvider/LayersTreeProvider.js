@@ -4,7 +4,6 @@ import PropTypes from 'prop-types';
 import context from './context';
 import {
   initLayersStateAction,
-  selectSublayerAction,
   setLayerStateAction,
 } from '../../services/layersTreeUtils';
 
@@ -51,7 +50,7 @@ export class LayersTreeProvider extends React.Component {
     const { initialState, layersTree } = this.props;
 
     if (initialState !== prevInitialState) {
-      this.resetLayerState(initialState);
+      this.resetState(initialState);
     }
 
     if (layersTree !== prevLayersTree) {
@@ -64,18 +63,14 @@ export class LayersTreeProvider extends React.Component {
   }
 
   setLayerState = ({ layer, state: newState }) => {
-    const { layersTreeState } = this.state;
-    this.resetLayerState(setLayerStateAction(layer, newState, layersTreeState));
+    this.resetState(({ layersTreeState }) => ({
+      layersTreeState: setLayerStateAction(layer, newState, layersTreeState),
+    }));
   }
 
   getLayerState = ({ layer }) => {
     const { layersTreeState } = this.state;
     return layersTreeState.get(layer) || {};
-  }
-
-  selectSublayer = ({ layer, sublayer }) => {
-    const { layersTreeState } = this.state;
-    this.resetLayerState(selectSublayerAction(layer, sublayer, layersTreeState));
   }
 
   fetchPropertyValues = async (layer, property) => {
@@ -85,12 +80,12 @@ export class LayersTreeProvider extends React.Component {
     // key in layersTreeState
     // eslint-disable-next-line no-param-reassign
     property.values = [];
-    this.resetLayerState(new Map(layersTreeState));
+    this.resetState(new Map(layersTreeState));
     const properties = (await fetchPropertyValues(layer, property)) || [];
     // eslint-disable-next-line no-param-reassign
     property.values = [...properties];
     const { layersTreeState: newLayersTreeState } = this.state;
-    this.resetLayerState(new Map(newLayersTreeState));
+    this.resetState(new Map(newLayersTreeState));
   }
 
   fetchPropertyRange = async (layer, property) => {
@@ -102,31 +97,38 @@ export class LayersTreeProvider extends React.Component {
     property.min = 0;
     property.max = 100;
     /* eslint-enable no-param-reassign */
-    this.resetLayerState(new Map(layersTreeState));
+    this.resetState(new Map(layersTreeState));
     const { min = 0, max = 100 } = (await fetchPropertyRange(layer, property)) || {};
     /* eslint-disable no-param-reassign */
     property.min = min;
     property.max = max;
     /* eslint-enable no-param-reassign */
     const { layersTreeState: newLayersTreeState } = this.state;
-    this.resetLayerState(new Map(newLayersTreeState));
+    this.resetState(new Map(newLayersTreeState));
   }
 
   initLayersState = () => {
-    const { layersTree } = this.props;
-    const { layersTreeState } = this.state;
+    this.resetState(({ layersTreeState }) => {
+      const { layersTree } = this.props;
 
-    if (!layersTree) return;
+      if (!layersTree) return {};
 
-    this.resetLayerState(layersTreeState.size
-      ? layersTreeState
-      : initLayersStateAction(layersTree));
+      return {
+        layersTreeState: layersTreeState.size
+          ? layersTreeState
+          : initLayersStateAction(layersTree),
+      };
+    });
   }
 
-  resetLayerState (layersTreeState) {
-    const { onChange } = this.props;
-    this.setState({ layersTreeState });
-    onChange(layersTreeState);
+  resetState (state, callback = () => {}) {
+    this.setState(state, () => {
+      callback();
+      const { onChange } = this.props;
+      const { layersTreeState } = this.state;
+
+      onChange(layersTreeState);
+    });
   }
 
   render () {
@@ -137,7 +139,7 @@ export class LayersTreeProvider extends React.Component {
     } = this.props;
     const { layersTreeState } = this.state;
     const {
-      initLayersState, setLayerState, getLayerState, selectSublayer,
+      initLayersState, setLayerState, getLayerState,
       fetchPropertyValues,
       fetchPropertyRange,
     } = this;
@@ -148,7 +150,6 @@ export class LayersTreeProvider extends React.Component {
       initLayersState,
       setLayerState,
       getLayerState,
-      selectSublayer,
       fetchPropertyValues,
       fetchPropertyRange,
     };

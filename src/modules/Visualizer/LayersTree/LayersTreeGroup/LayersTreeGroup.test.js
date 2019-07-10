@@ -57,6 +57,17 @@ it('should render correctly', () => {
         }}
         isHidden
       />
+      <LayersTreeGroup
+        title="Group 1"
+        layer={{
+          layers: [{
+            label: 'Layer 1',
+          }, {
+            group: 'Group 2',
+            layers: [],
+          }],
+        }}
+      />
     </>
   )).toJSON();
   expect(tree).toMatchSnapshot();
