@@ -57,6 +57,23 @@ it('should add a map to sync', () => {
   expect(syncMove).toHaveBeenCalledWith({ map: true }, { map: true });
 });
 
+it('should still call original onMapInit', () => {
+  const mapInit = jest.fn();
+  mount((
+    <SyncMaps>
+      <SyncedMap>
+        <Map onMapInit={mapInit} />
+      </SyncedMap>
+      <SyncedMap>
+        <Map />
+      </SyncedMap>
+    </SyncMaps>
+  ));
+
+  expect(syncMove).toHaveBeenCalledWith({ map: true }, { map: true });
+  expect(mapInit).toHaveBeenCalledWith({ map: true });
+});
+
 it('should not sync a single map', () => {
   const NotAMap = () => null;
   mount((
