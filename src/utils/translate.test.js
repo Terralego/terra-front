@@ -1,8 +1,11 @@
 import translate from './translate';
 
 it('should be a mock', () => {
-  expect(translate({
+  const trads = {
     foo: 'bar',
-  })('foo')).toBe('bar');
+    bar: 'with some {{param}}',
+  };
   expect(translate()('foo')).toBe('foo');
+  expect(translate(trads)('foo')).toBe('bar');
+  expect(translate(trads)('bar', { param: 'bar' })).toBe('with some bar');
 });

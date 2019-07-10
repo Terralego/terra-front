@@ -23,9 +23,8 @@ const LayersTreeItemOptionsTablet = ({
   widgets,
   isWidgetActive,
   translate = translateMock({
-    'layerstree.itemOptions.open': 'open',
-    'layerstree.itemOptions.close': 'close',
-    'layerstree.itemOptions.widget.label': 'widget',
+    'layerstree.itemOptions.widget.open': 'open {{widget}}',
+    'layerstree.itemOptions.widget.close': 'close {{widget}}',
     'layerstree.itemOptions.table.label': 'table',
     'layerstree.itemOptions.table.open': 'open table',
     'layerstree.itemOptions.table.close': 'close table',
@@ -56,10 +55,7 @@ const LayersTreeItemOptionsTablet = ({
           minimal
           icon="selection"
           title={`widget ${widget.component}`}
-          alt={isWidgetActive(widget)
-            ? `${translate('layerstree.itemOptions.close')} ${widget.component}`
-            : `${translate('layerstree.itemOptions.open')} ${widget.component}`
-          }
+          alt={translate(`layerstree.itemOptions.widget.${isWidgetActive(widget) ? 'close' : 'open'}`, { widget: widget.component })}
         >
           {widget.component}
         </Button>
@@ -68,20 +64,15 @@ const LayersTreeItemOptionsTablet = ({
 }
     {displayTableButton && (
     <Button
-      className={
-        classnames(
-          'layerNode-options__button',
-          { 'layerNode-options__button--active': isTableActive },
-        )
-      }
+      className={classnames(
+        'layerNode-options__button',
+        { 'layerNode-options__button--active': isTableActive },
+      )}
       onClick={toggleTable}
       minimal
       icon="th"
       title={translate('layerstree.itemOptions.table.title')}
-      alt={isTableActive
-        ? translate('layerstree.itemOptions.table.close')
-        : translate('layerstree.itemOptions.table.open')
-      }
+      alt={translate(`layerstree.itemOptions.table.${isTableActive ? 'close' : 'open'}`)}
     >
       {translate('layerstree.itemOptions.table.label')}
     </Button>
@@ -98,10 +89,7 @@ const LayersTreeItemOptionsTablet = ({
         minimal
         icon="filter"
         title={translate('layerstree.itemOptions.filter.label')}
-        alt={isFilterVisible
-          ? translate('layerstree.itemOptions.filter.close')
-          : translate('layerstree.itemOptions.filter.open')
-        }
+        alt={translate(`layerstree.itemOptions.filter.${isFilterVisible ? 'close' : 'open'}`)}
       >
         {translate('layerstree.itemOptions.filter.label')}
       </Button>
@@ -140,10 +128,7 @@ const LayersTreeItemOptionsTablet = ({
       minimal
       onClick={handleOptionPanel}
       title={translate('layerstree.itemOptions.options.label')}
-      alt={isOptionsOpen
-        ? translate('layerstree.itemOptions.options.close')
-        : translate('layerstree.itemOptions.options.open')
-      }
+      alt={translate(`layerstree.itemOptions.options.${isOptionsOpen ? 'close' : 'open'}`)}
     >
       {translate('layerstree.itemOptions.options.label')}
     </Button>

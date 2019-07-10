@@ -23,9 +23,8 @@ const LayersTreeItemOptionsDesktop = ({
   widgets,
   isWidgetActive,
   translate = translateMock({
-    'layerstree.itemOptions.widget.open': 'open widget',
-    'layerstree.itemOptions.widget.close': 'close widget',
-    'layerstree.itemOptions.widget.label': 'widget',
+    'layerstree.itemOptions.widget.open': 'open {{widget}}',
+    'layerstree.itemOptions.widget.close': 'close {{widget}}',
     'layerstree.itemOptions.table.label': 'table',
     'layerstree.itemOptions.table.open': 'open table',
     'layerstree.itemOptions.table.close': 'close table',
