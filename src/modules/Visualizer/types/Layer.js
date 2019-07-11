@@ -2,9 +2,16 @@ import PropTypes from 'prop-types';
 
 import { TYPE_SINGLE, TYPE_MANY, TYPE_RANGE, TYPE_BOOL } from '../../Forms/Filters/index';
 
-export default PropTypes.shape({
+export const LayerProps = PropTypes.shape({
   /** Layer's label */
   label: PropTypes.string,
+  /** Group name */
+  group: PropTypes.string,
+  /** If a group, you must specify other layers */
+  // eslint-disable-next-line no-use-before-define
+  // layers: PropTypes.arrayOf(LayerProps),
+  /** If a group, may be exclusive if only one layer must be active */
+  exclusive: PropTypes.bool,
   /** Initial layer state */
   initialState: PropTypes.shape({
     active: PropTypes.bool,
@@ -21,7 +28,7 @@ export default PropTypes.shape({
       /** Type of control */
       type: PropTypes.oneOf([TYPE_SINGLE, TYPE_MANY, TYPE_RANGE, TYPE_BOOL]),
       /** Format of control for some types */
-      format: PropTypes.oneOf(['date']),
+      format: PropTypes.oneOf(['date', 'number']),
       /** Force a specific conrtrol display */
       display: PropTypes.oneOf(['select']),
     })),
@@ -34,3 +41,5 @@ export default PropTypes.shape({
   /** Layer can be hidden by setting false here */
   displayed: PropTypes.bool,
 });
+
+export default LayerProps;
