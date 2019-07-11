@@ -370,7 +370,7 @@ export class MapComponent extends React.Component {
         }
         default: {
           const controlInstance = typeof control === 'string'
-            ? new mapBoxGl[control]()
+            ? new mapBoxGl[control]({ ...params })
             : control;
           this.controls.push(controlInstance);
           map.addControl(controlInstance, position);
