@@ -11,12 +11,8 @@ jest.mock('../FiltersPanel', () => function FiltersPanel () {
 });
 
 it('should render correctly with widget', () => {
-  const widgets = [{ component: 'foo' }, { component: 'bar' }];
-  const isWidgetActive = ({ component }) =>
-    component === 'foo';
   const tree = renderer.create((
     <LayersTreeProvider>
-      <LayersTreeItemOptionsTablet />
       <LayersTreeItemOptionsTablet
         isFilterVisible
         form={[]}

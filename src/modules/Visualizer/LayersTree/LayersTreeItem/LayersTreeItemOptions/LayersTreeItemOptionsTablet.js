@@ -65,8 +65,8 @@ const LayersTreeItemOptionsTablet = ({
     {displayTableButton && (
     <Button
       className={classnames(
-        'layerNode-options__button',
-        { 'layerNode-options__button--active': isTableActive },
+        'layerstree-node-content__options__button',
+        { 'layerstree-node-content__options__button--active': isTableActive },
       )}
       onClick={toggleTable}
       minimal
@@ -76,23 +76,6 @@ const LayersTreeItemOptionsTablet = ({
     >
       {translate('layerstree.itemOptions.table.label')}
     </Button>
-    )}
-    {displayTableButton && (
-      <Button
-        className={
-          classnames(
-            'layerstree-node-content__options__button',
-            { 'layerstree-node-content__options__button--active': isTableActive },
-          )
-        }
-        onClick={toggleTable}
-        minimal
-        icon="filter"
-        title={translate('layerstree.itemOptions.filter.label')}
-        alt={translate(`layerstree.itemOptions.filter.${isFilterVisible ? 'close' : 'open'}`)}
-      >
-        {translate('layerstree.itemOptions.filter.label')}
-      </Button>
     )}
     {form && (
       <FiltersPanel

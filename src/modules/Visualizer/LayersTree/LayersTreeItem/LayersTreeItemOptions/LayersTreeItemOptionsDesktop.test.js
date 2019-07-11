@@ -60,7 +60,7 @@ it('should close table', () => {
       isTableActive
     />
   ));
-  expect(wrapper.find('.table').props().content).toBe('Fermer le tableau');
+  expect(wrapper.find('.table').props().content).toBe('close table');
   expect(wrapper.find('.table').dive().find('.layerstree-node-content__options__button').props().alt).toBe('close table');
 });
 
@@ -81,5 +81,5 @@ it('should close options', () => {
     />
   ));
   expect(wrapper.find('.options').props().content).toBe('close options');
-  expect(wrapper.find('.options').dive().find('.layerNode-options__button').props().alt).toBe('close options');
+  expect(wrapper.find('.options').dive().find('.layerstree-node-content__options__button').props().alt).toBe('close options');
 });

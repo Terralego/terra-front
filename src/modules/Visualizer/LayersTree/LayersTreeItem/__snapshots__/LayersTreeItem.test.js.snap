@@ -176,9 +176,6 @@ Array [
         Button
       </p>
       <p>
-        Button
-      </p>
-      <p>
         FiltersPanel
       </p>
       <p>
@@ -216,9 +213,6 @@ Array [
     <div
       className="layerstree-node-content__options layerstree-node-content__options--mobile layerstree-node-content__options--active"
     >
-      <p>
-        Button
-      </p>
       <p>
         Button
       </p>

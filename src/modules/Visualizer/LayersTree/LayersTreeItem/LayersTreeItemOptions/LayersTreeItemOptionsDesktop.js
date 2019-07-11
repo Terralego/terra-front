@@ -120,6 +120,7 @@ const LayersTreeItemOptionsDesktop = ({
         className={
           classnames(
             'layerstree-node-content__options__button',
+            'layerstree-node-content__options__button--more',
             { 'layerstree-node-content__options__button--active': isOptionsOpen },
           )}
         icon="more"

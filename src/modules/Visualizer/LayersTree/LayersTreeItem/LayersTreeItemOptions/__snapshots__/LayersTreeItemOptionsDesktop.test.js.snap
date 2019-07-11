@@ -5,7 +5,7 @@ exports[`should render default options 1`] = `
   className="layerstree-node-content__options layerstree-node-content__options--desktop"
 >
   <span
-    className="bp3-popover-wrapper layerstree-node-content__options__tooltip options"
+    className="bp3-popover-wrapper layerNode__tooltip options"
   >
     <span
       className="bp3-popover-target"
@@ -53,7 +53,7 @@ exports[`should render no tooltip if empty widget empty 1`] = `
   className="layerstree-node-content__options layerstree-node-content__options--desktop"
 >
   <span
-    className="bp3-popover-wrapper layerstree-node-content__options__tooltip options"
+    className="bp3-popover-wrapper layerNode__tooltip options"
   >
     <span
       className="bp3-popover-target"
@@ -187,7 +187,7 @@ exports[`should render with proporties 1`] = `
     FiltersPanel
   </p>
   <span
-    className="bp3-popover-wrapper layerstree-node-content__options__tooltip options"
+    className="bp3-popover-wrapper layerNode__tooltip options"
   >
     <span
       className="bp3-popover-target"
