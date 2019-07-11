@@ -469,7 +469,7 @@ describe('Interactions', () => {
     instance.map = {};
     instance.map.getLayer = jest.fn(() => 'fakeLayer');
     instance.map.addLayer = jest.fn();
-    instance.map.getPaintProperty = jest.fn();
+    instance.map.getPaintProperty = jest.fn(() => 'blue');
     instance.map.setFilter = jest.fn();
     instance.triggerInteraction({
       event: {},
@@ -530,6 +530,53 @@ describe('Interactions', () => {
     instance.addHighlight({ layerId: 'new', featureId: 1, source: 'fakeSource' });
     expect(instance.map.setFilter).toHaveBeenCalled();
     expect(instance.map.getPaintProperty).toHaveBeenCalled();
+  });
+
+  describe('should highlight all geometries type', () => {
+    const interactions = [];
+    const instance = new InteractiveMap({ interactions });
+    instance.map = {};
+    instance.map.setFilter = jest.fn();
+    instance.map.getPaintProperty = jest.fn(() => 'red');
+    instance.map.addLayer = jest.fn();
+    const props = {
+      event: {},
+      feature: { properties: { _id: 1 } },
+      layerId: 'pwet',
+      interaction: {
+        id: 'foo',
+        interaction: INTERACTION_HIGHLIGHT,
+        trigger: 'mouseover',
+      },
+      eventType: 'mousemove',
+    };
+
+    it('should highlight line type', async () => {
+      instance.map.getLayer = jest.fn(() => ({ type: 'line' }));
+      instance.triggerInteraction(props);
+      await true;
+
+      instance.addHighlight({ layerId: 'layerWithLine', featureId: 1, source: 'fakeSource' });
+      expect(instance.map.setFilter).toHaveBeenCalledWith('line-layerWithLine-highlight', ['in', '_id', 1]);
+    });
+
+    it('should highlight circle type', async () => {
+      instance.map.getLayer = jest.fn(() => ({ type: 'circle' }));
+      instance.triggerInteraction(props);
+      await true;
+
+      instance.addHighlight({ layerId: 'layerWithCircle', featureId: 1, source: 'fakeSource' });
+      expect(instance.map.setFilter).toHaveBeenCalledWith('circle-layerWithCircle-highlight', ['in', '_id', 1]);
+    });
+
+    it('should highlight fill type', async () => {
+      instance.map.getLayer = jest.fn(() => ({ type: 'fill' }));
+      instance.triggerInteraction(props);
+      await true;
+
+      instance.addHighlight({ layerId: 'layerWithFill', featureId: 1, source: 'fakeSource' });
+      expect(instance.map.setFilter).toHaveBeenCalledWith('fill-layerWithFill-highlight', ['in', '_id', 1]);
+    });
   });
 
   it('should remove highlight', async () => {

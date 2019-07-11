@@ -352,14 +352,49 @@ export class InteractiveMap extends React.Component {
     const { map } = this;
 
     this.highlightedLayers.forEach((
-      { layersState: { ids, highlightColor }, source, propertyId },
+      { layersState: { ids, highlightColor = '' }, source, propertyId },
       layerId,
     ) => {
       const { sourceLayer, type } = map.getLayer(layerId);
 
-      const layerColor = highlightColor || map.getPaintProperty(layerId, `${type}-color`);
+      const targetLayerColor = map.getPaintProperty(layerId, `${type}-color`);
 
-      ['line', 'fill'].forEach(highlightType => {
+      const layerColor = (typeof targetLayerColor !== 'string' && typeof highlightColor === 'string')
+        ? targetLayerColor
+        : highlightColor;
+
+
+      const targetType = () => {
+        const line = {
+          'line-color': layerColor,
+          'line-width': 2,
+        };
+
+        const fill = {
+          'fill-color': layerColor,
+          'fill-opacity': 0.4,
+        };
+
+        const circle = {
+          'circle-color': layerColor,
+          'circle-radius': type === 'circle' && map.getPaintProperty(layerId, 'circle-radius'),
+          'circle-stroke-width': 2,
+          'circle-opacity': 0.4,
+          'circle-stroke-color': layerColor,
+        };
+
+        if (type === 'line') {
+          return { line };
+        }
+
+        if (type === 'circle') {
+          return { circle };
+        }
+
+        return { line, fill };
+      };
+
+      Object.keys(targetType()).forEach(highlightType => {
         const highlightTypeId = getHighlightLayerId(layerId, highlightType);
         if (!map.getLayer(highlightTypeId)) {
           map.addLayer({
@@ -367,17 +402,7 @@ export class InteractiveMap extends React.Component {
             source,
             type: highlightType,
             'source-layer': sourceLayer,
-            paint:
-            (highlightType === 'fill')
-              ? {
-                'fill-color': layerColor,
-                'fill-outline-color': layerColor,
-                'fill-opacity': 0.4,
-              }
-              : {
-                'line-color': layerColor,
-                'line-width': 2,
-              },
+            paint: targetType()[highlightType],
           });
         }
         map.setFilter(highlightTypeId, ['in', propertyId, ...ids]);
@@ -397,6 +422,7 @@ export class InteractiveMap extends React.Component {
 
     const {
       properties: { _id: featureId } = {},
+      layer: { source } = {},
     } = feature;
 
     const clusteredFeatures = await getClusteredFeatures(map, feature);
@@ -442,6 +468,7 @@ export class InteractiveMap extends React.Component {
         this.addHighlight({
           layerId,
           featureId,
+          source,
           unique: unique || eventType === 'mousemove',
           highlightColor,
         });
