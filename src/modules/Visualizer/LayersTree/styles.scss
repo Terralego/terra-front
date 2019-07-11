@@ -66,7 +66,7 @@ $scaleRatio: 1.25;
   display: flex;
   flex-direction: column;
   box-shadow: none;
-   
+ 
   .layerstree-node-content {
     display: flex;
     flex-direction: row;
@@ -200,7 +200,7 @@ $scaleRatio: 1.25;
               width: 100%;
               flex: auto;
               min-width: 0;
-              height: 1.2rem;
+              height: 100%;
     
               & > .bp3-popover-target {
                 max-width: 100%;
@@ -211,9 +211,10 @@ $scaleRatio: 1.25;
             }
             &--mobile {
               min-width: 0;
-              padding: 0 0 .5rem 0;
+              padding: .5rem 0;
               display: flex;
               order: 1;
+              align-items: center;
             }
           }
         }
@@ -223,9 +224,9 @@ $scaleRatio: 1.25;
           display: flex;
           order: 3;
           justify-content: flex-end;
-          padding: .25rem 0;
           border-top: 1px solid #0000001f;
           border-radius: 2px;
+          margin-top: .5rem;
         }
         &__options__button {
           width: 4.06rem;
