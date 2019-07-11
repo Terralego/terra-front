@@ -1,113 +1,44 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
-exports[`should render correctly 1`] = `
-Array [
-  <div
-    className="layerstree-node-content__options layerstree-node-content__options--mobile"
+exports[`should render correctly with widget 1`] = `
+<div
+  className="layerstree-node-content__options layerstree-node-content__options--mobile"
+>
+  <p>
+    FiltersPanel
+  </p>
+  <button
+    alt="open options"
+    className="bp3-button bp3-minimal layerstree-node-content__options__button layerstree-node-content__options__button--more"
+    onKeyDown={[Function]}
+    onKeyUp={[Function]}
+    title="options"
+    type="button"
   >
-    <button
-      className="bp3-button bp3-minimal layerstree-node-content__options__button layerstree-node-content__options__button--more"
-      onKeyDown={[Function]}
-      onKeyUp={[Function]}
-      title="options d'affichage"
-      type="button"
+    <span
+      className="bp3-icon bp3-icon-more"
+      icon="more"
     >
-      <span
-        className="bp3-icon bp3-icon-more"
-        icon="more"
+      <svg
+        data-icon="more"
+        height={16}
+        viewBox="0 0 16 16"
+        width={16}
       >
-        <svg
-          data-icon="more"
-          height={16}
-          viewBox="0 0 16 16"
-          width={16}
-        >
-          <desc>
-            more
-          </desc>
-          <path
-            d="M2 6.03a2 2 0 1 0 0 4 2 2 0 1 0 0-4zM14 6.03a2 2 0 1 0 0 4 2 2 0 1 0 0-4zM8 6.03a2 2 0 1 0 0 4 2 2 0 1 0 0-4z"
-            fillRule="evenodd"
-          />
-        </svg>
-      </span>
-      <span
-        className="bp3-button-text"
-      >
-        options
-      </span>
-    </button>
-  </div>,
-  <div
-    className="layerstree-node-content__options layerstree-node-content__options--mobile"
-  >
-    <p>
-      LayerFetchValues
-    </p>
-    <button
-      className="bp3-button bp3-minimal layerstree-node-content__options__button layerstree-node-content__options__button--active"
-      onKeyDown={[Function]}
-      onKeyUp={[Function]}
-      title="filter"
-      type="button"
+        <desc>
+          more
+        </desc>
+        <path
+          d="M2 6.03a2 2 0 1 0 0 4 2 2 0 1 0 0-4zM14 6.03a2 2 0 1 0 0 4 2 2 0 1 0 0-4zM8 6.03a2 2 0 1 0 0 4 2 2 0 1 0 0-4z"
+          fillRule="evenodd"
+        />
+      </svg>
+    </span>
+    <span
+      className="bp3-button-text"
     >
-      <span
-        className="bp3-icon bp3-icon-filter"
-        icon="filter"
-      >
-        <svg
-          data-icon="filter"
-          height={16}
-          viewBox="0 0 16 16"
-          width={16}
-        >
-          <desc>
-            filter
-          </desc>
-          <path
-            d="M13.99.99h-12a1.003 1.003 0 0 0-.71 1.71l4.71 4.71V14a1.003 1.003 0 0 0 1.71.71l2-2c.18-.18.29-.43.29-.71V7.41L14.7 2.7a1.003 1.003 0 0 0-.71-1.71z"
-            fillRule="evenodd"
-          />
-        </svg>
-      </span>
-      <span
-        className="bp3-button-text"
-      >
-        filtres
-      </span>
-    </button>
-    <button
-      className="bp3-button bp3-minimal layerstree-node-content__options__button layerstree-node-content__options__button--more"
-      onKeyDown={[Function]}
-      onKeyUp={[Function]}
-      title="options d'affichage"
-      type="button"
-    >
-      <span
-        className="bp3-icon bp3-icon-more"
-        icon="more"
-      >
-        <svg
-          data-icon="more"
-          height={16}
-          viewBox="0 0 16 16"
-          width={16}
-        >
-          <desc>
-            more
-          </desc>
-          <path
-            d="M2 6.03a2 2 0 1 0 0 4 2 2 0 1 0 0-4zM14 6.03a2 2 0 1 0 0 4 2 2 0 1 0 0-4zM8 6.03a2 2 0 1 0 0 4 2 2 0 1 0 0-4z"
-            fillRule="evenodd"
-          />
-        </svg>
-      </span>
-      <span
-        className="bp3-button-text"
-      >
-        options
-      </span>
-    </button>
-  </div>,
-]
+      options
+    </span>
+  </button>
+</div>
 `;

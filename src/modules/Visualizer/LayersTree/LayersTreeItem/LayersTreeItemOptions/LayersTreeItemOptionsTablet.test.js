@@ -6,10 +6,13 @@ import LayersTreeItemOptionsTablet from './LayersTreeItemOptionsTablet';
 jest.mock('../LayerFetchValues', () => () => <p>LayerFetchValues</p>);
 jest.mock('../FiltersPanel', () => (({ children }) => children));
 
-it('should render correctly', () => {
+jest.mock('../FiltersPanel', () => function FiltersPanel () {
+  return <p>FiltersPanel</p>;
+});
+
+it('should render correctly with widget', () => {
   const tree = renderer.create((
     <LayersTreeProvider>
-      <LayersTreeItemOptionsTablet />
       <LayersTreeItemOptionsTablet
         isFilterVisible
         form={[]}

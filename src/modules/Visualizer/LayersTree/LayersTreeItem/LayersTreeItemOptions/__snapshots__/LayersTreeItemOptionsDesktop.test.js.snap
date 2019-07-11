@@ -5,7 +5,7 @@ exports[`should render default options 1`] = `
   className="layerstree-node-content__options layerstree-node-content__options--desktop"
 >
   <span
-    className="bp3-popover-wrapper layerstree-node-content__options__tooltip options"
+    className="bp3-popover-wrapper layerNode__tooltip options"
   >
     <span
       className="bp3-popover-target"
@@ -15,11 +15,12 @@ exports[`should render default options 1`] = `
       onMouseLeave={[Function]}
     >
       <button
+        alt="open options"
         className="bp3-button bp3-minimal layerstree-node-content__options__button layerstree-node-content__options__button--more"
         onKeyDown={[Function]}
         onKeyUp={[Function]}
         tabIndex={0}
-        title="options d'affichage"
+        title="options"
         type="button"
       >
         <span
@@ -52,7 +53,7 @@ exports[`should render no tooltip if empty widget empty 1`] = `
   className="layerstree-node-content__options layerstree-node-content__options--desktop"
 >
   <span
-    className="bp3-popover-wrapper layerstree-node-content__options__tooltip options"
+    className="bp3-popover-wrapper layerNode__tooltip options"
   >
     <span
       className="bp3-popover-target"
@@ -62,11 +63,12 @@ exports[`should render no tooltip if empty widget empty 1`] = `
       onMouseLeave={[Function]}
     >
       <button
+        alt="open options"
         className="bp3-button bp3-minimal layerstree-node-content__options__button layerstree-node-content__options__button--more"
         onKeyDown={[Function]}
         onKeyUp={[Function]}
         tabIndex={0}
-        title="options d'affichage"
+        title="options"
         type="button"
       >
         <span
@@ -109,6 +111,7 @@ exports[`should render with proporties 1`] = `
       onMouseLeave={[Function]}
     >
       <button
+        alt="close foo"
         className="bp3-button bp3-minimal layerstree-node-content__options__button layerstree-node-content__options__button--active"
         onClick={true}
         onKeyDown={[Function]}
@@ -150,12 +153,12 @@ exports[`should render with proporties 1`] = `
       onMouseLeave={[Function]}
     >
       <button
-        alt="Ouvrir le tableau"
+        alt="open table"
         className="bp3-button bp3-minimal layerstree-node-content__options__button"
         onKeyDown={[Function]}
         onKeyUp={[Function]}
         tabIndex={0}
-        title="table"
+        title="layerstree.itemOptions.table.title"
         type="button"
       >
         <span
@@ -184,7 +187,7 @@ exports[`should render with proporties 1`] = `
     FiltersPanel
   </p>
   <span
-    className="bp3-popover-wrapper layerstree-node-content__options__tooltip options"
+    className="bp3-popover-wrapper layerNode__tooltip options"
   >
     <span
       className="bp3-popover-target"
@@ -194,11 +197,12 @@ exports[`should render with proporties 1`] = `
       onMouseLeave={[Function]}
     >
       <button
+        alt="open options"
         className="bp3-button bp3-minimal layerstree-node-content__options__button layerstree-node-content__options__button--more"
         onKeyDown={[Function]}
         onKeyUp={[Function]}
         tabIndex={0}
-        title="options d'affichage"
+        title="options"
         type="button"
       >
         <span
