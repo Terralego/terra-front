@@ -114,7 +114,7 @@ export class Filters extends React.Component {
             value={properties[property]}
             initialContent={(values && values.length > 250)
               ? translate('terralego.form.filter.select_placeholder')
-              : null
+              : values
             }
           />
         ))}
