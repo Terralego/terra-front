@@ -97,6 +97,7 @@ export class InteractiveMap extends React.Component {
     legends: PropTypes.arrayOf(PropTypes.shape({
 
     })),
+    onInit: PropTypes.func,
     onStyleChange: PropTypes.func,
   };
 
@@ -104,6 +105,7 @@ export class InteractiveMap extends React.Component {
     backgroundStyle: 'mapbox://styles/mapbox/light-v9',
     interactions: [],
     legends: [],
+    onInit () {},
     onStyleChange () {},
   };
 
@@ -132,6 +134,8 @@ export class InteractiveMap extends React.Component {
   }
 
   componentDidMount () {
+    const { onInit } = this.props;
+    onInit(this);
     this.insertBackgroundStyleControl();
   }
 
@@ -517,6 +521,7 @@ export class InteractiveMap extends React.Component {
       style,
       interactions,
       backgroundStyle,
+      onInit,
       onStyleChange,
       history,
       ...mapProps
@@ -535,6 +540,7 @@ export class InteractiveMap extends React.Component {
         <MapComponent
           {...mapProps}
           backgroundStyle={selectedBackgroundStyle}
+          onInit={onInit}
           onMapInit={onMapInit}
           onMapLoaded={onMapLoaded}
           onBackgroundChange={onStyleChange}
