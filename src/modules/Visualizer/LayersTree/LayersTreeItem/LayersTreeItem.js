@@ -193,6 +193,7 @@ export class LayersTreeItem extends React.Component {
                 minZoomLayer={minZoomLayer}
               >
                 <Switch
+                  className={classnames({ 'warning-zoom': display && isActive })}
                   checked={!!isActive}
                   onChange={onActiveChange}
                   id={`toggle-${htmlID}`}
