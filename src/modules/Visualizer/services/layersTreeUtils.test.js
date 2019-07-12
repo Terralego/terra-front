@@ -147,6 +147,24 @@ it('should set layer state', () => {
   });
 });
 
+it('should reset layer state', () => {
+  const layer = {};
+  const state = new Map();
+  state.set(layer, { foo: 'bar' });
+  expect(setLayerStateAction(
+    layer,
+    { active: true },
+    state,
+  ).get(layer)).toEqual({ active: true, foo: 'bar' });
+
+  expect(setLayerStateAction(
+    layer,
+    { active: true },
+    state,
+    true,
+  ).get(layer)).toEqual({ active: true });
+});
+
 it('should set layer state and initial sublayers', () => {
   const newLayersTreeState1 = setLayerStateAction(
     layersTree[0],

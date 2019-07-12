@@ -17,6 +17,14 @@ it('should render correctly with widget', () => {
         isFilterVisible
         form={[]}
       />
+      <LayersTreeItemOptionsTablet
+        isFilterVisible
+        form={[]}
+        isWidgetActive={() => true}
+        isOptionsOpen={() => true}
+        widgets={[{ component: 'foo' }]}
+        toggleWidgets={() => null}
+      />
     </LayersTreeProvider>
   )).toJSON();
   expect(tree).toMatchSnapshot();

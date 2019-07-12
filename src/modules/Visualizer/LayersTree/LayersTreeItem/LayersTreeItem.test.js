@@ -178,6 +178,7 @@ it('should change opacity state', () => {
   const setLayerState = jest.fn();
   const instance = new LayersTreeItem({
     layer,
+    activeLayer: layer,
     setLayerState,
   });
   instance.onOpacityChange(42);
@@ -265,7 +266,7 @@ it('should toggle table', () => {
   const setLayerState = jest.fn();
   const layer = 'foo';
   const isTableActive = true;
-  const instance = new LayersTreeItem({ setLayerState, layer, isTableActive });
+  const instance = new LayersTreeItem({ setLayerState, layer, activeLayer: layer, isTableActive });
   instance.toggleTable();
   expect(setLayerState).toHaveBeenCalledWith({ layer, state: { table: false } });
 });
@@ -274,7 +275,7 @@ it('should toggle widgets', () => {
   const layer = 'foo';
   const widget = {};
   const setLayerState = jest.fn();
-  const instance = new LayersTreeItem({ layer, setLayerState });
+  const instance = new LayersTreeItem({ layer, activeLayer: layer, setLayerState });
 
   instance.toggleWidgets(widget)();
   instance.setState = jest.fn();

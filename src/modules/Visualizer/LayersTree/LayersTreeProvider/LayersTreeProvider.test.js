@@ -67,7 +67,7 @@ it('should set layer state', () => {
   instance.setLayerState({ layer, state });
   expect(instance.resetState).toHaveBeenCalled();
   instance.resetState.mock.calls[0][0]({ layersTreeState });
-  expect(setLayerStateAction).toHaveBeenCalledWith(layer, state, layersTreeState);
+  expect(setLayerStateAction).toHaveBeenCalledWith(layer, state, layersTreeState, undefined);
 });
 
 it('should get layer state', () => {
