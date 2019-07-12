@@ -58,7 +58,8 @@ export class FiltersPanelContent extends React.Component {
       left,
       width,
       onChange,
-      layer: { filters: { form = [] } = {} },
+      layer: { filters: { form: layerForm = [] } = {} },
+      activeLayer: { filters: { form = layerForm } = {} } = {},
       filtersValues,
     } = this.props;
     const { visible, animate } = this.state;
