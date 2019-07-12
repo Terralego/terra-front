@@ -39,8 +39,6 @@ const generateTooltipContainer = ({ fetchProperties, properties, template, conte
 };
 
 export const getHighlightLayerId = (layerId, type = 'fill') => `${type}-${layerId}-highlight`;
-const getHighlightLayerIdFill = layerId => getHighlightLayerId(layerId, 'fill');
-const getHighlightLayerIdLine = layerId => getHighlightLayerId(layerId, 'line');
 
 const getUniqueLegends = legends => {
   const uniques = [];
@@ -220,10 +218,8 @@ export class InteractiveMap extends React.Component {
   };
 
   removeHighlight = ({
-    feature: {
-      layer: { id: layerId } = {},
-      properties: { _id: featureId } = {},
-    } = {},
+    layerId,
+    featureId,
   }) => {
     const { map } = this;
     if (!map || !layerId) return;
@@ -232,39 +228,41 @@ export class InteractiveMap extends React.Component {
 
     if (!highlightedLayer) return;
 
-    const { ids: prevIds } = highlightedLayer;
+    const { layersState: { ids: prevIds = [] } = {} } = highlightedLayer;
 
     const ids = prevIds.filter(id => id !== featureId);
+
     if (ids.length === prevIds.length) return;
 
     this.highlightedLayers.set(layerId, {
       ...highlightedLayer,
-      ids,
+      layersState: {
+        ...highlightedLayer.layersState,
+        ids,
+      },
     });
     this.highlight();
   }
 
   addHighlight = ({
-    feature: {
-      layer: { id: layerId } = {},
-      properties: { _id: id } = {},
-    } = {},
+    layerId,
+    featureId,
+    propertyId = '_id',
     highlightColor,
-    unique,
+    source = false,
+    unique = false,
   }) => {
-    if (!layerId) return;
+    if (!layerId || !source) return;
 
-    const prevLayersState = this.highlightedLayers.get(layerId) || {};
+    const { layersState: { ids = [] } = {} } = this.highlightedLayers.get(layerId) || {};
     const layersState = {
-      ids: [...prevLayersState.ids || []],
+      ids: unique
+        ? [featureId]
+        : [...ids, !ids.includes(featureId) && featureId].filter(a => a),
       highlightColor,
     };
 
-    layersState.ids = unique
-      ? [id]
-      : Array.from(new Set([...layersState.ids, id]));
-
-    this.highlightedLayers.set(layerId, layersState);
+    this.highlightedLayers.set(layerId, { layersState, source, propertyId });
     this.highlight();
   }
 
@@ -352,42 +350,63 @@ export class InteractiveMap extends React.Component {
 
   highlight () {
     const { map } = this;
-    this.highlightedLayers.forEach(({ ids, highlightColor }, layerId) => {
-      const { sourceLayer } = map.getLayer(layerId);
 
-      const fillId = getHighlightLayerIdFill(layerId);
-      const lineId = getHighlightLayerIdLine(layerId);
-      const layerColor = highlightColor || map.getPaintProperty(layerId, 'fill-color');
+    this.highlightedLayers.forEach((
+      { layersState: { ids, highlightColor = '' }, source, propertyId },
+      layerId,
+    ) => {
+      const { sourceLayer, type } = map.getLayer(layerId);
 
-      if (!map.getLayer(fillId)) {
-        map.addLayer({
-          id: fillId,
-          source: 'terralego',
-          type: 'fill',
-          'source-layer': sourceLayer,
-          paint: {
-            'fill-color': layerColor,
-            'fill-outline-color': layerColor,
-            'fill-opacity': 0.4,
-          },
-        });
-      }
+      const targetLayerColor = map.getPaintProperty(layerId, `${type}-color`);
 
-      if (!map.getLayer(lineId)) {
-        map.addLayer({
-          id: lineId,
-          source: 'terralego',
-          'source-layer': sourceLayer,
-          type: 'line',
-          paint: {
-            'line-color': layerColor,
-            'line-width': 2,
-          },
-        });
-      }
+      const layerColor = (typeof targetLayerColor !== 'string' && typeof highlightColor === 'string')
+        ? targetLayerColor
+        : highlightColor;
 
-      map.setFilter(fillId, ['in', '_id', ...ids]);
-      map.setFilter(lineId, ['in', '_id', ...ids]);
+
+      const targetType = () => {
+        const line = {
+          'line-color': layerColor,
+          'line-width': 2,
+        };
+
+        const fill = {
+          'fill-color': layerColor,
+          'fill-opacity': 0.4,
+        };
+
+        const circle = {
+          'circle-color': layerColor,
+          'circle-radius': type === 'circle' && map.getPaintProperty(layerId, 'circle-radius'),
+          'circle-stroke-width': 2,
+          'circle-opacity': 0.4,
+          'circle-stroke-color': layerColor,
+        };
+
+        if (type === 'line') {
+          return { line };
+        }
+
+        if (type === 'circle') {
+          return { circle };
+        }
+
+        return { line, fill };
+      };
+
+      Object.keys(targetType()).forEach(highlightType => {
+        const highlightTypeId = getHighlightLayerId(layerId, highlightType);
+        if (!map.getLayer(highlightTypeId)) {
+          map.addLayer({
+            id: highlightTypeId,
+            source,
+            type: highlightType,
+            'source-layer': sourceLayer,
+            paint: targetType()[highlightType],
+          });
+        }
+        map.setFilter(highlightTypeId, ['in', propertyId, ...ids]);
+      });
     });
   }
 
@@ -400,6 +419,11 @@ export class InteractiveMap extends React.Component {
     } = interaction;
     if ((trigger === 'mouseover' && !['mousemove', 'mouseleave'].includes(eventType)) ||
         (trigger !== 'mouseover' && trigger !== eventType)) return;
+
+    const {
+      properties: { _id: featureId } = {},
+      layer: { source } = {},
+    } = feature;
 
     const clusteredFeatures = await getClusteredFeatures(map, feature);
 
@@ -434,12 +458,17 @@ export class InteractiveMap extends React.Component {
         break;
       case INTERACTION_HIGHLIGHT: {
         if (eventType === 'mouseleave') {
-          this.removeHighlight({ feature });
+          this.removeHighlight({
+            layerId,
+            featureId,
+          });
           return;
         }
 
         this.addHighlight({
-          feature,
+          layerId,
+          featureId,
+          source,
           unique: unique || eventType === 'mousemove',
           highlightColor,
         });

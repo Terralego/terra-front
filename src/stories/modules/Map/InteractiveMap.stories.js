@@ -62,6 +62,28 @@ storiesOf('Modules/Map/', module)
           trigger: 'mouseover',
           // unique: true, // Multiple selection or one by one
           // highlightColor: 'red', // if not set, it will take the default feature color
+        },
+        {
+          id: 'terralego-eae-employment',
+          interaction: 'highlight',
+          trigger: 'mouseover',
+          highlightColor: [
+            'case',
+            ['has', 'nb_emplois'],
+            [
+              'case',
+              ['<', ['get', 'nb_emplois'], 600],
+              '#ffb2b2',
+              ['<', ['get', 'nb_emplois'], 2300],
+              '#fe5c5c',
+              ['<', ['get', 'nb_emplois'], 5200],
+              '#fd3c3c',
+              ['<', ['get', 'nb_emplois'], 12000],
+              '#ab0e00',
+              '#bd0202',
+            ],
+            '#ccc',
+          ],
         }, {
           id: 'terralego-eae',
           interaction: 'displayTooltip',
