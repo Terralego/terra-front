@@ -149,7 +149,7 @@ describe('map', () => {
     let instance = new InteractiveMap({ onMapInit });
     const map = {};
     instance.onMapInit(map);
-    expect(onMapInit).toHaveBeenCalledWith(map);
+    expect(onMapInit).toHaveBeenCalledWith(map, instance);
     onMapInit.mockClear();
 
     instance = new InteractiveMap({});

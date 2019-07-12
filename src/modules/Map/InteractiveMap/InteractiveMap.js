@@ -159,7 +159,7 @@ export class InteractiveMap extends React.Component {
 
   onMapInit = map => {
     const { onMapInit = () => {} } = this.props;
-    onMapInit(map);
+    onMapInit(map, this);
     // map is the only link between the outside and this component.
     // eslint-disable-next-line no-param-reassign
     map.triggerInteraction = ({ interaction, feature }) =>
