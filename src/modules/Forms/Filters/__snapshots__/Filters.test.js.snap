@@ -6,7 +6,7 @@ exports[`should build a form 1`] = `
     ControlText
   </p>
   <p>
-    ControlSelect with initialContent set to développeur,UX designer,Chef de projet
+    ControlSelect
   </p>
   <p>
     ControlSelect with initialContent set to Enter a query first
