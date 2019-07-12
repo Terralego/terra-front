@@ -72,7 +72,7 @@ export class LayersTreeGroup extends React.Component {
               )
               : (
                 <LayersTreeItem
-                  key={layer.label}
+                  key={layer.label || layer.group}
                   layer={layer}
                   exclusive={exclusive}
                 />

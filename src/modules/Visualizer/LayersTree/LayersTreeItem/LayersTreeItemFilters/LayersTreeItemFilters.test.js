@@ -50,7 +50,7 @@ it('should render', () => {
         }}
       />
       <LayersTreeItemFilters
-        layer={{}}
+        activeLayer={{}}
       />
     </>,
   );

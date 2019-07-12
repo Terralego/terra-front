@@ -65,6 +65,10 @@ it('should render correctly', () => {
           }, {
             group: 'Group 2',
             layers: [],
+          }, {
+            group: 'Group 3',
+            layers: [],
+            exclusive: true,
           }],
         }}
       />
