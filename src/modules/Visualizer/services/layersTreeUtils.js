@@ -43,7 +43,7 @@ export function setGroupLayerStateAction (layer, layerState, prevLayersTreeState
   return layersTreeState;
 }
 
-export function setLayerStateAction (layer, layerState, prevLayersTreeState) {
+export function setLayerStateAction (layer, layerState, prevLayersTreeState, reset) {
   if (layer.group) return setGroupLayerStateAction(layer, layerState, prevLayersTreeState);
 
   const layersTreeState = new Map(prevLayersTreeState);
@@ -58,7 +58,7 @@ export function setLayerStateAction (layer, layerState, prevLayersTreeState) {
     layersTreeState.forEach(layState => { layState.table = false; });
   }
   layersTreeState.set(layer, {
-    ...prevLayerState,
+    ...reset ? {} : prevLayerState,
     ...newLayerState,
   });
   return layersTreeState;

@@ -56,7 +56,7 @@ export class LayersTreeItem extends React.Component {
   }
 
   onOpacityChange = opacity => {
-    const { layer, setLayerState } = this.props;
+    const { activeLayer: layer, setLayerState } = this.props;
     setLayerState({ layer, state: { opacity } });
   }
 
@@ -79,12 +79,12 @@ export class LayersTreeItem extends React.Component {
     ({ isFilterVisible: !isFilterVisible }));
 
   toggleTable = () => {
-    const { layer, isTableActive, setLayerState } = this.props;
+    const { activeLayer: layer, isTableActive, setLayerState } = this.props;
     setLayerState({ layer, state: { table: !isTableActive } });
   };
 
   toggleWidgets = widget => () => {
-    const { layer, widgets: prevWidgets = [], setLayerState } = this.props;
+    const { activeLayer: layer, widgets: prevWidgets = [], setLayerState } = this.props;
     const contains = this.isWidgetActive(widget);
     const { hasWidgetActive } = this.state;
     const widgets = [

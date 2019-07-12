@@ -62,9 +62,9 @@ export class LayersTreeProvider extends React.Component {
     this.isUnmount = true;
   }
 
-  setLayerState = ({ layer, state: newState }) => {
+  setLayerState = ({ layer, state: newState, reset }) => {
     this.resetState(({ layersTreeState }) => ({
-      layersTreeState: setLayerStateAction(layer, newState, layersTreeState),
+      layersTreeState: setLayerStateAction(layer, newState, layersTreeState, reset),
     }));
   }
 
