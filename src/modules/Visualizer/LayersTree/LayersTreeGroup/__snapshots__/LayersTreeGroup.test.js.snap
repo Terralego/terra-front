@@ -44,6 +44,9 @@ Array [
         Button
       </p>
     </div>
+    <p>
+      LayersTreeItem
+    </p>
   </div>,
 ]
 `;

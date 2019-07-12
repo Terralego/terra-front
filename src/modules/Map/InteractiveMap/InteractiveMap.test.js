@@ -532,6 +532,25 @@ describe('Interactions', () => {
     expect(instance.map.getPaintProperty).toHaveBeenCalled();
   });
 
+  it('should trigger interaction without feature', async () => {
+    const interactions = [];
+    const instance = new InteractiveMap({
+      interactions,
+    });
+    instance.triggerInteraction({
+      event: {},
+      layerId: 'foo',
+      interaction: {
+        id: 'foo',
+        interaction: INTERACTION_FIT_ZOOM,
+        trigger: 'click',
+      },
+      eventType: 'click',
+    });
+    await true;
+    expect(fitZoom).toHaveBeenCalled();
+  });
+
   describe('should highlight all geometries type', () => {
     const interactions = [];
     const instance = new InteractiveMap({ interactions });

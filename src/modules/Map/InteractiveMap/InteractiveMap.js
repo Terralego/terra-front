@@ -410,7 +410,7 @@ export class InteractiveMap extends React.Component {
     });
   }
 
-  async triggerInteraction ({ map, event, feature, layerId, interaction, eventType }) {
+  async triggerInteraction ({ map, event, feature = {}, layerId, interaction, eventType }) {
     const {
       id, interaction: interactionType, fn,
       trigger = 'click', fixed, constraints,

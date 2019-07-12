@@ -24,7 +24,8 @@ const LayersTreeItemFilters = ({
   filtersValues,
   setLayerState,
   layer,
-  layer: { filters: { form } = {} },
+  layer: { filters: { form: layerForm } = {} } = {},
+  activeLayer: { filters: { form = layerForm } = {} } = {},
 }) => {
   const properties = (form || []).map(({ property, ...rest }) => ({
     ...rest,
