@@ -10,7 +10,7 @@ function getLiteralValue (value) {
   return value;
 }
 
-function getValueFromType (value, type) {
+export function getValueFromType (value, type) {
   if (type === 'boolean') {
     return null;
   }
@@ -38,7 +38,7 @@ const LayersTreeItemFilters = ({
   return (
     <div className="layersTreeItemFilter">
       {properties.map(({ property, value, type, label }) => (
-        value && (
+        (value && value.length > 0) && (
         <Tag
           key={property}
           className="layersTreeItemFilter__tag"

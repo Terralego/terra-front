@@ -1,7 +1,7 @@
 import React from 'react';
 import renderer from 'react-test-renderer';
 
-import LayersTreeItemFilters from './LayersTreeItemFilters';
+import LayersTreeItemFilters, { getValueFromType } from './LayersTreeItemFilters';
 
 let toLocaleDateString;
 beforeEach(() => {
@@ -56,6 +56,7 @@ it('should render', () => {
   );
   expect(tree.toJSON()).toMatchSnapshot();
 });
+
 it('should remove tag', () => {
   const layer = {
     filters: {
@@ -84,4 +85,9 @@ it('should remove tag', () => {
     },
     total: undefined,
   });
+});
+
+it('should return no value', () => {
+  getValueFromType(true, 'boolean');
+  expect(getValueFromType(true, 'boolean')).toEqual(null);
 });
