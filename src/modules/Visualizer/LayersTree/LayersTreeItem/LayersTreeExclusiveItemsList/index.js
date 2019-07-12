@@ -5,7 +5,7 @@ const onChange = (layers, setLayerState) => selected =>
   layers
     .filter(({ label }) => label)
     .forEach((layer, index) =>
-      setLayerState({ layer, state: { active: index === +selected } }));
+      setLayerState({ layer, state: { active: index === +selected }, reset: true }));
 
 
 export default connectLayersTree(({

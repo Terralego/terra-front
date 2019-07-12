@@ -53,6 +53,10 @@ $scaleRatio: 1.25;
       margin: 0;
     }
   }
+
+  & + .layerstree-node {
+    margin-top: .35rem;
+  }
 }
 
 .layerstree-node {

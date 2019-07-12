@@ -1,25 +1,16 @@
 import LayersTreeItem from './LayersTreeItem';
 import { connectLayersTree } from '../LayersTreeProvider/context';
 
-const getState = (getLayerState, layer) => {
-  const { exclusive, layers } = layer;
-  if (exclusive) {
-    return layers.reduce((activeState, sublayer) => {
-      if (activeState) return activeState;
-      const state = getLayerState({ layer: sublayer });
-      if (state.active) return state;
-      return activeState;
-    }, null) || {};
-  }
-
-  return getLayerState({ layer });
-};
-
 export default connectLayersTree(({
   getLayerState, setLayerState, map,
 }, {
   layer,
+  layer: { exclusive, layers },
 }) => {
+  const activeLayer = exclusive
+    ? layers.find(l => getLayerState({ layer: l }).active) || layer
+    : layer;
+
   const {
     active: isActive,
     opacity,
@@ -28,7 +19,7 @@ export default connectLayersTree(({
     widgets = [],
     total,
     hidden,
-  } = getState(getLayerState, layer);
+  } = getLayerState({ layer: activeLayer });
 
   return {
     isActive,
@@ -40,5 +31,6 @@ export default connectLayersTree(({
     total,
     hidden,
     map,
+    activeLayer,
   };
 })(LayersTreeItem);
