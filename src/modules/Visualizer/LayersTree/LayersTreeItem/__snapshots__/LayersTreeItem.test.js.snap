@@ -292,5 +292,76 @@ Array [
   <p>
     LayersTreeItemFilters
   </p>,
+  <div
+    className="layerstree-node-content"
+  >
+    <div
+      className="layerstree-node-content__item"
+    >
+      <div
+        className="layerstree-node-content__item-label"
+      >
+        <p>
+          Switch
+        </p>
+        <p>
+          Tooltip
+        </p>
+        <div
+          className="layerstree-node-content__item-label__total"
+        />
+      </div>
+      <p>
+        RadioGroup
+      </p>
+    </div>
+    <div
+      className="layerstree-node-content__options layerstree-node-content__options--mobile"
+    >
+      <p>
+        FiltersPanel
+      </p>
+      <p>
+        Button
+      </p>
+    </div>
+  </div>,
+  <p>
+    LayersTreeItemFilters
+  </p>,
+  <div
+    className="layerstree-node-content"
+  >
+    <div
+      className="layerstree-node-content__item"
+    >
+      <div
+        className="layerstree-node-content__item-label"
+      >
+        <p>
+          Switch
+        </p>
+        <p>
+          Tooltip
+        </p>
+        <div
+          className="layerstree-node-content__item-label__total"
+        />
+      </div>
+      <p>
+        RadioGroup
+      </p>
+    </div>
+    <div
+      className="layerstree-node-content__options layerstree-node-content__options--mobile"
+    >
+      <p>
+        Button
+      </p>
+    </div>
+  </div>,
+  <p>
+    LayersTreeItemFilters
+  </p>,
 ]
 `;

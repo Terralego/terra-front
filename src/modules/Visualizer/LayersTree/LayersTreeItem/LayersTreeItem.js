@@ -115,10 +115,15 @@ export class LayersTreeItem extends React.Component {
       layer: {
         group,
         label = group,
-        filters: { form, fields } = {},
-        widgets = [],
         exclusive,
+        filters: {
+          form: layerForm, fields: layerFields,
+        } = {},
       },
+      activeLayer: {
+        filters: { form = layerForm, fields = layerFields } = {},
+        widgets = layer.widgets,
+      } = {},
       isActive,
       opacity,
       isTableActive,
