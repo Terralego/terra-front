@@ -1,4 +1,4 @@
-image: node:10.9.0 # Should match .nvmrc content
+image: corpusops/node:10.9 # Should match .nvmrc content
 
 stages:
   - tests

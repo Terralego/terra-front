@@ -43,7 +43,7 @@ An API service to fetch data from backend
 
 ### Auth
 
-A user provider with a login form. Wrap your app with AuthProvider to get access to all auth data and actions. Then, you will be able to get connected user and call login and signout action. 
+A user provider with a login form. Wrap your app with AuthProvider to get access to all auth data and actions. Then, you will be able to get connected user and call login and signout action.
 
 ### Visualizer
 
@@ -52,3 +52,4 @@ A fully configurable visualizer displaying a layers tree, a map and able to make
 ## Customization
 
 Every component should be configurable by passing replacement props from TerraFrontProvider.
+
