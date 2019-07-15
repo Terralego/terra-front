@@ -47,7 +47,7 @@ export const Legend = ({ title, items, level, position, content, history }) => {
                   <div
                     className="tf-legend__symbol-container"
                     style={{
-                      height: shape === 'circle' ? biggestRadius : DEFAULT_RADIUS * 2,
+                      width: shape === 'circle' ? biggestRadius : DEFAULT_RADIUS * 2,
                     }}
                   >
                     {shape === 'circle'
@@ -70,7 +70,7 @@ Legend.propTypes = {
   title: PropTypes.string.isRequired,
   items: PropTypes.arrayOf(PropTypes.shape({
     label: PropTypes.string.isRequired,
-    color: PropTypes.string,
+    fill: PropTypes.string,
     items: PropTypes.array,
     shape: PropTypes.string,
     radius: PropTypes.number,

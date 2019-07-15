@@ -1,13 +1,14 @@
 @import "node_modules/@blueprintjs/core/lib/scss/variables";
 
 .tf-legend {
-  box-shadow: 0 1px 3px 0 rgba(16,22,26,0.40);
+  box-shadow: 0 1px 3px 0 rgba(16, 22, 26, 0.40);
   border-radius: 2px;
   background: $pt-app-background-color;
   padding: .5rem;
   margin-top: 1rem;
   display: flex;
   flex-direction: column;
+  min-width: 250px;
 
   .bp3-dark & {
     background: $pt-dark-app-background-color;
@@ -25,35 +26,61 @@
   }
 
   &__list {
-    display: table;
     margin: 0 .5rem;
+    position: relative;
+    height: 175px;
   }
-
 
 
   &__symbol-container {
     display: table-cell;
     text-align: center;
-    vertical-align: middle;
+
+    &:after {
+      content:"";
+      width: 80%;
+      border-bottom: 1px solid #000000;
+      height: 1px;
+      display: block;
+      position: absolute;
+      top: 0;
+      left: 15px;
+    }
   }
+
   &__symbol {
     border-radius: 0;
     display: inline-block;
   }
+
   &__label {
     font-size: 0.8rem;
     padding: 0 0 0 .5rem;
     display: table-cell;
-    vertical-align: middle;
     max-width: 170px;
+    position: absolute;
+    top: -8px;
+    right: -45px;
   }
 
   &__item {
+    position: absolute;
+    bottom: 0;
+    right: 25%;
+    left: 25%;
+
     &--circle {
       display: table-row;
+
       .tf-legend__symbol {
-        border-radius: 50%;
-        display: inline-block;
+        position: relative;
+        left: 35%;
+        margin-left:-150px;
+
+        svg {
+          border: 1px solid #000000;
+          border-radius: 50%;
+        }
       }
     }
   }

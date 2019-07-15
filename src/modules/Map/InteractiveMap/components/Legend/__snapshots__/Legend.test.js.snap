@@ -122,7 +122,7 @@ exports[`should render correctly circle 1`] = `
         className="tf-legend__symbol-container"
         style={
           Object {
-            "height": 16,
+            "width": 16,
           }
         }
       >
@@ -156,7 +156,7 @@ exports[`should render correctly circle 1`] = `
         className="tf-legend__symbol-container"
         style={
           Object {
-            "height": 16,
+            "width": 16,
           }
         }
       >
@@ -190,7 +190,7 @@ exports[`should render correctly circle 1`] = `
         className="tf-legend__symbol-container"
         style={
           Object {
-            "height": 16,
+            "width": 16,
           }
         }
       >
@@ -240,7 +240,7 @@ exports[`should render correctly square 1`] = `
         className="tf-legend__symbol-container"
         style={
           Object {
-            "height": 32,
+            "width": 32,
           }
         }
       >
@@ -275,7 +275,7 @@ exports[`should render correctly square 1`] = `
         className="tf-legend__symbol-container"
         style={
           Object {
-            "height": 32,
+            "width": 32,
           }
         }
       >
@@ -310,7 +310,7 @@ exports[`should render correctly square 1`] = `
         className="tf-legend__symbol-container"
         style={
           Object {
-            "height": 32,
+            "width": 32,
           }
         }
       >
@@ -361,7 +361,7 @@ exports[`should render correctly with multi level 1`] = `
         className="tf-legend__symbol-container"
         style={
           Object {
-            "height": 32,
+            "width": 32,
           }
         }
       >
@@ -396,7 +396,7 @@ exports[`should render correctly with multi level 1`] = `
         className="tf-legend__symbol-container"
         style={
           Object {
-            "height": 32,
+            "width": 32,
           }
         }
       >
@@ -442,7 +442,7 @@ exports[`should render correctly with multi level 1`] = `
             className="tf-legend__symbol-container"
             style={
               Object {
-                "height": 32,
+                "width": 32,
               }
             }
           >
@@ -477,7 +477,7 @@ exports[`should render correctly with multi level 1`] = `
             className="tf-legend__symbol-container"
             style={
               Object {
-                "height": 32,
+                "width": 32,
               }
             }
           >
@@ -523,7 +523,7 @@ exports[`should render correctly with multi level 1`] = `
                 className="tf-legend__symbol-container"
                 style={
                   Object {
-                    "height": 32,
+                    "width": 32,
                   }
                 }
               >
@@ -558,7 +558,7 @@ exports[`should render correctly with multi level 1`] = `
                 className="tf-legend__symbol-container"
                 style={
                   Object {
-                    "height": 32,
+                    "width": 32,
                   }
                 }
               >
@@ -604,7 +604,7 @@ exports[`should render correctly with multi level 1`] = `
                     className="tf-legend__symbol-container"
                     style={
                       Object {
-                        "height": 32,
+                        "width": 32,
                       }
                     }
                   >
@@ -639,7 +639,7 @@ exports[`should render correctly with multi level 1`] = `
                     className="tf-legend__symbol-container"
                     style={
                       Object {
-                        "height": 32,
+                        "width": 32,
                       }
                     }
                   >
