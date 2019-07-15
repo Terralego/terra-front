@@ -1,11 +1,21 @@
 import LayersTreeExclusiveItemsList from './LayersTreeExclusiveItemsList';
 import { connectLayersTree } from '../../LayersTreeProvider/context';
 
-const onChange = (layers, setLayerState) => selected =>
+export const onChange = (layers, setLayerState, getLayerState) => selected => {
+  const prevSelected = layers.reduce((prev, layer, index, all, state = getLayerState({ layer })) =>
+    (state.active ? state : prev), {});
+
   layers
     .filter(({ label }) => label)
     .forEach((layer, index) =>
-      setLayerState({ layer, state: { active: index === +selected }, reset: true }));
+      setLayerState({
+        layer,
+        state: index === +selected
+          ? { ...prevSelected, active: true }
+          : { active: false },
+        reset: true,
+      }));
+};
 
 
 export default connectLayersTree(({
@@ -13,7 +23,7 @@ export default connectLayersTree(({
 }, {
   layer: { layers = [] },
 }) => ({
-  onChange: onChange(layers, setLayerState),
+  onChange: onChange(layers, setLayerState, getLayerState),
   selected: layers
     .filter(({ label }) => label)
     .findIndex(layer => getLayerState({ layer }).active),
