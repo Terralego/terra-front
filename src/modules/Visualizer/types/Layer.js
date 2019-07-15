@@ -12,6 +12,12 @@ export const LayerProps = PropTypes.shape({
   // layers: PropTypes.arrayOf(LayerProps),
   /** If a group, may be exclusive if only one layer must be active */
   exclusive: PropTypes.bool,
+  /** If group, describe optional selectors menus to easy select big list of layers */
+  selectors: PropTypes.arrayOf(PropTypes.shape({
+    label: PropTypes.string,
+    name: PropTypes.string.isRequired,
+    values: PropTypes.arrayOf(PropTypes.string).isRequired,
+  })),
   /** Initial layer state */
   initialState: PropTypes.shape({
     active: PropTypes.bool,

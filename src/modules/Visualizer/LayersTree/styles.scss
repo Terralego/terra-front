@@ -119,18 +119,10 @@ $scaleRatio: 1.25;
         }
       }
     }
+
     &__subitems-list {
       padding: .75rem 0 0 0;
       order: 2;
-      .bp3-popover-target, div button {
-        width: 100%;
-        outline: none;
-        margin: auto;
-      }
-      button {
-        display: flex;
-        justify-content: space-between;
-      }
     }
     &__options {
       background-color: transparent;
@@ -257,7 +249,12 @@ $scaleRatio: 1.25;
       }
     }
   }
+
+  .control-container {
+    margin-top: .35rem;
+  }
 }
+
 .bp3-switch {
   margin: 0;
 }

@@ -169,6 +169,23 @@ it('should render correctly', () => {
         }}
         isActive
       />
+      <LayersTreeItem
+        layer={{
+          group: 'group 1',
+          exclusive: true,
+          filters: {
+            layer: 'foo',
+            form: [],
+          },
+          layers: [{
+            label: 'layer 1',
+          }, {
+            label: 'layer 2',
+          }],
+        }}
+        isActive
+        isMobileSized
+      />
     </LayersTreeProvider>
   ));
   const a = tree.root.findAll(({ type }) => type === LayersTreeItem);

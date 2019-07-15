@@ -1,13 +1,15 @@
 import React from 'react';
 import renderer from 'react-test-renderer';
 
-import LayersTreeEclusiveItems from './LayersTreeExclusiveItemsList';
+import LayersTreeExclusiveItemsList from './LayersTreeExclusiveItemsList';
 import { onChange } from '.';
+
+jest.mock('./Selector', () => () => <p>Selector</p>);
 
 it('should render', () => {
   const tree = renderer.create(
     <>
-      <LayersTreeEclusiveItems
+      <LayersTreeExclusiveItemsList
         layer={{
           layers: [{
             label: 'foo',
@@ -16,7 +18,7 @@ it('should render', () => {
           }],
         }}
       />
-      <LayersTreeEclusiveItems
+      <LayersTreeExclusiveItemsList
         layer={{
           layers: [{
             label: 'foo',
@@ -34,6 +36,44 @@ it('should render', () => {
             label: 'foo3',
           }, {
             label: 'bar3',
+          }],
+        }}
+      />
+      <LayersTreeExclusiveItemsList
+        layer={{
+          selectors: [{
+            label: 'Foo',
+            name: 'foo',
+            values: ['foo', 'bar'],
+          }, {
+            label: 'Baar',
+            name: 'bar',
+            values: ['foo', 'bar'],
+          }],
+          layers: [{
+            label: 'foo',
+            selectorKey: {
+              foo: 'foo',
+              bar: 'foo',
+            },
+          }, {
+            label: 'bar',
+            selectorKey: {
+              foo: 'foo',
+              bar: 'bar',
+            },
+          }, {
+            label: 'foo1',
+            selectorKey: {
+              foo: 'bar',
+              bar: 'foo',
+            },
+          }, {
+            label: 'bar1',
+            selectorKey: {
+              foo: 'bar',
+              bar: 'bar',
+            },
           }],
         }}
       />

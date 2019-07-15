@@ -1,0 +1,24 @@
+.control-container--select {
+
+  &.control-container--full-width {
+    .bp3-popover-target, div button {
+      width: 100%;
+      outline: none;
+      margin: auto;
+    }
+
+    button {
+      display: flex;
+      justify-content: space-between;
+    }
+  }
+  .control-label {
+    display: block;
+    line-height: 2rem;
+
+    &--inline {
+      display: inline;
+      margin-right: 1rem;
+    }
+  }
+}

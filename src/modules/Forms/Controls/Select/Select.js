@@ -4,8 +4,10 @@ import classnames from 'classnames';
 import { MenuItem, Button, Position } from '@blueprintjs/core';
 import { Select as BPSelect } from '@blueprintjs/select';
 
-import { preventEnterKeyPress } from '../../../utils/event';
-import formatValues from './formatValues';
+import { preventEnterKeyPress } from '../../../../utils/event';
+import formatValues from '../formatValues';
+
+let selectCount = 0;
 
 export class Select extends React.Component {
   static propTypes = {
@@ -44,6 +46,9 @@ export class Select extends React.Component {
   state = {
     values: [],
     query: '',
+    // Need to create unique but predictible (for snapshots) ids
+    // eslint-disable-next-line no-plusplus
+    uuid: `select-${++selectCount}`,
   };
 
   handleChange = ({ value }) => {
@@ -63,10 +68,12 @@ export class Select extends React.Component {
       isSubmissionPrevented,
       value,
       className,
+      inline,
+      fullWidth,
       ...props
     } = this.props;
 
-    const { values, query } = this.state;
+    const { values, query, uuid } = this.state;
     const { handleChange } = this;
     const filteredItems = query === ''
       ? values
@@ -75,11 +82,23 @@ export class Select extends React.Component {
 
     return (
       <div
-        className="control-container"
+        className={classnames(
+          'control-container',
+          'control-container--select',
+          { 'control-container--full-width': fullWidth },
+        )}
         onKeyPress={isSubmissionPrevented ? preventEnterKeyPress : null}
         role="presentation"
       >
-        <p className="control-label">{label}</p>
+        <label
+          htmlFor={uuid}
+          className={classnames(
+            'control-label',
+            { 'control-label--inline': inline },
+          )}
+        >
+          {label}
+        </label>
         <BPSelect
           className={classnames('tf-select', className)}
           popoverProps={{ usePortal: false, position: Position.BOTTOM_LEFT, minimal: true }}
@@ -110,7 +129,7 @@ export class Select extends React.Component {
           onItemSelect={handleChange}
           {...props}
         >
-          <Button text={value || emptySelectItem} rightIcon="double-caret-vertical" />
+          <Button id={uuid} text={value || emptySelectItem} rightIcon="double-caret-vertical" />
         </BPSelect>
       </div>
     );

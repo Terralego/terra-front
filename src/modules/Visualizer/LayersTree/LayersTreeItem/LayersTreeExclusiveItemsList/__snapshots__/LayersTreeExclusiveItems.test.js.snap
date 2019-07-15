@@ -37,15 +37,16 @@ Array [
     </label>
   </div>,
   <div
-    className="control-container"
+    className="control-container control-container--select control-container--full-width"
     onKeyPress={[Function]}
     role="presentation"
   >
-    <p
+    <label
       className="control-label"
+      htmlFor="select-1"
     >
       
-    </p>
+    </label>
     <span
       className="bp3-popover-wrapper tf-select layerstree-node-content__subitems-list"
     >
@@ -59,6 +60,7 @@ Array [
         >
           <button
             className="bp3-button"
+            id="select-1"
             onKeyDown={[Function]}
             onKeyUp={[Function]}
             type="button"
@@ -92,5 +94,8 @@ Array [
       </span>
     </span>
   </div>,
+  <p>
+    Selector
+  </p>,
 ]
 `;

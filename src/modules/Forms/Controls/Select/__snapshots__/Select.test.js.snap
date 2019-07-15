@@ -2,15 +2,16 @@
 
 exports[`should render correctly 1`] = `
 <div
-  className="control-container"
+  className="control-container control-container--select"
   onKeyPress={[Function]}
   role="presentation"
 >
-  <p
+  <label
     className="control-label"
+    htmlFor="select-1"
   >
     Pwout
-  </p>
+  </label>
   <select>
     <option
       value="foo"
@@ -23,15 +24,16 @@ exports[`should render correctly 1`] = `
 
 exports[`should render correctly with query 1`] = `
 <div
-  className="control-container"
+  className="control-container control-container--select"
   onKeyPress={[Function]}
   role="presentation"
 >
-  <p
+  <label
     className="control-label"
+    htmlFor="select-2"
   >
     Pwout
-  </p>
+  </label>
   <select>
     <option
       value="foo"
