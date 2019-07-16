@@ -3,9 +3,10 @@ import PropTypes from 'prop-types';
 import classnames from 'classnames';
 import { MenuItem, Button, Position } from '@blueprintjs/core';
 import { Select as BPSelect } from '@blueprintjs/select';
+import uuid from 'uuid/v4';
 
-import { preventEnterKeyPress } from '../../../utils/event';
-import formatValues from './formatValues';
+import { preventEnterKeyPress } from '../../../../utils/event';
+import formatValues from '../formatValues';
 
 export class Select extends React.Component {
   static propTypes = {
@@ -46,6 +47,8 @@ export class Select extends React.Component {
     query: '',
   };
 
+  uuid = `select-${uuid()}`;
+
   handleChange = ({ value }) => {
     const { onChange } = this.props;
     onChange(value);
@@ -63,6 +66,8 @@ export class Select extends React.Component {
       isSubmissionPrevented,
       value,
       className,
+      inline,
+      fullWidth,
       ...props
     } = this.props;
 
@@ -75,11 +80,23 @@ export class Select extends React.Component {
 
     return (
       <div
-        className="control-container"
+        className={classnames(
+          'control-container',
+          'control-container--select',
+          { 'control-container--full-width': fullWidth },
+        )}
         onKeyPress={isSubmissionPrevented ? preventEnterKeyPress : null}
         role="presentation"
       >
-        <p className="control-label">{label}</p>
+        <label
+          htmlFor={this.uuid}
+          className={classnames(
+            'control-label',
+            { 'control-label--inline': inline },
+          )}
+        >
+          {label}
+        </label>
         <BPSelect
           className={classnames('tf-select', className)}
           popoverProps={{ usePortal: false, position: Position.BOTTOM_LEFT, minimal: true }}
@@ -110,7 +127,7 @@ export class Select extends React.Component {
           onItemSelect={handleChange}
           {...props}
         >
-          <Button text={value || emptySelectItem} rightIcon="double-caret-vertical" />
+          <Button id={this.uuid} text={value || emptySelectItem} rightIcon="double-caret-vertical" />
         </BPSelect>
       </div>
     );

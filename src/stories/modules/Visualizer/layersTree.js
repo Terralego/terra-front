@@ -78,22 +78,7 @@ export default [{
     active: false,
   },
   layers: [{
-    label: 'Variantes 1',
-    sublayers: [{
-      label: 'Couche 1.1',
-    }, {
-      label: 'Couche 1.2',
-    }, {
-      label: 'Couche 1.3',
-    }, {
-      label: 'Couche 1.4',
-    }, {
-      label: 'Couche 1.5',
-    }, {
-      label: 'Couche 1.6',
-    }, {
-      label: 'Couche 1.7',
-    }],
+    label: 'Couche 1',
   }, {
     label: 'Couche 2',
   }, {
@@ -171,6 +156,49 @@ export default [{
     }],
   }, {
     label: 'Couche 6',
+  }],
+}, {
+  group: 'Grouped exclusive with variable choice',
+  exclusive: true,
+  selectors: [{
+    label: 'Year',
+    name: 'year',
+    values: [{
+      label: '2019',
+      value: '2019',
+    }, {
+      label: '2018',
+      value: '2018',
+    }, {
+      label: '2017',
+      value: '2017',
+    }, {
+      label: '2016',
+      value: '2016',
+    }],
+  }, {
+    label: 'Type',
+    name: 'type',
+    values: [{
+      label: 'Foo',
+      value: 'foo',
+    }, {
+      label: 'Bar',
+      value: 'bar',
+    }],
+  }],
+  layers: [{
+    label: 'Couche 13',
+    selectorKey: {
+      year: '2017',
+      type: 'foo',
+    },
+  }, {
+    label: 'Couche 14',
+    selectorKey: {
+      year: '2019',
+      type: 'foo',
+    },
   }],
 }, {
   group: 'Nested',

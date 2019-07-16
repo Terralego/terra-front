@@ -1,0 +1,270 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`should render 1`] = `
+<div
+  className="selector"
+>
+  <div
+    className="control-container control-container--select control-container--full-width"
+    onKeyPress={[Function]}
+    role="presentation"
+  >
+    <label
+      className="control-label"
+      htmlFor="select-uuid"
+    >
+      Foo
+    </label>
+    <span
+      className="bp3-popover-wrapper tf-select selector__select"
+    >
+      <span
+        className="bp3-popover-target"
+        onClick={[Function]}
+      >
+        <div
+          className=""
+          onKeyDown={[Function]}
+        >
+          <button
+            className="bp3-button"
+            id="select-uuid"
+            onKeyDown={[Function]}
+            onKeyUp={[Function]}
+            type="button"
+          >
+            <span
+              className="bp3-button-text"
+            >
+              Foo
+            </span>
+            <span
+              className="bp3-icon bp3-icon-double-caret-vertical"
+              icon="double-caret-vertical"
+            >
+              <svg
+                data-icon="double-caret-vertical"
+                height={16}
+                viewBox="0 0 16 16"
+                width={16}
+              >
+                <desc>
+                  double-caret-vertical
+                </desc>
+                <path
+                  d="M5 7h6a1.003 1.003 0 0 0 .71-1.71l-3-3C8.53 2.11 8.28 2 8 2s-.53.11-.71.29l-3 3A1.003 1.003 0 0 0 5 7zm6 2H5a1.003 1.003 0 0 0-.71 1.71l3 3c.18.18.43.29.71.29s.53-.11.71-.29l3-3A1.003 1.003 0 0 0 11 9z"
+                  fillRule="evenodd"
+                />
+              </svg>
+            </span>
+          </button>
+        </div>
+      </span>
+    </span>
+  </div>
+  <div
+    className="control-container control-container--select control-container--full-width"
+    onKeyPress={[Function]}
+    role="presentation"
+  >
+    <label
+      className="control-label"
+      htmlFor="select-uuid"
+    >
+      Bar
+    </label>
+    <span
+      className="bp3-popover-wrapper tf-select selector__select"
+    >
+      <span
+        className="bp3-popover-target"
+        onClick={[Function]}
+      >
+        <div
+          className=""
+          onKeyDown={[Function]}
+        >
+          <button
+            className="bp3-button"
+            id="select-uuid"
+            onKeyDown={[Function]}
+            onKeyUp={[Function]}
+            type="button"
+          >
+            <span
+              className="bp3-button-text"
+            >
+              Foo
+            </span>
+            <span
+              className="bp3-icon bp3-icon-double-caret-vertical"
+              icon="double-caret-vertical"
+            >
+              <svg
+                data-icon="double-caret-vertical"
+                height={16}
+                viewBox="0 0 16 16"
+                width={16}
+              >
+                <desc>
+                  double-caret-vertical
+                </desc>
+                <path
+                  d="M5 7h6a1.003 1.003 0 0 0 .71-1.71l-3-3C8.53 2.11 8.28 2 8 2s-.53.11-.71.29l-3 3A1.003 1.003 0 0 0 5 7zm6 2H5a1.003 1.003 0 0 0-.71 1.71l3 3c.18.18.43.29.71.29s.53-.11.71-.29l3-3A1.003 1.003 0 0 0 11 9z"
+                  fillRule="evenodd"
+                />
+              </svg>
+            </span>
+          </button>
+        </div>
+      </span>
+    </span>
+  </div>
+</div>
+`;
+
+exports[`should render an error message 1`] = `
+<div
+  className="selector"
+>
+  <div
+    className="control-container control-container--select control-container--full-width"
+    onKeyPress={[Function]}
+    role="presentation"
+  >
+    <label
+      className="control-label"
+      htmlFor="select-uuid"
+    >
+      Foo
+    </label>
+    <span
+      className="bp3-popover-wrapper tf-select selector__select"
+    >
+      <span
+        className="bp3-popover-target"
+        onClick={[Function]}
+      >
+        <div
+          className=""
+          onKeyDown={[Function]}
+        >
+          <button
+            className="bp3-button"
+            id="select-uuid"
+            onKeyDown={[Function]}
+            onKeyUp={[Function]}
+            type="button"
+          >
+            <span
+              className="bp3-button-text"
+            >
+              Foo
+            </span>
+            <span
+              className="bp3-icon bp3-icon-double-caret-vertical"
+              icon="double-caret-vertical"
+            >
+              <svg
+                data-icon="double-caret-vertical"
+                height={16}
+                viewBox="0 0 16 16"
+                width={16}
+              >
+                <desc>
+                  double-caret-vertical
+                </desc>
+                <path
+                  d="M5 7h6a1.003 1.003 0 0 0 .71-1.71l-3-3C8.53 2.11 8.28 2 8 2s-.53.11-.71.29l-3 3A1.003 1.003 0 0 0 5 7zm6 2H5a1.003 1.003 0 0 0-.71 1.71l3 3c.18.18.43.29.71.29s.53-.11.71-.29l3-3A1.003 1.003 0 0 0 11 9z"
+                  fillRule="evenodd"
+                />
+              </svg>
+            </span>
+          </button>
+        </div>
+      </span>
+    </span>
+  </div>
+  <div
+    className="control-container control-container--select control-container--full-width"
+    onKeyPress={[Function]}
+    role="presentation"
+  >
+    <label
+      className="control-label"
+      htmlFor="select-uuid"
+    >
+      Bar
+    </label>
+    <span
+      className="bp3-popover-wrapper tf-select selector__select"
+    >
+      <span
+        className="bp3-popover-target"
+        onClick={[Function]}
+      >
+        <div
+          className=""
+          onKeyDown={[Function]}
+        >
+          <button
+            className="bp3-button"
+            id="select-uuid"
+            onKeyDown={[Function]}
+            onKeyUp={[Function]}
+            type="button"
+          >
+            <span
+              className="bp3-button-text"
+            >
+              Foo
+            </span>
+            <span
+              className="bp3-icon bp3-icon-double-caret-vertical"
+              icon="double-caret-vertical"
+            >
+              <svg
+                data-icon="double-caret-vertical"
+                height={16}
+                viewBox="0 0 16 16"
+                width={16}
+              >
+                <desc>
+                  double-caret-vertical
+                </desc>
+                <path
+                  d="M5 7h6a1.003 1.003 0 0 0 .71-1.71l-3-3C8.53 2.11 8.28 2 8 2s-.53.11-.71.29l-3 3A1.003 1.003 0 0 0 5 7zm6 2H5a1.003 1.003 0 0 0-.71 1.71l3 3c.18.18.43.29.71.29s.53-.11.71-.29l3-3A1.003 1.003 0 0 0 11 9z"
+                  fillRule="evenodd"
+                />
+              </svg>
+            </span>
+          </button>
+        </div>
+      </span>
+    </span>
+  </div>
+  <div
+    className="bp3-callout bp3-intent-warning bp3-callout-icon selector__message"
+  >
+    <span
+      className="bp3-icon bp3-icon-warning-sign"
+      icon="warning-sign"
+    >
+      <svg
+        data-icon="warning-sign"
+        height={20}
+        viewBox="0 0 20 20"
+        width={20}
+      >
+        <desc>
+          warning-sign
+        </desc>
+        <path
+          d="M19.86 17.52l.01-.01-9-16-.01.01C10.69 1.21 10.37 1 10 1s-.69.21-.86.52l-.01-.01-9 16 .01.01c-.08.14-.14.3-.14.48 0 .55.45 1 1 1h18c.55 0 1-.45 1-1 0-.18-.06-.34-.14-.48zM11 17H9v-2h2v2zm0-3H9V6h2v8z"
+          fillRule="evenodd"
+        />
+      </svg>
+    </span>
+  </div>
+</div>
+`;

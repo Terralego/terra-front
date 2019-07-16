@@ -217,7 +217,7 @@ export class LayersTreeItem extends React.Component {
                 )}
               </div>
             </div>
-            {isActive && exclusive && (
+            {isMobileSized && isActive && exclusive && (
               <LayersTreeExclusiveItemsList
                 layer={layer}
               />
@@ -249,6 +249,11 @@ export class LayersTreeItem extends React.Component {
           />
         )}
         <LayersTreeItemFilters layer={layer} />
+        {!isMobileSized && isActive && exclusive && (
+          <LayersTreeExclusiveItemsList
+            layer={layer}
+          />
+        )}
       </Card>
     );
   }

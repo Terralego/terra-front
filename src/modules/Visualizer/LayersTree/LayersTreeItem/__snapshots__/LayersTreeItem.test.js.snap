@@ -293,9 +293,6 @@ Array [
           className="layerstree-node-content__item-label__total"
         />
       </div>
-      <p>
-        RadioGroup
-      </p>
     </div>
     <div
       className="layerstree-node-content__options layerstree-node-content__options--mobile"
@@ -308,6 +305,9 @@ Array [
   <p>
     LayersTreeItemFilters
   </p>,
+  <p>
+    RadioGroup
+  </p>,
   <div
     className="layerstree-node-content"
   >
@@ -316,6 +316,81 @@ Array [
     >
       <div
         className="layerstree-node-content__item-label"
+      >
+        <p
+          className=""
+        >
+          Switch
+        </p>
+        <p>
+          Tooltip
+        </p>
+        <div
+          className="layerstree-node-content__item-label__total"
+        />
+      </div>
+    </div>
+    <div
+      className="layerstree-node-content__options layerstree-node-content__options--mobile"
+    >
+      <p>
+        FiltersPanel
+      </p>
+      <p>
+        Button
+      </p>
+    </div>
+  </div>,
+  <p>
+    LayersTreeItemFilters
+  </p>,
+  <p>
+    RadioGroup
+  </p>,
+  <div
+    className="layerstree-node-content"
+  >
+    <div
+      className="layerstree-node-content__item"
+    >
+      <div
+        className="layerstree-node-content__item-label"
+      >
+        <p
+          className=""
+        >
+          Switch
+        </p>
+        <p>
+          Tooltip
+        </p>
+        <div
+          className="layerstree-node-content__item-label__total"
+        />
+      </div>
+    </div>
+    <div
+      className="layerstree-node-content__options layerstree-node-content__options--mobile"
+    >
+      <p>
+        Button
+      </p>
+    </div>
+  </div>,
+  <p>
+    LayersTreeItemFilters
+  </p>,
+  <p>
+    RadioGroup
+  </p>,
+  <div
+    className="layerstree-node-content--mobile"
+  >
+    <div
+      className="layerstree-node-content__item--mobile"
+    >
+      <div
+        className="layerstree-node-content__item-label--mobile"
       >
         <p
           className=""
@@ -339,42 +414,6 @@ Array [
       <p>
         FiltersPanel
       </p>
-      <p>
-        Button
-      </p>
-    </div>
-  </div>,
-  <p>
-    LayersTreeItemFilters
-  </p>,
-  <div
-    className="layerstree-node-content"
-  >
-    <div
-      className="layerstree-node-content__item"
-    >
-      <div
-        className="layerstree-node-content__item-label"
-      >
-        <p
-          className=""
-        >
-          Switch
-        </p>
-        <p>
-          Tooltip
-        </p>
-        <div
-          className="layerstree-node-content__item-label__total"
-        />
-      </div>
-      <p>
-        RadioGroup
-      </p>
-    </div>
-    <div
-      className="layerstree-node-content__options layerstree-node-content__options--mobile"
-    >
       <p>
         Button
       </p>

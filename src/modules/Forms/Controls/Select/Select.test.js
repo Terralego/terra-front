@@ -23,6 +23,8 @@ jest.mock('@blueprintjs/core', () => ({
   },
 }));
 
+jest.mock('uuid/v4', () => () => 'uuid');
+
 it('should render correctly', () => {
   const tree = renderer.create((
     <Select

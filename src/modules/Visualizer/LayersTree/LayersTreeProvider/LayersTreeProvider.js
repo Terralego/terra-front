@@ -6,6 +6,7 @@ import {
   initLayersStateAction,
   setLayerStateAction,
 } from '../../services/layersTreeUtils';
+import translateMock from '../../../../utils/translate';
 
 const { Provider } = context;
 
@@ -27,6 +28,7 @@ export class LayersTreeProvider extends React.Component {
      * @return {min: Number, max: Number}
      * */
     fetchPropertyRange: PropTypes.func,
+    translate: PropTypes.func,
   }
 
   static defaultProps = {
@@ -34,6 +36,9 @@ export class LayersTreeProvider extends React.Component {
     initialState: new Map(),
     fetchPropertyValues () {},
     fetchPropertyRange () {},
+    translate: translateMock({
+      'visualizer.layerstree.group.selector': 'No layer found',
+    }),
   }
 
   constructor (props) {
@@ -136,6 +141,7 @@ export class LayersTreeProvider extends React.Component {
       children,
       layersTree,
       map,
+      translate,
     } = this.props;
     const { layersTreeState } = this.state;
     const {
@@ -152,6 +158,7 @@ export class LayersTreeProvider extends React.Component {
       getLayerState,
       fetchPropertyValues,
       fetchPropertyRange,
+      translate,
     };
     return (
       <Provider value={value}>
