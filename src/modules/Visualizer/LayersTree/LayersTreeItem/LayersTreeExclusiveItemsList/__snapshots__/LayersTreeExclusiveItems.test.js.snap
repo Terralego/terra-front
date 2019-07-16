@@ -43,7 +43,7 @@ Array [
   >
     <label
       className="control-label"
-      htmlFor="select-1"
+      htmlFor="select-uuid"
     >
       
     </label>
@@ -60,7 +60,7 @@ Array [
         >
           <button
             className="bp3-button"
-            id="select-1"
+            id="select-uuid"
             onKeyDown={[Function]}
             onKeyUp={[Function]}
             type="button"

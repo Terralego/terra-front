@@ -3,11 +3,10 @@ import PropTypes from 'prop-types';
 import classnames from 'classnames';
 import { MenuItem, Button, Position } from '@blueprintjs/core';
 import { Select as BPSelect } from '@blueprintjs/select';
+import uuid from 'uuid/v4';
 
 import { preventEnterKeyPress } from '../../../../utils/event';
 import formatValues from '../formatValues';
-
-let selectCount = 0;
 
 export class Select extends React.Component {
   static propTypes = {
@@ -46,10 +45,9 @@ export class Select extends React.Component {
   state = {
     values: [],
     query: '',
-    // Need to create unique but predictible (for snapshots) ids
-    // eslint-disable-next-line no-plusplus
-    uuid: `select-${++selectCount}`,
   };
+
+  uuid = `select-${uuid()}`;
 
   handleChange = ({ value }) => {
     const { onChange } = this.props;
@@ -73,7 +71,7 @@ export class Select extends React.Component {
       ...props
     } = this.props;
 
-    const { values, query, uuid } = this.state;
+    const { values, query } = this.state;
     const { handleChange } = this;
     const filteredItems = query === ''
       ? values
@@ -91,7 +89,7 @@ export class Select extends React.Component {
         role="presentation"
       >
         <label
-          htmlFor={uuid}
+          htmlFor={this.uuid}
           className={classnames(
             'control-label',
             { 'control-label--inline': inline },
@@ -129,7 +127,7 @@ export class Select extends React.Component {
           onItemSelect={handleChange}
           {...props}
         >
-          <Button id={uuid} text={value || emptySelectItem} rightIcon="double-caret-vertical" />
+          <Button id={this.uuid} text={value || emptySelectItem} rightIcon="double-caret-vertical" />
         </BPSelect>
       </div>
     );

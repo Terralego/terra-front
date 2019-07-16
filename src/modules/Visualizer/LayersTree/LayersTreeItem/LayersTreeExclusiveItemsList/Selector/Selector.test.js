@@ -3,92 +3,90 @@ import renderer from 'react-test-renderer';
 
 import Selector from './Selector';
 
+jest.mock('uuid/v4', () => () => 'uuid');
+
 it('should render', () => {
   const tree = renderer.create(
-    <>
-      <Selector
-        selectors={[{
-          label: 'Foo',
-          name: 'foo',
-          values: ['foo', 'bar'],
-        }, {
-          label: 'Bar',
-          name: 'bar',
-          values: ['foo', 'bar'],
-        }]}
-        layers={[{
-          label: 'Layer 1',
-          selectorKey: {
-            foo: 'foo',
-            bar: 'foo',
-          },
-        }, {
-          label: 'Layer 1',
-          selectorKey: {
-            foo: 'foo',
-            bar: 'bar',
-          },
-        }]}
-        activeLayer={{
-          selectorKey: {
-            foo: 'foo',
-            bar: 'foo',
-          },
-        }}
-      />
-    </>,
+    <Selector
+      selectors={[{
+        label: 'Foo',
+        name: 'foo',
+        values: [{ label: 'Foo', value: 'foo' }, { label: 'Bar', value: 'bar' }],
+      }, {
+        label: 'Bar',
+        name: 'bar',
+        values: [{ label: 'Foo', value: 'foo' }, { label: 'Bar', value: 'bar' }],
+      }]}
+      layers={[{
+        label: 'Layer 1',
+        selectorKey: {
+          foo: 'foo',
+          bar: 'foo',
+        },
+      }, {
+        label: 'Layer 1',
+        selectorKey: {
+          foo: 'foo',
+          bar: 'bar',
+        },
+      }]}
+      activeLayer={{
+        selectorKey: {
+          foo: 'foo',
+          bar: 'foo',
+        },
+      }}
+    />,
   );
-  expect(tree.toJSON).toMatchSnapshot();
+  expect(tree.toJSON()).toMatchSnapshot();
 });
 
 it('should render an error message', () => {
   const tree = renderer.create(
-    <>
-      <Selector
-        selectors={[{
-          label: 'Foo',
-          name: 'foo',
-          values: ['foo', 'bar'],
-        }, {
-          label: 'Bar',
-          name: 'bar',
-          values: ['foo', 'bar'],
-        }]}
-        layers={[{
-          label: 'Layer 1',
-          selectorKey: {
-            foo: 'foo',
-            bar: 'foo',
-          },
-        }, {
-          label: 'Layer 1',
-          selectorKey: {
-            foo: 'foo',
-            bar: 'bar',
-          },
-        }]}
-        activeLayer={{
-          selectorKey: {
-            foo: 'foo',
-            bar: 'foo',
-          },
-        }}
-      />
-    </>,
+    <Selector
+      selectors={[{
+        label: 'Foo',
+        name: 'foo',
+        values: [{ label: 'Foo', value: 'foo' }, { label: 'Bar', value: 'bar' }],
+      }, {
+        label: 'Bar',
+        name: 'bar',
+        values: [{ label: 'Foo', value: 'foo' }, { label: 'Bar', value: 'bar' }],
+      }]}
+      layers={[{
+        label: 'Layer 1',
+        selectorKey: {
+          foo: 'foo',
+          bar: 'foo',
+        },
+      }, {
+        label: 'Layer 1',
+        selectorKey: {
+          foo: 'foo',
+          bar: 'bar',
+        },
+      }]}
+      activeLayer={{
+        selectorKey: {
+          foo: 'foo',
+          bar: 'foo',
+        },
+      }}
+    />,
   );
   tree.getInstance().setState({ noMatchingLayer: true });
-  expect(tree.toJSON).toMatchSnapshot();
+  expect(tree.toJSON()).toMatchSnapshot();
 });
 
 it('should change layer', () => {
   const selectors = [{
     label: 'Foo',
     name: 'foo',
-    values: ['foo', 'bar'],
+    values: [{ label: 'Foo', value: 'foo' }, { label: 'Bar', value: 'bar' }],
   }, {
     label: 'Bar',
     name: 'bar',
-    values: ['foo', 'bar'],
+    values: [{ label: 'Foo', value: 'foo' }, { label: 'Bar', value: 'bar' }],
   }];
   const layers = [{
     label: 'Layer 1',

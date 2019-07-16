@@ -12,7 +12,10 @@ export class Selector extends React.Component {
     selectors: PropTypes.arrayOf(PropTypes.shape({
       label: PropTypes.string,
       name: PropTypes.string.isRequired,
-      values: PropTypes.arrayOf(PropTypes.string).isRequired,
+      values: PropTypes.arrayOf(PropTypes.shape({
+        label: PropTypes.string.isRequired,
+        value: PropTypes.string.isRequired,
+      })).isRequired,
     })).isRequired,
     layers: PropTypes.arrayOf(PropTypes.shape({
       selectorKey: PropTypes.object,
@@ -59,8 +62,8 @@ export class Selector extends React.Component {
             label={label}
             className="selector__select"
             onChange={this.onChange(name)}
-            values={values.map(value => ({ value, label: value }))}
-            value={selectorKey[name]}
+            values={values}
+            value={values.find(({ value }) => selectorKey[name] === value).label}
           />
         ))}
         {noMatchingLayer && (

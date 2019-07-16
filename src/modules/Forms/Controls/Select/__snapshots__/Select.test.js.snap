@@ -8,7 +8,7 @@ exports[`should render correctly 1`] = `
 >
   <label
     className="control-label"
-    htmlFor="select-1"
+    htmlFor="select-uuid"
   >
     Pwout
   </label>
@@ -30,7 +30,7 @@ exports[`should render correctly with query 1`] = `
 >
   <label
     className="control-label"
-    htmlFor="select-2"
+    htmlFor="select-uuid"
   >
     Pwout
   </label>

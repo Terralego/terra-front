@@ -5,6 +5,7 @@ import LayersTreeExclusiveItemsList from './LayersTreeExclusiveItemsList';
 import { onChange } from '.';
 
 jest.mock('./Selector', () => () => <p>Selector</p>);
+jest.mock('uuid/v4', () => () => 'uuid');
 
 it('should render', () => {
   const tree = renderer.create(
