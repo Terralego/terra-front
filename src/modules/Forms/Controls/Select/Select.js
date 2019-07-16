@@ -77,6 +77,8 @@ export class Select extends React.Component {
       ? values
       : values.filter(({ label: itemLabel }) =>
         itemLabel.toLowerCase().includes(query.toLowerCase()));
+    const displayedValue = typeof value === 'object' ? value.label : value;
+    const rawValue = typeof value === 'object' ? value.value : value;
 
     return (
       <div
@@ -118,6 +120,7 @@ export class Select extends React.Component {
             >
               <MenuItem
                 {...modifiers}
+                active={rawValue === itemValue}
                 onClick={handleClick}
                 text={itemLabel}
               />
@@ -127,7 +130,7 @@ export class Select extends React.Component {
           onItemSelect={handleChange}
           {...props}
         >
-          <Button id={this.uuid} text={value || emptySelectItem} rightIcon="double-caret-vertical" />
+          <Button id={this.uuid} text={displayedValue || emptySelectItem} rightIcon="double-caret-vertical" />
         </BPSelect>
       </div>
     );

@@ -63,7 +63,7 @@ export class Selector extends React.Component {
             className="selector__select"
             onChange={this.onChange(name)}
             values={values}
-            value={values.find(({ value }) => selectorKey[name] === value).label}
+            value={values.find(({ value }) => selectorKey[name] === value)}
           />
         ))}
         {noMatchingLayer && (
