@@ -18,8 +18,12 @@ export const LayersTreeExclusiveItemsList = ({
 }) => {
   const lotOfItems = layers.length > 5;
   const Component = getComponent(selectors, layers.length);
+  const values = layers.filter(({ label }) => label).map(({ label }, index) => ({
+    label,
+    value: index,
+  }));
   const value = lotOfItems
-    ? layers[selected].label
+    ? values.find(({ value: itemValue }) => itemValue === selected)
     : selected;
 
   return (
@@ -28,10 +32,7 @@ export const LayersTreeExclusiveItemsList = ({
       layer={layer}
       className="layerstree-node-content__subitems-list"
       onChange={onChange}
-      values={layers.filter(({ label }) => label).map(({ label }, index) => ({
-        label,
-        value: index,
-      }))}
+      values={values}
       value={value}
     />
   );
