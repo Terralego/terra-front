@@ -12,6 +12,7 @@ const DEFAULT_RADIUS = 16;
 export const Legend = ({ title, items, level, position, content, history }) => {
   const biggestRadius = items.reduce((int, item) =>
     Math.max(int, item.radius || DEFAULT_RADIUS), 0);
+
   const isTemplate = !!content;
 
   return (

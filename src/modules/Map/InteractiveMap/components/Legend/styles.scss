@@ -1,10 +1,11 @@
 @import "node_modules/@blueprintjs/core/lib/scss/variables";
 
+// Todo : Légende carrée
 .tf-legend {
   box-shadow: 0 1px 3px 0 rgba(16, 22, 26, 0.40);
   border-radius: 2px;
   background: $pt-app-background-color;
-  padding: .5rem;
+  padding: .5rem 0;
   margin-top: 1rem;
   display: flex;
   flex-direction: column;
@@ -26,26 +27,21 @@
   }
 
   &__list {
+    display: table;
     margin: 0 .5rem;
     position: relative;
-    height: 175px;
+    min-height: 160px;
+
+    .tf-legend__item--circle:last-of-type .tf-legend__symbol-container:after {
+      top: 2px;
+    }
   }
 
 
   &__symbol-container {
     display: table-cell;
     text-align: center;
-
-    &:after {
-      content:"";
-      width: 80%;
-      border-bottom: 1px solid #000000;
-      height: 1px;
-      display: block;
-      position: absolute;
-      top: 0;
-      left: 15px;
-    }
+    vertical-align: middle;
   }
 
   &__symbol {
@@ -58,29 +54,58 @@
     padding: 0 0 0 .5rem;
     display: table-cell;
     max-width: 170px;
-    position: absolute;
-    top: -8px;
-    right: -45px;
+    vertical-align: middle;
   }
 
   &__item {
-    position: absolute;
-    bottom: 0;
-    right: 25%;
-    left: 25%;
 
     &--circle {
       display: table-row;
+      position: absolute;
+      bottom: 0;
 
-      .tf-legend__symbol {
-        position: relative;
-        left: 35%;
-        margin-left:-150px;
+      .tf-legend__symbol-container {
 
-        svg {
-          border: 1px solid #000000;
-          border-radius: 50%;
+        &:after {
+          content: "";
+          width: 70%;
+          border-bottom: 1px solid #000000;
+          height: 1px;
+          display: block;
+          position: absolute;
+          top: 0;
+          left: 50%;
         }
+
+        :last-child {
+          &:after {
+            top: 6px;
+          }
+        }
+
+        .tf-legend__symbol {
+          position: relative;
+
+          svg {
+            border: 1px solid #000000;
+            border-radius: 50%;
+          }
+        }
+      }
+
+      .tf-legend__label {
+        position: absolute;
+        top: -8px;
+        left: 120%;
+        width: 90px;
+      }
+    }
+
+    &--square {
+      padding-top: 0.5rem;
+
+      .tf-legend__label {
+        padding-bottom: 4px;
       }
     }
   }

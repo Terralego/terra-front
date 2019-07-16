@@ -550,7 +550,7 @@ export class InteractiveMap extends React.Component {
         {!!legends.length && (
           <div className="interactive-map__legends">
             {getUniqueLegends(legends)
-              .map(legend => (
+              .map(legend => console.log(legend) || (
                 <Legend
                   key={`${legend.title}${legend.items}`}
                   history={history}
