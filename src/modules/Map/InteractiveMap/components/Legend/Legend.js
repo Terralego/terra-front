@@ -25,7 +25,12 @@ export const Legend = ({ title, items, level, position, content, history }) => {
       >
         {title}
       </h4>
-      <div className="tf-legend__list">
+      <div
+        className={classnames(
+          'tf-legend__list',
+          { 'tf-legend__only-circles': isAllCircle },
+        )}
+      >
         {isTemplate
           ? (
             <Template
@@ -46,13 +51,7 @@ export const Legend = ({ title, items, level, position, content, history }) => {
               ) : (
                 <div
                   key={`${label}${color}`}
-                  className={classnames(
-                    'tf-legend__item',
-                    `tf-legend__item--${position}`,
-                    { 'tf-legend__item--circle': shape === 'circle' && isAllCircle },
-                    { 'tf-legend__item--mix': shape === 'circle' && !isAllCircle },
-                    { [`tf-legend__item--${shape}`]: shape !== 'circle' },
-                  )}
+                  className={`tf-legend__item tf-legend__item--${shape} tf-legend__item--${position}`}
                 >
                   <div
                     className="tf-legend__symbol-container"
@@ -80,7 +79,7 @@ Legend.propTypes = {
   title: PropTypes.string.isRequired,
   items: PropTypes.arrayOf(PropTypes.shape({
     label: PropTypes.string.isRequired,
-    fill: PropTypes.string,
+    color: PropTypes.string,
     items: PropTypes.array,
     shape: PropTypes.string,
     radius: PropTypes.number,

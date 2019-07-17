@@ -26,41 +26,36 @@
     text-align: center;
   }
 
-  &__list {
+  &__list:not(.tf-legend__only-circles) {
+    display: table;
+    margin: 0 .5rem;
+    position: relative;
+    min-height: 160px;
+
+    .tf-legend__item--circle {
+      display: table-row;
+    }
+
+    .tf-legend__item--square {
+      padding-top: 0.5rem;
+
+      .tf-legend__label {
+        padding-bottom: 4px;
+      }
+    }
+  }
+
+  &__only-circles {
     display: table;
     margin: 0 .5rem;
     position: relative;
     min-height: 160px;
 
     .tf-legend__item--circle:last-of-type .tf-legend__symbol-container:after {
-      top: 2px;
+      top: 1px;
     }
-  }
 
-
-  &__symbol-container {
-    display: table-cell;
-    text-align: center;
-    vertical-align: middle;
-  }
-
-  &__symbol {
-    border-radius: 0;
-    display: inline-block;
-  }
-
-  &__label {
-    font-size: 0.8rem;
-    padding: 0 0 0 .5rem;
-    display: table-cell;
-    max-width: 170px;
-    vertical-align: middle;
-  }
-
-  &__item {
-
-    &--circle {
-      display: table-row;
+    .tf-legend__item--circle {
       position: absolute;
       bottom: 0;
 
@@ -100,13 +95,25 @@
         width: 90px;
       }
     }
-
-    &--square {
-      padding-top: 0.5rem;
-
-      .tf-legend__label {
-        padding-bottom: 4px;
-      }
-    }
   }
+
+  &__symbol-container {
+    display: table-cell;
+    text-align: center;
+    vertical-align: middle;
+  }
+
+  &__symbol {
+    border-radius: 0;
+    display: inline-block;
+  }
+
+  &__label {
+    font-size: 0.8rem;
+    padding: 0 0 0 .5rem;
+    display: table-cell;
+    max-width: 170px;
+    vertical-align: middle;
+  }
+
 }

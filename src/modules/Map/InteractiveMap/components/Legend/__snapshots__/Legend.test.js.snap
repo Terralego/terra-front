@@ -10,7 +10,7 @@ exports[`should render a manual legend 1`] = `
     foo
   </h4>
   <div
-    className="tf-legend__list"
+    className="tf-legend__list tf-legend__only-circles"
   >
     <h1
       id="hello-world"
@@ -113,10 +113,10 @@ exports[`should render correctly circle 1`] = `
     Hello World
   </h4>
   <div
-    className="tf-legend__list"
+    className="tf-legend__list tf-legend__only-circles"
   >
     <div
-      className="tf-legend__item tf-legend__item--left tf-legend__item--circle"
+      className="tf-legend__item tf-legend__item--circle tf-legend__item--left"
     >
       <div
         className="tf-legend__symbol-container"
@@ -150,7 +150,7 @@ exports[`should render correctly circle 1`] = `
       </div>
     </div>
     <div
-      className="tf-legend__item tf-legend__item--left tf-legend__item--circle"
+      className="tf-legend__item tf-legend__item--circle tf-legend__item--left"
     >
       <div
         className="tf-legend__symbol-container"
@@ -184,7 +184,7 @@ exports[`should render correctly circle 1`] = `
       </div>
     </div>
     <div
-      className="tf-legend__item tf-legend__item--left tf-legend__item--circle"
+      className="tf-legend__item tf-legend__item--circle tf-legend__item--left"
     >
       <div
         className="tf-legend__symbol-container"
@@ -234,7 +234,7 @@ exports[`should render correctly square 1`] = `
     className="tf-legend__list"
   >
     <div
-      className="tf-legend__item tf-legend__item--left tf-legend__item--square"
+      className="tf-legend__item tf-legend__item--square tf-legend__item--left"
     >
       <div
         className="tf-legend__symbol-container"
@@ -269,7 +269,7 @@ exports[`should render correctly square 1`] = `
       </div>
     </div>
     <div
-      className="tf-legend__item tf-legend__item--left tf-legend__item--square"
+      className="tf-legend__item tf-legend__item--square tf-legend__item--left"
     >
       <div
         className="tf-legend__symbol-container"
@@ -304,7 +304,7 @@ exports[`should render correctly square 1`] = `
       </div>
     </div>
     <div
-      className="tf-legend__item tf-legend__item--left tf-legend__item--square"
+      className="tf-legend__item tf-legend__item--square tf-legend__item--left"
     >
       <div
         className="tf-legend__symbol-container"
@@ -355,7 +355,7 @@ exports[`should render correctly with multi level 1`] = `
     className="tf-legend__list"
   >
     <div
-      className="tf-legend__item tf-legend__item--left tf-legend__item--square"
+      className="tf-legend__item tf-legend__item--square tf-legend__item--left"
     >
       <div
         className="tf-legend__symbol-container"
@@ -390,7 +390,7 @@ exports[`should render correctly with multi level 1`] = `
       </div>
     </div>
     <div
-      className="tf-legend__item tf-legend__item--left tf-legend__item--square"
+      className="tf-legend__item tf-legend__item--square tf-legend__item--left"
     >
       <div
         className="tf-legend__symbol-container"
@@ -436,7 +436,7 @@ exports[`should render correctly with multi level 1`] = `
         className="tf-legend__list"
       >
         <div
-          className="tf-legend__item tf-legend__item--left tf-legend__item--square"
+          className="tf-legend__item tf-legend__item--square tf-legend__item--left"
         >
           <div
             className="tf-legend__symbol-container"
@@ -471,7 +471,7 @@ exports[`should render correctly with multi level 1`] = `
           </div>
         </div>
         <div
-          className="tf-legend__item tf-legend__item--left tf-legend__item--square"
+          className="tf-legend__item tf-legend__item--square tf-legend__item--left"
         >
           <div
             className="tf-legend__symbol-container"
@@ -517,7 +517,7 @@ exports[`should render correctly with multi level 1`] = `
             className="tf-legend__list"
           >
             <div
-              className="tf-legend__item tf-legend__item--left tf-legend__item--square"
+              className="tf-legend__item tf-legend__item--square tf-legend__item--left"
             >
               <div
                 className="tf-legend__symbol-container"
@@ -552,7 +552,7 @@ exports[`should render correctly with multi level 1`] = `
               </div>
             </div>
             <div
-              className="tf-legend__item tf-legend__item--left tf-legend__item--square"
+              className="tf-legend__item tf-legend__item--square tf-legend__item--left"
             >
               <div
                 className="tf-legend__symbol-container"
@@ -598,7 +598,7 @@ exports[`should render correctly with multi level 1`] = `
                 className="tf-legend__list"
               >
                 <div
-                  className="tf-legend__item tf-legend__item--left tf-legend__item--square"
+                  className="tf-legend__item tf-legend__item--square tf-legend__item--left"
                 >
                   <div
                     className="tf-legend__symbol-container"
@@ -633,7 +633,7 @@ exports[`should render correctly with multi level 1`] = `
                   </div>
                 </div>
                 <div
-                  className="tf-legend__item tf-legend__item--left tf-legend__item--square"
+                  className="tf-legend__item tf-legend__item--square tf-legend__item--left"
                 >
                   <div
                     className="tf-legend__symbol-container"
