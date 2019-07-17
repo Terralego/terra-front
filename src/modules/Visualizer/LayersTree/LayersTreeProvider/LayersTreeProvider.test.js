@@ -42,7 +42,7 @@ it('should update', () => {
 
   instance.props.initialState = {};
   instance.componentDidUpdate({ });
-  expect(instance.resetState).toHaveBeenCalledWith(instance.props.initialState);
+  expect(instance.initLayersState).toHaveBeenCalledWith(instance.props.initialState);
 
   instance.props.layersTree = [];
   instance.componentDidUpdate({ });

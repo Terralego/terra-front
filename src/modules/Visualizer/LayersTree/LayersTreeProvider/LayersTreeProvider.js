@@ -55,7 +55,7 @@ export class LayersTreeProvider extends React.Component {
     const { initialState, layersTree } = this.props;
 
     if (initialState !== prevInitialState) {
-      this.resetState(initialState);
+      this.initLayersState(initialState);
     }
 
     if (layersTree !== prevLayersTree) {
@@ -112,15 +112,16 @@ export class LayersTreeProvider extends React.Component {
     this.resetState(new Map(newLayersTreeState));
   }
 
-  initLayersState = () => {
+  initLayersState = initialState => {
     this.resetState(({ layersTreeState }) => {
       const { layersTree } = this.props;
+      const state = initialState || layersTreeState;
 
       if (!layersTree) return {};
 
       return {
-        layersTreeState: layersTreeState.size
-          ? layersTreeState
+        layersTreeState: state.size
+          ? state
           : initLayersStateAction(layersTree),
       };
     });
