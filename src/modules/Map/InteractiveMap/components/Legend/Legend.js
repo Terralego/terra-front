@@ -1,5 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
+import classnames from 'classnames';
 import './styles.scss';
 
 import Template from '../../../../Template/Template';
@@ -14,6 +15,8 @@ export const Legend = ({ title, items, level, position, content, history }) => {
     Math.max(int, item.radius || DEFAULT_RADIUS), 0);
 
   const isTemplate = !!content;
+
+  const isAllCircle = items.every(({ shape }) => (shape === 'circle'));
 
   return (
     <div className={`tf-legend tf-legend--level-${level}`}>
@@ -43,7 +46,13 @@ export const Legend = ({ title, items, level, position, content, history }) => {
               ) : (
                 <div
                   key={`${label}${color}`}
-                  className={`tf-legend__item tf-legend__item--${shape} tf-legend__item--${position}`}
+                  className={classnames(
+                    'tf-legend__item',
+                    `tf-legend__item--${position}`,
+                    { 'tf-legend__item--circle': shape === 'circle' && isAllCircle },
+                    { 'tf-legend__item--mix': shape === 'circle' && !isAllCircle },
+                    { [`tf-legend__item--${shape}`]: shape !== 'circle' },
+                  )}
                 >
                   <div
                     className="tf-legend__symbol-container"
