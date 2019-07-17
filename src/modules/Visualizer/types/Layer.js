@@ -16,7 +16,10 @@ export const LayerProps = PropTypes.shape({
   selectors: PropTypes.arrayOf(PropTypes.shape({
     label: PropTypes.string,
     name: PropTypes.string.isRequired,
-    values: PropTypes.arrayOf(PropTypes.string).isRequired,
+    values: PropTypes.arrayOf(PropTypes.shape({
+      label: PropTypes.string.isRequired,
+      value: PropTypes.string.isRequired,
+    })).isRequired,
   })),
   /** Initial layer state */
   initialState: PropTypes.shape({
