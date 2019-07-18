@@ -1,7 +1,7 @@
 import React from 'react';
 import LayersTreeItemOptionsDesktop from './LayersTreeItemOptionsDesktop';
 import LayersTreeItemOptionsTablet from './LayersTreeItemOptionsTablet';
-import withDeviceSize from '../withDeviceSize';
+import withDeviceSize from '../../../../../utils/withDeviceSize';
 
 export const LayersTreeItemOptions  = ({ isMobileSized, isPhoneSized, ...props }) => (
   isMobileSized
