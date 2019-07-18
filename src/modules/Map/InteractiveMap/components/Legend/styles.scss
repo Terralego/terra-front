@@ -1,6 +1,5 @@
 @import "node_modules/@blueprintjs/core/lib/scss/variables";
 
-// Todo : Légende carrée
 .tf-legend {
   box-shadow: 0 1px 3px 0 rgba(16, 22, 26, 0.40);
   border-radius: 2px;
@@ -28,7 +27,7 @@
 
   &__list:not(.tf-legend__only-circles) {
     display: table;
-    margin: 0 .5rem;
+    margin: 0.5rem;
     position: relative;
     min-height: 160px;
 
@@ -47,9 +46,9 @@
 
   &__only-circles {
     display: table;
-    margin: 0 .5rem;
+    margin: 0.5rem;
     position: relative;
-    min-height: 160px;
+    height: 160px;
 
     .tf-legend__item--circle:last-of-type .tf-legend__symbol-container:after {
       top: 1px;
