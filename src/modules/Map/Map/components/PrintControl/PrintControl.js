@@ -86,45 +86,45 @@ export class PrintControl extends AbstractMapControl {
     const { translate } = this.props;
     const { orientation, isOpen, isExporting } = this.state;
     return (
-      <button
-        className="mapboxgl-ctrl-icon"
-        type="button"
+      <Popover
+        className="popoverPos"
+        position={PopoverPosition.AUTO_START}
+        interactionKind={PopoverInteractionKind.CLICK_TARGET_ONLY}
+        onInteraction={this.handleInteraction}
+        isOpen={isOpen}
+        ref={this.popoverRef}
+        content={(
+          <>
+            <RadioGroup
+              label="Disposition"
+              onChange={this.handleDisposition}
+              selectedValue={orientation}
+            >
+              <Radio
+                value={ORIENTATION_PORTRAIT}
+                label={translate('terralego.map.print_control.portrait_label')}
+              />
+              <Radio
+                value={ORIENTATION_LANDSCAPE}
+                label={translate('terralego.map.print_control.lanscape_label')}
+              />
+            </RadioGroup>
+            <Button onClick={this.beginGeneration} disabled={isExporting}>
+              {isExporting ?
+                <Spinner size={16} /> :
+                translate('terralego.map.print_control.button_label')
+              }
+            </Button>
+          </>
+        )}
       >
-        <Popover
-          className="popoverPos"
-          position={PopoverPosition.AUTO_START}
-          interactionKind={PopoverInteractionKind.CLICK_TARGET_ONLY}
-          onInteraction={this.handleInteraction}
-          isOpen={isOpen}
-          ref={this.popoverRef}
-          content={(
-            <>
-              <RadioGroup
-                label="Disposition"
-                onChange={this.handleDisposition}
-                selectedValue={orientation}
-              >
-                <Radio
-                  value={ORIENTATION_PORTRAIT}
-                  label={translate('terralego.map.print_control.portrait_label')}
-                />
-                <Radio
-                  value={ORIENTATION_LANDSCAPE}
-                  label={translate('terralego.map.print_control.lanscape_label')}
-                />
-              </RadioGroup>
-              <Button onClick={this.beginGeneration} disabled={isExporting}>
-                {isExporting ?
-                  <Spinner size={16} /> :
-                  translate('terralego.map.print_control.button_label')
-                }
-              </Button>
-            </>
-          )}
+        <button
+          className="mapboxgl-ctrl-icon"
+          type="button"
         >
           <Icon icon="print" />
-        </Popover>
-      </button>
+        </button>
+      </Popover>
     );
   }
 }

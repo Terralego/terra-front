@@ -1,16 +1,16 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
 exports[`should render 1`] = `
-<button
-  className="mapboxgl-ctrl-icon"
-  type="button"
+<span
+  className="bp3-popover-wrapper popoverPos"
 >
   <span
-    className="bp3-popover-wrapper popoverPos"
+    className="bp3-popover-target"
+    onClick={[Function]}
   >
-    <span
-      className="bp3-popover-target"
-      onClick={[Function]}
+    <button
+      className="mapboxgl-ctrl-icon"
+      type="button"
     >
       <span
         className="bp3-icon bp3-icon-print"
@@ -31,22 +31,22 @@ exports[`should render 1`] = `
           />
         </svg>
       </span>
-    </span>
+    </button>
   </span>
-</button>
+</span>
 `;
 
 exports[`should render exporting 1`] = `
-<button
-  className="mapboxgl-ctrl-icon"
-  type="button"
+<span
+  className="bp3-popover-wrapper popoverPos"
 >
   <span
-    className="bp3-popover-wrapper popoverPos"
+    className="bp3-popover-target"
+    onClick={[Function]}
   >
-    <span
-      className="bp3-popover-target"
-      onClick={[Function]}
+    <button
+      className="mapboxgl-ctrl-icon"
+      type="button"
     >
       <span
         className="bp3-icon bp3-icon-print"
@@ -67,7 +67,7 @@ exports[`should render exporting 1`] = `
           />
         </svg>
       </span>
-    </span>
+    </button>
   </span>
-</button>
+</span>
 `;
