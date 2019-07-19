@@ -48,7 +48,6 @@
 
     "test": "react-scripts test",
     "watch-coverage": "npm test -- --coverage --watch",
-    "eject": "react-scripts eject",
     "start": "concurrently \"npm run watch-lint\" \"npm run start-storybook\"",
     "watch-lint": "esw src -w",
     "start-storybook": "start-storybook -p 9009 -s public --quiet --ci",
