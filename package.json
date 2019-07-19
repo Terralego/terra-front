@@ -37,6 +37,8 @@
   },
   "scripts": {
     "build": "npm run drop-dist && npm run babel && npm run sass && npm run fix-sass-imports && npm run clean-dist",
+    "build-local": "npm run build && cp package.json package-lock.json README.md dist",
+    "publish": "npm run build-local && cd dist && npm publish --access public",
 
     "drop-dist": "rm -rf ./dist",
     "babel": "babel src -d dist --copy-files --source-maps --config-file ./.babelrc-build",
