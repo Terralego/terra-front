@@ -1,5 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
+import classnames from 'classnames';
 import './styles.scss';
 
 import Template from '../../../../Template/Template';
@@ -12,7 +13,10 @@ const DEFAULT_RADIUS = 16;
 export const Legend = ({ title, items, level, position, content, history }) => {
   const biggestRadius = items.reduce((int, item) =>
     Math.max(int, item.radius || DEFAULT_RADIUS), 0);
+
   const isTemplate = !!content;
+
+  const isAllCircle = items.every(({ shape }) => (shape === 'circle'));
 
   return (
     <div className={`tf-legend tf-legend--level-${level}`}>
@@ -21,7 +25,12 @@ export const Legend = ({ title, items, level, position, content, history }) => {
       >
         {title}
       </h4>
-      <div className="tf-legend__list">
+      <div
+        className={classnames(
+          'tf-legend__list',
+          { 'tf-legend__only-circles': isAllCircle },
+        )}
+      >
         {isTemplate
           ? (
             <Template
@@ -47,7 +56,7 @@ export const Legend = ({ title, items, level, position, content, history }) => {
                   <div
                     className="tf-legend__symbol-container"
                     style={{
-                      height: shape === 'circle' ? biggestRadius : DEFAULT_RADIUS * 2,
+                      width: shape === 'circle' ? biggestRadius : DEFAULT_RADIUS * 2,
                     }}
                   >
                     {shape === 'circle'
