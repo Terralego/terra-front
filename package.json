@@ -36,7 +36,7 @@
     "uuid": "^3.3.2"
   },
   "scripts": {
-    "build": "run-s -l drop-dist babel sass fix-scss-imports copyscss",
+    "build": "run-s -l drop-dist babel sass fixcss copyscss",
     "build-local": "run-s build copyjson",
     "publish": "npm run build-local && cd dist && npm publish --access public",
 
@@ -44,7 +44,7 @@
 
     "sass": "node-sass src -o dist",
     "babel": "babel src -d dist --ignore 'src/**/*.snap','src/**/*.test.js','src/setupTests.js' --source-maps --config-file ./.babelrc-build",
-    "fix-scss-imports": "grep '.scss' -r dist -l | xargs sed -i'' 's/\\.scss/.css/g'",
+    "fixcss": "replace '\\.scss' '.css' dist/ --recursive --quiet",
 
     "copyscss": "rsync -Pamq src/ dist --include='*/' --include='*.scss' --include='*.svg' --exclude='*'",
     "copyjson": "cp package.json package-lock.json README.md dist",
@@ -93,7 +93,8 @@
     "react": "^16.8.6",
     "react-dom": "^16.8.6",
     "react-scripts": "^2.1.8",
-    "react-test-renderer": "^16.8.6"
+    "react-test-renderer": "^16.8.6",
+    "replace": "~1.1.0"
   },
   "peerDependencies": {
     "react": "^16.8.x",
