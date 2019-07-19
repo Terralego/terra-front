@@ -36,7 +36,14 @@
     "uuid": "^3.3.2"
   },
   "scripts": {
-    "build": "./scripts/build.sh",
+    "build": "npm run drop-dist && npm run babel && npm run sass && npm run fix-sass-imports && npm run clean-dist",
+
+    "drop-dist": "rm -rf ./dist",
+    "babel": "babel src -d dist --copy-files --source-maps --config-file ./.babelrc-build",
+    "sass": "node-sass dist -o dist",
+    "fix-sass-imports": "grep '.scss' -r dist -l | xargs sed -i'' 's/\\.scss/.css/g'",
+    "clean-dist": "rm -r dist/stories && rm dist/setupTests.js && find dist -name '__snapshots__' -type d | xargs rm -r && find dist -name '*.test.js' | xargs rm",
+
     "test": "react-scripts test",
     "watch-coverage": "npm test -- --coverage --watch",
     "eject": "react-scripts eject",
