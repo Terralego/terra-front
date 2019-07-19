@@ -36,19 +36,22 @@
     "uuid": "^3.3.2"
   },
   "scripts": {
-    "build": "npm run drop-dist && npm run babel && npm run sass && npm run fix-sass-imports && npm run clean-dist",
-    "build-local": "npm run build && cp package.json package-lock.json README.md dist",
+    "build": "run-s -l drop-dist babel sass fix-scss-imports copyscss",
+    "build-local": "run-s build copyjson",
     "publish": "npm run build-local && cd dist && npm publish --access public",
 
     "drop-dist": "rm -rf ./dist",
-    "babel": "babel src -d dist --copy-files --source-maps --config-file ./.babelrc-build",
-    "sass": "node-sass dist -o dist",
-    "fix-sass-imports": "grep '.scss' -r dist -l | xargs sed -i'' 's/\\.scss/.css/g'",
-    "clean-dist": "rm -r dist/stories && rm dist/setupTests.js && find dist -name '__snapshots__' -type d | xargs rm -r && find dist -name '*.test.js' | xargs rm",
+
+    "sass": "node-sass src -o dist",
+    "babel": "babel src -d dist --ignore 'src/**/*.snap','src/**/*.test.js','src/setupTests.js' --source-maps --config-file ./.babelrc-build",
+    "fix-scss-imports": "grep '.scss' -r dist -l | xargs sed -i'' 's/\\.scss/.css/g'",
+
+    "copyscss": "rsync -Pamq src/ dist --include='*/' --include='*.scss' --include='*.svg' --exclude='*'",
+    "copyjson": "cp package.json package-lock.json README.md dist",
 
     "test": "react-scripts test",
     "watch-coverage": "npm test -- --coverage --watch",
-    "start": "concurrently \"npm run watch-lint\" \"npm run start-storybook\"",
+    "start": "run-p -l watch-lint start-storybook",
     "watch-lint": "esw src -w",
     "start-storybook": "start-storybook -p 9009 -s public --quiet --ci",
     "build-storybook": "build-storybook -s public",
@@ -81,12 +84,12 @@
     "@storybook/addon-viewport": "^5.1.9",
     "@storybook/addons": "^5.1.9",
     "@storybook/react": "^5.1.9",
-    "concurrently": "^4.1.0",
     "enzyme": "^3.7.0",
     "enzyme-adapter-react-16": "^1.12.1",
     "eslint-config-makina": "~0.11.0",
     "eslint-watch": "^5.0.1",
     "node-sass": "^4.10.0",
+    "npm-run-all": "~4.1.5",
     "react": "^16.8.6",
     "react-dom": "^16.8.6",
     "react-scripts": "^2.1.8",
