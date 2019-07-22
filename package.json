@@ -42,7 +42,7 @@
     "build-local": "run-s build copyjson",
     "publish": "npm run build-local && cd dist && npm publish --access public",
 
-    "drop-dist": "rm -rf ./dist",
+    "drop-dist": "rimraf dist",
 
     "copyscss": "cpx 'src/**/*.{scss,svg}' dist",
     "copyjson": "cpx '{package.json,package-lock.json,README.md}' dist",
@@ -98,7 +98,8 @@
     "react-dom": "^16.8.6",
     "react-scripts": "^2.1.8",
     "react-test-renderer": "^16.8.6",
-    "replace": "~1.1.0"
+    "replace": "~1.1.0",
+    "rimraf": "~2.6.3"
   },
   "peerDependencies": {
     "react": "^16.8.x",
