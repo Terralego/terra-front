@@ -36,16 +36,30 @@
     "uuid": "^3.3.2"
   },
   "scripts": {
-    "build": "./scripts/build.sh",
-    "test": "react-scripts test",
-    "watch-coverage": "npm test -- --coverage --watch",
-    "eject": "react-scripts eject",
-    "start": "concurrently \"npm run watch-lint\" \"npm run start-storybook\"",
-    "watch-lint": "esw src -w",
+    "start": "run-p -l watch-lint start-storybook",
+
+    "build": "run-s -l drop-dist babel sass fixcss copyscss",
+    "build-local": "run-s build copyjson",
+    "publish": "npm run build-local && cd dist && npm publish --access public",
+
+    "drop-dist": "rimraf dist",
+
+    "copyscss": "cpx 'src/**/*.{scss,svg}' dist",
+    "copyjson": "cpx '{package.json,package-lock.json,README.md}' dist",
+
+    "sass": "node-sass src -o dist",
+    "babel": "babel src -d dist --ignore 'src/**/*.snap','src/**/*.test.js','src/setupTests.js' --source-maps --config-file ./.babelrc-build",
+    "fixcss": "replace '\\.scss' '.css' dist/ --recursive --quiet",
+
     "start-storybook": "start-storybook -p 9009 -s public --quiet --ci",
     "build-storybook": "build-storybook -s public",
+
+    "test": "react-scripts test",
+    "coverage": "npm test -- --coverage",
+    "watch-coverage": "npm test -- --coverage --watch",
+
     "lint": "eslint src",
-    "coverage": "npm test -- --coverage"
+    "watch-lint": "esw src -w"
   },
   "eslintConfig": {
     "extends": "react-app"
@@ -73,16 +87,19 @@
     "@storybook/addon-viewport": "^5.1.9",
     "@storybook/addons": "^5.1.9",
     "@storybook/react": "^5.1.9",
-    "concurrently": "^4.1.0",
+    "cpx": "~1.5.0",
     "enzyme": "^3.7.0",
     "enzyme-adapter-react-16": "^1.12.1",
     "eslint-config-makina": "~0.11.0",
     "eslint-watch": "^5.0.1",
     "node-sass": "^4.10.0",
+    "npm-run-all": "~4.1.5",
     "react": "^16.8.6",
     "react-dom": "^16.8.6",
     "react-scripts": "^2.1.8",
-    "react-test-renderer": "^16.8.6"
+    "react-test-renderer": "^16.8.6",
+    "replace": "~1.1.0",
+    "rimraf": "~2.6.3"
   },
   "peerDependencies": {
     "react": "^16.8.x",
