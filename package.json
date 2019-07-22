@@ -45,7 +45,7 @@
     "drop-dist": "rm -rf ./dist",
 
     "copyscss": "cpx 'src/**/*.{scss,svg}' dist",
-    "copyjson": "cp package.json package-lock.json README.md dist",
+    "copyjson": "cpx '{package.json,package-lock.json,README.md}' dist",
 
     "sass": "node-sass src -o dist",
     "babel": "babel src -d dist --ignore 'src/**/*.snap','src/**/*.test.js','src/setupTests.js' --source-maps --config-file ./.babelrc-build",
