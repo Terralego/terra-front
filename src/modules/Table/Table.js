@@ -34,6 +34,7 @@ export class Table extends React.Component {
       columnIndex: PropTypes.number.isRequired,
       asc: PropTypes.bool,
     }),
+    onSort: PropTypes.func,
   };
 
   static defaultProps = {
@@ -45,6 +46,7 @@ export class Table extends React.Component {
       columnIndex: 0,
       asc: true,
     },
+    onSort () {},
   };
 
   state = {
