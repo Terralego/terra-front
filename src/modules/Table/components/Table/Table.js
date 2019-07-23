@@ -41,6 +41,7 @@ export class Table extends React.Component {
       asc: PropTypes.bool,
     }),
     renderCell: PropTypes.func,
+    onSort: PropTypes.func,
   };
 
   static defaultProps = {
@@ -50,6 +51,7 @@ export class Table extends React.Component {
       asc: true,
     },
     renderCell: ({ children }) => children,
+    onSort () {},
   };
 
   state = {
@@ -115,7 +117,9 @@ export class Table extends React.Component {
   }
 
   sortColumn = (columnIndex = this.defaultColumnIndex, order = this.defaultOrder) => {
-    const { data, columns } = this.props;
+    const { data, columns, onSort } = this.props;
+    onSort({ columnIndex, order });
+
     if (!columns.length) {
       return;
     }
