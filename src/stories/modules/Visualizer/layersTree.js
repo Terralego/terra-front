@@ -106,6 +106,7 @@ export default [{
     widgets: [{
       component: 'synthesis',
     }],
+    default: true,
   }, {
     label: 'Couche 6',
   }],

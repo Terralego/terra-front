@@ -49,6 +49,8 @@ export const LayerProps = PropTypes.shape({
   })),
   /** Layer can be hidden by setting false here */
   displayed: PropTypes.bool,
+  /** Only used for exclusive groups layers. Tells which layer will be active by default */
+  default: PropTypes.bool,
 });
 
 export default LayerProps;

@@ -30,10 +30,11 @@ export function initLayersStateAction (layersTree) {
 export function setGroupLayerStateAction (layer, layerState, prevLayersTreeState) {
   const { layers } = layer;
   let layersTreeState = prevLayersTreeState;
+  const defaultIndex = Math.max(0, layers.findIndex(({ default: isDefault }) => isDefault));
 
   layers.forEach((sublayer, index) => {
     const newLayerState = { ...layerState };
-    if (newLayerState.active && index > 0) {
+    if (newLayerState.active && index !== defaultIndex) {
       newLayerState.active = false;
     }
     // One must be before the other
