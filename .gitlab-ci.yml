@@ -84,4 +84,4 @@ npm_run_deploy:
     - npm_run_build
   script:
     - echo "//registry.npmjs.org/:_authToken=${NPM_TOKEN}">~/.npmrc
-    - scripts/publish.sh
+    - npm run publish
