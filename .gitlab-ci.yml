@@ -66,6 +66,8 @@ Build Storybook:
 Deploy Storybook:
   tags: [shared-ci-docker]
   stage: deploy
+  variables:
+    NETLIFY_SITE_ID: terralego.netlify.com
   dependencies:
     - Build Storybook
   only:
