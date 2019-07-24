@@ -120,6 +120,7 @@ export class LayersTreeItem extends React.Component {
           form: layerForm, fields: layerFields,
         } = {},
       },
+      activeLayer,
       activeLayer: {
         filters: { form = layerForm, fields = layerFields } = {},
         widgets = layer.widgets,
@@ -228,7 +229,7 @@ export class LayersTreeItem extends React.Component {
             hasSomeOptionActive={hasSomeOptionActive}
             isOptionsOpen={isOptionsOpen}
             handleOptionPanel={handleOptionPanel}
-            layer={layer}
+            layer={activeLayer}
             toggleFilters={toggleFilters}
             isFilterVisible={isFilterVisible}
             getFilterPanelRef={getFilterPanelRef}
@@ -248,7 +249,7 @@ export class LayersTreeItem extends React.Component {
             opacity={opacity}
           />
         )}
-        <LayersTreeItemFilters layer={layer} />
+        <LayersTreeItemFilters layer={activeLayer} />
         {!isMobileSized && isActive && exclusive && (
           <LayersTreeExclusiveItemsList
             layer={layer}
