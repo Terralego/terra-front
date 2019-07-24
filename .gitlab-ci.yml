@@ -55,7 +55,7 @@ Build Storybook:
   stage: build
   script:
     - npm ci
-    - npm run build-storybook
+    - npm run build-storybook -- --quiet
   only:
     - master
   artifacts:
