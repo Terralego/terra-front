@@ -193,9 +193,9 @@ export function setInteractions ({ map, interactions, callback }) {
   });
 }
 
-export function fitZoom ({ feature, map, paddingRadius = 0 }) {
+export function fitZoom ({ feature, map, padding = 0 }) {
   const features = feature.length ? feature : [feature];
-  map.fitBounds(bbox({ type: 'FeatureCollection', features }), { padding: paddingRadius });
+  map.fitBounds(bbox({ type: 'FeatureCollection', features }), { padding });
 }
 
 export default {
