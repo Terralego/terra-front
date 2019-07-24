@@ -166,11 +166,21 @@ export const updateCluster = (map, layer, onClusterUpdate = ({ features }) => fe
 
   if (layerMinzoom > zoom || layerMaxzoom < zoom) return;
 
+  const allFeatures = Array.from(
+    map.querySourceFeatures(source, { sourceLayer })
+      .reduce((all, feature) => {
+        const { properties: { _id: featureId } } = feature;
+        all.set(featureId, feature);
+        return all;
+      }, new Map()).values(),
+  );
+
   const features = onClusterUpdate({
-    features: map.querySourceFeatures(source, { sourceLayer }),
+    features: allFeatures,
     source,
     sourceLayer,
   });
+
   sources.forEach(clusterSourceName => {
     map.getSource(clusterSourceName).setData({
       type: 'FeatureCollection',
