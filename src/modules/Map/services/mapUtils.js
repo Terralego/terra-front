@@ -88,7 +88,12 @@ export function getInteractionsOnEvent ({
   point,
   interactions: eventInteractions,
 }) {
-  const features = map.queryRenderedFeatures(point);
+  let features;
+  try {
+    features = map.queryRenderedFeatures(point);
+  } catch (e) {
+    return null;
+  }
 
   let interactions = false;
 
