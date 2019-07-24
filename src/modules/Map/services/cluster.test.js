@@ -451,3 +451,51 @@ it('should get clustered features', async () => {
   });
   expect(noFeaturesFound).toBeNull();
 });
+
+it('should dedpuplicate features on update', () => {
+  const map = {
+    getZoom: () => 4,
+    getLayer: () => true,
+    getSource: () => ({
+      setData () {},
+    }),
+    getMaxZoom: jest.fn(() => 18),
+    querySourceFeatures: () => [1, 2, 1, 3, 1, 5].map(id => ({
+      properties: {
+        _id: id,
+      },
+    })),
+  };
+  const layer = {
+    id: 'foo',
+    source: 'bar',
+    'source-layer': 'foobar',
+    cluster: {
+      radius: 10,
+    },
+  };
+  const onClusterUpdate = jest.fn(() => []);
+  updateCluster(map, layer, onClusterUpdate);
+
+  expect(onClusterUpdate).toHaveBeenCalledWith({
+    features: [{
+      properties: {
+        _id: 1,
+      },
+    }, {
+      properties: {
+        _id: 2,
+      },
+    }, {
+      properties: {
+        _id: 3,
+      },
+    }, {
+      properties: {
+        _id: 5,
+      },
+    }],
+    source: 'bar',
+    sourceLayer: 'foobar',
+  });
+});

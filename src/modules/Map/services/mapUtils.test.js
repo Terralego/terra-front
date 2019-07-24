@@ -676,3 +676,14 @@ it('should call fitBounds', () => {
   fitZoom({ feature: [feature], map });
   expect(map.fitBounds).toHaveBeenCalled();
 });
+
+it('should catch error when fetching feature', () => {
+  const map = {
+    queryRenderedFeatures: () => {
+      throw new Error('boum');
+    },
+  };
+  expect(() => getInteractionsOnEvent({
+    map,
+  })).not.toThrow();
+});
