@@ -36,7 +36,8 @@
     "uuid": "^3.3.2"
   },
   "scripts": {
-    "start": "run-p -l watch-lint start-storybook",
+    "start": "run-p -l watch:lint start-storybook",
+    "watch": "run-p -l watch:babel watch:sass watch:lint",
 
     "build": "run-s -l drop-dist babel sass fixcss copyscss",
     "build-local": "run-s build copyjson",
@@ -48,7 +49,11 @@
     "copyjson": "cpx '{package.json,package-lock.json,README.md}' dist",
 
     "sass": "node-sass src -o dist",
+    "watch:sass": "npm run sass -- --recursive --watch",
+
     "babel": "babel src -d dist --ignore 'src/**/*.snap','src/**/*.test.js','src/setupTests.js' --source-maps --config-file ./.babelrc-build",
+    "watch:babel": "npm run babel -- --verbose --skip-initial-build --watch",
+
     "fixcss": "replace '\\.scss' '.css' dist/ --recursive --quiet",
 
     "start-storybook": "start-storybook -p 9009 -s public --quiet --ci",
@@ -56,10 +61,10 @@
 
     "test": "react-scripts test",
     "coverage": "npm test -- --coverage",
-    "watch-coverage": "npm test -- --coverage --watch",
+    "watch:coverage": "npm test -- --coverage --watch",
 
     "lint": "eslint src",
-    "watch-lint": "esw src -w"
+    "watch:lint": "esw src -w"
   },
   "eslintConfig": {
     "extends": "react-app"

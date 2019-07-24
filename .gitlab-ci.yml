@@ -20,14 +20,14 @@ before_script:
 
 # Tests stage
 
-npm_lint:
+Lint:
   tags: [shared-ci-docker]
   stage: tests
   script:
     - npm ci
-    - npm run lint  
+    - npm run lint
 
-npm_test:
+Tests:
   tags: [shared-ci-docker]
   stage: tests
   script:
@@ -36,7 +36,7 @@ npm_test:
   coverage: /All files[^|]*\|[^|]*\s+([\d\.]+)/
 
 
-npm_run_build:
+Build package:
   tags: [shared-ci-docker]
   stage: build
   script:
@@ -50,7 +50,7 @@ npm_run_build:
 
 # Deploy story book
 
-build_story_book:
+Build Storybook:
   tags: [shared-ci-docker]
   stage: build
   script:
@@ -63,11 +63,13 @@ build_story_book:
     paths:
       - storybook-static/
 
-deploy_story_book:
+Deploy Storybook:
   tags: [shared-ci-docker]
   stage: deploy
+  variables:
+    NETLIFY_SITE_ID: terralego.netlify.com
   dependencies:
-    - build_story_book
+    - Build Storybook
   only:
     - master
   script:
@@ -75,13 +77,13 @@ deploy_story_book:
 
 # Publish on npm
 
-npm_run_deploy:
+Publish to NPM:
   tags: [shared-ci-docker]
   stage: publish
   only:
     - tags
   dependencies:
-    - npm_run_build
+    - Build package
   script:
     - echo "//registry.npmjs.org/:_authToken=${NPM_TOKEN}">~/.npmrc
     - npm run publish
