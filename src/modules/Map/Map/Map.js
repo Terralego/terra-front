@@ -258,9 +258,9 @@ export class MapComponent extends React.Component {
   }
 
   backgroundChanged (backgroundStyle) {
-    const { onBackgroundChange } = this.props;
+    const { map, onBackgroundChange } = this.props;
     this.createLayers();
-    onBackgroundChange(backgroundStyle);
+    onBackgroundChange(backgroundStyle, map);
   }
 
   createLayers () {
