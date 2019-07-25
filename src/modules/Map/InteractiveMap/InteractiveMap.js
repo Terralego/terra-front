@@ -498,18 +498,23 @@ export class InteractiveMap extends React.Component {
 
     try {
       if (typeof backgroundStyle === 'string') throw new Error('Single background');
-      const backgroundStyleControl = controls.find(({ control }) =>
+
+      const pos = controls.findIndex(({ control }) =>
         control === CONTROL_BACKGROUND_STYLES);
 
-      if (!backgroundStyleControl) throw new Error('BackgroundStyleControl not found');
+      if (pos === -1) throw new Error('BackgroundStyleControl not found');
 
+      const backgroundStyleControl = { ...controls[pos] };
       this.backgroundStyleControl = new BackgroundStyles({
         onChange: this.onBackgroundChange,
         styles: backgroundStyle,
         selected: selectedBackgroundStyle,
       });
       backgroundStyleControl.control = this.backgroundStyleControl;
-      this.setState({ controls: [...controls] });
+      const newControls = [...controls];
+      newControls[pos] = backgroundStyleControl;
+
+      this.setState({ controls: newControls });
     } catch (e) {
       this.setState({ controls });
     }
