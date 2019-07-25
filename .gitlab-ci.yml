@@ -6,10 +6,6 @@ stages:
   - deploy
   - publish
 
-cache:
-  paths:
-    - node_modules/
-
 variables:
   SKIP_PREFLIGHT_CHECK: "true"
 
