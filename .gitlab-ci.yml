@@ -84,4 +84,5 @@ Publish to NPM:
     - Build package
   script:
     - echo "//registry.npmjs.org/:_authToken=${NPM_TOKEN}">~/.npmrc
+    - npm ci
     - npm run publish
