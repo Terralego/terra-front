@@ -6,9 +6,6 @@ stages:
   - deploy
   - publish
 
-variables:
-  SKIP_PREFLIGHT_CHECK: "true"
-
 before_script:
   - node --version
   - npm --version
