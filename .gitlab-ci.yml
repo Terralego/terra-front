@@ -73,7 +73,7 @@ Deploy Storybook:
   only:
     - master
   script:
-    - npx --package netlify-cli netlify deploy
+    - npx netlify-cli deploy
       --site=$NETLIFY_SITE_ID
       --auth=$NETLIFY_ACCESS_TOKEN
       --dir=./storybook-static
