@@ -1,4 +1,10 @@
 
+1.0.33 / 2019-07-25
+===================
+
+  * Simplify release & tag process
+  * Secure NetlifyCLI deployment
+
 v1.0.32 / 2019-07-25
 ====================
 
