@@ -12,6 +12,7 @@ import {
   CONTROL_NAVIGATION,
   CONTROL_SEARCH,
   CONTROL_PRINT,
+  CONTROL_HOME,
 } from '../../../modules/Map/Map';
 import InteractiveMap, {
   CONTROL_BACKGROUND_STYLES,
@@ -82,6 +83,7 @@ storiesOf('Modules/Map/Controls', module).add('Toggle map controls ', () => (
       backgroundStyle={[{ label: 'light', url: 'mapbox://styles/mapbox/light-v9' }, { label: 'light aussi', url: 'mapbox://styles/mapbox/light-v9' }]}
       maxZoom={20}
       minZoom={0}
+      center={[5.386195159396806, 43.30072210972415]}
       maxBounds={[[-5.7283633634, 42.114925591], [8.8212564471, 51.3236272327]]} // Should be tried with https://boundingbox.klokantech.com/
       zoom={10} // set default zoom
       controls={[boolean('Display search', true) && {
@@ -89,6 +91,9 @@ storiesOf('Modules/Map/Controls', module).add('Toggle map controls ', () => (
         position: CONTROLS_TOP_RIGHT,
         onSearch,
         onSearchResultClick: ({ result }) => action('Click on search result')(result),
+      }, boolean('Display home', true) && {
+        control: CONTROL_HOME,
+        position: CONTROLS_TOP_RIGHT,
       }, {
         control: CONTROL_NAVIGATION,
         position: CONTROLS_TOP_RIGHT,
