@@ -13,12 +13,15 @@ jest.mock('../../Api', () => ({
       status: 200,
     });
   }),
-  request: jest.fn(endpoint => {
+  request: jest.fn((endpoint, { body: { token } }) => {
     if (endpoint === 'auth/obtain-token/') {
       return { token: 'newToken' };
     }
 
     if (endpoint === 'auth/refresh-token/') {
+      if (token === 'invalid') {
+        throw new Error('Invalid token');
+      }
       return { token: 'refreshedToken' };
     }
     throw new Error('invalid endpoint');
@@ -95,4 +98,17 @@ it('should create a token', () => {
     method: 'POST',
     body: { foo: 'bar' },
   });
+});
+
+it('should delete token', async () => {
+  global.localStorage.setItem('tf:auth:token', 'invalid');
+  Api.token = 'invalid';
+  let expected;
+  try {
+    await refreshToken();
+  } catch (e) {
+    expected = e;
+  }
+  expect(Api.token).not.toBeDefined();
+  expect(expected).toBeDefined();
 });
