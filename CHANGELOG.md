@@ -1,4 +1,9 @@
 
+1.0.35 / 2019-07-26
+===================
+
+  * [Auth] Clean token in Api when refreshing token fail
+
 1.0.34 / 2019-07-25
 ===================
 
