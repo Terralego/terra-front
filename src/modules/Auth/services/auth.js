@@ -36,13 +36,18 @@ export async function refreshToken () {
   if (currentToken === null) {
     return null;
   }
-  const { token } = await Api.request(ENDPOINT_REFRESH_TOKEN, {
-    method: POST,
-    body: { token: currentToken },
-  });
-  Api.token = token;
-  global.localStorage.setItem(TOKEN_KEY, token);
-  return token;
+  try {
+    const { token } = await Api.request(ENDPOINT_REFRESH_TOKEN, {
+      method: POST,
+      body: { token: currentToken },
+    });
+    Api.token = token;
+    global.localStorage.setItem(TOKEN_KEY, token);
+    return token;
+  } catch (e) {
+    delete Api.token;
+    throw e;
+  }
 }
 
 export function invalidToken () {
