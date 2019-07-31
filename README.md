@@ -1,4 +1,4 @@
-# Terra-front
+# Terra-front [![npm version](https://badge.fury.io/js/@terralego%2Fcore.svg)](https://www.npmjs.com/package/@terralego/core)
 
 ## Install
 
