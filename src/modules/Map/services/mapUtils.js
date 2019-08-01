@@ -136,12 +136,28 @@ export function setInteractions ({ map, interactions, callback }) {
     eventsTypes.delete('mouseover');
   }
 
-  /**
-   * Mouseleave events for mouseover triggers
-   * /!\ this listener MUST be before the mousemove
-   */
+  let hoveringClickableLayer = 0;
+  const canvas = map.getCanvas();
   interactions.forEach(interaction => {
-    const { id, trigger } = interaction;
+    // Display a pointer cursor over click zones for the given layer
+    const { id, trigger = 'click' } = interaction;
+    if (['click', 'mouseover'].includes(trigger)) {
+      map.on('mouseenter', id, () => {
+        hoveringClickableLayer += 1;
+        if (hoveringClickableLayer === 1) {
+          canvas.style.cursor = 'pointer';
+        }
+      });
+      map.on('mouseleave', id, () => {
+        hoveringClickableLayer -= 1;
+        if (hoveringClickableLayer === 0) {
+          canvas.style.cursor = '';
+        }
+      });
+    }
+
+    // Mouseleave events for mouseover triggers
+    // /!\ this listener MUST be before the mousemove
     if (trigger !== 'mouseover') return;
 
     const eventType = 'mouseleave';
@@ -175,26 +191,6 @@ export function setInteractions ({ map, interactions, callback }) {
       clearTimeout(listenerWaiter[eventType]);
       listenerWaiter[eventType] = setTimeout(() => listener(e, eventType), eventType === 'mousemove' ? 200 : 100);
     });
-  });
-
-  /**
-   *  Display a pointer cursor over click zones
-   */
-  map.on('mousemove', e => {
-    const { target, point } = e;
-    const interactionsSpec = getInteractionsOnEvent({
-      eventType: 'click',
-      map: target,
-      point,
-      interactions,
-    });
-
-    const canvas = target.getCanvas();
-    if (interactionsSpec) {
-      canvas.style.cursor = 'pointer';
-    } else {
-      canvas.style.cursor = '';
-    }
   });
 }
 
