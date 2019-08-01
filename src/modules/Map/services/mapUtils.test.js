@@ -335,7 +335,7 @@ describe('should set interactions', () => {
     map.queryRenderedFeatures = () => [];
 
     setInteractions({ map, interactions, callback });
-    listeners[0].listener(event);
+    listeners[2].listener(event);
     jest.runAllTimers();
 
     expect(callback).not.toHaveBeenCalled();
@@ -398,11 +398,6 @@ describe('should set interactions', () => {
       interaction: 'doSomething',
     }];
     const callback = () => {};
-    map.queryRenderedFeatures = () => [{
-      layer: {
-        id: 'foo',
-      },
-    }];
 
     setInteractions({ map, interactions, callback });
 
@@ -412,7 +407,9 @@ describe('should set interactions', () => {
     expect(map.getCanvas).toHaveBeenCalled();
     expect(canvas.style.cursor).toBe('pointer');
 
-    map.queryRenderedFeatures = () => [];
+    listeners[0].listener({ target: map, point: [1, 2] });
+    listeners[1].listener({ target: map, point: [1, 2] });
+    expect(canvas.style.cursor).toBe('pointer');
 
     listeners[1].listener({ target: map, point: [1, 2] });
     jest.runAllTimers();
