@@ -1,12 +1,16 @@
-# Terra-front
+# Terra-front [![npm version](https://badge.fury.io/js/@terralego%2Fcore.svg)](https://www.npmjs.com/package/@terralego/core)
 
 ## Install
 
-    $ npm i
+```shell
+$ npm ci
+```
 
 ## Usage
 
-    $ npm start
+```shell
+$ npm start
+```
 
 ## Debug
 
@@ -20,20 +24,29 @@ and reload your app. You can focus on any TerraFront module by replacing `*` by 
 
 ## Storybook
 
-    $ npm run storybook
+```shell
+npm run storybook
+```
 
 ## Tests
 
-    $ npm test
+```shell
+npm test
+```
 
 ## Build
 
-    $ npm run build
+```shell
+npm run build
+```
 
 ## Publish
 
-    $ ./scripts/publish.sh
+Publish package to npmjs.com *(current commit should be tagged)*
 
+```shell
+npm run publish
+```
 
 ## Modules
 
