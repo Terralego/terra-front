@@ -72,12 +72,12 @@
     "not op_mini all"
   ],
   "devDependencies": {
-    "@babel/cli": "^7.4.3",
-    "@babel/core": "^7.4.3",
-    "@babel/plugin-proposal-class-properties": "^7.1.0",
-    "@babel/plugin-proposal-object-rest-spread": "^7.4.3",
+    "@babel/cli": "~7.5.5",
+    "@babel/core": "~7.5.5",
+    "@babel/plugin-proposal-class-properties": "~7.5.5",
+    "@babel/plugin-proposal-object-rest-spread": "~7.5.5",
     "@babel/plugin-syntax-dynamic-import": "^7.0.0",
-    "@babel/plugin-transform-runtime": "^7.4.3",
+    "@babel/plugin-transform-runtime": "~7.5.5",
     "@babel/preset-react": "^7.0.0",
     "@storybook/addon-a11y": "~5.1.10",
     "@storybook/addon-actions": "~5.1.10",
