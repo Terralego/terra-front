@@ -467,7 +467,7 @@ describe('Interactions', () => {
     const instance = new InteractiveMap({ interactions });
     instance.removeHighlight = jest.fn();
     instance.map = {};
-    instance.map.getLayer = jest.fn(() => 'fakeLayer');
+    instance.map.getLayer = jest.fn(() => ({ type: 'fill' }));
     instance.map.addLayer = jest.fn();
     instance.map.getPaintProperty = jest.fn(() => 'blue');
     instance.map.setFilter = jest.fn();
@@ -512,7 +512,7 @@ describe('Interactions', () => {
     instance.map = {};
     instance.map.setFilter = jest.fn();
     instance.map.getPaintProperty = jest.fn(() => 'red');
-    instance.map.getLayer = jest.fn(() => true);
+    instance.map.getLayer = jest.fn(() => ({ type: 'fill' }));
     instance.map.addLayer = jest.fn();
     instance.triggerInteraction({
       event: {},
@@ -554,9 +554,11 @@ describe('Interactions', () => {
   describe('should highlight all geometries type', () => {
     const interactions = [];
     const instance = new InteractiveMap({ interactions });
+    global.console = { warn: jest.fn() };
     instance.map = {};
     instance.map.setFilter = jest.fn();
     instance.map.getPaintProperty = jest.fn(() => 'red');
+    instance.map.getLayer = jest.fn(() => ({ type: 'fill' }));
     instance.map.addLayer = jest.fn();
     const props = {
       event: {},
@@ -596,13 +598,25 @@ describe('Interactions', () => {
       instance.addHighlight({ layerId: 'layerWithFill', featureId: 1, source: 'fakeSource' });
       expect(instance.map.setFilter).toHaveBeenCalledWith('fill-layerWithFill-highlight', ['in', '_id', 1]);
     });
+
+    it('should highlight symbol type', async () => {
+      instance.map.getLayer = jest.fn(() => ({ type: 'symbol' }));
+      instance.triggerInteraction(props);
+      await true;
+
+      instance.addHighlight({ layerId: 'layerWithFill', featureId: 1, source: 'fakeSource' });
+      // "symbol" type is not yet supported
+      // eslint-disable-next-line no-console
+      expect(console.warn).toBeCalled();
+      expect(instance.map.setFilter).toHaveBeenCalledWith('symbol-layerWithFill-highlight', ['in', '_id', 1]);
+    });
   });
 
   it('should remove highlight', async () => {
     const interactions = [];
     const instance = new InteractiveMap({ interactions });
     instance.map = {};
-    instance.map.getLayer = jest.fn(() => true);
+    instance.map.getLayer = jest.fn(() => ({ type: 'fill' }));
     instance.map.removeLayer = jest.fn();
     instance.map.getPaintProperty = jest.fn(() => 'red');
     instance.highlight = jest.fn();
@@ -656,7 +670,7 @@ describe('Interactions', () => {
     instance.map.addLayer = jest.fn();
     instance.map.setFilter = jest.fn();
     instance.map.getPaintProperty = jest.fn();
-    instance.map.getLayer = jest.fn(() => true);
+    instance.map.getLayer = jest.fn(() => ({ type: 'fill' }));
     instance.map.removeLayer = jest.fn();
     instance.removeHighlight({
       layerId: 'test1',

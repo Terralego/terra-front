@@ -361,14 +361,19 @@ export class InteractiveMap extends React.Component {
     ) => {
       const { sourceLayer, type } = map.getLayer(layerId);
 
-      const targetLayerColor = map.getPaintProperty(layerId, `${type}-color`);
-
-      const layerColor = (typeof targetLayerColor !== 'string' && typeof highlightColor === 'string')
-        ? targetLayerColor
-        : highlightColor;
-
-
       const targetType = () => {
+        if (!['line', 'fill', 'circle'].includes(type)) {
+          // eslint-disable-next-line no-console
+          console.warn(`Interactive Map: "${type}" type is not yet supported for highlighting`);
+          return { [type]: {} };
+        }
+
+        const targetLayerColor = map.getPaintProperty(layerId, `${type}-color`);
+
+        const layerColor = (typeof targetLayerColor !== 'string' && typeof highlightColor === 'string')
+          ? targetLayerColor
+          : highlightColor;
+
         const line = {
           'line-color': layerColor,
           'line-width': 2,
