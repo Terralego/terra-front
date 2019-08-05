@@ -37,7 +37,7 @@
   },
   "scripts": {
     "start": "run-p -l watch:lint start-storybook",
-    "watch": "run-p -l watch:babel watch:sass watch:lint",
+    "watch": "nodemon -x npm run build-local",
     "build": "run-s -l drop-dist babel sass fixcss copyscss",
     "build-local": "run-s build copyjson",
     "publish": "npm run build-local && cd dist && npm publish --access public",
@@ -57,6 +57,10 @@
     "watch:coverage": "npm test -- --coverage --watch",
     "lint": "eslint src",
     "watch:lint": "esw src -w"
+  },
+  "nodemonConfig": {
+    "watch": "src/**/*.{js,s?css}",
+    "ignore": "src/**/*.test.js"
   },
   "eslintConfig": {
     "extends": "react-app"
@@ -90,6 +94,7 @@
     "eslint-config-makina": "~0.11.0",
     "eslint-watch": "^5.0.1",
     "node-sass": "^4.10.0",
+    "nodemon": "~1.19.1",
     "npm-run-all": "~4.1.5",
     "react": "^16.8.6",
     "react-dom": "^16.8.6",
