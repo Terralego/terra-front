@@ -8,6 +8,7 @@ import withMap from './withMap';
 jest.mock('mapbox-gl', () => {
   const map = {
     once: jest.fn((e, fn) => fn()),
+    on: jest.fn((e, fn) => fn()),
     fitBounds: jest.fn(),
   };
   return {
@@ -121,8 +122,17 @@ it('should not set center and fitbounds if hash is present', () => {
   global.location.hash = '#hash';
   instance.initMap();
   expect(mapboxgl.Map).toHaveBeenCalled();
-  expect(mapboxgl.Map.mock.calls[0][0].zoom).not.toBeDefined();
-  expect(mapboxgl.Map.mock.calls[0][0].center).not.toBeDefined();
+  expect(mapboxgl.Map.mock.calls[0][0].zoom).toBe(9);
+  expect(mapboxgl.Map.mock.calls[0][0].center).toEqual([1, 2]);
+  expect(mapboxgl.map.fitBounds).not.toHaveBeenCalled();
+  mapboxgl.Map.mockClear();
+  mapboxgl.map.fitBounds.mockClear();
+
+  global.location.hash = '#10/3/4';
+  instance.initMap();
+  expect(mapboxgl.Map).toHaveBeenCalled();
+  expect(mapboxgl.Map.mock.calls[0][0].zoom).toBe(10);
+  expect(mapboxgl.Map.mock.calls[0][0].center).toEqual([4, 3]);
   expect(mapboxgl.map.fitBounds).not.toHaveBeenCalled();
   mapboxgl.Map.mockClear();
   mapboxgl.map.fitBounds.mockClear();
@@ -133,4 +143,38 @@ it('should not set center and fitbounds if hash is present', () => {
   expect(mapboxgl.Map.mock.calls[0][0].zoom).toBe(9);
   expect(mapboxgl.Map.mock.calls[0][0].center).toEqual([1, 2]);
   expect(mapboxgl.map.fitBounds).toHaveBeenCalled();
+  global.location.hash = '';
+});
+
+it('should set center provided hashName', () => {
+  const wrapper = shallow(
+    <ComponentWithMap
+      backgroundStyle=""
+      center={[1, 2]}
+      fitBounds={{ coordinates: [] }}
+      hash
+      hashName="map"
+    />,
+  );
+  mapboxgl.Map.mockClear();
+  mapboxgl.map.fitBounds.mockClear();
+  const instance = wrapper.instance();
+
+  global.location.hash = '#foo=bar';
+  instance.initMap();
+  expect(mapboxgl.Map).toHaveBeenCalled();
+  expect(mapboxgl.Map.mock.calls[0][0].zoom).toBe(9);
+  expect(mapboxgl.Map.mock.calls[0][0].center).toEqual([1, 2]);
+  expect(mapboxgl.map.fitBounds).not.toHaveBeenCalled();
+  mapboxgl.Map.mockClear();
+  mapboxgl.map.fitBounds.mockClear();
+
+  global.location.hash = '#map=10/3/4&foo=bar';
+  instance.initMap();
+  expect(mapboxgl.Map).toHaveBeenCalled();
+  expect(mapboxgl.Map.mock.calls[0][0].zoom).toBe(10);
+  expect(mapboxgl.Map.mock.calls[0][0].center).toEqual([4, 3]);
+  expect(mapboxgl.map.fitBounds).not.toHaveBeenCalled();
+  mapboxgl.Map.mockClear();
+  mapboxgl.map.fitBounds.mockClear();
 });
