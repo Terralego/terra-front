@@ -114,6 +114,7 @@
       "!src/**/index.js",
       "!src/**/context.js",
       "!src/**/log.js",
+      "!src/**/hash.js",
       "!src/modules/TerraFrontProvider.js"
     ],
     "coverageThreshold": {
