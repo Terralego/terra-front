@@ -1,5 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
+import withHashParameters from '../../../Hash/withHashParameters';
 
 import context from './context';
 import {
@@ -113,6 +114,7 @@ export class LayersTreeProvider extends React.Component {
   }
 
   initLayersState = initialState => {
+    const { getHashParameters } = this.props;
     this.resetState(({ layersTreeState }) => {
       const { layersTree } = this.props;
       const state = initialState || layersTreeState;
@@ -122,16 +124,33 @@ export class LayersTreeProvider extends React.Component {
       return {
         layersTreeState: state.size
           ? state
-          : initLayersStateAction(layersTree),
+          : initLayersStateAction(layersTree, getHashParameters()),
       };
     });
   }
 
   resetState (state, callback = () => {}) {
+    const { setHashParameters } = this.props;
     this.setState(state, () => {
       callback();
       const { onChange } = this.props;
       const { layersTreeState } = this.state;
+
+      // Simplify the state from the map, and send it to hash
+      const activeLayers = [];
+      let table = false;
+      layersTreeState.forEach((layerState, { layers: [layerId] }) => {
+        if (layerState.active) {
+          activeLayers.push(layerId);
+        }
+        if (layerState.table) {
+          table = layerId;
+        }
+      });
+      setHashParameters({
+        layers: activeLayers.join(','),
+        table: table || null,
+      });
 
       onChange(layersTreeState);
     });
@@ -169,4 +188,4 @@ export class LayersTreeProvider extends React.Component {
   }
 }
 
-export default LayersTreeProvider;
+export default withHashParameters('layers', 'table')(LayersTreeProvider);
