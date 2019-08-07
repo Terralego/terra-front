@@ -1,7 +1,7 @@
 import React from 'react';
 import renderer from 'react-test-renderer';
 
-import LayersTreeProvider from './LayersTreeProvider';
+import { LayersTreeProvider } from './LayersTreeProvider';
 import { connectLayersTree } from './context';
 import { setLayerStateAction, initLayersStateAction } from '../../services/layersTreeUtils';
 

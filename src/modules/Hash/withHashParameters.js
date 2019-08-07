@@ -22,9 +22,15 @@ export const withHashParameters = (...parameters) => WrappedComponent =>
        * @return object
        */
       const params = new URLSearchParams(window.location.hash.slice(1));
-      return Object.fromEntries(Array.from(params.entries()).filter(
-        pair => this.parameters.includes(pair[0]),
-      ));
+      return Array.from(params.entries()).filter(
+        (obj, [key, value]) => {
+          const newObj = obj;
+          if (this.parameters.includes(key)) {
+            newObj[key] = value;
+          }
+          return newObj;
+        }, {},
+      );
     };
 
     setHashParameters = values => {

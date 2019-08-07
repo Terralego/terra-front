@@ -30,6 +30,8 @@ export class LayersTreeProvider extends React.Component {
      * */
     fetchPropertyRange: PropTypes.func,
     translate: PropTypes.func,
+    getHashParameters: PropTypes.func,
+    setHashParameters: PropTypes.func,
   }
 
   static defaultProps = {
@@ -37,6 +39,8 @@ export class LayersTreeProvider extends React.Component {
     initialState: new Map(),
     fetchPropertyValues () {},
     fetchPropertyRange () {},
+    getHashParameters () {},
+    setHashParameters () {},
     translate: translateMock({
       'visualizer.layerstree.group.selector': 'No layer found',
     }),
@@ -139,7 +143,7 @@ export class LayersTreeProvider extends React.Component {
       // Simplify the state from the map, and send it to hash
       const activeLayers = [];
       let table = false;
-      layersTreeState.forEach((layerState, { layers: [layerId] }) => {
+      layersTreeState && layersTreeState.forEach((layerState, { layers: [layerId] }) => {
         if (layerState.active) {
           activeLayers.push(layerId);
         }
