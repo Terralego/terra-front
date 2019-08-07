@@ -11,8 +11,8 @@ export const withHashParameters = (...parameters) => WrappedComponent =>
     constructor (props) {
       super(props);
       // Normalize parameters from possible string to array
-      this.parameters = parameters.values().length > 1 ? parameters :
-        (typeof parameters[0] === 'string' && parameters[0].split(','));
+      this.parameters = parameters.length > 1 ? parameters :
+        (typeof parameters[0] === 'string' && parameters[0].split(',')) || parameters[0];
     }
 
     getHashParameters = () => {
@@ -36,12 +36,12 @@ export const withHashParameters = (...parameters) => WrappedComponent =>
        *
        * @return object
        */
-      const mapping = typeof values === 'object' || {};
+      const mapping = (typeof values === 'object' && values) || {};
       const params = new URLSearchParams(window.location.hash.slice(1));
 
       // Filter hash values on parameters
       this.parameters.forEach(hashPart => {
-        if (typeof mapping[hashPart] === 'undefined') {
+        if (typeof mapping[hashPart] === 'undefined' || mapping[hashPart] === null) {
           params.delete(hashPart);
         } else {
           params.set(hashPart, mapping[hashPart]);
