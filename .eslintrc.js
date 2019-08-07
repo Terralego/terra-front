@@ -6,6 +6,12 @@ const always = 'always';
 module.exports = {
   root: true,
   extends: 'makina',
+  globals: {
+    page: true,
+    browser: true,
+    context: true,
+    jestPuppeteer: true,
+  },
   overrides: [
     {
       files: ['src/stories/**/*.js'],

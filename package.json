@@ -53,6 +53,7 @@
     "start-storybook": "start-storybook -p 9009 -s public --quiet --ci",
     "build-storybook": "build-storybook -s public",
     "test": "react-scripts test",
+    "e2e": "jest -c e2e/jest.config.js",
     "coverage": "npm test -- --coverage",
     "watch:coverage": "npm test -- --coverage --watch",
     "lint": "eslint src",
@@ -93,15 +94,19 @@
     "enzyme-adapter-react-16": "~1.14.0",
     "eslint-config-makina": "~1.0.0",
     "eslint-watch": "~5.1.2",
+    "jest": "~24.8.0",
+    "jest-puppeteer": "~4.3.0",
     "node-sass": "~4.12.0",
     "nodemon": "~1.19.1",
     "npm-run-all": "~4.1.5",
+    "puppeteer": "~1.19.0",
     "react": "^16.8.6",
     "react-dom": "^16.8.6",
     "react-scripts": "^2.1.8",
     "react-test-renderer": "^16.8.6",
     "replace": "~1.1.0",
-    "rimraf": "~2.6.3"
+    "rimraf": "~2.6.3",
+    "serve": "~11.1.0"
   },
   "peerDependencies": {
     "react": "^16.8.x",
