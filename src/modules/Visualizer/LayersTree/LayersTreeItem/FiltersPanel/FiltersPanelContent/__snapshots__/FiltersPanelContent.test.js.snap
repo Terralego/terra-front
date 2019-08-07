@@ -176,6 +176,7 @@ Array [
                     onFocus={[Function]}
                     onInput={[Function]}
                     onKeyDown={[Function]}
+                    onKeyUp={[Function]}
                   />
                 </div>
                 <div
@@ -200,6 +201,7 @@ Array [
                     onFocus={[Function]}
                     onInput={[Function]}
                     onKeyDown={[Function]}
+                    onKeyUp={[Function]}
                   />
                 </div>
               </div>
@@ -233,6 +235,7 @@ Array [
                     onFocus={[Function]}
                     onInput={[Function]}
                     onKeyDown={[Function]}
+                    onKeyUp={[Function]}
                   />
                 </span>
               </span>
@@ -266,6 +269,7 @@ Array [
                     onFocus={[Function]}
                     onInput={[Function]}
                     onKeyDown={[Function]}
+                    onKeyUp={[Function]}
                   />
                 </span>
               </span>
