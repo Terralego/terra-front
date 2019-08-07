@@ -1,4 +1,15 @@
 
+1.1.0 / 2019-08-07
+==================
+
+  * [Core] Upgrade a lot of dependency
+  * [Core] Fix security issues
+  * [Core] Add watch npm script for build-local automation
+  * [Map] Use native delegated events
+  * [Map] Allow a configurable hash
+  * [Map] Improve mousemove by setting event on layers
+  * [Map] Add missing control propTypes to the map
+
 1.0.35 / 2019-07-26
 ===================
 
