@@ -142,7 +142,7 @@ export class LayersTreeProvider extends React.Component {
 
       // Simplify the state from the map, and send it to hash
       const activeLayers = [];
-      let table = false;
+      let table = null;
       layersTreeState && layersTreeState.forEach((layerState, { layers: [layerId] }) => {
         if (layerState.active) {
           activeLayers.push(layerId);
@@ -151,10 +151,7 @@ export class LayersTreeProvider extends React.Component {
           table = layerId;
         }
       });
-      setHashParameters({
-        layers: activeLayers.join(','),
-        table: table || null,
-      });
+      setHashParameters({ layers: activeLayers, table });
 
       onChange(layersTreeState);
     });

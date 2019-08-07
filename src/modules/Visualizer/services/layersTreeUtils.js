@@ -8,17 +8,16 @@ export const isCluster = (source, layerId) => !!source.match(new RegExp(`^${laye
  * Returns a flattened map of layers state from a layers tree
  *
  * @param {object} layersTree The layers tree config object
- * @param {string} layers Active layers from hash (comma-separated)
+ * @param {string|string[]} layers Active layers from hash (comma-separated)
  * @param {string} table Active table from hash (layer id)
  * @return {Map} A reduced layer tree state
  */
 export function initLayersStateAction (layersTree, { layers, table } = {}) {
   const layersTreeState = new Map();
-  const hashLayers = layers ? layers.split(',') : [];
 
   function reduceLayers (group, map) {
     return group.reduce((layersStateMap, layer) => {
-      const { initialState = {}, layers: [layerId] = { layers: [] } } = layer;
+      const { initialState = {}, layers: [layerId] = [] } = layer;
       if (layer.group) {
         return reduceLayers(layer.layers, layersStateMap);
       }
@@ -27,7 +26,7 @@ export function initLayersStateAction (layersTree, { layers, table } = {}) {
         : initialState.opacity;
 
       if (layers) {
-        initialState.active = hashLayers.includes(layerId);
+        initialState.active = layers.includes(layerId);
       }
       if (table && table === layerId) {
         initialState.table = true;

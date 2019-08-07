@@ -139,6 +139,7 @@ it('should fetch property ranges', async () => {
 
 it('should init layers state', () => {
   const instance = new LayersTreeProvider({ initialState: new Map() });
+  instance.props.getHashParameters = jest.fn();
   instance.resetState = jest.fn();
   instance.initLayersState();
   expect(instance.resetState).toHaveBeenCalled();

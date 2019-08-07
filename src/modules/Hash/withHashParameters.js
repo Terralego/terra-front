@@ -1,4 +1,5 @@
 import React from 'react';
+import { parse, stringify } from 'query-string';
 
 /**
  * HOC for getting and updating values from location hash.
@@ -8,6 +9,14 @@ import React from 'react';
  */
 export const withHashParameters = (...parameters) => WrappedComponent =>
   class WithHashParameters extends React.Component {
+    options = {
+      encode: false,
+      arrayFormat: 'comma',
+      sort: false,
+      parseNumbers: true,
+      parseBooleans: true,
+    };
+
     constructor (props) {
       super(props);
       // Normalize parameters from possible string to array
@@ -21,16 +30,14 @@ export const withHashParameters = (...parameters) => WrappedComponent =>
        *
        * @return object
        */
-      const params = new URLSearchParams(window.location.hash.slice(1));
-      return Array.from(params.entries()).filter(
-        (obj, [key, value]) => {
-          const newObj = obj;
-          if (this.parameters.includes(key)) {
-            newObj[key] = value;
-          }
-          return newObj;
-        }, {},
-      );
+      const params = parse(window.location.hash, this.options);
+      return Object.entries(params).reduce((obj, [key, value]) => {
+        const newObj = obj;
+        if (this.parameters.includes(key)) {
+          newObj[key] = value;
+        }
+        return newObj;
+      }, {});
     };
 
     setHashParameters = values => {
@@ -42,26 +49,16 @@ export const withHashParameters = (...parameters) => WrappedComponent =>
        *
        * @return object
        */
-      const mapping = (typeof values === 'object' && values) || {};
-      const params = new URLSearchParams(window.location.hash.slice(1));
+      const params = parse(window.location.hash, this.options);
 
       // Filter hash values on parameters
-      this.parameters.forEach(hashPart => {
-        if (typeof mapping[hashPart] === 'undefined' || mapping[hashPart] === null) {
-          params.delete(hashPart);
-        } else {
-          params.set(hashPart, mapping[hashPart]);
-        }
-      });
+      const newParams = {
+        ...params,
+        ...values,
+      };
 
       // Rebuild string and set hash
-      let hash = '#';
-      const components = [];
-      params.forEach((value, key) => {
-        components.push(`${key}=${value}`);
-      });
-      hash += components.join('&');
-      window.history.replaceState(window.history.state, '', hash);
+      window.history.replaceState(window.history.state, '', `#${stringify(newParams, this.options)}`);
     };
 
     render () {
