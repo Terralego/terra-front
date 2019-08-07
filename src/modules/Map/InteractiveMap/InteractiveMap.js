@@ -251,25 +251,24 @@ export class InteractiveMap extends React.Component {
   /**
    * Adds an highlight on a feature in a layer
    *
-   * @param layerId string ID of the layer containing the feature
-   * @param featureId string|integer ID of the feature to search on
-   * @param propertyId string
-   *  Property name to search on
-   *  Will search this key in the `properties`object of the feature.
-   *  Defaults to `_id`.
-   * @param highlightColor string
-   *  Color to set on the feature depending on layer type:
-   *  If a layer named `${type}-${layerId}-highlight` is found, this layer will
-   *  be used and filtered on the feature ID.
-   *  Else depending on the layer type, it will add another layer with `source`
-   *  as source and (line|fill|circle)-color set to `highlightColor`.
-   *  For a symbol layer, it is advised to add the layer named as before with
-   *  `filter: false` set by default.
-   * @param source string
-   * The source of the layer added if no layer named
-   * `${type}-${layerId}-highlight` is found
-   * @param unique boolean
-   *  If true, only one feature is to be highlighted at once
+   * @param {string} layerId ID of the layer containing the feature
+   * @param {string\|integer} featureId ID of the feature to search on
+   * @param {string} [propertyId=_id]
+   *   Property name to search on
+   *   Will search this key in the `properties`object of the feature.
+   * @param {string} highlightColor
+   *   Color to set on the feature depending on layer type:
+   *   If a layer named `${type}-${layerId}-highlight` is found, this layer will
+   *   be used and filtered on the feature ID.
+   *   Else depending on the layer type, it will add another layer with `source`
+   *   as source and (line|fill|circle)-color set to `highlightColor`.
+   *   For a symbol layer, it is advised to add the layer named as before with
+   *   `filter: false` set by default.
+   * @param {string} [source=false]
+   *   The source of the layer added if no layer named
+   *   `${type}-${layerId}-highlight` is found
+   * @param {boolean} [unique=false]
+   *   If true, only one feature is to be highlighted at once
    */
   addHighlight = ({
     layerId,
