@@ -2,6 +2,7 @@ import React from 'react';
 import mapBoxGl from 'mapbox-gl';
 import PropTypes from 'prop-types';
 import 'mapbox-gl/dist/mapbox-gl.css';
+import { connectState } from '../../State/context';
 
 import { updateCluster } from '../services/cluster';
 
@@ -11,6 +12,7 @@ import CaptureControl from './components/CaptureControl';
 import DrawControl from './components/DrawControl';
 import PrintControl from './components/PrintControl';
 import HomeControl from './components/HomeControl';
+import PermalinkControl from './components/PermalinkControl';
 
 import './Map.scss';
 
@@ -27,6 +29,7 @@ export const CONTROL_CAPTURE = 'CaptureControl';
 export const CONTROL_DRAW = 'DrawControl';
 export const CONTROL_PRINT = 'PrintControl';
 export const CONTROL_HOME = 'HomeControl';
+export const CONTROL_PERMALINK = 'PermalinkControl';
 
 export const DEFAULT_CONTROLS = [{
   control: CONTROL_ATTRIBUTION,
@@ -79,6 +82,7 @@ export class MapComponent extends React.Component {
           CONTROL_DRAW,
           CONTROL_PRINT,
           CONTROL_HOME,
+          CONTROL_PERMALINK,
         ]),
         PropTypes.shape({
           onAdd: PropTypes.func,
@@ -386,6 +390,15 @@ export class MapComponent extends React.Component {
           map.addControl(controlInstance, position);
           break;
         }
+        case CONTROL_PERMALINK: {
+          const controlInstance = new PermalinkControl({
+            ...this.props,
+            ...params,
+          });
+          this.controls.push(controlInstance);
+          map.addControl(controlInstance, position);
+          break;
+        }
         default: {
           const controlInstance = typeof control === 'string'
             ? new mapBoxGl[control]({ ...params })
@@ -403,4 +416,4 @@ export class MapComponent extends React.Component {
   }
 }
 
-export default MapComponent;
+export default connectState('initialState')(MapComponent);

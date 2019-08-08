@@ -21,7 +21,7 @@ const ORIENTATION_PORTRAIT = 'portrait';
 const ORIENTATION_LANDSCAPE = 'landscape';
 
 export class PrintControl extends AbstractMapControl {
-  static containerClassName = 'mapboxgl-ctrl mapboxgl-ctrl-group print-button';
+  static containerClassName = 'mapboxgl-ctrl mapboxgl-ctrl-group mapboxgl-ctrl-print';
 
   static propTypes = {
     translate: PropTypes.func,
