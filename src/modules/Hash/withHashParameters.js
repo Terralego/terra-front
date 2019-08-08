@@ -4,7 +4,7 @@ import { parse, stringify } from 'query-string';
 /**
  * HOC for getting and updating values from location hash.
  *
- * @param parameters string|string[]
+ * @param {string|string[]} parameters
  *   A list of parameters names to set and get from hash.
  */
 export const withHashParameters = (...parameters) => WrappedComponent =>
@@ -57,7 +57,7 @@ export const withHashParameters = (...parameters) => WrappedComponent =>
      * it will be removed from hash.
      *
      * @param {{}} values
-     * @return void
+     * @return {void}
      */
     setHashParameters = values => {
       // Filter hash values on parameters
