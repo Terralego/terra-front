@@ -24,41 +24,50 @@ export const withHashParameters = (...parameters) => WrappedComponent =>
         (typeof parameters[0] === 'string' && parameters[0].split(',')) || parameters[0];
     }
 
-    getHashParameters = () => {
-      /**
-       * Returns the entries hash included in parameters.
-       *
-       * @return object
-       */
-      const params = parse(window.location.hash, this.options);
-      return Object.entries(params).reduce((obj, [key, value]) => {
+    /**
+     * Return a filtered object with keys from `this.parameters`
+     *
+     * @param {{}} values
+     * @return {{}}
+     */
+    getFilteredParams (values) {
+      return Object.entries(values).reduce((obj, [key, value]) => {
         const newObj = obj;
         if (this.parameters.includes(key)) {
           newObj[key] = value;
         }
         return newObj;
       }, {});
+    }
+
+    /**
+     * Returns the filtered entries from hash.
+     *
+     * @return {{}}
+     */
+    getHashParameters = () => {
+      const params = parse(window.location.hash, this.options);
+      return this.getFilteredParams(params);
     };
 
+    /**
+     * Update the hash with values object, filtered by parameters
+     *
+     * If the values does not contain a parameter name or prameter is null,
+     * it will be removed from hash.
+     *
+     * @param {{}} values
+     * @return void
+     */
     setHashParameters = values => {
-      /**
-       * Update the hash with values object, filtered by parameters
-       *
-       * If the values does not contain a parameter name, it will be removed
-       * from hash
-       *
-       * @return object
-       */
-      const params = parse(window.location.hash, this.options);
-
       // Filter hash values on parameters
-      const newParams = {
-        ...params,
-        ...values,
+      const params = {
+        ...parse(window.location.hash, this.options),
+        ...this.getFilteredParams(values),
       };
 
       // Rebuild string and set hash
-      window.history.replaceState(window.history.state, '', `#${stringify(newParams, this.options)}`);
+      window.history.replaceState(window.history.state, '', `#${stringify(params, this.options)}`);
     };
 
     render () {

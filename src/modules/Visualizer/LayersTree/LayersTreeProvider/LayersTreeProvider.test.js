@@ -3,12 +3,10 @@ import renderer from 'react-test-renderer';
 
 import { LayersTreeProvider } from './LayersTreeProvider';
 import { connectLayersTree } from './context';
-import { setLayerStateAction, initLayersStateAction } from '../../services/layersTreeUtils';
+import * as layersTreeUtils from '../../services/layersTreeUtils';
 
-jest.mock('../../services/layersTreeUtils', () => ({
-  initLayersStateAction: jest.fn(),
-  setLayerStateAction: jest.fn(),
-}));
+const initLayersStateAction = jest.spyOn(layersTreeUtils, 'initLayersStateAction').mockImplementation(jest.fn());
+const setLayerStateAction = jest.spyOn(layersTreeUtils, 'setLayerStateAction').mockImplementation(jest.fn());
 
 beforeEach(() => {
   initLayersStateAction.mockClear();
@@ -159,4 +157,126 @@ it('should init layers state', () => {
     layersTreeState: undefined,
   });
   expect(initLayersStateAction).toHaveBeenCalled();
+});
+
+it('should get layers state from hash', () => {
+  initLayersStateAction.mockRestore();
+
+  const layer1 = { layers: ['thatlayerid'] };
+  const layer2 = { layers: ['t'] };
+  const layersTreeState = new Map();
+
+  const getHashParameters = jest.fn(() => ({
+    layers: ['thatlayerid', 'b'],
+  }));
+
+  const instance = new LayersTreeProvider({
+    getHashParameters,
+    layersTree: [layer1, layer2],
+  });
+
+  instance.resetState = jest.fn(stateFn => stateFn({ layersTreeState }));
+  instance.initLayersState();
+  expect(getHashParameters).toHaveBeenCalled();
+  expect(instance.resetState.mock.calls[0][0]({ layersTreeState: new Map() })).toEqual({
+    layersTreeState: new Map([
+      [layer1, {
+        active: true,
+        opacity: 1,
+      }],
+      [layer2, {
+        active: false,
+        opacity: 1,
+      }],
+    ]),
+  });
+
+  instance.props.getHashParameters = () => ({
+    layers: 'thatlayerid',
+  });
+  instance.initLayersState();
+  expect(instance.resetState.mock.calls[1][0]({ layersTreeState: new Map() })).toEqual({
+    layersTreeState: new Map([
+      [layer1, {
+        active: true,
+        opacity: 1,
+      }],
+      [layer2, {
+        active: false,
+        opacity: 1,
+      }],
+    ]),
+  });
+
+  instance.props.getHashParameters = () => ({
+    layers: ['thatlayerid', 't'],
+    table: 'thatlayerid',
+  });
+  instance.initLayersState();
+  expect(instance.resetState.mock.calls[2][0]({ layersTreeState: new Map() })).toEqual({
+    layersTreeState: new Map([
+      [layer1, {
+        active: true,
+        opacity: 1,
+        table: true,
+      }],
+      [layer2, {
+        active: true,
+        opacity: 1,
+      }],
+    ]),
+  });
+});
+
+it('should set layers state from hash', () => {
+  const setHashParameters = jest.fn();
+  const layer1 = { layers: ['thatlayerid'] };
+  const layer2 = { layers: ['t'] };
+  const layer3 = { };
+  const instance = new LayersTreeProvider({
+    setHashParameters,
+    onChange: jest.fn(),
+  });
+
+  instance.state = {
+    layersTreeState: new Map([
+      [layer1, {
+        active: true,
+        opacity: 1,
+      }],
+      [layer2, {
+        active: false,
+        opacity: 1,
+      }],
+      [layer3, {}],
+    ]),
+  };
+  instance.setState = jest.fn(
+    (stateFn, callback) => callback(stateFn(instance.state)),
+  );
+  instance.initLayersState();
+
+  expect(setHashParameters).toHaveBeenCalledWith({
+    layers: ['thatlayerid'],
+    table: null,
+  });
+
+  instance.state = {
+    layersTreeState: new Map([
+      [layer1, {
+        active: true,
+        opacity: 1,
+      }],
+      [layer2, {
+        active: true,
+        opacity: 1,
+        table: true,
+      }],
+    ]),
+  };
+  instance.initLayersState();
+  expect(setHashParameters).toHaveBeenCalledWith({
+    layers: ['thatlayerid', 't'],
+    table: 't',
+  });
 });

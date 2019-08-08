@@ -135,6 +135,7 @@ export class LayersTreeProvider extends React.Component {
 
   resetState (state, callback = () => {}) {
     const { setHashParameters } = this.props;
+
     this.setState(state, () => {
       callback();
       const { onChange } = this.props;
@@ -143,7 +144,7 @@ export class LayersTreeProvider extends React.Component {
       // Simplify the state from the map, and send it to hash
       const activeLayers = [];
       let table = null;
-      layersTreeState && layersTreeState.forEach((layerState, { layers: [layerId] }) => {
+      layersTreeState && layersTreeState.forEach((layerState, { layers: [layerId] = [] }) => {
         if (layerState.active) {
           activeLayers.push(layerId);
         }

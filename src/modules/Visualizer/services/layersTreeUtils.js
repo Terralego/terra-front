@@ -26,7 +26,9 @@ export function initLayersStateAction (layersTree, { layers, table } = {}) {
         : initialState.opacity;
 
       if (layers) {
-        initialState.active = layers.includes(layerId);
+        initialState.active = (
+          Array.isArray(layers) && layers.includes(layerId))
+          || layers === layerId;
       }
       if (table && table === layerId) {
         initialState.table = true;
