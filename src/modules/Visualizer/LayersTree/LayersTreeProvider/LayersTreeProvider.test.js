@@ -137,7 +137,7 @@ it('should fetch property ranges', async () => {
 
 it('should init layers state', () => {
   const instance = new LayersTreeProvider({ initialState: new Map() });
-  instance.props.getHashParameters = jest.fn();
+  instance.props.getInitialState = jest.fn();
   instance.resetState = jest.fn();
   instance.initLayersState();
   expect(instance.resetState).toHaveBeenCalled();
@@ -166,18 +166,18 @@ it('should get layers state from hash', () => {
   const layer2 = { layers: ['t'] };
   const layersTreeState = new Map();
 
-  const getHashParameters = jest.fn(() => ({
+  const getInitialState = jest.fn(() => ({
     layers: ['thatlayerid', 'b'],
   }));
 
   const instance = new LayersTreeProvider({
-    getHashParameters,
+    getInitialState,
     layersTree: [layer1, layer2],
   });
 
   instance.resetState = jest.fn(stateFn => stateFn({ layersTreeState }));
   instance.initLayersState();
-  expect(getHashParameters).toHaveBeenCalled();
+  expect(getInitialState).toHaveBeenCalled();
   expect(instance.resetState.mock.calls[0][0]({ layersTreeState: new Map() })).toEqual({
     layersTreeState: new Map([
       [layer1, {
@@ -191,7 +191,7 @@ it('should get layers state from hash', () => {
     ]),
   });
 
-  instance.props.getHashParameters = () => ({
+  instance.props.getInitialState = () => ({
     layers: 'thatlayerid',
   });
   instance.initLayersState();
@@ -208,7 +208,7 @@ it('should get layers state from hash', () => {
     ]),
   });
 
-  instance.props.getHashParameters = () => ({
+  instance.props.getInitialState = () => ({
     layers: ['thatlayerid', 't'],
     table: 'thatlayerid',
   });
@@ -229,12 +229,12 @@ it('should get layers state from hash', () => {
 });
 
 it('should set layers state from hash', () => {
-  const setHashParameters = jest.fn();
+  const setCurrentState = jest.fn();
   const layer1 = { layers: ['thatlayerid'] };
   const layer2 = { layers: ['t'] };
   const layer3 = { };
   const instance = new LayersTreeProvider({
-    setHashParameters,
+    setCurrentState,
     onChange: jest.fn(),
   });
 
@@ -256,7 +256,7 @@ it('should set layers state from hash', () => {
   );
   instance.initLayersState();
 
-  expect(setHashParameters).toHaveBeenCalledWith({
+  expect(setCurrentState).toHaveBeenCalledWith({
     layers: ['thatlayerid'],
     table: null,
   });
@@ -275,7 +275,7 @@ it('should set layers state from hash', () => {
     ]),
   };
   instance.initLayersState();
-  expect(setHashParameters).toHaveBeenCalledWith({
+  expect(setCurrentState).toHaveBeenCalledWith({
     layers: ['thatlayerid', 't'],
     table: 't',
   });

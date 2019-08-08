@@ -1,6 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import withHashParameters from '../../../Hash/withHashParameters';
+import { connectState } from '../../../State/context';
 
 import context from './context';
 import {
@@ -16,7 +16,10 @@ export class LayersTreeProvider extends React.Component {
     /** Callback executed everytime layersTreeState change. Takes layersTreeState as parameter */
     onChange: PropTypes.func,
     /** Initial layer tree state */
-    initialState: PropTypes.instanceOf(Map),
+    initialState: PropTypes.shape({
+      layers: PropTypes.oneOfType([PropTypes.string, PropTypes.array]), // Active layer id(s)
+      table: PropTypes.string, // Layer if table is active
+    }),
     /**
      * Function called when a filter property of single or many type need to fetch values
      * Takes `layer` and `property` as parameters
@@ -30,38 +33,31 @@ export class LayersTreeProvider extends React.Component {
      * */
     fetchPropertyRange: PropTypes.func,
     translate: PropTypes.func,
-    getHashParameters: PropTypes.func,
-    setHashParameters: PropTypes.func,
+    setCurrentState: PropTypes.func,
   };
 
   static defaultProps = {
     onChange () {},
-    initialState: new Map(),
+    initialState: {},
     fetchPropertyValues () {},
     fetchPropertyRange () {},
-    getHashParameters () {},
-    setHashParameters () {},
+    setCurrentState () {},
     translate: translateMock({
       'visualizer.layerstree.group.selector': 'No layer found',
     }),
   };
 
-  constructor (props) {
-    super(props);
-    const { initialState: layersTreeState } = this.props;
-    this.state = { layersTreeState };
-  }
+  state = {
+    layersTreeState: new Map(),
+  };
 
   componentDidMount () {
-    this.initLayersState();
+    const { initialState } = this.props;
+    this.initLayersState(initialState);
   }
 
-  componentDidUpdate ({ initialState: prevInitialState, layersTree: prevLayersTree }) {
-    const { initialState, layersTree } = this.props;
-
-    if (initialState !== prevInitialState) {
-      this.initLayersState(initialState);
-    }
+  componentDidUpdate ({ layersTree: prevLayersTree }) {
+    const { layersTree } = this.props;
 
     if (layersTree !== prevLayersTree) {
       this.initLayersState();
@@ -118,30 +114,27 @@ export class LayersTreeProvider extends React.Component {
   }
 
   initLayersState = initialState => {
-    const { getHashParameters } = this.props;
     this.resetState(({ layersTreeState }) => {
       const { layersTree } = this.props;
-      const state = initialState || layersTreeState;
 
       if (!layersTree) return {};
 
       return {
-        layersTreeState: state.size
-          ? state
-          : initLayersStateAction(layersTree, getHashParameters()),
+        layersTreeState: layersTreeState.size
+          ? layersTreeState
+          : initLayersStateAction(layersTree, initialState),
       };
     });
   }
 
   resetState (state, callback = () => {}) {
-    const { setHashParameters } = this.props;
+    const { setCurrentState } = this.props;
 
     this.setState(state, () => {
       callback();
       const { onChange } = this.props;
       const { layersTreeState } = this.state;
-
-      // Simplify the state from the map, and send it to hash
+      // Simplify the state from the map
       const activeLayers = [];
       let table = null;
       layersTreeState && layersTreeState.forEach((layerState, { layers: [layerId] = [] }) => {
@@ -152,7 +145,7 @@ export class LayersTreeProvider extends React.Component {
           table = layerId;
         }
       });
-      setHashParameters({ layers: activeLayers, table });
+      setCurrentState({ layers: activeLayers, table: table || undefined });
 
       onChange(layersTreeState);
     });
@@ -190,4 +183,4 @@ export class LayersTreeProvider extends React.Component {
   }
 }
 
-export default withHashParameters('layers', 'table')(LayersTreeProvider);
+export default connectState('initialState', 'setCurrentState')(LayersTreeProvider);
