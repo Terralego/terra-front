@@ -8,7 +8,7 @@ export const isCluster = (source, layerId) => !!source.match(new RegExp(`^${laye
  * Returns a flattened map of layers state from a layers tree
  *
  * @param {object} layersTree The layers tree config object
- * @param {string|string[]} layers Active layers from hash (comma-separated)
+ * @param {string|string[]} layers Active layer(s) from hash
  * @param {string} table Active table from hash (layer id)
  * @return {Map} A reduced layer tree state
  */
