@@ -9,7 +9,6 @@ import debounce from 'lodash.debounce';
  */
 class Hash {
   constructor (hashName) {
-    this._onHashChange.bind(this);
     this._hashName = hashName;
 
     // Mobile Safari doesn't allow updating the hash more than 100 times per 30 seconds.
@@ -68,7 +67,7 @@ class Hash {
     return hash;
   }
 
-  _onHashChange () {
+  _onHashChange = () => {
     let loc = '';
     if (this._hashName) {
       const params = new URLSearchParams(window.location.hash.slice(1));
