@@ -72,13 +72,12 @@ export const withHashParameters = (...parameters) => WrappedComponent =>
 
     render () {
       const { ...props } = this.props;
-      const { setHashParameters, getHashParameters } = this;
 
       return (
         <WrappedComponent
           {...props}
-          getHashParameters={getHashParameters}
-          setHashParameters={setHashParameters}
+          getHashParameters={this.getHashParameters}
+          setHashParameters={this.setHashParameters}
         />
       );
     }

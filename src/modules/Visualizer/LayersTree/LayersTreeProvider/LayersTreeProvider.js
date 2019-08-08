@@ -26,13 +26,13 @@ export class LayersTreeProvider extends React.Component {
     /**
      * Function called when a filter property of range type need to fetch min and max
      * Takes `layer` and `property` as parameters
-     * @return {min: Number, max: Number}
+     * @return {{}} Object of form {min: Number, max: Number}
      * */
     fetchPropertyRange: PropTypes.func,
     translate: PropTypes.func,
     getHashParameters: PropTypes.func,
     setHashParameters: PropTypes.func,
-  }
+  };
 
   static defaultProps = {
     onChange () {},
@@ -44,7 +44,7 @@ export class LayersTreeProvider extends React.Component {
     translate: translateMock({
       'visualizer.layerstree.group.selector': 'No layer found',
     }),
-  }
+  };
 
   constructor (props) {
     super(props);
