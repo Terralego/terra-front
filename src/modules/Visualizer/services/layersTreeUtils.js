@@ -12,7 +12,7 @@ export const isCluster = (source, layerId) => !!source.match(new RegExp(`^${laye
  * @param {string} table Active table from hash (layer id)
  * @return {Map} A reduced layer tree state
  */
-export function initLayersStateAction (layersTree, { layers, table } = {}) {
+export const initLayersStateAction = (layersTree, { layers, table } = {}) => {
   const layersTreeState = new Map();
 
   function reduceLayers (group, map) {
