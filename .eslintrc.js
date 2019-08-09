@@ -8,9 +8,10 @@ module.exports = {
   extends: 'makina',
   overrides: [
     {
-      files: ['src/stories/**/*.js'],
+      files: ['src/stories/**/*.js', '.storybook/**'],
       rules: {
-        'import/no-extraneous-dependencies': [0],
+        'import/no-extraneous-dependencies': [off],
+        'global-require':                    [off],
       },
     },
   ],
