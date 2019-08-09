@@ -1,58 +1,42 @@
-import React from 'react';
-import { Switch, Classes }  from '@blueprintjs/core'
+import React, { useState, useEffect } from 'react';
+import { Switch, Classes }  from '@blueprintjs/core';
 
 const containerStyle = {
   position: 'fixed',
-  bottom: 0,
-  left: 0,
+  bottom: '.5em',
+  left: '.5em',
   zIndex: 9999,
-}
+};
 
-class ThemeSwitcher extends React.Component {
-  state = {
-    dark: true,
-  }
+const ThemeSwitcher = ({ children, ...rest }) => {
+  const [, forceUpdate] = useState();
+  const bodyClassList = document.body.classList;
 
-  componentDidMount () {
-    this.updateTheme();
-  }
+  useEffect(() => {
+    bodyClassList.add(Classes.DARK);
+    forceUpdate({});
+  }, [bodyClassList]);
 
-  componentDidUpdate ({}, { dark: prevDark }) {
-    const { dark } = this.state;
+  const handleThemeSwitch = ({ target: { checked: dark } }) => {
+    bodyClassList.toggle(Classes.DARK, dark);
+    forceUpdate({});
+  };
 
-    if (dark !== prevDark) {
-      this.updateTheme();
-    }
-  }
+  return (
+    <>
+      <div style={containerStyle} {...rest}>
+        <Switch
+          onChange={handleThemeSwitch}
+          innerLabel="Dark theme"
+          checked={bodyClassList.contains(Classes.DARK)}
+        />
+      </div>
 
-  updateTheme () {
-    const { dark } = this.state;
-    const {classList } = document.body;
-    classList[dark ? 'add' : 'remove'](Classes.DARK);
-  }
-
-  setTheme = ({ target: { checked: dark } }) => this.setState({ dark });
-
-  render () {
-    const { children } = this.props;
-    const { dark } = this.state;
-
-    return (
-      <>
-        <label style={containerStyle}>
-          <Switch
-            onChange={this.setTheme}
-            innerLabel="Dark theme"
-            checked={dark}
-          />
-        </label>
-        
-        {children}
-      </>
-    )
-  }
-}
+      {children}
+    </>
+  );
+};
 
 export default storyFn => (
   <ThemeSwitcher>{storyFn()}</ThemeSwitcher>
-)
+);
