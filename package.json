@@ -55,15 +55,12 @@
     "test": "react-scripts test",
     "coverage": "npm test -- --coverage",
     "watch:coverage": "npm test -- --coverage --watch",
-    "lint": "eslint src",
+    "lint": "eslint src .storybook",
     "watch:lint": "esw src -w"
   },
   "nodemonConfig": {
     "watch": "src/**/*.{js,s?css}",
     "ignore": "src/**/*.test.js"
-  },
-  "eslintConfig": {
-    "extends": "react-app"
   },
   "browserslist": [
     ">0.2%",
