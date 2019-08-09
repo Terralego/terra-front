@@ -1,4 +1,11 @@
 
+1.1.1 / 2019-08-09
+==================
+
+  * [Core] Add LICENSE file
+  * [Map] Add documentation
+  * [Map] Avoid errors when highlighting shape of unknown type
+
 1.1.0 / 2019-08-07
 ==================
 
