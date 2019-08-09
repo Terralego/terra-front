@@ -31,7 +31,7 @@ const fetchPropertyRange = async (layer, { property }) => {
   return { min: 42, max: 4200 };
 };
 
-storiesOf('Modules/Visualizer/LayersTree', module).add('Component', () => (
+storiesOf('LayersTree', module).add('Main component', () => (
   <div style={{
     maxWidth: '20rem',
   }}
@@ -59,7 +59,7 @@ const Debug = connectLayersTree('layersTreeState')(({ layersTreeState }) => (
   <pre>{JSON.stringify(Array.from(layersTreeState), null, 2)}</pre>
 ));
 Debug.displayName = 'connect(\'layersTreeState\')(Debug)';
-storiesOf('Modules/Visualizer/LayersTree', module).add('LayersTreeProvider', () => (
+storiesOf('LayersTree', module).add('LayersTreeProvider', () => (
   <LayersTreeProvider
     layersTree={layersTreeConfig}
     fetchPropertyValues={fetchPropertyValues}
