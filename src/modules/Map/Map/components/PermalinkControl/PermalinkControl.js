@@ -1,4 +1,10 @@
-import { Icon, Popover, PopoverPosition, Button } from '@blueprintjs/core';
+import {
+  Button,
+  ControlGroup,
+  Icon,
+  Popover,
+  PopoverPosition,
+} from '@blueprintjs/core';
 import * as PropTypes from 'prop-types';
 import { stringify } from 'query-string';
 import React from 'react';
@@ -35,21 +41,30 @@ export class PermalinkControl extends AbstractMapControl {
     this.setState({ url });
   };
 
+  copyToCliboard = () => {
+    const { current: textInput } = this.inputRef;
+    textInput.setSelectionRange(0, textInput.value.length);
+    textInput.focus();
+    document.execCommand('copy');
+    this.setState({ copySuccess: true });
+    setTimeout(() => this.setState({ copySuccess: false }), 2000);
+  };
+
   render () {
     const { translate } = this.props;
     const { url, copySuccess } = this.state;
     return (
-      <Popover position={PopoverPosition.LEFT}>
+      <Popover position={PopoverPosition.LEFT} usePortal={false}>
         <button
           className="mapboxgl-ctrl-icon"
           type="button"
-          onClick={() => this.generateHashString()}
+          onClick={this.generateHashString}
           title={translate('terralego.map.capture_control.button_label')}
           aria-label={translate('terralego.map.capture_control.button_label')}
         >
           <Icon icon="link" />
         </button>
-        <>
+        <ControlGroup fill>
           <input
             className="bp3-input"
             ref={this.inputRef}
@@ -60,19 +75,13 @@ export class PermalinkControl extends AbstractMapControl {
           />
           <Popover>
             <Button
-              onClick={() => {
-                const { current: textInput } = this.inputRef;
-                textInput.setSelectionRange(0, textInput.value.length);
-                document.execCommand('copy');
-                this.setState({ copySuccess: true });
-                setTimeout(() => this.setState({ copySuccess: false }), 2000);
-              }}
+              onClick={this.copyToCliboard}
               intent={copySuccess ? 'success' : 'none'}
               icon="clipboard"
             />
             {copySuccess && 'Copied !'}
           </Popover>
-        </>
+        </ControlGroup>
       </Popover>
     );
   }

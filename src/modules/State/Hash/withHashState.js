@@ -55,7 +55,6 @@ export const withHashState = () => WrappedComponent =>
       }
     };
 
-
     render () {
       const { listenHash, updateHash, ...props } = this.props;
       const initialState = parse(window.location.hash, this.options);
