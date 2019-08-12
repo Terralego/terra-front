@@ -23,6 +23,7 @@ it('should display correct url', () => {
 });
 
 it('should permit copy to clipboard', () => {
+  jest.useFakeTimers();
   document.execCommand = jest.fn();
 
   const wrapper = mount(
@@ -51,4 +52,6 @@ it('should permit copy to clipboard', () => {
   wrapper.instance().copyToCliboard();
   expect(document.execCommand).toHaveBeenCalledWith('copy');
   expect(wrapper.instance().state).toEqual({ copySuccess: true });
+  jest.runAllTimers();
+  expect(wrapper.instance().state).toEqual({ copySuccess: false });
 });
