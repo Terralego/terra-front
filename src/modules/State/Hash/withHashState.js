@@ -1,4 +1,4 @@
-import * as PropTypes from 'prop-types';
+import PropTypes from 'prop-types';
 import { stringify, parse } from 'query-string';
 import React from 'react';
 

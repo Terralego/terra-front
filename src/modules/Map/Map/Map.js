@@ -1,6 +1,6 @@
 import React from 'react';
 import mapBoxGl from 'mapbox-gl';
-import * as PropTypes from 'prop-types';
+import PropTypes from 'prop-types';
 import 'mapbox-gl/dist/mapbox-gl.css';
 import { connectState } from '../../State/context';
 

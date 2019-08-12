@@ -5,7 +5,7 @@ import {
   Popover,
   PopoverPosition,
 } from '@blueprintjs/core';
-import * as PropTypes from 'prop-types';
+import PropTypes from 'prop-types';
 import { stringify } from 'query-string';
 import React from 'react';
 import translateMock from '../../../../../utils/translate';

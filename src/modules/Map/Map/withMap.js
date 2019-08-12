@@ -1,5 +1,5 @@
 import React from 'react';
-import * as PropTypes from 'prop-types';
+import PropTypes from 'prop-types';
 import mapBoxGl from 'mapbox-gl';
 import { addMapDebug } from '../helpers/mapDebug';
 import Hash from './hash';
