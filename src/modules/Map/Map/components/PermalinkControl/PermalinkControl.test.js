@@ -45,6 +45,7 @@ it('should permit copy to clipboard', () => {
 
   wrapper.instance().inputRef.current = {
     setSelectionRange: jest.fn(),
+    focus: jest.fn(),
     value: 'coucou',
   };
   wrapper.instance().copyToCliboard();
