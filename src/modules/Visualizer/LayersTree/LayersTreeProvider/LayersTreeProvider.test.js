@@ -232,7 +232,7 @@ it('should set layers state from hash', () => {
   const setCurrentState = jest.fn();
   const layer1 = { layers: ['thatlayerid'] };
   const layer2 = { layers: ['t'] };
-  const layer3 = { };
+  const layer3 = {};
   const instance = new LayersTreeProvider({
     setCurrentState,
     onChange: jest.fn(),

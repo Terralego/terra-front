@@ -44,7 +44,7 @@ export const initLayersStateAction = (layersTree, { layers, table } = {}) => {
   }
 
   return reduceLayers(layersTree, layersTreeState);
-}
+};
 
 export function setGroupLayerStateAction (layer, layerState, prevLayersTreeState) {
   const { layers } = layer;

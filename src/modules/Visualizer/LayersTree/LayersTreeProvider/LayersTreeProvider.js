@@ -1,5 +1,5 @@
 import React from 'react';
-import PropTypes from 'prop-types';
+import * as PropTypes from 'prop-types';
 import { connectState } from '../../../State/context';
 
 import context from './context';
@@ -80,12 +80,12 @@ export class LayersTreeProvider extends React.Component {
     this.resetState(({ layersTreeState }) => ({
       layersTreeState: setLayerStateAction(layer, newState, layersTreeState, reset),
     }));
-  }
+  };
 
   getLayerState = ({ layer }) => {
     const { layersTreeState } = this.state;
     return layersTreeState.get(layer) || {};
-  }
+  };
 
   fetchPropertyValues = async (layer, property) => {
     const { fetchPropertyValues } = this.props;
@@ -100,7 +100,7 @@ export class LayersTreeProvider extends React.Component {
     property.values = [...properties];
     const { layersTreeState: newLayersTreeState } = this.state;
     this.resetState(new Map(newLayersTreeState));
-  }
+  };
 
   fetchPropertyRange = async (layer, property) => {
     const { fetchPropertyRange } = this.props;

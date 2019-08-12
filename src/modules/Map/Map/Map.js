@@ -1,6 +1,6 @@
 import React from 'react';
 import mapBoxGl from 'mapbox-gl';
-import PropTypes from 'prop-types';
+import * as PropTypes from 'prop-types';
 import 'mapbox-gl/dist/mapbox-gl.css';
 import { connectState } from '../../State/context';
 
@@ -177,7 +177,7 @@ export class MapComponent extends React.Component {
       const { map: { flyTo } } = this.props;
       flyTo(flyToConfig);
     }
-  }
+  };
 
   updateMapProperties = prevProps => {
     const {
@@ -222,7 +222,7 @@ export class MapComponent extends React.Component {
     if (JSON.stringify(customStyle) !== JSON.stringify(prevProps.customStyle)) {
       this.replaceLayers(prevProps.customStyle);
     }
-  }
+  };
 
   focusOnSearchResult = ({ center, bounds }) => {
     const { map } = this.props;
@@ -235,7 +235,7 @@ export class MapComponent extends React.Component {
     if (center) {
       map.setCenter(center);
     }
-  }
+  };
 
   onSearchResultClick = onResultClick => ({ result, ...rest }) => {
     const { map } = this.props;
@@ -249,7 +249,7 @@ export class MapComponent extends React.Component {
     } else {
       this.focusOnSearchResult(result);
     }
-  }
+  };
 
   async initMapProperties () {
     const {

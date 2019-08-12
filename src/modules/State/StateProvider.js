@@ -1,4 +1,4 @@
-import PropTypes from 'prop-types';
+import * as PropTypes from 'prop-types';
 import React from 'react';
 import context from './context';
 
@@ -21,8 +21,7 @@ export class StateProvider extends React.Component {
   setCurrentState = state => {
     const { onStateChange } = this.props;
     this.setState(state, () => onStateChange(this.state));
-  }
-
+  };
 
   render () {
     const { children } = this.props;
