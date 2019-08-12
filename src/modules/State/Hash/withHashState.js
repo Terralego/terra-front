@@ -1,4 +1,4 @@
-import PropTypes from 'prop-types';
+import * as PropTypes from 'prop-types';
 import { stringify, parse } from 'query-string';
 import React from 'react';
 
@@ -28,13 +28,23 @@ export const withHashState = () => WrappedComponent =>
 
     options = DEFAULT_OPTIONS;
 
-    constructor (props) {
-      super(props);
+    componentDidMount () {
       const { listenHash } = this.props;
       if (listenHash) {
-        window.addEventListener('hashchange', this.forceUpdate, false);
+        window.addEventListener('hashchange', this.onHashChange, false);
       }
     }
+
+    componentWillUnmount () {
+      this.isUnmount = true;
+      window.removeEventListener('hashchange', this.onHashChange, false);
+    }
+
+    onHashChange = () => {
+      if (!this.isUnmount) {
+        this.forceUpdate();
+      }
+    };
 
     getCurrentHashString = state => `#${stringify(state, this.options)}`;
 
