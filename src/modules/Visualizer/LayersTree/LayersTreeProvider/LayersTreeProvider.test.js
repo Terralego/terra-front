@@ -166,18 +166,17 @@ it('should get layers state from hash', () => {
   const layer2 = { layers: ['t'] };
   const layersTreeState = new Map();
 
-  const getInitialState = jest.fn(() => ({
+  const initialState = {
     layers: ['thatlayerid', 'b'],
-  }));
+  };
 
   const instance = new LayersTreeProvider({
-    getInitialState,
+    initialState,
     layersTree: [layer1, layer2],
   });
 
   instance.resetState = jest.fn(stateFn => stateFn({ layersTreeState }));
   instance.initLayersState();
-  expect(getInitialState).toHaveBeenCalled();
   expect(instance.resetState.mock.calls[0][0]({ layersTreeState: new Map() })).toEqual({
     layersTreeState: new Map([
       [layer1, {
@@ -191,9 +190,9 @@ it('should get layers state from hash', () => {
     ]),
   });
 
-  instance.props.getInitialState = () => ({
+  instance.props.initialState = {
     layers: 'thatlayerid',
-  });
+  };
   instance.initLayersState();
   expect(instance.resetState.mock.calls[1][0]({ layersTreeState: new Map() })).toEqual({
     layersTreeState: new Map([
@@ -208,10 +207,10 @@ it('should get layers state from hash', () => {
     ]),
   });
 
-  instance.props.getInitialState = () => ({
+  instance.props.initialState = {
     layers: ['thatlayerid', 't'],
     table: 'thatlayerid',
-  });
+  };
   instance.initLayersState();
   expect(instance.resetState.mock.calls[2][0]({ layersTreeState: new Map() })).toEqual({
     layersTreeState: new Map([
@@ -258,7 +257,7 @@ it('should set layers state from hash', () => {
 
   expect(setCurrentState).toHaveBeenCalledWith({
     layers: ['thatlayerid'],
-    table: null,
+    table: undefined,
   });
 
   instance.state = {
