@@ -556,6 +556,7 @@ export class InteractiveMap extends React.Component {
       onInit,
       onStyleChange,
       history,
+      children,
       ...mapProps
     } = this.props;
 
@@ -591,6 +592,7 @@ export class InteractiveMap extends React.Component {
               ))}
           </div>
         )}
+        {children}
       </div>
     );
   }
