@@ -1,14 +1,12 @@
 import React from 'react';
 import renderer from 'react-test-renderer';
 
-import LayersTreeProvider from './LayersTreeProvider';
+import { LayersTreeProvider } from './LayersTreeProvider';
 import { connectLayersTree } from './context';
-import { setLayerStateAction, initLayersStateAction } from '../../services/layersTreeUtils';
+import * as layersTreeUtils from '../../services/layersTreeUtils';
 
-jest.mock('../../services/layersTreeUtils', () => ({
-  initLayersStateAction: jest.fn(),
-  setLayerStateAction: jest.fn(),
-}));
+const initLayersStateAction = jest.spyOn(layersTreeUtils, 'initLayersStateAction').mockImplementation(jest.fn());
+const setLayerStateAction = jest.spyOn(layersTreeUtils, 'setLayerStateAction').mockImplementation(jest.fn());
 
 beforeEach(() => {
   initLayersStateAction.mockClear();
@@ -40,12 +38,12 @@ it('should update', () => {
   expect(instance.resetState).not.toHaveBeenCalled();
   expect(instance.initLayersState).not.toHaveBeenCalled();
 
-  instance.props.initialState = {};
-  instance.componentDidUpdate({ });
-  expect(instance.initLayersState).toHaveBeenCalledWith(instance.props.initialState);
+  instance.props.initialLayersTreeState = {};
+  instance.componentDidUpdate({});
+  expect(instance.initLayersState).toHaveBeenCalledWith(instance.props.initialLayersTreeState);
 
   instance.props.layersTree = [];
-  instance.componentDidUpdate({ });
+  instance.componentDidUpdate({});
   expect(instance.initLayersState).toHaveBeenCalledWith();
 });
 
@@ -139,6 +137,7 @@ it('should fetch property ranges', async () => {
 
 it('should init layers state', () => {
   const instance = new LayersTreeProvider({ initialState: new Map() });
+  instance.props.getInitialState = jest.fn();
   instance.resetState = jest.fn();
   instance.initLayersState();
   expect(instance.resetState).toHaveBeenCalled();
@@ -158,4 +157,125 @@ it('should init layers state', () => {
     layersTreeState: undefined,
   });
   expect(initLayersStateAction).toHaveBeenCalled();
+});
+
+it('should get layers state from hash', () => {
+  initLayersStateAction.mockRestore();
+
+  const layer1 = { layers: ['thatlayerid'] };
+  const layer2 = { layers: ['t'] };
+  const layersTreeState = new Map();
+
+  const initialState = {
+    layers: ['thatlayerid', 'b'],
+  };
+
+  const instance = new LayersTreeProvider({
+    initialState,
+    layersTree: [layer1, layer2],
+  });
+
+  instance.resetState = jest.fn(stateFn => stateFn({ layersTreeState }));
+  instance.initLayersState();
+  expect(instance.resetState.mock.calls[0][0]({ layersTreeState: new Map() })).toEqual({
+    layersTreeState: new Map([
+      [layer1, {
+        active: true,
+        opacity: 1,
+      }],
+      [layer2, {
+        active: false,
+        opacity: 1,
+      }],
+    ]),
+  });
+
+  instance.props.initialState = {
+    layers: 'thatlayerid',
+  };
+  instance.initLayersState();
+  expect(instance.resetState.mock.calls[1][0]({ layersTreeState: new Map() })).toEqual({
+    layersTreeState: new Map([
+      [layer1, {
+        active: true,
+        opacity: 1,
+      }],
+      [layer2, {
+        active: false,
+        opacity: 1,
+      }],
+    ]),
+  });
+
+  instance.props.initialState = {
+    layers: ['thatlayerid', 't'],
+    table: 'thatlayerid',
+  };
+  instance.initLayersState();
+  expect(instance.resetState.mock.calls[2][0]({ layersTreeState: new Map() })).toEqual({
+    layersTreeState: new Map([
+      [layer1, {
+        active: true,
+        opacity: 1,
+        table: true,
+      }],
+      [layer2, {
+        active: true,
+        opacity: 1,
+      }],
+    ]),
+  });
+});
+
+it('should set layers state from hash', () => {
+  const setCurrentState = jest.fn();
+  const layer1 = { layers: ['thatlayerid'] };
+  const layer2 = { layers: ['t'] };
+  const layer3 = {};
+  const instance = new LayersTreeProvider({
+    setCurrentState,
+    onChange: jest.fn(),
+  });
+
+  instance.state = {
+    layersTreeState: new Map([
+      [layer1, {
+        active: true,
+        opacity: 1,
+      }],
+      [layer2, {
+        active: false,
+        opacity: 1,
+      }],
+      [layer3, {}],
+    ]),
+  };
+  instance.setState = jest.fn(
+    (stateFn, callback) => callback(stateFn(instance.state)),
+  );
+  instance.initLayersState();
+
+  expect(setCurrentState).toHaveBeenCalledWith({
+    layers: ['thatlayerid'],
+    table: undefined,
+  });
+
+  instance.state = {
+    layersTreeState: new Map([
+      [layer1, {
+        active: true,
+        opacity: 1,
+      }],
+      [layer2, {
+        active: true,
+        opacity: 1,
+        table: true,
+      }],
+    ]),
+  };
+  instance.initLayersState();
+  expect(setCurrentState).toHaveBeenCalledWith({
+    layers: ['thatlayerid', 't'],
+    table: 't',
+  });
 });

@@ -20,7 +20,6 @@ export const withMap = WrappedComponent =>
       fitBounds: PropTypes.shape({
         coordinates: PropTypes.arrayOf(
           PropTypes.array,
-          PropTypes.array,
         ),
         padding: PropTypes.shape({
           top: PropTypes.number,
@@ -29,7 +28,6 @@ export const withMap = WrappedComponent =>
           right: PropTypes.number,
         }),
         offset: PropTypes.arrayOf(
-          PropTypes.number,
           PropTypes.number,
         ),
       }),

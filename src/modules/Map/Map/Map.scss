@@ -43,7 +43,8 @@
 }
 
 // Taken from .mapboxgl-ctrl-group > button
-.print-button .mapboxgl-ctrl-icon {
+.mapboxgl-ctrl-permalink .mapboxgl-ctrl-icon,
+.mapboxgl-ctrl-print .mapboxgl-ctrl-icon {
   width: 30px;
   height: 30px;
   display: block;

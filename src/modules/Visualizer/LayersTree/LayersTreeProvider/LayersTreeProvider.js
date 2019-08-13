@@ -1,5 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
+import { connectState } from '../../../State/context';
 
 import context from './context';
 import {
@@ -14,8 +15,13 @@ export class LayersTreeProvider extends React.Component {
   static propTypes = {
     /** Callback executed everytime layersTreeState change. Takes layersTreeState as parameter */
     onChange: PropTypes.func,
+    /** Initial state */
+    initialState: PropTypes.shape({
+      layers: PropTypes.oneOfType([PropTypes.string, PropTypes.array]), // Active layer id(s)
+      table: PropTypes.string, // Layer if table is active
+    }),
     /** Initial layer tree state */
-    initialState: PropTypes.instanceOf(Map),
+    initialLayersTreeState: PropTypes.instanceOf(Map),
     /**
      * Function called when a filter property of single or many type need to fetch values
      * Takes `layer` and `property` as parameters
@@ -25,25 +31,28 @@ export class LayersTreeProvider extends React.Component {
     /**
      * Function called when a filter property of range type need to fetch min and max
      * Takes `layer` and `property` as parameters
-     * @return {min: Number, max: Number}
+     * @return {{}} Object of form {min: Number, max: Number}
      * */
     fetchPropertyRange: PropTypes.func,
     translate: PropTypes.func,
-  }
+    setCurrentState: PropTypes.func,
+  };
 
   static defaultProps = {
     onChange () {},
-    initialState: new Map(),
+    initialState: {},
+    initialLayersTreeState: new Map(),
     fetchPropertyValues () {},
     fetchPropertyRange () {},
     translate: translateMock({
       'visualizer.layerstree.group.selector': 'No layer found',
     }),
-  }
+    setCurrentState () {},
+  };
 
   constructor (props) {
     super(props);
-    const { initialState: layersTreeState } = this.props;
+    const { initialLayersTreeState: layersTreeState } = this.props;
     this.state = { layersTreeState };
   }
 
@@ -51,11 +60,11 @@ export class LayersTreeProvider extends React.Component {
     this.initLayersState();
   }
 
-  componentDidUpdate ({ initialState: prevInitialState, layersTree: prevLayersTree }) {
-    const { initialState, layersTree } = this.props;
+  componentDidUpdate ({ initialLayersTreeState: prevLayersTreeState, layersTree: prevLayersTree }) {
+    const { initialLayersTreeState, layersTree } = this.props;
 
-    if (initialState !== prevInitialState) {
-      this.initLayersState(initialState);
+    if (initialLayersTreeState !== prevLayersTreeState) {
+      this.initLayersState(initialLayersTreeState);
     }
 
     if (layersTree !== prevLayersTree) {
@@ -71,12 +80,12 @@ export class LayersTreeProvider extends React.Component {
     this.resetState(({ layersTreeState }) => ({
       layersTreeState: setLayerStateAction(layer, newState, layersTreeState, reset),
     }));
-  }
+  };
 
   getLayerState = ({ layer }) => {
     const { layersTreeState } = this.state;
     return layersTreeState.get(layer) || {};
-  }
+  };
 
   fetchPropertyValues = async (layer, property) => {
     const { fetchPropertyValues } = this.props;
@@ -91,7 +100,7 @@ export class LayersTreeProvider extends React.Component {
     property.values = [...properties];
     const { layersTreeState: newLayersTreeState } = this.state;
     this.resetState(new Map(newLayersTreeState));
-  }
+  };
 
   fetchPropertyRange = async (layer, property) => {
     const { fetchPropertyRange } = this.props;
@@ -110,28 +119,43 @@ export class LayersTreeProvider extends React.Component {
     /* eslint-enable no-param-reassign */
     const { layersTreeState: newLayersTreeState } = this.state;
     this.resetState(new Map(newLayersTreeState));
-  }
+  };
 
-  initLayersState = initialState => {
+  initLayersState = initialLayersTreeState => {
     this.resetState(({ layersTreeState }) => {
-      const { layersTree } = this.props;
-      const state = initialState || layersTreeState;
+      const { layersTree, initialState } = this.props;
+      const state = initialLayersTreeState || layersTreeState;
 
       if (!layersTree) return {};
 
       return {
         layersTreeState: state.size
           ? state
-          : initLayersStateAction(layersTree),
+          : initLayersStateAction(layersTree, initialState),
       };
     });
-  }
+  };
 
   resetState (state, callback = () => {}) {
+    const { setCurrentState } = this.props;
+
     this.setState(state, () => {
       callback();
       const { onChange } = this.props;
       const { layersTreeState } = this.state;
+
+      // Simplify the state from the map
+      const activeLayers = [];
+      let table = null;
+      layersTreeState && layersTreeState.forEach((layerState, { layers: [layerId] = [] }) => {
+        if (layerState.active) {
+          activeLayers.push(layerId);
+        }
+        if (layerState.table) {
+          table = layerId;
+        }
+      });
+      setCurrentState({ layers: activeLayers, table: table || undefined });
 
       onChange(layersTreeState);
     });
@@ -169,4 +193,4 @@ export class LayersTreeProvider extends React.Component {
   }
 }
 
-export default LayersTreeProvider;
+export default connectState('initialState', 'setCurrentState')(LayersTreeProvider);

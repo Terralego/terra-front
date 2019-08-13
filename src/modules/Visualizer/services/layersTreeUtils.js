@@ -4,17 +4,35 @@ export const INITIAL_FILTERS = new Map();
 
 export const isCluster = (source, layerId) => !!source.match(new RegExp(`^${layerId}-${PREFIX_SOURCE}-[0-9]+`));
 
-export function initLayersStateAction (layersTree) {
+/**
+ * Returns a flattened map of layers state from a layers tree
+ *
+ * @param {object} layersTree The layers tree config object
+ * @param {string|string[]} layers Active layer(s) from hash
+ * @param {string} table Active table from hash (layer id)
+ * @return {Map} A reduced layer tree state
+ */
+export const initLayersStateAction = (layersTree, { layers, table } = {}) => {
   const layersTreeState = new Map();
+
   function reduceLayers (group, map) {
     return group.reduce((layersStateMap, layer) => {
-      const { initialState = {} } = layer;
+      const { initialState = {}, layers: [layerId] = [] } = layer;
       if (layer.group) {
         return reduceLayers(layer.layers, layersStateMap);
       }
       initialState.opacity = initialState.opacity === undefined
         ? 1
         : initialState.opacity;
+
+      if (layers) {
+        initialState.active = (
+          Array.isArray(layers) && layers.includes(layerId))
+          || layers === layerId;
+      }
+      if (table && table === layerId) {
+        initialState.table = true;
+      }
 
       layersStateMap.set(layer, {
         active: false,
@@ -24,8 +42,9 @@ export function initLayersStateAction (layersTree) {
       return layersStateMap;
     }, map);
   }
+
   return reduceLayers(layersTree, layersTreeState);
-}
+};
 
 export function setGroupLayerStateAction (layer, layerState, prevLayersTreeState) {
   const { layers } = layer;
