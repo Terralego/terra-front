@@ -1,4 +1,11 @@
 
+1.1.2 / 2019-08-13
+==================
+
+  * [Core] Upgrade Node to latest v12
+  * [Map] Add StateProvider and hash context handling
+  * [Map] Fix print rendering issues
+
 1.1.1 / 2019-08-09
 ==================
 
