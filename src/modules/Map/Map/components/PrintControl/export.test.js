@@ -34,21 +34,41 @@ afterEach(() => {
 it('should export map as pdf', async () => {
   window.scrollTo = jest.fn();
   const parentElement = {};
+  const canvas = {
+    style: {},
+    parentNode: {
+      appendChild () {},
+      removeChild () {},
+    },
+    toDataURL: jest.fn(() => 'dataurl'),
+  };
+  const listeners = [];
   const map = {
     getContainer: jest.fn(() => ({
       parentElement,
     })),
+    getCanvas: jest.fn(() => canvas),
+    setBearing () {},
+    getBearing () {},
+    once: (e, listener) => listeners.push(listener),
   };
 
   const orientation = 'portrait';
 
-  await exportPdf(map, orientation);
+  exportPdf(map, orientation);
 
   expect(map.getContainer).toHaveBeenCalled();
+  expect(map.getCanvas).toHaveBeenCalled();
+  expect(window.scrollTo).toHaveBeenCalled();
   expect(jspdf).toHaveBeenCalledWith({
     format: 'a4',
     orientation: 'portrait',
   });
+
+  await listeners[0]();
+  await true;
+  await true;
+  await true;
 
   expect(html2canvas).toHaveBeenCalledWith(parentElement, {
     ignoreElements: expect.any(Function),
