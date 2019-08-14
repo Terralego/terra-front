@@ -22,6 +22,20 @@ it('should display correct url', () => {
   expect(instance.setState).toHaveBeenCalledWith({ url: 'http://localhost/#foo=bar&baz=false' });
 });
 
+it('should display correct url with map named', () => {
+  window.location.href = 'http://localhost/#map=foobar&bar=false';
+  const instance = new PermalinkControl({
+    hash: 'map',
+    initialState: {
+      foo: 'bar',
+      baz: false,
+    },
+  });
+  instance.setState = jest.fn();
+  instance.generateHashString();
+  expect(instance.setState).toHaveBeenCalledWith({ url: 'http://localhost/#foo=bar&baz=false&map=foobar' });
+});
+
 it('should permit copy to clipboard', () => {
   jest.useFakeTimers();
   document.execCommand = jest.fn();

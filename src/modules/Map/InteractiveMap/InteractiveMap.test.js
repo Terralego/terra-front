@@ -3,9 +3,12 @@ import renderer from 'react-test-renderer';
 import ReactDOM from 'react-dom';
 import mapboxGl from 'mapbox-gl';
 import centroid from '@turf/centroid';
+import { CONTROL_PERMALINK } from '../Map';
+import PermalinkControl from '../Map/components/PermalinkControl/PermalinkControl';
 
 import { setInteractions, fitZoom } from '../services/mapUtils';
-import InteractiveMap, {
+import {
+  InteractiveMap,
   INTERACTION_FIT_ZOOM,
   INTERACTION_ZOOM,
   INTERACTION_FLY_TO,
@@ -334,6 +337,62 @@ describe('map', () => {
         position: 'top-right',
       }],
     });
+  });
+
+  it('should add permalink control', () => {
+    const instance = new InteractiveMap({
+      controls: [{
+        control: CONTROL_PERMALINK,
+        position: 'top-right',
+      }],
+    });
+    instance.setState = jest.fn();
+    instance.insertPermalinkControl();
+    expect(instance.setState).toHaveBeenCalledWith({
+      controls: [{
+        control: expect.any(PermalinkControl),
+        position: 'top-right',
+      }],
+    });
+
+    // Update control list
+    instance.setState.mockClear();
+    instance.props.controls = [{
+      control: CONTROL_PERMALINK,
+      position: 'top-right',
+    }];
+    instance.componentDidUpdate({});
+    expect(instance.setState).toHaveBeenCalledWith({
+      controls: [{
+        control: expect.any(PermalinkControl),
+        position: 'top-right',
+      }],
+    });
+  });
+
+  it('should update permalink control', () => {
+    const map = {};
+    const controls = [{
+      control: CONTROL_PERMALINK,
+      position: 'top-right',
+    }];
+    const instance = new InteractiveMap({ controls });
+    instance.setState = jest.fn();
+    instance.insertPermalinkControl();
+    instance.permalinkControl.onAdd(map);
+    instance.permalinkControl.setProps = jest.fn();
+    instance.props.initialState = { foo: 'bar' };
+    instance.componentDidUpdate({ controls });
+    expect(instance.permalinkControl.setProps).toHaveBeenCalledWith({
+      initialState: instance.props.initialState,
+    });
+  });
+
+  it('should not add permalink control if not present', () => {
+    const instance = new InteractiveMap({});
+    instance.setState = jest.fn();
+    instance.insertPermalinkControl();
+    expect(instance.setState).not.toHaveBeenCalled();
   });
 });
 

@@ -2,7 +2,9 @@ import PropTypes from 'prop-types';
 import { stringify, parse } from 'query-string';
 import React from 'react';
 
-
+/**
+ * Default options for reading and writing from hash.
+ */
 export const DEFAULT_OPTIONS = {
   encode: false,
   arrayFormat: 'comma',
@@ -17,7 +19,9 @@ export const DEFAULT_OPTIONS = {
 export const withHashState = () => WrappedComponent =>
   class WithHashState extends React.Component {
     static propTypes = {
+      /** @param {boolean} [listenHash=true] If initialState should be update when hash changes */
       listenHash: PropTypes.bool,
+      /** @param {boolean} [updateHash=true] If hash should be updated when initialState changes */
       updateHash: PropTypes.bool,
     };
 
@@ -40,6 +44,9 @@ export const withHashState = () => WrappedComponent =>
       window.removeEventListener('hashchange', this.onHashChange, false);
     }
 
+    /**
+     * Event listener on hash change, reloads the current state from hash
+     */
     onHashChange = () => {
       if (!this.isUnmount) {
         this.forceUpdate();
@@ -48,6 +55,12 @@ export const withHashState = () => WrappedComponent =>
 
     getCurrentHashString = state => `#${stringify(state, this.options)}`;
 
+    /**
+     * Callback when the state is changed, replace hash with current state
+     *
+     * @param state
+     * @see StateProvider
+     */
     updateHashString = state => {
       const { updateHash } = this.props;
       if (updateHash) {

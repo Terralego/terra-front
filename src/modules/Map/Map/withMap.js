@@ -76,7 +76,6 @@ export const withMap = WrappedComponent =>
         onMapInit,
         onMapLoaded,
         hash,
-        hashName,
       } = this.props;
 
       mapBoxGl.accessToken = accessToken;
@@ -84,8 +83,8 @@ export const withMap = WrappedComponent =>
       const hasHash = hash && !!global.location.hash;
       let hashProps = {};
       if (hasHash) {
-        const loc = hashName
-          ? ((new URLSearchParams(global.location.hash.slice(1))).get(hashName) || '').split('/')
+        const loc = typeof hash === 'string'
+          ? ((new URLSearchParams(global.location.hash.slice(1))).get(hash) || '').split('/')
           : global.location.hash.replace('#', '').split('/');
         if (loc.length >= 3) {
           hashProps = {
@@ -111,7 +110,7 @@ export const withMap = WrappedComponent =>
         ...hashProps,
       });
       // eslint-disable-next-line no-underscore-dangle
-      map._hash = hash && (new Hash(hashName)).addTo(map);
+      map._hash = hash && (new Hash((typeof hash === 'string' && hash) || undefined)).addTo(map);
 
       // This allows accessing MapboxGL instance from console (needed for e2e tests)
       if (this.containerEl.current) {
