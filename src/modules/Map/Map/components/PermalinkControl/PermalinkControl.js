@@ -6,7 +6,7 @@ import {
   PopoverPosition,
 } from '@blueprintjs/core';
 import PropTypes from 'prop-types';
-import { stringify } from 'query-string';
+import { parse, stringify } from 'query-string';
 import React from 'react';
 import translateMock from '../../../../../utils/translate';
 import { DEFAULT_OPTIONS } from '../../../../State/Hash/withHashState';
@@ -34,9 +34,17 @@ export class PermalinkControl extends AbstractMapControl {
 
   options = DEFAULT_OPTIONS;
 
+  /**
+   * Generate an url with current state (aware of current map hash)
+   *
+   * @return {string}
+   */
   generateHashString = () => {
-    const { initialState } = this.props;
-    const [currentUrl] = window.location.href.split('#');
+    const { hash, initialState } = this.props;
+    const [currentUrl, currentHash] = window.location.href.split('#');
+    if (typeof hash === 'string') {
+      initialState[hash] = parse(currentHash)[hash];
+    }
     const url = `${currentUrl}#${stringify(initialState, this.options)}`;
     this.setState({ url });
   };

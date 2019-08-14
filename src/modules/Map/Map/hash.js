@@ -95,7 +95,7 @@ class Hash {
       hash = '#';
       const components = [];
       params.forEach((value, key) => {
-        components.push(key === this._hashName ? `${key}=${value}` : `${key}=${encodeURIComponent(value)}`);
+        components.push(`${key}=${value}`);
       });
       hash += components.join('&');
     }

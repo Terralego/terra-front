@@ -146,14 +146,13 @@ it('should not set center and fitbounds if hash is present', () => {
   global.location.hash = '';
 });
 
-it('should set center provided hashName', () => {
+it('should set center provided named hash', () => {
   const wrapper = shallow(
     <ComponentWithMap
       backgroundStyle=""
       center={[1, 2]}
       fitBounds={{ coordinates: [] }}
-      hash
-      hashName="map"
+      hash="map"
     />,
   );
   mapboxgl.Map.mockClear();

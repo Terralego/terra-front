@@ -4,10 +4,16 @@ import PropTypes from 'prop-types';
 import mapBoxGl from 'mapbox-gl';
 import debounce from 'lodash.debounce';
 import centroid from '@turf/centroid';
+import { connectState } from '../../State/context';
 
 import { setInteractions, fitZoom } from '../services/mapUtils';
 import { getClusteredFeatures } from '../services/cluster';
-import MapComponent, { CONTROLS_TOP_RIGHT, DEFAULT_CONTROLS } from '../Map';
+import MapComponent, {
+  CONTROL_PERMALINK,
+  CONTROLS_TOP_RIGHT,
+  DEFAULT_CONTROLS,
+} from '../Map';
+import PermalinkControl from '../Map/components/PermalinkControl/PermalinkControl';
 import BackgroundStyles from './components/BackgroundStyles';
 import Legend from './components/Legend';
 import Tooltip from './components/Tooltip';
@@ -137,6 +143,7 @@ export class InteractiveMap extends React.Component {
     const { onInit } = this.props;
     onInit(this);
     this.insertBackgroundStyleControl();
+    this.insertPermalinkControl();
   }
 
   componentDidUpdate ({
@@ -144,8 +151,9 @@ export class InteractiveMap extends React.Component {
     legends: prevLegends,
     controls: prevControls,
     backgroundStyle: prevBackgroundStyle,
+    initialState: prevInitialState,
   }) {
-    const { interactions, legends, controls, backgroundStyle } = this.props;
+    const { interactions, legends, controls, backgroundStyle, initialState } = this.props;
 
     if (interactions !== prevInteractions) {
       this.setInteractions();
@@ -158,6 +166,12 @@ export class InteractiveMap extends React.Component {
     if (controls !== prevControls ||
         backgroundStyle !== prevBackgroundStyle) {
       this.insertBackgroundStyleControl();
+    }
+    if (controls !== prevControls) {
+      this.insertPermalinkControl();
+    } else if (initialState !== prevInitialState &&
+        this.permalinkControl && this.permalinkControl.container) {
+      this.permalinkControl.setProps({ initialState });
     }
   }
 
@@ -547,6 +561,27 @@ export class InteractiveMap extends React.Component {
     }
   }
 
+  /**
+   * Instantiate and insert a permalink control if in the list of controls.
+   * This is done because the control can't be connected to StateProvider.
+   */
+  insertPermalinkControl () {
+    const { controls = DEFAULT_INTERACTIVE_MAP_CONTROLS, initialState, hash } = this.props;
+
+    const pos = controls.findIndex(({ control }) =>
+      control === CONTROL_PERMALINK);
+
+    if (pos === -1) return;
+
+    const permalinkControl = { ...controls[pos] };
+    this.permalinkControl = new PermalinkControl({ initialState, hash });
+    permalinkControl.control = this.permalinkControl;
+    const newControls = [...controls];
+    newControls[pos] = permalinkControl;
+
+    this.setState({ controls: newControls });
+  }
+
   render () {
     const {
       layersTree,
@@ -596,4 +631,4 @@ export class InteractiveMap extends React.Component {
   }
 }
 
-export default InteractiveMap;
+export default connectState('initialState')(InteractiveMap);
