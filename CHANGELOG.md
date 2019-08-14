@@ -1,4 +1,12 @@
 
+1.1.3 / 2019-08-14
+==================
+
+  * [Map] Allow interactive map to have children
+  * [Map] Move permalink control to inserted component
+  * [Map] Make permalink control map-state aware
+  * [Map] Fix print rendering issues in Chrome/Edge
+
 1.1.2 / 2019-08-13
 ==================
 
