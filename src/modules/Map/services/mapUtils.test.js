@@ -41,6 +41,11 @@ const getStyle = jest.fn(() => ({
 
 jest.useFakeTimers();
 
+jest.mock('moize', () => ({ serializer }) => fn => (...args) => {
+  serializer(...args);
+  return fn(...args);
+});
+
 it('should get all layers related to main one', () => {
   const map = {
     getStyle,

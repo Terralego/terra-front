@@ -1,14 +1,17 @@
 import bbox from '@turf/bbox';
+import moize from 'moize';
 
 import { PREFIXES } from './cluster';
 
 const PREV_STATE = {};
 
-export const getLayers = (map, layerId) => {
+export const getLayers = moize({
+  serializer: (map, layerId) => `${layerId}${map.getStyle().layers.map(id => id).join('')}`,
+})((map, layerId) => {
   const regexp = new RegExp(`^${layerId}(-(${PREFIXES.join('|')}))?(-[0-9]+)?$`);
   return map.getStyle().layers
     .filter(({ id }) => id.match(regexp));
-};
+});
 
 export function toggleLayerVisibility (map, layerId, visibility) {
   getLayers(map, layerId)
