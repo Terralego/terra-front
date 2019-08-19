@@ -406,9 +406,7 @@ export class InteractiveMap extends React.Component {
 
         const targetLayerColor = map.getPaintProperty(layerId, `${type}-color`);
 
-        const layerColor = (typeof targetLayerColor !== 'string' && typeof highlightColor === 'string')
-          ? targetLayerColor
-          : highlightColor;
+        const layerColor = highlightColor || targetLayerColor;
 
         const line = {
           'line-color': layerColor,
