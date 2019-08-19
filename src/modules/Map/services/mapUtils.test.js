@@ -237,7 +237,6 @@ it('should get no interaction on event', () => {
 
 describe('should set interactions', () => {
   let listeners = [];
-  const canvas = { style: {} };
   const map = {
     getStyle,
     getLayoutProperty: jest.fn(() => 'visible'),
@@ -246,7 +245,6 @@ describe('should set interactions', () => {
       listener: listener || id,
       id: listener ? id : null,
     })),
-    getCanvas: jest.fn(() => canvas),
   };
   beforeEach(() => {
     listeners = [];
@@ -263,11 +261,10 @@ describe('should set interactions', () => {
     }];
     const callback = () => {};
     setInteractions({ map, interactions, callback });
-    expect(listeners.length).toBe(4);
-    expect(listeners[0].event).toBe('mouseenter');
-    expect(listeners[1].event).toBe('mouseleave');
-    expect(listeners[2].event).toBe('click');
-    expect(listeners[3].event).toBe('mousedown');
+    expect(listeners.length).toBe(3);
+    expect(listeners[0].event).toBe('click');
+    expect(listeners[1].event).toBe('mousedown');
+    expect(listeners[2].event).toBe('mousemove');
   });
 
   it('with mouseover events', () => {
@@ -278,12 +275,11 @@ describe('should set interactions', () => {
     }];
     const callback = () => {};
     setInteractions({ map, interactions, callback });
-    expect(listeners.length).toBe(4);
-    expect(listeners[0].event).toBe('mouseenter');
-    expect(listeners[1].event).toBe('mouseleave');
-    expect(listeners[2].event).toBe('mouseleave');
-    expect(listeners[3].event).toBe('mousemove');
+    expect(listeners.length).toBe(3);
+    expect(listeners[0].event).toBe('mouseleave');
+    expect(listeners[1].event).toBe('mousemove');
     expect(listeners[0].id).toBe('foo');
+    expect(listeners[2].event).toBe('mousemove');
   });
 
   it('then call callback', () => {
@@ -308,7 +304,7 @@ describe('should set interactions', () => {
     }];
 
     setInteractions({ map, interactions, callback });
-    listeners[2].listener(event);
+    listeners[0].listener(event);
     jest.runAllTimers();
 
     expect(callback).toHaveBeenCalledWith({
@@ -357,7 +353,7 @@ describe('should set interactions', () => {
 
     setInteractions({ map, interactions, callback });
 
-    listeners[2].listener(event);
+    listeners[0].listener(event);
     jest.runAllTimers();
 
     expect(callback).toHaveBeenCalledWith({
@@ -374,10 +370,11 @@ describe('should set interactions', () => {
     });
     callback.mockClear();
 
-    listeners[3].listener(event);
+    listeners[1].listener(event);
     jest.runAllTimers();
 
-    expect(listeners[3].event).toBe('mousemove');
+    expect(listeners[1].event).toBe('mousemove');
+    expect(listeners[1].id).toBe(null);
     expect(callback).toHaveBeenCalledWith({
       event,
       map,
@@ -398,6 +395,8 @@ describe('should set interactions', () => {
       interaction: 'doSomething',
     }];
     const callback = () => {};
+    const canvas = { style: {} };
+    map.getCanvas = jest.fn(() => canvas);
     map.queryRenderedFeatures = () => [{
       layer: {
         id: 'foo',
@@ -406,7 +405,7 @@ describe('should set interactions', () => {
 
     setInteractions({ map, interactions, callback });
 
-    listeners[0].listener({ target: map, point: [1, 2] });
+    listeners[1].listener({ target: map, point: [1, 2] });
     jest.runAllTimers();
 
     expect(map.getCanvas).toHaveBeenCalled();
