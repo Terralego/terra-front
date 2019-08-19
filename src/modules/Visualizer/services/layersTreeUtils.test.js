@@ -8,6 +8,7 @@ import {
   isCluster,
   filterFeatures,
   resetFilters,
+  sortCustomLayers,
   INITIAL_FILTERS,
 } from './layersTreeUtils';
 
@@ -376,4 +377,46 @@ it('should set group state', () => {
   expect(newLayersTreeState.get(layer.layers[1])).toEqual({
     active: false,
   });
+});
+
+it('should sort custom layers', () => {
+  const customLayers = [{
+    id: '1',
+  }, {
+    id: '2',
+  }, {
+    id: '3',
+  }, {
+    id: '4',
+  }, {
+    id: '5',
+  }, {
+    id: '6',
+  }];
+  const lT = [{
+    layers: ['4', '2', '7'],
+  }, {
+    group: 'foo',
+    layers: [{
+      layers: ['3', '5'],
+    }, {
+      group: 'bar',
+      layers: [{
+        layers: ['1', '2'],
+      }],
+    }],
+  }];
+  expect(sortCustomLayers(customLayers, lT)).toEqual([{
+    id: '6',
+  }, {
+    id: '4',
+  }, {
+    id: '3',
+  }, {
+    id: '5',
+  }, {
+    id: '1',
+  }, {
+    id: '2',
+  }]);
 });
