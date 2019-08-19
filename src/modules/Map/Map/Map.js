@@ -375,10 +375,12 @@ export class MapComponent extends React.Component {
           break;
         }
         case CONTROL_HOME: {
-          const { fitBounds, center, zoom } = this.props;
+          const { fitBounds = {}, center, zoom } = this.props;
+          const { coordinates, ...fitBoundsParams } = fitBounds;
           const controlInstance = new HomeControl({
             map,
-            fitBounds,
+            fitBounds: coordinates,
+            fitBoundsParams,
             center,
             zoom,
             ...params,
