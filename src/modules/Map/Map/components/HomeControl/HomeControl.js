@@ -20,11 +20,9 @@ export class HomeControl extends AbstractMapControl {
   }
 
   goHome = () => {
-    const { map, fitBounds, center, zoom = 7 } = this.props;
+    const { map, fitBounds, fitBoundsParams, center, zoom = 7 } = this.props;
     if (fitBounds) {
-      map.fitBounds(fitBounds, {
-        padding: 10,
-      });
+      map.fitBounds(fitBounds, fitBoundsParams);
       return;
     }
 

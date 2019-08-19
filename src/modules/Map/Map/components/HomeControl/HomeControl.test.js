@@ -13,7 +13,7 @@ it('should go home with bounds', () => {
     fitBounds: jest.fn(),
   };
 
-  const instance = new HomeControl({ map, fitBounds: [1, 2] });
+  const instance = new HomeControl({ map, fitBounds: [1, 2], fitBoundsParams: { padding: 10 } });
   instance.goHome();
   expect(map.fitBounds).toHaveBeenCalledWith([1, 2], { padding: 10 });
 });
