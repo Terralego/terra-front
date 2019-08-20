@@ -169,6 +169,23 @@ export const resetFilters = (map, layersTreeState) => {
   });
 };
 
+const flattenLayersTreeLayersId = layersTree => layersTree.reduce((all, { group, layers }) => [
+  ...all,
+  ...(group ? flattenLayersTreeLayersId(layers) : layers),
+], []);
+
+export const sortCustomLayers = (customLayers, layersTree) => {
+  const newCustomLayers = [...customLayers];
+  const flattenLayersTree = flattenLayersTreeLayersId(layersTree);
+  flattenLayersTree.forEach(layerId => {
+    const pos = newCustomLayers.findIndex(({ id }) => id === layerId);
+    if (pos > -1) {
+      newCustomLayers.push(...newCustomLayers.splice(pos, 1));
+    }
+  });
+  return newCustomLayers;
+};
+
 export default {
   initLayersStateAction,
   setLayerStateAction,
@@ -177,4 +194,5 @@ export default {
   hasWidget,
   filterFeatures,
   resetFilters,
+  sortCustomLayers,
 };
