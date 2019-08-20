@@ -7,6 +7,7 @@ import {
   setInteractions,
   checkContraints,
   fitZoom,
+  PREV_STATE,
 } from './mapUtils';
 
 const getStyle = jest.fn(() => ({
@@ -350,14 +351,14 @@ describe('should set interactions', () => {
     }];
     const callback = jest.fn();
     const event = { target: map, point: [1, 2] };
-    map.queryRenderedFeatures = () => [{
+    PREV_STATE.features = [{
       layer: {
         id: 'foo',
       },
     }];
+    map.queryRenderedFeatures = () => PREV_STATE.features;
 
     setInteractions({ map, interactions, callback });
-
     listeners[0].listener(event);
     jest.runAllTimers();
 
@@ -391,6 +392,19 @@ describe('should set interactions', () => {
           id: 'foo',
         },
       },
+    });
+    callback.mockClear();
+
+    delete PREV_STATE.features;
+    listeners[0].listener(event);
+    jest.runAllTimers();
+
+    expect(callback).toHaveBeenCalledWith({
+      event,
+      map,
+      layerId: 'foo',
+      interaction: interactions[0],
+      eventType: 'mouseleave',
     });
   });
 
@@ -680,15 +694,4 @@ it('should call fitBounds', () => {
 
   fitZoom({ feature: [feature], map });
   expect(map.fitBounds).toHaveBeenCalled();
-});
-
-it('should catch error when fetching feature', () => {
-  const map = {
-    queryRenderedFeatures: () => {
-      throw new Error('boum');
-    },
-  };
-  expect(() => getInteractionsOnEvent({
-    map,
-  })).not.toThrow();
 });

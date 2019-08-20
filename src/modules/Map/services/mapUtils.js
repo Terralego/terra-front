@@ -3,7 +3,7 @@ import moize from 'moize';
 
 import { PREFIXES } from './cluster';
 
-const PREV_STATE = {};
+export const PREV_STATE = {};
 
 export const getRelatedLayers = moize({
   serializer: (map, layerId) => `${layerId}${map.getStyle().layers.map(id => id).join('')}`,
@@ -90,14 +90,8 @@ export function getInteractionsOnEvent ({
   map,
   point,
   interactions: eventInteractions,
+  features = map.queryRenderedFeatures(point),
 }) {
-  let features;
-  try {
-    features = map.queryRenderedFeatures(point);
-  } catch (e) {
-    return null;
-  }
-
   let interactions = false;
 
   features.some(feature => {
@@ -150,7 +144,7 @@ export function setInteractions ({ map, interactions, callback }) {
 
     getRelatedLayers(map, id).forEach(({ id: realLayer }) => {
       map.on(eventType, realLayer, event => {
-        const features = map.queryRenderedFeatures(PREV_STATE.point);
+        const { features = [] } = PREV_STATE;
         const feature = features.find(({ layer: { id: layerId } }) => id === layerId);
         callback({ event, map, layerId: id, interaction, feature, eventType });
       });
@@ -159,14 +153,17 @@ export function setInteractions ({ map, interactions, callback }) {
 
   const listener = (e, eventType) => {
     const { target, point } = e;
+    let features;
     if (eventType === 'mousemove') {
-      PREV_STATE.point = point;
+      features = map.queryRenderedFeatures(point);
+      PREV_STATE.features = features;
     }
     const interactionsSpec = getInteractionsOnEvent({
       eventType,
       map: target,
       point,
       interactions,
+      features,
     });
 
     if (!interactionsSpec) return;
