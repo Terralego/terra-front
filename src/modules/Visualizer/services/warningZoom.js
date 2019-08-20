@@ -1,4 +1,4 @@
-import { getLayers } from '../../Map/services/mapUtils';
+import { getRelatedLayers } from '../../Map/services/mapUtils';
 
 export function getMinMax (values, minThreshold = 0, maxThreshold = 24) {
   return values.reduce((
@@ -16,7 +16,7 @@ export function displayWarningAccordingToZoom (map, layer) {
   const currentZoom = map.getZoom();
 
   const layers = layer.layers.reduce((prev, layerId) =>
-    [...prev, ...getLayers(map, layerId)], []);
+    [...prev, ...getRelatedLayers(map, layerId)], []);
 
   const sourcesIds = [...new Set(layers.reduce((prev, { source }) => [...prev, source], []))];
 

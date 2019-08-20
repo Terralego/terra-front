@@ -1,18 +1,20 @@
 import bbox from '@turf/bbox';
-
 import moize from 'moize';
+
 import { PREFIXES } from './cluster';
 
-const PREV_STATE = {};
+export const PREV_STATE = {};
 
-export const getLayers = moize((map, layerId) => {
+export const getRelatedLayers = moize({
+  serializer: (map, layerId) => `${layerId}${map.getStyle().layers.map(id => id).join('')}`,
+})((map, layerId) => {
   const regexp = new RegExp(`^${layerId}(-(${PREFIXES.join('|')}))?(-[0-9]+)?$`);
   return map.getStyle().layers
     .filter(({ id }) => id.match(regexp));
 });
 
 export function toggleLayerVisibility (map, layerId, visibility) {
-  getLayers(map, layerId)
+  getRelatedLayers(map, layerId)
     .forEach(({ id }) => map.setLayoutProperty(id, 'visibility', visibility));
 }
 
@@ -38,7 +40,7 @@ export function getOpacityProperty (type) {
 }
 
 export function setLayerOpacity (map, layerId, opacity) {
-  getLayers(map, layerId)
+  getRelatedLayers(map, layerId)
     .forEach(layer => {
       const property = getOpacityProperty(layer.type);
       if (property) {
@@ -68,10 +70,10 @@ export const checkContraints = ({
       const visible = match[1] !== '!';
       const layerId = match[2];
       return prevCheck && visible
-        ? getLayers(map, layerId).reduce((subCheck, { id }) =>
+        ? getRelatedLayers(map, layerId).reduce((subCheck, { id }) =>
           (subCheck ||
           map.getLayoutProperty(id, 'visibility') === 'visible'), false)
-        : getLayers(map, layerId).reduce((subCheck, { id }) =>
+        : getRelatedLayers(map, layerId).reduce((subCheck, { id }) =>
           (subCheck &&
           map.getLayoutProperty(id, 'visibility') === 'none'), true);
     }, true);
@@ -83,93 +85,126 @@ export const checkContraints = ({
   }, false);
 };
 
-let listenerWaiter = 0;
+export function getInteractionsOnEvent ({
+  eventType,
+  map,
+  point,
+  interactions: eventInteractions,
+  features = map.queryRenderedFeatures(point),
+}) {
+  let interactions = false;
 
+  features.some(feature => {
+    const { layer: { id: layerId } } = feature;
+
+    const foundInteractions = eventInteractions.filter(({ id, trigger = 'click', constraints }) => {
+      if (eventType !== (trigger === 'mouseover' ? 'mousemove' : trigger)) return false;
+
+      const found = getRelatedLayers(map, id)
+        .find(({ id: compatibleId }) => layerId === compatibleId);
+
+      if (!found) {
+        return false;
+      }
+
+      if (!constraints) {
+        return true;
+      }
+
+      return checkContraints({ map, constraints, feature });
+    });
+
+    if (!foundInteractions.length) return false;
+
+    interactions = {
+      interactions: foundInteractions,
+      feature,
+      layerId,
+    };
+
+    return true;
+  });
+
+  return interactions;
+}
+
+const listenerWaiter = {};
 export function setInteractions ({ map, interactions, callback }) {
   const eventsTypes = new Set(interactions.reduce((triggers, { trigger = 'click' }) => [...triggers, trigger], []));
 
-  // 'mouseover' is the trigger, 'mousemove' is the eventType
+  /**
+   * mouseover is a terralego specific event which equals to a mousemove mapbox
+   * event which watch when entering then leaving a feature
+   */
   if (eventsTypes.has('mouseover')) {
     eventsTypes.add('mousemove');
     eventsTypes.delete('mouseover');
   }
 
-  let hoveringClickableLayer = 0;
-  const uniqueHoveringEvents = {};
-  const canvas = map.getCanvas();
+  /**
+   * Mouseleave events for mouseover triggers
+   * /!\ this listener MUST be before the mousemove
+   */
   interactions.forEach(interaction => {
-    // Display a pointer cursor over click zones for the given layer
-    const { id, trigger = 'click' } = interaction;
-    if (['click', 'mouseover'].includes(trigger) && !uniqueHoveringEvents[id]) {
-      uniqueHoveringEvents[id] = true;
-      map.on('mouseenter', id, () => {
-        hoveringClickableLayer += 1;
-        if (hoveringClickableLayer === 1) {
-          canvas.style.cursor = 'pointer';
-        }
-      });
-      map.on('mouseleave', id, () => {
-        hoveringClickableLayer -= 1;
-        if (hoveringClickableLayer === 0) {
-          canvas.style.cursor = '';
-        }
-      });
-    }
-
-    // Mouseleave events for mouseover triggers
-    // /!\ this listener MUST be before the mousemove
+    const { id, trigger } = interaction;
     if (trigger !== 'mouseover') return;
-
     const eventType = 'mouseleave';
-    map.on(eventType, id, event => {
-      callback({
-        event,
-        map,
-        layerId: id,
-        interaction,
-        feature: PREV_STATE.point,
-        eventType,
+
+    getRelatedLayers(map, id).forEach(({ id: realLayer }) => {
+      map.on(eventType, realLayer, event => {
+        const { features = [] } = PREV_STATE;
+        const feature = features.find(({ layer: { id: layerId } }) => id === layerId);
+        callback({ event, map, layerId: id, interaction, feature, eventType });
       });
     });
   });
 
-  interactions.forEach(interaction => {
-    const { id, trigger = 'click', constraints } = interaction;
-    map.on(trigger === 'mouseover' ? 'mousemove' : trigger, id, e => {
-      const { features } = e;
-
-      if (!features.some(feature => !constraints || checkContraints({
-        map,
-        constraints,
-        feature,
-      }))) {
-        return;
-      }
-
-      if (trigger === 'mouseover') {
-        clearTimeout(listenerWaiter);
-        listenerWaiter = setTimeout(() => {
-          PREV_STATE.point = e.point;
-          return callback({
-            event: e,
-            map,
-            layerId: id,
-            feature: features && features[0],
-            interaction,
-            eventType: 'mousemove',
-          });
-        }, 100);
-      } else {
-        callback({
-          event: e,
-          map,
-          layerId: id,
-          feature: features && features[0],
-          interaction,
-          eventType: trigger,
-        });
-      }
+  const listener = (e, eventType) => {
+    const { target, point } = e;
+    let features;
+    if (eventType === 'mousemove') {
+      features = map.queryRenderedFeatures(point);
+      PREV_STATE.features = features;
+    }
+    const interactionsSpec = getInteractionsOnEvent({
+      eventType,
+      map: target,
+      point,
+      interactions,
+      features,
     });
+
+    if (!interactionsSpec) return;
+
+    const { interactions: filteredInteractionsSpec, feature, layerId } = interactionsSpec;
+    filteredInteractionsSpec.forEach(interaction =>
+      callback({ event: e, map, layerId, feature, interaction, eventType }));
+  };
+  eventsTypes.forEach(eventType => {
+    map.on(eventType, e => {
+      clearTimeout(listenerWaiter[eventType]);
+      listenerWaiter[eventType] = setTimeout(() => listener(e, eventType), eventType === 'mousemove' ? 200 : 100);
+    });
+  });
+
+  /**
+   *  Display a pointer cursor over click zones
+   */
+  map.on('mousemove', e => {
+    const { target, point } = e;
+    const interactionsSpec = getInteractionsOnEvent({
+      eventType: 'click',
+      map: target,
+      point,
+      interactions,
+    });
+
+    const canvas = target.getCanvas();
+    if (interactionsSpec) {
+      canvas.style.cursor = 'pointer';
+    } else {
+      canvas.style.cursor = '';
+    }
   });
 }
 
@@ -182,6 +217,7 @@ export default {
   toggleLayerVisibility,
   getOpacityProperty,
   setLayerOpacity,
+  getInteractionsOnEvent,
   setInteractions,
   checkContraints,
   fitZoom,
