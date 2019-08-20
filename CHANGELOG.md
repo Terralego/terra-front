@@ -1,4 +1,12 @@
 
+1.2.0 / 2019-08-20
+==================
+
+  * Some enhancements
+  * Utils to get custom layers ordered as layers tree
+  * Optimize layers check
+  * Home control get fitbounds coordinates and params
+
 1.1.3 / 2019-08-14
 ==================
 
