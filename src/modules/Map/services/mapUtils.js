@@ -103,7 +103,15 @@ export function getInteractionsOnEvent ({
       const found = getRelatedLayers(map, id)
         .find(({ id: compatibleId }) => layerId === compatibleId);
 
-      return found && (!constraints || checkContraints({ map, constraints, feature }));
+      if (!found) {
+        return false;
+      }
+
+      if (!constraints) {
+        return true;
+      }
+
+      return checkContraints({ map, constraints, feature });
     });
 
     if (!foundInteractions.length) return false;
