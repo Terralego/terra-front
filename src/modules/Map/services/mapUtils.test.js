@@ -1,5 +1,5 @@
 import {
-  getLayers,
+  getRelatedLayers,
   toggleLayerVisibility,
   getOpacityProperty,
   setLayerOpacity,
@@ -51,18 +51,18 @@ it('should get all layers related to main one', () => {
     getStyle,
   };
 
-  expect(getLayers(map, 'foo')).toEqual([{
+  expect(getRelatedLayers(map, 'foo')).toEqual([{
     id: 'foo',
     type: 'fill',
     paint: {
       'fill-opacity': 1,
     },
   }]);
-  expect(getLayers(map, 'bar')).toEqual([{
+  expect(getRelatedLayers(map, 'bar')).toEqual([{
     id: 'bar',
   }]);
 
-  expect(getLayers(map, 'layer')).toEqual([{
+  expect(getRelatedLayers(map, 'layer')).toEqual([{
     id: 'layer-0',
     type: 'fill',
     paint: {

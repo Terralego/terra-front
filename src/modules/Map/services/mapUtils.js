@@ -5,7 +5,7 @@ import { PREFIXES } from './cluster';
 
 const PREV_STATE = {};
 
-export const getLayers = moize({
+export const getRelatedLayers = moize({
   serializer: (map, layerId) => `${layerId}${map.getStyle().layers.map(id => id).join('')}`,
 })((map, layerId) => {
   const regexp = new RegExp(`^${layerId}(-(${PREFIXES.join('|')}))?(-[0-9]+)?$`);
@@ -14,7 +14,7 @@ export const getLayers = moize({
 });
 
 export function toggleLayerVisibility (map, layerId, visibility) {
-  getLayers(map, layerId)
+  getRelatedLayers(map, layerId)
     .forEach(({ id }) => map.setLayoutProperty(id, 'visibility', visibility));
 }
 
@@ -40,7 +40,7 @@ export function getOpacityProperty (type) {
 }
 
 export function setLayerOpacity (map, layerId, opacity) {
-  getLayers(map, layerId)
+  getRelatedLayers(map, layerId)
     .forEach(layer => {
       const property = getOpacityProperty(layer.type);
       if (property) {
@@ -70,10 +70,10 @@ export const checkContraints = ({
       const visible = match[1] !== '!';
       const layerId = match[2];
       return prevCheck && visible
-        ? getLayers(map, layerId).reduce((subCheck, { id }) =>
+        ? getRelatedLayers(map, layerId).reduce((subCheck, { id }) =>
           (subCheck ||
           map.getLayoutProperty(id, 'visibility') === 'visible'), false)
-        : getLayers(map, layerId).reduce((subCheck, { id }) =>
+        : getRelatedLayers(map, layerId).reduce((subCheck, { id }) =>
           (subCheck &&
           map.getLayoutProperty(id, 'visibility') === 'none'), true);
     }, true);
@@ -104,16 +104,12 @@ export function getInteractionsOnEvent ({
     const { layer: { id: layerId } } = feature;
 
     const foundInteractions = eventInteractions.filter(({ id, trigger = 'click', constraints }) => {
-      const found = getLayers(map, id).find(({ id: compatibleId }) =>
-        layerId === compatibleId &&
-        map.getLayoutProperty(compatibleId, 'visibility') === 'visible');
+      if (eventType !== (trigger === 'mouseover' ? 'mousemove' : trigger)) return false;
 
-      if (!found || (constraints && !checkContraints({ map, constraints, feature }))) {
-        return false;
-      }
+      const found = getRelatedLayers(map, id)
+        .find(({ id: compatibleId }) => layerId === compatibleId);
 
-      return found &&
-        eventType === (trigger === 'mouseover' ? 'mousemove' : trigger);
+      return found && (!constraints || checkContraints({ map, constraints, feature }));
     });
 
     if (!foundInteractions.length) return false;
@@ -134,6 +130,10 @@ const listenerWaiter = {};
 export function setInteractions ({ map, interactions, callback }) {
   const eventsTypes = new Set(interactions.reduce((triggers, { trigger = 'click' }) => [...triggers, trigger], []));
 
+  /**
+   * mouseover is a terralego specific event which equals to a mousemove mapbox
+   * event which watch when entering then leaving a feature
+   */
   if (eventsTypes.has('mouseover')) {
     eventsTypes.add('mousemove');
     eventsTypes.delete('mouseover');
@@ -146,12 +146,14 @@ export function setInteractions ({ map, interactions, callback }) {
   interactions.forEach(interaction => {
     const { id, trigger } = interaction;
     if (trigger !== 'mouseover') return;
-
     const eventType = 'mouseleave';
-    map.on(eventType, id, event => {
-      const features = map.queryRenderedFeatures(PREV_STATE.point);
-      const feature = features.find(({ layer: { id: layerId } }) => id === layerId);
-      callback({ event, map, layerId: id, interaction, feature, eventType });
+
+    getRelatedLayers(map, id).forEach(({ id: realLayer }) => {
+      map.on(eventType, realLayer, event => {
+        const features = map.queryRenderedFeatures(PREV_STATE.point);
+        const feature = features.find(({ layer: { id: layerId } }) => id === layerId);
+        callback({ event, map, layerId: id, interaction, feature, eventType });
+      });
     });
   });
 
