@@ -42,6 +42,12 @@
   }
 }
 
+.mapboxgl-ctrl--disabled {
+  pointer-events: none;
+  opacity: .4;
+  cursor: not-allowed;
+}
+
 // Taken from .mapboxgl-ctrl-group > button
 .mapboxgl-ctrl-permalink .mapboxgl-ctrl-icon,
 .mapboxgl-ctrl-print .mapboxgl-ctrl-icon {

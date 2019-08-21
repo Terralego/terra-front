@@ -53,3 +53,9 @@ it('should set props', () => {
   expect(instance.props).toEqual({ foo: 'foo', bar: 'bar' });
   expect(instance.renderContainer).toHaveBeenCalled();
 });
+
+it('should render a disabled control', () => {
+  const instance = new TestControl({ disabled: true });
+  instance.onAdd({});
+  expect(instance.container.className).toBe('mocked-classname mapboxgl-ctrl--disabled');
+});

@@ -86,27 +86,33 @@ storiesOf('Modules/Map/Controls', module).add('Toggle map controls ', () => (
       center={[5.386195159396806, 43.30072210972415]}
       maxBounds={[[-5.7283633634, 42.114925591], [8.8212564471, 51.3236272327]]} // Should be tried with https://boundingbox.klokantech.com/
       zoom={10} // set default zoom
-      controls={[boolean('Display search', true) && {
+      controls={[boolean('Display Search control', true) && {
         control: CONTROL_SEARCH,
         position: CONTROLS_TOP_RIGHT,
         onSearch,
         onSearchResultClick: ({ result }) => action('Click on search result')(result),
-      }, boolean('Display home', true) && {
+        disabled: boolean('Disable Search control', false),
+      }, boolean('Display Home control', true) && {
         control: CONTROL_HOME,
         position: CONTROLS_TOP_RIGHT,
+        disabled: boolean('Disable Home control', false),
       }, {
         control: CONTROL_NAVIGATION,
         position: CONTROLS_TOP_RIGHT,
-      }, boolean('Display background styles', true) && {
+        disabled: boolean('Disable Navigation control', false),
+      }, boolean('Display Background styles control', true) && {
         control: CONTROL_BACKGROUND_STYLES,
         position: CONTROLS_TOP_RIGHT,
-      }, boolean('Display capture', true) && {
+        disabled: boolean('Disable Background styles control', false),
+      }, boolean('Display Capture control', true) && {
         control: CONTROL_CAPTURE,
         position: CONTROLS_TOP_RIGHT,
-      }, boolean('Display print', true) && {
+        disabled: boolean('Disable Capture control', false),
+      }, boolean('Display Print control', true) && {
         control: CONTROL_PRINT,
         position: CONTROLS_TOP_RIGHT,
-      }, boolean('Display draw tools', false) && {
+        disabled: boolean('Disable Print control', false),
+      }, boolean('Display Draw tools control', false) && {
         control: CONTROL_DRAW,
         position: CONTROLS_TOP_LEFT,
         onDrawActionable: onChange,
@@ -117,6 +123,7 @@ storiesOf('Modules/Map/Controls', module).add('Toggle map controls ', () => (
         onDrawUncombine: onChange,
         onDrawSelectionChange: onChange,
         onDrawUpdate: onChange,
+        disabled: boolean('Disable Draw tools control', false),
         controls: {
           line_string: boolean('Display control "line_string"', true),
           polygon: boolean('Display control "polygon"', true),
