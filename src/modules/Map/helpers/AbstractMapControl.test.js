@@ -19,7 +19,7 @@ it('should be added on map', () => {
   instance.renderContainer = jest.fn();
   instance.onAdd(map);
   expect(instance.renderContainer).toHaveBeenCalled();
-  expect(instance.container.className).toBe('mocked-classname');
+  expect(instance.container.className).toContain('mocked-classname');
 });
 
 it('should be removed from map', () => {
@@ -52,4 +52,10 @@ it('should set props', () => {
   });
   expect(instance.props).toEqual({ foo: 'foo', bar: 'bar' });
   expect(instance.renderContainer).toHaveBeenCalled();
+});
+
+it('should render a disabled control', () => {
+  const instance = new TestControl({ disabled: true });
+  instance.onAdd({});
+  expect(instance.container.className).toContain('mapboxgl-ctrl--disabled');
 });

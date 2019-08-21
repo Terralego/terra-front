@@ -58,11 +58,20 @@ jest.mock('mapbox-gl', () => {
   PopupFunctions.addTo = jest.fn(() => PopupFunctions);
   PopupFunctions.setDOMContent = jest.fn(() => PopupFunctions);
   Popup.functions = PopupFunctions;
+
+  const mockedControl = {
+    _container: {
+      classList: {
+        add: jest.fn(),
+      },
+    },
+  };
   return {
     off,
     Map: jest.fn(() => map),
     ScaleControl: jest.fn(() => {}),
-    NavigationControl: jest.fn(() => {}),
+    MockedControl: mockedControl,
+    NavigationControl: jest.fn(() => mockedControl),
     AttributionControl: jest.fn(() => {}),
     Popup,
   };
@@ -631,5 +640,36 @@ describe('controls', () => {
       map,
       focusOnSearchResult: instance.focusOnSearchResult,
     });
+  });
+
+  it('should disable a mapbox bundled control', () => {
+    const instance = new Map({});
+    instance.props = {
+      map,
+      controls: [{
+        control: 'NavigationControl',
+        position: 'top-right',
+        disabled: true,
+      }],
+    };
+    instance.resetControls();
+    const { controls: [{ _container: { classList: { add } } }] } = instance;
+    expect(add).toHaveBeenCalledWith('mapboxgl-ctrl--disabled');
+  });
+
+  it('should not crash when disabling an unknow and not standard control', () => {
+    const instance = new Map({});
+
+    class CustomControl {}
+
+    instance.props = {
+      map,
+      controls: [{
+        control: CustomControl,
+        position: 'top-right',
+        disabled: true,
+      }],
+    };
+    expect(() => instance.resetControls()).not.toThrow();
   });
 });

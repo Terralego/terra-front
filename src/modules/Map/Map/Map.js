@@ -375,8 +375,8 @@ export class MapComponent extends React.Component {
           break;
         }
         case CONTROL_HOME: {
-          const { fitBounds = {}, center, zoom } = this.props;
-          const { coordinates, ...fitBoundsParams } = fitBounds;
+          const { fitBounds, center, zoom } = this.props;
+          const { coordinates, ...fitBoundsParams } = fitBounds || {};
           const controlInstance = new HomeControl({
             map,
             fitBounds: coordinates,
@@ -393,8 +393,15 @@ export class MapComponent extends React.Component {
           const controlInstance = typeof control === 'string'
             ? new mapBoxGl[control]({ ...params })
             : control;
+          const { disabled } = params;
           this.controls.push(controlInstance);
           map.addControl(controlInstance, position);
+          if (disabled) {
+            const { _container } = controlInstance;
+            if (_container) {
+              _container.classList.add('mapboxgl-ctrl--disabled');
+            }
+          }
         }
       }
       map.fire('control_added', { control });
