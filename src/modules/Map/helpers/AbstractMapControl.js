@@ -10,7 +10,7 @@ export class AbstractMapControl extends React.Component {
     const { disabled } = this.props;
     this.map = map;
     this.container = document.createElement('div');
-    this.container.className = `${this.constructor.containerClassName}${disabled ? ' mapboxgl-ctrl--disabled' : ''}`;
+    this.container.className = `${this.constructor.containerClassName} ${disabled ? 'mapboxgl-ctrl--disabled' : ''}`;
     this.renderContainer();
     return this.container;
   }
