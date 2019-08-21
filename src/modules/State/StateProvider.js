@@ -13,10 +13,8 @@ export class StateProvider extends React.Component {
     onStateChange () {},
   };
 
-  componentWillMount () {
-    const { initialState } = this.props;
-    this.setState(initialState);
-  }
+  // eslint-disable-next-line react/destructuring-assignment
+  state = this.props.initialState;
 
   setCurrentState = state => {
     const { onStateChange } = this.props;
