@@ -867,6 +867,68 @@ describe('Interactions', () => {
     expect(instance.displayTooltip).toHaveBeenCalled();
   });
 
+  it('should hide tooltip on mouseover out of the map', () => {
+    const instance = new InteractiveMap({
+      onInit () {},
+    });
+    instance.setState = () => null;
+    instance.componentDidMount();
+    const event = {
+      target: {},
+    };
+
+    class Popup {
+      remove = jest.fn();
+    }
+    const popup1 = new Popup();
+    const popup2 = new Popup();
+    const popup3 = new Popup();
+    instance.popups.set('foo', { type: 'mousemove', popup: popup1 });
+    instance.popups.set('bar', { type: 'click', popup: popup2 });
+    instance.popups.set('baba', { type: 'mousemove', popup: popup3 });
+
+    instance.mouseMoveListener(event);
+    expect(instance.popups.size).toBe(3);
+
+    instance.map = {
+      getCanvasContainer: () => event.target,
+    };
+
+    instance.mouseMoveListener(event);
+    expect(instance.popups.size).toBe(3);
+
+    instance.map = {
+      getCanvasContainer: () => {},
+      getContainer: () => ({
+        contains: () => true,
+      }),
+    };
+
+    instance.mouseMoveListener(event);
+    expect(instance.popups.size).toBe(3);
+
+    instance.map = {
+      getCanvasContainer: () => {},
+      getContainer: () => ({
+        contains: () => false,
+      }),
+    };
+
+    instance.mouseMoveListener(event);
+    expect(instance.popups.size).toBe(1);
+    expect(popup1.remove).toHaveBeenCalled();
+    expect(popup2.remove).not.toHaveBeenCalled();
+    expect(popup3.remove).toHaveBeenCalled();
+  });
+
+  it('should remove listener', () => {
+    const instance = new InteractiveMap({});
+    instance.mouseMoveListener = () => null;
+    jest.spyOn(document.body, 'removeEventListener');
+    instance.componentWillUnmount();
+    expect(document.body.removeEventListener).toHaveBeenCalledWith('mousemove', instance.mouseMoveListener);
+  });
+
   it('should trigger flyTo interaction', async () => {
     const interactions = [];
     const instance = new InteractiveMap({ interactions });

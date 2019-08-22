@@ -144,6 +144,19 @@ export class InteractiveMap extends React.Component {
     onInit(this);
     this.insertBackgroundStyleControl();
     this.insertPermalinkControl();
+
+    this.mouseMoveListener = ({ target }) => {
+      if (!this.map) return;
+      if (target === this.map.getCanvasContainer() ||
+          this.map.getContainer().contains(target)) return;
+
+      this.popups.forEach(({ type, popup }, k) => {
+        if (type !== 'mousemove') return;
+        popup.remove();
+        this.popups.delete(k);
+      });
+    };
+    document.body.addEventListener('mousemove', this.mouseMoveListener);
   }
 
   componentDidUpdate ({
@@ -173,6 +186,10 @@ export class InteractiveMap extends React.Component {
         this.permalinkControl && this.permalinkControl.container) {
       this.permalinkControl.setProps({ initialState });
     }
+  }
+
+  componentWillUnmount () {
+    document.body.removeEventListener('mousemove', this.mouseMoveListener);
   }
 
   onMapInit = map => {
@@ -352,7 +369,7 @@ export class InteractiveMap extends React.Component {
       anchor,
     });
     popup.once('close', () => this.popups.delete(layerId));
-    this.popups.set(layerId, { popup, content: container.innerHTML });
+    this.popups.set(layerId, { popup, content: container.innerHTML, type });
     popup.setLngLat(lnglat);
     popup.setDOMContent(container);
     popup.addTo(map);
