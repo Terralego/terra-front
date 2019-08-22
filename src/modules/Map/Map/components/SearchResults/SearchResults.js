@@ -27,7 +27,7 @@ export const SearchResults = ({
         >
           <p className="search-results__group-title">
             {group}
-            {total && (
+            {!!total && (
               <>
                 &nbsp;
                 <em>
@@ -36,35 +36,35 @@ export const SearchResults = ({
               </>
             )}
           </p>
-          {resultsItems.length
-            ? (
-              <ul className="search-results__list">
-                {resultsItems.slice(0, 5).map(item => (
-                  <li
-                    key={`${item.label}${item.id}`}
-                    className={classnames({
-                      'search-results__item': true,
-                      'search-results__item--active': true,
-                      'search-results__item--selected': selected === item,
-                    })}
+          {!!resultsItems.length && (
+            <ul className="search-results__list">
+              {resultsItems.slice(0, 5).map(item => (
+                <li
+                  key={`${item.label}${item.id}`}
+                  className={classnames({
+                    'search-results__item': true,
+                    'search-results__item--active': true,
+                    'search-results__item--selected': selected === item,
+                  })}
+                >
+                  <button
+                    type="button"
+                    onClick={() => onClick(item)}
                   >
-                    <button
-                      type="button"
-                      onClick={() => onClick(item)}
-                    >
-                      {item.label}
-                    </button>
-                  </li>
-                ))}
-                {resultsItems.length > maxResults && (
-                  <li className="search-results__item search-results__item--more">…</li>
-                )}
-              </ul>
-            ) : (
-              <p className="search-results__item">
-                {translate('terralego.map.search_results.no_result')}
-              </p>
-            )}
+                    {item.label}
+                  </button>
+                </li>
+              ))}
+              {resultsItems.length > maxResults && (
+                <li className="search-results__item search-results__item--more">…</li>
+              )}
+            </ul>
+          )}
+          {!resultsItems.length && (
+            <p className="search-results__item">
+              {translate('terralego.map.search_results.no_result')}
+            </p>
+          )}
           {!!results[index + 1] && <Divider />}
         </div>
       ))}
