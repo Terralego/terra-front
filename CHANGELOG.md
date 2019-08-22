@@ -1,4 +1,11 @@
 
+1.2.1 / 2019-08-22
+==================
+
+  * Add layers ordered by type
+  * Avoid displaying "0" in search results
+  * Ability to set a disabled map control
+
 1.2.0 / 2019-08-20
 ==================
 
