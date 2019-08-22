@@ -52,6 +52,8 @@ export function getLayerBeforeId (type, layers) {
   return layers[pos] && layers[pos].id;
 }
 
+export const LAYERS_TYPES = ['background', 'raster', 'hillshade', 'heatmap', 'fill', 'fill-extrusion', 'line', 'circle', 'symbol'];
+
 export class MapComponent extends React.Component {
   static propTypes = {
     // Mapbox general config
@@ -112,7 +114,7 @@ export class MapComponent extends React.Component {
         id: PropTypes.string.isRequired,
         source: PropTypes.oneOfType([PropTypes.string, PropTypes.object]),
         'source-layer': PropTypes.string,
-        type: PropTypes.oneOf(['fill', 'line', 'symbol', 'circle', 'heatmap', 'fill-extrusion', 'raster', 'hillshade', 'background']).isRequired,
+        type: PropTypes.oneOf(LAYERS_TYPES).isRequired,
         paint: PropTypes.object,
         layout: PropTypes.shape({
           visibility: PropTypes.oneOf(['visible', 'none']),
@@ -273,7 +275,12 @@ export class MapComponent extends React.Component {
     const { map, customStyle: { sources = [], layers = [] } } = this.props;
     const { layers: allLayers } = map.getStyle();
     sources.forEach(({ id, ...sourceAttrs }) => map.addSource(id, sourceAttrs));
-    layers.forEach(layer => {
+    const orderedLayers = [...layers];
+    orderedLayers.sort(({ type: typeA }, { type: typeB }) => {
+      if (typeA === typeB) return 0;
+      return LAYERS_TYPES.indexOf(typeA) - LAYERS_TYPES.indexOf(typeB);
+    });
+    orderedLayers.forEach(layer => {
       if (layer.cluster) return this.createClusterLayer(layer);
       const { type } = layer;
       const beforeId = getLayerBeforeId(type, allLayers);

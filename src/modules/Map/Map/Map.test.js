@@ -313,9 +313,10 @@ it('should update rotate', () => {
 });
 
 it('should create layers', () => {
+  const addedLayers = [];
   const map = {
     addSource: jest.fn(),
-    addLayer: jest.fn(),
+    addLayer: jest.fn(layer => addedLayers.push(layer)),
     getStyle: jest.fn(() => ({
       layers: [],
     })),
@@ -328,20 +329,47 @@ it('should create layers', () => {
     }],
     layers: [{
       id: 'layer1',
+      type: 'circle',
     }, {
       id: 'layer2',
+      type: 'fill',
+    }, {
+      id: 'layer3',
+      type: 'raster',
+    }, {
+      id: 'layer4',
+      type: 'circle',
+    }, {
+      id: 'layer5',
+      type: 'symbol',
     }],
   };
   const instance = new Map({ map, customStyle }, {});
   instance.createLayers();
   expect(map.addSource).toHaveBeenCalledTimes(1);
-  expect(map.addLayer).toHaveBeenCalledTimes(2);
+  expect(map.addLayer).toHaveBeenCalledTimes(5);
   expect(map.addSource).toHaveBeenCalledWith('foo', {
     type: 'vector',
     url: 'somewhere',
   });
-  expect(map.addLayer).toHaveBeenCalledWith({ id: 'layer1' }, undefined);
-  expect(map.addLayer).toHaveBeenCalledWith({ id: 'layer2' }, undefined);
+  expect(map.addLayer).toHaveBeenCalledWith({ id: 'layer1', type: 'circle' }, undefined);
+  expect(map.addLayer).toHaveBeenCalledWith({ id: 'layer2', type: 'fill' }, undefined);
+  expect(addedLayers).toEqual([{
+    id: 'layer3',
+    type: 'raster',
+  }, {
+    id: 'layer2',
+    type: 'fill',
+  }, {
+    id: 'layer1',
+    type: 'circle',
+  }, {
+    id: 'layer4',
+    type: 'circle',
+  }, {
+    id: 'layer5',
+    type: 'symbol',
+  }]);
 });
 
 it('should get layer before', () => {
