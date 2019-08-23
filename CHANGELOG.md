@@ -1,4 +1,9 @@
 
+1.2.2 / 2019-08-23
+==================
+
+  * Hide mousemove tooltips when mouse leaves the map
+
 1.2.1 / 2019-08-22
 ==================
 
