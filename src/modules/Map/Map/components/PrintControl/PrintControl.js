@@ -10,6 +10,7 @@ import {
   Radio,
   RadioGroup,
   Spinner,
+  Tooltip,
 } from '@blueprintjs/core';
 import AbstractMapControl from '../../../helpers/AbstractMapControl';
 import translateMock from '../../../../../utils/translate';
@@ -29,11 +30,11 @@ export class PrintControl extends AbstractMapControl {
 
   static defaultProps = {
     translate: translateMock({
-      'terralego.map.print_control.button_label': 'Export as PDF',
+      'terralego.map.print_control.button_label': 'Print to PDF',
       'terralego.map.print_control.portrait_label': 'Portrait',
       'terralego.map.print_control.lanscape_label': 'Landscape',
     }),
-  };
+  }
 
   state = {
     orientation: 'landscape',
@@ -85,6 +86,7 @@ export class PrintControl extends AbstractMapControl {
   render () {
     const { translate } = this.props;
     const { orientation, isOpen, isExporting } = this.state;
+
     return (
       <Popover
         className="popoverPos"
@@ -118,12 +120,17 @@ export class PrintControl extends AbstractMapControl {
           </>
         )}
       >
-        <button
-          className="mapboxgl-ctrl-icon"
-          type="button"
+        <Tooltip
+          content={translate('terralego.map.print_control.button_label')}
         >
-          <Icon icon="print" />
-        </button>
+          <button
+            className="mapboxgl-ctrl-icon"
+            type="button"
+            aria-label={translate('terralego.map.print_control.button_label')}
+          >
+            <Icon icon="print" />
+          </button>
+        </Tooltip>
       </Popover>
     );
   }

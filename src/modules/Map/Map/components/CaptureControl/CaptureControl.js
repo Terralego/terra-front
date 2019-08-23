@@ -1,6 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import { Icon } from '@blueprintjs/core';
+import { Icon, Tooltip } from '@blueprintjs/core';
 import { saveAs } from 'file-saver';
 
 import AbstractMapControl from '../../../helpers/AbstractMapControl';
@@ -35,15 +35,18 @@ export class CaptureControl extends AbstractMapControl {
   render () {
     const { translate } = this.props;
     return (
-      <button
-        className="mapboxgl-ctrl-icon"
-        type="button"
-        onClick={this.captureScreen}
-        title={translate('terralego.map.capture_control.button_label')}
-        aria-label={translate('terralego.map.capture_control.button_label')}
+      <Tooltip
+        content={translate('terralego.map.capture_control.button_label')}
       >
-        <Icon icon="download" />
-      </button>
+        <button
+          className="mapboxgl-ctrl-icon"
+          type="button"
+          onClick={this.captureScreen}
+          aria-label={translate('terralego.map.capture_control.button_label')}
+        >
+          <Icon icon="download" />
+        </button>
+      </Tooltip>
     );
   }
 }

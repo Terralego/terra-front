@@ -1,7 +1,8 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import { Radio, RadioGroup, Icon, Popover } from '@blueprintjs/core';
+import { Radio, RadioGroup, Icon, Popover, Tooltip } from '@blueprintjs/core';
 
+import translateMock from '../../../../../utils/translate';
 import AbstractMapControl from '../../../helpers/AbstractMapControl';
 import './styles.scss';
 
@@ -13,9 +14,16 @@ export class BackgroundStyles extends AbstractMapControl {
     ]).isRequired,
     selected: PropTypes.string.isRequired,
     onChange: PropTypes.func.isRequired,
+    translate: PropTypes.func,
   }
 
   static containerClassName = 'mapboxgl-ctrl mapboxgl-ctrl-group mapboxgl-ctrl-background-styles';
+
+  static defaultProps = {
+    translate: translateMock({
+      'terralego.map.BackgroundStyles_control.button_label': 'Background styles',
+    }),
+  };
 
   onChange = ({ target: { value } }) => {
     const { onChange } = this.props;
@@ -23,38 +31,42 @@ export class BackgroundStyles extends AbstractMapControl {
   }
 
   render () {
-    const { styles, selected } = this.props;
+    const { styles, selected, translate } = this.props;
     const { onChange } = this;
 
     return (
-      <button
-        className="mapboxgl-ctrl-icon"
-        type="button"
+      <Tooltip
+        content={translate('terralego.map.BackgroundStyles_control.button_label')}
       >
-        <Popover
-          className="popoverPos"
-          content={(
-            <div className="radioGroup">
-              <RadioGroup
-                label="Fond de carte"
-                onChange={onChange}
-                selectedValue={selected}
-              >
-                {styles.map(({ label, url }) => (
-                  <Radio
-                    className="bgLayer-radio"
-                    key={`${label}${url}`}
-                    label={label}
-                    value={url}
-                  />
-                ))}
-              </RadioGroup>
-            </div>
-          )}
+        <button
+          className="mapboxgl-ctrl-icon"
+          type="button"
         >
-          <Icon icon="layers" />
-        </Popover>
-      </button>
+          <Popover
+            className="popoverPos"
+            content={(
+              <div className="radioGroup">
+                <RadioGroup
+                  label="Fond de carte"
+                  onChange={onChange}
+                  selectedValue={selected}
+                >
+                  {styles.map(({ label, url }) => (
+                    <Radio
+                      className="bgLayer-radio"
+                      key={`${label}${url}`}
+                      label={label}
+                      value={url}
+                    />
+                  ))}
+                </RadioGroup>
+              </div>
+          )}
+          >
+            <Icon icon="layers" />
+          </Popover>
+        </button>
+      </Tooltip>
     );
   }
 }

@@ -4,6 +4,7 @@ import {
   Icon,
   Popover,
   PopoverPosition,
+  Tooltip,
 } from '@blueprintjs/core';
 import PropTypes from 'prop-types';
 import { parse, stringify } from 'query-string';
@@ -12,7 +13,6 @@ import translateMock from '../../../../../utils/translate';
 import { DEFAULT_OPTIONS } from '../../../../State/Hash/withHashState';
 
 import AbstractMapControl from '../../../helpers/AbstractMapControl';
-
 
 export class PermalinkControl extends AbstractMapControl {
   static containerClassName = 'mapboxgl-ctrl mapboxgl-ctrl-group mapboxgl-ctrl-permalink';
@@ -24,7 +24,7 @@ export class PermalinkControl extends AbstractMapControl {
 
   static defaultProps = {
     translate: translateMock({
-      'terralego.map.permalink_control.button_label': 'Get permalink',
+      'terralego.map.permalink_control.button_label': 'Share your map',
     }),
   };
 
@@ -62,16 +62,22 @@ export class PermalinkControl extends AbstractMapControl {
     const { translate } = this.props;
     const { url, copySuccess } = this.state;
     return (
-      <Popover position={PopoverPosition.LEFT} usePortal={false}>
-        <button
-          className="mapboxgl-ctrl-icon"
-          type="button"
-          onClick={this.generateHashString}
-          title={translate('terralego.map.capture_control.button_label')}
-          aria-label={translate('terralego.map.capture_control.button_label')}
+      <Popover
+        position={PopoverPosition.LEFT}
+        usePortal={false}
+      >
+        <Tooltip
+          content={translate('terralego.map.permalink_control.button_label')}
         >
-          <Icon icon="link" />
-        </button>
+          <button
+            className="mapboxgl-ctrl-icon"
+            type="button"
+            onClick={this.generateHashString}
+            aria-label={translate('terralego.map.permalink_control.button_label')}
+          >
+            <Icon icon="link" />
+          </button>
+        </Tooltip>
         <ControlGroup fill>
           <input
             className="bp3-input"

@@ -374,6 +374,7 @@ export class MapComponent extends React.Component {
         }
         case CONTROL_PRINT: {
           const controlInstance = new PrintControl({
+            ...this.props,
             map,
             ...params,
           });
@@ -385,6 +386,7 @@ export class MapComponent extends React.Component {
           const { fitBounds, center, zoom } = this.props;
           const { coordinates, ...fitBoundsParams } = fitBounds || {};
           const controlInstance = new HomeControl({
+            ...this.props,
             map,
             fitBounds: coordinates,
             fitBoundsParams,

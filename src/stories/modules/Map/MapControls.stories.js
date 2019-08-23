@@ -33,6 +33,10 @@ const t = (key, params) => {
       return `(${params.count} result found)`;
     case 'terralego.map.capture_control.button_label':
       return 'capture';
+    case 'terralego.map.home_control.button_label':
+      return 'Recentrer';
+    case 'terralego.map.print_control.button_label':
+      return 'Print to PDF';
     default:
       return key;
   }
