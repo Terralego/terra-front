@@ -18,6 +18,9 @@ jest.mock('@blueprintjs/core', () => ({
   Popover ({ children }) {
     return <span className="Popover">{children}</span>;
   },
+  Tooltip  ({ children }) {
+    return <span className="Tooltip">{children}</span>;
+  },
 }));
 it('should render correctly', () => {
   const style = [{ label: 'Onizuka', url: 'Sensei' }];
