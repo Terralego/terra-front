@@ -1,16 +1,20 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
 exports[`should render correctly 1`] = `
-<button
-  className="mapboxgl-ctrl-icon"
-  type="button"
+<span
+  className="Tooltip"
 >
-  <span
-    className="Popover"
+  <button
+    className="mapboxgl-ctrl-icon"
+    type="button"
   >
-    <span>
-      Icon
+    <span
+      className="Popover"
+    >
+      <span>
+        Icon
+      </span>
     </span>
-  </span>
-</button>
+  </button>
+</span>
 `;

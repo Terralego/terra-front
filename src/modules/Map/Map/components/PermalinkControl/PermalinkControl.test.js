@@ -50,7 +50,7 @@ it('should permit copy to clipboard', () => {
   );
   const selectionRange = jest.fn();
 
-  wrapper.find(Popover).setState({ isOpen: true });
+  wrapper.find(Popover).at(0).setState({ isOpen: true });
   wrapper.find('.bp3-input').props().onClick({
     target: {
       setSelectionRange: selectionRange,
