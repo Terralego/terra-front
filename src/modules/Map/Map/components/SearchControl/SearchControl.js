@@ -1,7 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import classnames from 'classnames';
-import { Icon } from '@blueprintjs/core';
+import { Icon, Tooltip } from '@blueprintjs/core';
 import debounce from 'lodash.debounce';
 import SearchInput from './SearchInput';
 
@@ -177,15 +177,18 @@ export class SearchControl extends AbstractMapControl {
 
     return (
       <>
-        <button
-          className="mapboxgl-ctrl-icon"
-          type="button"
-          title={translate('terralego.map.search_control.button_label')}
-          aria-label={translate('terralego.map.search_control.button_label')}
-          onClick={this.toggle}
+        <Tooltip
+          content={translate('terralego.map.search_control.button_label')}
         >
-          <Icon icon="search" />
-        </button>
+          <button
+            className="mapboxgl-ctrl-icon"
+            type="button"
+            aria-label={translate('terralego.map.search_control.button_label')}
+            onClick={this.toggle}
+          >
+            <Icon icon="search" />
+          </button>
+        </Tooltip>
         {visible && (
           <div className={classnames({
             'mapboxgl-ctrl-search__input': true,

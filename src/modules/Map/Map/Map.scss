@@ -33,6 +33,12 @@
     filter: invert(100%);
   }
 
+  .bp3-popover-target button {
+    background-color: #394b59;
+    filter: invert(0%);
+    color: $pt-dark-text-color;
+  }
+
   .mapboxgl-ctrl-icon.mapboxgl-ctrl-compass > .mapboxgl-ctrl-compass-arrow {
     filter: brightness(0.5);
   }

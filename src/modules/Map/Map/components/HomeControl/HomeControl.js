@@ -1,6 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import { Icon } from '@blueprintjs/core';
+import { Icon, Tooltip } from '@blueprintjs/core';
 
 import AbstractMapControl from '../../../helpers/AbstractMapControl';
 import translateMock from '../../../../../utils/translate';
@@ -35,15 +35,19 @@ export class HomeControl extends AbstractMapControl {
     const { translate } = this.props;
 
     return (
-      <button
-        className="mapboxgl-ctrl-icon"
-        type="button"
-        onClick={this.goHome}
-        title={translate('terralego.map.home_control.button_label')}
-        aria-label={translate('terralego.map.home_control.button_label')}
+      <Tooltip
+        content={translate('terralego.map.home_control.button_label')}
       >
-        <Icon icon="home" />
-      </button>
+        <button
+          className="mapboxgl-ctrl-icon"
+          type="button"
+          onClick={this.goHome}
+          aria-label={translate('terralego.map.home_control.button_label')}
+        >
+          <Icon icon="home" />
+        </button>
+      </Tooltip>
+
     );
   }
 }
