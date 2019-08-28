@@ -32,7 +32,7 @@ it('should mount & update correctly', () => {
       max={100}
     />
   ));
-  wrapper.find('RangeSlider').props().onChange([20, 40]);
+  wrapper.find('RangeSlider').props().onRelease([20, 40]);
   expect(onChange).toHaveBeenCalled();
 });
 

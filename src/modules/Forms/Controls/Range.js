@@ -107,7 +107,7 @@ export class Range extends React.Component {
         <p className="control-label">{label}</p>
         <RangeSlider
           value={value || [min, max]}
-          onChange={onChange}
+          onRelease={onChange}
           min={min}
           max={max}
           labelRenderer={this.labelRenderer}
