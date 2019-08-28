@@ -36,7 +36,7 @@ export const Legend = ({ title, items, level, position, content, history }) => {
             history={history}
           />
         )}
-        {items.map(({ label, color, items: subItems, shape = 'square', radius = DEFAULT_RADIUS }) => {
+        {items.map(({ label, template, color, items: subItems, shape = 'square', radius = DEFAULT_RADIUS }, index) => {
           if (subItems) {
             return (
               <Legend
@@ -44,6 +44,17 @@ export const Legend = ({ title, items, level, position, content, history }) => {
                 title={label}
                 items={subItems}
                 level={level + 1}
+              />
+            );
+          }
+
+          if (template) {
+            return (
+              <Template
+                key={index} // eslint-disable-line react/no-array-index-key
+                template={template}
+                customComponents={CustomComponents}
+                history={history}
               />
             );
           }
@@ -73,11 +84,12 @@ export const Legend = ({ title, items, level, position, content, history }) => {
 Legend.propTypes = {
   title: PropTypes.string.isRequired,
   items: PropTypes.arrayOf(PropTypes.shape({
-    label: PropTypes.string.isRequired,
+    label: PropTypes.string,
     color: PropTypes.string,
     items: PropTypes.array,
     shape: PropTypes.string,
     radius: PropTypes.number,
+    template: PropTypes.string,
   })),
   content: PropTypes.string,
   position: PropTypes.string,
