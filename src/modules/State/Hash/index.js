@@ -1,4 +1,4 @@
 import StateProvider from '../StateProvider';
-import { withHashState } from './withHashState';
+import withHashState from './withHashState';
 
-export default withHashState()(StateProvider);
+export default withHashState(StateProvider);

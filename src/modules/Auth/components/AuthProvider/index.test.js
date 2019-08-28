@@ -1,8 +1,10 @@
 import React from 'react';
 import { shallow } from 'enzyme';
 import AuthProvider from '.';
-import { Consumer } from '../../services/context';
+import context from '../../services/context';
 import Auth from '../../services/auth';
+
+const { Consumer } = context;
 
 const MOCKED_TOKEN = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyIjp7ImlkIjo0Mn0sImV4cCI6MTUxNjIzOTAyMn0.mPABaxD6A5yFiIFWjNDFFEhtDsrtDPVsDKHCW6ljCNs';
 
