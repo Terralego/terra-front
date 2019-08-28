@@ -427,6 +427,15 @@ exports[`should render correctly with multi level 1`] = `
         level1.2
       </div>
     </div>
+    <p>
+      custom 
+      <strong>
+        nunjucks
+      </strong>
+       template
+    </p>
+    
+
     <div
       className="tf-legend tf-legend--level-2"
     >

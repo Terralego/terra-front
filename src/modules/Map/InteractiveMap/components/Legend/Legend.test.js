@@ -38,6 +38,8 @@ describe('should render correctly', () => {
           label: 'level1.2',
           color: 'blue',
         }, {
+          template: 'custom <strong>nunjucks</strong> template',
+        }, {
           label: 'level2',
           items: [{
             label: 'level2.1',
