@@ -8,7 +8,9 @@ import {
   invalidToken,
   createToken,
 } from '../../services/auth';
-import { Provider } from '../../services/context';
+import context from '../../services/context';
+
+const { Provider } = context;
 
 export class AuthProvider extends React.Component {
   constructor (props) {

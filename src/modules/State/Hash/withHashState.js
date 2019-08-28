@@ -16,7 +16,7 @@ export const DEFAULT_OPTIONS = {
 /**
  * Decorator for getting an initialState from hash.
  */
-export const withHashState = () => WrappedComponent =>
+export const withHashState = WrappedComponent => {
   class WithHashState extends React.Component {
     static propTypes = {
       /** @param {boolean} [listenHash=true] If initialState should be update when hash changes */
@@ -80,6 +80,11 @@ export const withHashState = () => WrappedComponent =>
         />
       );
     }
-  };
+  }
+
+  const name = WrappedComponent.displayName || WrappedComponent.name;
+  WithHashState.displayName = `withHashState(${name})`;
+  return WithHashState;
+};
 
 export default withHashState;

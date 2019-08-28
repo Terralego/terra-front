@@ -3,7 +3,7 @@ import { shallow } from 'enzyme';
 import withHashState from './withHashState';
 
 const Component = jest.fn(() => null);
-const ComponentWithHash = withHashState()(Component);
+const ComponentWithHash = withHashState(Component);
 
 it('should not set listeners', () => {
   jest.spyOn(window, 'addEventListener');
