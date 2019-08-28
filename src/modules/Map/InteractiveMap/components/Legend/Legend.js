@@ -36,38 +36,35 @@ export const Legend = ({ title, items, level, position, content, history }) => {
             history={history}
           />
         )}
-        {items.map(({ label, color, items: subItems, shape = 'square', radius = DEFAULT_RADIUS }) => (
-          subItems
-            ? (
+        {items.map(({ label, color, items: subItems, shape = 'square', radius = DEFAULT_RADIUS }) => {
+          if (subItems) {
+            return (
               <Legend
                 key={`${label}${items.length}`}
                 title={label}
                 items={subItems}
                 level={level + 1}
               />
-            ) : (
+            );
+          }
+
+          return (
+            <div
+              key={`${label}${color}`}
+              className={`tf-legend__item tf-legend__item--${shape} tf-legend__item--${position}`}
+            >
               <div
-                key={`${label}${color}`}
-                className={`tf-legend__item tf-legend__item--${shape} tf-legend__item--${position}`}
+                className="tf-legend__symbol-container"
+                style={{ width: shape === 'circle' ? biggestRadius : DEFAULT_RADIUS * 2 }}
               >
-                <div
-                  className="tf-legend__symbol-container"
-                  style={{
-                    width: shape === 'circle' ? biggestRadius : DEFAULT_RADIUS * 2,
-                  }}
-                >
-                  {shape === 'circle'
-                    ? <Circle color={color} size={radius} />
-                    : <Rect color={color} size={DEFAULT_RADIUS} />}
-                </div>
-                <div
-                  className="tf-legend__label"
-                >
-                  {label}
-                </div>
+                {shape === 'circle'
+                  ? <Circle color={color} size={radius} />
+                  : <Rect color={color} size={DEFAULT_RADIUS} />}
               </div>
-            )
-        ))}
+              <div className="tf-legend__label">{label}</div>
+            </div>
+          );
+        })}
       </div>
     </div>
   );
