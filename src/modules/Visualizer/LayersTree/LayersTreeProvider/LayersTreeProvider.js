@@ -7,7 +7,6 @@ import {
   initLayersStateAction,
   setLayerStateAction,
 } from '../../services/layersTreeUtils';
-import translateMock from '../../../../utils/translate';
 
 const { Provider } = context;
 
@@ -44,9 +43,7 @@ export class LayersTreeProvider extends React.Component {
     initialLayersTreeState: new Map(),
     fetchPropertyValues () {},
     fetchPropertyRange () {},
-    translate: translateMock({
-      'visualizer.layerstree.group.selector': 'No layer found',
-    }),
+    translate: undefined,
     setCurrentState () {},
   };
 

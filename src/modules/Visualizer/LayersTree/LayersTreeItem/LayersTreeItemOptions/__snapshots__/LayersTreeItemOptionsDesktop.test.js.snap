@@ -111,7 +111,7 @@ exports[`should render with proporties 1`] = `
       onMouseLeave={[Function]}
     >
       <button
-        alt="close foo"
+        alt="terralego.layerstree.itemOptions.widget.close"
         className="bp3-button bp3-minimal layerstree-node-content__options__button layerstree-node-content__options__button--active"
         onClick={true}
         onKeyDown={[Function]}
@@ -158,7 +158,7 @@ exports[`should render with proporties 1`] = `
         onKeyDown={[Function]}
         onKeyUp={[Function]}
         tabIndex={0}
-        title="layerstree.itemOptions.table.title"
+        title="terralego.visualizer.layerstree.itemOptions.table.title"
         type="button"
       >
         <span

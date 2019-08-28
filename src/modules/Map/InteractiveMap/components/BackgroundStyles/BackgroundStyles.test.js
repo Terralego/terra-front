@@ -1,6 +1,6 @@
 import React from 'react';
 import renderer from 'react-test-renderer';
-import BackgroundStyles from '.';
+import BackgroundStyles from './BackgroundStyles';
 
 jest.mock('@blueprintjs/core', () => ({
   Radio () {
@@ -18,7 +18,7 @@ jest.mock('@blueprintjs/core', () => ({
   Popover ({ children }) {
     return <span className="Popover">{children}</span>;
   },
-  Tooltip  ({ children }) {
+  Tooltip ({ children }) {
     return <span className="Tooltip">{children}</span>;
   },
 }));

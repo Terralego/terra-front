@@ -23,17 +23,17 @@ const LayersTreeItemOptionsDesktop = ({
   widgets,
   isWidgetActive,
   translate = translateMock({
-    'layerstree.itemOptions.widget.open': 'open {{widget}}',
-    'layerstree.itemOptions.widget.close': 'close {{widget}}',
-    'layerstree.itemOptions.table.label': 'table',
-    'layerstree.itemOptions.table.open': 'open table',
-    'layerstree.itemOptions.table.close': 'close table',
-    'layerstree.itemOptions.filter.label': 'filters',
-    'layerstree.itemOptions.filter.open': 'open filters',
-    'layerstree.itemOptions.filter.close': 'close filters',
-    'layerstree.itemOptions.options.label': 'options',
-    'layerstree.itemOptions.options.open': 'open options',
-    'layerstree.itemOptions.options.close': 'close options',
+    'terralego.visualizer.layerstree.itemOptions.widget.open': 'open {{widget}}',
+    'terralego.visualizer.layerstree.itemOptions.widget.close': 'close {{widget}}',
+    'terralego.visualizer.layerstree.itemOptions.table.label': 'table',
+    'terralego.visualizer.layerstree.itemOptions.table.open': 'open table',
+    'terralego.visualizer.layerstree.itemOptions.table.close': 'close table',
+    'terralego.visualizer.layerstree.itemOptions.filter.label': 'filters',
+    'terralego.visualizer.layerstree.itemOptions.filter.open': 'open filters',
+    'terralego.visualizer.layerstree.itemOptions.filter.close': 'close filters',
+    'terralego.visualizer.layerstree.itemOptions.options.label': 'options',
+    'terralego.visualizer.layerstree.itemOptions.options.open': 'open options',
+    'terralego.visualizer.layerstree.itemOptions.options.close': 'close options',
   }),
 }) => (
   <div
@@ -48,7 +48,7 @@ const LayersTreeItemOptionsDesktop = ({
         <Tooltip
           key={widget.component}
           className="layerstree-node-content__options__tooltip widgets"
-          content={translate(`layerstree.itemOptions.widget.${isWidgetActive(widget) ? 'close' : 'open'}`, { widget: widget.component })}
+          content={translate(`terralego.visualizer.layerstree.itemOptions.widget.${isWidgetActive(widget) ? 'close' : 'open'}`, { widget: widget.component })}
         >
           <Button
             className={classnames({
@@ -59,7 +59,7 @@ const LayersTreeItemOptionsDesktop = ({
             minimal
             icon="selection"
             title={`widget ${widget.component}`}
-            alt={translate(`layerstree.itemOptions.widget.${isWidgetActive(widget) ? 'close' : 'open'}`, { widget: widget.component })}
+            alt={translate(`terralego.layerstree.itemOptions.widget.${isWidgetActive(widget) ? 'close' : 'open'}`, { widget: widget.component })}
           />
         </Tooltip>
       ))
@@ -67,7 +67,7 @@ const LayersTreeItemOptionsDesktop = ({
     {displayTableButton && (
       <Tooltip
         className="layerstree-node-content__options__tooltip table"
-        content={translate(`layerstree.itemOptions.table.${isTableActive ? 'close' : 'open'}`)}
+        content={translate(`terralego.visualizer.layerstree.itemOptions.table.${isTableActive ? 'close' : 'open'}`)}
       >
         <Button
           className={
@@ -79,8 +79,8 @@ const LayersTreeItemOptionsDesktop = ({
           onClick={toggleTable}
           minimal
           icon="th"
-          title={translate('layerstree.itemOptions.table.title')}
-          alt={translate(`layerstree.itemOptions.table.${isTableActive ? 'close' : 'open'}`)}
+          title={translate('terralego.visualizer.layerstree.itemOptions.table.title')}
+          alt={translate(`terralego.visualizer.layerstree.itemOptions.table.${isTableActive ? 'close' : 'open'}`)}
         />
       </Tooltip>
     )}
@@ -94,8 +94,8 @@ const LayersTreeItemOptionsDesktop = ({
       <LayerFetchValues layer={layer} isFilterVisible={isFilterVisible} />
       )}
       <Tooltip
-        content={translate(`layerstree.itemOptions.filter.${isFilterVisible ? 'close' : 'open'}`)}
-        className="layerstree-node-content__options__tooltip filters"
+        content={translate(`terralego.visualizer.layerstree.itemOptions.filter.${isFilterVisible ? 'close' : 'open'}`)}
+        className="visualizer.layerstree-node-content__options__tooltip filters"
       >
         <Button
           className={
@@ -106,14 +106,14 @@ const LayersTreeItemOptionsDesktop = ({
           onClick={toggleFilters}
           minimal
           icon="filter"
-          title={translate('layerstree.itemOptions.filter.label')}
-          alt={translate(`layerstree.itemOptions.filter.${isFilterVisible ? 'close' : 'open'}`)}
+          title={translate('terralego.visualizer.layerstree.itemOptions.filter.label')}
+          alt={translate(`terralego.visualizer.layerstree.itemOptions.filter.${isFilterVisible ? 'close' : 'open'}`)}
         />
       </Tooltip>
     </FiltersPanel>
     )}
     <Tooltip
-      content={translate(`layerstree.itemOptions.options.${isOptionsOpen ? 'close' : 'open'}`)}
+      content={translate(`terralego.visualizer.layerstree.itemOptions.options.${isOptionsOpen ? 'close' : 'open'}`)}
       className="layerNode__tooltip options"
     >
       <Button
@@ -126,8 +126,8 @@ const LayersTreeItemOptionsDesktop = ({
         icon="more"
         minimal
         onClick={handleOptionPanel}
-        title={translate('layerstree.itemOptions.options.label')}
-        alt={translate(`layerstree.itemOptions.options.${isOptionsOpen ? 'close' : 'open'}`)}
+        title={translate('terralego.visualizer.layerstree.itemOptions.options.label')}
+        alt={translate(`terralego.visualizer.layerstree.itemOptions.options.${isOptionsOpen ? 'close' : 'open'}`)}
       />
     </Tooltip>
   </div>

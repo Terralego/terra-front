@@ -4,6 +4,7 @@ import { Callout } from '@blueprintjs/core/lib/cjs/components/callout/callout';
 import { Intent } from '@blueprintjs/core/lib/cjs/common/intent';
 
 import Select from '../../../../../Forms/Controls/Select';
+import translateMock from '../../../../../../utils/translate';
 
 import './styles.scss';
 
@@ -29,7 +30,9 @@ export class Selector extends React.Component {
 
   static defaultProps = {
     onChange () {},
-    translate () {},
+    translate: translateMock({
+      'terralego.visualizer.layerstree.group.selector': 'No layer found',
+    }),
   }
 
   state = {}

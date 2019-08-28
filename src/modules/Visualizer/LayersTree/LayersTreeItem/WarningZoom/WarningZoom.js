@@ -13,7 +13,7 @@ export const WarningZoom = props => {
     minZoomLayer,
     children,
     translate = translateMock({
-      'visualizer.layerstree.warningzoom.message': 'Visible from zoom {{minzoom}}',
+      'terralego.visualizer.layerstree.warningzoom.message': 'Visible from zoom {{minzoom}}',
     }),
   } = props;
 
@@ -21,7 +21,7 @@ export const WarningZoom = props => {
   return (
     <Tooltip
       className="layerstree-node-content__item-tooltip-warning"
-      content={(<span>{translate('visualizer.layerstree.warningzoom.message', { minzoom: minZoomLayer })}</span>)}
+      content={(<span>{translate('terralego.visualizer.layerstree.warningzoom.message', { minzoom: minZoomLayer })}</span>)}
       intent={Intent.WARNING}
       usePortal={false}
     >
