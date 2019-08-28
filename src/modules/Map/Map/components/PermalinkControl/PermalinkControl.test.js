@@ -1,9 +1,17 @@
-import { Popover } from '@blueprintjs/core';
 import { mount } from 'enzyme';
 import React from 'react';
 import renderer from 'react-test-renderer';
 
 import PermalinkControl from './PermalinkControl';
+
+jest.mock('@blueprintjs/core', () => ({
+  Button: ({ children = 'Button' }) => children,
+  ControlGroup: ({ children }) => children,
+  Icon: ({ children = 'Icon' }) => children,
+  Popover: ({ children }) => children,
+  PopoverPosition: {},
+  Tooltip: ({ children }) => children,
+}))
 
 it('should render', () => {
   const tree = renderer.create(<PermalinkControl />);
@@ -49,8 +57,8 @@ it('should permit copy to clipboard', () => {
     />,
   );
   const selectionRange = jest.fn();
+  const instance = wrapper.instance();
 
-  wrapper.find(Popover).at(0).setState({ isOpen: true });
   wrapper.find('.bp3-input').props().onClick({
     target: {
       setSelectionRange: selectionRange,
@@ -58,14 +66,14 @@ it('should permit copy to clipboard', () => {
     },
   });
 
-  wrapper.instance().inputRef.current = {
+  instance.inputRef.current = {
     setSelectionRange: jest.fn(),
     focus: jest.fn(),
     value: 'coucou',
   };
-  wrapper.instance().copyToCliboard();
+  instance.copyToCliboard();
   expect(document.execCommand).toHaveBeenCalledWith('copy');
-  expect(wrapper.instance().state).toEqual({ copySuccess: true });
+  expect(instance.state).toEqual({ copySuccess: true });
   jest.runAllTimers();
-  expect(wrapper.instance().state).toEqual({ copySuccess: false });
+  expect(instance.state).toEqual({ copySuccess: false });
 });
