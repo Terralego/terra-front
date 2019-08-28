@@ -1,4 +1,15 @@
 
+1.2.3 / 2019-08-28
+==================
+
+  * Use onRelease for RangeSlider
+  * Standardize translations keys
+  * Fix tests
+  * Connect translate function
+  * update tests
+  * add tooltip to print and url map control button
+  * fix truncated select list
+
 1.2.2 / 2019-08-23
 ==================
 
