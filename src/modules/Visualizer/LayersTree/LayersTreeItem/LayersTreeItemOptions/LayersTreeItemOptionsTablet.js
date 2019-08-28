@@ -23,17 +23,17 @@ const LayersTreeItemOptionsTablet = ({
   widgets,
   isWidgetActive,
   translate = translateMock({
-    'layerstree.itemOptions.widget.open': 'open {{widget}}',
-    'layerstree.itemOptions.widget.close': 'close {{widget}}',
-    'layerstree.itemOptions.table.label': 'table',
-    'layerstree.itemOptions.table.open': 'open table',
-    'layerstree.itemOptions.table.close': 'close table',
-    'layerstree.itemOptions.filter.label': 'filters',
-    'layerstree.itemOptions.filter.open': 'open filters',
-    'layerstree.itemOptions.filter.close': 'close filters',
-    'layerstree.itemOptions.options.label': 'options',
-    'layerstree.itemOptions.options.open': 'open options',
-    'layerstree.itemOptions.options.close': 'close options',
+    'terralego.visualizer.layerstree.itemOptions.widget.open': 'open {{widget}}',
+    'terralego.visualizer.layerstree.itemOptions.widget.close': 'close {{widget}}',
+    'terralego.visualizer.layerstree.itemOptions.table.label': 'table',
+    'terralego.visualizer.layerstree.itemOptions.table.open': 'open table',
+    'terralego.visualizer.layerstree.itemOptions.table.close': 'close table',
+    'terralego.visualizer.layerstree.itemOptions.filter.label': 'filters',
+    'terralego.visualizer.layerstree.itemOptions.filter.open': 'open filters',
+    'terralego.visualizer.layerstree.itemOptions.filter.close': 'close filters',
+    'terralego.visualizer.layerstree.itemOptions.options.label': 'options',
+    'terralego.visualizer.layerstree.itemOptions.options.open': 'open options',
+    'terralego.visualizer.layerstree.itemOptions.options.close': 'close options',
   }),
 }) => (
   <div
@@ -55,7 +55,7 @@ const LayersTreeItemOptionsTablet = ({
           minimal
           icon="selection"
           title={`widget ${widget.component}`}
-          alt={translate(`layerstree.itemOptions.widget.${isWidgetActive(widget) ? 'close' : 'open'}`, { widget: widget.component })}
+          alt={translate(`terralego.visualizer.layerstree.itemOptions.widget.${isWidgetActive(widget) ? 'close' : 'open'}`, { widget: widget.component })}
         >
           {widget.component}
         </Button>
@@ -71,10 +71,10 @@ const LayersTreeItemOptionsTablet = ({
       onClick={toggleTable}
       minimal
       icon="th"
-      title={translate('layerstree.itemOptions.table.title')}
-      alt={translate(`layerstree.itemOptions.table.${isTableActive ? 'close' : 'open'}`)}
+      title={translate('terralego.visualizer.layerstree.itemOptions.table.title')}
+      alt={translate(`terralego.visualizer.layerstree.itemOptions.table.${isTableActive ? 'close' : 'open'}`)}
     >
-      {translate('layerstree.itemOptions.table.label')}
+      {translate('terralego.visualizer.layerstree.itemOptions.table.label')}
     </Button>
     )}
     {form && (
@@ -110,10 +110,10 @@ const LayersTreeItemOptionsTablet = ({
       icon="more"
       minimal
       onClick={handleOptionPanel}
-      title={translate('layerstree.itemOptions.options.label')}
-      alt={translate(`layerstree.itemOptions.options.${isOptionsOpen ? 'close' : 'open'}`)}
+      title={translate('terralego.visualizer.layerstree.itemOptions.options.label')}
+      alt={translate(`terralego.visualizer.layerstree.itemOptions.options.${isOptionsOpen ? 'close' : 'open'}`)}
     >
-      {translate('layerstree.itemOptions.options.label')}
+      {translate('terralego.visualizer.layerstree.itemOptions.options.label')}
     </Button>
   </div>
 );

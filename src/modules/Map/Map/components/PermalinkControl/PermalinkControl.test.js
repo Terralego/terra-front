@@ -11,7 +11,7 @@ jest.mock('@blueprintjs/core', () => ({
   Popover: ({ children }) => children,
   PopoverPosition: {},
   Tooltip: ({ children }) => children,
-}))
+}));
 
 it('should render', () => {
   const tree = renderer.create(<PermalinkControl />);
