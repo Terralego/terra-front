@@ -1,4 +1,12 @@
 
+v1.2.4 / 2019-08-29
+===================
+
+  * Upgrade mapbox
+  * Replace babel preset with react
+  * Allow text content in Legend component items
+  * Better consistency across project
+
 1.2.3 / 2019-08-28
 ==================
 
