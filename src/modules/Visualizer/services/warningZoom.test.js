@@ -1,5 +1,5 @@
 import {
-  getMinMax, displayWarningAccordingToZoom,
+  displayWarningAccordingToZoom,
 } from './warningZoom';
 
 const getStyle = jest.fn(() => ({
@@ -14,35 +14,42 @@ const getStyle = jest.fn(() => ({
     },
   }],
 }));
-
-it('should getMinMax with default param', () => {
-  expect(getMinMax([{}])).toEqual({ maxzoom: 24, minzoom: 0 });
-});
-
-it('should getMinMax with params', () => {
-  expect(getMinMax([{ minzoom: 0, maxzoom: 22 }])).toEqual({ maxzoom: 22, minzoom: 0 });
-  expect(getMinMax([{}], 8, 12)).toEqual({ maxzoom: 12, minzoom: 8 });
-});
-
-
-it('should display warning according to curret zoom', () => {
+it('should display warning according to current zoom', () => {
   const map = {
     getZoom: jest.fn(() => 7),
     getSource: jest.fn(() => ({ minzoom: 14, maxzoom: 22 })),
+    getLayer: jest.fn(id => ({
+      id,
+      minzoom: 14,
+      maxzoom: 24,
+    })),
     getStyle,
   };
   const layer = { layers: ['foo'] };
   expect(displayWarningAccordingToZoom(map, layer)).toEqual({ display: true, minZoomLayer: 14 });
 });
 
-it('should not display warning according to curret zoom', () => {
+it('should not display warning according to current zoom', () => {
   const map = {
     getZoom: jest.fn(() => 17),
     getSource: jest.fn(() => ({ minzoom: 14, maxzoom: 22 })),
+    getLayer: jest.fn(id => ({
+      id,
+      minzoom: 14,
+      maxzoom: 24,
+    })),
     getStyle,
   };
   const layer = { layers: ['foo'] };
   expect(displayWarningAccordingToZoom(map, layer)).toEqual({ display: false, minZoomLayer: 14 });
+
+  map.getLayer = jest.fn(id => ({
+    id,
+  }));
+  expect(displayWarningAccordingToZoom(map, layer)).toEqual({ display: false, minZoomLayer: 0 });
+
+  map.getLayer = jest.fn(() => null);
+  expect(displayWarningAccordingToZoom(map, layer)).toEqual({ display: false, minZoomLayer: 0 });
 });
 
 it('should displayWarningAccordingToZoom without map', () => {
