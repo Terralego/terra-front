@@ -36,6 +36,9 @@ const json = [
             color: 'blue',
           },
           {
+            template: '<strong>custom text</strong> at end of level 3',
+          },
+          {
             label: 'level4',
             items: [
               {
@@ -51,6 +54,12 @@ const json = [
         ],
       },
     ],
+  },
+  {
+    template: `
+### Custom Nunjucks template
+<em>after last legend item</em>
+    `,
   },
 ];
 
