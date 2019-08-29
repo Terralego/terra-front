@@ -13,6 +13,8 @@ import PrintControl from './components/PrintControl';
 import HomeControl from './components/HomeControl';
 import ShareControl from './components/ShareControl';
 
+import translateMock from '../../../utils/translate';
+
 import './Map.scss';
 
 export const CONTROLS_TOP_LEFT = 'top-left';
@@ -138,8 +140,8 @@ export class MapComponent extends React.Component {
         }),
       })),
     }),
-
     onBackgroundChange: PropTypes.func,
+    translate: PropTypes.func,
   };
 
   static defaultProps = {
@@ -152,6 +154,11 @@ export class MapComponent extends React.Component {
     customStyle: {},
     onBackgroundChange () {},
     controls: DEFAULT_CONTROLS,
+    translate: translateMock({
+      'terralego.map.zoom_in_control.title': 'Zoom in',
+      'terralego.map.zoom_out_control.title': 'Zoom out',
+      'terralego.map.compass_arrow_control.title': 'Reset bearing to north',
+    }),
   };
 
   controls = [];
@@ -337,7 +344,7 @@ export class MapComponent extends React.Component {
   }
 
   resetControls () {
-    const { controls, map } = this.props;
+    const { controls, map, translate } = this.props;
     // Remove all previous controls
     this.controls.forEach(control => map.removeControl(control));
     this.controls = [];
@@ -416,6 +423,16 @@ export class MapComponent extends React.Component {
           const { disabled } = params;
           this.controls.push(controlInstance);
           map.addControl(controlInstance, position);
+
+          const { _container: container } = controlInstance;
+          const isNavigationControlGroup = container.querySelector('.mapboxgl-ctrl-zoom-in');
+
+          if (isNavigationControlGroup) {
+            container.querySelector('.mapboxgl-ctrl-zoom-in').setAttribute('title', translate('terralego.map.zoom_in_control.title'));
+            container.querySelector('.mapboxgl-ctrl-zoom-out').setAttribute('title', translate('terralego.map.zoom_out_control.title'));
+            container.querySelector('.mapboxgl-ctrl-compass-arrow').setAttribute('title', translate('terralego.map.compass_arrow_control.title'));
+          }
+
           if (disabled) {
             const { _container } = controlInstance;
             if (_container) {
