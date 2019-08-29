@@ -16,6 +16,7 @@ const json = [
   },
   {
     label: 'level2',
+    source: 'Source of level 2',
     items: [
       {
         label: 'level2.1',
@@ -88,6 +89,7 @@ stories.add('JSON items', () => (
       <Legend
         title="foo"
         items={json}
+        source="Source of foo"
       />
     </div>
   </div>
@@ -116,41 +118,42 @@ stories.add('Both', () => (
   </div>
 ), knobsOptions);
 
-stories.add('Stacked', () => (
+stories.add('Only circles', () => (
   <div className="interactive-map">
     <div className="interactive-map__legends">
       <Legend
         title="foo"
-        items={[{
-          label: 'lorem ipsum',
-          color: 'red',
-        }, {
-          label: 'dolor sit amet',
-          color: 'green',
-        }, {
-          label: 'consectetur adipiscing elit',
-          color: 'yellow',
-        }]}
+        source="Source of wrapper"
+        items={[
+          {
+            label: 'quis nostrud',
+            source: 'Source of circles only',
+            items: [{
+              label: 'exercitation ullamco',
+              color: 'white',
+              shape: 'circle',
+              radius: 20,
+            }, {
+              label: 'laboris nisi ut aliquip',
+              color: 'white',
+              shape: 'circle',
+              radius: 15,
+            }, {
+              label: 'ex ea commodo consequat',
+              color: 'white',
+              shape: 'circle',
+              radius: 10,
+            }],
+          },
+        ]}
       />
-      <Legend
-        title="foo"
-        items={[{
-          label: 'sed do',
-          color: 'white',
-          shape: 'circle',
-          radius: 20,
-        }, {
-          label: 'eiusmod tempor',
-          color: 'white',
-          shape: 'circle',
-          radius: 15,
-        }, {
-          label: 'incididunt ut labore',
-          color: 'white',
-          shape: 'circle',
-          radius: 10,
-        }]}
-      />
+    </div>
+  </div>
+));
+
+stories.add('Stacked', () => (
+  <div className="interactive-map">
+    <div className="interactive-map__legends">
       <Legend
         title="foo"
         items={[{
