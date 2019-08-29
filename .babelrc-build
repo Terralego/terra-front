@@ -6,8 +6,12 @@
     "@babel/plugin-proposal-object-rest-spread"
   ],
   "presets": [
-    "@babel/preset-react",
-    ["minify", { "builtIns": false }] // to fix babel intersection error with Math.max in storybook: https://github.com/babel/minify/issues/904#issuecomment-464953535
+    [
+      "@babel/preset-env",
+      {
+        "modules": "umd"
+      }
+    ]
   ],
   "ignore": ["src/stories/**/*"],
 }
