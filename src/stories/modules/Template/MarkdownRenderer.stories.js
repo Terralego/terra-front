@@ -33,7 +33,7 @@ And you can write raw html too:
 <p><strong>Some</strong> <code>HTML</code></p>
 `;
 
-storiesOf('Modules/Template/', module)
+storiesOf('Components/Template', module)
   .add('Template component', () => {
     const content = text('Markdown content', DEFAULT_VALUE);
 
