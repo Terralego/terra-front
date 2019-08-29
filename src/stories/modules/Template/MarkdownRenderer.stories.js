@@ -35,10 +35,7 @@ And you can write raw html too:
 
 storiesOf('Modules/Template/', module)
   .add('Template component', () => {
-    const content = text('Markdown content', DEFAULT_VALUE)
-      // Because knobs encore html entities
-      .replace(/&gt;/g, '>')
-      .replace(/&lt;/g, '<');
+    const content = text('Markdown content', DEFAULT_VALUE);
 
     return (
       <div style={{ display: 'flex' }}>
@@ -83,4 +80,9 @@ storiesOf('Modules/Template/', module)
         </div>
       </div>
     );
+  }, {
+    knobs: {
+      timestamps: true, // Doesn't emit events while user is typing.
+      escapeHTML: false,
+    },
   });
