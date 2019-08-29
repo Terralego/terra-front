@@ -1,6 +1,7 @@
 import React from 'react';
 import { storiesOf } from '@storybook/react';
 import { text } from '@storybook/addon-knobs';
+import { action } from '@storybook/addon-actions';
 
 import Legend from '../../../modules/Map/InteractiveMap/components/Legend';
 
@@ -82,29 +83,129 @@ const knobsOptions = {
 };
 
 stories.add('JSON items', () => (
-  <div style={{ width: 300, margin: '0 auto' }}>
-    <Legend
-      title="foo"
-      items={json}
-    />
+  <div className="interactive-map">
+    <div className="interactive-map__legends">
+      <Legend
+        title="foo"
+        items={json}
+      />
+    </div>
   </div>
 ), knobsOptions);
 
 stories.add('Nunjucks template', () => (
-  <div style={{ width: 300, margin: '0 auto' }}>
-    <Legend
-      title="bar"
-      content={text('Nunjucks template', template)}
-    />
+  <div className="interactive-map">
+    <div className="interactive-map__legends">
+      <Legend
+        title="bar"
+        content={text('Nunjucks template', template)}
+      />
+    </div>
   </div>
 ), knobsOptions);
 
 stories.add('Both', () => (
-  <div style={{ width: 300, margin: '0 auto' }}>
-    <Legend
-      title="baz"
-      items={json}
-      content={text('Nunjucks template', template)}
-    />
+  <div className="interactive-map">
+    <div className="interactive-map__legends">
+      <Legend
+        title="baz"
+        items={json}
+        content={text('Nunjucks template', template)}
+      />
+    </div>
   </div>
 ), knobsOptions);
+
+stories.add('Stacked', () => (
+  <div className="interactive-map">
+    <div className="interactive-map__legends">
+      <Legend
+        title="foo"
+        items={[{
+          label: 'lorem ipsum',
+          color: 'red',
+        }, {
+          label: 'dolor sit amet',
+          color: 'green',
+        }, {
+          label: 'consectetur adipiscing elit',
+          color: 'yellow',
+        }]}
+      />
+      <Legend
+        title="foo"
+        items={[{
+          label: 'sed do',
+          color: 'white',
+          shape: 'circle',
+          radius: 20,
+        }, {
+          label: 'eiusmod tempor',
+          color: 'white',
+          shape: 'circle',
+          radius: 15,
+        }, {
+          label: 'incididunt ut labore',
+          color: 'white',
+          shape: 'circle',
+          radius: 10,
+        }]}
+      />
+      <Legend
+        title="foo"
+        items={[{
+          label: 'et dolore magna',
+          items: [{
+            label: 'aliqua',
+            color: 'red',
+          }, {
+            label: 'Ut enim ad',
+            color: 'green',
+          }, {
+            label: 'minim veniam',
+            color: 'yellow',
+          }],
+        }, {
+          label: 'quis nostrud',
+          items: [{
+            label: 'exercitation ullamco',
+            color: 'white',
+            shape: 'circle',
+            radius: 20,
+          }, {
+            label: 'laboris nisi ut aliquip',
+            color: 'white',
+            shape: 'circle',
+            radius: 15,
+          }, {
+            label: 'ex ea commodo consequat',
+            color: 'white',
+            shape: 'circle',
+            radius: 10,
+          }],
+        }]}
+      />
+      <Legend
+        title="with template"
+        content={`
+### Some squares
+
+<square color="red" /> lorem ipsum<br />
+<square color="green" size="16" /> dolor sit amet<br />
+<square color="yellow" size="20" /> consectetur adipiscing elit<br />
+
+### Some circles
+
+<circle color="red" /> lorem ipsum<br />
+<circle color="green" size="16" /> dolor sit amet<br />
+<circle color="yellow" size="20" /> consectetur adipiscing elit<br />
+
+<a href="the/link">lienB</a>
+`}
+        history={{
+          push: action('push to'),
+        }}
+      />
+    </div>
+  </div>
+));

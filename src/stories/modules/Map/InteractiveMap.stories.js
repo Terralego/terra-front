@@ -1,7 +1,6 @@
 import React from 'react';
 import { storiesOf } from '@storybook/react';
 import { boolean } from '@storybook/addon-knobs';
-import { action } from '@storybook/addon-actions';
 
 import InteractiveMap, { InteractiveMap as PureInteractiveMap } from '../../../modules/Map/InteractiveMap';
 import Legend from '../../../modules/Map/InteractiveMap/components/Legend';
@@ -277,98 +276,3 @@ storiesOf('Map components/InteractiveMap', module).add('InteractiveMap', () => (
     propTables: [PureInteractiveMap, Map],
   },
 });
-
-
-storiesOf('Components/Legend', module).add('Stacked', () => (
-  <div className="interactive-map">
-    <div className="interactive-map__legends">
-      <Legend
-        title="foo"
-        items={[{
-          label: 'lorem ipsum',
-          color: 'red',
-        }, {
-          label: 'dolor sit amet',
-          color: 'green',
-        }, {
-          label: 'consectetur adipiscing elit',
-          color: 'yellow',
-        }]}
-      />
-      <Legend
-        title="foo"
-        items={[{
-          label: 'sed do',
-          color: 'white',
-          shape: 'circle',
-          radius: 20,
-        }, {
-          label: 'eiusmod tempor',
-          color: 'white',
-          shape: 'circle',
-          radius: 15,
-        }, {
-          label: 'incididunt ut labore',
-          color: 'white',
-          shape: 'circle',
-          radius: 10,
-        }]}
-      />
-      <Legend
-        title="foo"
-        items={[{
-          label: 'et dolore magna',
-          items: [{
-            label: 'aliqua',
-            color: 'red',
-          }, {
-            label: 'Ut enim ad',
-            color: 'green',
-          }, {
-            label: 'minim veniam',
-            color: 'yellow',
-          }],
-        }, {
-          label: 'quis nostrud',
-          items: [{
-            label: 'exercitation ullamco',
-            color: 'white',
-            shape: 'circle',
-            radius: 20,
-          }, {
-            label: 'laboris nisi ut aliquip',
-            color: 'white',
-            shape: 'circle',
-            radius: 15,
-          }, {
-            label: 'ex ea commodo consequat',
-            color: 'white',
-            shape: 'circle',
-            radius: 10,
-          }],
-        }]}
-      />
-      <Legend
-        title="with template"
-        content={`
-### Some squares
-
-<square color="red" /> lorem ipsum
-<square color="green" size="16" /> dolor sit amet
-<square color="yellow" size="20" /> consectetur adipiscing elit
-
-### Some circles
-
-<circle color="red" /> lorem ipsum
-<circle color="green" size="16" /> dolor sit amet
-<circle color="yellow" size="20" /> consectetur adipiscing elit
-
-<a href="the/link">lienB</a>
-`}
-        history={{
-          push: action('push to'),
-        }}
-      />
-    </div>
-  </div>
-));
