@@ -3,7 +3,5 @@ import { storiesOf } from '@storybook/react';
 import MapWithCluster from './MapWithCluster';
 import SyncedMaps from './SyncedMaps';
 
-const stories = storiesOf('Modules/Map/', module);
-
-stories.add('SyncedMaps', SyncedMaps);
-stories.add('Map with cluster', MapWithCluster);
+storiesOf('Map components/SyncedMaps', module).add('SyncedMaps', SyncedMaps);
+storiesOf('Map components/InteractiveMap', module).add('With clusters', MapWithCluster);

@@ -23,7 +23,7 @@ const data = [
   ['lorem', 'ipsum', '12345.67890'],
 ];
 
-storiesOf('Modules/Table/', module)
+storiesOf('Components/Table', module)
   .add('Table', () => (
     <div style={{ height: '100vh' }}>
       <Table

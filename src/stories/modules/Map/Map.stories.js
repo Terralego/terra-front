@@ -12,7 +12,7 @@ import doc from './Map.md';
 
 Map.displayName = 'Map';
 
-storiesOf('Modules/Map/', module).add('Map component', () => (
+storiesOf('Map components/Map', module).add('Map component', () => (
   <div
     style={{ width: '100vw', height: '100vh' }}
   >

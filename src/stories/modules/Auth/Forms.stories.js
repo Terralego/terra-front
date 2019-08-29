@@ -16,7 +16,9 @@ LoginFormPure.displayName = 'LoginForm';
 SignupForm.displayName = 'SignupForm';
 SignupFormPure.displayName = 'SignupForm';
 
-storiesOf('Modules/Auth/Forms', module).add('Signin', () => (
+const stories = storiesOf('Components/Forms', module);
+
+stories.add('Signin', () => (
   <ApiProvider host={text('api host', '')}>
     <AuthProvider>
       <LoginForm />
@@ -29,7 +31,7 @@ storiesOf('Modules/Auth/Forms', module).add('Signin', () => (
   },
 });
 
-storiesOf('Modules/Auth/Forms', module).add('Signup', () => (
+stories.add('Signup', () => (
   <ApiProvider host={text('api host', '')}>
     <AuthProvider>
       <SignupForm

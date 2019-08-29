@@ -78,10 +78,8 @@ const onChange = event => {
   action(title)(event.type);
 };
 
-storiesOf('Modules/Map/Controls', module).add('Toggle map controls ', () => (
-  <div
-    style={{ width: '100vw', height: '100vh' }}
-  >
+storiesOf('Map components/InteractiveMap', module).add('Custom controls ', () => (
+  <div style={{ width: '100vw', height: '100vh' }}>
     <InteractiveMap
       accessToken="pk.eyJ1IjoibWFraW5hY29ycHVzIiwiYSI6ImNqY3E4ZTNwcTFta3ozMm80d2xzY29wM2MifQ.Nwl_FHrWAIQ46s_lY0KNiQ"
       backgroundStyle={[{ label: 'light', url: 'mapbox://styles/mapbox/light-v9' }, { label: 'light aussi', url: 'mapbox://styles/mapbox/light-v9' }]}
