@@ -10,7 +10,7 @@ import Rect from './components/Rect';
 
 const DEFAULT_RADIUS = 16;
 
-export const Legend = ({ title, items, level, position, content, history }) => {
+export const Legend = ({ title, source, items, level, position, content, history }) => {
   const biggestRadius = items.reduce((int, item) =>
     Math.max(int, item.radius || DEFAULT_RADIUS), 0);
 
@@ -36,13 +36,22 @@ export const Legend = ({ title, items, level, position, content, history }) => {
             history={history}
           />
         )}
-        {items.map(({ label, template, color, items: subItems, shape = 'square', radius = DEFAULT_RADIUS }, index) => {
+        {items.map(({
+          label,
+          template,
+          source: subSource,
+          color,
+          items: subItems,
+          shape = 'square',
+          radius = DEFAULT_RADIUS,
+        }, index) => {
           if (subItems) {
             return (
               <Legend
                 key={`${label}${items.length}`}
                 title={label}
                 items={subItems}
+                source={subSource}
                 level={level + 1}
               />
             );
@@ -77,6 +86,7 @@ export const Legend = ({ title, items, level, position, content, history }) => {
           );
         })}
       </div>
+      {source && <div className="tf-legend__source">{source}</div>}
     </div>
   );
 };
@@ -85,6 +95,7 @@ Legend.propTypes = {
   title: PropTypes.string.isRequired,
   items: PropTypes.arrayOf(PropTypes.shape({
     label: PropTypes.string,
+    source: PropTypes.string,
     color: PropTypes.string,
     items: PropTypes.array,
     shape: PropTypes.string,
