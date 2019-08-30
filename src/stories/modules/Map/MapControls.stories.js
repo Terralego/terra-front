@@ -1,7 +1,7 @@
 import React from 'react';
 import { storiesOf } from '@storybook/react';
 
-import { boolean } from '@storybook/addon-knobs';
+import { boolean, object } from '@storybook/addon-knobs';
 import { action } from '@storybook/addon-actions';
 
 import {
@@ -13,6 +13,7 @@ import {
   CONTROL_SEARCH,
   CONTROL_PRINT,
   CONTROL_HOME,
+  CONTROL_SHARE,
 } from '../../../modules/Map/Map';
 import InteractiveMap, {
   CONTROL_BACKGROUND_STYLES,
@@ -20,27 +21,6 @@ import InteractiveMap, {
 import leftInfoButtonStyles from '../../leftInfosButtonStyles';
 
 import doc from './MapControls.md';
-
-const t = (key, params) => {
-  switch (key) {
-    case 'terralego.map.search_results.title':
-      return 'Résultats de recherche';
-    case 'terralego.map.search_results.no_result':
-      return 'Pas de résultat';
-    case 'terralego.map.search_control.button_label':
-      return 'Rechercher';
-    case 'terralego.map.search_results.group_total':
-      return `(${params.count} result found)`;
-    case 'terralego.map.capture_control.button_label':
-      return 'capture';
-    case 'terralego.map.home_control.button_label':
-      return 'Recentrer';
-    case 'terralego.map.print_control.button_label':
-      return 'Print to PDF';
-    default:
-      return key;
-  }
-};
 
 const onSearch = () => new Promise(resolve => {
   setTimeout(() => resolve([{
@@ -116,6 +96,15 @@ storiesOf('Modules/Map/Controls', module).add('Toggle map controls ', () => (
         control: CONTROL_PRINT,
         position: CONTROLS_TOP_RIGHT,
         disabled: boolean('Disable Print control', false),
+      }, boolean('Display Share control', true) && {
+        control: CONTROL_SHARE,
+        position: CONTROLS_TOP_RIGHT,
+        disabled: boolean('Disable Share control', false),
+        link: boolean('Activate link', true),
+        twitter: boolean('Activate twitter', true),
+        facebook: boolean('Activate facebook', true),
+        linkedin: boolean('Activate linkedin', true),
+        initialState: object('Initial state', {}),
       }, boolean('Display Draw tools control', false) && {
         control: CONTROL_DRAW,
         position: CONTROLS_TOP_LEFT,
@@ -137,7 +126,6 @@ storiesOf('Modules/Map/Controls', module).add('Toggle map controls ', () => (
           uncombine_features: boolean('Display control "uncombine_features"', true),
         },
       }].filter(a => a)}
-      translate={t}
     />
   </div>
 ), {

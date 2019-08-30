@@ -17,5 +17,17 @@ Array [
     size={80}
   />,
   "Button",
+  <img
+    alt="twitter"
+    src="twitter.svg"
+  />,
+  <img
+    alt="facebook"
+    src="facebook.svg"
+  />,
+  <img
+    alt="linkedin"
+    src="linkedin.svg"
+  />,
 ]
 `;
