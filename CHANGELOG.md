@@ -1,4 +1,11 @@
 
+1.5.0 / 2019-08-30
+==================
+
+  * Fix css cursor on home control
+  * Add translation in navigation control
+  * Add social networks in share control
+
 1.4.0 / 2019-08-30
 ==================
 
