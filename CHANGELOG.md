@@ -1,4 +1,10 @@
 
+1.4.0 / 2019-08-30
+==================
+
+  * Add stories for Legend component and source property
+  * Add source property for Legend component
+
 1.3.0 / 2019-08-30
 ==================
 
