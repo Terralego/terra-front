@@ -1,0 +1,17 @@
+.share {
+  &__btn {
+    .bp3-button {
+      padding: 0;
+      img {
+        width: 1.5rem;
+      }
+    }
+
+    &--facebook,
+    &--linkedin {
+      .bp3-button img {
+        width: 1rem;
+      }
+    }
+  }
+}

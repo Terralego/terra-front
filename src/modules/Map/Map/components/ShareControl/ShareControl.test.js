@@ -2,7 +2,7 @@ import { mount } from 'enzyme';
 import React from 'react';
 import renderer from 'react-test-renderer';
 
-import PermalinkControl from './PermalinkControl';
+import ShareControl, { icon } from './ShareControl';
 
 jest.mock('@blueprintjs/core', () => ({
   Button: ({ children = 'Button' }) => children,
@@ -14,12 +14,12 @@ jest.mock('@blueprintjs/core', () => ({
 }));
 
 it('should render', () => {
-  const tree = renderer.create(<PermalinkControl />);
+  const tree = renderer.create(<ShareControl />);
   expect(tree.toJSON()).toMatchSnapshot();
 });
 
 it('should display correct url', () => {
-  const instance = new PermalinkControl({
+  const instance = new ShareControl({
     initialState: {
       foo: 'bar',
       baz: false,
@@ -32,7 +32,7 @@ it('should display correct url', () => {
 
 it('should display correct url with map named', () => {
   window.location.href = 'http://localhost/#map=foobar&bar=false';
-  const instance = new PermalinkControl({
+  const instance = new ShareControl({
     hash: 'map',
     initialState: {
       foo: 'bar',
@@ -49,7 +49,7 @@ it('should permit copy to clipboard', () => {
   document.execCommand = jest.fn();
 
   const wrapper = mount(
-    <PermalinkControl
+    <ShareControl
       initialState={{
         foo: 'bar',
         baz: false,
@@ -76,4 +76,30 @@ it('should permit copy to clipboard', () => {
   expect(instance.state).toEqual({ copySuccess: true });
   jest.runAllTimers();
   expect(instance.state).toEqual({ copySuccess: false });
+});
+
+it('should get no icon', () => {
+  expect(icon()).toBeNull();
+});
+
+it('should share', () => {
+  const instance = new ShareControl({});
+  instance.state.url = 'foo';
+  jest.spyOn(global, 'open');
+
+  instance.share('twitter')();
+  expect(global.open).toHaveBeenCalledWith('https://twitter.com/intent/tweet?url=foo');
+  global.open.mockClear();
+
+  instance.share('facebook')();
+  expect(global.open).toHaveBeenCalledWith('https://www.facebook.com/sharer/sharer.php?u=foo');
+  global.open.mockClear();
+
+  instance.share('linkedin')();
+  expect(global.open).toHaveBeenCalledWith('https://www.linkedin.com/shareArticle?mini=true&url=foo');
+  global.open.mockClear();
+
+  instance.share()();
+  expect(global.open).not.toHaveBeenCalled();
+  global.open.mockClear();
 });

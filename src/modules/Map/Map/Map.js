@@ -11,6 +11,7 @@ import CaptureControl from './components/CaptureControl';
 import DrawControl from './components/DrawControl';
 import PrintControl from './components/PrintControl';
 import HomeControl from './components/HomeControl';
+import ShareControl from './components/ShareControl';
 
 import './Map.scss';
 
@@ -27,7 +28,7 @@ export const CONTROL_CAPTURE = 'CaptureControl';
 export const CONTROL_DRAW = 'DrawControl';
 export const CONTROL_PRINT = 'PrintControl';
 export const CONTROL_HOME = 'HomeControl';
-export const CONTROL_PERMALINK = 'PermalinkControl';
+export const CONTROL_SHARE = 'ShareControl';
 
 export const DEFAULT_CONTROLS = [{
   control: CONTROL_ATTRIBUTION,
@@ -392,6 +393,16 @@ export class MapComponent extends React.Component {
             fitBoundsParams,
             center,
             zoom,
+            ...params,
+          });
+          this.controls.push(controlInstance);
+          map.addControl(controlInstance, position);
+          break;
+        }
+        case CONTROL_SHARE: {
+          const controlInstance = new ShareControl({
+            ...this.props,
+            map,
             ...params,
           });
           this.controls.push(controlInstance);
