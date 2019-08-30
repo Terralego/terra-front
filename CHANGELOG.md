@@ -1,4 +1,12 @@
 
+1.3.0 / 2019-08-30
+==================
+
+  * Setup ESlint to also check Storybook config
+  * Cleanup ThemeSwitcher Storybook addon
+  * Cleanup Storybook stories
+  * Fix warning zoom check
+
 1.2.5 / 2019-08-29
 ==================
 
