@@ -425,19 +425,15 @@ export class MapComponent extends React.Component {
           map.addControl(controlInstance, position);
 
           const { _container: container } = controlInstance;
-          const isNavigationControlGroup = container.querySelector('.mapboxgl-ctrl-zoom-in');
 
-          if (isNavigationControlGroup) {
+          if (control === CONTROL_NAVIGATION) {
             container.querySelector('.mapboxgl-ctrl-zoom-in').setAttribute('title', translate('terralego.map.zoom_in_control.title'));
             container.querySelector('.mapboxgl-ctrl-zoom-out').setAttribute('title', translate('terralego.map.zoom_out_control.title'));
             container.querySelector('.mapboxgl-ctrl-compass-arrow').setAttribute('title', translate('terralego.map.compass_arrow_control.title'));
           }
 
-          if (disabled) {
-            const { _container } = controlInstance;
-            if (_container) {
-              _container.classList.add('mapboxgl-ctrl--disabled');
-            }
+          if (disabled && container) {
+            container.classList.add('mapboxgl-ctrl--disabled');
           }
         }
       }

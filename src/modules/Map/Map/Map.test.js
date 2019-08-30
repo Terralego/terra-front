@@ -51,6 +51,7 @@ jest.mock('mapbox-gl', () => {
       disableRotation: jest.fn(),
     },
   };
+
   const PopupFunctions = {};
   const Popup = jest.fn(() => PopupFunctions);
   PopupFunctions.setLngLat = jest.fn(() => PopupFunctions);
@@ -61,6 +62,9 @@ jest.mock('mapbox-gl', () => {
 
   const mockedControl = {
     _container: {
+      querySelector: jest.fn(() => ({
+        setAttribute: jest.fn(),
+      })),
       classList: {
         add: jest.fn(),
       },
@@ -519,7 +523,8 @@ describe('controls', () => {
   });
 
   it('should reset controls', () => {
-    const instance = new Map({ map });
+    const translate = jest.fn(() => 'foo');
+    const instance = new Map({ map, translate });
     class CustomControl {
       // eslint-disable-next-line class-methods-use-this
       onAdd () {}
@@ -527,6 +532,7 @@ describe('controls', () => {
       // eslint-disable-next-line class-methods-use-this
       onRemove () {}
     }
+
     instance.props.controls = [{
       control: 'NavigationControl',
       position: 'top-right',
@@ -684,6 +690,7 @@ describe('controls', () => {
   });
 
   it('should disable a mapbox bundled control', () => {
+    const translate = jest.fn(() => 'foo');
     const instance = new Map({});
     instance.props = {
       map,
@@ -692,6 +699,7 @@ describe('controls', () => {
         position: 'top-right',
         disabled: true,
       }],
+      translate,
     };
     instance.resetControls();
     const { controls: [{ _container: { classList: { add } } }] } = instance;
