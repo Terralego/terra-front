@@ -2,13 +2,12 @@
 
 .tf-legend {
   box-shadow: 0 1px 3px 0 rgba(16, 22, 26, 0.40);
-  border-radius: 2px;
   background: $pt-app-background-color;
   padding: .5rem 0;
   margin-top: 1rem;
   display: flex;
   flex-direction: column;
-  min-width: 250px;
+  min-width: 15rem;
 
   .bp3-dark & {
     background: $pt-dark-app-background-color;
@@ -19,7 +18,7 @@
   }
 
   &__title {
-    margin: 0.2rem 0.3rem;
+    margin: .2rem .3rem;
     font-size: 1rem;
     font-weight: 600;
     text-align: center;
@@ -27,19 +26,19 @@
 
   &__list:not(.tf-legend__only-circles) {
     display: table;
-    margin: 0.5rem;
+    margin: .5rem;
     position: relative;
-    min-height: 160px;
+    min-height: 10rem;
 
     .tf-legend__item--circle {
       display: table-row;
     }
 
     .tf-legend__item--square {
-      padding-top: 0.5rem;
+      padding-top: .5rem;
 
       .tf-legend__label {
-        padding-bottom: 4px;
+        padding-bottom: .25rem;
       }
     }
   }
@@ -48,7 +47,7 @@
     display: table;
     margin: 0.5rem;
     position: relative;
-    height: 160px;
+    height: 10rem;
 
     .tf-legend__item--circle:last-of-type .tf-legend__symbol-container:after {
       top: 1px;
@@ -73,7 +72,7 @@
 
         :last-child {
           &:after {
-            top: 6px;
+            top: .4rem;
           }
         }
 
@@ -89,9 +88,9 @@
 
       .tf-legend__label {
         position: absolute;
-        top: -8px;
+        top: -0.5rem;
         left: 120%;
-        width: 90px;
+        width: 5.5rem;
       }
     }
   }
@@ -108,10 +107,10 @@
   }
 
   &__label {
-    font-size: 0.8rem;
+    font-size: .8rem;
     padding: 0 0 0 .5rem;
     display: table-cell;
-    max-width: 170px;
+    max-width: 10.5rem;
     vertical-align: middle;
   }
 

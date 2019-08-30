@@ -20,3 +20,22 @@ $transitionSpeed: .2s;
     overflow: auto;
   }
 }
+
+// Styles relative to DarkTheme
+.bp3-dark {
+  .interactive-map__legends {
+    scrollbar-color: none rgba(32, 43, 51, 0.4);
+  }
+
+  .interactive-map__legends::-webkit-scrollbar {
+    width: .5rem;
+  }
+
+  .interactive-map__legends::-webkit-scrollbar-track {
+    background-color: none;
+  }
+
+  .interactive-map__legends::-webkit-scrollbar-thumb {
+    background-color: rgba(32, 43, 51, 0.4);
+  }
+}
