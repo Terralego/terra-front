@@ -6,7 +6,7 @@ import Hash from './hash';
 
 import 'mapbox-gl/dist/mapbox-gl.css';
 
-export const withMap = WrappedComponent =>
+export const withMap = WrappedComponent => {
   class WithMap extends React.Component {
     static propTypes = {
       backgroundStyle: PropTypes.oneOfType([
@@ -148,6 +148,11 @@ export const withMap = WrappedComponent =>
         </div>
       );
     }
-  };
+  }
+  const name = WrappedComponent.displayName || WrappedComponent.name;
+  WithMap.displayName = `withMap(${name})`;
+
+  return WithMap;
+};
 
 export default withMap;
