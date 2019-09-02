@@ -1,3 +1,6 @@
+$breakpoints-phone: 320px;
+$breakpoints-tablet: 768px;
+
 .share {
   &__btn {
     .bp3-button {
@@ -12,6 +15,18 @@
       .bp3-button img {
         width: 1rem;
       }
+    }
+  }
+}
+
+@media(min-width: $breakpoints-phone) and (max-width: $breakpoints-tablet) {
+  .mapboxgl-ctrl-permalink  .bp3-popover {
+    max-width: 15rem;
+    input {
+      max-width: 9rem;
+      overflow: hidden;
+      text-overflow: ellipsis;
+      white-space: nowrap;
     }
   }
 }
