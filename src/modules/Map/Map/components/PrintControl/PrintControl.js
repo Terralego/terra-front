@@ -32,7 +32,7 @@ export class PrintControl extends AbstractMapControl {
     translate: translateMock({
       'terralego.map.print_control.button_label': 'Print to PDF',
       'terralego.map.print_control.portrait_label': 'Portrait',
-      'terralego.map.print_control.lanscape_label': 'Landscape',
+      'terralego.map.print_control.landscape_label': 'Landscape',
     }),
   }
 
@@ -108,7 +108,7 @@ export class PrintControl extends AbstractMapControl {
               />
               <Radio
                 value={ORIENTATION_LANDSCAPE}
-                label={translate('terralego.map.print_control.lanscape_label')}
+                label={translate('terralego.map.print_control.landscape_label')}
               />
             </RadioGroup>
             <Button onClick={this.beginGeneration} disabled={isExporting}>
