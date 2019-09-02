@@ -46,19 +46,15 @@
 
   &__only-circles {
     display: table;
-    margin: 0.5rem;
+    margin: 1rem .5rem .5rem;
     position: relative;
-    height: 160px;
-
-    .tf-legend__item--circle:last-of-type .tf-legend__symbol-container:after {
-      top: 1px;
-    }
 
     .tf-legend__item--circle {
       position: absolute;
       bottom: 0;
 
       .tf-legend__symbol-container {
+        line-height: 0;
 
         &:after {
           content: "";

@@ -28,6 +28,7 @@ export const Legend = ({ title, source, items, level, position, content, history
           'tf-legend__list',
           { 'tf-legend__only-circles': isAllCircle },
         )}
+        style={isAllCircle ? { height: biggestRadius } : null}
       >
         {content && (
           <Template
