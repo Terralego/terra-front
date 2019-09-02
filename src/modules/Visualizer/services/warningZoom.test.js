@@ -57,3 +57,45 @@ it('should displayWarningAccordingToZoom without map', () => {
   const layer = { layers: ['foo'] };
   expect(displayWarningAccordingToZoom(map, layer)).toEqual({});
 });
+
+it('should display warning on exclusive groups layers', () => {
+  const map = {
+    getZoom: jest.fn(() => 7),
+    getSource: jest.fn(() => ({ minzoom: 14, maxzoom: 22 })),
+    getLayer: jest.fn(id => ({
+      id,
+      minzoom: id === '1' ? 12 : 8,
+      maxzoom: id === '1' ? 16 : 12,
+    })),
+    getStyle: () => ({
+      layers: [{
+        id: '1',
+        minzoom: 12,
+        maxzoom: 16,
+      }, {
+        id: '2',
+        minzoom: 8,
+        maxzoom: 12,
+      }, {
+        id: '3',
+        minzoom: 8,
+        maxzoom: 12,
+      }],
+    }),
+  };
+  const layer = {
+    group: 'foo',
+    layers: [{
+      id: 'layer1',
+      layers: ['1'],
+      minzoom: 12,
+      maxzoom: 16,
+    }, {
+      id: 'layer2',
+      layers: ['2', '3'],
+      minzoom: 8,
+      maxzoom: 12,
+    }],
+  };
+  expect(displayWarningAccordingToZoom(map, layer)).toEqual({ display: true, minZoomLayer: 8 });
+});
