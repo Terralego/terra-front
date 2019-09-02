@@ -1,4 +1,10 @@
 
+1.5.2 / 2019-09-02
+==================
+
+  * Add test on legend source
+  * Fix warning zoom for groups
+
 1.5.1 / 2019-09-02
 ==================
 
