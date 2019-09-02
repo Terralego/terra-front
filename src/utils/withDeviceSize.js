@@ -7,7 +7,7 @@ const PHONE_BREAKPOINT = 559;
 export const withDeviceSize = ({
   desktop = DESKTOP_BREAKPOINT,
   phone = PHONE_BREAKPOINT,
-} = {}) => WrappedComponent =>
+} = {}) => WrappedComponent => {
   class WithDeviceSize extends React.Component {
     componentDidMount () {
       this.updateWindowDimensions();
@@ -34,6 +34,11 @@ export const withDeviceSize = ({
         />
       );
     }
-  };
+  }
+
+  const name = WrappedComponent.displayName || WrappedComponent.name;
+  WithDeviceSize.displayName = `withDeviceSize(${name})`;
+  return WithDeviceSize;
+};
 
 export default withDeviceSize;

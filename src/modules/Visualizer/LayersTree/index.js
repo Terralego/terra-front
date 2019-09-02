@@ -5,8 +5,11 @@ import UnconnectedLayersTree from './LayersTree';
 
 import { connectLayersTree } from './LayersTreeProvider/context';
 
-const LayersTree = connectLayersTree('layersTree')(UnconnectedLayersTree);
+const ConnectedLayersTree = connectLayersTree('layersTree')(UnconnectedLayersTree);
 
-export { connectLayersTree, LayersTreeProvider, LayersTree };
+export { connectLayersTree, LayersTreeProvider, ConnectedLayersTree as LayersTree };
 
-export default props => <LayersTreeProvider {...props}><LayersTree /></LayersTreeProvider>;
+const LayersTree = props => (
+  <LayersTreeProvider {...props}><ConnectedLayersTree /></LayersTreeProvider>
+);
+export default LayersTree;
