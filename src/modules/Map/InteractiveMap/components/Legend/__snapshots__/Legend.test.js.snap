@@ -11,6 +11,11 @@ exports[`should render a manual legend 1`] = `
   </h4>
   <div
     className="tf-legend__list tf-legend__only-circles"
+    style={
+      Object {
+        "height": 0,
+      }
+    }
   >
     <h1
       id="hello-world"
@@ -114,6 +119,11 @@ exports[`should render correctly circle 1`] = `
   </h4>
   <div
     className="tf-legend__list tf-legend__only-circles"
+    style={
+      Object {
+        "height": 16,
+      }
+    }
   >
     
     <div
@@ -233,6 +243,7 @@ exports[`should render correctly square 1`] = `
   </h4>
   <div
     className="tf-legend__list"
+    style={null}
   >
     
     <div
@@ -355,6 +366,7 @@ exports[`should render correctly with multi level 1`] = `
   </h4>
   <div
     className="tf-legend__list"
+    style={null}
   >
     
     <div
@@ -446,6 +458,7 @@ exports[`should render correctly with multi level 1`] = `
       </h4>
       <div
         className="tf-legend__list"
+        style={null}
       >
         
         <div
@@ -528,6 +541,7 @@ exports[`should render correctly with multi level 1`] = `
           </h4>
           <div
             className="tf-legend__list"
+            style={null}
           >
             
             <div
@@ -610,6 +624,7 @@ exports[`should render correctly with multi level 1`] = `
               </h4>
               <div
                 className="tf-legend__list"
+                style={null}
               >
                 
                 <div
