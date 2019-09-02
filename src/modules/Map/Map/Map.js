@@ -85,6 +85,7 @@ export class MapComponent extends React.Component {
           CONTROL_DRAW,
           CONTROL_PRINT,
           CONTROL_HOME,
+          CONTROL_SHARE,
         ]),
         PropTypes.shape({
           onAdd: PropTypes.func,
