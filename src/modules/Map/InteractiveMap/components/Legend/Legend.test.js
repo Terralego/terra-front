@@ -71,6 +71,11 @@ describe('should render correctly', () => {
     )).toJSON();
     expect(tree).toMatchSnapshot();
   });
+
+  it('with source', () => {
+    const tree = renderer.create(<Legend source="Evian" />).toJSON();
+    expect(tree).toMatchSnapshot();
+  });
 });
 
 it('should render a manual legend', () => {
