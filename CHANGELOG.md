@@ -1,4 +1,10 @@
 
+1.5.1 / 2019-09-02
+==================
+
+  * Fix all circle legend positioning
+  * Add responsive style for permalink
+
 1.5.0 / 2019-08-30
 ==================
 
@@ -38,11 +44,9 @@ v1.2.4 / 2019-08-29
 
   * Use onRelease for RangeSlider
   * Standardize translations keys
-  * Fix tests
   * Connect translate function
-  * update tests
-  * add tooltip to print and url map control button
-  * fix truncated select list
+  * Add tooltip to print and url map control button
+  * Fix truncated select list
 
 1.2.2 / 2019-08-23
 ==================
