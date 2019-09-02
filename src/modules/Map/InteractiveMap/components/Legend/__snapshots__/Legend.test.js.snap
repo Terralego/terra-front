@@ -706,3 +706,28 @@ exports[`should render correctly with multi level 1`] = `
   </div>
 </div>
 `;
+
+exports[`should render correctly with source 1`] = `
+<div
+  className="tf-legend tf-legend--level-1"
+>
+  <h4
+    className="tf-legend__title"
+  />
+  <div
+    className="tf-legend__list tf-legend__only-circles"
+    style={
+      Object {
+        "height": 0,
+      }
+    }
+  >
+    
+  </div>
+  <div
+    className="tf-legend__source"
+  >
+    Evian
+  </div>
+</div>
+`;
