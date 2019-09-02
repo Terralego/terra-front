@@ -16,7 +16,7 @@ jest.mock('@blueprintjs/core', () => ({
   InputGroup: () => <p>Input</p>,
   Select: ({ children }) => children,
   Switch: () => <p>Switch</p>,
-  MenuItem: () => <p>Menu Item</p>,
+  MenuItem: ({ text = 'Menu Item' }) => <p>{text}</p>,
   Button: () => <p>Button</p>,
   RangeSlider: () => <p>Range</p>,
 }));
@@ -25,7 +25,12 @@ jest.mock('../Controls/Text', () => () => <p>ControlText</p>);
 jest.mock('../Controls/MultiSelect', () => () => <p>ControlMultiSelect</p>);
 jest.mock('../Controls/Select', () => ({ initialContent }) => (
   <p>
-    {initialContent ? `ControlSelect with initialContent set to ${initialContent}` : 'ControlSelect'}
+    {initialContent ? (
+      <>
+        ControlSelect with initialContent set to
+        {initialContent}
+      </>
+    ) : 'ControlSelect'}
   </p>
 ));
 jest.mock('../Controls/Checkboxes', () => () => <p>ControlCheckboxes</p>);

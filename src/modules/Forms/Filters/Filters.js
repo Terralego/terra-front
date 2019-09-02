@@ -1,5 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
+import { MenuItem } from '@blueprintjs/core';
 
 import Select from '../Controls/Select';
 import Text from '../Controls/Text';
@@ -86,6 +87,7 @@ export class Filters extends React.Component {
     layer: '',
     translate: translateMock({
       'terralego.forms.filter.select_placeholder': 'Enter a query first',
+      'terralego.forms.filter.input_placeholder': 'Filter...',
     }),
   };
 
@@ -113,9 +115,12 @@ export class Filters extends React.Component {
             locales={locales}
             value={properties[property]}
             initialContent={(values && values.length > 250)
-              ? translate('terralego.forms.filter.select_placeholder')
+              ? <MenuItem disabled text={translate('terralego.forms.filter.select_placeholder')} />
               : undefined
             }
+            inputProps={{
+              placeholder: translate('terralego.forms.filter.input_placeholder'),
+            }}
           />
         ))}
       </div>

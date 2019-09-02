@@ -9,7 +9,10 @@ exports[`should build a form 1`] = `
     ControlSelect
   </p>
   <p>
-    ControlSelect with initialContent set to Enter a query first
+    ControlSelect with initialContent set to
+    <p>
+      Enter a query first
+    </p>
   </p>
   <p>
     ControlCheckboxes
