@@ -27,6 +27,11 @@ describe('should render correctly', () => {
     expect(tree).toMatchSnapshot();
   });
 
+  it('stacked circles', () => {
+    const tree = renderer.create(<Legend title="Hello World" stackedCircles items={items('circle')} />).toJSON();
+    expect(tree).toMatchSnapshot();
+  });
+
   it('with multi level', () => {
     const tree = renderer.create((
       <Legend
@@ -73,7 +78,7 @@ describe('should render correctly', () => {
   });
 
   it('with source', () => {
-    const tree = renderer.create(<Legend source="Evian" />).toJSON();
+    const tree = renderer.create(<Legend source="Evian" title="les bains" />).toJSON();
     expect(tree).toMatchSnapshot();
   });
 });

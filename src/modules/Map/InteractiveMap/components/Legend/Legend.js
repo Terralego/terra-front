@@ -10,11 +10,18 @@ import Rect from './components/Rect';
 
 const DEFAULT_RADIUS = 16;
 
-export const Legend = ({ title, source, items, level, position, content, history }) => {
+export const Legend = ({
+  title,
+  source,
+  items,
+  level,
+  position,
+  content,
+  history,
+  stackedCircles,
+}) => {
   const biggestRadius = items.reduce((int, item) =>
     Math.max(int, item.radius || DEFAULT_RADIUS), 0);
-
-  const isAllCircle = items.every(({ shape }) => (shape === 'circle'));
 
   return (
     <div className={`tf-legend tf-legend--level-${level}`}>
@@ -26,9 +33,9 @@ export const Legend = ({ title, source, items, level, position, content, history
       <div
         className={classnames(
           'tf-legend__list',
-          { 'tf-legend__only-circles': isAllCircle },
+          { 'tf-legend__stacked-circles': stackedCircles },
         )}
-        style={isAllCircle ? { height: biggestRadius } : null}
+        style={stackedCircles ? { height: biggestRadius } : null}
       >
         {content && (
           <Template
@@ -106,12 +113,14 @@ Legend.propTypes = {
   content: PropTypes.string,
   position: PropTypes.string,
   level: PropTypes.number,
+  stackedCircles: PropTypes.bool,
 };
 Legend.defaultProps = {
   position: 'left',
   level: 1,
   items: [],
   content: '',
+  stackedCircles: false,
 };
 
 export default Legend;
