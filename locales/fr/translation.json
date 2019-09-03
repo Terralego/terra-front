@@ -1,0 +1,66 @@
+{
+  "terralego": {
+    "map": {
+      "search_results": {
+        "title": "Résultats de recherche",
+        "no_result": "Pas de résultat",
+        "group_total": "(1 résultat trouvé)",
+        "group_total_plural": "({{count}} résultats trouvés)"
+      },
+      "search_control": {
+        "button_label": "Rechercher"
+      },
+      "home_control": {
+        "button_label": "Rénitialiser la position de la carte"
+      },
+      "print_control": {
+        "button_label": "Impression vers PDF",
+        "portrait_label": "Portrait",
+        "landscape_label": "Paysage"
+      },
+      "share_control": {
+        "link": "Partager la carte",
+        "copied": "Lien copié !",
+        "share": "Partager la carte sur {{context}}"
+      },
+      "zoom_in_control": {
+        "title": "Zoomer"
+      },
+      "zoom_out_control": {
+        "title": "Dézoomer"
+      },
+      "compass_arrow_control": {
+        "title": "Orienter vers le nord"
+      }
+    },
+    "visualizer": {
+      "layerstree": {
+        "warningzoom": {
+          "message": "Visible depuis le zoom {{minzoom}}"
+        },
+        "itemOptions": {
+          "widget": {
+            "open": "Ouvrir {{widget}}",
+            "close": "Fermer {{widget}}"
+          },
+          "table": {
+            "label": "Vue tabulaire",
+            "title": "Vue tabulaire",
+            "open": "Ouvrir la vue tabulaire",
+            "close": "Fermer la vue tabulaire"
+          },
+          "filter": {
+            "label": "Filtres",
+            "open": "Ouvrir les filtres",
+            "close": "Fermer les filtres"
+          },
+          "options": {
+            "label": "Options",
+            "open": "Afficher les options",
+            "close": "Fermer les options"
+          }
+        }
+      }
+    }
+  }
+}

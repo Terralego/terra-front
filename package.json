@@ -44,7 +44,7 @@
     "version": "git changelog -n -t $npm_package_version && git add CHANGELOG.md",
     "drop-dist": "rimraf dist",
     "copyscss": "cpx 'src/**/*.{scss,svg}' dist",
-    "copyjson": "cpx '{package.json,package-lock.json,README.md}' dist",
+    "copyjson": "cpx '{package.json,package-lock.json,README.md,locales/**/*.json}' dist",
     "sass": "node-sass src -o dist",
     "watch:sass": "npm run sass -- --recursive --watch",
     "babel": "babel src -d dist --ignore 'src/**/*.snap','src/**/*.test.js','src/setupTests.js' --source-maps --config-file ./.babelrc-build",
