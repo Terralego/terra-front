@@ -265,7 +265,7 @@ exports[`should render an error message 1`] = `
         />
       </svg>
     </span>
-    visualizer.layerstree.group.selector
+    No layer found
   </div>
 </div>
 `;

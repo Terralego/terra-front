@@ -85,7 +85,7 @@ export class Filters extends React.Component {
     properties: {},
     layer: '',
     translate: translateMock({
-      'terralego.form.filter.select_placeholder': 'Enter a query first',
+      'terralego.forms.filter.select_placeholder': 'Enter a query first',
     }),
   };
 
@@ -113,7 +113,7 @@ export class Filters extends React.Component {
             locales={locales}
             value={properties[property]}
             initialContent={(values && values.length > 250)
-              ? translate('terralego.form.filter.select_placeholder')
+              ? translate('terralego.forms.filter.select_placeholder')
               : undefined
             }
           />

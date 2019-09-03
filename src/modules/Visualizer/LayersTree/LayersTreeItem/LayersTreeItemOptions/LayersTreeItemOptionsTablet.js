@@ -55,6 +55,7 @@ const LayersTreeItemOptionsTablet = ({
           minimal
           icon="selection"
           title={`widget ${widget.component}`}
+          // i18next-extract-disable-next-line
           alt={translate(`terralego.visualizer.layerstree.itemOptions.widget.${isWidgetActive(widget) ? 'close' : 'open'}`, { widget: widget.component })}
         >
           {widget.component}
@@ -72,6 +73,7 @@ const LayersTreeItemOptionsTablet = ({
       minimal
       icon="th"
       title={translate('terralego.visualizer.layerstree.itemOptions.table.title')}
+      // i18next-extract-disable-next-line
       alt={translate(`terralego.visualizer.layerstree.itemOptions.table.${isTableActive ? 'close' : 'open'}`)}
     >
       {translate('terralego.visualizer.layerstree.itemOptions.table.label')}
@@ -111,6 +113,7 @@ const LayersTreeItemOptionsTablet = ({
       minimal
       onClick={handleOptionPanel}
       title={translate('terralego.visualizer.layerstree.itemOptions.options.label')}
+      // i18next-extract-disable-next-line
       alt={translate(`terralego.visualizer.layerstree.itemOptions.options.${isOptionsOpen ? 'close' : 'open'}`)}
     >
       {translate('terralego.visualizer.layerstree.itemOptions.options.label')}

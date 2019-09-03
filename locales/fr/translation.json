@@ -1,26 +1,77 @@
 {
-  "terralego": {
-    "map": {
-      "search_results": {
-        "title": "Résultats de recherche",
-        "no_result": "Pas de résultat",
-        "group_total": "(1 résultat trouvé)",
-        "group_total_plural": "({{count}} résultats trouvés)"
+  "auth": {
+    "loginform": {
+      "email": {
+        "help": "Saisissez votre e-mail",
+        "info": "requis",
+        "invalid": "E-mail invalide",
+        "label": "E-mail",
+        "placeholder": "E-mail"
       },
-      "search_control": {
-        "button_label": "Rechercher"
+      "error_generic": "Identifiants invalides",
+      "password": {
+        "help": "Saisissez votre votre mot de passe",
+        "info": "requis",
+        "invalid": "Mot de passe invalide",
+        "label": "Mot de passe",
+        "placeholder": "Mot de passe"
+      },
+      "submit": "Se connecter"
+    },
+    "signupform": {
+      "email": {
+        "help": "Saisissez votre e-mail",
+        "info": "requis",
+        "label": "E-mail",
+        "placeholder": "E-mail"
+      },
+      "error_generic": "Identifiants invalides",
+      "password": {
+        "help": "Saisissez votre votre mot de passe",
+        "info": "requis",
+        "label": "Mot de passe",
+        "placeholder": "Mot de passe"
+      },
+      "submit": "Créer le compte",
+      "submitSuccess": "E-mail envoyé à {{email}}"
+    }
+  },
+  "terralego": {
+    "forms": {
+      "filter": {
+        "select_placeholder": "Saisissez un terme de recherche..."
+      }
+    },
+    "map": {
+      "backgroundstyles_control": {
+        "button_label": "Fonds de carte"
+      },
+      "capture_control": {
+        "button_label": "Capture"
+      },
+      "compass_arrow_control": {
+        "title": "Orienter vers le nord"
       },
       "home_control": {
         "button_label": "Rénitialiser la position de la carte"
       },
       "print_control": {
         "button_label": "Impression vers PDF",
-        "portrait_label": "Portrait",
-        "landscape_label": "Paysage"
+        "landscape_label": "Paysage",
+        "portrait_label": "Portrait"
+      },
+      "search_control": {
+        "button_label": "Rechercher"
+      },
+      "search_results": {
+        "group_total": "(1 résultat trouvé)",
+        "group_total_plural": "({{count}} résultats trouvés)",
+        "no_result": "Pas de résultat",
+        "title": "Résultats de recherche"
       },
       "share_control": {
-        "link": "Partager la carte",
         "copied": "Lien copié !",
+        "link": "Partager la carte",
         "share": "Partager la carte sur {{context}}"
       },
       "zoom_in_control": {
@@ -28,37 +79,37 @@
       },
       "zoom_out_control": {
         "title": "Dézoomer"
-      },
-      "compass_arrow_control": {
-        "title": "Orienter vers le nord"
       }
     },
     "visualizer": {
       "layerstree": {
-        "warningzoom": {
-          "message": "Visible depuis le zoom {{minzoom}}"
+        "group": {
+          "selector": "Aucune couche disponible"
         },
         "itemOptions": {
-          "widget": {
-            "open": "Ouvrir {{widget}}",
-            "close": "Fermer {{widget}}"
-          },
-          "table": {
-            "label": "Vue tabulaire",
-            "title": "Vue tabulaire",
-            "open": "Ouvrir la vue tabulaire",
-            "close": "Fermer la vue tabulaire"
-          },
           "filter": {
+            "close": "Fermer les filtres",
             "label": "Filtres",
-            "open": "Ouvrir les filtres",
-            "close": "Fermer les filtres"
+            "open": "Ouvrir les filtres"
           },
           "options": {
+            "close": "Fermer les options",
             "label": "Options",
-            "open": "Afficher les options",
-            "close": "Fermer les options"
+            "open": "Afficher les options"
+          },
+          "table": {
+            "close": "Fermer la vue tabulaire",
+            "label": "Vue tabulaire",
+            "open": "Ouvrir la vue tabulaire",
+            "title": "Vue tabulaire"
+          },
+          "widget": {
+            "close": "Fermer {{widget}}",
+            "open": "Ouvrir {{widget}}"
           }
+        },
+        "warningzoom": {
+          "message": "Visible depuis le zoom {{minzoom}}"
         }
       }
     }
