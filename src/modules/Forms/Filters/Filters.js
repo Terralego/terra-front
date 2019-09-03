@@ -95,6 +95,7 @@ export class Filters extends React.Component {
         {filters.map(({ type, values, property, display, format, ...props }) => (
           <Control
             {...props}
+            translate={translate}
             component={getComponent(type, values, display, format)}
             key={property}
             type={type}
