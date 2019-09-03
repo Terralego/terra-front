@@ -26,6 +26,7 @@ export class PrintControl extends AbstractMapControl {
 
   static propTypes = {
     translate: PropTypes.func,
+    onToggle: PropTypes.func,
   };
 
   static defaultProps = {
@@ -34,6 +35,7 @@ export class PrintControl extends AbstractMapControl {
       'terralego.map.print_control.portrait_label': 'Portrait',
       'terralego.map.print_control.landscape_label': 'Landscape',
     }),
+    onToggle () {},
   }
 
   state = {
@@ -65,9 +67,13 @@ export class PrintControl extends AbstractMapControl {
     map.resize();
   }
 
-  handleInteraction = nextOpenedState => this.setState({
-    isOpen: nextOpenedState,
-  }, this.setClasses);
+  handleInteraction = nextOpenedState => {
+    const { onToggle } = this.props;
+    onToggle(nextOpenedState);
+    this.setState({
+      isOpen: nextOpenedState,
+    }, this.setClasses);
+  }
 
   handleDisposition = ({ target: { value: orientation } }) =>
     this.setState({ orientation }, this.setClasses);
