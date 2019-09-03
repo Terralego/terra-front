@@ -9,21 +9,24 @@ import './styles.scss';
 
 export const LayersTree = ({ layersTree }) => (
   <div className="layerstree-panel-list">
-    {layersTree.map(layer => ((layer.group && !layer.exclusive)
-      ? (
-        <LayersTreeGroup
-          key={layer.group}
-          title={layer.group}
-          layer={layer}
-        />
-      )
-      : (
+    {layersTree.map(layer => {
+      if (layer.group && !layer.exclusive) {
+        return (
+          <LayersTreeGroup
+            key={layer.group}
+            title={layer.group}
+            layer={layer}
+          />
+        );
+      }
+
+      return (
         <LayersTreeItem
-          key={layer.label}
+          key={layer.label || layer.group}
           layer={layer}
         />
-      )
-    ))}
+      );
+    })}
   </div>
 );
 LayersTree.propTypes = {
