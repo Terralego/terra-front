@@ -146,6 +146,7 @@ export class ShareControl extends AbstractMapControl {
           )}
           {['twitter', 'facebook', 'linkedin'].map(network => this.props[network] && (
             <Tooltip
+              key={network}
               className={`share__btn share__btn--${network}`}
               content={translate('terralego.map.share_control.share', { context: network })}
             >
