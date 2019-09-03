@@ -22,12 +22,14 @@ it('should render exporting', () => {
 });
 
 it('should open and set classes', () => {
-  const instance = new PrintControl({});
+  const onToggle = jest.fn();
+  const instance = new PrintControl({ onToggle });
   instance.setClasses = jest.fn();
   instance.setState = jest.fn((state, fn) => fn());
   instance.handleInteraction(true);
   expect(instance.setState).toHaveBeenCalledWith({ isOpen: true }, instance.setClasses);
   expect(instance.setClasses).toHaveBeenCalled();
+  expect(onToggle).toHaveBeenCalledWith(true);
 });
 
 it('should resize map', () => {
