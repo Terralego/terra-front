@@ -1,6 +1,6 @@
 import React from 'react';
 import { storiesOf } from '@storybook/react';
-import { text } from '@storybook/addon-knobs';
+import { text, boolean } from '@storybook/addon-knobs';
 import { action } from '@storybook/addon-actions';
 
 import Legend from '../../../modules/Map/InteractiveMap/components/Legend';
@@ -118,32 +118,29 @@ stories.add('Both', () => (
   </div>
 ), knobsOptions);
 
-stories.add('Only circles', () => (
+stories.add('Circles', () => (
   <div className="interactive-map">
     <div className="interactive-map__legends">
       <Legend
         title="foo"
         source="Source of wrapper"
+        stackedCircles={boolean('Stack circles', false)}
         items={[
           {
-            label: 'quis nostrud',
-            source: 'Source of circles only',
-            items: [{
-              label: 'exercitation ullamco',
-              color: 'white',
-              shape: 'circle',
-              radius: 20,
-            }, {
-              label: 'laboris nisi ut aliquip',
-              color: 'white',
-              shape: 'circle',
-              radius: 15,
-            }, {
-              label: 'ex ea commodo consequat',
-              color: 'white',
-              shape: 'circle',
-              radius: 10,
-            }],
+            label: 'exercitation ullamco',
+            color: 'white',
+            shape: 'circle',
+            radius: 30,
+          }, {
+            label: 'laboris nisi ut aliquip',
+            color: 'white',
+            shape: 'circle',
+            radius: 15,
+          }, {
+            label: 'ex ea commodo consequat',
+            color: 'white',
+            shape: 'circle',
+            radius: 5,
           },
         ]}
       />

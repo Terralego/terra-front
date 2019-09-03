@@ -40,12 +40,8 @@ exports[`snaphsots should render legends 1`] = `
         foo
       </h4>
       <div
-        className="tf-legend__list tf-legend__only-circles"
-        style={
-          Object {
-            "height": 0,
-          }
-        }
+        className="tf-legend__list"
+        style={null}
       >
         
       </div>
@@ -59,12 +55,8 @@ exports[`snaphsots should render legends 1`] = `
         pwet
       </h4>
       <div
-        className="tf-legend__list tf-legend__only-circles"
-        style={
-          Object {
-            "height": 0,
-          }
-        }
+        className="tf-legend__list"
+        style={null}
       >
         
       </div>
