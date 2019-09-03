@@ -552,6 +552,7 @@ export class InteractiveMap extends React.Component {
 
       const backgroundStyleControl = { ...controls[pos] };
       this.backgroundStyleControl = new BackgroundStyles({
+        ...this.props,
         ...backgroundStyleControl,
         onChange: this.onBackgroundChange,
         styles: backgroundStyle,
