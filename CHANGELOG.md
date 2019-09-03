@@ -1,4 +1,14 @@
 
+1.6.0 / 2019-09-03
+==================
+
+  * Implement stackedCircles props in Legend
+  * Add onToggle prop on Print Control
+  * Pass props to BackgroundStyle control
+  * Update Proptypes + Add key in tooltip
+  * Translate share label
+  * Ensure HOC display name
+
 1.5.3 / 2019-09-02
 ==================
 
