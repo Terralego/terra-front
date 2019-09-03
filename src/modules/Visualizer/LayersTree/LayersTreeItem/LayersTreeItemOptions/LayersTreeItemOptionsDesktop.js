@@ -48,6 +48,7 @@ const LayersTreeItemOptionsDesktop = ({
         <Tooltip
           key={widget.component}
           className="layerstree-node-content__options__tooltip widgets"
+          // i18next-extract-disable-next-line
           content={translate(`terralego.visualizer.layerstree.itemOptions.widget.${isWidgetActive(widget) ? 'close' : 'open'}`, { widget: widget.component })}
         >
           <Button
@@ -59,6 +60,7 @@ const LayersTreeItemOptionsDesktop = ({
             minimal
             icon="selection"
             title={`widget ${widget.component}`}
+            // i18next-extract-disable-next-line
             alt={translate(`terralego.layerstree.itemOptions.widget.${isWidgetActive(widget) ? 'close' : 'open'}`, { widget: widget.component })}
           />
         </Tooltip>
@@ -67,6 +69,7 @@ const LayersTreeItemOptionsDesktop = ({
     {displayTableButton && (
       <Tooltip
         className="layerstree-node-content__options__tooltip table"
+        // i18next-extract-disable-next-line
         content={translate(`terralego.visualizer.layerstree.itemOptions.table.${isTableActive ? 'close' : 'open'}`)}
       >
         <Button
@@ -80,6 +83,7 @@ const LayersTreeItemOptionsDesktop = ({
           minimal
           icon="th"
           title={translate('terralego.visualizer.layerstree.itemOptions.table.title')}
+          // i18next-extract-disable-next-line
           alt={translate(`terralego.visualizer.layerstree.itemOptions.table.${isTableActive ? 'close' : 'open'}`)}
         />
       </Tooltip>
@@ -94,6 +98,7 @@ const LayersTreeItemOptionsDesktop = ({
       <LayerFetchValues layer={layer} isFilterVisible={isFilterVisible} />
       )}
       <Tooltip
+        // i18next-extract-disable-next-line
         content={translate(`terralego.visualizer.layerstree.itemOptions.filter.${isFilterVisible ? 'close' : 'open'}`)}
         className="visualizer.layerstree-node-content__options__tooltip filters"
       >
@@ -107,12 +112,14 @@ const LayersTreeItemOptionsDesktop = ({
           minimal
           icon="filter"
           title={translate('terralego.visualizer.layerstree.itemOptions.filter.label')}
+          // i18next-extract-disable-next-line
           alt={translate(`terralego.visualizer.layerstree.itemOptions.filter.${isFilterVisible ? 'close' : 'open'}`)}
         />
       </Tooltip>
     </FiltersPanel>
     )}
     <Tooltip
+      // i18next-extract-disable-next-line
       content={translate(`terralego.visualizer.layerstree.itemOptions.options.${isOptionsOpen ? 'close' : 'open'}`)}
       className="layerNode__tooltip options"
     >
@@ -127,6 +134,7 @@ const LayersTreeItemOptionsDesktop = ({
         minimal
         onClick={handleOptionPanel}
         title={translate('terralego.visualizer.layerstree.itemOptions.options.label')}
+        // i18next-extract-disable-next-line
         alt={translate(`terralego.visualizer.layerstree.itemOptions.options.${isOptionsOpen ? 'close' : 'open'}`)}
       />
     </Tooltip>

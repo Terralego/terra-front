@@ -71,7 +71,7 @@ export class Selector extends React.Component {
         ))}
         {noMatchingLayer && (
           <Callout intent={Intent.WARNING} className="selector__message">
-            {translate('visualizer.layerstree.group.selector')}
+            {translate('terralego.visualizer.layerstree.group.selector')}
           </Callout>
         )}
       </div>

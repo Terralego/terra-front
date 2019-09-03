@@ -21,7 +21,7 @@ export class BackgroundStyles extends AbstractMapControl {
 
   static defaultProps = {
     translate: translateMock({
-      'terralego.map.BackgroundStyles_control.button_label': 'Background styles',
+      'terralego.map.backgroundstyles_control.button_label': 'Background styles',
     }),
   };
 
@@ -36,7 +36,7 @@ export class BackgroundStyles extends AbstractMapControl {
 
     return (
       <Tooltip
-        content={translate('terralego.map.BackgroundStyles_control.button_label')}
+        content={translate('terralego.map.backgroundstyles_control.button_label')}
       >
         <button
           className="mapboxgl-ctrl-icon"

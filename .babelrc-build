@@ -3,6 +3,15 @@
     "@babel/plugin-transform-runtime",
     "@babel/plugin-syntax-dynamic-import",
     "@babel/plugin-proposal-class-properties",
+    [
+      "i18next-extract",
+      {
+        "locales": ["fr"],
+        "tFunctionNames": ['translate'],
+        "defaultContexts": [''],
+        outputPath: "locales/{{locale}}/{{ns}}.json"
+      }
+    ],
     "@babel/plugin-proposal-object-rest-spread"
   ],
   "presets": [
