@@ -101,14 +101,6 @@ export class FiltersPanelContent extends React.Component {
               onChange={onChange}
               filters={filters}
               properties={filtersValues}
-              locales={{
-                emptySelectItem: 'Toutes',
-                noResults: 'Aucun résultat',
-                overlappingDatesMessage: 'Date chevauchante',
-                invalidDateMessage: 'Date invalide',
-                startInputProps: 'Du JJ/MM/AAAA',
-                endInputProps: 'Au JJ/MM/AAAA',
-              }}
             />
           </div>
         </div>

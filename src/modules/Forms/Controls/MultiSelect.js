@@ -11,25 +11,26 @@ import {
 import { MultiSelect as BPMultiSelect } from '@blueprintjs/select';
 
 import { preventEnterKeyPress } from '../../../utils/event';
-
-const DEFAULT_LOCALES = { noResults: 'No results.' };
+import translateMock from '../../../utils/translate';
 
 export class MultiSelect extends React.Component {
   static propTypes = {
     value: PropTypes.arrayOf(PropTypes.string),
-    locales: PropTypes.shape({ noResults: PropTypes.string }),
     label: PropTypes.string,
     onChange: PropTypes.func,
     values: PropTypes.arrayOf(PropTypes.string).isRequired,
     isSubmissionPrevented: PropTypes.bool,
+    translate: PropTypes.func,
   };
 
   static defaultProps = {
-    locales: DEFAULT_LOCALES,
     label: '',
     value: [],
     isSubmissionPrevented: true,
     onChange () {},
+    translate: translateMock({
+      'terralego.forms.controls.multiselect.no_results': 'No results.',
+    }),
   };
 
   state = {
@@ -76,10 +77,10 @@ export class MultiSelect extends React.Component {
     const { items, query } = this.state;
     const {
       label,
-      locales,
       value,
       isSubmissionPrevented,
       className,
+      translate,
       ...props
     } = this.props;
 
@@ -101,7 +102,7 @@ export class MultiSelect extends React.Component {
           resetOnSelect
           items={filteredItems}
           selectedItems={value}
-          noResults={<MenuItem disabled text={locales.noResults || DEFAULT_LOCALES.noResults} />}
+          noResults={<MenuItem disabled text={translate('terralego.forms.controls.multiselect.no_results')} />}
           onItemSelect={handleChange}
           onQueryChange={handleQueryChange}
           tagRenderer={item => item}

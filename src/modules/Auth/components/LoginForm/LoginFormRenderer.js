@@ -30,6 +30,7 @@ export const LoginFormRenderer = ({
       onSubmit={submit}
     >
       <FormGroup
+        // i18next-extract-disable-next-line
         helperText={translate(`auth.loginform.email.${errorLogin ? 'invalid' : 'help'}`)}
         label={translate('auth.loginform.email.label')}
         labelFor="login"
@@ -47,6 +48,7 @@ export const LoginFormRenderer = ({
       </FormGroup>
 
       <FormGroup
+        // i18next-extract-disable-next-line
         helperText={translate(`auth.loginform.password.${errorPassword ? 'invalid' : 'help'}`)}
         label={translate('auth.loginform.password.label')}
         labelFor="password"

@@ -40,7 +40,6 @@ jest.mock('../Controls/DateRangeInput', () => () => <p>DateRangeInput</p>);
 it('should build a form', () => {
   const tree = renderer.create((
     <Filters
-      locales={{ noResults: 'Aucun résultats' }}
       onChange={() => null}
       filters={[{
         property: 'single_value',

@@ -38,8 +38,27 @@
   },
   "terralego": {
     "forms": {
+      "controls": {
+        "daterangeinput": {
+          "end_placeholder": "Au JJ/MM/AAAA",
+          "invalid_date": "Date invalide",
+          "overlapping_dates": "Date chevauchante",
+          "start_placeholder": "Du JJ/MM/AAAA"
+        },
+        "generic": {
+          "empty_item": "Tous(tes)"
+        },
+        "multiselect": {
+          "no_results": "Aucun résultat"
+        },
+        "select": {
+          "empty_item": "Tous(tes)",
+          "no_results": "Aucun résultat"
+        }
+      },
       "filter": {
-        "select_placeholder": "Saisissez un terme de recherche..."
+        "input_placeholder": "Filtrer...",
+        "select_placeholder": "Saisissez un terme de recherche"
       }
     },
     "map": {

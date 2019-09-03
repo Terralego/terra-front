@@ -1,6 +1,7 @@
 import React from 'react';
 import moize from 'moize';
 
+import translateMock from '../../../utils/translate';
 import { TYPE_MANY } from './Filters';
 
 const getValuesWithEmptyItem = moize((values, emptySelectItem) => [{
@@ -9,14 +10,21 @@ const getValuesWithEmptyItem = moize((values, emptySelectItem) => [{
 }, ...values]);
 
 export class Control extends React.Component {
-  static getDerivedStateFromProps ({ values, locales: { emptySelectItem }, type }) {
+  static getDerivedStateFromProps (props) {
+    const {
+      values,
+      type,
+      translate = translateMock({
+        'terralego.forms.controls.generic.empty_item': 'Nothing',
+      }),
+    } = props;
     if (!values) return null;
 
     const withEmptyValue = values && type !== TYPE_MANY;
 
     return {
       values: withEmptyValue
-        ? getValuesWithEmptyItem(values, emptySelectItem)
+        ? getValuesWithEmptyItem(values, translate('terralego.forms.controls.generic.empty_item'))
         : values,
     };
   }

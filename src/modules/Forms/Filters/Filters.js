@@ -17,11 +17,6 @@ export const TYPE_MANY = 'many';
 export const TYPE_RANGE = 'range';
 export const TYPE_BOOL = 'boolean';
 
-const DEFAULT_LOCALES = {
-  noResults: 'No results',
-  emptySelectItem: 'Nothing',
-};
-
 export function getComponent (type, values, display, format) {
   switch (type) {
     case TYPE_SINGLE:
@@ -47,10 +42,6 @@ export function getComponent (type, values, display, format) {
 
 export class Filters extends React.Component {
   static propTypes = {
-    locales: PropTypes.shape({
-      noResults: PropTypes.string,
-      emptySelectItem: PropTypes.string,
-    }),
     onChange: PropTypes.func,
     layer: PropTypes.string,
     filters: PropTypes.arrayOf(PropTypes.shape({
@@ -80,7 +71,6 @@ export class Filters extends React.Component {
   };
 
   static defaultProps = {
-    locales: {},
     onChange () {},
     filters: [],
     properties: {},
@@ -98,8 +88,7 @@ export class Filters extends React.Component {
 
   render () {
     const { onChange } = this;
-    const { properties, filters, locales: customLocales, translate } = this.props;
-    const locales = { ...DEFAULT_LOCALES, ...customLocales };
+    const { properties, filters, translate } = this.props;
 
     return (
       <div>
@@ -112,7 +101,6 @@ export class Filters extends React.Component {
             values={values}
             property={property}
             onChange={onChange(property)}
-            locales={locales}
             value={properties[property]}
             initialContent={(values && values.length > 250)
               ? <MenuItem disabled text={translate('terralego.forms.filter.select_placeholder')} />
