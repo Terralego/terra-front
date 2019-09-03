@@ -1,6 +1,9 @@
 $breakpoints-phone: 320px;
 $breakpoints-tablet: 768px;
 
+.mapboxgl-ctrl-permalink .bp3-popover-wrapper:first-of-type {
+  margin-right: .5rem;
+}
 .share {
   &__btn {
     .bp3-button {

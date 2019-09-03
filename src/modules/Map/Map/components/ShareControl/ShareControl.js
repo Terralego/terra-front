@@ -153,12 +153,9 @@ export class ShareControl extends AbstractMapControl {
                 context: network.charAt(0).toUpperCase() + network.slice(1),
               })}
             >
-              <Button
-                onClick={this.share(network)}
-              >
-                <img src={icon(network)} alt={network} />
-              </Button>
-            </Tooltip>
+              <img src={icon(network)} alt={network} />
+            </Button>
+          </Tooltip>
           ))}
         </ControlGroup>
       </Popover>
