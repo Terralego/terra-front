@@ -51,6 +51,7 @@ export class ShareControl extends AbstractMapControl {
     translate: translateMock({
       'terralego.map.share_control.link': 'Share your map',
       'terralego.map.share_control.share': 'Share your map on {{context}}',
+      'terralego.map.share_control.copied': 'Copied!',
     }),
   };
 
@@ -140,7 +141,7 @@ export class ShareControl extends AbstractMapControl {
                   intent={copySuccess ? 'success' : 'none'}
                   icon="clipboard"
                 />
-                {copySuccess && 'Copied !'}
+                {copySuccess && translate('terralego.map.share_control.copied')}
               </Popover>
             </>
           )}
@@ -148,7 +149,9 @@ export class ShareControl extends AbstractMapControl {
             <Tooltip
               key={network}
               className={`share__btn share__btn--${network}`}
-              content={translate('terralego.map.share_control.share', { context: network })}
+              content={translate('terralego.map.share_control.share', {
+                context: network.charAt(0).toUpperCase() + network.slice(1),
+              })}
             >
               <Button
                 onClick={this.share(network)}
