@@ -76,6 +76,7 @@
       },
       "print_control": {
         "button_label": "Impression vers PDF",
+        "cancel_label": "Annuler",
         "landscape_label": "Paysage",
         "portrait_label": "Portrait"
       },
