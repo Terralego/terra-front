@@ -34,6 +34,7 @@ export class PrintControl extends AbstractMapControl {
       'terralego.map.print_control.button_label': 'Print to PDF',
       'terralego.map.print_control.portrait_label': 'Portrait',
       'terralego.map.print_control.landscape_label': 'Landscape',
+      'terralego.map.print_control.cancel_label': 'Cancel',
     }),
     onToggle () {},
   }
@@ -122,6 +123,12 @@ export class PrintControl extends AbstractMapControl {
                 <Spinner size={16} /> :
                 translate('terralego.map.print_control.button_label')
               }
+            </Button>
+            <Button
+              onClick={() => this.setState({ isOpen: false })}
+              intent="danger"
+            >
+              {translate('terralego.map.print_control.cancel_label')}
             </Button>
           </>
         )}
