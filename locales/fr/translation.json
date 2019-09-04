@@ -2,17 +2,17 @@
   "auth": {
     "loginform": {
       "email": {
-        "help": "Saisissez votre e-mail",
+        "helper": "Saisissez votre e-mail",
+        "helper_invalid": "E-mail invalide",
         "info": "requis",
-        "invalid": "E-mail invalide",
         "label": "E-mail",
         "placeholder": "E-mail"
       },
       "error_generic": "Identifiants invalides",
       "password": {
-        "help": "Saisissez votre votre mot de passe",
+        "helper": "Saisissez votre votre mot de passe",
+        "helper_invalid": "Mot de passe invalide",
         "info": "requis",
-        "invalid": "Mot de passe invalide",
         "label": "Mot de passe",
         "placeholder": "Mot de passe"
       },
@@ -38,8 +38,27 @@
   },
   "terralego": {
     "forms": {
+      "controls": {
+        "daterangeinput": {
+          "end_placeholder": "Au JJ/MM/AAAA",
+          "invalid_date": "Date invalide",
+          "overlapping_dates": "Date chevauchante",
+          "start_placeholder": "Du JJ/MM/AAAA"
+        },
+        "generic": {
+          "empty_item": "Tous(tes)"
+        },
+        "multiselect": {
+          "no_results": "Aucun résultat"
+        },
+        "select": {
+          "empty_item": "Tous(tes)",
+          "no_results": "Aucun résultat"
+        }
+      },
       "filter": {
-        "select_placeholder": "Saisissez un terme de recherche..."
+        "input_placeholder": "Filtrer...",
+        "select_placeholder": "Saisissez un terme de recherche"
       }
     },
     "map": {
@@ -88,24 +107,33 @@
         },
         "itemOptions": {
           "filter": {
-            "close": "Fermer les filtres",
+            "alt": "Ouvrir les filtres",
+            "alt_close": "Fermer les filtres",
             "label": "Filtres",
-            "open": "Ouvrir les filtres"
+            "tooltip": "Ouvrir les filtres",
+            "tooltip_close": "Fermer les filtres"
           },
           "options": {
-            "close": "Fermer les options",
+            "alt": "",
+            "alt_close": "Fermer les options",
+            "alt_open": "Afficher les options",
             "label": "Options",
-            "open": "Afficher les options"
+            "tooltip": "Afficher les options",
+            "tooltip_close": "Fermer les options"
           },
           "table": {
-            "close": "Fermer la vue tabulaire",
+            "alt": "Ouvrir la vue tabulaire",
+            "alt_close": "Fermer la vue tabulaire",
             "label": "Vue tabulaire",
-            "open": "Ouvrir la vue tabulaire",
-            "title": "Vue tabulaire"
+            "title": "Vue tabulaire",
+            "tooltip": "Ouvrir la vue tabulaire",
+            "tooltip_close": "Fermer la vue tabulaire"
           },
           "widget": {
-            "close": "Fermer {{widget}}",
-            "open": "Ouvrir {{widget}}"
+            "alt": "Ouvrir {{widget}}",
+            "alt_close": "Fermer {{widget}}",
+            "tooltip": "Ouvrir {{widget}}",
+            "tooltip_close": "Fermer {{widget}}"
           }
         },
         "warningzoom": {

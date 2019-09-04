@@ -122,8 +122,8 @@ it('should render item', () => {
   }
 });
 
-it('should render default locales', () => {
-  const wrapper = shallow(<MultiSelect locales={{ foo: 'foo' }} values={['foo', 'bar']} />);
+it('should render default message', () => {
+  const wrapper = shallow(<MultiSelect values={['foo', 'bar']} />);
   expect(wrapper.find('BPMultiSelect').props().noResults.props.text).toBe('No results.');
 });
 

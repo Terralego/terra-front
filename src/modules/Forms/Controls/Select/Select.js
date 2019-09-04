@@ -6,11 +6,11 @@ import { Select as BPSelect } from '@blueprintjs/select';
 import uuid from 'uuid/v4';
 
 import { preventEnterKeyPress } from '../../../../utils/event';
+import translateMock from '../../../../utils/translate';
 import formatValues from '../formatValues';
 
 export class Select extends React.Component {
   static propTypes = {
-    locales: PropTypes.shape({ noResults: PropTypes.string }),
     label: PropTypes.string,
     onChange: PropTypes.func,
     values: PropTypes.arrayOf(
@@ -22,16 +22,18 @@ export class Select extends React.Component {
         }),
       ]),
     ).isRequired,
-    placeholder: PropTypes.string,
     isSubmissionPrevented: PropTypes.bool,
+    translate: PropTypes.func,
   };
 
   static defaultProps = {
-    locales: { noResults: 'No results.' },
     label: '',
-    placeholder: 'Filter…',
     isSubmissionPrevented: true,
     onChange () {},
+    translate: translateMock({
+      'terralego.forms.controls.select.empty_item': 'All',
+      'terralego.forms.controls.select.no_results': 'No results.',
+    }),
   };
 
   static getDerivedStateFromProps ({ values }) {
@@ -61,13 +63,13 @@ export class Select extends React.Component {
   render () {
     const {
       label,
-      locales: { noResults, emptySelectItem },
       placeholder,
       isSubmissionPrevented,
       value,
       className,
       inline,
       fullWidth,
+      translate,
       ...props
     } = this.props;
 
@@ -126,11 +128,20 @@ export class Select extends React.Component {
               />
             </div>
           )}
-          noResults={<MenuItem disabled text={noResults} />}
+          noResults={(
+            <MenuItem
+              disabled
+              text={translate('terralego.forms.controls.select.no_results')}
+            />
+          )}
           onItemSelect={handleChange}
           {...props}
         >
-          <Button id={this.uuid} text={displayedValue || emptySelectItem} rightIcon="double-caret-vertical" />
+          <Button
+            id={this.uuid}
+            text={displayedValue || translate('terralego.forms.controls.select.empty_item')}
+            rightIcon="double-caret-vertical"
+          />
         </BPSelect>
       </div>
     );

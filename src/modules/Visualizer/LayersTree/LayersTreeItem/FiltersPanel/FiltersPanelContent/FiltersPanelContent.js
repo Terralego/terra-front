@@ -61,6 +61,7 @@ export class FiltersPanelContent extends React.Component {
       layer: { filters: { form: layerForm = [] } = {} },
       activeLayer: { filters: { form = layerForm } = {} } = {},
       filtersValues,
+      translate,
     } = this.props;
     const { visible, animate } = this.state;
     const { elRef } = this;
@@ -101,14 +102,7 @@ export class FiltersPanelContent extends React.Component {
               onChange={onChange}
               filters={filters}
               properties={filtersValues}
-              locales={{
-                emptySelectItem: 'Toutes',
-                noResults: 'Aucun résultat',
-                overlappingDatesMessage: 'Date chevauchante',
-                invalidDateMessage: 'Date invalide',
-                startInputProps: 'Du JJ/MM/AAAA',
-                endInputProps: 'Au JJ/MM/AAAA',
-              }}
+              translate={translate}
             />
           </div>
         </div>

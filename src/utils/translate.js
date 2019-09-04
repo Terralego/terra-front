@@ -6,4 +6,4 @@
 export default (config = {}) => (key, params = {}) =>
   Object.keys(params).reduce((prev, next) =>
     prev.replace(new RegExp(`{{${next}}}`, 'g'), params[next]),
-  config[key] || key);
+  (params.context && config[`${key}_${params.context}`]) || config[key] || key);

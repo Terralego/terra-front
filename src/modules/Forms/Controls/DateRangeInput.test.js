@@ -23,14 +23,10 @@ it('should render local error', () => {
     <DateRangeInput
       label="Change Values of my range"
       onChange={() => null}
-      locales={{
-        overlappingDatesMessage: 'Date chevauchante',
-        invalidDateMessage: 'Date invalide',
-      }}
     />
   ));
-  expect(wrapper.find('DateRangeInput').props().overlappingDatesMessage).toEqual('Date chevauchante');
-  expect(wrapper.find('DateRangeInput').props().invalidDateMessage).toEqual('Date invalide');
+  expect(wrapper.find('DateRangeInput').props().overlappingDatesMessage).toEqual('Overlapping date');
+  expect(wrapper.find('DateRangeInput').props().invalidDateMessage).toEqual('Invalid date');
 });
 
 it('should mount & update correctly', () => {
@@ -60,10 +56,4 @@ it('shoud render date', () => {
   const { parseDate } = wrapper.find('DateRangeInput').props();
   wrapper.find('DateRangeInput').props();
   expect(parseDate(str)).toEqual(new Date(str));
-});
-
-it('should render default locales', () => {
-  const wrapper = shallow(<DateRangeInput locales={{ foo: 'foo' }} />);
-  expect(wrapper.find('DateRangeInput').props().overlappingDatesMessage).toBe('Overlapping date.');
-  expect(wrapper.find('DateRangeInput').props().invalidDateMessage).toBe('Invalid date.');
 });

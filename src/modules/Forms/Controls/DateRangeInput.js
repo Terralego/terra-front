@@ -6,31 +6,18 @@ import PropTypes from 'prop-types';
 import { DateRangeInput as BPDateRangeInput } from '@blueprintjs/datetime';
 
 import localeUtils from '../../../utils/localeUtils';
+import translateMock from '../../../utils/translate';
 
 // Date Format
 const formatDate = date => date.toLocaleDateString();
 const parseDate = str => new Date(str);
-
-// Date Error Message
-const DEFAULT_LOCALES = {
-  overlappingDatesMessage: 'Overlapping date.',
-  invalidDateMessage: 'Invalid date.',
-  startInputProps: 'Start date',
-  endInputProps: 'End date',
-};
 
 export const DateRangeInput = ({
   className,
   label,
   value,
   onChange,
-  locales,
-  locales: {
-    overlappingDatesMessage = DEFAULT_LOCALES.overlappingDatesMessage,
-    invalidDateMessage = DEFAULT_LOCALES.invalidDateMessage,
-    startInputProps = DEFAULT_LOCALES.startInputProps,
-    endInputProps = DEFAULT_LOCALES.endInputProps,
-  },
+  translate,
   locale = global.navigator.language,
   shortcuts = false,
   ...props
@@ -45,18 +32,18 @@ export const DateRangeInput = ({
       onChange={onChange}
       parseDate={parseDate}
       value={value}
-      overlappingDatesMessage={overlappingDatesMessage}
-      invalidDateMessage={invalidDateMessage}
+      overlappingDatesMessage={translate('terralego.forms.controls.daterangeinput.overlapping_dates')}
+      invalidDateMessage={translate('terralego.forms.controls.daterangeinput.invalid_date')}
       popoverProps={{ usePortal: false }}
-      localeUtils={{ ...localeUtils, ...locales }}
+      localeUtils={localeUtils}
       locale={locale.substr(0, 2)}
       shortcuts={shortcuts}
       startInputProps={{
-        placeholder: startInputProps,
+        placeholder: translate('terralego.forms.controls.daterangeinput.start_placeholder'),
         className: 'tf-control-date-range__start-input',
       }}
       endInputProps={{
-        placeholder: endInputProps,
+        placeholder: translate('terralego.forms.controls.daterangeinput.end_placeholder'),
         className: 'tf-control-date-range__en d-input',
       }}
       {...props}
@@ -65,23 +52,22 @@ export const DateRangeInput = ({
 );
 
 DateRangeInput.propTypes = {
-  locales: PropTypes.shape({
-    overlappingDatesMessage: PropTypes.string,
-    invalidDateMessage: PropTypes.string,
-  }),
   label: PropTypes.string,
   onChange: PropTypes.func,
   value: PropTypes.arrayOf(PropTypes.instanceOf(Date)),
+  translate: PropTypes.func,
 };
 
 DateRangeInput.defaultProps = {
-  locales: {
-    overlappingDatesMessage: DEFAULT_LOCALES.overlappingDatesMessage,
-    invalidDateMessage: DEFAULT_LOCALES.invalidDateMessage,
-  },
   label: '',
   value: [null, null],
   onChange () {},
+  translate: translateMock({
+    'terralego.forms.controls.daterangeinput.overlapping_dates': 'Overlapping date',
+    'terralego.forms.controls.daterangeinput.invalid_date': 'Invalid date',
+    'terralego.forms.controls.daterangeinput.start_placeholder': 'Start date',
+    'terralego.forms.controls.daterangeinput.end_placeholder': 'End date',
+  }),
 };
 
-export default (DateRangeInput);
+export default DateRangeInput;

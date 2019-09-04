@@ -1,5 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
+import { MenuItem } from '@blueprintjs/core';
 
 import Select from '../Controls/Select';
 import Text from '../Controls/Text';
@@ -15,11 +16,6 @@ export const TYPE_SINGLE = 'single';
 export const TYPE_MANY = 'many';
 export const TYPE_RANGE = 'range';
 export const TYPE_BOOL = 'boolean';
-
-const DEFAULT_LOCALES = {
-  noResults: 'No results',
-  emptySelectItem: 'Nothing',
-};
 
 export function getComponent (type, values, display, format) {
   switch (type) {
@@ -46,10 +42,6 @@ export function getComponent (type, values, display, format) {
 
 export class Filters extends React.Component {
   static propTypes = {
-    locales: PropTypes.shape({
-      noResults: PropTypes.string,
-      emptySelectItem: PropTypes.string,
-    }),
     onChange: PropTypes.func,
     layer: PropTypes.string,
     filters: PropTypes.arrayOf(PropTypes.shape({
@@ -79,13 +71,14 @@ export class Filters extends React.Component {
   };
 
   static defaultProps = {
-    locales: {},
     onChange () {},
     filters: [],
     properties: {},
     layer: '',
     translate: translateMock({
       'terralego.forms.filter.select_placeholder': 'Enter a query first',
+      'terralego.forms.filter.input_placeholder': 'Filter...',
+      'terralego.forms.controls.generic.empty_item': 'Nothing',
     }),
   };
 
@@ -96,26 +89,28 @@ export class Filters extends React.Component {
 
   render () {
     const { onChange } = this;
-    const { properties, filters, locales: customLocales, translate } = this.props;
-    const locales = { ...DEFAULT_LOCALES, ...customLocales };
+    const { properties, filters, translate } = this.props;
 
     return (
       <div>
         {filters.map(({ type, values, property, display, format, ...props }) => (
           <Control
             {...props}
+            translate={translate}
             component={getComponent(type, values, display, format)}
             key={property}
             type={type}
             values={values}
             property={property}
             onChange={onChange(property)}
-            locales={locales}
             value={properties[property]}
             initialContent={(values && values.length > 250)
-              ? translate('terralego.forms.filter.select_placeholder')
+              ? <MenuItem disabled text={translate('terralego.forms.filter.select_placeholder')} />
               : undefined
             }
+            inputProps={{
+              placeholder: translate('terralego.forms.filter.input_placeholder'),
+            }}
           />
         ))}
       </div>

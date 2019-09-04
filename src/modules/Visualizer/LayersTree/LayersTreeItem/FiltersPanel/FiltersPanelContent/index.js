@@ -2,7 +2,7 @@ import FiltersPanelContent from './FiltersPanelContent';
 
 import { connectLayersTree } from '../../../LayersTreeProvider/context';
 
-export default connectLayersTree(({ getLayerState }, { layer, layer: { exclusive, layers } }) => {
+export default connectLayersTree('translate', ({ getLayerState }, { layer, layer: { exclusive, layers } }) => {
   const activeLayer = exclusive
     ? layers.find(l => getLayerState({ layer: l }).active) || layer
     : layer;

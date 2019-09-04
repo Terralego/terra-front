@@ -6,13 +6,13 @@ import translateMock from '../../../../utils/translate';
 export const LoginFormRenderer = ({
   submit, setLogin, setPassword, errorLogin, errorPassword, errorGeneric,
   translate = translateMock({
-    'auth.loginform.email.invalid': 'Invalid email',
-    'auth.loginform.email.help': 'Type your email',
+    'auth.loginform.email.helper': 'Type your email',
+    'auth.loginform.email.helper_invalid': 'Invalid email',
     'auth.loginform.email.label': 'Email',
     'auth.loginform.email.info': 'required',
     'auth.loginform.email.placeholder': 'Email',
-    'auth.loginform.password.invalid': 'Invalid password',
-    'auth.loginform.password.help': 'Type your password',
+    'auth.loginform.password.helper': 'Type your password',
+    'auth.loginform.password.helper_invalid': 'Invalid password',
     'auth.loginform.password.label': 'Password',
     'auth.loginform.password.info': 'required',
     'auth.loginform.password.placeholder': 'Password',
@@ -30,7 +30,7 @@ export const LoginFormRenderer = ({
       onSubmit={submit}
     >
       <FormGroup
-        helperText={translate(`auth.loginform.email.${errorLogin ? 'invalid' : 'help'}`)}
+        helperText={translate('auth.loginform.email.helper', { context: errorLogin ? 'invalid' : 'help' })}
         label={translate('auth.loginform.email.label')}
         labelFor="login"
         labelInfo={translate('auth.loginform.email.info')}
@@ -47,7 +47,7 @@ export const LoginFormRenderer = ({
       </FormGroup>
 
       <FormGroup
-        helperText={translate(`auth.loginform.password.${errorPassword ? 'invalid' : 'help'}`)}
+        helperText={translate('auth.loginform.password.helper', { context: errorPassword ? 'invalid' : 'help' })}
         label={translate('auth.loginform.password.label')}
         labelFor="password"
         labelInfo={translate('auth.loginform.password.info')}

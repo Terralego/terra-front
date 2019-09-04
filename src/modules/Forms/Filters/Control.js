@@ -9,14 +9,19 @@ const getValuesWithEmptyItem = moize((values, emptySelectItem) => [{
 }, ...values]);
 
 export class Control extends React.Component {
-  static getDerivedStateFromProps ({ values, locales: { emptySelectItem }, type }) {
+  static getDerivedStateFromProps (props) {
+    const {
+      values,
+      type,
+      translate,
+    } = props;
     if (!values) return null;
 
     const withEmptyValue = values && type !== TYPE_MANY;
 
     return {
       values: withEmptyValue
-        ? getValuesWithEmptyItem(values, emptySelectItem)
+        ? getValuesWithEmptyItem(values, translate('terralego.forms.controls.generic.empty_item'))
         : values,
     };
   }
