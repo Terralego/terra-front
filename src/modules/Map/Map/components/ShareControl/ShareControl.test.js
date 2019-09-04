@@ -13,6 +13,8 @@ jest.mock('@blueprintjs/core', () => ({
   Tooltip: ({ children }) => children,
 }));
 
+window.open = jest.fn();
+
 it('should render', () => {
   const tree = renderer.create(<ShareControl />);
   expect(tree.toJSON()).toMatchSnapshot();

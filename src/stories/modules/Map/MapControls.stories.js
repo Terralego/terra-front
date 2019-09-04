@@ -68,42 +68,42 @@ storiesOf('Map components/InteractiveMap', module).add('Custom controls ', () =>
       center={[5.386195159396806, 43.30072210972415]}
       maxBounds={[[-5.7283633634, 42.114925591], [8.8212564471, 51.3236272327]]} // Should be tried with https://boundingbox.klokantech.com/
       zoom={10} // set default zoom
-      controls={[boolean('Display Search control', true) && {
+      controls={[boolean('Display Search control', true, CONTROL_SEARCH) && {
         control: CONTROL_SEARCH,
         position: CONTROLS_TOP_RIGHT,
         onSearch,
         onSearchResultClick: ({ result }) => action('Click on search result')(result),
-        disabled: boolean('Disable Search control', false),
-      }, boolean('Display Home control', true) && {
+        disabled: boolean('Disable Search control', false, CONTROL_SEARCH),
+      }, boolean('Display Home control', true, CONTROL_HOME) && {
         control: CONTROL_HOME,
         position: CONTROLS_TOP_RIGHT,
-        disabled: boolean('Disable Home control', false),
+        disabled: boolean('Disable Home control', false, CONTROL_HOME),
       }, {
         control: CONTROL_NAVIGATION,
         position: CONTROLS_TOP_RIGHT,
-        disabled: boolean('Disable Navigation control', false),
-      }, boolean('Display Background styles control', true) && {
+        disabled: boolean('Disable Navigation control', false, CONTROL_NAVIGATION),
+      }, boolean('Display Background styles control', true, CONTROL_BACKGROUND_STYLES) && {
         control: CONTROL_BACKGROUND_STYLES,
         position: CONTROLS_TOP_RIGHT,
-        disabled: boolean('Disable Background styles control', false),
-      }, boolean('Display Capture control', true) && {
+        disabled: boolean('Disable Background styles control', false, CONTROL_BACKGROUND_STYLES),
+      }, boolean('Display Capture control', true, CONTROL_CAPTURE) && {
         control: CONTROL_CAPTURE,
         position: CONTROLS_TOP_RIGHT,
-        disabled: boolean('Disable Capture control', false),
-      }, boolean('Display Print control', true) && {
+        disabled: boolean('Disable Capture control', false, CONTROL_CAPTURE),
+      }, boolean('Display Print control', true, CONTROL_PRINT) && {
         control: CONTROL_PRINT,
         position: CONTROLS_TOP_RIGHT,
-        disabled: boolean('Disable Print control', false),
-      }, boolean('Display Share control', true) && {
+        disabled: boolean('Disable Print control', false, CONTROL_PRINT),
+      }, boolean('Display Share control', false, CONTROL_SHARE) && {
         control: CONTROL_SHARE,
         position: CONTROLS_TOP_RIGHT,
-        disabled: boolean('Disable Share control', false),
-        link: boolean('Activate link', true),
-        twitter: boolean('Activate twitter', true),
-        facebook: boolean('Activate facebook', true),
-        linkedin: boolean('Activate linkedin', true),
-        initialState: object('Initial state', {}),
-      }, boolean('Display Draw tools control', false) && {
+        disabled: boolean('Disable Share control', false, CONTROL_SHARE),
+        link: boolean('Activate link', true, CONTROL_SHARE),
+        twitter: boolean('Activate twitter', true, CONTROL_SHARE),
+        facebook: boolean('Activate facebook', true, CONTROL_SHARE),
+        linkedin: boolean('Activate linkedin', true, CONTROL_SHARE),
+        initialState: object('Initial state', {}, CONTROL_SHARE),
+      }, boolean('Display Draw tools control', false, CONTROL_DRAW) && {
         control: CONTROL_DRAW,
         position: CONTROLS_TOP_LEFT,
         onDrawActionable: onChange,
@@ -114,14 +114,14 @@ storiesOf('Map components/InteractiveMap', module).add('Custom controls ', () =>
         onDrawUncombine: onChange,
         onDrawSelectionChange: onChange,
         onDrawUpdate: onChange,
-        disabled: boolean('Disable Draw tools control', false),
+        disabled: boolean('Disable Draw tools control', false, CONTROL_DRAW),
         controls: {
-          line_string: boolean('Display control "line_string"', true),
-          polygon: boolean('Display control "polygon"', true),
-          point: boolean('Display control "point"', true),
-          trash: boolean('Display control "trash"', true),
-          combine_features: boolean('Display control "combine_features"', true),
-          uncombine_features: boolean('Display control "uncombine_features"', true),
+          line_string: boolean('Display control "line_string"', true, CONTROL_DRAW),
+          polygon: boolean('Display control "polygon"', true, CONTROL_DRAW),
+          point: boolean('Display control "point"', true, CONTROL_DRAW),
+          trash: boolean('Display control "trash"', true, CONTROL_DRAW),
+          combine_features: boolean('Display control "combine_features"', true, CONTROL_DRAW),
+          uncombine_features: boolean('Display control "uncombine_features"', true, CONTROL_DRAW),
         },
       }].filter(a => a)}
     />
