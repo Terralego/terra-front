@@ -1,7 +1,6 @@
 import React from 'react';
 import moize from 'moize';
 
-import translateMock from '../../../utils/translate';
 import { TYPE_MANY } from './Filters';
 
 const getValuesWithEmptyItem = moize((values, emptySelectItem) => [{
@@ -14,9 +13,7 @@ export class Control extends React.Component {
     const {
       values,
       type,
-      translate = translateMock({
-        'terralego.forms.controls.generic.empty_item': 'Nothing',
-      }),
+      translate,
     } = props;
     if (!values) return null;
 

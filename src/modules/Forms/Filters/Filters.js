@@ -78,6 +78,7 @@ export class Filters extends React.Component {
     translate: translateMock({
       'terralego.forms.filter.select_placeholder': 'Enter a query first',
       'terralego.forms.filter.input_placeholder': 'Filter...',
+      'terralego.forms.controls.generic.empty_item': 'Nothing',
     }),
   };
 
