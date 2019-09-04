@@ -120,7 +120,7 @@ export class ShareControl extends AbstractMapControl {
             onClick={this.generateHashString}
             aria-label={translate('terralego.map.share_control.link')}
           >
-            <Icon icon="link" />
+            <Icon icon="share" />
           </button>
         </Tooltip>
         <ControlGroup fill>
