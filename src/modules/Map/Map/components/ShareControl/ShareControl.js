@@ -32,7 +32,7 @@ export const icon = network => {
   }
 };
 export class ShareControl extends AbstractMapControl {
-  static containerClassName = 'mapboxgl-ctrl mapboxgl-ctrl-group mapboxgl-ctrl-permalink';
+  static containerClassName = 'mapboxgl-ctrl mapboxgl-ctrl-group mapboxgl-ctrl-share';
 
   static propTypes = {
     link: PropTypes.bool,

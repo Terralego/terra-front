@@ -1,9 +1,6 @@
 $breakpoints-phone: 320px;
 $breakpoints-tablet: 768px;
 
-.mapboxgl-ctrl-permalink .bp3-popover-wrapper:first-of-type {
-  margin-right: .5rem;
-}
 .share {
   &__btn {
     .bp3-button {
@@ -23,7 +20,7 @@ $breakpoints-tablet: 768px;
 }
 
 @media(min-width: $breakpoints-phone) and (max-width: $breakpoints-tablet) {
-  .mapboxgl-ctrl-permalink  .bp3-popover {
+  .mapboxgl-ctrl-share  .bp3-popover {
     max-width: 15rem;
     input {
       max-width: 9rem;
