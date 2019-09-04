@@ -9,6 +9,15 @@
   }
 }
 
+// Taken from .mapboxgl-ctrl-group > button
+.mapboxgl-ctrl-icon {
+  width: 30px;
+  height: 30px;
+  border: 0;
+  background-color: transparent;
+  cursor: pointer;
+}
+
 .mapbox-gl-draw_ctrl-draw-btn {
   &:hover,
   &:focus {
@@ -35,7 +44,6 @@
   }
 
   .bp3-popover-target button {
-    background-color: #394b59;
     filter: invert(0%);
     color: $pt-dark-text-color;
   }
@@ -53,18 +61,4 @@
   pointer-events: none;
   opacity: .4;
   cursor: not-allowed;
-}
-
-// Taken from .mapboxgl-ctrl-group > button
-.mapboxgl-ctrl-share .mapboxgl-ctrl-icon,
-.mapboxgl-ctrl-print .mapboxgl-ctrl-icon {
-  width: 30px;
-  height: 30px;
-  display: block;
-  padding: 0;
-  outline: none;
-  border: 0;
-  box-sizing: border-box;
-  background-color: transparent;
-  cursor: pointer;
 }
