@@ -50,6 +50,14 @@ it('should render correctly', () => {
         }, {
           label: 'sublayer 2',
         }],
+      }, {
+        group: 'Group 2',
+        exclusive: true,
+        layers: [{
+          label: 'Layer 1',
+        }, {
+          label: 'Layer 2',
+        }],
       }]}
     />
   )).toJSON();

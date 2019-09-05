@@ -90,9 +90,45 @@ export class PrintControl extends AbstractMapControl {
     }, this.setClasses);
   });
 
+  renderContent () {
+    const { translate } = this.props;
+    const { orientation, isExporting } = this.state;
+
+    return (
+      <>
+        <RadioGroup
+          label="Disposition"
+          onChange={this.handleDisposition}
+          selectedValue={orientation}
+        >
+          <Radio
+            value={ORIENTATION_PORTRAIT}
+            label={translate('terralego.map.print_control.portrait_label')}
+          />
+          <Radio
+            value={ORIENTATION_LANDSCAPE}
+            label={translate('terralego.map.print_control.landscape_label')}
+          />
+        </RadioGroup>
+        <Button onClick={this.beginGeneration} disabled={isExporting}>
+          {isExporting ?
+            <Spinner size={16} /> :
+            translate('terralego.map.print_control.button_label')
+          }
+        </Button>
+        <Button
+          onClick={() => this.setState({ isOpen: false })}
+          intent="danger"
+        >
+          {translate('terralego.map.print_control.cancel_label')}
+        </Button>
+      </>
+    );
+  }
+
   render () {
     const { translate } = this.props;
-    const { orientation, isOpen, isExporting } = this.state;
+    const { isOpen } = this.state;
 
     return (
       <Popover
@@ -102,36 +138,7 @@ export class PrintControl extends AbstractMapControl {
         onInteraction={this.handleInteraction}
         isOpen={isOpen}
         ref={this.popoverRef}
-        content={(
-          <>
-            <RadioGroup
-              label="Disposition"
-              onChange={this.handleDisposition}
-              selectedValue={orientation}
-            >
-              <Radio
-                value={ORIENTATION_PORTRAIT}
-                label={translate('terralego.map.print_control.portrait_label')}
-              />
-              <Radio
-                value={ORIENTATION_LANDSCAPE}
-                label={translate('terralego.map.print_control.landscape_label')}
-              />
-            </RadioGroup>
-            <Button onClick={this.beginGeneration} disabled={isExporting}>
-              {isExporting ?
-                <Spinner size={16} /> :
-                translate('terralego.map.print_control.button_label')
-              }
-            </Button>
-            <Button
-              onClick={() => this.setState({ isOpen: false })}
-              intent="danger"
-            >
-              {translate('terralego.map.print_control.cancel_label')}
-            </Button>
-          </>
-        )}
+        content={this.renderContent()}
       >
         <Tooltip
           content={translate('terralego.map.print_control.button_label')}
