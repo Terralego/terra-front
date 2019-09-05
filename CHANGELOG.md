@@ -1,4 +1,18 @@
 
+1.6.1 / 2019-09-05
+==================
+
+  * Add cancel button in print control
+  * Fix iterator key issue in LayersTree
+  * Fix light theme controls
+  * Add knobs on controls story, rename and fix css class on share ctrl
+  * Replace link by share icon n share control
+  * Remove autofocus on twitter share control button
+  * Refactor all Filters translations
+  * Translate placeholder of select filter
+  * Add automatic translations extraction
+  * Add translations
+
 1.6.0 / 2019-09-03
 ==================
 
