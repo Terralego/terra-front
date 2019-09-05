@@ -132,3 +132,18 @@ it('should get component', () => {
   expect(getComponent(TYPE_RANGE, [null, null], null, 'date') === DateRangeInput).toBe(true);
   expect(getComponent('NONE_EXISTING_TYPE', 'text') === null).toBe(true);
 });
+
+it('should ensure translation works', () => {
+  const translate = jest.fn();
+  const wrapper = shallow((
+    <Filters
+      translate={translate}
+      filters={[{
+        property: 'switch_value',
+        label: 'Switch label',
+        type: TYPE_BOOL,
+      }]}
+    />
+  ));
+  expect(wrapper.find('Control').props().translate).toEqual(translate);
+});

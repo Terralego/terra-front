@@ -57,6 +57,12 @@ export function getLayerBeforeId (type, layers) {
 
 export const LAYERS_TYPES = ['background', 'raster', 'hillshade', 'heatmap', 'fill', 'fill-extrusion', 'line', 'circle', 'symbol'];
 
+const defaultTranslate = translateMock({
+  'terralego.map.zoom_in_control.title': 'Zoom in',
+  'terralego.map.zoom_out_control.title': 'Zoom out',
+  'terralego.map.compass_arrow_control.title': 'Reset bearing to north',
+});
+
 export class MapComponent extends React.Component {
   static propTypes = {
     // Mapbox general config
@@ -155,11 +161,7 @@ export class MapComponent extends React.Component {
     customStyle: {},
     onBackgroundChange () {},
     controls: DEFAULT_CONTROLS,
-    translate: translateMock({
-      'terralego.map.zoom_in_control.title': 'Zoom in',
-      'terralego.map.zoom_out_control.title': 'Zoom out',
-      'terralego.map.compass_arrow_control.title': 'Reset bearing to north',
-    }),
+    translate: defaultTranslate,
   };
 
   controls = [];
@@ -346,15 +348,21 @@ export class MapComponent extends React.Component {
 
   resetControls () {
     const { controls, map, translate } = this.props;
+    const props = {
+      ...this.props,
+      translate: translate === defaultTranslate ? undefined : translate,
+    };
+
     // Remove all previous controls
     this.controls.forEach(control => map.removeControl(control));
     this.controls = [];
+
     // Add new controls
     controls.forEach(({ position, control, ...params }) => {
       switch (control) {
         case CONTROL_SEARCH: {
           const controlInstance = new SearchControl({
-            ...this.props,
+            ...props,
             renderSearchResults: SearchResults,
             ...params,
             onResultClick: this.onSearchResultClick(params.onSearchResultClick),
@@ -365,7 +373,7 @@ export class MapComponent extends React.Component {
         }
         case CONTROL_CAPTURE: {
           const controlInstance = new CaptureControl({
-            ...this.props,
+            ...props,
             ...params,
           });
           this.controls.push(controlInstance);
@@ -383,7 +391,7 @@ export class MapComponent extends React.Component {
         }
         case CONTROL_PRINT: {
           const controlInstance = new PrintControl({
-            ...this.props,
+            ...props,
             map,
             ...params,
           });
@@ -392,10 +400,10 @@ export class MapComponent extends React.Component {
           break;
         }
         case CONTROL_HOME: {
-          const { fitBounds, center, zoom } = this.props;
+          const { fitBounds, center, zoom } = props;
           const { coordinates, ...fitBoundsParams } = fitBounds || {};
           const controlInstance = new HomeControl({
-            ...this.props,
+            ...props,
             map,
             fitBounds: coordinates,
             fitBoundsParams,
@@ -409,7 +417,7 @@ export class MapComponent extends React.Component {
         }
         case CONTROL_SHARE: {
           const controlInstance = new ShareControl({
-            ...this.props,
+            ...props,
             map,
             ...params,
           });
