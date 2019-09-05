@@ -1,13 +1,21 @@
-import React from 'react';
+import {
+  RangeSlider,
+  NumericInput,
+  Intent,
+  FormGroup,
+} from '@blueprintjs/core';
 import PropTypes from 'prop-types';
-import { RangeSlider } from '@blueprintjs/core';
-import ContentEditable from 'react-contenteditable';
+import React from 'react';
 
 import './index.scss';
+import translateMock from '../../../utils/translate';
 
 const DEFAULT_MIN = 0;
 const DEFAULT_MAX = 100;
 
+/**
+ * Range component that allows editing either by a slider or 2 numeric inputs
+ */
 export class Range extends React.Component {
   static propTypes = {
     label: PropTypes.string,
@@ -15,6 +23,9 @@ export class Range extends React.Component {
     onChange: PropTypes.func,
     min: PropTypes.number,
     max: PropTypes.number,
+    translate: PropTypes.func,
+    /** Number of steps for when to swith to 2 numeric inputs */
+    threshold: PropTypes.number,
   };
 
   static defaultProps = {
@@ -23,96 +34,123 @@ export class Range extends React.Component {
     onChange () {},
     min: DEFAULT_MIN,
     max: DEFAULT_MAX,
+    translate: translateMock({
+      'terralego.forms.controls.range_from': 'From',
+      'terralego.forms.controls.range_to': 'to',
+    }),
+    threshold: 250,
   };
 
-  state = {}
-
-  onBlur = () => {
-    this.handleManualChange();
-    this.setState({ newMin: undefined, newMax: undefined });
+  constructor (props) {
+    super(props);
+    const { min = DEFAULT_MIN, max = DEFAULT_MAX, value = [min, max] } = props;
+    this.state = { range: value.length === 2 ? value : [min, max] };
   }
 
-  handleManualChange = () => {
-    const { onChange, min, max, value: [prevMin, prevMax] = [min, max] } = this.props;
-    const { newMin, newMax } = this.state;
-
-    if (newMin !== undefined) {
-      onChange([Math.max(min, Math.min(newMin, prevMax)), prevMax]);
-    }
-    if (newMax !== undefined) {
-      onChange([prevMin, Math.min(max, Math.max(prevMin, newMax))]);
-    }
+  componentDidUpdate (prevProps) {
+    this.updateRangeFromProps(prevProps);
   }
 
-  selectAll = ({ target }) => {
-    const selection = global.getSelection();
-    const range = document.createRange();
-    range.selectNodeContents(target);
-    selection.removeAllRanges();
-    selection.addRange(range);
-  }
+  onNumericInputChange = pos => bound => {
+    const { onChange, min, max } = this.props;
+    const { range } = this.state;
+    range[pos] = bound;
+    this.setState({ range });
 
-  onLabelEdit = ({ minChanged, maxChanged }) => ({ target: { value: newValue } }) => {
-    const fixedNewValue = Number.isNaN(+newValue)
-      ? 0
-      : +newValue;
-    if (minChanged) {
-      this.setState({ newMin: fixedNewValue });
+    const [lowerBound, upperBound] = range;
+    // Check that the values are within min/max, it will be eventually be
+    // clamped, but we need to prevent firing onChange
+    if (lowerBound <= upperBound && min <= lowerBound && upperBound <= max) {
+      onChange(range);
     }
-    if (maxChanged) {
-      this.setState({ newMax: fixedNewValue });
-    }
-  }
+  };
 
-  labelRenderer = itemValue => {
-    const { min, max, value: [minValue, maxValue] = [min, max] } = this.props;
-    const { newMin, newMax } = this.state;
-    if (+itemValue === minValue || +itemValue === maxValue) {
-      const minChanged = +itemValue === minValue;
-      const maxChanged = !minChanged;
-      const inputValue = minChanged
-        ? newMin
-        : newMax;
-      return (
-        <ContentEditable
-          className="range__manual"
-          onChange={this.onLabelEdit({ minChanged, maxChanged })}
-          html={`${inputValue === undefined ? itemValue : inputValue}`}
-          onBlur={this.onBlur}
-          onClick={this.selectAll}
-          onFocus={this.selectAll}
-        />
-      );
+  /**
+   * This replace the current range if the prop value changed, it keeps it
+   * within new min/max bounds
+   */
+  updateRangeFromProps ({ value: prevValue, min: prevMin, max: prevMax }) {
+    const { value, min, max } = this.props;
+    if (value && prevValue !== value && value.length === 2) {
+      const [lowerBound, upperBound] = value;
+      this.setState({
+        range: [
+          Math.max(lowerBound, min),
+          Math.min(upperBound, max),
+        ],
+      });
     }
-    return itemValue;
+    if (prevMin !== min || prevMax !== max) {
+      this.setState({ range: [min, max] });
+    }
   }
 
   render () {
     const {
       label,
-      value,
       onChange,
       min,
       max,
-      ...props
+      inputProps,
+      translate,
+      threshold,
+      stepSize = 1,
+      ...otherProps
     } = this.props;
-    const [minValue, maxValue] = value || [min, max];
+    const { range, range: [lowerBound, upperBound] } = this.state;
 
-    if (value && (value.length !== 2 || (+minValue > +maxValue))) {
-      throw new Error('Range control: There must be two values and the first must be less than the second');
-    }
+    const tooManyValues = (max - min) / stepSize > threshold;
+    const numericInputProps = {
+      selectAllOnFocus: true,
+      clampValueOnBlur: true,
+      buttonPosition: 'none',
+      ...otherProps,
+      type: undefined, // This resets the type given by Control
+      min,
+      max,
+      intent: lowerBound > upperBound ? Intent.DANGER : undefined,
+    };
 
     return (
       <div className="control-container control--range range">
         <p className="control-label">{label}</p>
-        <RangeSlider
-          value={value || [min, max]}
-          onRelease={onChange}
-          min={min}
-          max={max}
-          labelRenderer={this.labelRenderer}
-          {...props}
-        />
+        {
+          tooManyValues ? (
+            <div className="control--range__numeric">
+              <FormGroup
+                className="bp3-inline"
+                label={translate('terralego.forms.controls.range_from')}
+              >
+                <NumericInput
+                  {...numericInputProps}
+                  onValueChange={this.onNumericInputChange(0)}
+                  value={lowerBound}
+                />
+              </FormGroup>
+              <FormGroup
+                className="bp3-inline"
+                label={translate('terralego.forms.controls.range_to')}
+              >
+                <NumericInput
+                  {...numericInputProps}
+                  onValueChange={this.onNumericInputChange(1)}
+                  value={upperBound}
+                />
+              </FormGroup>
+            </div>
+          ) : (
+            <RangeSlider
+              className="control--range__slider"
+              {...otherProps}
+              value={range}
+              min={min}
+              max={max}
+              onRelease={onChange}
+              onChange={value => this.setState({ range: value })}
+              stepSize={stepSize}
+            />
+          )
+        }
       </div>
     );
   }

@@ -1,6 +1,6 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
-exports[`should render correctly 1`] = `
+exports[`should render correctly as range slider 1`] = `
 <div
   className="control-container control--range range"
 >
@@ -12,5 +12,31 @@ exports[`should render correctly 1`] = `
   <p>
     Range
   </p>
+</div>
+`;
+
+exports[`should render correctly as two inputs 1`] = `
+<div
+  className="control-container control--range range"
+>
+  <p
+    className="control-label"
+  >
+    My range
+  </p>
+  <div
+    className="control--range__numeric"
+  >
+    <div>
+      <p>
+        Numeric input
+      </p>
+    </div>
+    <div>
+      <p>
+        Numeric input
+      </p>
+    </div>
+  </div>
 </div>
 `;

@@ -113,7 +113,7 @@ Array [
               
             </p>
             <div
-              className="bp3-slider"
+              className="bp3-slider control--range__slider"
               onMouseDown={[Function]}
               onTouchStart={[Function]}
             >
@@ -162,22 +162,7 @@ Array [
                     }
                   }
                 >
-                  <div
-                    className="range__manual"
-                    contentEditable={true}
-                    dangerouslySetInnerHTML={
-                      Object {
-                        "__html": "0",
-                      }
-                    }
-                    onBlur={[Function]}
-                    onChange={[Function]}
-                    onClick={[Function]}
-                    onFocus={[Function]}
-                    onInput={[Function]}
-                    onKeyDown={[Function]}
-                    onKeyUp={[Function]}
-                  />
+                  0
                 </div>
                 <div
                   className="bp3-slider-label"
@@ -187,22 +172,7 @@ Array [
                     }
                   }
                 >
-                  <div
-                    className="range__manual"
-                    contentEditable={true}
-                    dangerouslySetInnerHTML={
-                      Object {
-                        "__html": "100",
-                      }
-                    }
-                    onBlur={[Function]}
-                    onChange={[Function]}
-                    onClick={[Function]}
-                    onFocus={[Function]}
-                    onInput={[Function]}
-                    onKeyDown={[Function]}
-                    onKeyUp={[Function]}
-                  />
+                  100
                 </div>
               </div>
               <span
@@ -221,22 +191,7 @@ Array [
                 <span
                   className="bp3-slider-label"
                 >
-                  <div
-                    className="range__manual"
-                    contentEditable={true}
-                    dangerouslySetInnerHTML={
-                      Object {
-                        "__html": "0",
-                      }
-                    }
-                    onBlur={[Function]}
-                    onChange={[Function]}
-                    onClick={[Function]}
-                    onFocus={[Function]}
-                    onInput={[Function]}
-                    onKeyDown={[Function]}
-                    onKeyUp={[Function]}
-                  />
+                  0
                 </span>
               </span>
               <span
@@ -255,22 +210,7 @@ Array [
                 <span
                   className="bp3-slider-label"
                 >
-                  <div
-                    className="range__manual"
-                    contentEditable={true}
-                    dangerouslySetInnerHTML={
-                      Object {
-                        "__html": "100",
-                      }
-                    }
-                    onBlur={[Function]}
-                    onChange={[Function]}
-                    onClick={[Function]}
-                    onFocus={[Function]}
-                    onInput={[Function]}
-                    onKeyDown={[Function]}
-                    onKeyUp={[Function]}
-                  />
+                  100
                 </span>
               </span>
             </div>

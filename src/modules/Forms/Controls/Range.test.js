@@ -6,9 +6,12 @@ import Range from './Range';
 
 jest.mock('@blueprintjs/core', () => ({
   RangeSlider: () => <p>Range</p>,
+  FormGroup: ({ children }) => <div>{children}</div>,
+  NumericInput: () => <p>Numeric input</p>,
+  Intent: { DANGER: 'danger' },
 }));
 
-it('should render correctly', () => {
+it('should render correctly as range slider', () => {
   const tree = renderer.create((
     <Range
       label="My range"
@@ -16,6 +19,19 @@ it('should render correctly', () => {
       onChange={() => null}
       min={0}
       max={10}
+    />
+  )).toJSON();
+  expect(tree).toMatchSnapshot();
+});
+
+it('should render correctly as two inputs', () => {
+  const tree = renderer.create((
+    <Range
+      label="My range"
+      values={[1, 4]}
+      onChange={() => null}
+      min={0}
+      max={1000}
     />
   )).toJSON();
   expect(tree).toMatchSnapshot();
@@ -36,95 +52,51 @@ it('should mount & update correctly', () => {
   expect(onChange).toHaveBeenCalled();
 });
 
-it('should throw an error when values are incorrect', () => {
-  const ERROR_MESSAGE =  'Range control: There must be two values and the first must be less than the second';
-  expect(() => new Range({ value: [10] }).render()).toThrow(ERROR_MESSAGE);
-  expect(() => new Range({ value: [30, 10] }).render()).toThrow(ERROR_MESSAGE);
-});
-
-it('should blur', () => {
+it('should get default min and max if no value', () => {
   const instance = new Range({});
-  instance.handleManualChange = jest.fn();
-  instance.setState = jest.fn();
-  instance.onBlur();
-  expect(instance.handleManualChange).toHaveBeenCalled();
-  expect(instance.setState).toHaveBeenCalledWith({ newMin: undefined, newMax: undefined });
+  expect(instance.state).toEqual({
+    range: [0, 100],
+  });
 });
 
-it('should handle manual change', () => {
+it('should get default min and max if wrong value', () => {
+  const instance = new Range({ value: ['foo'] });
+  expect(instance.state).toEqual({
+    range: [0, 100],
+  });
+});
+
+it('should update range if props are changed', () => {
+  const wrapper = shallow(<Range />);
+  expect(wrapper.state().range).toEqual([0, 100]);
+  wrapper.setProps({ value: [0, 50] });
+  expect(wrapper.state().range).toEqual([0, 50]);
+  wrapper.find('RangeSlider').props().onChange([10, 20]);
+  expect(wrapper.state().range).toEqual([10, 20]);
+
+  wrapper.setProps({ min: -100, max: 50 });
+  expect(wrapper.state().range).toEqual([-100, 50]);
+});
+
+it('should handle numeric change', () => {
   const onChange = jest.fn();
-  const instance = new Range({ onChange, min: 0, max: 100 });
-  instance.state = { newMin: '42' };
-  instance.handleManualChange();
-  expect(onChange).toHaveBeenCalledWith([42, 100]);
-  onChange.mockClear();
+  const wrapper = shallow(<Range max={1000} onChange={onChange} />);
+  const instance = wrapper.instance();
 
-  instance.state = { newMax: '42' };
-  instance.handleManualChange();
-  expect(onChange).toHaveBeenCalledWith([0, 42]);
-  onChange.mockClear();
+  instance.onNumericInputChange(1)(10);
+  expect(wrapper.state().range).toEqual([0, 10]);
+  expect(onChange).toHaveBeenCalled();
 });
 
-it('should manually select all', () => {
-  const instance = new Range();
-  const mockedSelection = {
-    removeAllRanges: jest.fn(),
-    addRange: jest.fn(),
-  };
-  const mockedRange = {
-    selectNodeContents: jest.fn(),
-  };
-  global.getSelection = jest.fn(() => mockedSelection);
-  document.createRange = jest.fn(() => mockedRange);
-  const mockedTarget = {};
-  instance.selectAll({ target: mockedTarget });
+it('should handle danger intent', () => {
+  const onChange = jest.fn();
+  const wrapper = shallow(
+    <Range max={1000} onChange={onChange} value={[10, 20]} />,
+  );
+  const instance = wrapper.instance();
 
-  expect(global.getSelection).toHaveBeenCalled();
-  expect(document.createRange).toHaveBeenCalled();
-  expect(mockedRange.selectNodeContents).toHaveBeenCalledWith(mockedTarget);
-  expect(mockedSelection.removeAllRanges).toHaveBeenCalled();
-  expect(mockedSelection.addRange).toHaveBeenCalledWith(mockedRange);
-});
-
-describe('Label rendering', () => {
-  const instance = new Range({ min: 0, max: 100 });
-  it('should render display labels', () => {
-    const label = instance.labelRenderer(10);
-    expect(label).toBe(10);
-  });
-
-  it('should render min label as editbale', () => {
-    const label = instance.labelRenderer(0);
-    expect(label.type.name).toBe('ContentEditable');
-    expect(label.props.html).toBe('0');
-  });
-
-  it('should render max label as editbale', () => {
-    const label = instance.labelRenderer(100);
-    expect(label.type.name).toBe('ContentEditable');
-    expect(label.props.html).toBe('100');
-  });
-
-  it('should render typed value', () => {
-    instance.state = {
-      newMin: 4,
-    };
-    const label = instance.labelRenderer(0);
-    expect(label.type.name).toBe('ContentEditable');
-    expect(label.props.html).toBe('4');
-  });
-
-  it('should edit label', () => {
-    instance.setState = jest.fn();
-    instance.onLabelEdit({ minChanged: true })({ target: { value: '4' } });
-    expect(instance.setState).toHaveBeenCalledWith({ newMin: 4 });
-
-    instance.setState = jest.fn();
-    instance.onLabelEdit({ maxChanged: true })({ target: { value: '4' } });
-    expect(instance.setState).toHaveBeenCalledWith({ newMax: 4 });
-
-    instance.setState = jest.fn();
-    instance.onLabelEdit({ maxChanged: true })({ target: { value: 'A' } });
-    expect(instance.setState).toHaveBeenCalledWith({ newMax: 0 });
-  });
+  instance.onNumericInputChange(0)(30);
+  expect(wrapper.state().range).toEqual([30, 20]);
+  expect(wrapper.find('NumericInput').first().props().intent).toEqual('danger');
+  expect(onChange).not.toHaveBeenCalled();
 });

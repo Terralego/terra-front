@@ -3,21 +3,19 @@ $breakpoints-tablet: 768px;
 $breakpoints-desktop: 1024px;
 $scaleRatio: 1.25;
 
-.control--range .range__manual {
-  width: auto;
-}
 
 .tf-select .bp3-popover {
   max-width: 16.5rem;
   border: .1px solid #202B33;
   box-shadow: 2px 4px 6px 2px rgba(16, 22, 26, 0.4);
+
   .bp3-popover-content {
     padding: 0;
   }
 }
 
 .bp3-dark .bp3-menu {
-  background-color:#293742;
+  background-color: #293742;
 }
 
 @media(min-width: $breakpoints-phone) and (max-width: $breakpoints-desktop) {
@@ -41,4 +39,16 @@ $scaleRatio: 1.25;
   .bp3-datepicker-month-select > select, .bp3-datepicker-year-select > select {
     font-size: .875rem / $scaleRatio;
   }
+}
+
+.control--range__numeric {
+  display: flex;
+  align-items: center;
+}
+
+.control--range__numeric .bp3-form-group:first-child {
+  margin-right: 10px;
+}
+.control--range__numeric .bp3-input {
+  width: 5em;
 }
