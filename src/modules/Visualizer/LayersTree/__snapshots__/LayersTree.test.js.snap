@@ -10,5 +10,8 @@ exports[`should render correctly 1`] = `
   <p>
     LayersTreeItem
   </p>
+  <p>
+    LayersTreeItem
+  </p>
 </div>
 `;

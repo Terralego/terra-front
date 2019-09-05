@@ -1,5 +1,7 @@
 import React from 'react';
 import renderer from 'react-test-renderer';
+import { shallow } from 'enzyme';
+import { Button } from '@blueprintjs/core';
 
 import PrintControl from './PrintControl';
 import exportPdf from './export';
@@ -118,4 +120,14 @@ it('should set classes', () => {
   instance.setClasses();
 
   expect(container.className).toBe('visualizer__print visualizer__print--landscape');
+});
+
+it('should close menu', () => {
+  const instance = new PrintControl({ translate () {} });
+  instance.setState = jest.fn();
+  const Content = () => instance.renderContent();
+  const wrapper = shallow(<Content />);
+  const closeBtnCallback = wrapper.find(Button).get(1).props.onClick;
+  closeBtnCallback();
+  expect(instance.setState).toHaveBeenCalledWith({ isOpen: false });
 });
