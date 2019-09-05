@@ -1,11 +1,11 @@
+import React from 'react';
+import PropTypes from 'prop-types';
 import {
   RangeSlider,
   NumericInput,
   Intent,
   FormGroup,
 } from '@blueprintjs/core';
-import PropTypes from 'prop-types';
-import React from 'react';
 
 import './index.scss';
 import translateMock from '../../../utils/translate';
@@ -24,8 +24,9 @@ export class Range extends React.Component {
     min: PropTypes.number,
     max: PropTypes.number,
     translate: PropTypes.func,
-    /** Number of steps for when to swith to 2 numeric inputs */
+    /** Number of steps for when to switch to 2 numeric inputs */
     threshold: PropTypes.number,
+    stepSize: PropTypes.number,
   };
 
   static defaultProps = {
@@ -39,6 +40,7 @@ export class Range extends React.Component {
       'terralego.forms.controls.range_to': 'to',
     }),
     threshold: 250,
+    stepSize: 1,
   };
 
   constructor (props) {
@@ -94,7 +96,7 @@ export class Range extends React.Component {
       inputProps,
       translate,
       threshold,
-      stepSize = 1,
+      stepSize,
       ...otherProps
     } = this.props;
     const { range, range: [lowerBound, upperBound] } = this.state;
@@ -114,43 +116,42 @@ export class Range extends React.Component {
     return (
       <div className="control-container control--range range">
         <p className="control-label">{label}</p>
-        {
-          tooManyValues ? (
-            <div className="control--range__numeric">
-              <FormGroup
-                className="bp3-inline"
-                label={translate('terralego.forms.controls.range_from')}
-              >
-                <NumericInput
-                  {...numericInputProps}
-                  onValueChange={this.onNumericInputChange(0)}
-                  value={lowerBound}
-                />
-              </FormGroup>
-              <FormGroup
-                className="bp3-inline"
-                label={translate('terralego.forms.controls.range_to')}
-              >
-                <NumericInput
-                  {...numericInputProps}
-                  onValueChange={this.onNumericInputChange(1)}
-                  value={upperBound}
-                />
-              </FormGroup>
-            </div>
-          ) : (
-            <RangeSlider
-              className="control--range__slider"
-              {...otherProps}
-              value={range}
-              min={min}
-              max={max}
-              onRelease={onChange}
-              onChange={value => this.setState({ range: value })}
-              stepSize={stepSize}
-            />
-          )
-        }
+        {tooManyValues && (
+          <div className="control--range__numeric">
+            <FormGroup
+              className="bp3-inline"
+              label={translate('terralego.forms.controls.range_from')}
+            >
+              <NumericInput
+                {...numericInputProps}
+                onValueChange={this.onNumericInputChange(0)}
+                value={lowerBound}
+              />
+            </FormGroup>
+            <FormGroup
+              className="bp3-inline"
+              label={translate('terralego.forms.controls.range_to')}
+            >
+              <NumericInput
+                {...numericInputProps}
+                onValueChange={this.onNumericInputChange(1)}
+                value={upperBound}
+              />
+            </FormGroup>
+          </div>
+        )}
+        {!tooManyValues && (
+          <RangeSlider
+            className="control--range__slider"
+            {...otherProps}
+            value={range}
+            min={min}
+            max={max}
+            onRelease={onChange}
+            onChange={value => this.setState({ range: value })}
+            stepSize={stepSize}
+          />
+        )}
       </div>
     );
   }

@@ -53,15 +53,15 @@ it('should mount & update correctly', () => {
 });
 
 it('should get default min and max if no value', () => {
-  const instance = new Range({});
-  expect(instance.state).toEqual({
+  const wrapper = shallow(<Range />);
+  expect(wrapper.state()).toEqual({
     range: [0, 100],
   });
 });
 
 it('should get default min and max if wrong value', () => {
-  const instance = new Range({ value: ['foo'] });
-  expect(instance.state).toEqual({
+  const wrapper = shallow(<Range value={['foo']} />);
+  expect(wrapper.state()).toEqual({
     range: [0, 100],
   });
 });
