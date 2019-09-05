@@ -40,6 +40,11 @@ export function getComponent (type, values, display, format) {
   }
 }
 
+const defaultTranslate = translateMock({
+  'terralego.forms.filter.select_placeholder': 'Enter a query first',
+  'terralego.forms.filter.input_placeholder': 'Filter...',
+});
+
 export class Filters extends React.Component {
   static propTypes = {
     onChange: PropTypes.func,
@@ -75,11 +80,7 @@ export class Filters extends React.Component {
     filters: [],
     properties: {},
     layer: '',
-    translate: translateMock({
-      'terralego.forms.filter.select_placeholder': 'Enter a query first',
-      'terralego.forms.filter.input_placeholder': 'Filter...',
-      'terralego.forms.controls.generic.empty_item': 'Nothing',
-    }),
+    translate: defaultTranslate,
   };
 
   onChange = property => value => {
@@ -96,7 +97,7 @@ export class Filters extends React.Component {
         {filters.map(({ type, values, property, display, format, ...props }) => (
           <Control
             {...props}
-            translate={translate}
+            translate={translate === defaultTranslate ? undefined : translate}
             component={getComponent(type, values, display, format)}
             key={property}
             type={type}
