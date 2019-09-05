@@ -1,7 +1,7 @@
 import LayersTreeGroup from './LayersTreeGroup';
 import { connectLayersTree } from '../LayersTreeProvider/context';
+import { isGroupHidden } from './utils';
 
 export default connectLayersTree(({ getLayerState }, { layer: { layers } }) => ({
-  isHidden: layers.reduce((prev, layer) =>
-    prev || getLayerState({ layer }).hidden, false),
+  isHidden: isGroupHidden(layers, getLayerState),
 }))(LayersTreeGroup);
