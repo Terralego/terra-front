@@ -60,7 +60,7 @@ it('should get default min and max if no value', () => {
 });
 
 it('should get default min and max if wrong value', () => {
-  const wrapper = shallow(<Range value={['foo']} />);
+  const wrapper = shallow(<Range value={[123]} />);
   expect(wrapper.state()).toEqual({
     range: [0, 100],
   });

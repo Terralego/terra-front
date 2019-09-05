@@ -45,7 +45,7 @@ export class Range extends React.Component {
 
   constructor (props) {
     super(props);
-    const { min = DEFAULT_MIN, max = DEFAULT_MAX, value = [min, max] } = props;
+    const { min, max, value = [min, max] } = props;
     this.state = { range: value.length === 2 ? value : [min, max] };
   }
 
