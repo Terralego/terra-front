@@ -865,6 +865,39 @@ describe('Interactions', () => {
     expect(popup3.remove).toHaveBeenCalled();
   });
 
+  it('should cancel tooltip display when mouse isn\'t over map anymore', () => {
+    const instance = new InteractiveMap({
+      onInit () {},
+    });
+    instance.setState = () => null;
+    instance.componentDidMount();
+
+    const event = {
+      target: {},
+    };
+
+    instance.map = {
+      getZoom: jest.fn(() => 14),
+      getCanvasContainer: () => {},
+      getContainer: () => ({
+        contains: () => true,
+        querySelectorAll: () => [{
+          contains: () => true,
+        }],
+      }),
+    };
+
+    instance.mouseMoveListener(event);
+    instance.displayTooltip({
+      layerId: 'foo',
+      features: [{ properties: {} }],
+      event: { lngLat: { lng: 3, lat: 4 } },
+      template: 'bar',
+    });
+
+    expect(instance.popups.size).toBe(0);
+  });
+
   it('should remove listener', () => {
     const instance = new InteractiveMap({});
     instance.mouseMoveListener = () => null;
