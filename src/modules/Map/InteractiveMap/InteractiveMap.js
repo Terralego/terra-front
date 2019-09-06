@@ -175,7 +175,8 @@ export class InteractiveMap extends React.Component {
     this.mouseMoveListener = ({ target }) => {
       if (!this.map) return;
 
-      if (isOverMap(target, this.map)) return;
+      this.isPointerOverMap = isOverMap(target, this.map);
+      if (this.isPointerOverMap) return;
 
       /**
        * If event is NOT from map then pointer is moving ouside of the map :
@@ -367,7 +368,10 @@ export class InteractiveMap extends React.Component {
     className,
   }) => {
     const { history } = this.props;
-    const { map } = this;
+    const { map, isPointerOverMap } = this;
+
+    if (isPointerOverMap === false) return;
+
     const zoom = map.getZoom();
     const container = element || generateTooltipContainer({
       fetchProperties,
