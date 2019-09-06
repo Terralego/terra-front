@@ -1,4 +1,11 @@
 
+1.6.3 / 2019-09-06
+==================
+
+  * Do not displayTooltip if pointer is not over Map anymore
+  * Consider being over controls as beeing outside of the map for mouseover behavior
+  * Ensure translation works in stories
+
 1.6.2 / 2019-09-05
 ==================
 
