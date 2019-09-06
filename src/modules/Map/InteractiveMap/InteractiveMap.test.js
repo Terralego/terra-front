@@ -843,6 +843,7 @@ describe('Interactions', () => {
       getCanvasContainer: () => {},
       getContainer: () => ({
         contains: () => true,
+        querySelectorAll: () => [],
       }),
     };
 
@@ -853,6 +854,7 @@ describe('Interactions', () => {
       getCanvasContainer: () => {},
       getContainer: () => ({
         contains: () => false,
+        querySelectorAll: () => [],
       }),
     };
 

@@ -44,7 +44,35 @@ const generateTooltipContainer = ({ fetchProperties, properties, template, conte
 
 export const getHighlightLayerId = (layerId, type = 'fill') => `${type}-${layerId}-highlight`;
 
-const isChildOfAny = (target, elementsArray) => elementsArray.some(element => element.contains(target));
+/**
+ * Determine if provided event target is from Map
+ *
+ * @param {Object} target Event target
+ * @param {Object} map MapboxGL map instance
+ * @returns {boolean}
+ */
+const isOverMap = (target, map) => {
+  const mapCanvas = map.getCanvasContainer();
+
+  // Event is directly from map <canvas />
+  if (target === mapCanvas) return true;
+
+  const mapContainer = map.getContainer();
+  const isPointerOverContainer = mapContainer.contains(target);
+
+  // Event is not from any DOM element of Map
+  if (!isPointerOverContainer) return false;
+
+  // Event IS from an element of Map
+
+  const mapControlGroups = mapContainer.querySelectorAll('.mapboxgl-ctrl-group');
+  const isPointerOverControl = [...mapControlGroups].some(element => element.contains(target));
+
+  // Event is from a Map control button (so, no directly from Map)
+  if (isPointerOverControl) return false;
+
+  return true;
+};
 
 const getUniqueLegends = legends => {
   const uniques = [];
@@ -147,16 +175,7 @@ export class InteractiveMap extends React.Component {
     this.mouseMoveListener = ({ target }) => {
       if (!this.map) return;
 
-      const canvasContainer = this.map.getCanvasContainer();
-      if (target === canvasContainer) return;
-
-      const mapContainer = this.map.getContainer();
-      const isPointerOverMap = mapContainer.contains(target);
-      const mapControlGroups = mapContainer.querySelectorAll('.mapboxgl-ctrl-group');
-
-      const isPointerOverControl = isChildOfAny(target, [...mapControlGroups]);
-
-      if (isPointerOverMap && !isPointerOverControl) return;
+      if (isOverMap(target, this.map)) return;
 
       /**
        * If event is NOT from map then pointer is moving ouside of the map :
