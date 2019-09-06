@@ -1,3 +1,6 @@
+
+import searchService, { MAX_SIZE } from './search';
+
 import { PREFIX_SOURCE } from '../../Map/services/cluster';
 
 export const INITIAL_FILTERS = new Map();
@@ -186,6 +189,99 @@ export const sortCustomLayers = (customLayers, layersTree) => {
   return newCustomLayers;
 };
 
+/**
+ * Fetch property values list
+ * @param {String} layer Layer id to fetch
+ * @param {Object} property Property to fetch
+ * @return Mixed[]
+ */
+export const fetchPropertyValues = async (layer, { property }) => {
+  const results = await searchService.search({
+    properties: {
+      'layer.keyword': { value: layer, type: 'term' },
+    },
+    aggregations: [{
+      type: 'terms',
+      field: `${property}.keyword`,
+      name: 'values',
+      options: {
+        size: MAX_SIZE,
+      },
+    }],
+    size: 0,
+  });
+  const { aggregations: { values: { buckets } } } = results;
+  return buckets.map(({ key }) => key);
+};
+
+/**
+ * Fetch property's min and max values
+ * @param {String} layer Layer id to fetch
+ * @param {Object} property Property to fetch
+ * @return { min: Number, max: Number }
+ */
+export const fetchPropertyRange = async (layer, { property }) => {
+  const results = await searchService.search({
+    properties: {
+      'layer.keyword': { value: layer, type: 'term' },
+    },
+    aggregations: [{
+      type: 'max',
+      field: `${property}`,
+      name: 'max',
+    }, {
+      type: 'min',
+      field: `${property}`,
+      name: 'min',
+    }],
+    size: 0,
+  });
+  const { aggregations: { min: { value: min } = {}, max: { value: max } = {} } } = results;
+
+  return { min: min && Math.round(min), max: min && Math.round(max) };
+};
+
+/**
+ * Story type view needs a specfic format.
+ */
+export const layersTreeToStory = layersTree => {
+  if (!layersTree[0] || !layersTree[0].layers) {
+    throw new Error('Story\'s layers should be in a group');
+  }
+  const story = layersTree[0].layers.reduce(({
+    beforeEach: [beforeEachConfig],
+    slides,
+  }, {
+    label: title, content, layers, ...layerAttrs
+  }) => ({
+    beforeEach: [{
+      ...beforeEachConfig,
+      layers: [
+        ...beforeEachConfig.layers,
+        ...layers.filter(layer => typeof layer === 'string'),
+      ],
+    }],
+    slides: [
+      ...slides, {
+        title,
+        content,
+        layouts: [{
+          layers: layers.filter(layer => typeof layer === 'string'),
+          active: true,
+        }],
+        ...layerAttrs,
+      }],
+  }), {
+    beforeEach: [{
+      layers: [],
+      active: false,
+    }],
+    slides: [],
+  });
+
+  return story;
+};
+
 export default {
   initLayersStateAction,
   setLayerStateAction,
@@ -195,4 +291,7 @@ export default {
   filterFeatures,
   resetFilters,
   sortCustomLayers,
+  fetchPropertyValues,
+  fetchPropertyRange,
+  layersTreeToStory,
 };

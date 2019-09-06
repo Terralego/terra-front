@@ -9,8 +9,36 @@ import {
   filterFeatures,
   resetFilters,
   sortCustomLayers,
+  fetchPropertyValues,
+  fetchPropertyRange,
+  layersTreeToStory,
   INITIAL_FILTERS,
 } from './layersTreeUtils';
+import search from './search';
+
+jest.mock('./search', () => ({
+  MAX_SIZE: 10000,
+  search: jest.fn(({ properties }) => {
+    if (properties['layer.keyword'].value === 'witherror') {
+      return {
+        aggregations: {},
+      };
+    }
+    return {
+      aggregations: {
+        values: {
+          buckets: [{
+            key: 'foo',
+          }, {
+            key: 'bar',
+          }],
+        },
+        min: { value: 42 },
+        max: { value: 123 },
+      },
+    };
+  }),
+}));
 
 const layersTree = [{
   label: 'label1',
@@ -419,4 +447,87 @@ it('should sort custom layers', () => {
   }, {
     id: '2',
   }]);
+});
+
+it('should fetch property value', async () => {
+  const values = await fetchPropertyValues('foo', { property: 'foo' });
+  expect(search.search).toHaveBeenCalledWith({
+    properties: {
+      'layer.keyword': { value: 'foo', type: 'term' },
+    },
+    aggregations: [{
+      type: 'terms',
+      field: 'foo.keyword',
+      name: 'values',
+      options: {
+        size: 10000,
+      },
+    }],
+    size: 0,
+  });
+  expect(values).toEqual(['foo', 'bar']);
+});
+
+it('should fetch property range', async () => {
+  const values = await fetchPropertyRange('foo', { property: 'foo' });
+  expect(search.search).toHaveBeenCalledWith({
+    properties: {
+      'layer.keyword': { value: 'foo', type: 'term' },
+    },
+    aggregations: [{
+      type: 'max',
+      field: 'foo',
+      name: 'max',
+    }, {
+      type: 'min',
+      field: 'foo',
+      name: 'min',
+    }],
+    size: 0,
+  });
+  expect(values).toEqual({ min: 42, max: 123 });
+});
+
+it('should fetch property range with error', async () => {
+  const values = await fetchPropertyRange('witherror', { property: 'foo' });
+  expect(values).toEqual({ min: undefined, max: undefined });
+});
+
+it('should generate story from layerstree', () => {
+  expect(layersTreeToStory([{
+    group: 'foo',
+    layers: [{
+      label: 'first story',
+      layers: ['layer1', 'layer2'],
+      content: 'some content',
+    }, {
+      label: 'second story',
+      layers: ['layer3', 'layer4'],
+      content: 'some other content',
+    }],
+  }])).toEqual({
+    beforeEach: [{
+      layers: ['layer1', 'layer2', 'layer3', 'layer4'],
+      active: false,
+    }],
+    slides: [{
+      title: 'first story',
+      layouts: [{
+        layers: ['layer1', 'layer2'],
+        active: true,
+      }],
+      content: 'some content',
+    }, {
+      title: 'second story',
+      layouts: [{
+        layers: ['layer3', 'layer4'],
+        active: true,
+      }],
+      content: 'some other content',
+    }],
+  });
+});
+
+it('should fail to generate a story', () => {
+  expect(() => layersTreeToStory([{ label: 'fail' }])).toThrow('Story\'s layers should be in a group');
 });
