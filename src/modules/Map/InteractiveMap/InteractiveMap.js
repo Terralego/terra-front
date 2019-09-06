@@ -44,6 +44,8 @@ const generateTooltipContainer = ({ fetchProperties, properties, template, conte
 
 export const getHighlightLayerId = (layerId, type = 'fill') => `${type}-${layerId}-highlight`;
 
+const isChildOfAny = (target, elementsArray) => elementsArray.some(element => element.contains(target));
+
 const getUniqueLegends = legends => {
   const uniques = [];
   legends.forEach(legend => uniques.find(({ title, items }) =>
@@ -144,15 +146,32 @@ export class InteractiveMap extends React.Component {
 
     this.mouseMoveListener = ({ target }) => {
       if (!this.map) return;
-      if (target === this.map.getCanvasContainer() ||
-          this.map.getContainer().contains(target)) return;
 
+      const canvasContainer = this.map.getCanvasContainer();
+      if (target === canvasContainer) return;
+
+      const mapContainer = this.map.getContainer();
+      const isPointerOverMap = mapContainer.contains(target);
+      const mapControlGroups = mapContainer.querySelectorAll('.mapboxgl-ctrl-group');
+
+      const isPointerOverControl = isChildOfAny(target, [...mapControlGroups]);
+
+      if (isPointerOverMap && !isPointerOverControl) return;
+
+      /**
+       * If event is NOT from map then pointer is moving ouside of the map :
+       *   - delete all popups that were triggered through mousemove
+       */
       this.popups.forEach(({ type, popup }, k) => {
         if (type !== 'mousemove') return;
         popup.remove();
         this.popups.delete(k);
       });
     };
+
+    /**
+     * Listen to mouse events on full page body
+     */
     document.body.addEventListener('mousemove', this.mouseMoveListener);
   }
 
