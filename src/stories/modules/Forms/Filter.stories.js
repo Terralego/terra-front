@@ -101,6 +101,8 @@ storiesOf('Components/Filters', module).add('Range', () => (
       type: TYPE_RANGE,
       // Below, props accepted by https://blueprintjs.com/docs/#core/components/sliders.range-slider
       labelStepSize: 10,
+      min: number('Min (small range)', 0, {}, 'Small range'),
+      max: number('Max (small range)', 100, {}, 'Small range'),
     }, {
       property: 'not_controlable',
       label: 'Large range with poor precision',
@@ -113,8 +115,8 @@ storiesOf('Components/Filters', module).add('Range', () => (
       property: 'large_range',
       label: 'Large range',
       type: TYPE_RANGE,
-      min: number('Min', 0, {}, 'Large range'),
-      max: number('Max', 1000, {}, 'Large range'),
+      min: number('Min (large range)', 0, {}, 'Large range'),
+      max: number('Max (large range)', 100000, {}, 'Large range'),
     }, {
       property: 'date_range',
       label: 'Date range',
