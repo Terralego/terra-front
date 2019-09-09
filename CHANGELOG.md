@@ -1,4 +1,14 @@
 
+1.6.4 / 2019-09-09
+==================
+
+  * Move search from project
+  * Split and use hooks
+  * Missing fix
+  * Dissociate every filter in Stories
+  * Reviewed by @mabhub
+  * Revamp Range filter
+
 1.6.3 / 2019-09-06
 ==================
 
