@@ -85,9 +85,15 @@ storiesOf('Components/Filters', module).add('Range', () => (
   <Filters
     onChange={onChange}
     properties={{
-      small_range: [number('Small range from', 30), number('Small range to', 70)],
+      small_range: [
+        number('From (small range)', 30, {}, 'Small range'),
+        number('To (small range)', 70, {}, 'Small range'),
+      ],
       not_controlable: [1500, 6000],
-      large_range: [number('Large range from', 15460), number('Large range to', 40214)],
+      large_range: [
+        number('From (large range)', 15460, {}, 'Large range'),
+        number('To (large range)', 40214, {}, 'Large range'),
+      ],
     }}
     filters={[{
       property: 'small_range',
@@ -107,8 +113,8 @@ storiesOf('Components/Filters', module).add('Range', () => (
       property: 'large_range',
       label: 'Large range',
       type: TYPE_RANGE,
-      min: 0,
-      max: 250000,
+      min: number('Min', 0, {}, 'Large range'),
+      max: number('Max', 1000, {}, 'Large range'),
     }, {
       property: 'date_range',
       label: 'Date range',
