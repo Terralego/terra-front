@@ -16,9 +16,12 @@ Array [
         >
           Switch
         </p>
-        <p>
-          Tooltip
-        </p>
+        <label
+          className="layerstree-node-content__item-label__label"
+          htmlFor="toggle-bGFiZWxmb28="
+        >
+          foo
+        </label>
         <div
           className="layerstree-node-content__item-label__total"
         />
@@ -49,9 +52,12 @@ Array [
         >
           Switch
         </p>
-        <p>
-          Tooltip
-        </p>
+        <label
+          className="layerstree-node-content__item-label__label"
+          htmlFor="toggle-bGFiZWxiYXI="
+        >
+          bar
+        </label>
         <div
           className="layerstree-node-content__item-label__total"
         />
@@ -75,9 +81,12 @@ Array [
         >
           Switch
         </p>
-        <p>
-          Tooltip
-        </p>
+        <label
+          className="layerstree-node-content__item-label__label"
+          htmlFor="toggle-bGFiZWxzdWJsYXllcnNzdWJsYXllcnNsYWJlbHN1YmxheWVyMWxhYmVsc3VibGF5ZXIy"
+        >
+          sublayers
+        </label>
         <div
           className="layerstree-node-content__item-label__total"
         />
@@ -108,9 +117,12 @@ Array [
         >
           Switch
         </p>
-        <p>
-          Tooltip
-        </p>
+        <label
+          className="layerstree-node-content__item-label__label"
+          htmlFor="toggle-bGFiZWxzdWJsYXllcnNmaWx0ZXJzZm9ybWZpZWxkc3dpZGdldHNjb21wb25lbnRmb28="
+        >
+          sublayers
+        </label>
         <div
           className="layerstree-node-content__item-label__total"
         />
@@ -147,9 +159,12 @@ Array [
         >
           Switch
         </p>
-        <p>
-          Tooltip
-        </p>
+        <label
+          className="layerstree-node-content__item-label__label"
+          htmlFor="toggle-bGFiZWxzdWJsYXllcnNkaXNwbGF5ZWRmYWxzZQ=="
+        >
+          sublayers
+        </label>
         <div
           className="layerstree-node-content__item-label__total"
         />
@@ -173,9 +188,12 @@ Array [
         >
           Switch
         </p>
-        <p>
-          Tooltip
-        </p>
+        <label
+          className="layerstree-node-content__item-label__label"
+          htmlFor="toggle-bGFiZWxzdWJsYXllcnNmaWx0ZXJzZm9ybWZpZWxkc2xhYmVsZm9v"
+        >
+          sublayers
+        </label>
         <div
           className="layerstree-node-content__item-label__total"
         />
@@ -212,9 +230,12 @@ Array [
         >
           Switch
         </p>
-        <p>
-          Tooltip
-        </p>
+        <label
+          className="layerstree-node-content__item-label__label"
+          htmlFor="toggle-bGFiZWxzdWJsYXllcnNmaWx0ZXJzZm9ybWZpZWxkc2xhYmVsZm9v"
+        >
+          sublayers
+        </label>
         <div
           className="layerstree-node-content__item-label__total"
         >
@@ -250,12 +271,17 @@ Array [
       <div
         className="layerstree-node-content__item-label"
       >
-        <p>
-          Tooltip
+        <p
+          className="warning-zoom"
+        >
+          Switch
         </p>
-        <p>
-          Tooltip
-        </p>
+        <label
+          className="layerstree-node-content__item-label__label"
+          htmlFor="toggle-bGFiZWx3YXJuaW5n"
+        >
+          warning
+        </label>
         <div
           className="layerstree-node-content__item-label__total"
         />
@@ -286,9 +312,12 @@ Array [
         >
           Switch
         </p>
-        <p>
-          Tooltip
-        </p>
+        <label
+          className="layerstree-node-content__item-label__label"
+          htmlFor="toggle-Z3JvdXBncm91cDFleGNsdXNpdmV0cnVlbGF5ZXJzbGFiZWxsYXllcjFsYWJlbGxheWVyMg=="
+        >
+          group 1
+        </label>
         <div
           className="layerstree-node-content__item-label__total"
         />
@@ -322,9 +351,12 @@ Array [
         >
           Switch
         </p>
-        <p>
-          Tooltip
-        </p>
+        <label
+          className="layerstree-node-content__item-label__label"
+          htmlFor="toggle-Z3JvdXBncm91cDFleGNsdXNpdmV0cnVlZmlsdGVyc2xheWVyZm9vZm9ybWxheWVyc2xhYmVsbGF5ZXIxbGFiZWxsYXllcjI="
+        >
+          group 1
+        </label>
         <div
           className="layerstree-node-content__item-label__total"
         />
@@ -361,9 +393,12 @@ Array [
         >
           Switch
         </p>
-        <p>
-          Tooltip
-        </p>
+        <label
+          className="layerstree-node-content__item-label__label"
+          htmlFor="toggle-Z3JvdXBncm91cDFleGNsdXNpdmV0cnVlbGF5ZXJzbGFiZWxsYXllcjFsYWJlbGxheWVyMmZpbHRlcnNsYXllcmZvb2Zvcm0="
+        >
+          group 1
+        </label>
         <div
           className="layerstree-node-content__item-label__total"
         />
@@ -397,9 +432,12 @@ Array [
         >
           Switch
         </p>
-        <p>
-          Tooltip
-        </p>
+        <label
+          className="layerstree-node-content__item-label__label"
+          htmlFor="toggle-Z3JvdXBncm91cDFleGNsdXNpdmV0cnVlZmlsdGVyc2xheWVyZm9vZm9ybWxheWVyc2xhYmVsbGF5ZXIxbGFiZWxsYXllcjI="
+        >
+          group 1
+        </label>
         <div
           className="layerstree-node-content__item-label__total"
         />

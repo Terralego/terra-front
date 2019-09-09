@@ -10,11 +10,10 @@ import {
   Radio,
   RadioGroup,
   Spinner,
-  Tooltip,
 } from '@blueprintjs/core';
 import AbstractMapControl from '../../../helpers/AbstractMapControl';
+import Tooltip from '../../../../../components/Tooltip';
 import translateMock from '../../../../../utils/translate';
-
 import './styles.scss';
 
 const PRINT_CLASS_PREFIX = 'visualizer__print';

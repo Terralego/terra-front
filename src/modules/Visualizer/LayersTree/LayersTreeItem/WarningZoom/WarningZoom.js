@@ -2,9 +2,10 @@ import React from 'react';
 
 import {
   Intent,
-  Tooltip,
 } from '@blueprintjs/core';
 import translateMock from '../../../../../utils/translate';
+import Tooltip from '../../../../../components/Tooltip';
+
 
 export const WarningZoom = props => {
   const {

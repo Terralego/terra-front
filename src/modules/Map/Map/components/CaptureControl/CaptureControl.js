@@ -1,10 +1,11 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import { Icon, Tooltip } from '@blueprintjs/core';
+import { Icon } from '@blueprintjs/core';
 import { saveAs } from 'file-saver';
 
 import AbstractMapControl from '../../../helpers/AbstractMapControl';
 import translateMock from '../../../../../utils/translate';
+import Tooltip from '../../../../../components/Tooltip';
 
 
 export class CaptureControl extends AbstractMapControl {
