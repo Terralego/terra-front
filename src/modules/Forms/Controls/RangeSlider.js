@@ -1,38 +1,28 @@
-import React, { useState, useEffect } from 'react';
+import React from 'react';
 import { RangeSlider as BPRangeSlider } from '@blueprintjs/core';
 import PropTypes from 'prop-types';
 import { DEFAULT_MIN, DEFAULT_MAX } from './Range';
+import RangeComponent from './RangeComponent';
 
 /**
  * Slider for editing a range.
  */
-const RangeSlider = ({ onChange, value, ...props }) => {
-  const { min, max } = props;
-  const [range, setRange] = useState(value);
+class RangeSlider extends RangeComponent {
+  render () {
+    const { onChange, value, ...props } = this.props;
+    const { range } = this.state;
 
-  useEffect(() => {
-    // When min or max change, update the range accordingly
-    setRange([min, max]);
-  }, [min, max]);
-
-  useEffect(() => {
-    // If value prop changes, update the range accordingly, within min/max
-    if (Array.isArray(value) && value.length === 2) {
-      const [lowerBound, upperBound] = value;
-      setRange([Math.max(lowerBound, min), Math.min(upperBound, max)]);
-    }
-  }, [value, min, max]);
-
-  return (
-    <BPRangeSlider
-      className="control--range__slider"
-      value={range}
-      onRelease={onChange}
-      onChange={v => setRange(v)}
-      {...props}
-    />
-  );
-};
+    return (
+      <BPRangeSlider
+        className="control--range__slider"
+        value={range}
+        onRelease={onChange}
+        onChange={this.setRange}
+        {...props}
+      />
+    );
+  }
+}
 
 RangeSlider.propTypes = {
   value: PropTypes.arrayOf(PropTypes.number),
