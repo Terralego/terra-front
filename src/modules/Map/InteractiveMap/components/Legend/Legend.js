@@ -51,7 +51,8 @@ export const Legend = ({
           color,
           items: subItems,
           shape = 'square',
-          diameter = DEFAULT_DIAMETER,
+          radius,
+          diameter = radius || DEFAULT_DIAMETER,
         }, index) => {
           if (subItems) {
             return (
