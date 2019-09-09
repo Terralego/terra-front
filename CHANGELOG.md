@@ -1,4 +1,10 @@
 
+1.6.5 / 2019-09-09
+==================
+
+  * Resolve eslint-utils vulnerability issue through npm audit
+  * Fix package-lock inconsistency
+
 1.6.4 / 2019-09-09
 ==================
 
