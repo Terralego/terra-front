@@ -1,121 +1,57 @@
-import React from 'react';
 import PropTypes from 'prop-types';
-import { RangeSlider } from '@blueprintjs/core';
-import ContentEditable from 'react-contenteditable';
+import React from 'react';
 
 import './index.scss';
+import RangeNumeric from './RangeNumeric';
+import RangeSlider from './RangeSlider';
 
-const DEFAULT_MIN = 0;
-const DEFAULT_MAX = 100;
+export const DEFAULT_MIN = 0;
+export const DEFAULT_MAX = 100;
 
-export class Range extends React.Component {
-  static propTypes = {
-    label: PropTypes.string,
-    value: PropTypes.arrayOf(PropTypes.number),
-    onChange: PropTypes.func,
-    min: PropTypes.number,
-    max: PropTypes.number,
-  };
+/**
+ * Range component that allows editing either by a slider or 2 numeric inputs
+ */
+export const Range = props => {
+  const {
+    label,
+    min,
+    max,
+    threshold,
+    stepSize,
+    value,
+  } = props;
+  const Component = (max - min) / stepSize > threshold ? RangeNumeric : RangeSlider;
 
-  static defaultProps = {
-    label: '',
-    value: undefined,
-    onChange () {},
-    min: DEFAULT_MIN,
-    max: DEFAULT_MAX,
-  };
+  return (
+    <div className="control-container control--range range">
+      <p className="control-label">{label}</p>
+      <Component
+        {...props}
+        value={(!Array.isArray(value) || value.length !== 2) ? [min, max] : value}
+      />
+    </div>
+  );
+};
 
-  state = {}
+Range.propTypes = {
+  label: PropTypes.string,
+  value: PropTypes.arrayOf(PropTypes.number),
+  onChange: PropTypes.func,
+  min: PropTypes.number,
+  max: PropTypes.number,
+  /** Number of steps for when to switch to 2 numeric inputs */
+  threshold: PropTypes.number,
+  stepSize: PropTypes.number,
+};
 
-  onBlur = () => {
-    this.handleManualChange();
-    this.setState({ newMin: undefined, newMax: undefined });
-  }
-
-  handleManualChange = () => {
-    const { onChange, min, max, value: [prevMin, prevMax] = [min, max] } = this.props;
-    const { newMin, newMax } = this.state;
-
-    if (newMin !== undefined) {
-      onChange([Math.max(min, Math.min(newMin, prevMax)), prevMax]);
-    }
-    if (newMax !== undefined) {
-      onChange([prevMin, Math.min(max, Math.max(prevMin, newMax))]);
-    }
-  }
-
-  selectAll = ({ target }) => {
-    const selection = global.getSelection();
-    const range = document.createRange();
-    range.selectNodeContents(target);
-    selection.removeAllRanges();
-    selection.addRange(range);
-  }
-
-  onLabelEdit = ({ minChanged, maxChanged }) => ({ target: { value: newValue } }) => {
-    const fixedNewValue = Number.isNaN(+newValue)
-      ? 0
-      : +newValue;
-    if (minChanged) {
-      this.setState({ newMin: fixedNewValue });
-    }
-    if (maxChanged) {
-      this.setState({ newMax: fixedNewValue });
-    }
-  }
-
-  labelRenderer = itemValue => {
-    const { min, max, value: [minValue, maxValue] = [min, max] } = this.props;
-    const { newMin, newMax } = this.state;
-    if (+itemValue === minValue || +itemValue === maxValue) {
-      const minChanged = +itemValue === minValue;
-      const maxChanged = !minChanged;
-      const inputValue = minChanged
-        ? newMin
-        : newMax;
-      return (
-        <ContentEditable
-          className="range__manual"
-          onChange={this.onLabelEdit({ minChanged, maxChanged })}
-          html={`${inputValue === undefined ? itemValue : inputValue}`}
-          onBlur={this.onBlur}
-          onClick={this.selectAll}
-          onFocus={this.selectAll}
-        />
-      );
-    }
-    return itemValue;
-  }
-
-  render () {
-    const {
-      label,
-      value,
-      onChange,
-      min,
-      max,
-      ...props
-    } = this.props;
-    const [minValue, maxValue] = value || [min, max];
-
-    if (value && (value.length !== 2 || (+minValue > +maxValue))) {
-      throw new Error('Range control: There must be two values and the first must be less than the second');
-    }
-
-    return (
-      <div className="control-container control--range range">
-        <p className="control-label">{label}</p>
-        <RangeSlider
-          value={value || [min, max]}
-          onRelease={onChange}
-          min={min}
-          max={max}
-          labelRenderer={this.labelRenderer}
-          {...props}
-        />
-      </div>
-    );
-  }
-}
+Range.defaultProps = {
+  label: '',
+  value: undefined,
+  onChange () {},
+  min: DEFAULT_MIN,
+  max: DEFAULT_MAX,
+  threshold: 250,
+  stepSize: 1,
+};
 
 export default Range;

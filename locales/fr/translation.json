@@ -51,6 +51,8 @@
         "multiselect": {
           "no_results": "Aucun résultat"
         },
+        "range_from": "De",
+        "range_to": "à",
         "select": {
           "empty_item": "Tous(tes)",
           "no_results": "Aucun résultat"
@@ -72,7 +74,7 @@
         "title": "Orienter vers le nord"
       },
       "home_control": {
-        "button_label": "Rénitialiser la position de la carte"
+        "button_label": "Réinitialiser la position de la carte"
       },
       "print_control": {
         "button_label": "Impression vers PDF",

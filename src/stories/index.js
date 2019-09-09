@@ -5,4 +5,3 @@ import '@blueprintjs/datetime/lib/css/blueprint-datetime.css';
 
 import './summary';
 import './modules/Map';
-import './modules/Forms';
