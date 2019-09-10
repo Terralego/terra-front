@@ -45,78 +45,64 @@ const defaultTranslate = translateMock({
   'terralego.forms.filter.input_placeholder': 'Filter...',
 });
 
-export class Filters extends React.Component {
-  static propTypes = {
-    onChange: PropTypes.func,
-    layer: PropTypes.string,
-    filters: PropTypes.arrayOf(PropTypes.shape({
-      property: PropTypes.string.isRequired,
-      label: PropTypes.string,
-      placeholder: PropTypes.string,
-      type: PropTypes.oneOf([
-        TYPE_SINGLE,
-        TYPE_MANY,
-        TYPE_RANGE,
-        TYPE_BOOL,
-      ]).isRequired,
-      values: PropTypes.oneOfType([
-        PropTypes.arrayOf(PropTypes.string),
-        PropTypes.arrayOf(PropTypes.number),
-        PropTypes.bool,
-        PropTypes.arrayOf(PropTypes.shape({
-          label: PropTypes.string,
-          value: PropTypes.oneOfType([PropTypes.string, PropTypes.number]),
-        })),
-      ]),
-    })),
-    properties: PropTypes.shape({
-      // property: value
-    }),
-    translate: PropTypes.func,
-  };
+export const Filters = ({ properties, filters, translate, onChange }) => (
+  <div>
+    {filters.map(({ type, values, property, display, format, ...props }) => (
+      <Control
+        {...props}
+        translate={translate === defaultTranslate ? undefined : translate}
+        component={getComponent(type, values, display, format)}
+        key={property}
+        type={type}
+        values={values}
+        property={property}
+        onChange={value => onChange({ ...properties, [property]: value })}
+        value={properties[property]}
+        initialContent={(values && values.length > 250)
+          ? <MenuItem disabled text={translate('terralego.forms.filter.select_placeholder')} />
+          : undefined
+        }
+        inputProps={{
+          placeholder: translate('terralego.forms.filter.input_placeholder'),
+        }}
+      />
+    ))}
+  </div>
+);
 
-  static defaultProps = {
-    onChange () {},
-    filters: [],
-    properties: {},
-    layer: '',
-    translate: defaultTranslate,
-  };
+Filters.propTypes = {
+  onChange: PropTypes.func,
+  filters: PropTypes.arrayOf(PropTypes.shape({
+    property: PropTypes.string.isRequired,
+    label: PropTypes.string,
+    placeholder: PropTypes.string,
+    type: PropTypes.oneOf([
+      TYPE_SINGLE,
+      TYPE_MANY,
+      TYPE_RANGE,
+      TYPE_BOOL,
+    ]).isRequired,
+    values: PropTypes.oneOfType([
+      PropTypes.arrayOf(PropTypes.string),
+      PropTypes.arrayOf(PropTypes.number),
+      PropTypes.bool,
+      PropTypes.arrayOf(PropTypes.shape({
+        label: PropTypes.string,
+        value: PropTypes.oneOfType([PropTypes.string, PropTypes.number]),
+      })),
+    ]),
+  })),
+  properties: PropTypes.shape({
+    // property: value
+  }),
+  translate: PropTypes.func,
+};
 
-  onChange = property => value => {
-    const { onChange, properties } = this.props;
-    onChange({ ...properties, [property]: value });
-  };
-
-  render () {
-    const { onChange } = this;
-    const { properties, filters, translate } = this.props;
-
-    return (
-      <div>
-        {filters.map(({ type, values, property, display, format, ...props }) => (
-          <Control
-            {...props}
-            translate={translate === defaultTranslate ? undefined : translate}
-            component={getComponent(type, values, display, format)}
-            key={property}
-            type={type}
-            values={values}
-            property={property}
-            onChange={onChange(property)}
-            value={properties[property]}
-            initialContent={(values && values.length > 250)
-              ? <MenuItem disabled text={translate('terralego.forms.filter.select_placeholder')} />
-              : undefined
-            }
-            inputProps={{
-              placeholder: translate('terralego.forms.filter.input_placeholder'),
-            }}
-          />
-        ))}
-      </div>
-    );
-  }
-}
+Filters.defaultProps = {
+  onChange () {},
+  filters: [],
+  properties: {},
+  translate: defaultTranslate,
+};
 
 export default Filters;

@@ -118,9 +118,8 @@ it('should mount & update correctly', () => {
       }]}
     />
   ));
-
-  wrapper.instance().onChange('pwout')('pwet');
-  expect(onChange).toHaveBeenCalledWith({ pwout: 'pwet' });
+  wrapper.find('Control').first().props().onChange('pwet');
+  expect(onChange).toHaveBeenCalledWith({ single_value: 'pwet' });
 });
 
 it('should get component', () => {
