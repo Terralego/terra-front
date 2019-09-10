@@ -30,6 +30,6 @@ it('should mount & update correctly', () => {
     />
   ));
 
-  wrapper.instance().onToggle();
+  wrapper.props().onChange();
   expect(onToggle).toHaveBeenCalledWith(value);
 });
