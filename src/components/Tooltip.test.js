@@ -1,11 +1,11 @@
 import React from 'react';
 import renderer from 'react-test-renderer';
 
-import { Button } from '@blueprintjs/core';
 import Tooltip from './Tooltip';
 
+// mock blueprint tooltip to stabilize tests
 jest.mock('@blueprintjs/core', () => ({
-  Button: () => <p>Button</p>,
+  Tooltip: () => <p>Tooltip</p>,
 }));
 
 it('should render with desktop device size', () => {
@@ -15,7 +15,7 @@ it('should render with desktop device size', () => {
       isMobileSized={false}
       {...props}
     >
-      <Button />
+      foo
     </Tooltip>
   ));
   expect(tree.toJSON()).toMatchSnapshot();
@@ -26,7 +26,7 @@ it('should render with tablet device size', () => {
     <Tooltip
       isMobileSized
     >
-      <Button />
+      foo
     </Tooltip>
   ));
   expect(tree.toJSON()).toMatchSnapshot();

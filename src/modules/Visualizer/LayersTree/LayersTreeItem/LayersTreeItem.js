@@ -12,7 +12,7 @@ import OptionsLayer from './OptionsLayer';
 import LayersTreeItemFilters from './LayersTreeItemFilters';
 import LayerProps from '../../types/Layer';
 import LayersTreeItemOptions from './LayersTreeItemOptions';
-import withDeviceSize from '../../../../higherOrderComponents/withDeviceSize';
+import withDeviceSize from '../../../../hoc/withDeviceSize';
 import WarningZoom from './WarningZoom';
 import { displayWarningAccordingToZoom } from '../../services/warningZoom';
 import LayersTreeExclusiveItemsList from './LayersTreeExclusiveItemsList';

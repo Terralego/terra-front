@@ -1,7 +1,7 @@
 import React from 'react';
 
 import { Tooltip as BpTooltip } from '@blueprintjs/core';
-import withDeviceSize from '../higherOrderComponents/withDeviceSize';
+import withDeviceSize from '../hoc/withDeviceSize';
 
 export const Tooltip = ({ isMobileSized, children, ...props }) => (
   isMobileSized
