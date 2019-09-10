@@ -130,17 +130,17 @@ stories.add('Circles', () => (
             label: 'exercitation ullamco',
             color: 'white',
             shape: 'circle',
-            radius: 30,
+            diameter: 30,
           }, {
             label: 'laboris nisi ut aliquip',
             color: 'white',
             shape: 'circle',
-            radius: 15,
+            diameter: 15,
           }, {
             label: 'ex ea commodo consequat',
             color: 'white',
             shape: 'circle',
-            radius: 5,
+            diameter: 5,
           },
         ]}
       />
@@ -171,17 +171,17 @@ stories.add('Stacked', () => (
             label: 'exercitation ullamco',
             color: 'white',
             shape: 'circle',
-            radius: 20,
+            diameter: 20,
           }, {
             label: 'laboris nisi ut aliquip',
             color: 'white',
             shape: 'circle',
-            radius: 15,
+            diameter: 15,
           }, {
             label: 'ex ea commodo consequat',
             color: 'white',
             shape: 'circle',
-            radius: 10,
+            diameter: 10,
           }],
         }]}
       />

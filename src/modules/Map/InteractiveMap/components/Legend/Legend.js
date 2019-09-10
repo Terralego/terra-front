@@ -8,7 +8,7 @@ import CustomComponents from './CustomComponents';
 import Circle from './components/Circle';
 import Rect from './components/Rect';
 
-const DEFAULT_RADIUS = 16;
+const DEFAULT_DIAMETER = 16;
 
 export const Legend = ({
   title,
@@ -20,8 +20,8 @@ export const Legend = ({
   history,
   stackedCircles,
 }) => {
-  const biggestRadius = items.reduce((int, item) =>
-    Math.max(int, item.radius || DEFAULT_RADIUS), 0);
+  const biggestDiameter = items.reduce((int, item) =>
+    Math.max(int, item.diameter || DEFAULT_DIAMETER), 0);
 
   return (
     <div className={`tf-legend tf-legend--level-${level}`}>
@@ -35,7 +35,7 @@ export const Legend = ({
           'tf-legend__list',
           { 'tf-legend__stacked-circles': stackedCircles },
         )}
-        style={stackedCircles ? { height: biggestRadius } : null}
+        style={stackedCircles ? { height: biggestDiameter } : null}
       >
         {content && (
           <Template
@@ -51,7 +51,8 @@ export const Legend = ({
           color,
           items: subItems,
           shape = 'square',
-          radius = DEFAULT_RADIUS,
+          radius,
+          diameter = radius || DEFAULT_DIAMETER,
         }, index) => {
           if (subItems) {
             return (
@@ -83,11 +84,11 @@ export const Legend = ({
             >
               <div
                 className="tf-legend__symbol-container"
-                style={{ width: shape === 'circle' ? biggestRadius : DEFAULT_RADIUS * 2 }}
+                style={{ width: shape === 'circle' ? biggestDiameter : DEFAULT_DIAMETER * 2 }}
               >
                 {shape === 'circle'
-                  ? <Circle color={color} size={radius} />
-                  : <Rect color={color} size={DEFAULT_RADIUS} />}
+                  ? <Circle color={color} size={diameter} />
+                  : <Rect color={color} size={DEFAULT_DIAMETER} />}
               </div>
               <div className="tf-legend__label">{label}</div>
             </div>
@@ -107,7 +108,7 @@ Legend.propTypes = {
     color: PropTypes.string,
     items: PropTypes.array,
     shape: PropTypes.string,
-    radius: PropTypes.number,
+    diameter: PropTypes.number,
     template: PropTypes.string,
   })),
   content: PropTypes.string,
