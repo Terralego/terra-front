@@ -4,38 +4,26 @@ import { InputGroup } from '@blueprintjs/core';
 
 import './index.scss';
 
-export class Text extends React.Component {
-  static propTypes = {
-    label: PropTypes.string,
-    onChange: PropTypes.func,
-    value: PropTypes.string,
-  }
+export const Text = ({ label, onChange, value }) => (
+  <div className="control-container">
+    <p className="control-label">{label}</p>
+    <InputGroup
+      onChange={({ target: { value: v } }) => onChange(v)}
+      value={value}
+    />
+  </div>
+);
 
-  static defaultProps = {
-    label: '',
-    onChange () {},
-    value: '',
-  }
+Text.propTypes = {
+  label: PropTypes.string,
+  onChange: PropTypes.func,
+  value: PropTypes.string,
+};
 
-  handleChange = ({ target: { value } }) => {
-    const { onChange } = this.props;
-    onChange(value);
-  }
-
-  render () {
-    const { label, value } = this.props;
-    const { handleChange } = this;
-
-    return (
-      <div className="control-container">
-        <p className="control-label">{label}</p>
-        <InputGroup
-          onChange={handleChange}
-          value={value}
-        />
-      </div>
-    );
-  }
-}
+Text.defaultProps = {
+  label: '',
+  onChange () {},
+  value: '',
+};
 
 export default Text;
