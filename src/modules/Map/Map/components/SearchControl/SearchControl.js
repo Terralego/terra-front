@@ -1,12 +1,13 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import classnames from 'classnames';
-import { Icon, Tooltip } from '@blueprintjs/core';
+import { Icon } from '@blueprintjs/core';
 import debounce from 'lodash.debounce';
 import SearchInput from './SearchInput';
 
 import AbstractMapControl from '../../../helpers/AbstractMapControl';
 import translateMock from '../../../../../utils/translate';
+import Tooltip from '../../../../../components/Tooltip';
 
 import './styles.scss';
 

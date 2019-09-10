@@ -1,9 +1,10 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import { Icon, Tooltip } from '@blueprintjs/core';
+import { Icon } from '@blueprintjs/core';
 
 import AbstractMapControl from '../../../helpers/AbstractMapControl';
 import translateMock from '../../../../../utils/translate';
+import Tooltip from '../../../../../components/Tooltip';
 
 export class HomeControl extends AbstractMapControl {
   static containerClassName = 'mapboxgl-ctrl mapboxgl-ctrl-group mapboxgl-ctrl-home';

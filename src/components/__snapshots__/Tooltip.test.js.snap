@@ -1,0 +1,13 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`should render with desktop device size 1`] = `
+<p>
+  Tooltip
+</p>
+`;
+
+exports[`should render with tablet device size 1`] = `
+<p>
+  Tooltip
+</p>
+`;

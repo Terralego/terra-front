@@ -4,13 +4,13 @@ import {
   Icon,
   Popover,
   PopoverPosition,
-  Tooltip,
 } from '@blueprintjs/core';
 import PropTypes from 'prop-types';
 import { parse, stringify } from 'query-string';
 import React from 'react';
 import translateMock from '../../../../../utils/translate';
 import { DEFAULT_OPTIONS } from '../../../../State/Hash/withHashState';
+import Tooltip from '../../../../../components/Tooltip';
 
 import AbstractMapControl from '../../../helpers/AbstractMapControl';
 import twitterIcon from './twitter.svg';

@@ -6,17 +6,17 @@ import {
   Switch,
   Elevation,
   Tag,
-  Tooltip,
 } from '@blueprintjs/core';
 
 import OptionsLayer from './OptionsLayer';
 import LayersTreeItemFilters from './LayersTreeItemFilters';
 import LayerProps from '../../types/Layer';
 import LayersTreeItemOptions from './LayersTreeItemOptions';
-import withDeviceSize from '../../../../utils/withDeviceSize';
+import withDeviceSize from '../../../../hoc/withDeviceSize';
 import WarningZoom from './WarningZoom';
 import { displayWarningAccordingToZoom } from '../../services/warningZoom';
 import LayersTreeExclusiveItemsList from './LayersTreeExclusiveItemsList';
+import Tooltip from '../../../../components/Tooltip';
 
 export class LayersTreeItem extends React.Component {
   static propTypes = {

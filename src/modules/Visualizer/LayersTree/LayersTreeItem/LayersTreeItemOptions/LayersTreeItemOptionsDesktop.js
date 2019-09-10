@@ -1,11 +1,12 @@
 import React from 'react';
 import classnames from 'classnames';
-import { Button, Tooltip } from '@blueprintjs/core';
+import { Button } from '@blueprintjs/core';
 
 import translateMock from '../../../../../utils/translate';
 
 import LayerFetchValues from '../LayerFetchValues';
 import FiltersPanel from '../FiltersPanel';
+import Tooltip from '../../../../../components/Tooltip';
 
 const LayersTreeItemOptionsDesktop = ({
   hasSomeOptionActive,

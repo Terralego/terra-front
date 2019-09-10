@@ -1,9 +1,11 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import { Radio, RadioGroup, Icon, Popover, Tooltip } from '@blueprintjs/core';
+import { Radio, RadioGroup, Icon, Popover } from '@blueprintjs/core';
 
 import translateMock from '../../../../../utils/translate';
 import AbstractMapControl from '../../../helpers/AbstractMapControl';
+import Tooltip from '../../../../../components/Tooltip';
+
 import './styles.scss';
 
 export class BackgroundStyles extends AbstractMapControl {

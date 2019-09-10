@@ -25,10 +25,10 @@ Array [
       </div>
     </div>
     <div
-      className="layerstree-node-content__options layerstree-node-content__options--mobile"
+      className="layerstree-node-content__options layerstree-node-content__options--desktop"
     >
       <p>
-        Button
+        Tooltip
       </p>
     </div>
   </div>,
@@ -84,10 +84,10 @@ Array [
       </div>
     </div>
     <div
-      className="layerstree-node-content__options layerstree-node-content__options--mobile"
+      className="layerstree-node-content__options layerstree-node-content__options--desktop"
     >
       <p>
-        Button
+        Tooltip
       </p>
     </div>
   </div>,
@@ -117,16 +117,16 @@ Array [
       </div>
     </div>
     <div
-      className="layerstree-node-content__options layerstree-node-content__options--mobile"
+      className="layerstree-node-content__options layerstree-node-content__options--desktop"
     >
       <p>
-        Button
+        Tooltip
       </p>
       <p>
         FiltersPanel
       </p>
       <p>
-        Button
+        Tooltip
       </p>
     </div>
   </div>,
@@ -182,16 +182,16 @@ Array [
       </div>
     </div>
     <div
-      className="layerstree-node-content__options layerstree-node-content__options--mobile layerstree-node-content__options--active"
+      className="layerstree-node-content__options layerstree-node-content__options--desktop layerstree-node-content__options--active"
     >
       <p>
-        Button
+        Tooltip
       </p>
       <p>
         FiltersPanel
       </p>
       <p>
-        Button
+        Tooltip
       </p>
     </div>
   </div>,
@@ -225,16 +225,16 @@ Array [
       </div>
     </div>
     <div
-      className="layerstree-node-content__options layerstree-node-content__options--mobile layerstree-node-content__options--active"
+      className="layerstree-node-content__options layerstree-node-content__options--desktop layerstree-node-content__options--active"
     >
       <p>
-        Button
+        Tooltip
       </p>
       <p>
         FiltersPanel
       </p>
       <p>
-        Button
+        Tooltip
       </p>
     </div>
   </div>,
@@ -262,10 +262,10 @@ Array [
       </div>
     </div>
     <div
-      className="layerstree-node-content__options layerstree-node-content__options--mobile"
+      className="layerstree-node-content__options layerstree-node-content__options--desktop"
     >
       <p>
-        Button
+        Tooltip
       </p>
     </div>
   </div>,
@@ -295,10 +295,10 @@ Array [
       </div>
     </div>
     <div
-      className="layerstree-node-content__options layerstree-node-content__options--mobile"
+      className="layerstree-node-content__options layerstree-node-content__options--desktop"
     >
       <p>
-        Button
+        Tooltip
       </p>
     </div>
   </div>,
@@ -331,13 +331,13 @@ Array [
       </div>
     </div>
     <div
-      className="layerstree-node-content__options layerstree-node-content__options--mobile"
+      className="layerstree-node-content__options layerstree-node-content__options--desktop"
     >
       <p>
         FiltersPanel
       </p>
       <p>
-        Button
+        Tooltip
       </p>
     </div>
   </div>,
@@ -370,10 +370,10 @@ Array [
       </div>
     </div>
     <div
-      className="layerstree-node-content__options layerstree-node-content__options--mobile"
+      className="layerstree-node-content__options layerstree-node-content__options--desktop"
     >
       <p>
-        Button
+        Tooltip
       </p>
     </div>
   </div>,
@@ -409,13 +409,13 @@ Array [
       </p>
     </div>
     <div
-      className="layerstree-node-content__options layerstree-node-content__options--mobile"
+      className="layerstree-node-content__options layerstree-node-content__options--desktop"
     >
       <p>
         FiltersPanel
       </p>
       <p>
-        Button
+        Tooltip
       </p>
     </div>
   </div>,
