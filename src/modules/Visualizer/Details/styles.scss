@@ -1,0 +1,302 @@
+@import '../../../utils/variables.scss'; 
+
+.view-details {
+  position: absolute;
+  top: 0.5rem;
+  bottom: .5rem;
+  right: 0;
+  width: 25rem;
+  display: flex;
+  flex-direction: column;
+  transform: translate3d(100%, 0, 0);
+  transition: transform .2s ease-in, opacity .2s ease-in;
+  z-index: 2;
+  background: #fff;
+  margin: 0;
+  opacity: 0;
+
+  &--hidden {
+    display: none;
+  }
+
+  &--visible {
+    transform: translate3d(-.5rem, 0, 0);
+    opacity: .9;
+    box-shadow: 0 0 10px rgba(0,0,0,.2);
+  }
+
+  &__close-button {
+    position: absolute;
+    top: .5rem;
+    right: .5rem;
+    cursor: pointer;
+  }
+
+  &__wrapper {
+    display: flex;
+    overflow-x: hidden;
+    overflow-y: auto;
+    height: 100%;
+  }
+
+  &__content {
+    padding: .5rem 0;
+    flex: auto;
+    min-width: 0;
+  }
+
+  &__button {
+    position: relative;
+    transition: transform 0.2s ease-in;
+    height: 100%;
+    width: 1.75rem;
+    flex-shrink: 0;
+    &--prev {
+      transform: translateX(-100%)
+    }
+    &--next {
+      transform: translateX(100%)
+    }
+    &--active {
+      transform: translateX(0)
+    }
+    button {
+      position: absolute;
+      top: 12.5%;
+      right: 0;
+      left: 0;
+      transform: translateY(-50%);
+      transform: scale(1.5);
+    } 
+  }
+
+  .details {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+
+    &__loading {
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%);
+    }
+    
+    &__title {
+      text-align: center;
+      font-size: 1.6rem;
+      font-weight: 300;
+    }
+
+    &__group {
+      margin-top: .5rem;
+    }
+
+    &__list {
+      padding: 0;
+      margin: 0;
+      display: table;
+      
+      &__amenity {
+        display: flex;
+        flex-direction: row;
+        justify-content: space-between;
+        padding: 0;
+
+        &__img {
+          width: 2.25rem;
+          height:2.25rem;
+        }
+      }
+    }
+
+    &__times {
+      display: flex;
+      flex-direction: row;
+      justify-content: space-around;
+      padding: 0;
+    }
+
+    &__subtitle {
+      color: #106ba3;
+      opacity: .65;
+      font-weight: normal;
+    }
+
+    &__column {
+      display: table-row;
+
+      &-label {
+        display: table-cell;
+        padding-bottom: .5rem;
+        white-space: nowrap;
+        opacity: .65;
+
+        &:after {
+          content: ' : ';
+          padding-right: 1rem;
+        }
+      }
+
+      &-value {
+        display: table-cell;
+        padding-bottom: 10px;
+        overflow-wrap: anywhere; // Firefox
+        word-break: break-word; // Chrome
+        // If no support, it will fallback with a scrollbar
+
+        &-time {
+          display: flex;
+          flex-direction: column;
+          justify-content: center;
+          list-style: none;
+        }
+      }
+    }
+
+    &__link {
+      margin-top: 3.5rem;
+      text-align: center;
+
+      a {
+        background: #fff;
+        padding: .8rem;
+        border: 1px solid rgba(10, 6, 77, .35);
+      }
+    }
+  }
+}
+
+@media(min-width: $breakpoints-tablet) and (max-width: $breakpoints-desktop) and (orientation: landscape) {
+  .view-details {
+    width: 20rem/$scaleRatio;
+  
+    &__close-button {
+      top: .25rem;
+      right: .25rem;
+    }
+  
+    &__wrapper {
+      display: flex;
+      overflow-x: hidden;
+      overflow-y: auto;
+      height: 100%;
+    }
+  
+    &__content {
+      flex: auto;
+      min-width: 0;
+    }
+  
+    .details {
+      padding: .5rem / $scaleRatio;
+
+      &__picto {
+        width: 4.25rem;
+        margin: auto;
+  
+        &-activites-supports, 
+        &-commerce-de-detail,
+        &-construction ,
+        &-industrie,
+        &-commerce-de-groslogistique,
+        &-mixte,
+        &-mixte-a-dominante-activites-supports,
+        &-mixte-a-dominante-commerce-de-detail,
+        &-mixte-a-dominante-construction,
+        &-mixte-a-dominante-industrie,
+        &-mixte-a-dominante-commerce-de-groslogistique,
+        &-mixte-a-dominante-logistique,
+        &-mixte-a-dominante-services-aux-particuliers,
+        &-mixte-a-dominante-tertiaire-superieur,
+        &-tertiaire-superieur,
+        &-services-aux-particuliers {
+          transform: scale(.75);
+        }
+      }
+  
+      &__title {
+        font-size: 1.6rem/$scaleRatio;
+        margin: .75rem 0;
+      }
+  
+      &__group {
+        margin-top: .5rem/$scaleRatio;
+      }
+      &__group:first-child {
+        margin-top: 0;
+      }
+  
+      &__list {
+        padding: 0;
+        margin: 0;
+        display: flex;
+        flex-direction: column;
+        
+        &__amenity {
+          display: flex;
+          flex-direction: row;
+          justify-content: space-between;
+          padding: 0;
+  
+          &__img {
+            width: 2.25rem/$scaleRatio;
+            height: 2.25rem/$scaleRatio;
+          }
+        }
+      }
+  
+      &__times {
+        display: flex;
+        flex-direction: row;
+        justify-content: space-around;
+        padding: 0;
+      }
+  
+      &__column {
+        display: flex;
+        flex-direction: column;
+  
+        &-label {
+          display: flex;
+          padding-bottom: .5rem/$scaleRatio;
+        }
+  
+        &-value {
+          display: flex;
+          padding-bottom: 1.2rem;
+          
+          &-time {
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            list-style: none;
+          }
+        }
+      }
+    }
+    &__button {
+      height: 100%;
+      width: .75rem;
+      flex-shrink: 0;
+      &--prev {
+        transform: translateX(-100%);
+      }
+      &--next {
+        transform:translateX(100%);
+      }
+      &--active {
+        transform: translateX(0)
+      }
+
+      button {
+        top: 15%;
+        margin: 0;
+        min-width: .75rem;
+        min-height: .75rem;
+        padding: 0;
+        outline: none;
+      } 
+    }
+  }
+}
