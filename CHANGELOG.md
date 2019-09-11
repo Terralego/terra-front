@@ -1,4 +1,14 @@
 
+1.6.6 / 2019-09-11
+==================
+
+  * Move Details from project
+  * Fix tests
+  * Change button tooltip behavior with touch device
+  * Remove hook-based component
+  * Keep radius to maintain compatibility
+  * Rename the legend radius to diameter
+
 1.6.5 / 2019-09-09
 ==================
 
