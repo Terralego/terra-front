@@ -12,6 +12,7 @@ export const MapNavigation = ({
   visible,
   toggleLayersTree,
   renderHeader,
+  translate,
 }) => {
   const uid = uuid();
   return (
@@ -33,6 +34,8 @@ export const MapNavigation = ({
       <MapNavigationButton
         onToggle={toggleLayersTree}
         isVisible={visible}
+        translate={translate}
+        uid={uid}
       />
     </Card>
   );

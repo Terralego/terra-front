@@ -143,7 +143,9 @@
           "message": "Visible depuis le zoom {{minzoom}}"
         }
       },
-      "too_many_results": "Votre recherche contient trop de résultats, veuillez affiner votre requête ou zoomer sur une zone plus restreinte."
+      "too_many_results": "Votre recherche contient trop de résultats, veuillez affiner votre requête ou zoomer sur une zone plus restreinte.",
+      "fold": "Relier",
+      "unfold": "Déplier"
     }
   }
 }

@@ -20,8 +20,10 @@ Array [
         onMouseLeave={[Function]}
       >
         <button
-          aria-controls="map-navigations__content-undefined"
+          aria-controls="map-navigations__content-42"
+          aria-expanded={false}
           className="bp3-button map-navigation__button"
+          onClick={[Function]}
           onKeyDown={[Function]}
           onKeyUp={[Function]}
           tabIndex={0}
@@ -68,9 +70,10 @@ Array [
         onMouseLeave={[Function]}
       >
         <button
-          aria-controls="map-navigations__content-undefined"
+          aria-controls="map-navigations__content-42"
           aria-expanded={true}
           className="bp3-button map-navigation__button"
+          onClick={[Function]}
           onKeyDown={[Function]}
           onKeyUp={[Function]}
           tabIndex={0}
@@ -121,8 +124,10 @@ Array [
         onMouseLeave={[Function]}
       >
         <button
-          aria-controls="map-navigations__content-undefined"
+          aria-controls="map-navigations__content-42"
+          aria-expanded={false}
           className="bp3-button map-navigation__button"
+          onClick={[Function]}
           onKeyDown={[Function]}
           onKeyUp={[Function]}
           tabIndex={0}
@@ -181,8 +186,10 @@ Array [
         onMouseLeave={[Function]}
       >
         <button
-          aria-controls="map-navigations__content-undefined"
+          aria-controls="map-navigations__content-42"
+          aria-expanded={false}
           className="bp3-button map-navigation__button"
+          onClick={[Function]}
           onKeyDown={[Function]}
           onKeyUp={[Function]}
           tabIndex={0}

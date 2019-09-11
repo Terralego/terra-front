@@ -22,12 +22,12 @@ const resetLayers = map => ({ layers = [] }) => {
 
 export class Story extends React.Component {
   static propTypes = {
-    story: PropTypes.arrayOf(PropTypes.shape({
+    story: PropTypes.shape({
       beforeEach: PropTypes.arrayOf(PropTypes.shape({
         layers: PropTypes.arrayOf(PropTypes.string),
         active: PropTypes.bool,
       })),
-      slides: PropTypes.shape({
+      slides: PropTypes.arrayOf(PropTypes.shape({
         title: PropTypes.string,
         content: PropTypes.string,
         layouts: PropTypes.arrayOf(PropTypes.shape({
@@ -41,8 +41,8 @@ export class Story extends React.Component {
             color: PropTypes.string,
           })),
         })),
-      }),
-    })).isRequired,
+      })),
+    }).isRequired,
   }
 
   state = {
