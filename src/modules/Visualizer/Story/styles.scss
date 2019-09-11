@@ -1,0 +1,36 @@
+@import '../../../utils/variables.scss'; 
+
+.storytelling {
+  display: flex;
+  flex-direction: column;
+  min-height: calc(100vh - 140px);
+  padding: 0 .75rem;
+  &__content {
+    flex: 1;
+  }
+  &__buttons {
+    display: flex;
+    font-size: 2rem;
+    height: 1.3em;
+    justify-content: center;
+    &--justified {
+      justify-content: space-between;
+    }
+  }
+}
+
+@media(min-width: $breakpoints-tablet) and (max-width: $breakpoints-desktop) and (orientation: landscape) {
+  .storytelling {
+    font-size: 1rem/$scaleRatio;
+    line-height: 145%;
+
+    h2 {
+      line-height: 145%;
+      font-size: 1.3rem/$scaleRatio;
+    }
+
+    &__buttons {
+      font-size: 2rem/$scaleRatio;
+    }
+  }
+}
