@@ -1,0 +1,9 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`should render 1`] = `
+<div
+  className="bp3-callout too-many-results"
+>
+  Your query contains too many results, please change your request or zoom on a closer zone.
+</div>
+`;
