@@ -12,6 +12,7 @@ class RangeNumeric extends RangeComponent {
   onNumericInputChange = pos => bound => {
     const { onChange, min, max } = this.props;
     const { range } = this.state;
+    if (Number.isNaN(+bound)) return; // Sanity check that allows typing '-'
     range[pos] = bound;
     this.setState({ range });
 
