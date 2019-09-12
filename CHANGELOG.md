@@ -1,4 +1,15 @@
 
+1.6.7 / 2019-09-12
+==================
+
+  * Update translation
+  * Move TooManyResults
+  * Move PrivateLayers
+  * Convert Text to functional component
+  * Convert Filters to functional component
+  * Convert Checkbox to functional component
+  * Move MapNavigation
+
 1.6.6 / 2019-09-11
 ==================
 
