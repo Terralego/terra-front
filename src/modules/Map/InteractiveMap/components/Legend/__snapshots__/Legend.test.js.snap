@@ -361,6 +361,7 @@ exports[`should render correctly stacked circles 1`] = `
     style={
       Object {
         "height": 16,
+        "width": 27.2,
       }
     }
   >

@@ -35,7 +35,8 @@ export const Legend = ({
           'tf-legend__list',
           { 'tf-legend__stacked-circles': stackedCircles },
         )}
-        style={stackedCircles ? { height: biggestDiameter } : null}
+        // The width is multiplied by a factor 1.7 in order to provide space for the legend labels
+        style={stackedCircles ? { height: biggestDiameter, width: biggestDiameter * 1.7 } : null}
       >
         {content && (
           <Template
