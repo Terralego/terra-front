@@ -1,0 +1,18 @@
+.too-many-results {
+  position: absolute;
+  top: 20px;
+  left: 0;
+  right: 0;
+  margin: auto;
+  z-index: 1;
+  color: #fff;
+  display: table;
+  width: auto;
+  width: fit-content;
+  background-color: #394B59;
+  border: 1px solid #222F38;
+  border-radius: 2px;
+  @media print {
+    display: none;
+  }
+}

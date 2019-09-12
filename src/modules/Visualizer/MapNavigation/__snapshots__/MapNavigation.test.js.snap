@@ -1,0 +1,222 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`should render correctly 1`] = `
+Array [
+  <div
+    className="bp3-card bp3-elevation-0 map-navigation bp3-dark"
+  >
+    <div
+      className="map-navigation__content"
+      id="map-navigation__content-42"
+    />
+    <span
+      className="bp3-popover-wrapper bp3-dark map-navigation__button-container"
+    >
+      <span
+        className="bp3-popover-target"
+        onBlur={[Function]}
+        onFocus={[Function]}
+        onMouseEnter={[Function]}
+        onMouseLeave={[Function]}
+      >
+        <button
+          aria-controls="map-navigations__content-42"
+          aria-expanded={false}
+          className="bp3-button map-navigation__button"
+          onClick={[Function]}
+          onKeyDown={[Function]}
+          onKeyUp={[Function]}
+          tabIndex={0}
+          type="button"
+        >
+          <span
+            className="bp3-icon bp3-icon-arrow-right"
+            icon="arrow-right"
+          >
+            <svg
+              data-icon="arrow-right"
+              height={16}
+              viewBox="0 0 16 16"
+              width={16}
+            >
+              <desc>
+                arrow-right
+              </desc>
+              <path
+                d="M14.7 7.29l-5-5a.965.965 0 00-.71-.3 1.003 1.003 0 00-.71 1.71l3.29 3.29H1.99c-.55 0-1 .45-1 1s.45 1 1 1h9.59l-3.29 3.29a1.003 1.003 0 001.42 1.42l5-5c.18-.18.29-.43.29-.71s-.12-.52-.3-.7z"
+                fillRule="evenodd"
+              />
+            </svg>
+          </span>
+        </button>
+      </span>
+    </span>
+  </div>,
+  <div
+    className="bp3-card bp3-elevation-0 map-navigation bp3-dark"
+  >
+    <div
+      className="map-navigation__content"
+      id="map-navigation__content-42"
+    />
+    <span
+      className="bp3-popover-wrapper bp3-dark map-navigation__button-container"
+    >
+      <span
+        className="bp3-popover-target"
+        onBlur={[Function]}
+        onFocus={[Function]}
+        onMouseEnter={[Function]}
+        onMouseLeave={[Function]}
+      >
+        <button
+          aria-controls="map-navigations__content-42"
+          aria-expanded={true}
+          className="bp3-button map-navigation__button"
+          onClick={[Function]}
+          onKeyDown={[Function]}
+          onKeyUp={[Function]}
+          tabIndex={0}
+          type="button"
+        >
+          <span
+            className="bp3-icon bp3-icon-arrow-right"
+            icon="arrow-right"
+          >
+            <svg
+              data-icon="arrow-right"
+              height={16}
+              viewBox="0 0 16 16"
+              width={16}
+            >
+              <desc>
+                arrow-right
+              </desc>
+              <path
+                d="M14.7 7.29l-5-5a.965.965 0 00-.71-.3 1.003 1.003 0 00-.71 1.71l3.29 3.29H1.99c-.55 0-1 .45-1 1s.45 1 1 1h9.59l-3.29 3.29a1.003 1.003 0 001.42 1.42l5-5c.18-.18.29-.43.29-.71s-.12-.52-.3-.7z"
+                fillRule="evenodd"
+              />
+            </svg>
+          </span>
+        </button>
+      </span>
+    </span>
+  </div>,
+  <div
+    className="bp3-card bp3-elevation-0 map-navigation bp3-dark"
+  >
+    <div
+      className="map-navigation__content"
+      id="map-navigation__content-42"
+    >
+      <p>
+        Foo
+      </p>
+    </div>
+    <span
+      className="bp3-popover-wrapper bp3-dark map-navigation__button-container"
+    >
+      <span
+        className="bp3-popover-target"
+        onBlur={[Function]}
+        onFocus={[Function]}
+        onMouseEnter={[Function]}
+        onMouseLeave={[Function]}
+      >
+        <button
+          aria-controls="map-navigations__content-42"
+          aria-expanded={false}
+          className="bp3-button map-navigation__button"
+          onClick={[Function]}
+          onKeyDown={[Function]}
+          onKeyUp={[Function]}
+          tabIndex={0}
+          type="button"
+        >
+          <span
+            className="bp3-icon bp3-icon-arrow-right"
+            icon="arrow-right"
+          >
+            <svg
+              data-icon="arrow-right"
+              height={16}
+              viewBox="0 0 16 16"
+              width={16}
+            >
+              <desc>
+                arrow-right
+              </desc>
+              <path
+                d="M14.7 7.29l-5-5a.965.965 0 00-.71-.3 1.003 1.003 0 00-.71 1.71l3.29 3.29H1.99c-.55 0-1 .45-1 1s.45 1 1 1h9.59l-3.29 3.29a1.003 1.003 0 001.42 1.42l5-5c.18-.18.29-.43.29-.71s-.12-.52-.3-.7z"
+                fillRule="evenodd"
+              />
+            </svg>
+          </span>
+        </button>
+      </span>
+    </span>
+  </div>,
+  <div
+    className="bp3-card bp3-elevation-0 map-navigation bp3-dark"
+  >
+    <div
+      className="map-navigation__header"
+    >
+      <p>
+        Foo
+      </p>
+    </div>
+    <h2
+      className="map-navigation__title"
+    >
+      bar
+    </h2>
+    <div
+      className="map-navigation__content"
+      id="map-navigation__content-42"
+    />
+    <span
+      className="bp3-popover-wrapper bp3-dark map-navigation__button-container"
+    >
+      <span
+        className="bp3-popover-target"
+        onBlur={[Function]}
+        onFocus={[Function]}
+        onMouseEnter={[Function]}
+        onMouseLeave={[Function]}
+      >
+        <button
+          aria-controls="map-navigations__content-42"
+          aria-expanded={false}
+          className="bp3-button map-navigation__button"
+          onClick={[Function]}
+          onKeyDown={[Function]}
+          onKeyUp={[Function]}
+          tabIndex={0}
+          type="button"
+        >
+          <span
+            className="bp3-icon bp3-icon-arrow-right"
+            icon="arrow-right"
+          >
+            <svg
+              data-icon="arrow-right"
+              height={16}
+              viewBox="0 0 16 16"
+              width={16}
+            >
+              <desc>
+                arrow-right
+              </desc>
+              <path
+                d="M14.7 7.29l-5-5a.965.965 0 00-.71-.3 1.003 1.003 0 00-.71 1.71l3.29 3.29H1.99c-.55 0-1 .45-1 1s.45 1 1 1h9.59l-3.29 3.29a1.003 1.003 0 001.42 1.42l5-5c.18-.18.29-.43.29-.71s-.12-.52-.3-.7z"
+                fillRule="evenodd"
+              />
+            </svg>
+          </span>
+        </button>
+      </span>
+    </span>
+  </div>,
+]
+`;
