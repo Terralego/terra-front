@@ -1,26 +1,31 @@
 $breakpoints-phone: 320px;
 $breakpoints-tablet: 768px;
 
-.share {
-  &__btn {
-    .bp3-button {
-      padding: 0;
-      img {
-        width: 1.5rem;
-      }
-    }
+.share__btn-tooltip, .share__btn {
+  button {
+    max-width: 1rem;
+    max-height: 1rem;
+    padding: 0;
+  }
+  img {
+    width: 1rem;
+  }
 
-    &--facebook,
-    &--linkedin {
-      .bp3-button img {
-        width: 1rem;
-      }
+  &--twitter {
+    margin-left: .25rem;
+  }
+
+  &--facebook,
+  &--linkedin {
+    span > img {
+      width: 1rem;
     }
   }
 }
 
+
 @media(min-width: $breakpoints-phone) and (max-width: $breakpoints-tablet) {
-  .mapboxgl-ctrl-share  .bp3-popover {
+  .mapboxgl-ctrl-share .bp3-popover {
     max-width: 15rem;
     input {
       max-width: 9rem;
