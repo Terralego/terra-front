@@ -8,7 +8,7 @@ jest.mock('@blueprintjs/core', () => ({
   Intent: { DANGER: 'danger' },
 }));
 
-it('should handle numeric change', async () => {
+it('should handle numeric change', () => {
   const onChange = jest.fn();
   const wrapper = mount(<RangeNumeric onChange={onChange} />);
   expect(wrapper.find('NumericInput').last().prop('value')).toBe(100);
@@ -16,6 +16,13 @@ it('should handle numeric change', async () => {
   wrapper.find('NumericInput').last().invoke('onValueChange')(10);
   expect(wrapper.find('NumericInput').last().prop('value')).toBe(10);
   expect(onChange).toHaveBeenCalled();
+});
+
+it('should allow typing minus', () => {
+  const instance = new RangeNumeric({});
+  instance.setState = jest.fn();
+  instance.onNumericInputChange(0)('-');
+  expect(instance.setState).not.toHaveBeenCalled();
 });
 
 it('should update range numeric if props are changed', () => {
