@@ -15,7 +15,6 @@ import MapComponent, {
 import BackgroundStyles from './components/BackgroundStyles';
 import Legend from './components/Legend';
 import Tooltip from './components/Tooltip';
-import withDeviceSize from '../../../hoc/withDeviceSize';
 import './styles.scss';
 
 export const INTERACTION_FLY_TO = 'flyTo';
@@ -369,11 +368,11 @@ export class InteractiveMap extends React.Component {
     element,
     className,
   }) => {
-    const { history, isMobileSized } = this.props;
+    const { history } = this.props;
     const { map, isPointerOverMap } = this;
 
     if (isPointerOverMap === false) return;
-    if (isMobileSized) return;
+    if (!global.matchMedia('(hover: hover)').matches) return;
 
     const zoom = map.getZoom();
     const container = element || generateTooltipContainer({
@@ -664,4 +663,4 @@ export class InteractiveMap extends React.Component {
   }
 }
 
-export default connectState('initialState')(withDeviceSize()(InteractiveMap));
+export default connectState('initialState')((InteractiveMap));

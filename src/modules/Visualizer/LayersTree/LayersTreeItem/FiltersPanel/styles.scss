@@ -1,8 +1,6 @@
+@import '../../../../../utils/variables.scss';
+
 $transitionSpeed: 0.15s;
-$breakpoints-phone: 320px;
-$breakpoints-tablet: 768px;
-$breakpoints-desktop: 1024px;
-$scaleRatio: 1.25;
 
 .filters-panel {
   position: absolute;

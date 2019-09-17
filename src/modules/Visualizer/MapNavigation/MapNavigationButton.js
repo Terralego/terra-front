@@ -3,13 +3,16 @@ import PropTypes from 'prop-types';
 import { Button, Tooltip } from '@blueprintjs/core';
 
 import translateMock from '../../../utils/translate';
+import withDeviceSize from '../../../hoc/withDeviceSize';
 import './styles.scss';
 
-export const MapNavigationButton = ({ isVisible, onToggle, uid, translate }) => (
+export const MapNavigationButton = ({ isVisible, onToggle, uid, translate, isMobileSized }) => (
   <Tooltip
     className="bp3-dark map-navigation__button-container"
     portalClassName="map-navigation__button-tooltip"
     content={translate(`terralego.visualizer.${isVisible ? 'fold' : 'unfold'}`)}
+    disabled={isMobileSized}
+
   >
     <Button
       className="map-navigation__button"
@@ -37,4 +40,4 @@ MapNavigationButton.defaultProps = {
   }),
 };
 
-export default MapNavigationButton;
+export default withDeviceSize()(MapNavigationButton);

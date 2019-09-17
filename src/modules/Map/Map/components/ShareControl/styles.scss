@@ -1,6 +1,8 @@
-$breakpoints-phone: 320px;
-$breakpoints-tablet: 768px;
+@import '../../../../../utils/variables.scss'; 
 
+.mapboxgl-ctrl-share {
+  z-index: 130;
+}
 .share__btn-tooltip, .share__btn {
   button {
     max-width: 1rem;
@@ -23,10 +25,9 @@ $breakpoints-tablet: 768px;
   }
 }
 
-
-@media(min-width: $breakpoints-phone) and (max-width: $breakpoints-tablet) {
+@media(min-width: $breakpoints-phone) and (max-width: $breakpoints-tablet) and (orientation: portrait) {
   .mapboxgl-ctrl-share .bp3-popover {
-    max-width: 15rem;
+    max-width: 13rem;
     input {
       max-width: 9rem;
       overflow: hidden;
