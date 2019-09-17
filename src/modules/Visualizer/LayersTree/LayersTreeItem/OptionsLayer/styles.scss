@@ -1,7 +1,4 @@
-$breakpoints-phone: 320px;
-$breakpoints-tablet: 768px;
-$breakpoints-desktop: 1024px;
-$scaleRatio: 1.25;
+@import '../../../../../utils/variables.scss'; 
 
 .layerNode-Option-Container {
   width: 100%;

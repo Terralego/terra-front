@@ -15,7 +15,6 @@ import MapComponent, {
 import BackgroundStyles from './components/BackgroundStyles';
 import Legend from './components/Legend';
 import Tooltip from './components/Tooltip';
-
 import './styles.scss';
 
 export const INTERACTION_FLY_TO = 'flyTo';
@@ -371,6 +370,7 @@ export class InteractiveMap extends React.Component {
     const { map, isPointerOverMap } = this;
 
     if (isPointerOverMap === false) return;
+    if (!global.matchMedia('(hover: hover)').matches) return;
 
     const zoom = map.getZoom();
     const container = element || generateTooltipContainer({

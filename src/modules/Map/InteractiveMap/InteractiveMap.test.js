@@ -75,6 +75,14 @@ beforeEach(() => {
   ReactDOM.render.mockClear();
 });
 
+global.matchMedia = jest.fn().mockImplementation(query => ({
+  matches: query === '(hover: hover)',
+  media: '',
+  onchange: null,
+  addListener: jest.fn(),
+  removeListener: jest.fn(),
+}));
+
 describe('snaphsots', () => {
   it('should render correctly', () => {
     const tree = renderer.create((

@@ -104,6 +104,7 @@
       }
     },
     "visualizer": {
+      "fold": "Replier",
       "layerstree": {
         "group": {
           "selector": "Aucune couche disponible"
@@ -144,7 +145,6 @@
         }
       },
       "too_many_results": "Votre recherche contient trop de résultats, veuillez affiner votre requête ou zoomer sur une zone plus restreinte.",
-      "fold": "Relier",
       "unfold": "Déplier"
     }
   }

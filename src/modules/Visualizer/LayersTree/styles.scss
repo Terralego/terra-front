@@ -1,11 +1,4 @@
-$font-medium: "SFProText-Medium", Arial, Helvetica, sans-serif;
-$font-default: "SFProText-Light", Arial, Helvetica, sans-serif;
-$font-color: #F5F8FA;
-$active-button-color: #5a91b3;
-$breakpoints-phone: 320px;
-$breakpoints-tablet: 768px;
-$breakpoints-desktop: 1024px;
-$scaleRatio: 1.25;
+@import '../../../utils/variables.scss';
 
 .layerstree-panel-list {
   width: 100%;
@@ -145,6 +138,7 @@ $scaleRatio: 1.25;
         min-height: 1.125rem;
         padding: 0;
         outline: none;
+        text-align: center;
       
         .bp3-icon {
           padding: 0.05rem;
