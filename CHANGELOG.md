@@ -1,4 +1,11 @@
 
+1.6.8 / 2019-09-17
+==================
+
+  * Fix the legend size for stacked circles
+  * Allow typing minus in range numeric
+  * Fix connect HOC on FilterPanelContent
+
 1.6.7 / 2019-09-12
 ==================
 
