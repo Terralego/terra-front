@@ -132,7 +132,6 @@ export class InteractiveMap extends React.Component {
     })),
     onInit: PropTypes.func,
     onStyleChange: PropTypes.func,
-    isMobileSized: PropTypes.bool,
   };
 
   static defaultProps = {
@@ -141,7 +140,6 @@ export class InteractiveMap extends React.Component {
     legends: [],
     onInit () {},
     onStyleChange () {},
-    isMobileSized: false,
   };
 
   popups = new Map();
