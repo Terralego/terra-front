@@ -1,4 +1,10 @@
 
+1.6.9 / 2019-09-17
+==================
+
+  * Improve responsive styles
+  * Remove map tooltips display on mobile device
+
 1.6.8 / 2019-09-17
 ==================
 
