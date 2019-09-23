@@ -24,10 +24,11 @@ export class RenderColumn {
 
     const sortAsc = () => sortColumn(index, 'asc');
     const sortDesc = () => sortColumn(index, 'desc');
+    const sortBase = formatType === 'number' ? 'sort-numerical' : 'sort-alphabetical';
     return (
       <Menu>
-        <MenuItem icon={formatType === 'number' ? 'sort-numerical' : 'sort-alphabetical'} onClick={sortAsc} text={labelSortAsc} />
-        <MenuItem icon={formatType === 'number' ? 'sort-numerical-desc' : 'sort-alphabetical-desc'} onClick={sortDesc} text={labelSortDesc} />
+        <MenuItem icon={sortBase} onClick={sortAsc} text={labelSortAsc} />
+        <MenuItem icon={`${sortBase}-desc`} onClick={sortDesc} text={labelSortDesc} />
       </Menu>
     );
   }
