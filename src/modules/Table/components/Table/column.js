@@ -19,20 +19,21 @@ export class RenderColumn {
     const {
       index,
       locales: { sortAsc: labelSortAsc, sortDesc: labelSortDesc } = {},
+      format_type: formatType,
     } = this.props; // eslint-disable-line react/no-this-in-sfc
 
     const sortAsc = () => sortColumn(index, 'asc');
     const sortDesc = () => sortColumn(index, 'desc');
     return (
       <Menu>
-        <MenuItem icon="sort-alphabetical" onClick={sortAsc} text={labelSortAsc} />
-        <MenuItem icon="sort-alphabetical-desc" onClick={sortDesc} text={labelSortDesc} />
+        <MenuItem icon={formatType === 'number' ? 'sort-numerical' : 'sort-alphabetical'} onClick={sortAsc} text={labelSortAsc} />
+        <MenuItem icon={formatType === 'number' ? 'sort-numerical-desc' : 'sort-alphabetical-desc'} onClick={sortDesc} text={labelSortDesc} />
       </Menu>
     );
   }
 
   getColumn (getCellData, sortColumn, renderCell, sortedIndexMap) {
-    const { value, label = value, index, sortable, format: { type: formatType = '' } = {} } = this.props;
+    const { value, label = value, index, sortable, format_type: formatType } = this.props;
 
     const cellRenderer = (rowIndex, columnIndex) => {
       const sortedIndex = (sortedIndexMap || [])[rowIndex];
