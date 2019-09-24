@@ -30,7 +30,7 @@ export class Table extends React.Component {
       display: PropTypes.bool,
       sortable: PropTypes.bool,
       editable: PropTypes.bool,
-      format: PropTypes.shape({ type: PropTypes.string }),
+      format_type: PropTypes.string,
     }).isRequired).isRequired,
     data: PropTypes.arrayOf(
       PropTypes.arrayOf(PropTypes.oneOfType([PropTypes.string, PropTypes.number])),
@@ -103,8 +103,8 @@ export class Table extends React.Component {
 
   formatCell = (cell, columnIndex) => {
     const { columns } = this;
-    const { format: { type } = {} } = columns[columnIndex];
-    switch (type) {
+    const { format_type: formatType } = columns[columnIndex];
+    switch (formatType) {
       case 'date':
         return new Date(cell).toLocaleDateString();
       case 'number':
@@ -123,12 +123,12 @@ export class Table extends React.Component {
     if (!columns.length) {
       return;
     }
-    const { format: { type } = {} } = columns[columnIndex];
+    const { format_type: formatType } = columns[columnIndex];
     const sortedIndexMap = data.map((_, i) => i);
     sortedIndexMap.sort((a, b) => {
       const orderA = order === 'asc' ? a : b;
       const orderB = order === 'asc' ? b : a;
-      return this.compare(data[orderA][columnIndex], data[orderB][columnIndex], type);
+      return this.compare(data[orderA][columnIndex], data[orderB][columnIndex], formatType);
     });
     this.setState({
       lastSort: [columnIndex, order],

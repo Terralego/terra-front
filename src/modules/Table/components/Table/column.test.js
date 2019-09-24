@@ -32,7 +32,7 @@ it('should render correctly', () => {
 
 it('should render cell with type in className', () => {
   const instance = new RenderColumn({
-    value: 'Label1', sortable: true, display: true, format: { type: 'number' }, index: 2,
+    value: 'Label1', sortable: true, display: true, format_type: 'number', index: 2,
   });
   const getCellData = () => 'foo';
   const sortColumn = a => a;
@@ -122,4 +122,14 @@ it('should render cell with sorted index', () => {
     rowIndex: 0,
     columnIndex: 0,
   });
+});
+
+it('should display sort-numerical icon', () => {
+  const instance = new RenderColumn({
+    value: 'Label1', sortable: true, display: true, format_type: 'number', index: 2,
+  });
+  const sortColumn = jest.fn();
+  const RenderMenu = () => instance.renderMenu(sortColumn);
+  const wrapper = shallow(<RenderMenu sortColumn={sortColumn} />);
+  expect(wrapper.find('MenuItem').get(0).props.icon).toMatch('sort-numerical');
 });

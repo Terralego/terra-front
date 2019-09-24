@@ -16,9 +16,9 @@ const props = {
   columns: [
     { value: 'col1', sortable: true },
     { value: 'col2', sortable: false },
-    { value: 'col3', sortable: true, format: { type: 'number' } },
-    { value: 'col4', sortable: true, format: { type: 'date' } },
-    { value: 'col5', sortable: true, format: { type: 'integer' } },
+    { value: 'col3', sortable: true, format_type: 'number' },
+    { value: 'col4', sortable: true, format_type: 'date' },
+    { value: 'col5', sortable: true, format_type: 'integer' },
   ],
   data: [
     ['row1-z', 'row2-b', '10', '04-12-2018', '10.2'],
