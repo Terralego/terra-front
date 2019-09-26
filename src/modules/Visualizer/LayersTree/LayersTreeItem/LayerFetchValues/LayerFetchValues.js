@@ -1,5 +1,4 @@
 import React from 'react';
-import { TYPE_SINGLE, TYPE_MANY, TYPE_RANGE } from '../../../../Forms/Filters';
 
 export class LayerFetchValues extends React.Component {
   componentDidMount () {
@@ -17,34 +16,12 @@ export class LayerFetchValues extends React.Component {
   fetchValues () {
     const {
       layer: { filters: { layer, form = [] } = {} },
+      fetchPropertiesValues,
     } = this.props;
-    form.forEach(property => {
-      const { type } = property;
-      switch (type) {
-        case TYPE_SINGLE:
-        case TYPE_MANY:
-          return this.fetchEnum(layer, property);
-        case TYPE_RANGE:
-        default:
-          return this.fetchRange(layer, property);
-      }
-    });
-  }
-
-  fetchEnum (layer, property) {
-    const {
-      fetchPropertyValues,
-    } = this.props;
-    if (!property.fetchValues || property.values) return;
-    fetchPropertyValues(layer, property);
-  }
-
-  fetchRange (layer, property) {
-    const {
-      fetchPropertyRange,
-    } = this.props;
-    if (!property.fetchValues || property.min !== undefined) return;
-    fetchPropertyRange(layer, property);
+    const properties = form.filter(property => property.fetchValues);
+    if (properties.length) {
+      fetchPropertiesValues(layer, properties);
+    }
   }
 
   render () {

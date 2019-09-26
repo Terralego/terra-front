@@ -9,7 +9,15 @@ jest.mock('@blueprintjs/core', () => ({
   FormGroup: ({ children }) => <div>{children}</div>,
   NumericInput: () => <p>Numeric input</p>,
   Intent: { DANGER: 'danger' },
+  Spinner: () => <p>Spinner</p>,
 }));
+
+it('should render correctly loading', () => {
+  const tree = renderer.create((
+    <Range loading label="Pwout" />
+  )).toJSON();
+  expect(tree).toMatchSnapshot();
+});
 
 it('should render correctly as range slider', () => {
   const tree = renderer.create((

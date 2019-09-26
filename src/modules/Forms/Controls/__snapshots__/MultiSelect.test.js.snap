@@ -51,6 +51,23 @@ exports[`should render filtered items 1`] = `
 </div>
 `;
 
+exports[`should render loading correctly 1`] = `
+<div
+  className="control-container"
+  onKeyPress={[Function]}
+  role="presentation"
+>
+  <p
+    className="control-label"
+  >
+    Pwout
+  </p>
+  <p>
+    Spinner
+  </p>
+</div>
+`;
+
 exports[`should render multiple value 1`] = `
 <div
   className="control-container"

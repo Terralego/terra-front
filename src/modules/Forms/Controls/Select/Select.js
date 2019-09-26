@@ -1,7 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import classnames from 'classnames';
-import { MenuItem, Button } from '@blueprintjs/core';
+import { MenuItem, Button, Spinner } from '@blueprintjs/core';
 import { Select as BPSelect } from '@blueprintjs/select';
 import uuid from 'uuid/v4';
 
@@ -24,6 +24,7 @@ export class Select extends React.Component {
     ).isRequired,
     isSubmissionPrevented: PropTypes.bool,
     translate: PropTypes.func,
+    loading: PropTypes.bool,
   };
 
   static defaultProps = {
@@ -34,6 +35,7 @@ export class Select extends React.Component {
       'terralego.forms.controls.select.empty_item': 'All',
       'terralego.forms.controls.select.no_results': 'No results.',
     }),
+    loading: false,
   };
 
   static getDerivedStateFromProps ({ values }) {
@@ -70,6 +72,7 @@ export class Select extends React.Component {
       inline,
       fullWidth,
       translate,
+      loading,
       ...props
     } = this.props;
 
@@ -101,48 +104,51 @@ export class Select extends React.Component {
         >
           {label}
         </label>
-        <BPSelect
-          className={classnames('tf-select', className)}
-          popoverProps={{ usePortal: false, boundary: 'viewport', minimal: true }}
-          items={filteredItems}
-          filterable={values.length > 9}
-          inputProps={{ placeholder }}
-          onQueryChange={this.handleQueryChange}
-          itemRenderer={({
-            label: itemLabel, value: itemValue,
-          }, {
-            handleClick, modifiers: { matchesPredicate, ...modifiers },
-          }) => (
-            <div
-              key={`${itemValue}${itemLabel}`}
-              className={classnames({
-                'control-container__item': true,
-                'control-container__item--empty': itemValue === '',
-              })}
-            >
+        {!!loading && <Spinner size={20} />}
+        {!loading && (
+          <BPSelect
+            className={classnames('tf-select', className)}
+            popoverProps={{ usePortal: false, boundary: 'viewport', minimal: true }}
+            items={filteredItems}
+            filterable={values.length > 9}
+            inputProps={{ placeholder }}
+            onQueryChange={this.handleQueryChange}
+            itemRenderer={({
+              label: itemLabel, value: itemValue,
+            }, {
+              handleClick, modifiers: { matchesPredicate, ...modifiers },
+            }) => (
+              <div
+                key={`${itemValue}${itemLabel}`}
+                className={classnames({
+                  'control-container__item': true,
+                  'control-container__item--empty': itemValue === '',
+                })}
+              >
+                <MenuItem
+                  {...modifiers}
+                  active={rawValue === itemValue}
+                  onClick={handleClick}
+                  text={itemLabel}
+                />
+              </div>
+            )}
+            noResults={(
               <MenuItem
-                {...modifiers}
-                active={rawValue === itemValue}
-                onClick={handleClick}
-                text={itemLabel}
+                disabled
+                text={translate('terralego.forms.controls.select.no_results')}
               />
-            </div>
-          )}
-          noResults={(
-            <MenuItem
-              disabled
-              text={translate('terralego.forms.controls.select.no_results')}
+            )}
+            onItemSelect={handleChange}
+            {...props}
+          >
+            <Button
+              id={this.uuid}
+              text={displayedValue || translate('terralego.forms.controls.select.empty_item')}
+              rightIcon="double-caret-vertical"
             />
-          )}
-          onItemSelect={handleChange}
-          {...props}
-        >
-          <Button
-            id={this.uuid}
-            text={displayedValue || translate('terralego.forms.controls.select.empty_item')}
-            rightIcon="double-caret-vertical"
-          />
-        </BPSelect>
+          </BPSelect>
+        )}
       </div>
     );
   }

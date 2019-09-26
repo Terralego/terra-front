@@ -6,6 +6,7 @@ import { DateRangeInput } from './DateRangeInput';
 
 jest.mock('@blueprintjs/datetime', () => ({
   DateRangeInput: () => <p>BPDateRangeInput</p>,
+  Spinner: () => <p>Spinner</p>,
 }));
 
 it('should render', () => {
@@ -14,6 +15,13 @@ it('should render', () => {
       label="My range"
       onChange={() => null}
     />
+  )).toJSON();
+  expect(tree).toMatchSnapshot();
+});
+
+it('should render loading', () => {
+  const tree = renderer.create((
+    <DateRangeInput label="Pwout" loading />
   )).toJSON();
   expect(tree).toMatchSnapshot();
 });

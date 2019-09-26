@@ -1,5 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
+import { Spinner } from '@blueprintjs/core';
 
 import Checkbox from './Checkbox';
 import formatValues from '../formatValues';
@@ -25,14 +26,15 @@ export class Checkboxes extends React.Component {
   }
 
   render () {
-    const { value: mainValue, label: mainLabel } = this.props;
+    const { value: mainValue, label: mainLabel, loading } = this.props;
     const { values } = this.state;
     const { onToggle } = this;
 
     return (
       <div className="control-container">
         <p className="control-label">{mainLabel}</p>
-        {values.map(({ label, value }) => (
+        {!!loading && <Spinner size={20} />}
+        {!loading && values.map(({ label, value }) => (
           <Checkbox
             key={`${label}${value}`}
             onToggle={onToggle}
@@ -54,6 +56,7 @@ Checkboxes.propTypes = {
   // eslint-disable-next-line react/no-unused-prop-types
   values: PropTypes.arrayOf(PropTypes.string),
   onChange: PropTypes.func,
+  loading: PropTypes.bool,
 };
 
 Checkboxes.defaultProps = {
@@ -61,6 +64,7 @@ Checkboxes.defaultProps = {
   value: [],
   values: [],
   onChange () {},
+  loading: false,
 };
 
 export default Checkboxes;

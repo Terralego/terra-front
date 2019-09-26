@@ -17,3 +17,18 @@ exports[`should render correctly 1`] = `
   </p>
 </div>
 `;
+
+exports[`should render loading correctly 1`] = `
+<div
+  className="control-container"
+>
+  <p
+    className="control-label"
+  >
+    Pwout
+  </p>
+  <p>
+    Spinner
+  </p>
+</div>
+`;

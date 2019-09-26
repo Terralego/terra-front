@@ -17,6 +17,7 @@ jest.mock('@blueprintjs/select', () => ({
 }));
 jest.mock('@blueprintjs/core', () => ({
   Button () { return null; },
+  Spinner: () => <p>Spinner</p>,
   MenuItem: function BPMenuItem () { return null; },
   Position: {
     BOTTOM_LEFT: 'foo',
@@ -32,6 +33,13 @@ it('should render correctly', () => {
       onChange={() => null}
       values={['foo']}
     />
+  ));
+  expect(tree.toJSON()).toMatchSnapshot();
+});
+
+it('should render loading correctly', () => {
+  const tree = renderer.create((
+    <Select label="Pwout" loading values={[]} />
   ));
   expect(tree.toJSON()).toMatchSnapshot();
 });
