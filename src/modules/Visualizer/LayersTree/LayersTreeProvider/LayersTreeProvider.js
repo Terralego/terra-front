@@ -1,6 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { connectState } from '../../../State/context';
+import { TYPE_RANGE } from '../../../Forms/Filters';
 
 import context from './context';
 import {
@@ -84,36 +85,40 @@ export class LayersTreeProvider extends React.Component {
     return layersTreeState.get(layer) || {};
   };
 
-  fetchPropertyValues = async (layer, property) => {
-    const { fetchPropertyValues } = this.props;
+  fetchPropertiesValues = async (layer, properties) => {
+    const { fetchPropertyValues, fetchPropertyRange } = this.props;
     const { layersTreeState } = this.state;
-    // We need to keep a static reference to this object because it serve as
-    // key in layersTreeState
-    // eslint-disable-next-line no-param-reassign
-    property.values = [];
+    properties.forEach(property => {
+      // We need to keep a static reference to this object because it serve as
+      // key in layersTreeState
+      // eslint-disable-next-line no-param-reassign
+      property.loading = true;
+      if (property.type) {
+        // eslint-disable-next-line no-param-reassign
+        property.values = [];
+      }
+    });
     this.resetState(new Map(layersTreeState));
-    const properties = (await fetchPropertyValues(layer, property)) || [];
-    // eslint-disable-next-line no-param-reassign
-    property.values = [...properties];
-    const { layersTreeState: newLayersTreeState } = this.state;
-    this.resetState(new Map(newLayersTreeState));
-  };
 
-  fetchPropertyRange = async (layer, property) => {
-    const { fetchPropertyRange } = this.props;
-    const { layersTreeState } = this.state;
-    // We need to keep a static reference to this object because it serve as
-    // key in layersTreeState
-    /* eslint-disable no-param-reassign */
-    property.min = 0;
-    property.max = 100;
-    /* eslint-enable no-param-reassign */
-    this.resetState(new Map(layersTreeState));
-    const { min = 0, max = 100 } = (await fetchPropertyRange(layer, property)) || {};
-    /* eslint-disable no-param-reassign */
-    property.min = min;
-    property.max = max;
-    /* eslint-enable no-param-reassign */
+    const responses = await Promise.all(properties.map(property =>
+      (property.type === TYPE_RANGE
+        ? fetchPropertyRange(layer, property)
+        : fetchPropertyValues(layer, property))));
+
+    properties.forEach((property, index) => {
+      const { type } = property;
+      /* eslint-disable no-param-reassign */
+      delete property.loading;
+      if (type === TYPE_RANGE) {
+        const { min = 0, max = 100 } = responses[index] || {};
+        property.min = min;
+        property.max = max;
+      } else {
+        property.values = [...(responses[index] || [])];
+      }
+      /* eslint-enable no-param-reassign */
+    });
+
     const { layersTreeState: newLayersTreeState } = this.state;
     this.resetState(new Map(newLayersTreeState));
   };
@@ -168,8 +173,7 @@ export class LayersTreeProvider extends React.Component {
     const { layersTreeState } = this.state;
     const {
       initLayersState, setLayerState, getLayerState,
-      fetchPropertyValues,
-      fetchPropertyRange,
+      fetchPropertiesValues,
     } = this;
     const value = {
       map,
@@ -178,8 +182,7 @@ export class LayersTreeProvider extends React.Component {
       initLayersState,
       setLayerState,
       getLayerState,
-      fetchPropertyValues,
-      fetchPropertyRange,
+      fetchPropertiesValues,
       translate,
     };
     return (

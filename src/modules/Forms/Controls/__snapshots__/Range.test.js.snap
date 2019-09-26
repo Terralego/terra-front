@@ -40,3 +40,18 @@ exports[`should render correctly as two inputs 1`] = `
   </div>
 </div>
 `;
+
+exports[`should render correctly loading 1`] = `
+<div
+  className="control-container control--range range"
+>
+  <p
+    className="control-label"
+  >
+    Pwout
+  </p>
+  <p>
+    Spinner
+  </p>
+</div>
+`;

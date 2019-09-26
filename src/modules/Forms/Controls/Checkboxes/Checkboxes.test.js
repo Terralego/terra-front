@@ -6,6 +6,7 @@ import Checkboxes from './Checkboxes';
 
 jest.mock('@blueprintjs/core', () => ({
   Checkbox: () => <p>Checkbox</p>,
+  Spinner: () => <p>Spinner</p>,
 }));
 
 it('should render correctly', () => {
@@ -15,6 +16,13 @@ it('should render correctly', () => {
       onChange={() => null}
       values={['pwet', 'wxd']}
     />
+  )).toJSON();
+  expect(tree).toMatchSnapshot();
+});
+
+it('should render loading correctly', () => {
+  const tree = renderer.create((
+    <Checkboxes label="Pwout" loading />
   )).toJSON();
   expect(tree).toMatchSnapshot();
 });

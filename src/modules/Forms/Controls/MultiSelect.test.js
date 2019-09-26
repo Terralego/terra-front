@@ -29,6 +29,7 @@ jest.mock('@blueprintjs/core', () => ({
   Intent: {
     NONE: 'none',
   },
+  Spinner: () => <p>Spinner</p>,
 }));
 
 it('should render correctly', () => {
@@ -37,6 +38,13 @@ it('should render correctly', () => {
       label="Bouh"
       values={['foo', 'bar']}
     />
+  ));
+  expect(tree.toJSON()).toMatchSnapshot();
+});
+
+it('should render loading correctly', () => {
+  const tree = renderer.create((
+    <MultiSelect label="Pwout" loading values={[]} />
   ));
   expect(tree.toJSON()).toMatchSnapshot();
 });

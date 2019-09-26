@@ -1,5 +1,6 @@
 import PropTypes from 'prop-types';
 import React from 'react';
+import { Spinner } from '@blueprintjs/core';
 
 import './index.scss';
 import RangeNumeric from './RangeNumeric';
@@ -19,16 +20,19 @@ export const Range = props => {
     threshold,
     stepSize,
     value,
+    loading,
   } = props;
   const Component = (max - min) / stepSize > threshold ? RangeNumeric : RangeSlider;
 
   return (
     <div className="control-container control--range range">
       <p className="control-label">{label}</p>
-      <Component
-        {...props}
-        value={(!Array.isArray(value) || value.length !== 2) ? [min, max] : value}
-      />
+      {loading ? <Spinner size={20} /> : (
+        <Component
+          {...props}
+          value={(!Array.isArray(value) || value.length !== 2) ? [min, max] : value}
+        />
+      )}
     </div>
   );
 };
@@ -42,6 +46,7 @@ Range.propTypes = {
   /** Number of steps for when to switch to 2 numeric inputs */
   threshold: PropTypes.number,
   stepSize: PropTypes.number,
+  loading: PropTypes.bool,
 };
 
 Range.defaultProps = {
@@ -52,6 +57,7 @@ Range.defaultProps = {
   max: DEFAULT_MAX,
   threshold: 250,
   stepSize: 1,
+  loading: false,
 };
 
 export default Range;

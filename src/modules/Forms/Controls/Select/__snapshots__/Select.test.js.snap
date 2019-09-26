@@ -58,3 +58,21 @@ exports[`should render correctly with query 1`] = `
   </select>
 </div>
 `;
+
+exports[`should render loading correctly 1`] = `
+<div
+  className="control-container control-container--select"
+  onKeyPress={[Function]}
+  role="presentation"
+>
+  <label
+    className="control-label"
+    htmlFor="select-uuid"
+  >
+    Pwout
+  </label>
+  <p>
+    Spinner
+  </p>
+</div>
+`;

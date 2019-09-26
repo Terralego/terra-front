@@ -1,5 +1,6 @@
 import React from 'react';
 import renderer from 'react-test-renderer';
+import { TYPE_RANGE } from '../../../Forms/Filters';
 
 import { LayersTreeProvider } from './LayersTreeProvider';
 import { connectLayersTree } from './context';
@@ -92,8 +93,8 @@ it('should fetch property values', async () => {
   layersTreeState.set(layer, {});
   instance.state.layersTreeState = layersTreeState;
 
-  const wait = instance.fetchPropertyValues(layer, property);
-  expect(property.values).toEqual([]);
+  const wait = instance.fetchPropertiesValues(layer, [property]);
+  expect(property.loading).toEqual(true);
   expect(instance.resetState).toHaveBeenCalledWith(expect.any(Map));
   instance.resetState.mockClear();
   expect(fetchPropertyValues).toHaveBeenCalledWith(layer, property);
@@ -103,7 +104,7 @@ it('should fetch property values', async () => {
   expect(instance.resetState).toHaveBeenCalledWith(expect.any(Map));
 
   instance.props.fetchPropertyValues = jest.fn();
-  await instance.fetchPropertyValues(layer, property);
+  await instance.fetchPropertiesValues(layer, [property]);
   expect(property.values).toEqual([]);
 });
 
@@ -113,13 +114,12 @@ it('should fetch property ranges', async () => {
   instance.resetState = jest.fn();
   const layersTreeState = new Map();
   const layer = {};
-  const property = {};
+  const property = { type: TYPE_RANGE };
   layersTreeState.set(layer, {});
   instance.state.layersTreeState = layersTreeState;
 
-  const wait = instance.fetchPropertyRange(layer, property);
-  expect(property.min).toBe(0);
-  expect(property.max).toBe(100);
+  const wait = instance.fetchPropertiesValues(layer, [property]);
+  expect(property.loading).toEqual(true);
   expect(instance.resetState).toHaveBeenCalledWith(expect.any(Map));
   instance.resetState.mockClear();
   expect(fetchPropertyRange).toHaveBeenCalledWith(layer, property);
@@ -130,7 +130,7 @@ it('should fetch property ranges', async () => {
   expect(instance.resetState).toHaveBeenCalledWith(expect.any(Map));
 
   instance.props.fetchPropertyRange = jest.fn();
-  await instance.fetchPropertyRange(layer, property);
+  await instance.fetchPropertiesValues(layer, [property]);
   expect(property.min).toBe(0);
   expect(property.max).toBe(100);
 });
