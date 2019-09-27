@@ -32,6 +32,8 @@ export class MultiSelect extends React.Component {
     onChange () {},
     translate: translateMock({
       'terralego.forms.controls.multiselect.no_results': 'No results.',
+      'terralego.forms.controls.multiselect.select_placeholder': 'Enter a query first',
+      'terralego.forms.controls.multiselect.input_placeholder': 'Filter...',
     }),
     loading: false,
   };
@@ -81,6 +83,7 @@ export class MultiSelect extends React.Component {
     const {
       label,
       value,
+      values,
       isSubmissionPrevented,
       className,
       translate,
@@ -108,12 +111,16 @@ export class MultiSelect extends React.Component {
             resetOnSelect
             items={filteredItems}
             selectedItems={value}
-            noResults={
-              <MenuItem disabled text={translate('terralego.forms.controls.multiselect.no_results')} />}
+            noResults={<MenuItem disabled text={translate('terralego.forms.controls.multiselect.no_results')} />}
             onItemSelect={handleChange}
             onQueryChange={handleQueryChange}
             tagRenderer={item => item}
             popoverProps={{ usePortal: false }}
+            initialContent={(values && values.length > 250)
+              ? <MenuItem disabled text={translate('terralego.forms.controls.multiselect.select_placeholder')} />
+              : undefined
+            }
+            placeholder={translate('terralego.forms.controls.multiselect.input_placeholder')}
             tagInputProps={{
               tagProps: { intent: Intent.NONE, interactive: true },
               onRemove: handleTagRemove,

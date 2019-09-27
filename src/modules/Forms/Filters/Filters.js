@@ -1,6 +1,5 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import { MenuItem } from '@blueprintjs/core';
 
 import Select from '../Controls/Select';
 import Text from '../Controls/Text';
@@ -40,17 +39,12 @@ export function getComponent (type, values, display, format) {
   }
 }
 
-const defaultTranslate = translateMock({
-  'terralego.forms.filter.select_placeholder': 'Enter a query first',
-  'terralego.forms.filter.input_placeholder': 'Filter...',
-});
-
 export const Filters = ({ properties, filters, translate, onChange }) => (
   <div>
     {filters.map(({ type, values, property, display, format, ...props }) => (
       <Control
         {...props}
-        translate={translate === defaultTranslate ? undefined : translate}
+        translate={translate}
         component={getComponent(type, values, display, format)}
         key={property}
         type={type}
@@ -58,13 +52,6 @@ export const Filters = ({ properties, filters, translate, onChange }) => (
         property={property}
         onChange={value => onChange({ ...properties, [property]: value })}
         value={properties[property]}
-        initialContent={(values && values.length > 250)
-          ? <MenuItem disabled text={translate('terralego.forms.filter.select_placeholder')} />
-          : undefined
-        }
-        inputProps={{
-          placeholder: translate('terralego.forms.filter.input_placeholder'),
-        }}
       />
     ))}
   </div>
@@ -102,7 +89,7 @@ Filters.defaultProps = {
   onChange () {},
   filters: [],
   properties: {},
-  translate: defaultTranslate,
+  translate: translateMock,
 };
 
 export default Filters;

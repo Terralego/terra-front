@@ -49,18 +49,18 @@
           "empty_item": "Tous(tes)"
         },
         "multiselect": {
-          "no_results": "Aucun résultat"
+          "input_placeholder": "Filtrer...",
+          "no_results": "Aucun résultat",
+          "select_placeholder": "Saisissez un terme de recherche"
         },
         "range_from": "De",
         "range_to": "à",
         "select": {
           "empty_item": "Tous(tes)",
-          "no_results": "Aucun résultat"
+          "input_placeholder": "Filtrer...",
+          "no_results": "Aucun résultat",
+          "select_placeholder": "Saisissez un terme de recherche"
         }
-      },
-      "filter": {
-        "input_placeholder": "Filtrer...",
-        "select_placeholder": "Saisissez un terme de recherche"
       }
     },
     "map": {

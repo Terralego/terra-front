@@ -34,6 +34,8 @@ export class Select extends React.Component {
     translate: translateMock({
       'terralego.forms.controls.select.empty_item': 'All',
       'terralego.forms.controls.select.no_results': 'No results.',
+      'terralego.forms.controls.select.select_placeholder': 'Enter a query first',
+      'terralego.forms.controls.select.input_placeholder': 'Filter...',
     }),
     loading: false,
   };
@@ -111,8 +113,14 @@ export class Select extends React.Component {
             popoverProps={{ usePortal: false, boundary: 'viewport', minimal: true }}
             items={filteredItems}
             filterable={values.length > 9}
-            inputProps={{ placeholder }}
             onQueryChange={this.handleQueryChange}
+            initialContent={(values && values.length > 250)
+              ? <MenuItem disabled text={translate('terralego.forms.controls.select.select_placeholder')} />
+              : undefined
+            }
+            inputProps={{
+              placeholder: translate('terralego.forms.controls.select.input_placeholder'),
+            }}
             itemRenderer={({
               label: itemLabel, value: itemValue,
             }, {
