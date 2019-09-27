@@ -145,6 +145,7 @@
         }
       },
       "too_many_results": "Votre recherche contient trop de résultats, veuillez affiner votre requête ou zoomer sur une zone plus restreinte.",
+      "too_many_results_count": "Votre recherche contient trop de résultats ({{count}}), veuillez affiner votre requête ou zoomer sur une zone plus restreinte.",
       "unfold": "Déplier"
     }
   }
