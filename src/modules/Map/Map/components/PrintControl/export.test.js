@@ -35,7 +35,10 @@ it('should export map as pdf', async () => {
   window.scrollTo = jest.fn();
   const parentElement = {};
   const canvas = {
-    style: {},
+    style: {
+      width: `${210 * 96 / 25.4}px`,
+      height: `${297 * 96 / 25.4}px`,
+    },
     parentNode: {
       appendChild () {},
       removeChild () {},
@@ -48,8 +51,9 @@ it('should export map as pdf', async () => {
       parentElement,
     })),
     getCanvas: jest.fn(() => canvas),
-    setBearing () {},
-    getBearing () {},
+    resize () {
+      expect(window.devicePixelRatio).toBe(300 / 96);
+    },
     once: (e, listener) => listeners.push(listener),
   };
 
@@ -63,6 +67,7 @@ it('should export map as pdf', async () => {
   expect(jspdf).toHaveBeenCalledWith({
     format: 'a4',
     orientation: 'portrait',
+    units: 'mm',
   });
 
   await listeners[0]();
@@ -78,6 +83,7 @@ it('should export map as pdf', async () => {
   expect(ignoreElements({ className: 'mapboxgl-control-container-top' })).toBe(true);
   expect(ignoreElements({ className: 'foo' })).toBe(false);
 
-  expect(jspdf.instance.addImage).toHaveBeenCalledWith(html2canvas.canvas, 'PNG', 0, 0);
+  expect(jspdf.instance.addImage).toHaveBeenCalledWith(html2canvas.canvas, 'PNG', 0, 0, 210, 297);
   expect(jspdf.instance.save).toHaveBeenCalledWith('export (mocked date).pdf');
+  expect(window.devicePixelRatio).toBe(1);
 });
