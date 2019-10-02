@@ -5,18 +5,24 @@ export default async function exportPdf (map, orientation, format = 'a4') {
   // html2canvas fails to render elements on top of page so we need to scroll
   window.scrollTo(0, 0);
 
+  // Increase DPI temporarily
+  const dpi = 300;
+  const actualPixelRatio = window.devicePixelRatio;
+  Object.defineProperty(window, 'devicePixelRatio', {
+    get: () => dpi / 96,
+  });
+
   const container = map.getContainer().parentElement;
   const canvas = map.getCanvas();
   const canvasRoot = canvas.parentNode;
 
-  const doc = new JsPdf({ format, orientation });
+  const doc = new JsPdf({ format, orientation, units: 'mm' });
 
   // Rendering canvas to an image is needed for Chrome/Edge
   const fixedMap = await new Promise(async resolve => {
-    map.once('render', () =>
-      resolve(map.getCanvas().toDataURL()));
-    // trigger render
-    await map.setBearing(map.getBearing());
+    map.once('render', () => resolve(map.getCanvas().toDataURL()));
+    // trigger render by resizing so that new devicePixelRatio is handled
+    map.resize();
   });
   const img = new Image();
   img.src = fixedMap;
@@ -32,9 +38,19 @@ export default async function exportPdf (map, orientation, format = 'a4') {
     ignoreElements: ({ className: classes }) => typeof classes === 'string' && classes.includes('mapboxgl-control-container'),
   });
 
-  // JsPdf will automatically detect and put the image full page
-  doc.addImage(renderedContainer, 'PNG', 0, 0);
+  // Convert canvas' dimensions from pixels to milimeters
+  const conversionFactor = 96 / 25.4;
+  const widthInmm = parseFloat(canvas.style.width) / conversionFactor;
+  const heightInmm = parseFloat(canvas.style.height) / conversionFactor;
+
+  // Put the image full page
+  doc.addImage(renderedContainer, 'PNG', 0, 0, widthInmm, heightInmm);
   doc.save(`export (${new Date(Date.now()).toLocaleDateString()}).pdf`);
+
+  // Set back previous DPI, map will be resized back by control
+  Object.defineProperty(window, 'devicePixelRatio', {
+    get: () => actualPixelRatio,
+  });
 
   canvasRoot.removeChild(img);
   canvasRoot.appendChild(canvas);
