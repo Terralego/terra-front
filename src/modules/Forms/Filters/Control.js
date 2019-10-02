@@ -45,12 +45,11 @@ export class Control extends React.Component {
   };
 
   render () {
-    const { component: Component, translate, ...props } = this.props;
+    const { component: Component, ...props } = this.props;
     const { values } = this.state;
 
     return (
       <Component
-        translate={translate === defaultTranslate ? undefined : translate}
         {...props}
         values={values}
       />
