@@ -9,7 +9,7 @@ import './styles.scss';
 
 export const TooManyResults = ({ count, translate }) => count >= MAX_SIZE && (
   <Callout className="too-many-results">
-    {translate('terralego.visualizer.too_many_results', { count })}
+    {translate('terralego.visualizer.too_many_results_count', { count })}
   </Callout>
 );
 
