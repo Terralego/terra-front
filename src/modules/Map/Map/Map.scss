@@ -3,6 +3,7 @@
 .tf-map {
   height: 100%;
   width: auto;
+
   .mapboxgl-map {
     height: 100%;
     width: auto;
@@ -23,6 +24,7 @@
   &:focus {
     background-color: rgba(0, 0, 0, 0.05);
   }
+
   &.active {
     opacity: 0.5;
   }
@@ -34,13 +36,23 @@
 }
 
 .bp3-dark .mapboxgl-ctrl-group {
-  box-shadow: 0 0 0 1px rgba(16,22,26,.4);
+  box-shadow: 0 0 0 1px rgba(16, 22, 26, .4);
   background-color: #394b59;
   color: $pt-dark-text-color;
 
   .mapboxgl-ctrl-icon {
-    border-color: rgba(16,22,26,.4);
+    border-color: rgba(16, 22, 26, .4);
     filter: invert(100%);
+  }
+
+  &.mapboxgl-ctrl-home,
+  &.mapboxgl-ctrl-print,
+  &.mapboxgl-ctrl-share,
+  .mapboxgl-ctrl-background-styles {
+    button:hover,
+    button:focus {
+      background-color: #435461;
+    }
   }
 
   .bp3-popover-target button {
