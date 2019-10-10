@@ -1,4 +1,13 @@
 
+1.7.0 / 2019-10-10
+==================
+
+  * Increase device pixel ratio for printing
+  * Fix scss on hover and focus in mapbox-crtl
+  * Fix warning about initialContent and intialprops in Filter
+  * Improve filters fetching performance and UX
+  * Add missing translation
+
 1.6.10 / 2019-09-24
 ===================
 
