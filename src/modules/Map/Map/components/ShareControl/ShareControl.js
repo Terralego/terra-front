@@ -107,63 +107,66 @@ export class ShareControl extends AbstractMapControl {
     const { url, copySuccess } = this.state;
 
     return (
-      <Popover
-        position={PopoverPosition.LEFT}
-        usePortal={false}
+      <Tooltip
+        content={translate('terralego.map.share_control.link')}
       >
-        <Tooltip
-          content={translate('terralego.map.share_control.link')}
+        <button
+          className="mapboxgl-ctrl-icon"
+          type="button"
+          onClick={this.generateHashString}
+          aria-label={translate('terralego.map.share_control.link')}
         >
-          <button
-            className="mapboxgl-ctrl-icon"
-            type="button"
-            onClick={this.generateHashString}
-            aria-label={translate('terralego.map.share_control.link')}
+          <Popover
+            content={(
+              <ControlGroup
+                className="mapboxgl-ctrl-share"
+                fill
+              >
+                {link && (
+                  <>
+                    <input
+                      className="bp3-input"
+                      ref={this.inputRef}
+                      onClick={({ target: { value }, target }) =>
+                        target.setSelectionRange(0, value.length)}
+                      value={url}
+                      readOnly
+                      size={80}
+                    />
+                    <Popover>
+                      <Button
+                        onClick={this.copyToCliboard}
+                        intent={copySuccess ? 'success' : 'none'}
+                        icon="clipboard"
+                      />
+                      {copySuccess && translate('terralego.map.share_control.copied')}
+                    </Popover>
+                  </>
+                )}
+                {['twitter', 'facebook', 'linkedin'].map(network => this.props[network] && (
+                  <Tooltip
+                    className={`share__btn-tooltip share__btn-tooltip--${network}`}
+                    key={network}
+                    content={translate('terralego.map.share_control.share', {
+                      context: network.charAt(0).toUpperCase() + network.slice(1),
+                    })}
+                    openOnTargetFocus={false}
+                  >
+                    <Button
+                      className={`share__btn share__btn--${network}`}
+                      onClick={this.share(network)}
+                    >
+                      <img src={icon(network)} alt={network} />
+                    </Button>
+                  </Tooltip>
+                ))}
+              </ControlGroup>
+              )}
           >
             <Icon icon="share" />
-          </button>
-        </Tooltip>
-        <ControlGroup fill>
-          {link && (
-            <>
-              <input
-                className="bp3-input"
-                ref={this.inputRef}
-                onClick={({ target: { value }, target }) =>
-                  target.setSelectionRange(0, value.length)}
-                value={url}
-                readOnly
-                size={80}
-              />
-              <Popover>
-                <Button
-                  onClick={this.copyToCliboard}
-                  intent={copySuccess ? 'success' : 'none'}
-                  icon="clipboard"
-                />
-                {copySuccess && translate('terralego.map.share_control.copied')}
-              </Popover>
-            </>
-          )}
-          {['twitter', 'facebook', 'linkedin'].map(network => this.props[network] && (
-            <Tooltip
-              className={`share__btn-tooltip share__btn-tooltip--${network}`}
-              key={network}
-              content={translate('terralego.map.share_control.share', {
-                context: network.charAt(0).toUpperCase() + network.slice(1),
-              })}
-              openOnTargetFocus={false}
-            >
-              <Button
-                className={`share__btn share__btn--${network}`}
-                onClick={this.share(network)}
-              >
-                <img src={icon(network)} alt={network} />
-              </Button>
-            </Tooltip>
-          ))}
-        </ControlGroup>
-      </Popover>
+          </Popover>
+        </button>
+      </Tooltip>
     );
   }
 }
