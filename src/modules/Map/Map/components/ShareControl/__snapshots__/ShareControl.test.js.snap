@@ -1,33 +1,12 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
 exports[`should render 1`] = `
-Array [
-  <button
-    aria-label="Share your map"
-    className="mapboxgl-ctrl-icon"
-    onClick={[Function]}
-    type="button"
-  >
-    Icon
-  </button>,
-  <input
-    className="bp3-input"
-    onClick={[Function]}
-    readOnly={true}
-    size={80}
-  />,
-  "Button",
-  <img
-    alt="twitter"
-    src="twitter.svg"
-  />,
-  <img
-    alt="facebook"
-    src="facebook.svg"
-  />,
-  <img
-    alt="linkedin"
-    src="linkedin.svg"
-  />,
-]
+<button
+  aria-label="Share your map"
+  className="mapboxgl-ctrl-icon"
+  onClick={[Function]}
+  type="button"
+>
+  Icon
+</button>
 `;

@@ -117,31 +117,32 @@ export class ShareControl extends AbstractMapControl {
           aria-label={translate('terralego.map.share_control.link')}
         >
           <Popover
+            position={PopoverPosition.RIGHT}
             content={(
               <ControlGroup
                 className="mapboxgl-ctrl-share"
                 fill
               >
                 {link && (
-                  <>
-                    <input
-                      className="bp3-input"
-                      ref={this.inputRef}
-                      onClick={({ target: { value }, target }) =>
-                        target.setSelectionRange(0, value.length)}
-                      value={url}
-                      readOnly
-                      size={80}
+                <>
+                  <input
+                    className="bp3-input"
+                    ref={this.inputRef}
+                    onClick={({ target: { value }, target }) =>
+                      target.setSelectionRange(0, value.length)}
+                    value={url}
+                    readOnly
+                    size={80}
+                  />
+                  <Popover>
+                    <Button
+                      onClick={this.copyToCliboard}
+                      intent={copySuccess ? 'success' : 'none'}
+                      icon="clipboard"
                     />
-                    <Popover>
-                      <Button
-                        onClick={this.copyToCliboard}
-                        intent={copySuccess ? 'success' : 'none'}
-                        icon="clipboard"
-                      />
-                      {copySuccess && translate('terralego.map.share_control.copied')}
-                    </Popover>
-                  </>
+                    {copySuccess && translate('terralego.map.share_control.copied')}
+                  </Popover>
+                </>
                 )}
                 {['twitter', 'facebook', 'linkedin'].map(network => this.props[network] && (
                   <Tooltip

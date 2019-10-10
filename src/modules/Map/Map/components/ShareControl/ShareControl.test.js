@@ -1,7 +1,6 @@
 import { mount } from 'enzyme';
 import React from 'react';
 import renderer from 'react-test-renderer';
-
 import ShareControl, { icon } from './ShareControl';
 
 jest.mock('@blueprintjs/core', () => ({
@@ -11,6 +10,10 @@ jest.mock('@blueprintjs/core', () => ({
   Popover: ({ children }) => children,
   PopoverPosition: {},
   Tooltip: ({ children }) => children,
+}));
+
+jest.mock('react-dom', () => ({
+  createPortal: node => node,
 }));
 
 window.open = jest.fn();
@@ -49,24 +52,27 @@ it('should display correct url with map named', () => {
 it('should permit copy to clipboard', () => {
   jest.useFakeTimers();
   document.execCommand = jest.fn();
-
   const wrapper = mount(
     <ShareControl
+      usePortal={false}
       initialState={{
         foo: 'bar',
         baz: false,
       }}
     />,
   );
-  const selectionRange = jest.fn();
+  // const selectionRange = jest.fn();
   const instance = wrapper.instance();
-
-  wrapper.find('.bp3-input').props().onClick({
-    target: {
-      setSelectionRange: selectionRange,
-      value: 'coucou',
-    },
-  });
+  // console.log(wrapper.find('.bp3-input') ? 'youpi' : 'nope');
+  // wrapper
+  //   .find('.bp3-input')
+  //   .props()
+  //   .onClick({
+  //     target: {
+  //       setSelectionRange: selectionRange,
+  //       value: 'coucou',
+  //     },
+  //   });
 
   instance.inputRef.current = {
     setSelectionRange: jest.fn(),
