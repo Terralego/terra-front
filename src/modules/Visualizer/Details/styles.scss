@@ -131,11 +131,6 @@
         padding-bottom: .5rem;
         white-space: nowrap;
         opacity: .65;
-
-        &:after {
-          content: ' : ';
-          padding-right: 1rem;
-        }
       }
 
       &-value {
