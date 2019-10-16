@@ -18,7 +18,11 @@ export class RenderColumn {
   renderMenu = sortColumn => {
     const {
       index,
-      locales: { sortAsc: labelSortAsc, sortDesc: labelSortDesc } = {},
+      locales: { sortAsc: localesSortAsc, sortDesc: localesSortDesc } = {},
+      customLocales: {
+        sortAsc: labelSortAsc = localesSortAsc,
+        sortDesc: labelSortDesc = localesSortDesc,
+      } = {},
       format_type: formatType,
       customSortColumn: callback,
     } = this.props; // eslint-disable-line react/no-this-in-sfc

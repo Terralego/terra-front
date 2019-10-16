@@ -19,6 +19,7 @@ const columns = [
     value: 'Color',
     format: { type: 'string' },
     sortable: true,
+    customLocales: { sortAsc: 'Order by CYMB', sortDesc: 'Order by BMYC' },
     customSortColumn (a, b) {
       const value = str => str.split('').reverse().splice(2, 1);
       return `${value(b)}`.localeCompare(value(a));
