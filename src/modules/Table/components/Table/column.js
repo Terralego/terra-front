@@ -20,10 +20,11 @@ export class RenderColumn {
       index,
       locales: { sortAsc: labelSortAsc, sortDesc: labelSortDesc } = {},
       format_type: formatType,
+      customSortColumn: callback,
     } = this.props; // eslint-disable-line react/no-this-in-sfc
 
-    const sortAsc = () => sortColumn(index, 'asc');
-    const sortDesc = () => sortColumn(index, 'desc');
+    const sortAsc = () => sortColumn(index, 'asc', callback);
+    const sortDesc = () => sortColumn(index, 'desc', callback);
     const sortBase = formatType === 'number' ? 'sort-numerical' : 'sort-alphabetical';
     return (
       <Menu>
