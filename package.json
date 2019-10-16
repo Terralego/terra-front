@@ -8,7 +8,7 @@
     "@blueprintjs/datetime": "~3.9.2",
     "@blueprintjs/icons": "~3.10.0",
     "@blueprintjs/select": "~3.10.0",
-    "@blueprintjs/table": "~3.7.0",
+    "@blueprintjs/table": "^3.8.1",
     "@mapbox/mapbox-gl-draw": "^1.1.2",
     "@mapbox/mapbox-gl-sync-move": "^0.2.0",
     "@turf/bbox": "^6.0.1",
