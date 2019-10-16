@@ -116,7 +116,11 @@ export class Table extends React.Component {
     }
   }
 
-  sortColumn = (columnIndex = this.defaultColumnIndex, order = this.defaultOrder) => {
+  sortColumn = (
+    columnIndex = this.defaultColumnIndex,
+    order = this.defaultOrder,
+    callback = this.compare,
+  ) => {
     const { data, columns, onSort } = this.props;
     onSort({ columnIndex, order });
 
@@ -124,11 +128,12 @@ export class Table extends React.Component {
       return;
     }
     const { format_type: formatType } = columns[columnIndex];
+    const isOrderAsc = order === 'asc';
     const sortedIndexMap = data.map((_, i) => i);
     sortedIndexMap.sort((a, b) => {
-      const orderA = order === 'asc' ? a : b;
-      const orderB = order === 'asc' ? b : a;
-      return this.compare(data[orderA][columnIndex], data[orderB][columnIndex], formatType);
+      const orderA = isOrderAsc ? a : b;
+      const orderB = isOrderAsc ? b : a;
+      return callback(data[orderA][columnIndex], data[orderB][columnIndex], formatType);
     });
     this.setState({
       lastSort: [columnIndex, order],

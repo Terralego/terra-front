@@ -14,13 +14,23 @@ const columns = [
     format: { type: 'number' },
     sortable: true,
   },
+  {
+    label: 'Color',
+    value: 'Color',
+    format: { type: 'string' },
+    sortable: true,
+    customSortColumn (a, b) {
+      const value = str => str.split('').reverse().splice(2, 1);
+      return `${value(b)}`.localeCompare(value(a));
+    },
+  },
 ];
 const data = [
-  ['fghj', 'ghjk', '123'],
-  ['fghjkk', 'ghjkl', '23.78'],
-  ['abc', 'def', '1'],
-  ['fghr', 'bnz', '12'],
-  ['lorem', 'ipsum', '12345.67890'],
+  ['fghj', 'ghjk', '123', 'magenta'],
+  ['fghjkk', 'ghjkl', '23.78', 'cyan'],
+  ['abc', 'def', '1', 'yellow'],
+  ['fghr', 'bnz', '12', 'black'],
+  ['lorem', 'ipsum', '12345.67890', 'yellow'],
 ];
 
 storiesOf('Components/Table', module)
