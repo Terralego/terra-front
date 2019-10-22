@@ -10,7 +10,7 @@ import RangeComponent from './RangeComponent';
  */
 class RangeNumeric extends RangeComponent {
   onNumericInputChange = pos => bound => {
-    const { onChange, min, max } = this.props;
+    const { onChange } = this.props;
     const { range } = this.state;
     if (Number.isNaN(+bound)) return; // Sanity check that allows typing '-'
     range[pos] = bound;
@@ -19,7 +19,7 @@ class RangeNumeric extends RangeComponent {
     // Check that the values are within min/max, it will be eventually be
     // clamped, but we need to prevent firing onChange
     const [lowerB, upperB] = range;
-    if (lowerB <= upperB && min <= lowerB && upperB <= max) {
+    if (lowerB <= upperB) {
       this.setState({ intent: undefined });
       onChange(range);
     } else {
@@ -36,6 +36,8 @@ class RangeNumeric extends RangeComponent {
       clampValueOnBlur: true,
       buttonPosition: 'none',
       ...props,
+      min: null,
+      max: null,
       type: undefined, // This resets the type given by Control
       intent,
     };
