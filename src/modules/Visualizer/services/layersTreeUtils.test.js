@@ -331,6 +331,14 @@ it('should filter features', () => {
   expect(map.setFilter).toHaveBeenCalledWith('foo', ['match', ['get', '_id'], ['1', '2'], true, false]);
   expect(map.setFilter).toHaveBeenCalledTimes(1);
 
+  map.setFilter.mockClear();
+  map.fire.mockClear();
+  ltState.set(layer3, { active: false });
+  filterFeatures(map, [{ layer: 'foo', features: [] }], ltState);
+  expect(map.fire).not.toHaveBeenCalled();
+  expect(map.setFilter).toHaveBeenCalledWith('foo', false);
+  expect(map.setFilter).toHaveBeenCalledTimes(1);
+
   INITIAL_FILTERS.clear();
 });
 

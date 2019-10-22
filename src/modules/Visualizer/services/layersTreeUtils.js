@@ -115,6 +115,18 @@ export const hasWidget = layersTreeState =>
   filterLayersStatesFromLayersState(layersTreeState, ({ widgets = [] }) => widgets.length > 0)
     .length > 0;
 
+const filterFromFeatureIds = ids => {
+  if (!Array.isArray(ids)) {
+    return null;
+  }
+
+  if (!ids.length) {
+    return false;
+  }
+
+  return ['match', ['get', '_id'], ids, true, false];
+};
+
 export const filterFeatures = (
   map,
   features/* = [ { layer: String, features: [id1, id2, …] } ] */,
@@ -129,9 +141,10 @@ export const filterFeatures = (
     if (!active || !layers) return;
     const layerFeatures = features
       .find(({ layer: fLayer }) => fLayer === layer);
-    const { features: ids = [] } = layerFeatures || {};
+    const { features: ids } = layerFeatures || {};
 
-    const filter = ids.length ? ['match', ['get', '_id'], ids, true, false] : null;
+    const filter = filterFromFeatureIds(ids);
+
     layers.forEach(layerId => {
       const paintLayer = map.getLayer(layerId);
       if (!paintLayer) return;
