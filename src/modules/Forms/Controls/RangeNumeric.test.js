@@ -42,3 +42,14 @@ it('should handle danger intent', () => {
   expect(wrapper.find('NumericInput').first().props().intent).toEqual('danger');
   expect(onChange).not.toHaveBeenCalled();
 });
+
+it('should not take consideration of props min or max', () => {
+  const onChange = jest.fn();
+  const wrapper = mount(
+    <RangeNumeric max={1000} min={100} onChange={onChange} value={[10, 20]} />,
+  );
+  expect(wrapper.find('NumericInput').first().props().min).toEqual(null);
+  expect(wrapper.find('NumericInput').first().props().max).toEqual(null);
+  wrapper.find('NumericInput').first().prop('onValueChange')(0);
+  expect(onChange).toHaveBeenCalledWith([0, 20]);
+});
