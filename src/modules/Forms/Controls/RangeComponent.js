@@ -40,7 +40,7 @@ class RangeComponent extends React.Component {
     }
     if (!rangeIsEqual(prevProps.value, value) && Array.isArray(value) && value.length === 2) {
       const [lowerBound, upperBound] = value;
-      this.setRange([Math.max(lowerBound, min), Math.min(upperBound, max)]);
+      this.setRange([lowerBound, upperBound]);
     }
   }
 
