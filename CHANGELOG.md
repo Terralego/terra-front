@@ -1,4 +1,13 @@
 
+1.8.0 / 2019-10-24
+==================
+
+  * Do not manage min/max limits in rangeNumeric
+  * Filter all features when there is nothing to display
+  * Add the ability to order a custom locales for sorting
+  * Add the ability to order a custom sorting
+  * Update @blueprintjs/table package to 3.8.1
+
 1.7.2 / 2019-10-14
 ==================
 
