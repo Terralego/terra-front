@@ -1,35 +1,18 @@
 @import '../../../../../utils/variables.scss'; 
 
 .mapboxgl-ctrl-share {
-  z-index: 130;
+    z-index: 130;
 }
-.share__btn-tooltip, .share__btn {
-  button {
-    max-width: 1rem;
-    max-height: 1rem;
-    padding: 0;
-  }
-  img {
-    width: 1rem;
-  }
-
-  &--twitter {
+.share__btn--twitter {
     margin-left: .25rem;
   }
 
-  &--facebook,
-  &--linkedin {
-    span > img {
-      width: 1rem;
-    }
-  }
-}
-
 @media(min-width: $breakpoints-phone) and (max-width: $breakpoints-tablet) and (orientation: portrait) {
-  .mapboxgl-ctrl-share .bp3-popover {
-    max-width: 13rem;
-    input {
-      max-width: 9rem;
+  .mapboxgl-ctrl-share {
+    max-width: 15rem;
+    
+    .bp3-input {
+      max-width: 6rem;
       overflow: hidden;
       text-overflow: ellipsis;
       white-space: nowrap;
