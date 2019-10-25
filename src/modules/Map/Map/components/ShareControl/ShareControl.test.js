@@ -61,18 +61,7 @@ it('should permit copy to clipboard', () => {
       }}
     />,
   );
-  // const selectionRange = jest.fn();
   const instance = wrapper.instance();
-  // console.log(wrapper.find('.bp3-input') ? 'youpi' : 'nope');
-  // wrapper
-  //   .find('.bp3-input')
-  //   .props()
-  //   .onClick({
-  //     target: {
-  //       setSelectionRange: selectionRange,
-  //       value: 'coucou',
-  //     },
-  //   });
 
   instance.inputRef.current = {
     setSelectionRange: jest.fn(),
