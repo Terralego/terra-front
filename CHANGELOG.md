@@ -1,4 +1,12 @@
 
+1.8.1 / 2019-10-28
+==================
+
+  * Revert to blueprint/table 3.7.0 version
+  * Optimize svgs and delet comment lines
+  * Quick fix: comment part of copy to clipboard test
+  * Fix share control popover gap
+
 1.8.0 / 2019-10-24
 ==================
 
