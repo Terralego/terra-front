@@ -1,4 +1,5 @@
 import React from 'react';
+import PropTypes from 'prop-types';
 import classnames from 'classnames';
 import { Button } from '@blueprintjs/core';
 
@@ -59,6 +60,14 @@ class Details extends React.Component {
     return index;
   }
 
+  handleChange = direction => {
+    const { onChange } = this.props;
+    const { index: prevIndex = 0 } = this.state;
+    const index = this.getIndexFeature(prevIndex + direction);
+    onChange(index);
+    return this.setState({ index });
+  }
+
   switchVisibility (visible) {
     if (visible) {
       clearTimeout(this.hideTimeout);
@@ -80,14 +89,6 @@ class Details extends React.Component {
     if (features.length) {
       this.setState({ index: features.findIndex(({ _id }) => _id === id) });
     }
-  }
-
-  handleChange (direction) {
-    const { onChange } = this.props;
-    const { index: prevIndex = 0 } = this.state;
-    const index = this.getIndexFeature(prevIndex + direction);
-    onChange(index);
-    return this.setState({ index });
   }
 
   render () {
@@ -175,5 +176,13 @@ class Details extends React.Component {
     );
   }
 }
+
+Details.propTypes = {
+  onChange: PropTypes.func,
+};
+
+Details.defaultProps = {
+  onChange () {},
+};
 
 export default Details;
