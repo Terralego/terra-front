@@ -1,4 +1,10 @@
 
+1.8.2 / 2019-11-04
+==================
+
+  * Fix wording dependency
+  * Fix navigation through the details
+
 1.8.1 / 2019-10-28
 ==================
 
