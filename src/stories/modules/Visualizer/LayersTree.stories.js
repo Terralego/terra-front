@@ -35,7 +35,7 @@ const stories = storiesOf('Components/LayersTree', module);
 
 stories.add('LayersTree', () => (
   <div style={{ maxWidth: '20rem' }}>
-    <div style={{ backgroundColor: '#44535F' }}>
+    <div>
       <LayersTreeSingle
         onChange={onChange}
         layersTree={layersTreeConfig}
@@ -68,7 +68,6 @@ stories.add('LayersTreeProvider', () => (
     }}
     >
       <div style={{
-        backgroundColor: '#30404d',
         flex: 1,
         maxWidth: '30rem',
       }}

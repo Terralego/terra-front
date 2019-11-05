@@ -15,9 +15,11 @@
 .layerNode-Option-slider-label {
   font-family: "SFProText-Light", Arial, Helvetica, sans-serif;
   font-size: .75rem;
-  color: #F5F8FA;
   line-height: .9rem;
   margin-bottom: .25rem;
+  .bp3-dark & {
+    color: #f5f8fA;
+  }
 }
 
 .layerNode-Option-button:not(:last-of-type) {

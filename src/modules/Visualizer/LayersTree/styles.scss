@@ -16,9 +16,13 @@
     .bp3-collapse-body {
       transform: inherit !important;
       padding: .3rem;
-      background-color: #394B59;
-      border: 1px solid #0000001f;
       box-shadow: none;
+      background-color: #f9f7f7;
+      border: 1px solid #fbfbfb1f;
+      .bp3-dark & {
+        background-color: #394b59;
+        border-color: #0000001f;
+      }
     } 
   }
 
@@ -41,9 +45,11 @@
       font-family: $font-medium;
       font-size: 0.9rem;
       letter-spacing: .07rem;
-      color: $font-color;
       font-weight: 500;
       margin: 0;
+      .bp3-dark & {
+        color: $font-color;
+      }
     }
   }
 
@@ -54,34 +60,43 @@
 
 .layerstree-node {
   padding: .35rem .25rem;
-  border: 1px solid #0000001f;
   border-radius: 0;
   font-family: $font-default;
   font-size: .875rem;
-  color: $font-color;
   letter-spacing: 0.06rem;
   display: flex;
   flex-direction: column;
   box-shadow: none;
+  border: 1px solid #fbfbfb1f;
+  box-shadow: 0 0 0 1px rgba(206, 209, 210, 0.4), 0 0 0 rgba(16, 22, 26, 0), 0 0 0 rgba(16, 22, 26, 0);
+  background: #efefef;
+  .bp3-dark & {
+    color: $font-color;
+    border-color: #0000001f;
+  }
  
   .layerstree-node-content {
     display: flex;
     flex-direction: row;
     
     .layerstree-node-content__item-tooltip-warning .bp3-popover-target .bp3-switch.warning-zoom .bp3-control-indicator {
-      background: #9EB4C1;
-  
+      background: #9eb4c1;
+
       &::after {
         content: '!';
         position: absolute;
         left: 18px;
         font-size: 13px;
         font-weight: bold;
+        color: #000;
+        .bp3-dark & {
+          color: #fff;
+        }
       }
     }
     /* Override Blueprintjs */
-    .bp3-dark .bp3-control.bp3-switch.warning-zoom:hover input:checked ~ .bp3-control-indicator {
-      background: darken(#9EB4C1, 10%);
+    .bp3-control.bp3-switch.warning-zoom:hover input:checked ~ .bp3-control-indicator {
+      background: darken(#9eb4c1, 10%);
     }
     &__item {
       display: flex;
@@ -151,9 +166,11 @@
           }
         }
         &--active {
-          background: radial-gradient($active-button-color 0, transparent 55%) !important;
-          svg {
-            filter: invert(.5) sepia(1) saturate(5) hue-rotate(175deg);
+          .bp3-dark & {
+            background: radial-gradient($active-button-color 0, transparent 55%) !important;
+            svg {
+              filter: invert(.5) sepia(1) saturate(5) hue-rotate(175deg);
+            }
           }
         }
       }
@@ -214,9 +231,12 @@
           display: flex;
           order: 3;
           justify-content: flex-end;
-          border-top: 1px solid #0000001f;
           border-radius: 2px;
           margin-top: .5rem;
+          border-top: 1px solid #fbfbfb1f;
+          .bp3-dark & {
+            border-top-color: #0000001f;
+          }
         }
         &__options__button {
           width: 4.06rem;
@@ -234,9 +254,11 @@
             transform: rotate(0deg);
           }
           &--active {
-            background: radial-gradient(circle at 50% 1.05rem, $active-button-color 0, transparent 40%) !important;
-            svg {
-              filter: invert(.5) sepia(1) saturate(5) hue-rotate(175deg);
+            .bp3-dark & {
+              background: radial-gradient(circle at 50% 1.05rem, $active-button-color 0, transparent 40%) !important;
+              svg {
+                filter: invert(.5) sepia(1) saturate(5) hue-rotate(175deg);
+              }
             }
           }
         }
