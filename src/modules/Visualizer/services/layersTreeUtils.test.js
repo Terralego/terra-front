@@ -18,8 +18,8 @@ import search from './search';
 
 jest.mock('./search', () => ({
   MAX_SIZE: 10000,
-  search: jest.fn(({ properties }) => {
-    if (properties['layer.keyword'].value === 'witherror') {
+  search: jest.fn(({ index }) => {
+    if (index === 'witherror') {
       return {
         aggregations: {},
       };
@@ -460,9 +460,7 @@ it('should sort custom layers', () => {
 it('should fetch property value', async () => {
   const values = await fetchPropertyValues('foo', { property: 'foo' });
   expect(search.search).toHaveBeenCalledWith({
-    properties: {
-      'layer.keyword': { value: 'foo', type: 'term' },
-    },
+    index: 'foo',
     aggregations: [{
       type: 'terms',
       field: 'foo.keyword',
@@ -479,9 +477,7 @@ it('should fetch property value', async () => {
 it('should fetch property range', async () => {
   const values = await fetchPropertyRange('foo', { property: 'foo' });
   expect(search.search).toHaveBeenCalledWith({
-    properties: {
-      'layer.keyword': { value: 'foo', type: 'term' },
-    },
+    index: 'foo',
     aggregations: [{
       type: 'max',
       field: 'foo',

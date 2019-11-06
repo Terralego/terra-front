@@ -2,7 +2,7 @@ import elasticsearch from 'elasticsearch';
 import bodybuilder from 'bodybuilder';
 import debounce from 'lodash.debounce';
 
-export const DEFAULT_INDEX = 'features';
+export const DEFAULT_INDEX = '_all';
 export const MAX_SIZE = 10000;
 export const SEARCHES_QUEUE = new Set();
 
