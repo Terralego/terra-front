@@ -216,9 +216,7 @@ export const sortCustomLayers = (customLayers, layersTree) => {
  */
 export const fetchPropertyValues = async (layer, { property }) => {
   const results = await searchService.search({
-    properties: {
-      'layer.keyword': { value: layer, type: 'term' },
-    },
+    index: layer,
     aggregations: [{
       type: 'terms',
       field: `${property}.keyword`,
@@ -241,9 +239,7 @@ export const fetchPropertyValues = async (layer, { property }) => {
  */
 export const fetchPropertyRange = async (layer, { property }) => {
   const results = await searchService.search({
-    properties: {
-      'layer.keyword': { value: layer, type: 'term' },
-    },
+    index: layer,
     aggregations: [{
       type: 'max',
       field: `${property}`,
