@@ -2,7 +2,6 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import mapBoxGl from 'mapbox-gl';
 import { addMapDebug } from '../helpers/mapDebug';
-import Hash from './hash';
 
 import 'mapbox-gl/dist/mapbox-gl.css';
 
@@ -81,20 +80,6 @@ export const withMap = WrappedComponent => {
       mapBoxGl.accessToken = accessToken;
 
       const hasHash = hash && !!global.location.hash;
-      let hashProps = {};
-      if (hasHash) {
-        const loc = typeof hash === 'string'
-          ? ((new URLSearchParams(global.location.hash.slice(1))).get(hash) || '').split('/')
-          : global.location.hash.replace('#', '').split('/');
-        if (loc.length >= 3) {
-          hashProps = {
-            center: [+loc[2], +loc[1]],
-            zoom: +loc[0],
-            bearing: +(loc[3] || 0),
-            pitch: +(loc[4] || 0),
-          };
-        }
-      }
 
       const map = new mapBoxGl.Map({
         container: this.containerEl.current,
@@ -107,10 +92,8 @@ export const withMap = WrappedComponent => {
         maxBounds,
         // below fix Firefox bug for printing http://fuzzytolerance.info/blog/2016/07/01/Printing-Mapbox-GL-JS-maps-in-Firefox/
         preserveDrawingBuffer: navigator.userAgent.toLowerCase().indexOf('firefox') > -1,
-        ...hashProps,
+        hash,
       });
-      // eslint-disable-next-line no-underscore-dangle
-      map._hash = hash && (new Hash((typeof hash === 'string' && hash) || undefined)).addTo(map);
 
       // This allows accessing MapboxGL instance from console (needed for e2e tests)
       if (this.containerEl.current) {

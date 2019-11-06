@@ -131,8 +131,6 @@ it('should not set center and fitbounds if hash is present', () => {
   global.location.hash = '#10/3/4';
   instance.initMap();
   expect(mapboxgl.Map).toHaveBeenCalled();
-  expect(mapboxgl.Map.mock.calls[0][0].zoom).toBe(10);
-  expect(mapboxgl.Map.mock.calls[0][0].center).toEqual([4, 3]);
   expect(mapboxgl.map.fitBounds).not.toHaveBeenCalled();
   mapboxgl.Map.mockClear();
   mapboxgl.map.fitBounds.mockClear();
@@ -140,8 +138,6 @@ it('should not set center and fitbounds if hash is present', () => {
   wrapper.setProps({ hash: false });
   instance.initMap();
   expect(mapboxgl.Map).toHaveBeenCalled();
-  expect(mapboxgl.Map.mock.calls[0][0].zoom).toBe(9);
-  expect(mapboxgl.Map.mock.calls[0][0].center).toEqual([1, 2]);
   expect(mapboxgl.map.fitBounds).toHaveBeenCalled();
   global.location.hash = '';
 });
@@ -162,8 +158,6 @@ it('should set center provided named hash', () => {
   global.location.hash = '#foo=bar';
   instance.initMap();
   expect(mapboxgl.Map).toHaveBeenCalled();
-  expect(mapboxgl.Map.mock.calls[0][0].zoom).toBe(9);
-  expect(mapboxgl.Map.mock.calls[0][0].center).toEqual([1, 2]);
   expect(mapboxgl.map.fitBounds).not.toHaveBeenCalled();
   mapboxgl.Map.mockClear();
   mapboxgl.map.fitBounds.mockClear();
@@ -171,8 +165,6 @@ it('should set center provided named hash', () => {
   global.location.hash = '#map=10/3/4&foo=bar';
   instance.initMap();
   expect(mapboxgl.Map).toHaveBeenCalled();
-  expect(mapboxgl.Map.mock.calls[0][0].zoom).toBe(10);
-  expect(mapboxgl.Map.mock.calls[0][0].center).toEqual([4, 3]);
   expect(mapboxgl.map.fitBounds).not.toHaveBeenCalled();
   mapboxgl.Map.mockClear();
   mapboxgl.map.fitBounds.mockClear();
