@@ -1,4 +1,11 @@
 
+1.9.0 / 2019-11-06
+==================
+
+  * Fix default value for translate prop in Filters component
+  * Use MapboxGL native hash option
+  * Update elasticsearch logic (OR) in multiselect
+
 1.8.2 / 2019-11-04
 ==================
 
