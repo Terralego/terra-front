@@ -1,5 +1,12 @@
 import elasticsearch from 'elasticsearch';
-import search, { Search, getExtent, getSearchParamFromProperty, buildQuery, MAX_SIZE, SEARCHES_QUEUE } from './search';
+import search, {
+  buildQuery,
+  getExtent,
+  getSearchParamFromProperty,
+  MAX_SIZE,
+  Search,
+  SEARCHES_QUEUE,
+} from './search';
 
 jest.mock('elasticsearch', () => {
   const mockedClient = {
@@ -9,8 +16,7 @@ jest.mock('elasticsearch', () => {
   function Client () {
     return mockedClient;
   }
-  const mockedElasticsearch = { Client };
-  return mockedElasticsearch;
+  return { Client };
 });
 jest.mock('lodash.debounce', () => fn => () => fn());
 
@@ -301,9 +307,8 @@ it('should build query with multiselect properties', () => {
       bool: {
         filter: {
           bool: {
-            must: [
-              { term: { 0: 'PAYS DE LA LOIRE' } },
-              { term: { 0: 'BRETAGNE' } },
+            should: [
+              { terms: { 0: ['PAYS DE LA LOIRE', 'BRETAGNE'] } },
             ],
           },
         },

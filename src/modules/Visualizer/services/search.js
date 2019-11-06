@@ -93,8 +93,11 @@ export const buildQuery = ({
         if (typeof value.min === 'number' && typeof value.max === 'number') {
           const { min, max } = value;
           body.filter('range', property, { gte: +min, lte: +max });
+        } else if (Array.isArray(value)) {
+          body.filter('bool', q => q
+            .orFilter('terms', property, value));
         } else {
-          const values = Array.isArray(value) ? value : [value];
+          const values = [value];
           values.forEach(val => {
             if (type === 'match' && typeof val === 'string') {
               body.filter('bool', q => q
