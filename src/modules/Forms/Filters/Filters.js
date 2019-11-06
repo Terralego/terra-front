@@ -89,7 +89,7 @@ Filters.defaultProps = {
   onChange () {},
   filters: [],
   properties: {},
-  translate: translateMock,
+  translate: translateMock(),
 };
 
 export default Filters;
