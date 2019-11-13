@@ -32,7 +32,6 @@ export async function obtainToken (email, password) {
     body: { email, password },
   });
 
-  Api.token = token;
   global.localStorage.setItem(TOKEN_KEY, token);
 
   return token;
@@ -40,6 +39,10 @@ export async function obtainToken (email, password) {
 
 export function getToken () {
   return global.localStorage.getItem(TOKEN_KEY);
+}
+
+export function invalidToken () {
+  global.localStorage.removeItem(TOKEN_KEY);
 }
 
 export async function refreshToken () {
@@ -52,21 +55,14 @@ export async function refreshToken () {
       method: POST,
       body: { token: currentToken },
     });
-    Api.token = token;
+
     global.localStorage.setItem(TOKEN_KEY, token);
     return token;
   } catch (e) {
-    delete Api.token;
+    invalidToken();
     throw e;
   }
 }
-
-export function invalidToken () {
-  global.localStorage.removeItem(TOKEN_KEY);
-  delete Api.token;
-}
-
-Api.token = global.localStorage.getItem(TOKEN_KEY);
 
 Api.on(EVENT_FAILURE, response => {
   if (response.status === 401) {
