@@ -17,6 +17,30 @@ export function parseToken (token) {
   }
 }
 
+/**
+ * Return wether given JWT token is still valid
+ */
+export const checkToken = token => {
+  if (!token) {
+    return null;
+  }
+
+  try {
+    const { exp } = parseToken(token);
+
+    const hasExpired = Date.now() >= (exp * 1000);
+    if (!exp || hasExpired) {
+      console.info('Stored token has expired.'); // eslint-disable-line no-console
+      return false;
+    }
+
+    return true;
+  } catch (e) {
+    console.info('Unable to parse stored token.'); // eslint-disable-line no-console
+    return false;
+  }
+};
+
 export async function createToken (properties) {
   log('create auth token start');
   return Api.request(ENDPOINT_CREATE_TOKEN, {
@@ -37,9 +61,13 @@ export async function obtainToken (email, password) {
   return token;
 }
 
-export function getToken () {
-  return global.localStorage.getItem(TOKEN_KEY);
-}
+export const getToken = () => {
+  const storedToken = global.localStorage.getItem(TOKEN_KEY);
+
+  return checkToken(storedToken)
+    ? storedToken
+    : undefined;
+};
 
 export function invalidToken () {
   global.localStorage.removeItem(TOKEN_KEY);
@@ -47,9 +75,10 @@ export function invalidToken () {
 
 export async function refreshToken () {
   const currentToken = getToken();
-  if (currentToken === null) {
+  if (!currentToken) {
     return null;
   }
+
   try {
     const { token } = await Api.request(ENDPOINT_REFRESH_TOKEN, {
       method: POST,
@@ -70,4 +99,4 @@ Api.on(EVENT_FAILURE, response => {
   }
 });
 
-export default { createToken, obtainToken, getToken, refreshToken, invalidToken, parseToken };
+export default { createToken, checkToken, obtainToken, getToken, refreshToken, invalidToken, parseToken };
