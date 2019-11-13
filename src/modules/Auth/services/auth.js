@@ -69,9 +69,9 @@ export const getToken = () => {
     : undefined;
 };
 
-export function invalidToken () {
-  global.localStorage.removeItem(TOKEN_KEY);
-}
+export const clearToken = () => global.localStorage.removeItem(TOKEN_KEY);
+
+export const invalidToken = clearToken; // Legacy
 
 export async function refreshToken () {
   const currentToken = getToken();
@@ -88,15 +88,15 @@ export async function refreshToken () {
     global.localStorage.setItem(TOKEN_KEY, token);
     return token;
   } catch (e) {
-    invalidToken();
+    clearToken();
     throw e;
   }
 }
 
 Api.on(EVENT_FAILURE, response => {
   if (response.status === 401) {
-    invalidToken();
+    clearToken();
   }
 });
 
-export default { createToken, checkToken, obtainToken, getToken, refreshToken, invalidToken, parseToken };
+export default { createToken, checkToken, obtainToken, getToken, refreshToken, clearToken, parseToken };

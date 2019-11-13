@@ -5,7 +5,7 @@ import {
   obtainToken,
   parseToken,
   refreshToken,
-  invalidToken,
+  clearToken,
   createToken,
 } from '../../services/auth';
 import context from '../../services/context';
@@ -45,7 +45,7 @@ export class AuthProvider extends React.Component {
   }
 
   logoutAction = () => {
-    invalidToken();
+    clearToken();
     this.setState({ authenticated: false, user: null });
   }
 
