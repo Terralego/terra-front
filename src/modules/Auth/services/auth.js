@@ -6,6 +6,17 @@ const ENDPOINT_OBTAIN_TOKEN = 'auth/obtain-token/';
 const ENDPOINT_REFRESH_TOKEN = 'auth/refresh-token/';
 const ENDPOINT_CREATE_TOKEN = 'accounts/register/'; // => auth/create-token/
 
+export function parseToken (token) {
+  const [, payload = ''] = token.split('.');
+  const base64 = payload.replace('-', '+').replace('_', '/');
+
+  try {
+    return JSON.parse(atob(base64));
+  } catch (e) {
+    return {};
+  }
+}
+
 export async function createToken (properties) {
   log('create auth token start');
   return Api.request(ENDPOINT_CREATE_TOKEN, {
@@ -53,17 +64,6 @@ export async function refreshToken () {
 export function invalidToken () {
   global.localStorage.removeItem(TOKEN_KEY);
   delete Api.token;
-}
-
-export function parseToken (token) {
-  const [, payload = ''] = token.split('.');
-  const base64 = payload.replace('-', '+').replace('_', '/');
-
-  try {
-    return JSON.parse(atob(base64));
-  } catch (e) {
-    return {};
-  }
 }
 
 Api.token = global.localStorage.getItem(TOKEN_KEY);
