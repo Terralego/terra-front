@@ -15,10 +15,23 @@ export const DEFAULT_HEADERS = {
   'Content-Type': 'application/json',
 };
 
+export const buildHeaders = (headers, body) => {
+  const newHeaders = { ...headers };
+  const token = global.localStorage.getItem('tf:auth:token');
+
+  if (token) {
+    newHeaders.Authorization = `JWT ${token}`;
+  }
+
+  if (body instanceof FormData) {
+    delete newHeaders['Content-Type'];
+  }
+
+  return newHeaders;
+};
+
 export class Api {
   host = '/';
-
-  token = '';
 
   listeners = [];
 
@@ -29,7 +42,7 @@ export class Api {
 
     const response = await fetch(url, {
       method,
-      headers: this.buildHeaders(headers, body),
+      headers: buildHeaders(headers, body),
       body: body instanceof FormData ? body : JSON.stringify(body),
     });
 
@@ -42,17 +55,6 @@ export class Api {
 
   buildUrl ({ endpoint, querystring }) {
     return `${this.host}/${endpoint.replace(/\/+/g, '/')}${querystring ? `?${qs.stringify(querystring)}` : ''}`;
-  }
-
-  buildHeaders (headers, body) {
-    const newHeaders = { ...headers };
-    if (this.token) {
-      newHeaders.Authorization = `JWT ${this.token}`;
-    }
-    if (body instanceof FormData) {
-      delete newHeaders['Content-Type'];
-    }
-    return newHeaders;
   }
 
   async handleError (response) {
