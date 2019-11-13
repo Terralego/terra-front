@@ -1,5 +1,5 @@
 import Api from '../../Api';
-import { obtainToken, refreshToken, getToken, invalidToken, parseToken, createToken } from './auth';
+import { obtainToken, refreshToken, getToken, clearToken, parseToken, createToken } from './auth';
 
 const MOCKED_TOKEN = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyIjp7ImlkIjo0Mn0sImV4cCI6MTUxNjIzOTAyMn0.mPABaxD6A5yFiIFWjNDFFEhtDsrtDPVsDKHCW6ljCNs';
 
@@ -73,7 +73,7 @@ it('should get token', () => {
 
 it('should invalid token', () => {
   global.localStorage.setItem('tf:auth:token', 'storedToken');
-  invalidToken();
+  clearToken();
   expect(global.localStorage.getItem('tf:auth:token')).toBe(null);
   expect(Api.token).not.toBeDefined();
 });

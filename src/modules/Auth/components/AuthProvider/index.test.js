@@ -15,7 +15,7 @@ jest.mock('../../services/auth', () => ({
     user: { id: 42 },
     exp: 1516239022,
   })),
-  invalidToken: jest.fn(),
+  clearToken: jest.fn(),
 }));
 
 it('should get props from consumer', () => {
