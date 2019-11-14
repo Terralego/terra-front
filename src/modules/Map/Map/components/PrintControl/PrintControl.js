@@ -70,9 +70,9 @@ export class PrintControl extends AbstractMapControl {
   handleInteraction = nextOpenedState => {
     const { onToggle } = this.props;
     onToggle(nextOpenedState);
-    this.setState({
+    setTimeout(() => this.setState({
       isOpen: nextOpenedState,
-    }, this.setClasses);
+    }, this.setClasses), 500);
   }
 
   handleDisposition = ({ target: { value: orientation } }) =>
@@ -130,27 +130,27 @@ export class PrintControl extends AbstractMapControl {
     const { isOpen } = this.state;
 
     return (
-      <Popover
-        className="popoverPos"
-        position={PopoverPosition.AUTO_START}
-        interactionKind={PopoverInteractionKind.CLICK_TARGET_ONLY}
-        onInteraction={this.handleInteraction}
-        isOpen={isOpen}
-        ref={this.popoverRef}
-        content={this.renderContent()}
+      <Tooltip
+        content={translate('terralego.map.print_control.button_label')}
       >
-        <Tooltip
-          content={translate('terralego.map.print_control.button_label')}
+        <button
+          className="mapboxgl-ctrl-icon"
+          type="button"
+          aria-label={translate('terralego.map.print_control.button_label')}
         >
-          <button
-            className="mapboxgl-ctrl-icon"
-            type="button"
-            aria-label={translate('terralego.map.print_control.button_label')}
+          <Popover
+            className="popoverPos"
+            position={PopoverPosition.AUTO_START}
+            interactionKind={PopoverInteractionKind.CLICK_TARGET_ONLY}
+            onInteraction={this.handleInteraction}
+            isOpen={isOpen}
+            ref={this.popoverRef}
+            content={this.renderContent()}
           >
             <Icon icon="print" />
-          </button>
-        </Tooltip>
-      </Popover>
+          </Popover>
+        </button>
+      </Tooltip>
     );
   }
 }
