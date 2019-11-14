@@ -25,20 +25,15 @@ export const checkToken = token => {
     return null;
   }
 
-  try {
-    const { exp } = parseToken(token);
+  const { exp } = parseToken(token);
 
-    const hasExpired = Date.now() >= (exp * 1000);
-    if (!exp || hasExpired) {
-      console.info('Stored token has expired.'); // eslint-disable-line no-console
-      return false;
-    }
-
-    return true;
-  } catch (e) {
-    console.info('Unable to parse stored token.'); // eslint-disable-line no-console
+  const hasExpired = Date.now() >= (exp * 1000);
+  if (!exp || hasExpired) {
+    console.info('Stored token has expired.'); // eslint-disable-line no-console
     return false;
   }
+
+  return true;
 };
 
 export async function createToken (properties) {
@@ -79,18 +74,13 @@ export async function refreshToken () {
     return null;
   }
 
-  try {
-    const { token } = await Api.request(ENDPOINT_REFRESH_TOKEN, {
-      method: POST,
-      body: { token: currentToken },
-    });
+  const { token } = await Api.request(ENDPOINT_REFRESH_TOKEN, {
+    method: POST,
+    body: { token: currentToken },
+  });
 
-    global.localStorage.setItem(TOKEN_KEY, token);
-    return token;
-  } catch (e) {
-    clearToken();
-    throw e;
-  }
+  global.localStorage.setItem(TOKEN_KEY, token);
+  return token;
 }
 
 Api.on(EVENT_FAILURE, response => {
@@ -99,4 +89,12 @@ Api.on(EVENT_FAILURE, response => {
   }
 });
 
-export default { createToken, checkToken, obtainToken, getToken, refreshToken, clearToken, parseToken };
+export default {
+  checkToken,
+  clearToken,
+  createToken,
+  getToken,
+  obtainToken,
+  parseToken,
+  refreshToken,
+};

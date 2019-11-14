@@ -5,30 +5,41 @@ import { obtainToken, refreshToken, getToken, clearToken, parseToken, createToke
 
 export const MOCKED_PAYLOAD = { exp: 1516239022, user: { id: 42 } };
 export const MOCKED_TOKEN = `xxx.${b64u(JSON.stringify({ ...MOCKED_PAYLOAD }))}.xxx`;
-export const IMPERISHABLE_TOKEN = `xxx.${b64u(JSON.stringify({ ...MOCKED_PAYLOAD, exp: 99999999999 }))}.xxx`;
-export const EXPIRED_TOKEN = `xxx.${b64u(JSON.stringify({ ...MOCKED_PAYLOAD, exp: 0 }))}.xxx`;
+export const IMPERISHABLE_TOKEN = `imp.${b64u(JSON.stringify({ ...MOCKED_PAYLOAD, exp: 99999999999 }))}.xxx`;
+export const EXPIRED_TOKEN = `exp.${b64u(JSON.stringify({ ...MOCKED_PAYLOAD, exp: 0 }))}.xxx`;
 
-jest.mock('../../Api', () => ({
-  EVENT_FAILURE: 'failure',
-  on: jest.fn((event, fn) => {
-    fn({ status: 401 });
-    fn({ status: 200 });
-  }),
-  request: jest.fn((endpoint, { body: { token } }) => {
-    if (endpoint === 'auth/obtain-token/') {
-      return { token: 'newToken' };
-    }
+jest.mock('../../Api', () => {
+  // eslint-disable-next-line global-require
+  const b64uM = require('base64url');
 
-    if (endpoint === 'auth/refresh-token/') {
-      if (token === 'invalid') {
-        throw new Error('Invalid token');
+  return {
+    EVENT_FAILURE: 'failure',
+    on: jest.fn((event, fn) => {
+      fn({ status: 401 });
+      fn({ status: 200 });
+    }),
+    request: jest.fn((endpoint, { body: { token } }) => {
+      if (endpoint === 'auth/obtain-token/') {
+        return { token: 'newToken' };
       }
-      return { token: 'refreshedToken' };
-    }
-    // throw new Error('invalid endpoint' + endpoint);
-  }),
-  POST: 'POST',
-}));
+
+      if (endpoint === 'auth/refresh-token/') {
+        const [, b64Payload] = token.split('.');
+        const payload = JSON.parse(b64uM.decode(b64Payload));
+        const isValid = (payload.exp * 1000) >= Date.now();
+
+        if (token === 'invalid' || !isValid) {
+          throw new Error('Invalid token');
+        }
+
+        return { token: 'refreshedToken' };
+      }
+
+      return {};
+    }),
+    POST: 'POST',
+  };
+});
 
 it('should add a listener to Api', () => {
   expect(Api.on).toHaveBeenCalled();
