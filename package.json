@@ -13,6 +13,7 @@
     "@mapbox/mapbox-gl-sync-move": "^0.2.0",
     "@turf/bbox": "^6.0.1",
     "@turf/centroid": "^6.0.2",
+    "base64url": "^3.0.1",
     "bodybuilder": "^2.2.17",
     "classnames": "^2.2.6",
     "debug": "^4.1.0",
