@@ -1,4 +1,5 @@
-import { Api, EVENT_FAILURE, EVENT_SUCCESS } from './api';
+import { Api, EVENT_FAILURE, EVENT_SUCCESS, buildHeaders } from './api';
+import { IMPERISHABLE_TOKEN } from '../../Auth/services/auth.test';
 
 global.fetch = jest.fn(path => {
   if (path === '/wrongpath') {
@@ -82,14 +83,19 @@ it('should off event', () => {
   expect(api.listeners.length).toBe(0);
 });
 
-it('should build headers', () => {
-  const api = new Api();
-  const headers = api.buildHeaders({ foo: 'bar' });
-  expect(headers).toEqual({ foo: 'bar' });
+describe('should build headers', () => {
+  beforeEach(() => global.localStorage.clear());
 
-  api.token = 'token';
-  const headersWithToken = api.buildHeaders({ foo: 'bar' });
-  expect(headersWithToken).toEqual({ foo: 'bar', Authorization: 'JWT token' });
+  it('with no token', () => {
+    const headers = buildHeaders({ foo: 'bar' });
+    expect(headers).toEqual({ foo: 'bar' });
+  });
+
+  it('with token', () => {
+    global.localStorage.setItem('tf:auth:token', IMPERISHABLE_TOKEN);
+    const headersWithToken = buildHeaders({ foo: 'bar' });
+    expect(headersWithToken).toEqual({ foo: 'bar', Authorization: `JWT ${IMPERISHABLE_TOKEN}` });
+  });
 });
 
 it('should fire and catch an event', () => {

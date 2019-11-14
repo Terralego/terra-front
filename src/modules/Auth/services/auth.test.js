@@ -1,17 +1,18 @@
+import b64u from 'base64url';
+
 import Api from '../../Api';
 import { obtainToken, refreshToken, getToken, clearToken, parseToken, createToken } from './auth';
 
-const MOCKED_TOKEN = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyIjp7ImlkIjo0Mn0sImV4cCI6MTUxNjIzOTAyMn0.mPABaxD6A5yFiIFWjNDFFEhtDsrtDPVsDKHCW6ljCNs';
+export const MOCKED_PAYLOAD = { exp: 1516239022, user: { id: 42 } };
+export const MOCKED_TOKEN = `xxx.${b64u(JSON.stringify({ ...MOCKED_PAYLOAD }))}.xxx`;
+export const IMPERISHABLE_TOKEN = `xxx.${b64u(JSON.stringify({ ...MOCKED_PAYLOAD, exp: 99999999999 }))}.xxx`;
+export const EXPIRED_TOKEN = `xxx.${b64u(JSON.stringify({ ...MOCKED_PAYLOAD, exp: 0 }))}.xxx`;
 
 jest.mock('../../Api', () => ({
   EVENT_FAILURE: 'failure',
   on: jest.fn((event, fn) => {
-    fn({
-      status: 401,
-    });
-    fn({
-      status: 200,
-    });
+    fn({ status: 401 });
+    fn({ status: 200 });
   }),
   request: jest.fn((endpoint, { body: { token } }) => {
     if (endpoint === 'auth/obtain-token/') {
@@ -24,17 +25,14 @@ jest.mock('../../Api', () => ({
       }
       return { token: 'refreshedToken' };
     }
-    throw new Error('invalid endpoint');
+    // throw new Error('invalid endpoint' + endpoint);
   }),
   POST: 'POST',
 }));
 
-Date.now = () => 1539956249578;
-
 it('should add a listener to Api', () => {
   expect(Api.on).toHaveBeenCalled();
 });
-
 
 it('should not refresh token', async done => {
   const token = await refreshToken();
@@ -50,40 +48,39 @@ it('should request a token', async done => {
   });
   expect(token).toBe('newToken');
   expect(global.localStorage.getItem('tf:auth:token')).toBe('newToken');
-  expect(Api.token).toBe('newToken');
   done();
 });
 
 it('should refresh token', async done => {
-  global.localStorage.setItem('tf:auth:token', 'someToken');
+  global.localStorage.setItem('tf:auth:token', IMPERISHABLE_TOKEN);
+
   const token = await refreshToken();
   expect(Api.request).toHaveBeenCalledWith('auth/refresh-token/', {
     method: 'POST',
-    body: { token: 'someToken' },
+    body: { token: IMPERISHABLE_TOKEN },
   });
   expect(token).toBe('refreshedToken');
+  global.localStorage.clear();
   done();
 });
 
 it('should get token', () => {
-  global.localStorage.setItem('tf:auth:token', 'storedToken');
+  global.localStorage.setItem('tf:auth:token', IMPERISHABLE_TOKEN);
   const token = getToken();
-  expect(token).toBe('storedToken');
+  expect(token).toBe(IMPERISHABLE_TOKEN);
+  global.localStorage.clear();
 });
 
-it('should invalid token', () => {
-  global.localStorage.setItem('tf:auth:token', 'storedToken');
+it('should invalidate token', () => {
+  global.localStorage.setItem('tf:auth:token', IMPERISHABLE_TOKEN);
   clearToken();
-  expect(global.localStorage.getItem('tf:auth:token')).toBe(null);
-  expect(Api.token).not.toBeDefined();
+  expect(getToken()).toBeFalsy();
+  global.localStorage.clear();
 });
 
 it('should parse token', () => {
   const data = parseToken(MOCKED_TOKEN);
-  expect(data).toEqual({
-    user: { id: 42 },
-    exp: 1516239022,
-  });
+  expect(data).toEqual(MOCKED_PAYLOAD);
 });
 
 it('should parse an invalid token', () => {
@@ -100,15 +97,10 @@ it('should create a token', () => {
   });
 });
 
-it('should delete token', async () => {
+it('should delete invalid token on refresh', async done => {
   global.localStorage.setItem('tf:auth:token', 'invalid');
-  Api.token = 'invalid';
-  let expected;
-  try {
-    await refreshToken();
-  } catch (e) {
-    expected = e;
-  }
-  expect(Api.token).not.toBeDefined();
-  expect(expected).toBeDefined();
+  await refreshToken();
+  expect(getToken()).not.toBeDefined();
+  global.localStorage.clear();
+  done();
 });
