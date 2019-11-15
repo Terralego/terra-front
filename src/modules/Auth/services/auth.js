@@ -1,5 +1,6 @@
 import Api, { POST, EVENT_FAILURE } from '../../Api';
 import log from './log';
+import { checkTokenValidity } from '../../../utils/jwt';
 
 const TOKEN_KEY = 'tf:auth:token';
 const ENDPOINT_OBTAIN_TOKEN = 'auth/obtain-token/';
@@ -29,7 +30,7 @@ export async function obtainToken (email, password) {
 export const getToken = () => {
   const storedToken = global.localStorage.getItem(TOKEN_KEY);
 
-  return checkToken(storedToken)
+  return checkTokenValidity(storedToken)
     ? storedToken
     : undefined;
 };
