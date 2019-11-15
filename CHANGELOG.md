@@ -1,4 +1,13 @@
 
+1.10.0-0 / 2019-11-15
+=====================
+
+  * Remove useless try/catch blocks
+  * Add dependency to base64url
+  * Rename Auth function invalidToken to clearToken
+  * Invalidate expired or unparsable token when reading it
+  * Support light theme for LayersTree
+
 1.9.0 / 2019-11-06
 ==================
 
