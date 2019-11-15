@@ -89,6 +89,16 @@ Api.on(EVENT_FAILURE, response => {
   }
 });
 
+/**
+ * Drop invalid token on app load
+ */
+(() => {
+  const token = getToken();
+  if (token && !checkToken(token)) {
+    clearToken();
+  }
+})();
+
 export default {
   checkToken,
   clearToken,
