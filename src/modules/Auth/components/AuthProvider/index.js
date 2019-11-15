@@ -3,12 +3,12 @@ import React from 'react';
 import {
   getToken,
   obtainToken,
-  parseToken,
   refreshToken,
   clearToken,
   createToken,
 } from '../../services/auth';
 import context from '../../services/context';
+import { getTokenPayload } from '../../../../utils/jwt';
 
 const { Provider } = context;
 
@@ -52,7 +52,7 @@ export class AuthProvider extends React.Component {
   // "Privates"
 
   extractTokenData (token) {
-    const data = parseToken(token);
+    const data = getTokenPayload(token);
     this.delayAutoRefresh(data);
     return data;
   }
