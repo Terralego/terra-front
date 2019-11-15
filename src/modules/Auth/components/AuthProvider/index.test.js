@@ -11,10 +11,6 @@ const MOCKED_TOKEN = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyIjp7ImlkIjo0M
 jest.mock('../../services/auth', () => ({
   getToken: jest.fn(() => global.localStorage.getItem('tf:auth:token')),
   obtainToken: jest.fn(() => MOCKED_TOKEN),
-  parseToken: jest.fn(() => ({
-    user: { id: 42 },
-    exp: 1516239022,
-  })),
   clearToken: jest.fn(),
 }));
 
