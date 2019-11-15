@@ -6,36 +6,6 @@ const ENDPOINT_OBTAIN_TOKEN = 'auth/obtain-token/';
 const ENDPOINT_REFRESH_TOKEN = 'auth/refresh-token/';
 const ENDPOINT_CREATE_TOKEN = 'accounts/register/'; // => auth/create-token/
 
-export function parseToken (token) {
-  const [, payload = ''] = token.split('.');
-  const base64 = payload.replace('-', '+').replace('_', '/');
-
-  try {
-    return JSON.parse(atob(base64));
-  } catch (e) {
-    return {};
-  }
-}
-
-/**
- * Return wether given JWT token is still valid
- */
-export const checkToken = token => {
-  if (!token) {
-    return null;
-  }
-
-  const { exp } = parseToken(token);
-
-  const hasExpired = Date.now() >= (exp * 1000);
-  if (!exp || hasExpired) {
-    console.info('Stored token has expired.'); // eslint-disable-line no-console
-    return false;
-  }
-
-  return true;
-};
-
 export async function createToken (properties) {
   log('create auth token start');
   return Api.request(ENDPOINT_CREATE_TOKEN, {
@@ -90,11 +60,9 @@ Api.on(EVENT_FAILURE, response => {
 });
 
 export default {
-  checkToken,
   clearToken,
   createToken,
   getToken,
   obtainToken,
-  parseToken,
   refreshToken,
 };
