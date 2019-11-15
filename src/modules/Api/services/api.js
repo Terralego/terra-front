@@ -2,6 +2,8 @@ import qs from 'query-string';
 
 import log from './log';
 
+import { checkTokenValidity } from '../../../utils/jwt';
+
 export const GET = 'GET';
 export const POST = 'POST';
 export const PUT = 'PUT';
@@ -19,7 +21,7 @@ export const buildHeaders = (headers, body) => {
   const newHeaders = { ...headers };
   const token = global.localStorage.getItem('tf:auth:token');
 
-  if (token) {
+  if (token && checkTokenValidity(token)) {
     newHeaders.Authorization = `JWT ${token}`;
   }
 
