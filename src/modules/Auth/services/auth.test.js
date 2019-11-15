@@ -1,7 +1,8 @@
 import b64u from 'base64url';
 
 import Api from '../../Api';
-import { obtainToken, refreshToken, getToken, clearToken, parseToken, createToken } from './auth';
+import { obtainToken, refreshToken, getToken, clearToken, createToken } from './auth';
+import { getTokenPayload } from '../../../utils/jwt';
 
 export const MOCKED_PAYLOAD = { exp: 1516239022, user: { id: 42 } };
 export const MOCKED_TOKEN = `xxx.${b64u(JSON.stringify({ ...MOCKED_PAYLOAD }))}.xxx`;
@@ -90,12 +91,12 @@ it('should invalidate token', () => {
 });
 
 it('should parse token', () => {
-  const data = parseToken(MOCKED_TOKEN);
+  const data = getTokenPayload(MOCKED_TOKEN);
   expect(data).toEqual(MOCKED_PAYLOAD);
 });
 
 it('should parse an invalid token', () => {
-  const data = parseToken('foo');
+  const data = getTokenPayload('foo');
   expect(data).toEqual({});
 });
 
