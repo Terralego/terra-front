@@ -1,4 +1,15 @@
 
+1.10.0 / 2019-11-18
+===================
+
+  * Use new generic getTokenPayload in AuthProvider tests
+  * Use new generic getTokenPayload in Auth tests
+  * Use new generic checkTokenValidity function in Auth module service
+  * Drop old parseToken & checkToken functions
+  * Do not embed JWT Authorization header if token is invalid
+  * Create helper for JWT validation & parsing
+  * Revert "Drop invalid token on app load"
+
 1.10.0-1 / 2019-11-15
 =====================
 
