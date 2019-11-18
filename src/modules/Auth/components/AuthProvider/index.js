@@ -73,7 +73,10 @@ export class AuthProvider extends React.Component {
       const token = await refreshToken();
       if (this.isUnmount) return;
       const { user } = this.extractTokenData(token);
-      this.setState({ authenticated: true, user });
+
+      if (user) {
+        this.setState({ authenticated: true, user });
+      }
     } catch (e) {
       if (this.isUnmount) return;
       this.setState({ authenticated: false, user: null });
