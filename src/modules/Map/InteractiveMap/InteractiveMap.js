@@ -351,6 +351,24 @@ export class InteractiveMap extends React.Component {
     this.highlight();
   };
 
+
+  /**
+   *
+   * @param {string} layerId ID of the layer containing the feature
+   * @param {feature} the feature to display tooltip on
+   * @param properties tooltip container properties
+   * @param {Object} lngLat the coordinates where to display the tooltip
+   * @param type
+   * @param template
+   * @param content
+   * @param {boolean} unique Tooltip should be unique in screen
+   * @param fixed
+   * @param fetchProperties
+   * @param clusteredFeatures All the features in the cluster
+   * @param element
+   * @param popupOptions mapbox popup options
+   *   (className, maxWidth, etc) - see Mapbox doc for full options list
+   */
   displayTooltip = ({
     layerId,
     feature,
@@ -360,11 +378,10 @@ export class InteractiveMap extends React.Component {
     content,
     unique,
     fixed,
-    anchor,
     fetchProperties = {},
     clusteredFeatures,
     element,
-    className,
+    ...popupOptions
   }) => {
     const { history } = this.props;
     const { map, isPointerOverMap } = this;
@@ -396,10 +413,7 @@ export class InteractiveMap extends React.Component {
       this.popups.forEach(({ popup }) => popup.remove());
       this.popups.clear();
     }
-    const popup = new mapBoxGl.Popup({
-      className,
-      anchor,
-    });
+    const popup = new mapBoxGl.Popup(popupOptions);
     popup.once('close', () => this.popups.delete(layerId));
     this.popups.set(layerId, { popup, content: container.innerHTML, type });
     popup.setLngLat(lnglat);
