@@ -27,15 +27,17 @@ export async function obtainToken (email, password) {
   return token;
 }
 
+export const clearToken = () => global.localStorage.removeItem(TOKEN_KEY);
+
 export const getToken = () => {
   const storedToken = global.localStorage.getItem(TOKEN_KEY);
+  if (checkTokenValidity(storedToken)) {
+    return storedToken;
+  }
 
-  return checkTokenValidity(storedToken)
-    ? storedToken
-    : undefined;
+  clearToken(); // Drop token if invalid
+  return undefined;
 };
-
-export const clearToken = () => global.localStorage.removeItem(TOKEN_KEY);
 
 export const invalidToken = clearToken; // Legacy
 
