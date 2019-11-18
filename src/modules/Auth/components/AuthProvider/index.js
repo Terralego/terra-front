@@ -53,7 +53,9 @@ export class AuthProvider extends React.Component {
 
   extractTokenData (token) {
     const data = getTokenPayload(token);
-    this.delayAutoRefresh(data);
+    if (data && data.exp) {
+      this.delayAutoRefresh(data);
+    }
     return data;
   }
 
