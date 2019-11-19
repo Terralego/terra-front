@@ -362,7 +362,7 @@ export class InteractiveMap extends React.Component {
    * @param {string} event.type - The event type (e.g. 'click' or 'mouseover')
    * @param {boolean} unique - Tooltip should be unique in screen
    * @param {boolean} fixed - Tooltip should be anchored on feature centroid
-   * @param {Object} [element] - HTML element for the container of this tooltip. 
+   * @param {Object} [element] - HTML element for the container of this tooltip.
       Optional, if not set, an element will be created based on fetchProperties, template,
       content, and history.
    * @param {string} [template] - Nunjucks-style template, see <Template>
