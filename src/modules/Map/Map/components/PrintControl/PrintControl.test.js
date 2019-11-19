@@ -11,6 +11,7 @@ jest.mock('jspdf', () => ({
 }));
 jest.mock('html2canvas', () => jest.fn());
 jest.mock('./export', () => jest.fn());
+jest.useFakeTimers();
 
 it('should render', () => {
   const tree = renderer.create(<PrintControl />);
@@ -29,6 +30,10 @@ it('should open and set classes', () => {
   instance.setClasses = jest.fn();
   instance.setState = jest.fn((state, fn) => fn());
   instance.handleInteraction(true);
+  expect(instance.setState).not.toBeCalled();
+  jest.advanceTimersByTime(500);
+  expect(instance.setState).toBeCalled();
+  expect(instance.setState).toHaveBeenCalledTimes(1);
   expect(instance.setState).toHaveBeenCalledWith({ isOpen: true }, instance.setClasses);
   expect(instance.setClasses).toHaveBeenCalled();
   expect(onToggle).toHaveBeenCalledWith(true);
