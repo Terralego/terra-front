@@ -251,7 +251,7 @@ export const fetchPropertyRange = async (layer, { property }) => {
   });
   const { aggregations: { min: { value: min } = {}, max: { value: max } = {} } } = results;
 
-  return { min: min && Math.round(min), max: min && Math.round(max) };
+  return { min: min && Math.round(min), max: max && Math.round(max) };
 };
 
 /**
