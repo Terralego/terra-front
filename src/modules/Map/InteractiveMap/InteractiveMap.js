@@ -354,20 +354,26 @@ export class InteractiveMap extends React.Component {
 
   /**
    * Display tooltip for the given feature
+   *
    * @param {string} layerId - ID of the layer containing the feature
    * @param {feature} feature - The feature to display tooltip on
-   * @param {Object} properties - Tooltip container properties
-   * @param {Object} lngLat - The coordinates where to display the tooltip
-   * @param {string} type - Tooltip type
-   * @param {string} template - Tooltip template
-   * @param {string} content - Tooltip content
+   * @param {Object} event - The event displaying the tooltip
+   * @param {float[]} event.lngLat - The coordinates where the tooltip will be displayed
+   * @param {string} event.type - The event type (e.g. 'click' or 'mouseover')
    * @param {boolean} unique - Tooltip should be unique in screen
    * @param {boolean} fixed - Tooltip should be anchored on feature centroid
-   * @param {Object} fetchProperties - Tooltip fetch properties
+   * @param {Object} [element] - HTML element for the container of this tooltip. 
+      Optional, if not set, an element will be created based on fetchProperties, template,
+      content, and history.
+   * @param {string} [template] - Nunjucks-style template, see <Template>
+   * @param {string} [content] - Tooltip content if no template given
+   * @param {Object} [fetchProperties] - Tooltip template fetch properties
    * @param {Object} clusteredFeatures - All the features in the cluster
-   * @param {Object} element - Tooltip container
-   * @param {Object} popupOptions - mapbox popup options
+   * @param {Object} popupOptions - Mapbox popup options
    *   (className, maxWidth, etc) see Mapbox doc for full options list
+   *
+   * @see modules/Template
+   * @see ./components/Tooltip
    */
   displayTooltip = ({
     layerId,
