@@ -1,4 +1,10 @@
 
+1.11.0 / 2019-11-19
+===================
+
+  * Add popup options to displayTooltip function (#137)
+  * Fix print control tooltip gap
+
 1.10.1 / 2019-11-19
 ===================
 
