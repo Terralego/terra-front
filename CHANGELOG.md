@@ -1,4 +1,11 @@
 
+1.10.1 / 2019-11-19
+===================
+
+  * Avoid beeing identified when there's not auth token
+  * Avoid infinite loop by planning refresh only if exp time exists
+  * Drop token if invalid when getting it
+
 1.10.0 / 2019-11-18
 ===================
 
