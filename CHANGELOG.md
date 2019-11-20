@@ -1,4 +1,10 @@
 
+1.11.1 / 2019-11-20
+===================
+
+  * Fix MultiSelect values update
+  * Fix fetchPropertyRange method bad return condition
+
 1.11.0 / 2019-11-19
 ===================
 
