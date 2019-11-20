@@ -47,6 +47,13 @@ export class MultiSelect extends React.Component {
     this.updateItems();
   }
 
+  componentDidUpdate ({ values: prevValues }) {
+    const { values } = this.props;
+    if (prevValues !== values) {
+      this.updateItems();
+    }
+  }
+
   handleChange = item => {
     const { value, onChange } = this.props;
     const newValue = value.includes(item)
