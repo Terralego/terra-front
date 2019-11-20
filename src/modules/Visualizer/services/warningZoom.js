@@ -1,9 +1,7 @@
+import moize from 'moize';
 import { getRelatedLayers } from '../../Map/services/mapUtils';
 
-export function displayWarningAccordingToZoom (map, layer) {
-  if (!map) return {};
-
-  const currentZoom = map.getZoom();
+const getLayerZoom = moize((layer, map) => {
   const layers = layer.layers.reduce((prev, layerId) =>
     [
       ...prev,
@@ -18,7 +16,7 @@ export function displayWarningAccordingToZoom (map, layer) {
         // to the id
         : getRelatedLayers(map, layerId)),
     ], []);
-  const layerZoom = layers
+  return layers
     .reduce(({ minzoom: prevMinzoom, maxzoom: prevMaxzoom }, { id }) => {
       const { minzoom = 0, maxzoom = 24 } = map.getLayer(id) || {};
       return {
@@ -26,6 +24,13 @@ export function displayWarningAccordingToZoom (map, layer) {
         maxzoom: Math.max(maxzoom, prevMaxzoom),
       };
     }, { minzoom: 24, maxzoom: 0 });
+});
+
+export function displayWarningAccordingToZoom (map, layer) {
+  if (!map) return {};
+
+  const currentZoom = map.getZoom();
+  const layerZoom = getLayerZoom(layer, map);
   const isNotDisplayed = currentZoom < layerZoom.minzoom || currentZoom > layerZoom.maxzoom;
 
   return { display: isNotDisplayed, minZoomLayer: layerZoom.minzoom };

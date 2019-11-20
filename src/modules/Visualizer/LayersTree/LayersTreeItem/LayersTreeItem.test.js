@@ -47,6 +47,8 @@ jest.mock('@blueprintjs/datetime', () => ({
   },
 }));
 
+jest.mock('uuid/v4', () => () => 'uuid');
+
 jest.mock('./OptionsLayer', () => function OptionsLayer () {
   return <p>OptionsLayer</p>;
 });

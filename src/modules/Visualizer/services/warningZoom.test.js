@@ -40,16 +40,18 @@ it('should not display warning according to current zoom', () => {
     })),
     getStyle,
   };
-  const layer = { layers: ['foo'] };
-  expect(displayWarningAccordingToZoom(map, layer)).toEqual({ display: false, minZoomLayer: 14 });
+  const layer1 = { layers: ['foo'] };
+  expect(displayWarningAccordingToZoom(map, layer1)).toEqual({ display: false, minZoomLayer: 14 });
 
+  const layer2 = { layers: ['foo'] };
   map.getLayer = jest.fn(id => ({
     id,
   }));
-  expect(displayWarningAccordingToZoom(map, layer)).toEqual({ display: false, minZoomLayer: 0 });
+  expect(displayWarningAccordingToZoom(map, layer2)).toEqual({ display: false, minZoomLayer: 0 });
 
+  const layer3 = { layers: ['foo'] };
   map.getLayer = jest.fn(() => null);
-  expect(displayWarningAccordingToZoom(map, layer)).toEqual({ display: false, minZoomLayer: 0 });
+  expect(displayWarningAccordingToZoom(map, layer3)).toEqual({ display: false, minZoomLayer: 0 });
 });
 
 it('should displayWarningAccordingToZoom without map', () => {

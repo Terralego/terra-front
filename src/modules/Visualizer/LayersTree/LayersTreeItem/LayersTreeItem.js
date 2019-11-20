@@ -7,6 +7,7 @@ import {
   Elevation,
   Tag,
 } from '@blueprintjs/core';
+import uuid from 'uuid/v4';
 
 import OptionsLayer from './OptionsLayer';
 import LayersTreeItemFilters from './LayersTreeItemFilters';
@@ -45,6 +46,8 @@ export class LayersTreeItem extends React.Component {
     isFilterVisible: false,
     hasWidgetActive: false,
   }
+
+  uuid = `toggle-${uuid()}`;
 
   componentWillUnmount () {
     this.resetFilterPanelListener();
@@ -157,7 +160,6 @@ export class LayersTreeItem extends React.Component {
     const hasSomeOptionActive =
     isTableActive || isFilterVisible || isOptionsOpen || hasWidgetActive;
 
-    const htmlID = btoa(JSON.stringify(layer).replace(/\W/g, ''));
     const displayTableButton = fields && !!fields.length;
 
     return (
@@ -197,7 +199,7 @@ export class LayersTreeItem extends React.Component {
                   className={classnames({ 'warning-zoom': display && isActive })}
                   checked={!!isActive}
                   onChange={onActiveChange}
-                  id={`toggle-${htmlID}`}
+                  id={this.uuid}
                 />
               </WarningZoom>
               <Tooltip
@@ -205,7 +207,7 @@ export class LayersTreeItem extends React.Component {
                 hoverOpenDelay={2000}
                 className="layerstree-node-content__item-label__tooltip"
               >
-                <label className="layerstree-node-content__item-label__label" htmlFor={`toggle-${htmlID}`}>{label}</label>
+                <label className="layerstree-node-content__item-label__label" htmlFor={this.uuid}>{label}</label>
               </Tooltip>
               <div className="layerstree-node-content__item-label__total">
                 {isActive && totalResult && (
