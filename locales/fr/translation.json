@@ -49,9 +49,11 @@
           "empty_item": "Tous(tes)"
         },
         "multiselect": {
-          "input_placeholder": "Filtrer...",
+          "input_placeholder": "Rechercher...",
           "no_results": "Aucun résultat",
-          "select_placeholder": "Saisissez un terme de recherche"
+          "select_placeholder": "Saisissez un terme de recherche",
+          "select_placeholder_plural": "Saisissez au moins {{count}} caractères",
+          "too_many": "Trop de résultats, affinez votre recherche"
         },
         "range_from": "De",
         "range_to": "à",

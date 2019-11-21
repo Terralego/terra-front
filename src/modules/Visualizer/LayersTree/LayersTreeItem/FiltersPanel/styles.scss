@@ -96,6 +96,15 @@ $transitionSpeed: 0.15s;
       max-height: 18rem;
       overflow: auto;
       padding: 0;
+
+      strong {
+        text-decoration: underline;
+        font-weight: normal;
+      }
+      .bp3-disabled {
+        font-style: italic;
+        color: #f5f8fa !important;
+      }
     }
   }
 
