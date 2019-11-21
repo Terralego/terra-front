@@ -90,11 +90,13 @@ $transitionSpeed: 0.15s;
     margin: 1rem 0;
   }
 
-  .bp3-select-popover .bp3-menu {
-    max-width: 25rem;
-    max-height: 18rem;
-    overflow: auto;
-    padding: 0;
+  .bp3-select-popover, .bp3-multi-select-popover {
+    .bp3-menu {
+      max-width: 25rem;
+      max-height: 18rem;
+      overflow: auto;
+      padding: 0;
+    }
   }
 
   .bp3-control.bp3-checkbox {
