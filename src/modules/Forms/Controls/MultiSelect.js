@@ -29,7 +29,7 @@ const highlightItem = (item, query, regExp) =>
     // Use a reducer for a JSX join
     [...accu, accu.length % 2 ? (
       // Then get the case-friendly query part of item
-      <strong>{elem}</strong>
+      <strong key={accu.length}>{elem}</strong>
     ) : elem], []);
 
 export class MultiSelect extends React.Component {
@@ -154,7 +154,8 @@ export class MultiSelect extends React.Component {
               let message = null;
 
               // If we have no query or a query too short and too many results
-              if (listProps.query.length < minCharacters && items.length > 250) {
+              if ((!listProps.query || listProps.query.length < minCharacters)
+                && items.length > 250) {
                 message = translate('terralego.forms.controls.multiselect.select_placeholder', { count: minCharacters });
               } else if (items.length > 250) {
                 // If we have a query but too many results

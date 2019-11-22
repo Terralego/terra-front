@@ -20,6 +20,9 @@ jest.mock('@blueprintjs/core', () => ({
   Button ({ children }) {
     return <div className="Button"> {children} </div>;
   },
+  Menu: function BPMenu ({ children }) {
+    return <div className="Menu"> {children} </div>;
+  },
   MenuItem: function BPMenuItem ({ children }) {
     return <div className="MenuItem"> {children} </div>;
   },
@@ -49,14 +52,13 @@ it('should render loading correctly', () => {
   expect(tree.toJSON()).toMatchSnapshot();
 });
 
-it('should render filtered items', () => {
+it('should render with values', () => {
   const tree = renderer.create((
     <MultiSelect
       label="Bouh"
       values={['foo', 'bar']}
     />
   ));
-  tree.getInstance().handleQueryChange('foo');
   expect(tree.toJSON()).toMatchSnapshot();
 });
 
@@ -81,13 +83,6 @@ it('should handle change', () => {
   instance.props.value = ['foo'];
   instance.handleChange(instance.props.value[0]);
   expect(onChange).toHaveBeenCalledWith([]);
-});
-
-it('should handle query change', () => {
-  const instance = new MultiSelect({});
-  instance.setState = jest.fn();
-  instance.handleQueryChange('foo');
-  expect(instance.setState).toHaveBeenCalledWith({ query: 'foo' });
 });
 
 it('should handle clear', () => {
@@ -130,13 +125,53 @@ it('should render item', () => {
   }
 });
 
-it('should render default message', () => {
+it('should render item with highlighted support', () => {
+  const wrapper = shallow(<MultiSelect values={['foobar', 'barbaz']} />);
+  {
+    const { itemRenderer } = wrapper.find('BPMultiSelect').props();
+    const itemRendered = itemRenderer('foobarbaz', { query: 'bar', modifiers: { matchesPredicate: true } });
+    expect(itemRendered.props.text).toEqual(<span>foo<strong key={1}>bar</strong>baz</span>);
+  }
+  wrapper.setProps({ highlightSearch: false });
+  {
+    const { itemRenderer } = wrapper.find('BPMultiSelect').props();
+    const itemRendered = itemRenderer('foobar', { query: 'foo', modifiers: { matchesPredicate: true } });
+    expect(itemRendered.props.text).toBe('foobar');
+  }
+});
+
+it('should render correctly default message', () => {
+  const renderItem = jest.fn();
   const wrapper = shallow(<MultiSelect values={['foo', 'bar']} />);
-  expect(wrapper.find('BPMultiSelect').props().noResults.props.text).toBe('No results.');
+  expect(shallow(wrapper.find('BPMultiSelect').props().itemListRenderer({
+    filteredItems: [],
+    query: 'something',
+  })).find('BPMenuItem').props().text).toBe('No results.');
+  expect(shallow(wrapper.find('BPMultiSelect').props().itemListRenderer({
+    filteredItems: Array(251).fill('foo'),
+    query: 'fo',
+  })).find('BPMenuItem').props().text).toBe('Too many results, please refine your query...');
+  expect(shallow(wrapper.find('BPMultiSelect').props().itemListRenderer({
+    filteredItems: Array(251).fill('foo'),
+    query: '',
+  })).find('BPMenuItem').props().text).toBe('Enter a query first');
+  wrapper.find('BPMultiSelect').props().itemListRenderer({
+    filteredItems: ['foo', 'bar'],
+    query: '',
+    renderItem,
+  });
+  expect(renderItem).toHaveBeenCalledTimes(2);
 });
 
 it('should prevent submit event in parent', () => {
   const wrapper = shallow(<MultiSelect values={['foo', 'bar']} isSubmissionPrevented={false} />);
   const div = wrapper.find('.control-container');
   expect(div.props().onKeyPress).toBe(null);
+});
+
+it('should not filter if minCharacters not matched', () => {
+  const values = ['foo', 'bar'];
+  const wrapper = shallow(<MultiSelect values={values} minCharacters={2} />);
+  expect(wrapper.find('BPMultiSelect').props().itemListPredicate('f', values)).toBe(values);
+  expect(wrapper.find('BPMultiSelect').props().itemListPredicate('fo', values)).toEqual(['foo']);
 });
