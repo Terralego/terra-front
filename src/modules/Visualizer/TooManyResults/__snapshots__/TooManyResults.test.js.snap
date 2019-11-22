@@ -4,6 +4,6 @@ exports[`should render 1`] = `
 <div
   className="bp3-callout too-many-results"
 >
-  terralego.visualizer.too_many_results_count
+  Your query contains too many results (101), please change your request or zoom on a closer zone.
 </div>
 `;
