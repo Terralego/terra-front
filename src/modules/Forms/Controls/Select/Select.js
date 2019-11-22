@@ -50,7 +50,6 @@ export class Select extends React.Component {
 
   state = {
     values: [],
-    query: '',
   };
 
   uuid = `select-${uuid()}`;
@@ -58,10 +57,6 @@ export class Select extends React.Component {
   handleChange = ({ value }) => {
     const { onChange } = this.props;
     onChange(value);
-  };
-
-  handleQueryChange = query => {
-    this.setState({ query });
   };
 
   render () {
@@ -78,12 +73,8 @@ export class Select extends React.Component {
       ...props
     } = this.props;
 
-    const { values, query } = this.state;
+    const { values } = this.state;
     const { handleChange } = this;
-    const filteredItems = query === ''
-      ? values
-      : values.filter(({ label: itemLabel }) =>
-        itemLabel.toLowerCase().includes(query.toLowerCase()));
     const displayedValue = typeof value === 'object' ? value.label : value;
     const rawValue = typeof value === 'object' ? value.value : value;
 
@@ -111,7 +102,7 @@ export class Select extends React.Component {
           <BPSelect
             className={classnames('tf-select', className)}
             popoverProps={{ usePortal: false, boundary: 'viewport', minimal: true }}
-            items={filteredItems}
+            items={values}
             filterable={values.length > 9}
             onQueryChange={this.handleQueryChange}
             initialContent={(values && values.length > 250)
@@ -121,6 +112,9 @@ export class Select extends React.Component {
             inputProps={{
               placeholder: translate('terralego.forms.controls.select.input_placeholder'),
             }}
+            itemPredicate={
+              (query, { label: itemLabel }) => itemLabel.toLowerCase().includes(query.toLowerCase())
+            }
             itemRenderer={({
               label: itemLabel, value: itemValue,
             }, {

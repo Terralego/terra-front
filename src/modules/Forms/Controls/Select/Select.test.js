@@ -5,7 +5,10 @@ import { mount, shallow } from 'enzyme';
 import Select from './Select';
 
 jest.mock('@blueprintjs/select', () => ({
-  Select: function BPSelect ({ items }) {
+  Select: function BPSelect ({ items, initialContent }) {
+    if (initialContent) {
+      return <span>InitialContent</span>;
+    }
     return (
       <select>
         {items.map(({ label, value }) => (
@@ -44,7 +47,7 @@ it('should render loading correctly', () => {
   expect(tree.toJSON()).toMatchSnapshot();
 });
 
-it('should render correctly with query', () => {
+it('should render correctly with values', () => {
   const tree = renderer.create((
     <Select
       label="Pwout"
@@ -52,7 +55,17 @@ it('should render correctly with query', () => {
       values={['foo', 'bar', 'foofoo', 'fou', 'fooooo']}
     />
   ));
-  tree.getInstance().handleQueryChange('fo');
+  expect(tree.toJSON()).toMatchSnapshot();
+});
+
+it('should render correctly with a lot of values', () => {
+  const tree = renderer.create((
+    <Select
+      label="It's over the max"
+      onChange={() => null}
+      values={Array(300).fill('foo')}
+    />
+  ));
   expect(tree.toJSON()).toMatchSnapshot();
 });
 
@@ -94,13 +107,6 @@ it('should render Item', () => {
       }}
     />,
   ).props().className).toBe('control-container__item control-container__item--empty');
-});
-
-it('should handle query change', () => {
-  const instance = new Select();
-  instance.setState = jest.fn();
-  instance.handleQueryChange('foo');
-  expect(instance.setState).toHaveBeenCalledWith({ query: 'foo' });
 });
 
 it('should prevent submit event in parent', () => {

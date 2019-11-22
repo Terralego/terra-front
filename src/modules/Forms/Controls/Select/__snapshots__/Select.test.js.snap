@@ -22,7 +22,25 @@ exports[`should render correctly 1`] = `
 </div>
 `;
 
-exports[`should render correctly with query 1`] = `
+exports[`should render correctly with a lot of values 1`] = `
+<div
+  className="control-container control-container--select"
+  onKeyPress={[Function]}
+  role="presentation"
+>
+  <label
+    className="control-label"
+    htmlFor="select-uuid"
+  >
+    It's over the max
+  </label>
+  <span>
+    InitialContent
+  </span>
+</div>
+`;
+
+exports[`should render correctly with values 1`] = `
 <div
   className="control-container control-container--select"
   onKeyPress={[Function]}
@@ -39,6 +57,11 @@ exports[`should render correctly with query 1`] = `
       value="foo"
     >
       foo
+    </option>
+    <option
+      value="bar"
+    >
+      bar
     </option>
     <option
       value="foofoo"
