@@ -2,7 +2,7 @@ import React from 'react';
 import renderer from 'react-test-renderer';
 import MapNavigation from './MapNavigation';
 
-jest.mock('uuid/v4', () => () => 42);
+jest.mock('uuid/v4', () => () => '42');
 
 it('should render correctly', () => {
   const tree = renderer.create((

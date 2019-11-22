@@ -9,7 +9,7 @@ import './styles.scss';
 
 export const TooManyResults = ({ count, translate }) => count >= MAX_SIZE && (
   <Callout className="too-many-results">
-    {translate('terralego.visualizer.too_many_results_count', { count })}
+    {translate('terralego.visualizer.too_many_results', { number: count })}
   </Callout>
 );
 
@@ -19,7 +19,7 @@ TooManyResults.propTypes = {
 };
 TooManyResults.defaultProps = {
   translate: translateMock({
-    'terralego.visualizer.too_many_results': 'Your query contains too many results, please change your request or zoom on a closer zone.',
+    'terralego.visualizer.too_many_results': 'Your query contains too many results ({{number}}), please change your request or zoom on a closer zone.',
   }),
 };
 
