@@ -1,4 +1,21 @@
 
+1.12.0 / 2019-11-25
+===================
+
+  * Put search above all other control
+  * Support lightMode for Search control
+  * Support lightMode for BackgroundStyles control
+  * Add and use compose function
+  * Move processing of zoom warning into a HOC
+  * Improve LayersTreeItem performance
+  * Simplify highlighting
+  * Fast check before JSON comparison
+  * Drop query state for Select
+  * Fix translation extraction
+  * Fix tests and coverage
+  * Drop state in MultiSelect component
+  * Fix multiselect menu height
+
 1.11.1 / 2019-11-20
 ===================
 
