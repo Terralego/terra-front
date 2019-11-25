@@ -1,7 +1,7 @@
 import React from 'react';
 import renderer from 'react-test-renderer';
 
-import WarningZoom from './WarningZoom';
+import { WarningZoom } from './WarningZoom';
 
 jest.mock('@blueprintjs/core', () => ({
   Intent: {

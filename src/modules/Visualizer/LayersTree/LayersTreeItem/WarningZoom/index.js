@@ -1,5 +1,6 @@
 import React from 'react';
-import processWarningAccordingToZoom from '../../../services/warningZoom';
+import compose from '../../../../../utils/compose';
+import { processWarningAccordingToZoom } from '../../../services/warningZoom';
 import WarningZoom from './WarningZoom';
 import { connectLayersTree } from '../../LayersTreeProvider/context';
 
@@ -14,4 +15,7 @@ const withWarningAccordingToZoom = WrappedComponent => props => {
   );
 };
 
-export default withWarningAccordingToZoom(connectLayersTree('translate')(WarningZoom));
+export default compose(
+  withWarningAccordingToZoom,
+  connectLayersTree('translate'),
+)(WarningZoom);

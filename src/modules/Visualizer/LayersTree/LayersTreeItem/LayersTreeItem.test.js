@@ -66,8 +66,8 @@ jest.mock('./FiltersPanel', () => function FiltersPanel () {
 });
 
 jest.mock('../../services/warningZoom', () => ({
-  displayWarningAccordingToZoom (map) {
-    return { minZoomLayer: 14, display: map && true };
+  processWarningAccordingToZoom (map) {
+    return { minZoomLayer: 14, showWarning: !!map };
   },
 }));
 

@@ -1,4 +1,4 @@
-import processWarningAccordingToZoom from './warningZoom';
+import { processWarningAccordingToZoom } from './warningZoom';
 
 const getStyle = jest.fn(() => ({
   layers: [{
