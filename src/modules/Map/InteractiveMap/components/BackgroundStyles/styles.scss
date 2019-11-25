@@ -12,8 +12,11 @@
 
 .bgLayer-radio {
   padding: .5rem 2.25rem .5rem .5rem;
-  border: 1px solid #182026;
   margin: 0;
+  border: 1px solid #f0f0f0;
+  .bp3-dark & {
+    border-color: #182026;
+  }
   &:not(:last-of-type) {
     border-bottom: 0;
   }
