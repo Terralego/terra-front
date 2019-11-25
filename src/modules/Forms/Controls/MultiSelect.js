@@ -6,6 +6,7 @@ import classnames from 'classnames';
 import {
   Button,
   Intent,
+  Menu,
   MenuItem,
   Spinner,
 } from '@blueprintjs/core';
@@ -23,6 +24,8 @@ export class MultiSelect extends React.Component {
     isSubmissionPrevented: PropTypes.bool,
     translate: PropTypes.func,
     loading: PropTypes.bool,
+    minCharacters: PropTypes.number,
+    highlightSearch: PropTypes.bool,
   };
 
   static defaultProps = {
@@ -33,26 +36,14 @@ export class MultiSelect extends React.Component {
     translate: translateMock({
       'terralego.forms.controls.multiselect.no_results': 'No results.',
       'terralego.forms.controls.multiselect.select_placeholder': 'Enter a query first',
-      'terralego.forms.controls.multiselect.input_placeholder': 'Filter...',
+      'terralego.forms.controls.multiselect.select_placeholder_plural': 'Enter at least {{count}} characters',
+      'terralego.forms.controls.multiselect.input_placeholder': 'Search...',
+      'terralego.forms.controls.multiselect.too_many': 'Too many results, please refine your query...',
     }),
     loading: false,
+    minCharacters: 0,
+    highlightSearch: true,
   };
-
-  state = {
-    items: [],
-    query: '',
-  };
-
-  componentDidMount () {
-    this.updateItems();
-  }
-
-  componentDidUpdate ({ values: prevValues }) {
-    const { values } = this.props;
-    if (prevValues !== values) {
-      this.updateItems();
-    }
-  }
 
   handleChange = item => {
     const { value, onChange } = this.props;
@@ -62,10 +53,6 @@ export class MultiSelect extends React.Component {
     onChange(newValue);
   };
 
-  handleQueryChange = query => {
-    this.setState({ query });
-  };
-
   handleTagRemove = tag => this.handleChange(tag);
 
   handleClear = () => {
@@ -73,20 +60,11 @@ export class MultiSelect extends React.Component {
     onChange([]);
   };
 
-  updateItems () {
-    const { values } = this.props;
-    this.setState({
-      items: [...values],
-    });
-  }
-
   render () {
     const {
       handleChange,
       handleTagRemove,
-      handleQueryChange,
     } = this;
-    const { items, query } = this.state;
     const {
       label,
       value,
@@ -95,14 +73,12 @@ export class MultiSelect extends React.Component {
       className,
       translate,
       loading,
+      minCharacters,
+      highlightSearch,
       ...props
     } = this.props;
 
     const displayClearButton = value.length > 0;
-
-    const filteredItems = query === ''
-      ? items
-      : items.filter(item => item.toLowerCase().includes(query.toLowerCase()));
 
     return (
       <div
@@ -111,45 +87,80 @@ export class MultiSelect extends React.Component {
         role="presentation"
       >
         <p className="control-label">{label}</p>
-        {!!loading && <Spinner size={20} /> }
+        {!!loading && <Spinner size={20} />}
         {!loading && (
           <BPMultiSelect
             className={classnames('tf-multiselect', className)}
             resetOnSelect
-            items={filteredItems}
+            fill
+            items={values}
             selectedItems={value}
-            noResults={<MenuItem disabled text={translate('terralego.forms.controls.multiselect.no_results')} />}
             onItemSelect={handleChange}
-            onQueryChange={handleQueryChange}
             tagRenderer={item => item}
             popoverProps={{ usePortal: false }}
-            initialContent={(values && values.length > 250)
-              ? <MenuItem disabled text={translate('terralego.forms.controls.multiselect.select_placeholder')} />
-              : undefined
-            }
             placeholder={translate('terralego.forms.controls.multiselect.input_placeholder')}
             tagInputProps={{
               tagProps: { intent: Intent.NONE, interactive: true },
               onRemove: handleTagRemove,
               rightElement: displayClearButton && (
-              <Button icon="cross" minimal onClick={this.handleClear} />
+                <Button icon="cross" minimal onClick={this.handleClear} />
               ),
             }}
+            itemListPredicate={(query, items) => {
+              const regExp = new RegExp(query, 'i');
+              return query.length < minCharacters
+                ? items
+                : items.filter(item => regExp.test(item));
+            }}
             itemRenderer={(item, {
-              handleClick, modifiers: { matchesPredicate, ...modifiers },
+              query, handleClick, modifiers: { matchesPredicate, ...modifiers },
             }) => {
               if (!matchesPredicate) {
                 return null;
               }
+              const regExp = new RegExp(`(${query})`, 'i');
               return (
                 <MenuItem
                   active={modifiers.active}
                   icon={value.includes(item) ? 'tick' : 'blank'}
                   key={item}
                   onClick={handleClick}
-                  text={item}
+                  text={query && highlightSearch
+                    ? item.split(regExp).map(
+                      // eslint-disable-next-line react/no-array-index-key
+                      (elem, i) => (i % 2 ? <strong key={`${item}-${i}`}>{elem}</strong> : elem),
+                    ) : item}
                   shouldDismissPopover={false}
                 />
+              );
+            }}
+            itemListRenderer={listProps => {
+              const items = listProps.filteredItems;
+              let message = null;
+
+              // If we have no query or a query too short and too many results
+              if ((!listProps.query || listProps.query.length < minCharacters)
+                && items.length > 250) {
+                message = translate('terralego.forms.controls.multiselect.select_placeholder', { count: minCharacters });
+              } else if (items.length > 250) {
+                // If we have a query but too many results
+                message = translate('terralego.forms.controls.multiselect.too_many');
+              } else if (items.length === 0) {
+                // If we have no results
+                message = translate('terralego.forms.controls.multiselect.no_results');
+              }
+              return (
+                <Menu ulRef={listProps.itemsParentRef}>
+                  {message !== null
+                    ? (
+                      <MenuItem
+                        disabled
+                        text={message}
+                      />
+                    )
+                    : items.map(listProps.renderItem)
+                  }
+                </Menu>
               );
             }}
             {...props}
