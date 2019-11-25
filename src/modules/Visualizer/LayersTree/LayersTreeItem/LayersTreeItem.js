@@ -7,6 +7,7 @@ import {
   Elevation,
   Tag,
 } from '@blueprintjs/core';
+import uuid from 'uuid/v4';
 
 import OptionsLayer from './OptionsLayer';
 import LayersTreeItemFilters from './LayersTreeItemFilters';
@@ -14,7 +15,6 @@ import LayerProps from '../../types/Layer';
 import LayersTreeItemOptions from './LayersTreeItemOptions';
 import withDeviceSize from '../../../../hoc/withDeviceSize';
 import WarningZoom from './WarningZoom';
-import { displayWarningAccordingToZoom } from '../../services/warningZoom';
 import LayersTreeExclusiveItemsList from './LayersTreeExclusiveItemsList';
 import Tooltip from '../../../../components/Tooltip';
 
@@ -45,6 +45,8 @@ export class LayersTreeItem extends React.Component {
     isFilterVisible: false,
     hasWidgetActive: false,
   }
+
+  uuid = `toggle-${uuid()}`;
 
   componentWillUnmount () {
     this.resetFilterPanelListener();
@@ -137,8 +139,6 @@ export class LayersTreeItem extends React.Component {
 
     if (hidden) return null;
 
-    const { display, minZoomLayer } = displayWarningAccordingToZoom(map, layer);
-
     const {
       isOptionsOpen, isFilterVisible, hasWidgetActive,
     } = this.state;
@@ -157,7 +157,6 @@ export class LayersTreeItem extends React.Component {
     const hasSomeOptionActive =
     isTableActive || isFilterVisible || isOptionsOpen || hasWidgetActive;
 
-    const htmlID = btoa(JSON.stringify(layer).replace(/\W/g, ''));
     const displayTableButton = fields && !!fields.length;
 
     return (
@@ -189,15 +188,14 @@ export class LayersTreeItem extends React.Component {
           }
             >
               <WarningZoom
-                display={display}
                 isActive={isActive}
-                minZoomLayer={minZoomLayer}
+                map={map}
+                layer={layer}
               >
                 <Switch
-                  className={classnames({ 'warning-zoom': display && isActive })}
                   checked={!!isActive}
                   onChange={onActiveChange}
-                  id={`toggle-${htmlID}`}
+                  id={this.uuid}
                 />
               </WarningZoom>
               <Tooltip
@@ -205,7 +203,7 @@ export class LayersTreeItem extends React.Component {
                 hoverOpenDelay={2000}
                 className="layerstree-node-content__item-label__tooltip"
               >
-                <label className="layerstree-node-content__item-label__label" htmlFor={`toggle-${htmlID}`}>{label}</label>
+                <label className="layerstree-node-content__item-label__label" htmlFor={this.uuid}>{label}</label>
               </Tooltip>
               <div className="layerstree-node-content__item-label__total">
                 {isActive && totalResult && (

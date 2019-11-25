@@ -1,6 +1,4 @@
-import {
-  displayWarningAccordingToZoom,
-} from './warningZoom';
+import { processWarningAccordingToZoom } from './warningZoom';
 
 const getStyle = jest.fn(() => ({
   layers: [{
@@ -26,7 +24,10 @@ it('should display warning according to current zoom', () => {
     getStyle,
   };
   const layer = { layers: ['foo'] };
-  expect(displayWarningAccordingToZoom(map, layer)).toEqual({ display: true, minZoomLayer: 14 });
+  expect(processWarningAccordingToZoom(map, layer)).toEqual({
+    showWarning: true,
+    minZoomLayer: 14,
+  });
 });
 
 it('should not display warning according to current zoom', () => {
@@ -40,22 +41,33 @@ it('should not display warning according to current zoom', () => {
     })),
     getStyle,
   };
-  const layer = { layers: ['foo'] };
-  expect(displayWarningAccordingToZoom(map, layer)).toEqual({ display: false, minZoomLayer: 14 });
+  const layer1 = { layers: ['foo'] };
+  expect(processWarningAccordingToZoom(map, layer1)).toEqual({
+    showWarning: false,
+    minZoomLayer: 14,
+  });
 
+  const layer2 = { layers: ['foo'] };
   map.getLayer = jest.fn(id => ({
     id,
   }));
-  expect(displayWarningAccordingToZoom(map, layer)).toEqual({ display: false, minZoomLayer: 0 });
+  expect(processWarningAccordingToZoom(map, layer2)).toEqual({
+    showWarning: false,
+    minZoomLayer: 0,
+  });
 
+  const layer3 = { layers: ['foo'] };
   map.getLayer = jest.fn(() => null);
-  expect(displayWarningAccordingToZoom(map, layer)).toEqual({ display: false, minZoomLayer: 0 });
+  expect(processWarningAccordingToZoom(map, layer3)).toEqual({
+    showWarning: false,
+    minZoomLayer: 0,
+  });
 });
 
 it('should displayWarningAccordingToZoom without map', () => {
   const map = undefined;
   const layer = { layers: ['foo'] };
-  expect(displayWarningAccordingToZoom(map, layer)).toEqual({});
+  expect(processWarningAccordingToZoom(map, layer)).toEqual({});
 });
 
 it('should display warning on exclusive groups layers', () => {
@@ -97,5 +109,8 @@ it('should display warning on exclusive groups layers', () => {
       maxzoom: 12,
     }],
   };
-  expect(displayWarningAccordingToZoom(map, layer)).toEqual({ display: true, minZoomLayer: 8 });
+  expect(processWarningAccordingToZoom(map, layer)).toEqual({
+    showWarning: true,
+    minZoomLayer: 8,
+  });
 });

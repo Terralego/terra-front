@@ -47,6 +47,8 @@ jest.mock('@blueprintjs/datetime', () => ({
   },
 }));
 
+jest.mock('uuid/v4', () => () => 'uuid');
+
 jest.mock('./OptionsLayer', () => function OptionsLayer () {
   return <p>OptionsLayer</p>;
 });
@@ -64,8 +66,8 @@ jest.mock('./FiltersPanel', () => function FiltersPanel () {
 });
 
 jest.mock('../../services/warningZoom', () => ({
-  displayWarningAccordingToZoom (map) {
-    return { minZoomLayer: 14, display: map && true };
+  processWarningAccordingToZoom (map) {
+    return { minZoomLayer: 14, showWarning: !!map };
   },
 }));
 

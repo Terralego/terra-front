@@ -78,25 +78,29 @@
   .layerstree-node-content {
     display: flex;
     flex-direction: row;
-    
-    .layerstree-node-content__item-tooltip-warning .bp3-popover-target .bp3-switch.warning-zoom .bp3-control-indicator {
-      background: #9eb4c1;
 
-      &::after {
-        content: '!';
-        position: absolute;
-        left: 18px;
-        font-size: 13px;
-        font-weight: bold;
-        color: #000;
-        .bp3-dark & {
-          color: #fff;
+    .layerstree-node-content__item-tooltip-warning .bp3-popover-target .bp3-switch {
+      .bp3-control-indicator {
+        background: #9eb4c1;
+
+        &::after {
+          content: '!';
+          position: absolute;
+          left: 18px;
+          font-size: 13px;
+          font-weight: bold;
+          color: #000;
+
+          .bp3-dark & {
+            color: #fff;
+          }
+        }
+
+        /* Override Blueprintjs */
+        &:hover input:checked ~ .bp3-control-indicator {
+          background: darken(#9eb4c1, 10%);
         }
       }
-    }
-    /* Override Blueprintjs */
-    .bp3-control.bp3-switch.warning-zoom:hover input:checked ~ .bp3-control-indicator {
-      background: darken(#9eb4c1, 10%);
     }
     &__item {
       display: flex;
