@@ -114,6 +114,7 @@ class Details extends React.Component {
             'view-details--hidden': hidden,
             'view-details--visible': visible,
             'view-details--withTable': isTableActive,
+            'view-details--withCarousel': isCarrousel,
           },
         )}
       >
@@ -128,20 +129,21 @@ class Details extends React.Component {
         </div>
         {featureToDisplay && (
           <div className="view-details__wrapper">
-            <div
-              className={classnames(
-                'view-details__button',
-                'view-details__button--prev',
-                { 'view-details__button--active': isCarrousel },
-              )}
-            >
-              <Button
-                type="button"
-                onClick={() => this.handleChange(-1)}
-                icon="chevron-left"
-                minimal
-              />
-            </div>
+            {isCarrousel && (
+              <div
+                className={classnames(
+                  'view-details__button',
+                  'view-details__button--prev',
+                )}
+              >
+                <Button
+                  type="button"
+                  onClick={() => this.handleChange(-1)}
+                  icon="chevron-left"
+                  minimal
+                />
+              </div>
+            )}
             <div className="view-details__content">
               <FeatureProperties
                 {...fetchProperties}
@@ -156,20 +158,21 @@ class Details extends React.Component {
                 )}
               </FeatureProperties>
             </div>
-            <div
-              className={classnames(
-                'view-details__button',
-                'view-details__button--next',
-                { 'view-details__button--active': isCarrousel },
-              )}
-            >
-              <Button
-                type="button"
-                onClick={() => this.handleChange(1)}
-                icon="chevron-right"
-                minimal
-              />
-            </div>
+            {isCarrousel && (
+              <div
+                className={classnames(
+                  'view-details__button',
+                  'view-details__button--next',
+                )}
+              >
+                <Button
+                  type="button"
+                  onClick={() => this.handleChange(1)}
+                  icon="chevron-right"
+                  minimal
+                />
+              </div>
+            )}
           </div>
         )}
       </div>
