@@ -10,7 +10,6 @@ import Tooltip from '../../../../../components/Tooltip';
 export const WarningZoom = props => {
   const {
     display,
-    isActive,
     minZoomLayer,
     children,
     translate = translateMock({
@@ -18,7 +17,7 @@ export const WarningZoom = props => {
     }),
   } = props;
 
-  if (!display || !isActive) return children;
+  if (!display) return children;
   return (
     <Tooltip
       className="layerstree-node-content__item-tooltip-warning"

@@ -26,14 +26,12 @@ const getLayerZoom = moize((layer, map) => {
     }, { minzoom: 24, maxzoom: 0 });
 });
 
-export function displayWarningAccordingToZoom (map, layer) {
+export default function processWarningAccordingToZoom (map, layer) {
   if (!map) return {};
 
   const currentZoom = map.getZoom();
   const layerZoom = getLayerZoom(layer, map);
   const isNotDisplayed = currentZoom < layerZoom.minzoom || currentZoom > layerZoom.maxzoom;
 
-  return { display: isNotDisplayed, minZoomLayer: layerZoom.minzoom };
+  return { showWarning: isNotDisplayed, minZoomLayer: layerZoom.minzoom };
 }
-
-export default { displayWarningAccordingToZoom };

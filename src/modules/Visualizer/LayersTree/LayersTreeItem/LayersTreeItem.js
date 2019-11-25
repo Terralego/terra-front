@@ -15,7 +15,6 @@ import LayerProps from '../../types/Layer';
 import LayersTreeItemOptions from './LayersTreeItemOptions';
 import withDeviceSize from '../../../../hoc/withDeviceSize';
 import WarningZoom from './WarningZoom';
-import { displayWarningAccordingToZoom } from '../../services/warningZoom';
 import LayersTreeExclusiveItemsList from './LayersTreeExclusiveItemsList';
 import Tooltip from '../../../../components/Tooltip';
 
@@ -140,8 +139,6 @@ export class LayersTreeItem extends React.Component {
 
     if (hidden) return null;
 
-    const { display, minZoomLayer } = displayWarningAccordingToZoom(map, layer);
-
     const {
       isOptionsOpen, isFilterVisible, hasWidgetActive,
     } = this.state;
@@ -191,12 +188,11 @@ export class LayersTreeItem extends React.Component {
           }
             >
               <WarningZoom
-                display={display}
                 isActive={isActive}
-                minZoomLayer={minZoomLayer}
+                map={map}
+                layer={layer}
               >
                 <Switch
-                  className={classnames({ 'warning-zoom': display && isActive })}
                   checked={!!isActive}
                   onChange={onActiveChange}
                   id={this.uuid}
