@@ -130,7 +130,7 @@ it('should render item with highlighted support', () => {
   {
     const { itemRenderer } = wrapper.find('BPMultiSelect').props();
     const itemRendered = itemRenderer('foobarbaz', { query: 'bar', modifiers: { matchesPredicate: true } });
-    expect(itemRendered.props.text).toEqual(<span>foo<strong key={1}>bar</strong>baz</span>);
+    expect(itemRendered.props.text).toEqual(['foo', <strong key="foobarbaz-1">bar</strong>, 'baz']);
   }
   wrapper.setProps({ highlightSearch: false });
   {

@@ -15,23 +15,6 @@ import { MultiSelect as BPMultiSelect } from '@blueprintjs/select';
 import { preventEnterKeyPress } from '../../../utils/event';
 import translateMock from '../../../utils/translate';
 
-/**
- * Highlight with <strong> element
- *
- * @param {string} item - Item to highlight
- * @param {string} query - Query to use as highlight
- * @param {RegExp} regExp - Regular expression to use as splitter (must use capturing parenthesis)
- * @return {Array} Can be used as React.el
- */
-const highlightItem = (item, query, regExp) =>
-  // Complex highlighting because we must take case into account
-  item.split(regExp).reduce((accu, elem) =>
-    // Use a reducer for a JSX join
-    [...accu, accu.length % 2 ? (
-      // Then get the case-friendly query part of item
-      <strong key={accu.length}>{elem}</strong>
-    ) : elem], []);
-
 export class MultiSelect extends React.Component {
   static propTypes = {
     value: PropTypes.arrayOf(PropTypes.string),
@@ -143,8 +126,10 @@ export class MultiSelect extends React.Component {
                   key={item}
                   onClick={handleClick}
                   text={query && highlightSearch
-                    ? <span>{highlightItem(item, query, regExp)}</span>
-                    : item}
+                    ? item.split(regExp).map(
+                      // eslint-disable-next-line react/no-array-index-key
+                      (elem, i) => (i % 2 ? <strong key={`${item}-${i}`}>{elem}</strong> : elem),
+                    ) : item}
                   shouldDismissPopover={false}
                 />
               );
