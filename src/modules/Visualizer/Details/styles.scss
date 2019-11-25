@@ -14,6 +14,7 @@
   background: #fff;
   margin: 0;
   opacity: 0;
+  padding: 0 2em;
 
   &--hidden {
     display: none;
@@ -23,6 +24,10 @@
     transform: translate3d(-.5rem, 0, 0);
     opacity: .9;
     box-shadow: 0 0 10px rgba(0,0,0,.2);
+  }
+
+  &--withCarousel {
+    padding: 0;
   }
 
   &__close-button {
@@ -51,22 +56,12 @@
     height: 100%;
     width: 1.75rem;
     flex-shrink: 0;
-    &--prev {
-      transform: translateX(-100%)
-    }
-    &--next {
-      transform: translateX(100%)
-    }
-    &--active {
-      transform: translateX(0)
-    }
     button {
       position: absolute;
       top: 12.5%;
       right: 0;
       left: 0;
-      transform: translateY(-50%);
-      transform: scale(1.5);
+      transform: translateY(-50%) scale(1.5);
     } 
   }
 
