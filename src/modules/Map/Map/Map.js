@@ -320,16 +320,14 @@ export class MapComponent extends React.Component {
 
   deleteLayers ({ sources, layers }) {
     const { map } = this.props;
-    const { layers: allLayers } = map.getStyle();
+
+    layers.forEach(({ id }) => {
+      if (!map.getLayer(id)) return;
+      map.removeLayer(id);
+    });
     sources.forEach(({ id, ...sourceAttrs }) => {
       if (!map.getSource(id)) return;
       map.removeSource(id, sourceAttrs);
-    });
-    layers.forEach(layer => {
-      const { type } = layer;
-      if (!map.getLayer(layer)) return;
-      const beforeId = getLayerBeforeId(type, allLayers);
-      map.removeLayer(layer, beforeId);
     });
   }
 
