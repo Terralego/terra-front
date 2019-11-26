@@ -286,24 +286,12 @@ describe('on properties changes', () => {
     expect(map.getSource).toHaveBeenCalledWith('source1');
     expect(map.getSource).toHaveBeenCalledWith('source2');
     expect(map.getLayer).toHaveBeenCalledTimes(2);
-    expect(map.getLayer).toHaveBeenCalledWith({
-      id: 'layer1',
-      foo: 'foo',
-    });
-    expect(map.getLayer).toHaveBeenCalledWith({
-      id: 'layer2',
-      bar: 'bar',
-    });
+    expect(map.getLayer).toHaveBeenCalledWith('layer1');
+    expect(map.getLayer).toHaveBeenCalledWith('layer2');
     expect(map.removeSource).toHaveBeenCalledWith('source1', { foo: 'foo' });
     expect(map.removeSource).toHaveBeenCalledWith('source2', { bar: 'bar' });
-    expect(map.removeLayer).toHaveBeenCalledWith({
-      id: 'layer1',
-      foo: 'foo',
-    }, undefined);
-    expect(map.removeLayer).toHaveBeenCalledWith({
-      id: 'layer2',
-      bar: 'bar',
-    }, undefined);
+    expect(map.removeLayer).toHaveBeenCalledWith('layer1');
+    expect(map.removeLayer).toHaveBeenCalledWith('layer2');
   });
 });
 
