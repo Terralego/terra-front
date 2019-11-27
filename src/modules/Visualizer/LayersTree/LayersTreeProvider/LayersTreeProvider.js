@@ -34,6 +34,11 @@ export class LayersTreeProvider extends React.Component {
      * @return {{}} Object of form {min: Number, max: Number}
      * */
     fetchPropertyRange: PropTypes.func,
+    /**
+     * An array of properties for which the values fetched by a layer will be shared
+     * between layers if they have the same property name
+     */
+    sharedProperties: PropTypes.arrayOf(PropTypes.string),
     translate: PropTypes.func,
     setCurrentState: PropTypes.func,
   };
@@ -46,6 +51,7 @@ export class LayersTreeProvider extends React.Component {
     fetchPropertyRange () {},
     translate: undefined,
     setCurrentState () {},
+    sharedProperties: undefined,
   };
 
   constructor (props) {
@@ -86,7 +92,7 @@ export class LayersTreeProvider extends React.Component {
   };
 
   fetchPropertiesValues = async (layer, properties) => {
-    const { fetchPropertyValues, fetchPropertyRange } = this.props;
+    const { fetchPropertyValues, fetchPropertyRange, sharedProperties } = this.props;
     const { layersTreeState } = this.state;
     properties.forEach(property => {
       // We need to keep a static reference to this object because it serve as
@@ -118,6 +124,28 @@ export class LayersTreeProvider extends React.Component {
       }
       /* eslint-enable no-param-reassign */
     });
+
+    if (sharedProperties) {
+      layersTreeState.forEach((layerState, l) => {
+        const { filters: { form = [] } = {} } = l;
+        if (l !== layer) {
+          form.filter(({ property, fetchValues }) =>
+            fetchValues && sharedProperties.includes(property))
+            .forEach(sharedProperty => {
+              const { type, property: sharedName } = sharedProperty;
+              const fetchedProperty = properties.find(({ property: name }) => name === sharedName);
+              /* eslint-disable no-param-reassign */
+              if (type === TYPE_RANGE) {
+                sharedProperty.min = fetchedProperty.min;
+                sharedProperty.max = fetchedProperty.max;
+              } else {
+                sharedProperty.values = fetchedProperty.values;
+              }
+              /* eslint-enable no-param-reassign */
+            });
+        }
+      });
+    }
 
     const { layersTreeState: newLayersTreeState } = this.state;
     this.resetState(new Map(newLayersTreeState));
