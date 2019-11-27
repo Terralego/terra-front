@@ -226,7 +226,7 @@ describe('on properties changes', () => {
     expect(instance.replaceLayers).toHaveBeenCalled();
   });
 
-  it("should not call replaceLayers if property doesn't change", () => {
+  it("should not replace layers if property doesn't change", () => {
     const customStyle = {
       sources: [{
         id: 'foo',
@@ -252,8 +252,12 @@ describe('on properties changes', () => {
     const wrapper = shallow(<Map {...props} customStyle={customStyle} />);
     const instance = wrapper.instance();
     jest.spyOn(instance, 'replaceLayers');
+    jest.spyOn(instance, 'removeLayers');
+    jest.spyOn(instance, 'addLayers');
     wrapper.setProps({ customStyle: customStyle2 });
-    expect(instance.replaceLayers).not.toHaveBeenCalled();
+    expect(instance.replaceLayers).toHaveBeenCalled();
+    expect(instance.removeLayers).not.toHaveBeenCalled();
+    expect(instance.addLayers).not.toHaveBeenCalled();
   });
 
   it('should remove layers and sources', () => {

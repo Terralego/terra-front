@@ -2,6 +2,7 @@ import React from 'react';
 import mapBoxGl from 'mapbox-gl';
 import PropTypes from 'prop-types';
 import 'mapbox-gl/dist/mapbox-gl.css';
+import { detailedDiff } from 'deep-object-diff';
 
 import { updateCluster } from '../services/cluster';
 
@@ -229,9 +230,8 @@ export class MapComponent extends React.Component {
       this.toggleRotate();
     }
 
-    if (customStyle !== prevProps.customStyle &&
-      JSON.stringify(customStyle) !== JSON.stringify(prevProps.customStyle)) {
-      this.replaceLayers(prevProps.customStyle);
+    if (customStyle !== prevProps.customStyle) {
+      this.replaceLayers(prevProps.customStyle, customStyle);
     }
   };
 
@@ -336,9 +336,26 @@ export class MapComponent extends React.Component {
     });
   }
 
-  replaceLayers (prevCustomStyle) {
-    this.removeLayers(prevCustomStyle);
-    this.createLayers();
+  replaceLayers (prevCustomStyle, customStyle) {
+    const objectValues = (obj = {}) => Object.values(obj);
+
+    const { added, deleted, updated } = detailedDiff(prevCustomStyle, customStyle);
+    const stylesToRemove = {
+      sources: [...objectValues(deleted.sources), ...objectValues(updated.sources)],
+      layers: [...objectValues(deleted.layers), ...objectValues(updated.layers)],
+    };
+    const stylesToAdd = {
+      sources: [...objectValues(added.sources), ...objectValues(updated.sources)],
+      layers: [...objectValues(added.layers), ...objectValues(updated.layers)],
+    };
+
+    if (stylesToRemove.sources.length || stylesToRemove.layers.length) {
+      this.removeLayers(stylesToRemove);
+    }
+
+    if (stylesToAdd.sources.length || stylesToAdd.layers.length) {
+      this.addLayers(stylesToAdd);
+    }
   }
 
   toggleRotate () {
