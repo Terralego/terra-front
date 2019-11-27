@@ -266,7 +266,7 @@ describe('on properties changes', () => {
       removeLayer: jest.fn(),
     };
     const instance = new Map({ map });
-    instance.deleteLayers({
+    instance.removeLayers({
       sources: [{
         id: 'source1',
         foo: 'foo',

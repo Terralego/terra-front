@@ -284,7 +284,12 @@ export class MapComponent extends React.Component {
   }
 
   createLayers () {
-    const { map, customStyle: { sources = [], layers = [] } } = this.props;
+    const { customStyle } = this.props;
+    this.addLayers(customStyle);
+  }
+
+  addLayers ({ sources = [], layers = [] }) {
+    const { map } = this.props;
     const { layers: allLayers } = map.getStyle();
     sources.forEach(({ id, ...sourceAttrs }) => map.addSource(id, sourceAttrs));
     const orderedLayers = [...layers];
@@ -318,7 +323,7 @@ export class MapComponent extends React.Component {
     map.on('sourcedata', listener);
   }
 
-  deleteLayers ({ sources, layers }) {
+  removeLayers ({ sources = [], layers = [] }) {
     const { map } = this.props;
 
     layers.forEach(({ id }) => {
@@ -332,7 +337,7 @@ export class MapComponent extends React.Component {
   }
 
   replaceLayers (prevCustomStyle) {
-    this.deleteLayers(prevCustomStyle);
+    this.removeLayers(prevCustomStyle);
     this.createLayers();
   }
 
