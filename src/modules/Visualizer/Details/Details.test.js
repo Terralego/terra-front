@@ -25,7 +25,6 @@ it('should render correctly with content', () => {
 `# Hello world
  This is {{foo}}`,
       }}
-      features={[]}
     />
   )).toJSON();
   expect(tree).toMatchSnapshot();
@@ -39,7 +38,6 @@ it('should render correctly without content', () => {
   `# Hello world
   This is {{foo}}`,
       }}
-      features={[]}
     />
   )).toJSON();
   expect(tree).toMatchSnapshot();
@@ -49,7 +47,6 @@ it('should close', () => {
   const onClose = jest.fn();
   const wrapper = shallow((
     <Details
-      features={[]}
       onClose={onClose}
     />
   ));
