@@ -11,7 +11,7 @@ class Details extends React.Component {
   state = {
     index: -1,
     hidden: true,
-  }
+  };
 
   static getDerivedStateFromProps ({ feature, interaction }) {
     /**
@@ -58,7 +58,7 @@ class Details extends React.Component {
       return 0;
     }
     return index;
-  }
+  };
 
   handleChange = direction => {
     const { onChange } = this.props;
@@ -66,7 +66,7 @@ class Details extends React.Component {
     const index = this.getIndexFeature(prevIndex + direction);
     onChange(index);
     return this.setState({ index });
-  }
+  };
 
   switchVisibility (visible) {
     if (visible) {
@@ -94,15 +94,16 @@ class Details extends React.Component {
   render () {
     const {
       features,
-      onClose = () => null,
+      onClose,
       isTableActive,
+      enableCarousel,
     } = this.props;
     const {
       feature: { properties } = {},
       interaction: { template, fetchProperties = {} } = {},
       index, hidden, visible,
     } = this.state;
-    const isCarrousel = features.length > 1;
+    const isCarousel = enableCarousel && features.length > 1;
     const featureToDisplay = features.length > 0 && index !== -1 ? features[index] : properties;
 
     return (
@@ -114,7 +115,7 @@ class Details extends React.Component {
             'view-details--hidden': hidden,
             'view-details--visible': visible,
             'view-details--withTable': isTableActive,
-            'view-details--withCarousel': isCarrousel,
+            'view-details--withCarousel': isCarousel,
           },
         )}
       >
@@ -129,7 +130,7 @@ class Details extends React.Component {
         </div>
         {featureToDisplay && (
           <div className="view-details__wrapper">
-            {isCarrousel && (
+            {isCarousel && (
               <div
                 className={classnames(
                   'view-details__button',
@@ -158,7 +159,7 @@ class Details extends React.Component {
                 )}
               </FeatureProperties>
             </div>
-            {isCarrousel && (
+            {isCarousel && (
               <div
                 className={classnames(
                   'view-details__button',
@@ -180,12 +181,30 @@ class Details extends React.Component {
   }
 }
 
+const propFeature = PropTypes.shape({
+  properties: PropTypes.shape({
+    _id: PropTypes.any,
+  }),
+});
 Details.propTypes = {
+  feature: propFeature,
+  interaction: PropTypes.shape({
+    template: PropTypes.string,
+    fetchProperties: PropTypes.shape(),
+  }),
+  features: PropTypes.arrayOf(propFeature),
   onChange: PropTypes.func,
+  onClose: PropTypes.func,
+  enableCarousel: PropTypes.bool,
 };
 
 Details.defaultProps = {
   onChange () {},
+  onClose: () => null,
+  enableCarousel: true,
+  features: [],
+  feature: undefined,
+  interaction: undefined,
 };
 
 export default Details;
