@@ -171,6 +171,7 @@ export class Table extends React.Component {
       .map(col => col.getColumn(this.getCellData, this.sortColumn, renderCell, sortedIndexMap));
     return (
       <BluePrintTable
+        {...this.props}
         className="component-table"
         numRows={data.length}
         loadingOptions={loading
