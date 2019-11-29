@@ -49,7 +49,6 @@ export class BackgroundStyles extends AbstractMapControl {
             content={(
               <div className="radioGroup">
                 <RadioGroup
-                  label="Fond de carte"
                   onChange={onChange}
                   selectedValue={selected}
                 >
