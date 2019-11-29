@@ -1,4 +1,15 @@
 
+1.13.0 / 2019-11-29
+===================
+
+  * Allow to disable carousel
+  * Details: remove carousel buttons when there is no carousel
+  * Remove and add sources/layers to the map only if necessary
+  * Install deep-object-diff package
+  * Rename some methods of Map component
+  * Fix Map deleteLayers method
+  * Upgrade suitable nodejs version to 12.13
+
 1.12.0 / 2019-11-25
 ===================
 
