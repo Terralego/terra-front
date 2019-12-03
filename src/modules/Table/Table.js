@@ -108,15 +108,28 @@ export class Table extends React.Component {
 
   render () {
     const { columns } = this.state;
-    const { Header, title, locales: customLocales, loading, initialSort } = this.props;
+    const {
+      Header,
+      title,
+      locales: customLocales,
+      loading,
+      initialSort,
+      columnWidths,
+      ...rest
+    } = this.props;
     const locales = { ...DEFAULT_LOCALES, ...customLocales };
     const { filteredColumns, filteredData } = this;
+
+    const columnWidthsProp = columnWidths && columnWidths.length === filteredColumns.length
+      ? { columnWidths }
+      : {};
 
     return (
       <div className="table">
         <Header title={title} columns={columns} onChange={this.onHeaderChange} locales={locales} />
         <TableComponent
-          {...this.props}
+          {...rest}
+          {...columnWidthsProp}
           columns={filteredColumns}
           data={filteredData}
           locales={locales}
