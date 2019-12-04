@@ -62,7 +62,13 @@ export class LayersTreeProvider extends React.Component {
     const { initialLayersTreeState, layersTree } = this.props;
 
     if (initialLayersTreeState !== prevLayersTreeState) {
-      this.initLayersState(initialLayersTreeState);
+      // Deep comparison to avoid unusefull and buggy rerender.
+      // This is a hack waiting better refactoring.
+      const init = JSON.stringify(Array.from(initialLayersTreeState.entries()));
+      const prev = JSON.stringify(Array.from(prevLayersTreeState.entries()));
+      if (init !== prev) {
+        this.initLayersState(initialLayersTreeState);
+      }
     }
 
     if (layersTree !== prevLayersTree) {
@@ -144,7 +150,6 @@ export class LayersTreeProvider extends React.Component {
    * @param {Object|Function} state
    * @param {Function} callback
    */
-
   resetState (state, callback = () => { }) {
     const { setCurrentState, onChange } = this.props;
 
