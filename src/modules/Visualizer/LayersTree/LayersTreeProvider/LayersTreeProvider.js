@@ -138,29 +138,39 @@ export class LayersTreeProvider extends React.Component {
     });
   };
 
-  resetState (state, callback = () => {}) {
-    const { setCurrentState } = this.props;
+  /**
+   * Reset the tree state.
+   *
+   * @param {Object|Function} state
+   * @param {Function} callback
+   */
 
-    this.setState(state, () => {
+  resetState (state, callback = () => { }) {
+    const { setCurrentState, onChange } = this.props;
+
+    const setStateCallback = () => {
       callback();
-      const { onChange } = this.props;
-      const { layersTreeState } = this.state;
+      const { layersTreeState = new Map() } = this.state;
 
       // Simplify the state from the map
       const activeLayers = [];
-      let table = null;
-      layersTreeState && layersTreeState.forEach((layerState, { layers: [layerId] = [] }) => {
+      let table;
+
+      const populateActiveLayersAndTable = (layerState, { layers: [layerId] = [] }) => {
         if (layerState.active) {
           activeLayers.push(layerId);
         }
         if (layerState.table) {
           table = layerId;
         }
-      });
-      setCurrentState({ layers: activeLayers, table: table || undefined });
+      };
 
+      layersTreeState.forEach(populateActiveLayersAndTable);
+      setCurrentState({ layers: activeLayers, table });
       onChange(layersTreeState);
-    });
+    };
+
+    this.setState(state, setStateCallback);
   }
 
   render () {
