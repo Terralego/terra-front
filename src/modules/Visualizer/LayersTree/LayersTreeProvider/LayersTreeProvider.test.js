@@ -48,6 +48,19 @@ it('should update', () => {
   expect(instance.initLayersState).toHaveBeenCalledWith();
 });
 
+it('should not update', () => {
+  const instance = new LayersTreeProvider(new Map());
+  instance.resetState = jest.fn();
+  instance.initLayersState = jest.fn();
+  instance.componentDidUpdate({});
+  expect(instance.resetState).not.toHaveBeenCalled();
+  expect(instance.initLayersState).not.toHaveBeenCalled();
+
+  instance.props.initialLayersTreeState = new Map([['a', 'b']]);
+  instance.componentDidUpdate({ initialLayersTreeState: new Map([['a', 'b']]) });
+  expect(instance.initLayersState).not.toHaveBeenCalled();
+});
+
 it('should unmount', () => {
   const instance = new LayersTreeProvider({});
   expect(instance.isUnmount).not.toBeDefined();

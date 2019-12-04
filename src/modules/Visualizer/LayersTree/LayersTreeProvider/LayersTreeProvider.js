@@ -2,6 +2,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import { connectState } from '../../../State/context';
 import { TYPE_RANGE } from '../../../Forms/Filters';
+import { serialize } from '../../../../utils/serialize';
 
 import context from './context';
 import {
@@ -64,9 +65,7 @@ export class LayersTreeProvider extends React.Component {
     if (initialLayersTreeState !== prevLayersTreeState) {
       // Deep comparison to avoid unusefull and buggy rerender.
       // This is a hack waiting better refactoring.
-      const init = JSON.stringify(Array.from(initialLayersTreeState.entries()));
-      const prev = JSON.stringify(Array.from(prevLayersTreeState.entries()));
-      if (init !== prev) {
+      if (serialize(initialLayersTreeState) !== serialize(prevLayersTreeState)) {
         this.initLayersState(initialLayersTreeState);
       }
     }
