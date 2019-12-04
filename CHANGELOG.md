@@ -1,4 +1,10 @@
 
+1.14.0 / 2019-12-04
+===================
+
+  * Set and forward columnWidth props to BPTable
+  * Forward properties inherited from parent to BluePrintTable
+
 1.13.0 / 2019-11-29
 ===================
 
