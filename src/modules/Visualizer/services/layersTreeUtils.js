@@ -66,26 +66,32 @@ export function setGroupLayerStateAction (layer, layerState, prevLayersTreeState
   return layersTreeState;
 }
 
-export function setLayerStateAction (layer, layerState, prevLayersTreeState, reset) {
+/**
+ * Compute new `newLayersTreeState` from `prevLayersTreeState`
+ * with updated `layerState` for `layer`. If we want to `reset` state.
+ * Do not update state.
+ */
+export const setLayerStateAction = (layer, layerState, prevLayersTreeState, reset) => {
   if (layer.group) return setGroupLayerStateAction(layer, layerState, prevLayersTreeState);
 
-  const layersTreeState = new Map(prevLayersTreeState);
-  const prevLayerState = layersTreeState.get(layer);
-  const newLayerState = { ...layerState };
-
+  const newLayersTreeState = new Map(prevLayersTreeState);
+  // Clone layer current state
+  const prevLayerState = newLayersTreeState.get(layer);
   if (!prevLayerState) return prevLayersTreeState;
+
+  const newLayerState = { ...layerState };
 
   if (newLayerState.table) {
     // Easiest to to read as transform Map in Array and run a .map() on it
     // eslint-disable-next-line no-param-reassign
-    layersTreeState.forEach(layState => { layState.table = false; });
+    newLayersTreeState.forEach(layState => { layState.table = false; });
   }
-  layersTreeState.set(layer, {
+  newLayersTreeState.set(layer, {
     ...reset ? {} : prevLayerState,
     ...newLayerState,
   });
-  return layersTreeState;
-}
+  return newLayersTreeState;
+};
 
 export function layersTreeStatesHaveChanged (layersTreeState, prevLayersTreeState, fields = ['active']) {
   return !fields.reduce((all, field) =>
