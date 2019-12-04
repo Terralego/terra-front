@@ -1,11 +1,14 @@
 import React from 'react';
 import { storiesOf } from '@storybook/react';
 import { action } from '@storybook/addon-actions';
+import { object } from '@storybook/addon-knobs';
 
 import LayersTreeProvider from '../../../modules/Visualizer/LayersTree/LayersTreeProvider';
 import LayersTreeSingle, { LayersTree as ConnectedLayersTree, connectLayersTree } from '../../../modules/Visualizer/LayersTree';
 import LayersTree from '../../../modules/Visualizer/LayersTree/LayersTree';
 import layersTreeConfig from './layersTree';
+
+const stories = storiesOf('Components/LayersTree', module);
 
 LayersTreeSingle.displayName = 'LayersTree';
 LayersTree.displayName = 'LayersTree';
@@ -16,7 +19,9 @@ const onChange = layersTreeState => {
   console.log(title, layersTreeState);
   action(title)(Array.from(layersTreeState));
 };
+
 const waitForIt = timeout => new Promise(resolve => setTimeout(resolve, timeout));
+
 const fetchPropertyValues = async (layer, { property }) => {
   // eslint-disable-next-line no-console
   console.log(`fetching property ${property} Values`);
@@ -31,14 +36,13 @@ const fetchPropertyRange = async (layer, { property }) => {
   return { min: 42, max: 4200 };
 };
 
-const stories = storiesOf('Components/LayersTree', module);
 
 stories.add('LayersTree', () => (
   <div style={{ maxWidth: '20rem' }}>
     <div>
       <LayersTreeSingle
         onChange={onChange}
-        layersTree={layersTreeConfig}
+        layersTree={object('layersTree', layersTreeConfig)}
         fetchPropertyValues={fetchPropertyValues}
         fetchPropertyRange={fetchPropertyRange}
       />
@@ -58,7 +62,7 @@ Debug.displayName = 'connect(\'layersTreeState\')(Debug)';
 
 stories.add('LayersTreeProvider', () => (
   <LayersTreeProvider
-    layersTree={layersTreeConfig}
+    layersTree={object('layersTree', layersTreeConfig)}
     fetchPropertyValues={fetchPropertyValues}
     fetchPropertyRange={fetchPropertyRange}
   >
