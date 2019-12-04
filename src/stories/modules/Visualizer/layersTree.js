@@ -4,6 +4,7 @@ export default [{
   label: 'Très long nom de couche',
   initialState: {
     active: true,
+    total: 42,
   },
   filters: {
     fields: [{
