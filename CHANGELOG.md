@@ -1,4 +1,10 @@
 
+1.14.1 / 2019-12-05
+===================
+
+  * Add deep comparison to avoid bug and perf issues
+  * Add knobs and total to storybook
+
 1.14.0 / 2019-12-04
 ===================
 
