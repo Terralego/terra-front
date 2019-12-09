@@ -45,16 +45,22 @@ export class Selector extends React.Component {
       selectors.reduce((prev, { name: selectorName }) =>
         prev && layerSelectorKey[selectorName] === newKey[selectorName],
       true));
+
     if (newActiveLayerIndex === -1) {
       return this.setState({ noMatchingLayer: true });
     }
+
     this.setState({ noMatchingLayer: false });
     return onChange(newActiveLayerIndex);
   }
 
   render () {
-    const { selectors, activeLayer: { selectorKey }, translate } = this.props;
+    const { selectors, activeLayer: { selectorKey } = {}, translate } = this.props;
     const { noMatchingLayer } = this.state;
+
+    const getSelectedValue = (values, name) => values.find(
+      ({ value }) => (selectorKey ? selectorKey[name] === value : false),
+    );
 
     return (
       <div className="selector">
@@ -66,7 +72,7 @@ export class Selector extends React.Component {
             className="selector__select"
             onChange={this.onChange(name)}
             values={values}
-            value={values.find(({ value }) => selectorKey[name] === value)}
+            value={getSelectedValue(values, name)}
           />
         ))}
         {noMatchingLayer && (
