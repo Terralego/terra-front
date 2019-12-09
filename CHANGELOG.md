@@ -1,4 +1,9 @@
 
+1.14.3 / 2019-12-09
+===================
+
+  * Update dataTable sorting only where there are the same columns
+
 1.14.2 / 2019-12-05
 ===================
 
