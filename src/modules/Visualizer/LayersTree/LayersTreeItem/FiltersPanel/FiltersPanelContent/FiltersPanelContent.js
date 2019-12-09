@@ -32,6 +32,10 @@ export class FiltersPanelContent extends React.Component {
     }
   }
 
+  componentWillUnmount () {
+    this.isUnmount = true;
+  }
+
   animate () {
     const { visible } = this.props;
 
@@ -39,14 +43,14 @@ export class FiltersPanelContent extends React.Component {
       this.setState({
         animate: true,
       });
-      setTimeout(() => this.setState({
+      setTimeout(() => this.isUnmount || this.setState({
         visible: true,
       }));
     } else {
       this.setState({
         visible: false,
       });
-      setTimeout(() => this.setState({
+      setTimeout(() => this.isUnmount || this.setState({
         animate: false,
       }), 150);
     }
