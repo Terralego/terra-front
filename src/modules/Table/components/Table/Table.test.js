@@ -100,7 +100,7 @@ it('should update sorting', () => {
   const instance = new Table(props);
   instance.sortColumn = jest.fn();
   instance.state.lastSort = [1, 2];
-  instance.componentDidUpdate({ data: [] });
+  instance.componentDidUpdate({ data: [], columns: props.columns });
   expect(instance.sortColumn).toHaveBeenCalledWith(1, 2);
 });
 
