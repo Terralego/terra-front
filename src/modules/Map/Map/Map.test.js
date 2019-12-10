@@ -492,12 +492,18 @@ it('should update on map events', () => {
 });
 
 describe('controls', () => {
+  const translate = jest.fn(() => 'foo');
   const map = {
     removeControl: jest.fn(),
     addControl: jest.fn(),
     setCenter: jest.fn(),
     fitBounds: jest.fn(),
     fire: jest.fn((event, item) => item),
+    _container: {
+      querySelector: jest.fn(() => ({
+        setAttribute: jest.fn(),
+      })),
+    },
   };
 
   beforeEach(() => {
@@ -515,7 +521,6 @@ describe('controls', () => {
   });
 
   it('should reset controls', () => {
-    const translate = jest.fn(() => 'foo');
     const instance = new Map({ map, translate });
     class CustomControl {
       // eslint-disable-next-line class-methods-use-this
@@ -603,6 +608,7 @@ describe('controls', () => {
         control: 'DrawControl',
         position: 'top-left',
       }],
+      translate,
     };
     instance.resetControls();
     expect(map.addControl).toHaveBeenCalledWith(instance.controls[0], 'top-left');
@@ -682,7 +688,6 @@ describe('controls', () => {
   });
 
   it('should disable a mapbox bundled control', () => {
-    const translate = jest.fn(() => 'foo');
     const instance = new Map({});
     instance.props = {
       map,
