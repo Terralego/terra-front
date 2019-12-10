@@ -62,6 +62,12 @@ const defaultTranslate = translateMock({
   'terralego.map.zoom_in_control.title': 'Zoom in',
   'terralego.map.zoom_out_control.title': 'Zoom out',
   'terralego.map.compass_arrow_control.title': 'Reset bearing to north',
+  'terralego.map.draw_control.point': 'Marker',
+  'terralego.map.draw_control.polygon': 'Polygon',
+  'terralego.map.draw_control.line': 'LineString',
+  'terralego.map.draw_control.trash': 'Delete',
+  'terralego.map.draw_control.combine': 'Combine',
+  'terralego.map.draw_control.uncombine': 'Uncombine',
 });
 
 export class MapComponent extends React.Component {
@@ -408,6 +414,23 @@ export class MapComponent extends React.Component {
           });
           this.controls.push(controlInstance);
           map.addControl(controlInstance, position);
+
+          const { _container: container } = map;
+          const drawControlLocales = {
+            point: translate('terralego.map.draw_control.point'),
+            polygon: translate('terralego.map.draw_control.polygon'),
+            line: translate('terralego.map.draw_control.line'),
+            trash: translate('terralego.map.draw_control.trash'),
+            combine: translate('terralego.map.draw_control.combine'),
+            uncombine: translate('terralego.map.draw_control.uncombine'),
+          };
+          Object.entries(drawControlLocales).forEach(([drawControl, locale]) => {
+            const domElement = container.querySelector(`.mapbox-gl-draw_${drawControl}`);
+
+            if (domElement) {
+              domElement.setAttribute('title', locale);
+            }
+          });
           break;
         }
         case CONTROL_PRINT: {

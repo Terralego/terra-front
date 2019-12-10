@@ -75,6 +75,14 @@
       "compass_arrow_control": {
         "title": "Orienter vers le nord"
       },
+      "draw_control": {
+        "combine": "Grouper",
+        "line": "Ligne",
+        "point": "Point",
+        "polygon": "Polygone",
+        "trash": "Supprimer",
+        "uncombine": "Dégrouper"
+      },
       "home_control": {
         "button_label": "Réinitialiser la position de la carte"
       },
