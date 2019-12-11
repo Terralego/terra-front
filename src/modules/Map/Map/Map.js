@@ -424,11 +424,11 @@ export class MapComponent extends React.Component {
             combine: translate('terralego.map.draw_control.combine'),
             uncombine: translate('terralego.map.draw_control.uncombine'),
           };
-          Object.entries(drawControlLocales).forEach(([drawControl, locale]) => {
+          Object.entries(drawControlLocales).forEach(([drawControl, translation]) => {
             const domElement = container.querySelector(`.mapbox-gl-draw_${drawControl}`);
 
             if (domElement) {
-              domElement.setAttribute('title', locale);
+              domElement.setAttribute('title', translation);
             }
           });
           break;
