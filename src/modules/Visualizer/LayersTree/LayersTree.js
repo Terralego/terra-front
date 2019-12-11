@@ -9,11 +9,12 @@ import './styles.scss';
 
 export const LayersTree = ({ layersTree }) => (
   <div className="layerstree-panel-list">
-    {layersTree.map(layer => {
+    {layersTree.map((layer, index) => {
       if (layer.group && !layer.exclusive) {
         return (
           <LayersTreeGroup
-            key={layer.group}
+            // Done to avoid duplicate warning on same label
+            key={index} // eslint-disable-line react/no-array-index-key
             title={layer.group}
             layer={layer}
           />
