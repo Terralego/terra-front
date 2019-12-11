@@ -10,7 +10,7 @@ Array [
     </p>
     <button
       alt="open options"
-      className="bp3-button bp3-minimal layerstree-node-content__options__button layerstree-node-content__options__button--more"
+      className="bp3-button bp3-minimal btn-option layerstree-node-content__options__button layerstree-node-content__options__button--more"
       onKeyDown={[Function]}
       onKeyUp={[Function]}
       title="options"
@@ -46,12 +46,12 @@ Array [
     className="layerstree-node-content__options layerstree-node-content__options--mobile"
   >
     <button
-      alt="close foo"
-      className="bp3-button bp3-minimal layerstree-node-content__options__button layerstree-node-content__options__button--active"
+      alt="close widget"
+      className="bp3-button bp3-minimal btn-widget layerstree-node-content__options__button layerstree-node-content__options__button--active"
       onClick={null}
       onKeyDown={[Function]}
       onKeyUp={[Function]}
-      title="widget foo"
+      title="widget"
       type="button"
     >
       <span
@@ -84,7 +84,7 @@ Array [
     </p>
     <button
       alt="close options"
-      className="bp3-button bp3-minimal layerstree-node-content__options__button layerstree-node-content__options__button--more layerstree-node-content__options__button--active"
+      className="bp3-button bp3-minimal btn-option layerstree-node-content__options__button layerstree-node-content__options__button--more layerstree-node-content__options__button--active"
       onKeyDown={[Function]}
       onKeyUp={[Function]}
       title="options"
