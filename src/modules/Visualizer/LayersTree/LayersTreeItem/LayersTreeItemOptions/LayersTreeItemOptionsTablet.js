@@ -23,8 +23,12 @@ const LayersTreeItemOptionsTablet = ({
   widgets,
   isWidgetActive,
   translate = translateMock({
-    'terralego.visualizer.layerstree.itemOptions.widget.alt': 'open {{widget}}',
-    'terralego.visualizer.layerstree.itemOptions.widget.alt_close': 'close {{widget}}',
+    'terralego.visualizer.layerstree.itemOptions.widget.title': 'widget',
+    'terralego.visualizer.layerstree.itemOptions.widget.alt-open': 'open widget',
+    'terralego.visualizer.layerstree.itemOptions.widget.alt-close': 'close widget',
+    'terralego.visualizer.layerstree.itemOptions.widget.title_synthesis': 'widget synthesis',
+    'terralego.visualizer.layerstree.itemOptions.widget.alt-open_synthesis': 'open synthesis',
+    'terralego.visualizer.layerstree.itemOptions.widget.alt-close_synthesis': 'close synthesis',
     'terralego.visualizer.layerstree.itemOptions.table.label': 'table',
     'terralego.visualizer.layerstree.itemOptions.table.alt': 'open table',
     'terralego.visualizer.layerstree.itemOptions.table.alt_close': 'close table',
@@ -44,30 +48,39 @@ const LayersTreeItemOptionsTablet = ({
     )}
   >
     {(widgets && !!widgets.length) && (
+      // i18next-extract-mark-context-start ["", "synthesis"]
       widgets.map(widget => (
         <Button
           key={widget.component}
           className={classnames({
+            'btn-widget': true,
             'layerstree-node-content__options__button': true,
             'layerstree-node-content__options__button--active': isWidgetActive(widget),
           })}
           onClick={toggleWidgets(widget)}
           minimal
           icon="selection"
-          title={`widget ${widget.component}`}
-          alt={translate('terralego.visualizer.layerstree.itemOptions.widget.alt', {
-            context: isWidgetActive(widget) ? 'close' : 'open',
-            widget: widget.component,
+          title={translate('terralego.visualizer.layerstree.itemOptions.widget.title', {
+            context: widget.component,
           })}
+          alt={isWidgetActive(widget) === 'open'
+            ? translate('terralego.visualizer.layerstree.itemOptions.widget.alt-open', {
+              context: widget.component,
+            }) : translate('terralego.visualizer.layerstree.itemOptions.widget.alt-close', {
+              context: widget.component,
+            })
+          }
         >
           {widget.component}
         </Button>
       ))
+      // i18next-extract-mark-context-stop
     )
 }
     {displayTableButton && (
     <Button
       className={classnames(
+        'btn-table',
         'layerstree-node-content__options__button',
         { 'layerstree-node-content__options__button--active': isTableActive },
       )}
@@ -94,6 +107,7 @@ const LayersTreeItemOptionsTablet = ({
         <Button
           className={
           classnames(
+            'btn-form',
             'layerstree-node-content__options__button',
             { 'layerstree-node-content__options__button--active': isFilterVisible },
           )}
@@ -108,6 +122,7 @@ const LayersTreeItemOptionsTablet = ({
     )}
     <Button
       className={classnames(
+        'btn-option',
         'layerstree-node-content__options__button',
         'layerstree-node-content__options__button--more',
         { 'layerstree-node-content__options__button--active': isOptionsOpen },
