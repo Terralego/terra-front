@@ -24,10 +24,16 @@ const LayersTreeItemOptionsDesktop = ({
   widgets,
   isWidgetActive,
   translate = translateMock({
-    'terralego.visualizer.layerstree.itemOptions.widget.alt': 'open {{widget}}',
-    'terralego.visualizer.layerstree.itemOptions.widget.alt_close': 'close {{widget}}',
-    'terralego.visualizer.layerstree.itemOptions.widget.tooltip': 'open {{widget}}',
-    'terralego.visualizer.layerstree.itemOptions.widget.tooltip_close': 'close {{widget}}',
+    'terralego.visualizer.layerstree.itemOptions.widget.title': 'widget',
+    'terralego.visualizer.layerstree.itemOptions.widget.alt-open': 'open widget',
+    'terralego.visualizer.layerstree.itemOptions.widget.alt-close': 'close widget',
+    'terralego.visualizer.layerstree.itemOptions.widget.tooltip-open': 'open widget',
+    'terralego.visualizer.layerstree.itemOptions.widget.tooltip-close': 'close widget',
+    'terralego.visualizer.layerstree.itemOptions.widget.title_synthesis': 'widget synthesis',
+    'terralego.visualizer.layerstree.itemOptions.widget.alt-open_synthesis': 'open synthesis',
+    'terralego.visualizer.layerstree.itemOptions.widget.alt-close_synthesis': 'close synthesis',
+    'terralego.visualizer.layerstree.itemOptions.widget.tooltip-open_synthesis': 'open synthesis',
+    'terralego.visualizer.layerstree.itemOptions.widget.tooltip-close_synthesis': 'close synthesis',
     'terralego.visualizer.layerstree.itemOptions.table.label': 'table',
     'terralego.visualizer.layerstree.itemOptions.table.alt': 'open table',
     'terralego.visualizer.layerstree.itemOptions.table.alt_close': 'close table',
@@ -53,31 +59,44 @@ const LayersTreeItemOptionsDesktop = ({
     )}
   >
     {(widgets && !!widgets.length) && (
-      widgets.map(widget => (
-        <Tooltip
-          key={widget.component}
-          className="layerstree-node-content__options__tooltip widgets"
-          content={translate('terralego.visualizer.layerstree.itemOptions.widget.tooltip', {
-            context: isWidgetActive(widget) ? 'close' : 'open',
-            widget: widget.component,
-          })}
-        >
-          <Button
-            className={classnames({
-              'layerstree-node-content__options__button': true,
-              'layerstree-node-content__options__button--active': isWidgetActive(widget),
-            })}
-            onClick={toggleWidgets(widget)}
-            minimal
-            icon="selection"
-            title={`widget ${widget.component}`}
-            alt={translate('terralego.visualizer.layerstree.itemOptions.widget.alt', {
-              context: isWidgetActive(widget) ? 'close' : 'open',
-              widget: widget.component,
-            })}
-          />
-        </Tooltip>
-      ))
+      // i18next-extract-mark-context-start ["", "synthesis"]
+      widgets.map(widget => {
+        const statusWidget = isWidgetActive(widget) ? 'close' : 'open';
+        return (
+          <Tooltip
+            key={widget.component}
+            className="layerstree-node-content__options__tooltip widgets"
+            content={statusWidget === 'open'
+              ? translate('terralego.visualizer.layerstree.itemOptions.widget.tooltip-open', {
+                context: widget.component,
+              }) : translate('terralego.visualizer.layerstree.itemOptions.widget.tooltip-close', {
+                context: widget.component,
+              })
+            }
+          >
+            <Button
+              className={classnames({
+                'layerstree-node-content__options__button': true,
+                'layerstree-node-content__options__button--active': isWidgetActive(widget),
+              })}
+              onClick={toggleWidgets(widget)}
+              minimal
+              icon="selection"
+              title={translate('terralego.visualizer.layerstree.itemOptions.widget.title', {
+                context: widget.component,
+              })}
+              alt={statusWidget === 'open'
+                ? translate('terralego.visualizer.layerstree.itemOptions.widget.alt-open', {
+                  context: widget.component,
+                }) : translate('terralego.visualizer.layerstree.itemOptions.widget.alt-close', {
+                  context: widget.component,
+                })
+              }
+            />
+          </Tooltip>
+        );
+      })
+      // i18next-extract-mark-context-stop
     )}
     {displayTableButton && (
       <Tooltip
