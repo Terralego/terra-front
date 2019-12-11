@@ -96,7 +96,7 @@ exports[`should render no tooltip if empty widget empty 1`] = `
 </div>
 `;
 
-exports[`should render with proporties 1`] = `
+exports[`should render with properties 1`] = `
 <div
   className="layerstree-node-content__options layerstree-node-content__options--desktop"
 >
@@ -111,13 +111,13 @@ exports[`should render with proporties 1`] = `
       onMouseLeave={[Function]}
     >
       <button
-        alt="close foo"
+        alt="close widget"
         className="bp3-button bp3-minimal layerstree-node-content__options__button layerstree-node-content__options__button--active"
         onClick={true}
         onKeyDown={[Function]}
         onKeyUp={[Function]}
         tabIndex={0}
-        title="widget foo"
+        title="widget"
         type="button"
       >
         <span

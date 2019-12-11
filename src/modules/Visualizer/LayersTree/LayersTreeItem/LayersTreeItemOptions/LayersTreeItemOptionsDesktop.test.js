@@ -18,7 +18,7 @@ it('should render default options', () => {
   expect(tree.toJSON()).toMatchSnapshot();
 });
 
-it('should render with proporties', () => {
+it('should render with properties', () => {
   const tree = renderer.create((
     <LayersTreeItemOptionsDesktop
       displayTableButton
@@ -50,7 +50,7 @@ it('should open widget', () => {
       toggleWidgets={jest.fn(() => true)}
     />
   ));
-  expect(wrapper.find('.widgets').props().content).toBe('open foo');
+  expect(wrapper.find('.widgets').props().content).toBe('open widget');
 });
 
 it('should close table', () => {

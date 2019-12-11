@@ -1,5 +1,7 @@
 import React from 'react';
 import renderer from 'react-test-renderer';
+import { shallow } from 'enzyme';
+
 import LayersTreeProvider from '../../LayersTreeProvider';
 import LayersTreeItemOptionsTablet from './LayersTreeItemOptionsTablet';
 
@@ -28,4 +30,40 @@ it('should render correctly with widget', () => {
     </LayersTreeProvider>
   )).toJSON();
   expect(tree).toMatchSnapshot();
+});
+
+it('should open widget', () => {
+  const wrapper = shallow((
+    <LayersTreeItemOptionsTablet
+      displayTableButton
+      form={[]}
+      widgets={[{ component: 'foo' }]}
+      isWidgetActive={() => 'close'}
+      toggleWidgets={() => true}
+    />
+  ));
+  expect(wrapper.find('.btn-widget').props().alt).toBe('close widget');
+});
+
+it('should close widget', () => {
+  const wrapper = shallow((
+    <LayersTreeItemOptionsTablet
+      displayTableButton
+      form={[]}
+      widgets={[{ component: 'foo' }]}
+      isWidgetActive={() => 'open'}
+      toggleWidgets={() => true}
+    />
+  ));
+  expect(wrapper.find('.btn-widget').props().alt).toBe('open widget');
+});
+
+it('should close table', () => {
+  const wrapper = shallow((
+    <LayersTreeItemOptionsTablet
+      displayTableButton
+      isTableActive
+    />
+  ));
+  expect(wrapper.find('.btn-table').props().alt).toBe('close table');
 });
