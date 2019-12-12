@@ -48,8 +48,8 @@ const LayersTreeItemFilters = ({
               layer,
               state: {
                 filters: { ...filtersValues, [property]: undefined },
+                total: undefined,
               },
-              total: undefined,
             })
           }
         >

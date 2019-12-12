@@ -82,8 +82,8 @@ it('should remove tag', () => {
     layer,
     state: {
       filters: {},
+      total: undefined,
     },
-    total: undefined,
   });
 });
 
