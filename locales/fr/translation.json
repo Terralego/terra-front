@@ -144,16 +144,12 @@
             "tooltip_close": "Fermer la vue tabulaire"
           },
           "widget": {
-            "title": "Widget le widget",
-            "title_synthesis": "Widget de synthèse",
-            "alt-close": "Fermer le widget",
-            "alt-close_synthesis": "Fermer la synthèse",
-            "alt-open": "Ouvrir le widget",
-            "alt-open_synthesis": "Ouvrir la synthèse",
-            "tooltip-close": "Fermer le widget",
-            "tooltip-close_synthesis": "Fermer la synthèse",
-            "tooltip-open": "Ouvrir le widget",
-            "tooltip-open_synthesis": "Ouvrir la synthèse"
+            "action-close": "Fermer le widget",
+            "action-close_synthesis": "Fermer la synthèse",
+            "action-open": "Ouvrir le widget",
+            "action-open_synthesis": "Ouvrir la synthèse",
+            "title": "Widget",
+            "title_synthesis": "Widget de synthèse"
           }
         },
         "warningzoom": {
