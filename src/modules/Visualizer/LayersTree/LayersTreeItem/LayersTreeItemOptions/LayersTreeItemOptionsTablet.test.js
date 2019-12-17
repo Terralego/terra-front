@@ -38,11 +38,11 @@ it('should open widget', () => {
       displayTableButton
       form={[]}
       widgets={[{ component: 'foo' }]}
-      isWidgetActive={() => 'close'}
+      isWidgetActive={() => false}
       toggleWidgets={() => true}
     />
   ));
-  expect(wrapper.find('.btn-widget').props().alt).toBe('close widget');
+  expect(wrapper.find('.btn-widget').props().alt).toBe('open widget');
 });
 
 it('should close widget', () => {
@@ -51,11 +51,11 @@ it('should close widget', () => {
       displayTableButton
       form={[]}
       widgets={[{ component: 'foo' }]}
-      isWidgetActive={() => 'open'}
+      isWidgetActive={() => true}
       toggleWidgets={() => true}
     />
   ));
-  expect(wrapper.find('.btn-widget').props().alt).toBe('open widget');
+  expect(wrapper.find('.btn-widget').props().alt).toBe('close widget');
 });
 
 it('should close table', () => {
