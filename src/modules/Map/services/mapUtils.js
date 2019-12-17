@@ -214,10 +214,32 @@ export function fitZoom ({ feature, map, padding = 0 }) {
   map.fitBounds(bbox({ type: 'FeatureCollection', features }), { padding });
 }
 
+const getTypeBefore = (type, types = LAYER_TYPES_ORDER) => {
+  const index = types.findIndex(t => t === type) - 1;
+  return index > -1 ? types[index] : undefined;
+};
+
+
+/**
+ * Returns
+ * - `layers` first layer id with the requested `type`
+ * - or `layers` first layer id with the first type available before the requested `type`
+ * - or `undefined`
+ *
+ * @param {object} type The type of a layer
+ * @param {array} layers The list of layers to find the requested id
+ * @return {string|undefined} The id of the requested layer or undefined if none found.
+ */
 export const getLayerBeforeId = (type, layers) => {
   const sameTypes = layers.filter(layer => type === layer.type);
 
-  if (!sameTypes.length) return undefined;
+  if (!sameTypes.length) {
+    const newType = getTypeBefore(type);
+    if (newType) {
+      return getLayerBeforeId(newType, layers);
+    }
+    return undefined;
+  }
 
   const lastOfSameType = sameTypes[sameTypes.length - 1];
 
