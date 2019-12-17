@@ -3,7 +3,7 @@ import renderer from 'react-test-renderer';
 import { shallow } from 'enzyme';
 import mapboxgl from 'mapbox-gl';
 
-import { MapComponent as Map, getLayerBeforeId } from './Map';
+import { MapComponent as Map } from './Map';
 import { updateCluster } from '../services/cluster';
 
 const props = {
@@ -375,52 +375,6 @@ it('should create layers', () => {
     id: 'layer5',
     type: 'symbol',
   }]);
-});
-
-it('should get layer before', () => {
-  expect(getLayerBeforeId('line', [{
-    type: 'line',
-    id: 'a',
-  }, {
-    type: 'line',
-    id: 'b',
-  }, {
-    type: 'line',
-    id: 'c',
-  }, {
-    type: 'circle',
-    id: 'd',
-  }])).toBe('d');
-
-  expect(getLayerBeforeId('circle', [{
-    type: 'line',
-    id: 'a',
-  }, {
-    type: 'line',
-    id: 'b',
-  }, {
-    type: 'line',
-    id: 'c',
-  }, {
-    type: 'circle',
-    id: 'd',
-  }])).toBe(undefined);
-
-  expect(getLayerBeforeId('fill', [{
-    type: 'fill',
-    id: 'a',
-  }, {
-    type: 'line',
-    id: 'b',
-  }, {
-    type: 'line',
-    id: 'c',
-  }, {
-    type: 'circle',
-    id: 'd',
-  }])).toBe('b');
-
-  expect(getLayerBeforeId('fill', [])).toBe(undefined);
 });
 
 it('should create cluster layer', () => {

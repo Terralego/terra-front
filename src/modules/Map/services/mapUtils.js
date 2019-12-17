@@ -4,6 +4,7 @@ import moize from 'moize';
 import { PREFIXES } from './cluster';
 
 export const PREV_STATE = {};
+export const LAYER_TYPES_ORDER = ['background', 'raster', 'hillshade', 'heatmap', 'fill', 'fill-extrusion', 'line', 'circle', 'symbol'];
 
 export const getRelatedLayers = moize({
   serializer: (map, layerId) => `${layerId}${map.getStyle().layers.map(id => id).join('')}`,
@@ -213,7 +214,28 @@ export function fitZoom ({ feature, map, padding = 0 }) {
   map.fitBounds(bbox({ type: 'FeatureCollection', features }), { padding });
 }
 
+export const getLayerBeforeId = (type, layers) => {
+  const sameTypes = layers.filter(layer => type === layer.type);
+
+  if (!sameTypes.length) return undefined;
+
+  const lastOfSameType = sameTypes[sameTypes.length - 1];
+
+  const pos = layers.findIndex(({ id }) => id === lastOfSameType.id) + 1;
+
+  return layers[pos] && layers[pos].id;
+};
+
+export const getOrderedLayers = (layers, layersTypes = LAYER_TYPES_ORDER) => {
+  const orderedLayers = [...layers];
+  return orderedLayers.sort(({ type: typeA }, { type: typeB }) => {
+    if (typeA === typeB) return 0;
+    return layersTypes.indexOf(typeA) - layersTypes.indexOf(typeB);
+  });
+};
+
 export default {
+  LAYER_TYPES_ORDER,
   toggleLayerVisibility,
   getOpacityProperty,
   setLayerOpacity,
@@ -221,4 +243,6 @@ export default {
   setInteractions,
   checkContraints,
   fitZoom,
+  getLayerBeforeId,
+  getOrderedLayers,
 };
