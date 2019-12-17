@@ -32,6 +32,7 @@ export const CONTROL_DRAW = 'DrawControl';
 export const CONTROL_PRINT = 'PrintControl';
 export const CONTROL_HOME = 'HomeControl';
 export const CONTROL_SHARE = 'ShareControl';
+export const CONTROL_CUSTOM = 'CustomControl';
 
 export const DEFAULT_CONTROLS = [{
   control: CONTROL_ATTRIBUTION,
@@ -99,6 +100,7 @@ export class MapComponent extends React.Component {
           CONTROL_PRINT,
           CONTROL_HOME,
           CONTROL_SHARE,
+          CONTROL_CUSTOM,
         ]),
         PropTypes.shape({
           onAdd: PropTypes.func,
@@ -464,6 +466,19 @@ export class MapComponent extends React.Component {
             ...props,
             map,
             ...params,
+          });
+          this.controls.push(controlInstance);
+          map.addControl(controlInstance, position);
+          break;
+        }
+        case CONTROL_CUSTOM: {
+          const { instance: CustomInstance, ...otherParams } = params;
+          if (!CustomInstance) {
+            return;
+          }
+          const controlInstance = new CustomInstance({
+            ...props,
+            ...otherParams,
           });
           this.controls.push(controlInstance);
           map.addControl(controlInstance, position);
