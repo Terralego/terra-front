@@ -231,7 +231,9 @@ const getTypeBefore = (type, types = LAYER_TYPES_ORDER) => {
  * @return {string|undefined} The id of the requested layer or undefined if none found.
  */
 export const getLayerBeforeId = (type, layers) => {
-  const sameTypes = layers.filter(layer => type === layer.type);
+  const isDrawLayer = layer => layer.id.startsWith('gl-draw');
+
+  const sameTypes = layers.filter(layer => type === layer.type && !isDrawLayer(layer));
 
   if (!sameTypes.length) {
     const newType = getTypeBefore(type);
