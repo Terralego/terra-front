@@ -4,6 +4,7 @@ import PropTypes from 'prop-types';
 import 'mapbox-gl/dist/mapbox-gl.css';
 import { detailedDiff } from 'deep-object-diff';
 
+import { getOrderedLayers, getLayerBeforeId, LAYER_TYPES_ORDER } from '../services/mapUtils';
 import { updateCluster } from '../services/cluster';
 
 import SearchControl from './components/SearchControl';
@@ -43,20 +44,6 @@ export const DEFAULT_CONTROLS = [{
   control: CONTROL_SCALE,
   position: CONTROLS_BOTTOM_LEFT,
 }];
-
-export function getLayerBeforeId (type, layers) {
-  const sameTypes = layers.filter(({ type: lType }) => type === lType);
-
-  if (!sameTypes.length) return undefined;
-
-  const lastOfSameType = sameTypes[sameTypes.length - 1];
-
-  const pos = layers.findIndex(({ id }) => id === lastOfSameType.id) + 1;
-
-  return layers[pos] && layers[pos].id;
-}
-
-export const LAYERS_TYPES = ['background', 'raster', 'hillshade', 'heatmap', 'fill', 'fill-extrusion', 'line', 'circle', 'symbol'];
 
 const defaultTranslate = translateMock({
   'terralego.map.zoom_in_control.title': 'Zoom in',
@@ -131,7 +118,7 @@ export class MapComponent extends React.Component {
         id: PropTypes.string.isRequired,
         source: PropTypes.oneOfType([PropTypes.string, PropTypes.object]),
         'source-layer': PropTypes.string,
-        type: PropTypes.oneOf(LAYERS_TYPES).isRequired,
+        type: PropTypes.oneOf(LAYER_TYPES_ORDER).isRequired,
         paint: PropTypes.object,
         layout: PropTypes.shape({
           visibility: PropTypes.oneOf(['visible', 'none']),
@@ -298,11 +285,7 @@ export class MapComponent extends React.Component {
     const { map } = this.props;
     const { layers: allLayers } = map.getStyle();
     sources.forEach(({ id, ...sourceAttrs }) => map.addSource(id, sourceAttrs));
-    const orderedLayers = [...layers];
-    orderedLayers.sort(({ type: typeA }, { type: typeB }) => {
-      if (typeA === typeB) return 0;
-      return LAYERS_TYPES.indexOf(typeA) - LAYERS_TYPES.indexOf(typeB);
-    });
+    const orderedLayers = getOrderedLayers(layers);
     orderedLayers.forEach(layer => {
       if (layer.cluster) return this.createClusterLayer(layer);
       const { type } = layer;
