@@ -73,7 +73,7 @@ const LayersTreeItemOptionsDesktop = ({
             <Button
               className={classnames({
                 'layerstree-node-content__options__button': true,
-                'layerstree-node-content__options__button--active': isWidgetActive(widget),
+                'layerstree-node-content__options__button--active': isActive,
               })}
               onClick={toggleWidgets(widget)}
               minimal
