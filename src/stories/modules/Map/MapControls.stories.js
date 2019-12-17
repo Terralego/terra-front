@@ -3,6 +3,7 @@ import { storiesOf } from '@storybook/react';
 
 import { boolean, object } from '@storybook/addon-knobs';
 import { action } from '@storybook/addon-actions';
+import HomeControl from '../../../modules/Map/Map/components/HomeControl';
 
 import {
   CONTROLS_TOP_RIGHT,
@@ -14,6 +15,7 @@ import {
   CONTROL_PRINT,
   CONTROL_HOME,
   CONTROL_SHARE,
+  CONTROL_CUSTOM,
 } from '../../../modules/Map/Map';
 import InteractiveMap, {
   CONTROL_BACKGROUND_STYLES,
@@ -123,7 +125,12 @@ storiesOf('Map components/InteractiveMap', module).add('Custom controls ', () =>
           combine_features: boolean('Display control "combine_features"', true, CONTROL_DRAW),
           uncombine_features: boolean('Display control "uncombine_features"', true, CONTROL_DRAW),
         },
-      }].filter(a => a)}
+      }, boolean('Display Custom control', true, CONTROL_CUSTOM) && {
+        control: CONTROL_CUSTOM,
+        position: CONTROLS_TOP_LEFT,
+        instance: HomeControl,
+      },
+      ].filter(Boolean)}
     />
   </div>
 ), {
