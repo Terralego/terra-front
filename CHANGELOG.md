@@ -1,4 +1,19 @@
 
+1.15.0 / 2020-01-06
+===================
+
+  * Bump handlebars from 4.1.2 to 4.5.3
+  * Re-add missing url for package-lock resolved keys
+  * Add custom control to the list of Map controls
+  * Never get Draw layer id referer to insert custom layer
+  * Get layer's type before the one requested if it does not exist
+  * Move functions from Map Component to mapUtils file
+  * Add and Update widget translations
+  * Remove a warning on duplicate key
+  * Fix total is not unset on filter removal
+  * Add locales for drawControl buttons
+  * Fix bug on layer selection with active filter
+
 1.14.3 / 2019-12-09
 ===================
 
