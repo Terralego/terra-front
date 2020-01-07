@@ -6,7 +6,9 @@ import { object } from '@storybook/addon-knobs';
 import LayersTreeProvider from '../../../modules/Visualizer/LayersTree/LayersTreeProvider';
 import LayersTreeSingle, { LayersTree as ConnectedLayersTree, connectLayersTree } from '../../../modules/Visualizer/LayersTree';
 import LayersTree from '../../../modules/Visualizer/LayersTree/LayersTree';
-import layersTreeConfig from './layersTree';
+import layersTreeConfig, { storyLayersTreeConfig } from './layersTree';
+import Story from '../../../modules/Visualizer/Story/Story';
+import { layersTreeToStory } from '../../../modules/Visualizer/services/layersTreeUtils';
 
 const stories = storiesOf('Components/LayersTree', module);
 
@@ -54,6 +56,12 @@ stories.add('LayersTree', () => (
     propTablesExclude: [LayersTreeSingle],
   },
 });
+
+stories.add('Storytelling', () => (
+  <div style={{ maxWidth: '20rem' }}>
+    <Story story={layersTreeToStory(storyLayersTreeConfig)} />
+  </div>
+));
 
 const Debug = connectLayersTree('layersTreeState')(({ layersTreeState }) => (
   <pre>{JSON.stringify(Array.from(layersTreeState), null, 2)}</pre>
