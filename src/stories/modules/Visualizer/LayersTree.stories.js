@@ -12,6 +12,13 @@ import { layersTreeToStory } from '../../../modules/Visualizer/services/layersTr
 
 const stories = storiesOf('Components/LayersTree', module);
 
+const knobsOptions = {
+  knobs: {
+    timestamps: true, // Doesn't emit events while user is typing.
+    escapeHTML: false,
+  },
+};
+
 LayersTreeSingle.displayName = 'LayersTree';
 LayersTree.displayName = 'LayersTree';
 
@@ -59,9 +66,15 @@ stories.add('LayersTree', () => (
 
 stories.add('Storytelling', () => (
   <div style={{ maxWidth: '20rem' }}>
-    <Story story={layersTreeToStory(storyLayersTreeConfig)} />
+    <Story story={layersTreeToStory(object('storyLayersTreeConfig', storyLayersTreeConfig))} />
   </div>
-));
+), knobsOptions);
+
+stories.add('Storytelling with std LayersTree', () => (
+  <div style={{ maxWidth: '20rem' }}>
+    <Story story={layersTreeToStory(object('layersTreeConfig', layersTreeConfig))} />
+  </div>
+), knobsOptions);
 
 const Debug = connectLayersTree('layersTreeState')(({ layersTreeState }) => (
   <pre>{JSON.stringify(Array.from(layersTreeState), null, 2)}</pre>

@@ -535,7 +535,3 @@ it('should generate story from layerstree', () => {
     }],
   });
 });
-
-it('should fail to generate a story', () => {
-  expect(() => layersTreeToStory([{ label: 'fail' }])).toThrow('Story\'s layers should be in a group');
-});

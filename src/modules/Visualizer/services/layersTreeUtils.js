@@ -261,17 +261,38 @@ export const fetchPropertyRange = async (layer, { property }) => {
 };
 
 /**
+ * Transform a layersTree into a flat array of layers
+ */
+const flattenLayersTreeGroup = tree => {
+  const layers = [];
+
+  tree.forEach(treeNode => {
+    if (treeNode.label) {
+      layers.push(treeNode);
+    }
+
+    if (treeNode.layers) {
+      layers.push(...flattenLayersTreeGroup(treeNode.layers));
+    }
+  });
+
+  return layers;
+};
+
+/**
  * Story type view needs a specfic format.
  */
 export const layersTreeToStory = layersTree => {
-  if (!layersTree[0] || !layersTree[0].layers) {
-    throw new Error('Story\'s layers should be in a group');
-  }
-  const story = layersTree[0].layers.reduce(({
+  const arrayOfLayers = flattenLayersTreeGroup(layersTree);
+
+  const story = arrayOfLayers.reduce(({
     beforeEach: [beforeEachConfig],
     slides,
   }, {
-    label: title, content, layers, ...layerAttrs
+    label: title,
+    content = '',
+    layers = [],
+    ...layerAttrs
   }) => ({
     beforeEach: [{
       ...beforeEachConfig,
