@@ -1,4 +1,10 @@
 
+1.16.0 / 2020-01-08
+===================
+
+  * Allow Story(telling) to manage any layersTree structure
+  * Add Storybook story for Story(telling) component
+
 1.15.0 / 2020-01-06
 ===================
 
