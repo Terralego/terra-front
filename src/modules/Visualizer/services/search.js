@@ -2,7 +2,6 @@ import elasticsearch from 'elasticsearch';
 import bodybuilder from 'bodybuilder';
 import debounce from 'lodash.debounce';
 
-export const DEFAULT_INDEX = '_all';
 export const MAX_SIZE = 10000;
 export const SEARCHES_QUEUE = new Set();
 
@@ -56,15 +55,15 @@ export const getSearchParamFromProperty = (properties, form, key) => {
 
 /**
  * Build an Elastic Search query
- * @param {String} query A literal query
- * @param {Array} boundingBox Boundingbox to restrict results
- * @param {Number} size Max number of results to fetch
- * @param {Array} properties Array of properties.
+ * @param {String} [query] A literal query
+ * @param {Array} [boundingBox] Boundingbox to restrict results
+ * @param {Number} [size=MAX_SIZE] Max number of results to fetch
+ * @param {{}} [properties] Object representing properties.
  *   Each property should be a key/value association. Value may be a single
  *   value or an object describing the value and type
- * @param {String[]} include List of fields to include in results hits
- * @param {String[]} exclude List of fields to exclude in results hits.
- * @param {Object[]} Array of aggregations definition.
+ * @param {String[]} [include] List of fields to include in results hits
+ * @param {String[]} [exclude] List of fields to exclude in results hits.
+ * @param {Object[]} [aggregations] Array of aggregations definition.
  *   Each aggregation will take a type, a field, a name and options.
  *    See https://bodybuilder.js.org/docs/#aggregation
  */
@@ -155,6 +154,17 @@ export class Search {
     this.client = new elasticsearch.Client({ host });
   }
 
+  /**
+   * Perform a single search
+   *
+   * For performance purposes, this search is added to a queue, which is sent
+   * as multi-search (msearch).
+   *
+   * @param {String} query
+   * @see buildQuery()
+   * @param {String} [query.index] The ES index to search on
+   * @return {Promise<unknown>}
+   */
   async search (query = {/*
     query = '',
     boundingBox,
@@ -164,9 +174,13 @@ export class Search {
     index = DEFAULT_INDEX,
   */}) {
     const body = buildQuery(query);
+    const { index } = query;
     const action = {
       body,
     };
+    if (index) {
+      action.header = { index };
+    }
     const promise = new Promise(resolve => {
       action.resolve = resolve;
     });
@@ -176,6 +190,13 @@ export class Search {
     return promise;
   }
 
+  /**
+   * Perform a multi-search
+   *
+   * @see search()
+   *
+   * @param queries
+   */
   async msearch (queries = [/* {
       query: String,q
       include: String,
@@ -186,22 +207,37 @@ export class Search {
     } */]) {
     if (!queries.length) throw new Error('`queries` must not be empty');
 
+    const defaultSize = MAX_SIZE / queries.length;
     const searches = queries
-      .map(({ size = MAX_SIZE / queries.length, ...query }) => buildQuery({ size, ...query }))
-      .reduce((body, query) => [...body, { }, query],
+      .map(
+        ({ size = defaultSize, index, ...query }) =>
+          [{ index }, buildQuery({ size, ...query })],
+      )
+      .reduce((body, [header, query]) => [...body, header, query],
         []);
     return this.client.msearch({ body: searches });
   }
 
+  /**
+   * Consume SEARCHES_QUEUE as a batch of queries and send them as msearch.
+   */
   batchSearch = debounce(async () => {
-    const [bodies, resolves] = Array
+    // Consume the queue and reduce it to headers, bodies and resolvers
+    const [headers, bodies, resolves] = Array
       .from(SEARCHES_QUEUE.values())
-      .reduce(([allBodies, allResolves], { body, resolve }) =>
-        [[...allBodies, body], [...allResolves, resolve]], [[], []]);
+      .reduce(
+        ([allHeaders, allBodies, allResolves], { header = {}, body, resolve }) =>
+          [[...allHeaders, header], [...allBodies, body], [...allResolves, resolve]],
+        [[], [], []],
+      );
+
+    // Reduce headers and bodies to a single body to be sent through ES client
     const batchBody = bodies
-      .reduce((body, query) => [...body, { }, query],
-        []);
+      .map((body, index) => ([headers[index], body]))
+      .reduce((body, [header, query]) => [...body, header, query], []);
     SEARCHES_QUEUE.clear();
+
+    // Perform the request and run all responses through the corresponding resolver
     const { responses } = await this.client.msearch({ body: batchBody });
     resolves.forEach((resolve, index) => resolve(responses[index]));
   }, 500)

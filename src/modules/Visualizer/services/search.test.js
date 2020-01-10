@@ -348,6 +348,32 @@ it('should search empty query', () => {
   expect(searchService.batchSearch).toHaveBeenCalled();
 });
 
+it('should search handling indexes', async () => {
+  const body = { query: { query_string: { query: '*foo*' } }, size: MAX_SIZE };
+  const searchService = new Search();
+  searchService.client.msearch = jest.fn();
+  searchService.search({
+    query: 'foo',
+  });
+  expect(searchService.client.msearch).toHaveBeenCalledWith({
+    body: [
+      { },
+      body,
+    ],
+  });
+
+  searchService.search({
+    query: 'foo',
+    index: 'bar',
+  });
+  expect(searchService.client.msearch).toHaveBeenCalledWith({
+    body: [
+      { index: 'bar' },
+      body,
+    ],
+  });
+});
+
 it('should batch many queries', () => {
   const searchService = new Search();
   searchService.batchSearch = jest.fn();
@@ -415,23 +441,29 @@ it('should search many queries', () => {
     query: 'foo',
   }, {
     query: 'bar',
+    index: 'foobar',
   }]);
   expect(client.msearch).toHaveBeenCalledWith({
-    body: [{}, {
-      query: {
-        query_string: {
-          query: '*foo*',
+    body: [
+      {},
+      {
+        query: {
+          query_string: {
+            query: '*foo*',
+          },
         },
+        size: MAX_SIZE / 2,
       },
-      size: MAX_SIZE / 2,
-    }, {}, {
-      query: {
-        query_string: {
-          query: '*bar*',
+      { index: 'foobar' },
+      {
+        query: {
+          query_string: {
+            query: '*bar*',
+          },
         },
+        size: MAX_SIZE / 2,
       },
-      size: MAX_SIZE / 2,
-    }],
+    ],
   });
 });
 
