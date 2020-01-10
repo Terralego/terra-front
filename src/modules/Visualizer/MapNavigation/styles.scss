@@ -1,4 +1,4 @@
-@import '../../../utils/variables.scss'; 
+@import '../../../utils/variables.scss';
 
 .map-navigation {
   position: relative;
@@ -13,8 +13,8 @@
   flex-shrink: 0;
   border-radius: 0;
   z-index: 80;
-  box-shadow: .5rem 0 .5rem .5rem rgba(16,22,26,0.20), .6rem .5rem 1.5rem 0 rgba(16,22,26,0.40);  
-  
+  box-shadow: .5rem 0 .5rem .5rem rgba(16,22,26,0.20), .6rem .5rem 1.5rem 0 rgba(16,22,26,0.40);
+
   &__header {
     opacity: 1;
     width: 100%;
@@ -88,7 +88,7 @@
       &__button {
         transform: scaleX(-1) translate3d(-0.5rem, 0, 0);
       }
-  
+
       &__content {
         opacity: 1;
       }
@@ -98,7 +98,7 @@
 
 // Styles relative to DarkTheme
 .bp3-dark {
- 
+
   .map-navigation__content {
     scrollbar-color: #202B33 #30404D;
   }
@@ -106,7 +106,7 @@
   .map-navigation__content::-webkit-scrollbar-track {
     background-color: #30404D;
   }
-  
+
   .map-navigation__content::-webkit-scrollbar-thumb {
     background-color: #202B33;
   }
@@ -119,12 +119,12 @@
     width: 17.5rem;
     margin-left: -17.5rem;
     transition: margin $transitionSpeed ease-in;
-  
+
     &__title {
       margin-top: .5rem / $scaleRatio;
       font-size: 1.2rem / $scaleRatio;
     }
-  
+
     &__button {
       width: 1.5rem / $scaleRatio;
       height: 1.5rem / $scaleRatio;
@@ -149,17 +149,17 @@
     .map-navigation {
       width: 14rem;
       margin-left: -14rem;
-      
+
       &__title {
         font-size: 1.2rem / $scaleRatio;
       }
-  
+
       &__content {
         .layerstree-panel-list {
           padding: 0 .25rem 0 .5rem;
         }
       }
-  
+
       &__content::-webkit-scrollbar {
         width: .5rem / $scaleRatio;
       }

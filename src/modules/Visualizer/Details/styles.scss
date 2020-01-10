@@ -62,7 +62,7 @@
       right: 0;
       left: 0;
       transform: translateY(-50%) scale(1.5);
-    } 
+    }
   }
 
   .details {
@@ -76,7 +76,7 @@
       left: 50%;
       transform: translate(-50%);
     }
-    
+
     &__title {
       text-align: center;
       font-size: 1.6rem;
@@ -91,7 +91,7 @@
       padding: 0;
       margin: 0;
       display: table;
-      
+
       &__amenity {
         display: flex;
         flex-direction: row;
@@ -160,24 +160,24 @@
 @media(min-width: $breakpoints-tablet) and (max-width: $breakpoints-desktop) and (orientation: landscape) {
   .view-details {
     width: 16.5rem;
-  
+
     &__close-button {
       top: .25rem;
       right: .25rem;
     }
-  
+
     &__wrapper {
       display: flex;
       overflow-x: hidden;
       overflow-y: auto;
       height: 100%;
     }
-  
+
     &__content {
       flex: auto;
       min-width: 0;
     }
-  
+
     .details {
       padding: .5rem / $scaleRatio;
 
@@ -185,58 +185,58 @@
         width: 4.25rem;
         margin: auto;
       }
-  
+
       &__title {
         font-size: 1.6rem/$scaleRatio;
         margin: .75rem 0;
       }
-  
+
       &__group {
         margin-top: .5rem/$scaleRatio;
       }
       &__group:first-child {
         margin-top: 0;
       }
-  
+
       &__list {
         padding: 0;
         margin: 0;
         display: flex;
         flex-direction: column;
-        
+
         &__amenity {
           display: flex;
           flex-direction: row;
           justify-content: space-between;
           padding: 0;
-  
+
           &__img {
             width: 2.25rem/$scaleRatio;
             height: 2.25rem/$scaleRatio;
           }
         }
       }
-  
+
       &__times {
         display: flex;
         flex-direction: row;
         justify-content: space-around;
         padding: 0;
       }
-  
+
       &__column {
         display: flex;
         flex-direction: column;
-  
+
         &-label {
           display: flex;
           padding-bottom: .5rem/$scaleRatio;
         }
-  
+
         &-value {
           display: flex;
           padding-bottom: 1.2rem;
-          
+
           &-time {
             display: flex;
             flex-direction: column;
@@ -267,7 +267,7 @@
         min-height: .75rem;
         padding: 0;
         outline: none;
-      } 
+      }
     }
   }
 }
@@ -275,24 +275,24 @@
 @media(min-width: $breakpoints-phone) and (max-width: $breakpoints-tablet) and (orientation: portrait) {
   .view-details {
     width: 16.5rem;
-  
+
     &__close-button {
       top: .25rem;
       right: .25rem;
     }
-  
+
     &__wrapper {
       display: flex;
       overflow-x: hidden;
       overflow-y: auto;
       height: 100%;
     }
-  
+
     &__content {
       flex: auto;
       min-width: 0;
     }
-  
+
     .details {
       padding: .5rem / $scaleRatio;
 
@@ -300,58 +300,58 @@
         width: 4.25rem;
         margin: auto;
       }
-  
+
       &__title {
         font-size: 1.6rem/$scaleRatio;
         margin: .75rem 0;
       }
-  
+
       &__group {
         margin-top: .5rem/$scaleRatio;
       }
       &__group:first-child {
         margin-top: 0;
       }
-  
+
       &__list {
         padding: 0;
         margin: 0;
         display: flex;
         flex-direction: column;
-        
+
         &__amenity {
           display: flex;
           flex-direction: row;
           justify-content: space-between;
           padding: 0;
-  
+
           &__img {
             width: 2.25rem/$scaleRatio;
             height: 2.25rem/$scaleRatio;
           }
         }
       }
-  
+
       &__times {
         display: flex;
         flex-direction: row;
         justify-content: space-around;
         padding: 0;
       }
-  
+
       &__column {
         display: flex;
         flex-direction: column;
-  
+
         &-label {
           display: flex;
           padding-bottom: .5rem/$scaleRatio;
         }
-  
+
         &-value {
           display: flex;
           padding-bottom: 1.2rem;
-          
+
           &-time {
             display: flex;
             flex-direction: column;
@@ -382,7 +382,7 @@
         min-height: .75rem;
         padding: 0;
         outline: none;
-      } 
+      }
     }
   }
 }

@@ -21,7 +21,7 @@ $transitionSpeed: 0.15s;
     0 8px 24px 0 rgba(16,22,26,0.40);
   transform: scale3d(.9, .9, .9);
   max-height: 100vh;
-  
+
   &--visible {
     opacity: 1;
     transform: scale3d(1, 1, 1);
@@ -84,7 +84,7 @@ $transitionSpeed: 0.15s;
     padding: 0 0 .6rem;
   }
 
-  .control-label { 
+  .control-label {
     border-top: .5px solid #293742;
     padding-top: .3rem;
     margin: 1rem 0;
@@ -148,7 +148,7 @@ $transitionSpeed: 0.15s;
     &__form::-webkit-scrollbar-track , .bp3-select-popover .bp3-menu::-webkit-scrollbar-track {
       background-color: #30404D;
     }
-    
+
     &__form::-webkit-scrollbar-thumb, .bp3-select-popover .bp3-menu::-webkit-scrollbar-thumb {
       background-color: #202B33;
     }
@@ -159,7 +159,7 @@ $transitionSpeed: 0.15s;
   .filters-panel {
     width: 18rem / $scaleRatio;
     margin-left: 5.4rem;
-    
+
     &__arrow {
       $width: 2rem / $scaleRatio;
       margin-top: -0.125rem / $scaleRatio;
@@ -200,7 +200,7 @@ $transitionSpeed: 0.15s;
       max-width: 40rem / $scaleRatio;
       max-height: 30rem / $scaleRatio;
       font-size: .875rem / $scaleRatio;
-      
+
       .control-container__item li {
         padding: .5rem;
       }

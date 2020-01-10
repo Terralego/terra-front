@@ -28,4 +28,3 @@ which take number of pixels as values.
 measured in pixels.
 
 You can change the default map bounds options at the time of first map initialisation or when the flyTo and  animations are running.  
-

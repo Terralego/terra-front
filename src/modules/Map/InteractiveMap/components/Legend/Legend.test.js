@@ -87,11 +87,11 @@ it('should render a manual legend', () => {
   const template =
 `# Hello World
 
-<square color="red" /> foo  
-<square color="green" /> bar  
+<square color="red" /> foo
+<square color="green" /> bar
 
-<circle color="red" /> foo  
-<circle color="green" /> bar  
+<circle color="red" /> foo
+<circle color="green" /> bar
 `;
   const tree = renderer.create(
     <Legend

@@ -1,4 +1,4 @@
-@import '../../../../../utils/variables.scss'; 
+@import '../../../../../utils/variables.scss';
 
 .mapboxgl-ctrl-share {
     z-index: 130;
@@ -10,7 +10,7 @@
 @media(min-width: $breakpoints-phone) and (max-width: $breakpoints-tablet) and (orientation: portrait) {
   .mapboxgl-ctrl-share {
     max-width: 15rem;
-    
+
     .bp3-input {
       max-width: 6rem;
       overflow: hidden;

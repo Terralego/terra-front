@@ -1,9 +1,9 @@
-@import '../../../../../utils/variables.scss'; 
+@import '../../../../../utils/variables.scss';
 
 .layerNode-Option-Container {
   width: 100%;
   padding: .5rem 0;
-  
+
   .bp3-slider {
     width: calc(100% - .5rem);
     span {
@@ -29,7 +29,7 @@
 @media(min-width: $breakpoints-phone) and (max-width: $breakpoints-desktop) {
   .layerNode-Option-Container {
     padding: 1rem 0;
-    
+
     .bp3-slider {
       width: calc(100% - .5rem / #{$scaleRatio});
       span {
@@ -37,13 +37,13 @@
       }
     }
   }
-  
+
   .layerNode-Option-slider-label {
     font-size: .75rem / $scaleRatio;
     line-height: .9rem / $scaleRatio;
     margin-bottom: .25rem / $scaleRatio;
   }
-  
+
   .layerNode-Option-button:not(:last-of-type) {
     margin-right: .75rem / $scaleRatio;
   }

@@ -1,0 +1,19 @@
+repos:
+  - repo: https://github.com/pre-commit/pre-commit-hooks
+    rev: v2.0.0
+    hooks:
+      - id: trailing-whitespace
+        exclude: ^.*\.(snap|md)$
+      - id: end-of-file-fixer
+        exclude: locales/fr/translation.json
+      - id: check-json
+        exclude: ^\.babelrc$
+      - id: check-added-large-files
+      - id: no-commit-to-branch
+  - repo: local
+    hooks:
+      - id: eslint
+        name: eslint
+        language: node
+        entry: npx --no-install eslint --fix
+        types: [javascript]

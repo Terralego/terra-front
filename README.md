@@ -65,4 +65,3 @@ A fully configurable visualizer displaying a layers tree, a map and able to make
 ## Customization
 
 Every component should be configurable by passing replacement props from TerraFrontProvider.
-
