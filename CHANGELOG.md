@@ -1,4 +1,10 @@
 
+1.17.1 / 2020-01-10
+===================
+
+  * Simplify doc, reorder reducer returns
+  * Handle indexes in Search client
+
 1.17.0 / 2020-01-09
 ===================
 
