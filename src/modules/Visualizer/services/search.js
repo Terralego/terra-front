@@ -2,7 +2,6 @@ import elasticsearch from 'elasticsearch';
 import bodybuilder from 'bodybuilder';
 import debounce from 'lodash.debounce';
 
-export const DEFAULT_INDEX = '_all';
 export const MAX_SIZE = 10000;
 export const SEARCHES_QUEUE = new Set();
 
@@ -56,15 +55,15 @@ export const getSearchParamFromProperty = (properties, form, key) => {
 
 /**
  * Build an Elastic Search query
- * @param {String} query A literal query
- * @param {Array} boundingBox Boundingbox to restrict results
- * @param {Number} size Max number of results to fetch
- * @param {Array} properties Array of properties.
+ * @param {String} [query] A literal query
+ * @param {Array} [boundingBox] Boundingbox to restrict results
+ * @param {Number} [size=MAX_SIZE] Max number of results to fetch
+ * @param {{}} [properties] Object representing properties.
  *   Each property should be a key/value association. Value may be a single
  *   value or an object describing the value and type
- * @param {String[]} include List of fields to include in results hits
- * @param {String[]} exclude List of fields to exclude in results hits.
- * @param {Object[]} Array of aggregations definition.
+ * @param {String[]} [include] List of fields to include in results hits
+ * @param {String[]} [exclude] List of fields to exclude in results hits.
+ * @param {Object[]} [aggregations] Array of aggregations definition.
  *   Each aggregation will take a type, a field, a name and options.
  *    See https://bodybuilder.js.org/docs/#aggregation
  */
@@ -161,12 +160,9 @@ export class Search {
    * For performance purposes, this search is added to a queue, which is sent
    * as multi-search (msearch).
    *
-   * @param {{}} query.query
-   * @param {String} query.boundingBox - Boundingbox to restrict results
-   * @param {{}} query.properties
-   * @param {String[]} query.include - List of fields to include in results hits
-   * @param {Number} [query.size=MAX_SIZE] - Max number of results to fetch
-   * @param {String} [query.index=DEFAULT_INDEX]
+   * @param {String} query
+   * @see buildQuery()
+   * @param {String} [query.index] The ES index to search on
    * @return {Promise<unknown>}
    */
   async search (query = {/*
@@ -178,11 +174,11 @@ export class Search {
     index = DEFAULT_INDEX,
   */}) {
     const body = buildQuery(query);
-    const { index = DEFAULT_INDEX } = query;
+    const { index } = query;
     const action = {
       body,
     };
-    if (index !== DEFAULT_INDEX) {
+    if (index) {
       action.header = { index };
     }
     const promise = new Promise(resolve => {
@@ -211,9 +207,10 @@ export class Search {
     } */]) {
     if (!queries.length) throw new Error('`queries` must not be empty');
 
+    const defaultSize = MAX_SIZE / queries.length;
     const searches = queries
       .map(
-        ({ size = MAX_SIZE / queries.length, index, ...query }) =>
+        ({ size = defaultSize, index, ...query }) =>
           [{ index }, buildQuery({ size, ...query })],
       )
       .reduce((body, [header, query]) => [...body, header, query],
@@ -226,11 +223,11 @@ export class Search {
    */
   batchSearch = debounce(async () => {
     // Consume the queue and reduce it to headers, bodies and resolvers
-    const [bodies, resolves, headers] = Array
+    const [headers, bodies, resolves] = Array
       .from(SEARCHES_QUEUE.values())
       .reduce(
-        ([allBodies, allResolves, allHeaders], { body, resolve, header = {} }) =>
-          [[...allBodies, body], [...allResolves, resolve], [...allHeaders, header]],
+        ([allHeaders, allBodies, allResolves], { header = {}, body, resolve }) =>
+          [[...allHeaders, header], [...allBodies, body], [...allResolves, resolve]],
         [[], [], []],
       );
 
