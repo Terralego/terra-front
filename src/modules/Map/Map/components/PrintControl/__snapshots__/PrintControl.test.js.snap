@@ -11,18 +11,17 @@ exports[`should render 1`] = `
     onMouseEnter={[Function]}
     onMouseLeave={[Function]}
   >
-    <button
-      aria-label="Print to PDF"
-      className="mapboxgl-ctrl-icon"
-      tabIndex={0}
-      type="button"
+    <span
+      className="bp3-popover-wrapper popoverPos"
     >
       <span
-        className="bp3-popover-wrapper popoverPos"
+        className="bp3-popover-target"
+        onClick={[Function]}
       >
-        <span
-          className="bp3-popover-target"
-          onClick={[Function]}
+        <button
+          aria-label="Print to PDF"
+          className="mapboxgl-ctrl-icon"
+          type="button"
         >
           <span
             className="bp3-icon bp3-icon-print"
@@ -43,9 +42,9 @@ exports[`should render 1`] = `
               />
             </svg>
           </span>
-        </span>
+        </button>
       </span>
-    </button>
+    </span>
   </span>
 </span>
 `;
@@ -61,18 +60,17 @@ exports[`should render exporting 1`] = `
     onMouseEnter={[Function]}
     onMouseLeave={[Function]}
   >
-    <button
-      aria-label="Print to PDF"
-      className="mapboxgl-ctrl-icon"
-      tabIndex={0}
-      type="button"
+    <span
+      className="bp3-popover-wrapper popoverPos"
     >
       <span
-        className="bp3-popover-wrapper popoverPos"
+        className="bp3-popover-target"
+        onClick={[Function]}
       >
-        <span
-          className="bp3-popover-target"
-          onClick={[Function]}
+        <button
+          aria-label="Print to PDF"
+          className="mapboxgl-ctrl-icon"
+          type="button"
         >
           <span
             className="bp3-icon bp3-icon-print"
@@ -93,9 +91,9 @@ exports[`should render exporting 1`] = `
               />
             </svg>
           </span>
-        </span>
+        </button>
       </span>
-    </button>
+    </span>
   </span>
 </span>
 `;

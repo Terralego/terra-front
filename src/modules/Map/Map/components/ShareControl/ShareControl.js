@@ -110,20 +110,14 @@ export class ShareControl extends AbstractMapControl {
       <Tooltip
         content={translate('terralego.map.share_control.link')}
       >
-        <button
-          className="mapboxgl-ctrl-icon"
-          type="button"
-          onClick={this.generateHashString}
-          aria-label={translate('terralego.map.share_control.link')}
-        >
-          <Popover
-            position={PopoverPosition.RIGHT}
-            content={(
-              <ControlGroup
-                className="mapboxgl-ctrl-share"
-                fill
-              >
-                {link && (
+        <Popover
+          position={PopoverPosition.RIGHT}
+          content={(
+            <ControlGroup
+              className="mapboxgl-ctrl-share"
+              fill
+            >
+              {link && (
                 <>
                   <input
                     className="bp3-input"
@@ -143,30 +137,36 @@ export class ShareControl extends AbstractMapControl {
                     {copySuccess && translate('terralego.map.share_control.copied')}
                   </Popover>
                 </>
-                )}
-                {['twitter', 'facebook', 'linkedin'].map(network => this.props[network] && (
-                  <Tooltip
-                    className={`share__btn-tooltip share__btn-tooltip--${network}`}
-                    key={network}
-                    content={translate('terralego.map.share_control.share', {
-                      context: network.charAt(0).toUpperCase() + network.slice(1),
-                    })}
-                    openOnTargetFocus={false}
-                  >
-                    <Button
-                      className={`share__btn share__btn--${network}`}
-                      onClick={this.share(network)}
-                    >
-                      <img src={icon(network)} alt={network} />
-                    </Button>
-                  </Tooltip>
-                ))}
-              </ControlGroup>
               )}
+              {['twitter', 'facebook', 'linkedin'].map(network => this.props[network] && (
+              <Tooltip
+                className={`share__btn-tooltip share__btn-tooltip--${network}`}
+                key={network}
+                content={translate('terralego.map.share_control.share', {
+                  context: network.charAt(0).toUpperCase() + network.slice(1),
+                })}
+                openOnTargetFocus={false}
+              >
+                <Button
+                  className={`share__btn share__btn--${network}`}
+                  onClick={this.share(network)}
+                >
+                  <img src={icon(network)} alt={network} />
+                </Button>
+              </Tooltip>
+              ))}
+            </ControlGroup>
+              )}
+        >
+          <button
+            className="mapboxgl-ctrl-icon"
+            type="button"
+            onClick={this.generateHashString}
+            aria-label={translate('terralego.map.share_control.link')}
           >
             <Icon icon="share" />
-          </Popover>
-        </button>
+          </button>
+        </Popover>
       </Tooltip>
     );
   }

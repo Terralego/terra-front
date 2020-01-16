@@ -40,33 +40,34 @@ export class BackgroundStyles extends AbstractMapControl {
       <Tooltip
         content={translate('terralego.map.backgroundstyles_control.button_label')}
       >
-        <button
-          className="mapboxgl-ctrl-icon"
-          type="button"
-        >
-          <Popover
-            className="popoverPos"
-            content={(
-              <div className="radioGroup">
-                <RadioGroup
-                  onChange={onChange}
-                  selectedValue={selected}
-                >
-                  {styles.map(({ label, url }) => (
-                    <Radio
-                      className="bgLayer-radio"
-                      key={`${label}${url}`}
-                      label={label}
-                      value={url}
-                    />
-                  ))}
-                </RadioGroup>
-              </div>
+
+        <Popover
+          className="popoverPos"
+          content={(
+            <div className="radioGroup">
+              <RadioGroup
+                onChange={onChange}
+                selectedValue={selected}
+              >
+                {styles.map(({ label, url }) => (
+                  <Radio
+                    className="bgLayer-radio"
+                    key={`${label}${url}`}
+                    label={label}
+                    value={url}
+                  />
+                ))}
+              </RadioGroup>
+            </div>
           )}
+        >
+          <button
+            className="mapboxgl-ctrl-icon"
+            type="button"
           >
             <Icon icon="layers" />
-          </Popover>
-        </button>
+          </button>
+        </Popover>
       </Tooltip>
     );
   }
