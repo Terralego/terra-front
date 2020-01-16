@@ -133,23 +133,24 @@ export class PrintControl extends AbstractMapControl {
       <Tooltip
         content={translate('terralego.map.print_control.button_label')}
       >
-        <button
-          className="mapboxgl-ctrl-icon"
-          type="button"
-          aria-label={translate('terralego.map.print_control.button_label')}
+
+        <Popover
+          className="popoverPos"
+          position={PopoverPosition.AUTO_START}
+          interactionKind={PopoverInteractionKind.CLICK_TARGET_ONLY}
+          onInteraction={this.handleInteraction}
+          isOpen={isOpen}
+          ref={this.popoverRef}
+          content={this.renderContent()}
         >
-          <Popover
-            className="popoverPos"
-            position={PopoverPosition.AUTO_START}
-            interactionKind={PopoverInteractionKind.CLICK_TARGET_ONLY}
-            onInteraction={this.handleInteraction}
-            isOpen={isOpen}
-            ref={this.popoverRef}
-            content={this.renderContent()}
+          <button
+            className="mapboxgl-ctrl-icon"
+            type="button"
+            aria-label={translate('terralego.map.print_control.button_label')}
           >
             <Icon icon="print" />
-          </Popover>
-        </button>
+          </button>
+        </Popover>
       </Tooltip>
     );
   }
