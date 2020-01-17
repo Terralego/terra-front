@@ -328,16 +328,32 @@ export class MapComponent extends React.Component {
   }
 
   replaceLayers (prevCustomStyle, customStyle) {
-    const objectValues = (obj = {}) => Object.values(obj);
-
     const { added, deleted, updated } = detailedDiff(prevCustomStyle, customStyle);
+    const getDiffWith = type => (action, style) => (
+      !action[type]
+        ? []
+        : Object.keys(action[type]).map(index => style[type][Number(index)])
+    );
+
+    const getDiffWithSources = getDiffWith('sources');
+    const getDiffWithLayers = getDiffWith('layers');
+
+    const getListDiffed = (action, style = {}) => [
+      getDiffWithSources(action, style),
+      getDiffWithLayers(action, style),
+    ];
+
+    const [deletedSources, deletedLayers] = getListDiffed(deleted, prevCustomStyle);
+    const [updatedSources, updatedLayers] = getListDiffed(updated, customStyle);
+    const [addedSources, addedLayers] = getListDiffed(added, customStyle);
+
     const stylesToRemove = {
-      sources: [...objectValues(deleted.sources), ...objectValues(updated.sources)],
-      layers: [...objectValues(deleted.layers), ...objectValues(updated.layers)],
+      sources: [...deletedSources, ...updatedSources],
+      layers: [...deletedLayers, ...updatedLayers],
     };
     const stylesToAdd = {
-      sources: [...objectValues(added.sources), ...objectValues(updated.sources)],
-      layers: [...objectValues(added.layers), ...objectValues(updated.layers)],
+      sources: [...addedSources, ...updatedSources],
+      layers: [...addedLayers, ...updatedLayers],
     };
 
     if (stylesToRemove.sources.length || stylesToRemove.layers.length) {
