@@ -61,9 +61,12 @@ export class Table extends React.Component {
 
   componentDidUpdate ({ data: prevData, columns: prevColumns }) {
     const { data, columns } = this.props;
-    const { lastSort } = this.state;
+    const { lastSort, sortedIndexMap } = this.state;
     if (data !== prevData && columns === prevColumns) {
       this.sortColumn(...lastSort);
+    }
+    if (Number.isSafeInteger(sortedIndexMap) && data !== prevData && columns !== prevColumns) {
+      this.resetSortedIndexMap();
     }
   }
 
@@ -162,6 +165,8 @@ export class Table extends React.Component {
       : rows;
     onSelection(realRows);
   };
+
+  resetSortedIndexMap = () => this.setState({ sortedIndexMap: null })
 
   render () {
     const { locales, loading, renderCell } = this.props;
