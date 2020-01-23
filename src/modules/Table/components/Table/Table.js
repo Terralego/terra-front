@@ -65,7 +65,7 @@ export class Table extends React.Component {
     if (data !== prevData && columns === prevColumns) {
       this.sortColumn(...lastSort);
     }
-    if (Number.isSafeInteger(sortedIndexMap) && data !== prevData && columns !== prevColumns) {
+    if (sortedIndexMap && data !== prevData && columns !== prevColumns) {
       this.resetSortedIndexMap();
     }
   }
