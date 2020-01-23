@@ -1,4 +1,9 @@
 
+1.17.3 / 2020-01-23
+===================
+
+  * Repair condition for reseting sortedIndexMap value
+
 1.17.2 / 2020-01-23
 ===================
 
