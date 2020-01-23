@@ -1,4 +1,11 @@
 
+1.17.2 / 2020-01-23
+===================
+
+  * Reset sortedIndexMap value if the columns and data changed
+  * Retrieve objects from the updated key to add/remove customStyles
+  * Expand click area on the whole button for certain map controls
+
 1.17.1 / 2020-01-10
 ===================
 
