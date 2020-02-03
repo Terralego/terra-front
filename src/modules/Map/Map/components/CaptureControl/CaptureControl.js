@@ -45,7 +45,7 @@ export class CaptureControl extends AbstractMapControl {
           onClick={this.captureScreen}
           aria-label={translate('terralego.map.capture_control.button_label')}
         >
-          <Icon icon="download" />
+          <Icon icon="camera" />
         </button>
       </Tooltip>
     );
