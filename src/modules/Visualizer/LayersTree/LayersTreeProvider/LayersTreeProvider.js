@@ -56,6 +56,10 @@ export class LayersTreeProvider extends React.Component {
   }
 
   componentDidMount () {
+    const { setCurrentState } = this.props;
+    // Reset current tree state from hash
+    setCurrentState({ layers: undefined });
+
     this.initLayersState();
   }
 
