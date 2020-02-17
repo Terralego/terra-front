@@ -13,6 +13,11 @@ export const DEFAULT_OPTIONS = {
   parseBooleans: true,
 };
 
+
+const getCurrentHashState = () => parse(window.location.hash, DEFAULT_OPTIONS);
+
+const getCurrentHashString = state => `#${stringify(state, DEFAULT_OPTIONS)}`;
+
 /**
  * Decorator for getting an initialState from hash.
  */
@@ -30,7 +35,12 @@ export const withHashState = WrappedComponent => {
       updateHash: true,
     };
 
-    options = DEFAULT_OPTIONS;
+    state = {
+      initialState: getCurrentHashState(),
+    }
+
+    // To keep compatibility
+    getCurrentHashString = getCurrentHashString;
 
     componentDidMount () {
       const { listenHash } = this.props;
@@ -49,11 +59,9 @@ export const withHashState = WrappedComponent => {
      */
     onHashChange = () => {
       if (!this.isUnmount) {
-        this.forceUpdate();
+        this.setState({ initialState: getCurrentHashState() });
       }
     };
-
-    getCurrentHashString = state => `#${stringify(state, this.options)}`;
 
     /**
      * Callback when the state is changed, replace hash with current state
@@ -64,18 +72,18 @@ export const withHashState = WrappedComponent => {
     updateHashString = state => {
       const { updateHash } = this.props;
       if (updateHash) {
-        window.history.replaceState(window.history.state, '', `#${stringify(state, this.options)}`);
+        window.history.replaceState(window.history.state, '', getCurrentHashString(state));
       }
     };
 
     render () {
       const { listenHash, updateHash, ...props } = this.props;
-      const initialState = parse(window.location.hash, this.options);
+      const { initialState } = this.state;
       return (
         <WrappedComponent
           initialState={initialState}
           {...props}
-          getCurrentHashString={this.getCurrentHashString}
+          getCurrentHashString={getCurrentHashString}
           onStateChange={this.updateHashString}
         />
       );
