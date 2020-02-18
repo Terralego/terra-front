@@ -8,10 +8,14 @@ import './styles.scss';
 export class LoginForm extends React.Component {
   static propTypes = {
     render: PropTypes.func,
+    onAfterSubmitting: PropTypes.func,
+    onBeforeSubmitting: PropTypes.func,
   };
 
   static defaultProps = {
     render,
+    onAfterSubmitting () {},
+    onBeforeSubmitting () {},
   };
 
   state = {};
@@ -21,6 +25,7 @@ export class LoginForm extends React.Component {
   setPassword = ({ target: { value: password } }) => this.setState({ password });
 
   submit = async event => {
+    const { onBeforeSubmitting, onAfterSubmitting } = this.props;
     event.preventDefault();
     this.setState({
       errorLogin: false,
@@ -29,6 +34,8 @@ export class LoginForm extends React.Component {
 
     const { authAction } = this.props;
     const { login, password } = this.state;
+
+    onBeforeSubmitting(event);
 
     try {
       await authAction({ login, password });
@@ -41,6 +48,7 @@ export class LoginForm extends React.Component {
         });
       }
     }
+    onAfterSubmitting(event);
   }
 
   render () {
