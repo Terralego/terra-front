@@ -47,9 +47,6 @@ export const DEFAULT_CONTROLS = [{
 }];
 
 const defaultTranslate = translateMock({
-  'terralego.map.zoom_in_control.title': 'Zoom in',
-  'terralego.map.zoom_out_control.title': 'Zoom out',
-  'terralego.map.compass_arrow_control.title': 'Reset bearing to north',
   'terralego.map.draw_control.point': 'Marker',
   'terralego.map.draw_control.polygon': 'Polygon',
   'terralego.map.draw_control.line': 'LineString',
@@ -257,17 +254,16 @@ export class MapComponent extends React.Component {
     }
   };
 
-  async initMapProperties () {
+  initMapProperties () {
     const {
       accessToken,
-      controls,
     } = this.props;
 
     mapBoxGl.accessToken = accessToken;
 
     this.createLayers();
 
-    this.resetControls(controls);
+    this.resetControls();
 
     this.toggleRotate();
   }
@@ -416,7 +412,7 @@ export class MapComponent extends React.Component {
           this.controls.push(controlInstance);
           map.addControl(controlInstance, position);
 
-          const { _container: container } = map;
+          const container = map.getContainer();
           const drawControlLocales = {
             point: translate('terralego.map.draw_control.point'),
             polygon: translate('terralego.map.draw_control.polygon'),
@@ -492,12 +488,6 @@ export class MapComponent extends React.Component {
           map.addControl(controlInstance, position);
 
           const { _container: container } = controlInstance;
-
-          if (control === CONTROL_NAVIGATION) {
-            container.querySelector('.mapboxgl-ctrl-zoom-in').setAttribute('title', translate('terralego.map.zoom_in_control.title'));
-            container.querySelector('.mapboxgl-ctrl-zoom-out').setAttribute('title', translate('terralego.map.zoom_out_control.title'));
-            container.querySelector('.mapboxgl-ctrl-compass-arrow').setAttribute('title', translate('terralego.map.compass_arrow_control.title'));
-          }
 
           if (disabled && container) {
             container.classList.add('mapboxgl-ctrl--disabled');

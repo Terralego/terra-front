@@ -45,6 +45,11 @@ jest.mock('mapbox-gl', () => {
       return off;
     }),
     fire: jest.fn(),
+    getContainer: () => ({
+      classList: {
+        add: jest.fn(),
+      },
+    }),
     getStyle: jest.fn(() => ({ layers: [{ id: 'foo' }, { id: 'bar' }] })),
     touchZoomRotate: {
       enableRotation: jest.fn(),
@@ -62,9 +67,6 @@ jest.mock('mapbox-gl', () => {
 
   const mockedControl = {
     _container: {
-      querySelector: jest.fn(() => ({
-        setAttribute: jest.fn(),
-      })),
       classList: {
         add: jest.fn(),
       },
@@ -453,11 +455,14 @@ describe('controls', () => {
     setCenter: jest.fn(),
     fitBounds: jest.fn(),
     fire: jest.fn((event, item) => item),
-    _container: {
+    getContainer: () => ({
       querySelector: jest.fn(() => ({
         setAttribute: jest.fn(),
       })),
-    },
+      classList: {
+        add: jest.fn(),
+      },
+    }),
   };
 
   beforeEach(() => {
