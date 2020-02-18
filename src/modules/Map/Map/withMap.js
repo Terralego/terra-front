@@ -33,6 +33,7 @@ export const withMap = WrappedComponent => {
       onMapInit: PropTypes.func,
       onMapLoaded: PropTypes.func,
       onMapUpdate: PropTypes.func,
+      locale: PropTypes.shape({}),
     };
 
     static defaultProps = {
@@ -41,6 +42,7 @@ export const withMap = WrappedComponent => {
       onMapInit () {},
       onMapLoaded () {},
       onMapUpdate () {},
+      locale: {},
     };
 
     state = {
@@ -75,6 +77,7 @@ export const withMap = WrappedComponent => {
         onMapInit,
         onMapLoaded,
         hash,
+        locale,
       } = this.props;
 
       mapBoxGl.accessToken = accessToken;
@@ -93,6 +96,7 @@ export const withMap = WrappedComponent => {
         // below fix Firefox bug for printing http://fuzzytolerance.info/blog/2016/07/01/Printing-Mapbox-GL-JS-maps-in-Firefox/
         preserveDrawingBuffer: navigator.userAgent.toLowerCase().indexOf('firefox') > -1,
         hash,
+        locale,
       });
 
       // This allows accessing MapboxGL instance from console (needed for e2e tests)
