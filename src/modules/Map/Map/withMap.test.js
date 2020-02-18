@@ -37,6 +37,8 @@ it('should have a map', () => {
     minZoom: undefined,
     maxBounds: undefined,
     preserveDrawingBuffer: false,
+    hash: undefined,
+    locale: {},
   });
   expect(mapboxgl.map.once).toHaveBeenCalled();
   expect(Component).toHaveBeenCalled();
@@ -72,6 +74,8 @@ it('should fit bounds', () => {
     minZoom: undefined,
     maxBounds: undefined,
     preserveDrawingBuffer: false,
+    hash: undefined,
+    locale: {},
   });
   expect(mapboxgl.map.fitBounds).toHaveBeenCalledWith(
     [[1, 2], [3, 4]],
