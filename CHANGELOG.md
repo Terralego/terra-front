@@ -1,4 +1,12 @@
 
+1.17.4 / 2020-02-18
+===================
+
+  * Add react state to withHashContext for better control
+  * Fix missing default active layers when changing view
+  * Fix popup logout confirmation display while reloading
+  * Replace download icon by camera for CaptureControl
+
 1.17.3 / 2020-01-23
 ===================
 
