@@ -10,6 +10,8 @@ import translateMock from '../../../../utils/translate';
 import formatValues from '../formatValues';
 import NoValues from '../NoValues';
 
+const MAX_NON_FILTERABLE_COUNT = 9;
+
 export class Select extends React.Component {
   static propTypes = {
     label: PropTypes.string,
@@ -74,10 +76,11 @@ export class Select extends React.Component {
       ...props
     } = this.props;
 
-    const { values } = this.state;
+    const { values = [] } = this.state;
     const { handleChange } = this;
-    const displayedValue = typeof value === 'object' ? value.label : value;
-    const rawValue = typeof value === 'object' ? value.value : value;
+
+    const result = values.find(({ value: itemValue }) => value === itemValue) || values[0];
+    const displayedValue = result ? result.label : '';
 
     return (
       <div
@@ -105,7 +108,7 @@ export class Select extends React.Component {
             className={classnames('tf-select', className)}
             popoverProps={{ usePortal: false, boundary: 'viewport', minimal: true }}
             items={values}
-            filterable={values.length > 9}
+            filterable={values.length > MAX_NON_FILTERABLE_COUNT}
             onQueryChange={this.handleQueryChange}
             initialContent={(values && values.length > 250)
               ? <MenuItem disabled text={translate('terralego.forms.controls.select.select_placeholder')} />
@@ -131,7 +134,7 @@ export class Select extends React.Component {
               >
                 <MenuItem
                   {...modifiers}
-                  active={rawValue === itemValue}
+                  active={value === itemValue}
                   onClick={handleClick}
                   text={itemLabel}
                 />
