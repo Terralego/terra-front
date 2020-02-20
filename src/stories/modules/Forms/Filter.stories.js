@@ -3,12 +3,9 @@ import { storiesOf } from '@storybook/react';
 import { action } from '@storybook/addon-actions';
 
 import {
-  text,
-  select,
   object,
   number,
   boolean,
-  optionsKnob,
 } from '@storybook/addon-knobs';
 
 import Filters, {
@@ -20,11 +17,11 @@ import Filters, {
 import './styles.css';
 import translateMock from '../../../utils/translate';
 
-const dummyValues = {
-  Developper: 'Developper',
-  'UX designer': 'UX designer',
-  'Project manager': 'Project manager',
-};
+const dummyValues = [
+  { label: 'Developper', value: 'dev' },
+  { label: 'UX designer', value: 'ux' },
+  { label: 'Project manager', value: 'pm' },
+];
 
 const dummyMonth = [
   { label: 'January', value: '1' },
@@ -61,7 +58,7 @@ const Parent = ({ children, initData, ...props }) => {
 storiesOf('Components/Filters', module).add('Single', () => (
   <Parent initData={{
     single_value: '',
-    single_value_forced: 'Developper',
+    single_value_forced: 'ux',
     single_value_forced_with_values: '3',
   }}
   >
@@ -81,13 +78,12 @@ storiesOf('Components/Filters', module).add('Single', () => (
           property: 'single_value_forced',
           label: 'Single value with values',
           type: TYPE_SINGLE,
-          values: ['Developper', 'UX designer', 'Project manager'],
+          values: object('Position', dummyValues),
         }, {
           property: 'single_value_forced_with_values',
           label: 'Single value filter with values',
           type: TYPE_SINGLE,
-          // values: object('Select values', dummyMonth),
-          values: dummyMonth,
+          values: object('Month', dummyMonth),
         }]}
       />
     )}
@@ -96,18 +92,8 @@ storiesOf('Components/Filters', module).add('Single', () => (
 
 storiesOf('Components/Filters', module).add('Many', () => (
   <Parent initData={{
-    many_values: optionsKnob(
-      'Many values with checkboxes',
-      dummyValues,
-      [],
-      { display: 'multi-select' },
-    ),
-    many_values_select_forced: optionsKnob(
-      'Many values forced as select',
-      dummyValues,
-      [],
-      { display: 'multi-select' },
-    ),
+    many_values: ['ux'],
+    many_values_select_forced: ['dev'],
   }}
   >
     {(state, setState) => (
@@ -122,13 +108,13 @@ storiesOf('Components/Filters', module).add('Many', () => (
           property: 'many_values',
           label: 'Many filter with values',
           type: TYPE_MANY,
-          values: ['Developper', 'UX designer', 'Project manager'],
+          values: object('Positions', dummyValues),
         }, {
           property: 'many_values_select_forced',
           label: 'Many filter with values forced as select',
           type: TYPE_MANY,
           display: 'select',
-          values: ['Developper', 'UX designer', 'Project manager'],
+          values: object('Positions', dummyValues),
         }]}
       />
     )}
@@ -154,17 +140,18 @@ storiesOf('Components/Filters', module).add('Range', () => (
           label: 'Small range',
           type: TYPE_RANGE,
           // Below, props accepted by https://blueprintjs.com/docs/#core/components/sliders.range-slider
-          labelStepSize: 10,
+          labelStepSize: number('Label step size (small range)', 10, {}, 'Small range'),
           min: number('Min (small range)', 0, {}, 'Small range'),
           max: number('Max (small range)', 100, {}, 'Small range'),
         }, {
           property: 'not_controlable',
           label: 'Large range with poor precision',
           type: TYPE_RANGE,
-          max: 10000,
+          min: number('Min (Large range poor precision)', 0, {}, 'Large range (poor precision)'),
+          max: number('Max (Large range poor precision)', 10000, {}, 'Large range (poor precision)'),
           // Below, props accepted by https://blueprintjs.com/docs/#core/components/sliders.range-slider
-          stepSize: 500,
-          labelStepSize: 1000,
+          stepSize: number('Step size (Large range poor precision)', 500, {}, 'Large range (poor precision)'),
+          labelStepSize: number('Label step size (Large range poor precision)', 1000, {}, 'Large range (poor precision)'),
         }, {
           property: 'large_range',
           label: 'Large range',
