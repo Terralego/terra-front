@@ -8,8 +8,8 @@ jest.mock('@blueprintjs/select', () => ({
   MultiSelect: function BPMultiSelect ({ items }) {
     return (
       <select multiple>
-        {items.map(label => (
-          <option key={label} value={label}>{label}</option>
+        {items.map(({ label, value }) => (
+          <option key={label} value={value}>{label}</option>
         ))}
       </select>
     );
@@ -75,13 +75,13 @@ it('should render multiple value', () => {
 
 it('should handle change', () => {
   const onChange = jest.fn();
-  const instance = new MultiSelect({ onChange, value: [] });
-  instance.handleChange('foo');
+  const instance = new MultiSelect({ onChange, value: [], values: ['foo'] });
+  instance.handleChange({ value: 'foo' });
   expect(onChange).toHaveBeenCalledWith(['foo']);
   onChange.mockClear();
 
   instance.props.value = ['foo'];
-  instance.handleChange(instance.props.value[0]);
+  instance.handleChange({ value: instance.props.value[0] });
   expect(onChange).toHaveBeenCalledWith([]);
 });
 
@@ -96,7 +96,7 @@ it('should handle tag remove', () => {
   const onChange = jest.fn();
   const instance = new MultiSelect({ onChange, value: [] });
   instance.props.value = ['foo', 'bar'];
-  instance.handleTagRemove('foo');
+  instance.handleTagRemove('foo', 0);
 
   expect(onChange).toHaveBeenCalledWith(['bar']);
 });
@@ -104,7 +104,7 @@ it('should handle tag remove', () => {
 it('should render tag', () => {
   const wrapper = shallow(<MultiSelect values={['foo', 'bar']} />);
   const { tagRenderer } = wrapper.find('BPMultiSelect').props();
-  expect(tagRenderer('foo')).toBe('foo');
+  expect(tagRenderer({ value: 'foo', label: 'Foo' })).toBe('Foo');
 });
 
 it('should render item', () => {
@@ -113,14 +113,14 @@ it('should render item', () => {
     const { itemRenderer } = wrapper.find('BPMultiSelect').props();
     expect(itemRenderer('foo', { modifiers: { matchesPredicate: false } })).toBe(null);
     expect(itemRenderer('foo', { modifiers: { matchesPredicate: true } })).not.toBe(null);
-    const itemRendered = itemRenderer('foo', { modifiers: { matchesPredicate: true } });
+    const itemRendered = itemRenderer({ label: 'foo', value: 'foo' }, { modifiers: { matchesPredicate: true } });
     expect(itemRendered.type.name).toBe('BPMenuItem');
     expect(itemRendered.props.icon).toBe('blank');
   }
   wrapper.setProps({ value: ['foo'] });
   {
     const { itemRenderer } = wrapper.find('BPMultiSelect').props();
-    const itemRendered = itemRenderer('foo', { modifiers: { matchesPredicate: true } });
+    const itemRendered = itemRenderer({ label: 'foo', value: 'foo' }, { modifiers: { matchesPredicate: true } });
     expect(itemRendered.props.icon).toBe('tick');
   }
 });
@@ -129,13 +129,13 @@ it('should render item with highlighted support', () => {
   const wrapper = shallow(<MultiSelect values={['foobar', 'barbaz']} />);
   {
     const { itemRenderer } = wrapper.find('BPMultiSelect').props();
-    const itemRendered = itemRenderer('foobarbaz', { query: 'bar', modifiers: { matchesPredicate: true } });
+    const itemRendered = itemRenderer({ label: 'foobarbaz', value: 'foobarbaz' }, { query: 'bar', modifiers: { matchesPredicate: true } });
     expect(itemRendered.props.text).toEqual(['foo', <strong key="foobarbaz-1">bar</strong>, 'baz']);
   }
   wrapper.setProps({ highlightSearch: false });
   {
     const { itemRenderer } = wrapper.find('BPMultiSelect').props();
-    const itemRendered = itemRenderer('foobar', { query: 'foo', modifiers: { matchesPredicate: true } });
+    const itemRendered = itemRenderer({ label: 'foobar', value: 'foobar' }, { query: 'foo', modifiers: { matchesPredicate: true } });
     expect(itemRendered.props.text).toBe('foobar');
   }
 });

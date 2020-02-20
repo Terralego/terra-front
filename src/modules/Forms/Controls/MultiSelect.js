@@ -15,13 +15,22 @@ import { MultiSelect as BPMultiSelect } from '@blueprintjs/select';
 import { preventEnterKeyPress } from '../../../utils/event';
 import translateMock from '../../../utils/translate';
 import NoValues from './NoValues';
+import formatValues from './formatValues';
 
 export class MultiSelect extends React.Component {
   static propTypes = {
     value: PropTypes.arrayOf(PropTypes.string),
     label: PropTypes.string,
     onChange: PropTypes.func,
-    values: PropTypes.arrayOf(PropTypes.string).isRequired,
+    values: PropTypes.arrayOf(
+      PropTypes.oneOfType([
+        PropTypes.string,
+        PropTypes.shape({
+          label: PropTypes.string.isRequired,
+          value: PropTypes.any.isRequired,
+        }),
+      ]),
+    ).isRequired,
     isSubmissionPrevented: PropTypes.bool,
     translate: PropTypes.func,
     loading: PropTypes.bool,
@@ -46,15 +55,40 @@ export class MultiSelect extends React.Component {
     highlightSearch: true,
   };
 
+  state = {
+    values: [],
+    value: [],
+  }
+
+  static getDerivedStateFromProps ({ values, value }) {
+    if (!values) return null;
+
+    const formatedValues = formatValues(values);
+
+    const formatedValue = value.map(val => ({
+      label: formatedValues.find(({ value: availableVal }) => val === availableVal).label,
+      value: val,
+    }));
+
+    return {
+      values: formatedValues,
+      value: formatedValue,
+    };
+  }
+
   handleChange = item => {
     const { value, onChange } = this.props;
-    const newValue = value.includes(item)
-      ? [...value.filter(val => val !== item)]
-      : [...value, item];
+    const newValue = value.includes(item.value)
+      ? [...value.filter(val => val !== item.value)]
+      : [...value, item.value];
     onChange(newValue);
   };
 
-  handleTagRemove = tag => this.handleChange(tag);
+  handleTagRemove = (_, index) => {
+    const { value, onChange } = this.props;
+    const newValue = value.filter((__, idx) => idx !== index);
+    onChange(newValue);
+  }
 
   handleClear = () => {
     const { onChange } = this.props;
@@ -66,10 +100,10 @@ export class MultiSelect extends React.Component {
       handleChange,
       handleTagRemove,
     } = this;
+
     const {
       label,
-      value,
-      values,
+      value: origValue,
       isSubmissionPrevented,
       className,
       translate,
@@ -79,6 +113,7 @@ export class MultiSelect extends React.Component {
       ...props
     } = this.props;
 
+    const { values = [], value = [] } = this.state;
     const displayClearButton = value.length > 0;
 
     return (
@@ -98,7 +133,7 @@ export class MultiSelect extends React.Component {
             items={values}
             selectedItems={value}
             onItemSelect={handleChange}
-            tagRenderer={item => item}
+            tagRenderer={item => item.label}
             popoverProps={{ usePortal: false }}
             placeholder={translate('terralego.forms.controls.multiselect.input_placeholder')}
             tagInputProps={{
@@ -114,7 +149,7 @@ export class MultiSelect extends React.Component {
                 ? items
                 : items.filter(item => regExp.test(item));
             }}
-            itemRenderer={(item, {
+            itemRenderer={({ label: itemLabel, value: itemValue }, {
               query, handleClick, modifiers: { matchesPredicate, ...modifiers },
             }) => {
               if (!matchesPredicate) {
@@ -124,14 +159,14 @@ export class MultiSelect extends React.Component {
               return (
                 <MenuItem
                   active={modifiers.active}
-                  icon={value.includes(item) ? 'tick' : 'blank'}
-                  key={item}
+                  icon={origValue.includes(itemValue) ? 'tick' : 'blank'}
+                  key={`${itemValue}${itemLabel}`}
                   onClick={handleClick}
                   text={query && highlightSearch
-                    ? item.split(regExp).map(
+                    ? itemLabel.split(regExp).map(
                       // eslint-disable-next-line react/no-array-index-key
-                      (elem, i) => (i % 2 ? <strong key={`${item}-${i}`}>{elem}</strong> : elem),
-                    ) : item}
+                      (elem, i) => (i % 2 ? <strong key={`${itemLabel}-${i}`}>{elem}</strong> : elem),
+                    ) : itemLabel}
                   shouldDismissPopover={false}
                 />
               );
