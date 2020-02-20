@@ -71,6 +71,15 @@ it('should render multiple value', () => {
     />
   ));
   expect(tree.toJSON()).toMatchSnapshot();
+
+  const tree2 = renderer.create((
+    <MultiSelect
+      label="Boom"
+      values={[{ label: 'Foo', value: 'foo' }, { label: 'Bar', value: 'bar' }]}
+      value={['foo', 'bar']}
+    />
+  ));
+  expect(tree2.toJSON()).toMatchSnapshot();
 });
 
 it('should handle change', () => {
@@ -108,25 +117,25 @@ it('should render tag', () => {
 });
 
 it('should render item', () => {
-  const wrapper = shallow(<MultiSelect values={['foo', 'bar']} />);
+  const wrapper = shallow(<MultiSelect values={[{ label: 'Foo', value: 'foo' }, { label: 'Bar', value: 'bar' }]} />);
   {
     const { itemRenderer } = wrapper.find('BPMultiSelect').props();
     expect(itemRenderer('foo', { modifiers: { matchesPredicate: false } })).toBe(null);
     expect(itemRenderer('foo', { modifiers: { matchesPredicate: true } })).not.toBe(null);
-    const itemRendered = itemRenderer({ label: 'foo', value: 'foo' }, { modifiers: { matchesPredicate: true } });
+    const itemRendered = itemRenderer({ label: 'Foo', value: 'foo' }, { modifiers: { matchesPredicate: true } });
     expect(itemRendered.type.name).toBe('BPMenuItem');
     expect(itemRendered.props.icon).toBe('blank');
   }
   wrapper.setProps({ value: ['foo'] });
   {
     const { itemRenderer } = wrapper.find('BPMultiSelect').props();
-    const itemRendered = itemRenderer({ label: 'foo', value: 'foo' }, { modifiers: { matchesPredicate: true } });
+    const itemRendered = itemRenderer({ label: 'Foo', value: 'foo' }, { modifiers: { matchesPredicate: true } });
     expect(itemRendered.props.icon).toBe('tick');
   }
 });
 
 it('should render item with highlighted support', () => {
-  const wrapper = shallow(<MultiSelect values={['foobar', 'barbaz']} />);
+  const wrapper = shallow(<MultiSelect values={[{ label: 'Foo', value: 'foobar' }, { label: 'Bar', value: 'barbaz' }]} />);
   {
     const { itemRenderer } = wrapper.find('BPMultiSelect').props();
     const itemRendered = itemRenderer({ label: 'foobarbaz', value: 'foobarbaz' }, { query: 'bar', modifiers: { matchesPredicate: true } });
