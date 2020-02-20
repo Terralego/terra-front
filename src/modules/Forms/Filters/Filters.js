@@ -16,6 +16,8 @@ export const TYPE_MANY = 'many';
 export const TYPE_RANGE = 'range';
 export const TYPE_BOOL = 'boolean';
 
+const MAX_MANY = 10;
+
 export function getComponent (type, values, display, format) {
   switch (type) {
     case TYPE_SINGLE:
@@ -24,7 +26,7 @@ export function getComponent (type, values, display, format) {
         : Text;
     case TYPE_MANY:
       return (
-        Array.isArray(values) && values.length > 10) ||
+        Array.isArray(values) && values.length > MAX_MANY) ||
           (display === 'select')
         ? MultiSelect
         : Checkboxes;
