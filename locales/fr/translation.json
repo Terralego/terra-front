@@ -18,6 +18,15 @@
       },
       "submit": "Se connecter"
     },
+    "logout": {
+      "cancel": {
+        "button_label": "Annuler"
+      },
+      "confirm": {
+        "button_label": "Confirmer",
+        "label": "Voulez-vous vraiment vous déconnecter ?"
+      }
+    },
     "signupform": {
       "email": {
         "help": "Saisissez votre e-mail",
