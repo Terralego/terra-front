@@ -29,3 +29,11 @@ exports[`should build a form 1`] = `
   </div>
 </div>
 `;
+
+exports[`should display no values message 1`] = `
+<div>
+  <p>
+    NoValues
+  </p>
+</div>
+`;
