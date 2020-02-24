@@ -10,6 +10,7 @@ import MultiSelect from '../Controls/MultiSelect';
 import DateRangeInput from '../Controls/DateRangeInput';
 import Control from './Control';
 import translateMock from '../../../utils/translate';
+import NoValues from '../Controls/NoValues';
 
 export const TYPE_SINGLE = 'single';
 export const TYPE_MANY = 'many';
@@ -41,18 +42,25 @@ export function getComponent (type, values, display, format) {
 
 export const Filters = ({ properties, filters, translate, onChange }) => (
   <div>
-    {filters.map(({ type, values, property, display, format, ...props }) => (
-      <Control
-        {...props}
-        translate={translate}
-        component={getComponent(type, values, display, format)}
-        key={property}
-        type={type}
-        values={values}
-        property={property}
-        onChange={value => onChange({ ...properties, [property]: value })}
-        value={properties[property]}
-      />
+    {filters.map(({ type, values, property, display, format, label, ...props }) => (
+      values && values.length === 0
+        ? (
+          <NoValues label={label} />
+        )
+        : (
+          <Control
+            {...props}
+            label={label}
+            translate={translate}
+            component={getComponent(type, values, display, format)}
+            key={property}
+            type={type}
+            values={values}
+            property={property}
+            onChange={value => onChange({ ...properties, [property]: value })}
+            value={properties[property]}
+          />
+        )
     ))}
   </div>
 );

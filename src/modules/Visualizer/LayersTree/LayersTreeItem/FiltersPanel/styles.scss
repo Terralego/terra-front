@@ -88,6 +88,11 @@ $transitionSpeed: 0.15s;
     border-top: .5px solid #293742;
     padding-top: .3rem;
     margin: 1rem 0;
+    &-noValues {
+      opacity: .7;
+      font-size: .875rem;
+      font-style: italic;
+    }
   }
 
   .bp3-select-popover, .bp3-multi-select-popover {
@@ -194,6 +199,9 @@ $transitionSpeed: 0.15s;
       border-top: .5px solid #293742;
       padding-top: .3rem;
       margin-bottom: 1rem;
+      &-noValues {
+        font-size: .875rem / $scaleRatio;
+      }
     }
 
     .bp3-select-popover .bp3-menu {
