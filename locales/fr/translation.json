@@ -64,6 +64,7 @@
           "select_placeholder_plural": "Saisissez au moins {{count}} caractères",
           "too_many": "Trop de résultats, affinez votre recherche"
         },
+        "noValues": "Aucune valeur disponible",
         "range_from": "De",
         "range_to": "à",
         "select": {
