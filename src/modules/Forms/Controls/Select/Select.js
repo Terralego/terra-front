@@ -8,6 +8,7 @@ import uuid from 'uuid/v4';
 import { preventEnterKeyPress } from '../../../../utils/event';
 import translateMock from '../../../../utils/translate';
 import formatValues from '../formatValues';
+import NoValues from '../NoValues';
 
 export class Select extends React.Component {
   static propTypes = {
@@ -97,7 +98,8 @@ export class Select extends React.Component {
         >
           {label}
         </label>
-        {!!loading && <Spinner size={20} />}
+        {loading && <Spinner size={20} />}
+        {!loading && !values.length && <NoValues />}
         {!loading && (
           <BPSelect
             className={classnames('tf-select', className)}

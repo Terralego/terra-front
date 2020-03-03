@@ -14,6 +14,7 @@ import { MultiSelect as BPMultiSelect } from '@blueprintjs/select';
 
 import { preventEnterKeyPress } from '../../../utils/event';
 import translateMock from '../../../utils/translate';
+import NoValues from './NoValues';
 
 export class MultiSelect extends React.Component {
   static propTypes = {
@@ -87,7 +88,8 @@ export class MultiSelect extends React.Component {
         role="presentation"
       >
         <p className="control-label">{label}</p>
-        {!!loading && <Spinner size={20} />}
+        {loading && <Spinner size={20} />}
+        {!loading && !values.length && <NoValues />}
         {!loading && (
           <BPMultiSelect
             className={classnames('tf-multiselect', className)}

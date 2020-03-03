@@ -1,8 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 
-import Spinner from '@blueprintjs/core';
-
 import Select from '../Controls/Select';
 import Text from '../Controls/Text';
 import Checkboxes from '../Controls/Checkboxes';
@@ -12,7 +10,6 @@ import MultiSelect from '../Controls/MultiSelect';
 import DateRangeInput from '../Controls/DateRangeInput';
 import Control from './Control';
 import translateMock from '../../../utils/translate';
-import NoValues from '../Controls/NoValues';
 
 export const TYPE_SINGLE = 'single';
 export const TYPE_MANY = 'many';
@@ -42,30 +39,22 @@ export function getComponent (type, values, display, format) {
   }
 }
 
-export const Filters = ({ properties, filters, translate, onChange, loading }) => (
+export const Filters = ({ properties, filters, translate, onChange }) => (
   <div>
-    {filters.map(({ type, values, property, display, format, label, ...props }) => {
-      console.log(!!loading);
-      if (loading && !values) {
-        return <Spinner size={20} />;
-      } if (values && values.length === 0) {
-        return <NoValues label={label} />;
-      }
-      return (
-        <Control
-          {...props}
-          label={label}
-          translate={translate}
-          component={getComponent(type, values, display, format)}
-          key={property}
-          type={type}
-          values={values}
-          property={property}
-          onChange={value => onChange({ ...properties, [property]: value })}
-          value={properties[property]}
-        />
-      );
-    })}
+    {filters.map(({ type, values, property, display, format, label, ...props }) => (
+      <Control
+        {...props}
+        label={label}
+        translate={translate}
+        component={getComponent(type, values, display, format)}
+        key={property}
+        type={type}
+        values={values}
+        property={property}
+        onChange={value => onChange({ ...properties, [property]: value })}
+        value={properties[property]}
+      />
+    ))}
   </div>
 );
 
@@ -96,7 +85,6 @@ Filters.propTypes = {
     // property: value
   }),
   translate: PropTypes.func,
-  loading: PropTypes.bool,
 };
 
 Filters.defaultProps = {
@@ -104,7 +92,6 @@ Filters.defaultProps = {
   filters: [],
   properties: {},
   translate: translateMock(),
-  loading: false,
 };
 
 export default Filters;

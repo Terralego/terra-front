@@ -105,28 +105,139 @@ Array [
       >
         <div>
           <div
-            className="control-container"
+            className="control-container control--range range"
           >
             <p
               className="control-label"
-            />
-            <p
-              className="control-label-noValues"
             >
-              Aucun choix disponible
+              
             </p>
+            <div
+              className="bp3-slider control--range__slider"
+              onMouseDown={[Function]}
+              onTouchStart={[Function]}
+            >
+              <div
+                className="bp3-slider-track"
+              >
+                <div
+                  className="bp3-slider-progress"
+                  style={
+                    Object {
+                      "left": "0.00%",
+                      "right": "100.00%",
+                      "top": 0,
+                    }
+                  }
+                />
+                <div
+                  className="bp3-slider-progress bp3-intent-primary"
+                  style={
+                    Object {
+                      "left": "0.00%",
+                      "right": "100.00%",
+                      "top": 0,
+                    }
+                  }
+                />
+                <div
+                  className="bp3-slider-progress"
+                  style={
+                    Object {
+                      "left": "0.00%",
+                      "right": "100.00%",
+                      "top": 0,
+                    }
+                  }
+                />
+              </div>
+              <div
+                className="bp3-slider-axis"
+              >
+                <div
+                  className="bp3-slider-label"
+                  style={
+                    Object {
+                      "left": "0.00%",
+                    }
+                  }
+                >
+                  0
+                </div>
+                <div
+                  className="bp3-slider-label"
+                  style={
+                    Object {
+                      "left": "0.00%",
+                    }
+                  }
+                >
+                  100
+                </div>
+              </div>
+              <span
+                className="bp3-slider-handle bp3-start"
+                onKeyDown={[Function]}
+                onKeyUp={[Function]}
+                onMouseDown={[Function]}
+                onTouchStart={[Function]}
+                style={
+                  Object {
+                    "left": "calc(0.00% - 0px)",
+                  }
+                }
+                tabIndex={0}
+              >
+                <span
+                  className="bp3-slider-label"
+                >
+                  0
+                </span>
+              </span>
+              <span
+                className="bp3-slider-handle bp3-end"
+                onKeyDown={[Function]}
+                onKeyUp={[Function]}
+                onMouseDown={[Function]}
+                onTouchStart={[Function]}
+                style={
+                  Object {
+                    "left": "calc(0.00% - 0px)",
+                  }
+                }
+                tabIndex={0}
+              >
+                <span
+                  className="bp3-slider-label"
+                >
+                  100
+                </span>
+              </span>
+            </div>
           </div>
           <div
             className="control-container"
           >
             <p
               className="control-label"
-            />
-            <p
-              className="control-label-noValues"
             >
-              Aucun choix disponible
+              
             </p>
+            <div
+              className="bp3-input-group"
+            >
+              <input
+                className="bp3-input"
+                onChange={[Function]}
+                style={
+                  Object {
+                    "paddingRight": 10,
+                  }
+                }
+                type="text"
+                value=""
+              />
+            </div>
           </div>
         </div>
       </div>
