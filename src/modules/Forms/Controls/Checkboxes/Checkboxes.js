@@ -4,6 +4,7 @@ import { Spinner } from '@blueprintjs/core';
 
 import Checkbox from './Checkbox';
 import formatValues from '../formatValues';
+import NoValues from '../NoValues';
 import '../index.scss';
 
 export class Checkboxes extends React.Component {
@@ -33,7 +34,8 @@ export class Checkboxes extends React.Component {
     return (
       <div className="control-container">
         <p className="control-label">{mainLabel}</p>
-        {!!loading && <Spinner size={20} />}
+        {loading && <Spinner size={20} />}
+        {!loading && !values.length && <NoValues />}
         {!loading && values.map(({ label, value }) => (
           <Checkbox
             key={`${label}${value}`}
@@ -47,7 +49,6 @@ export class Checkboxes extends React.Component {
     );
   }
 }
-
 
 Checkboxes.propTypes = {
   label: PropTypes.string,

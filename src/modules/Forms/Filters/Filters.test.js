@@ -37,7 +37,6 @@ jest.mock('../Controls/Select', () => ({ initialContent }) => (
 jest.mock('../Controls/Checkboxes', () => () => <p>ControlCheckboxes</p>);
 jest.mock('../Controls/Range', () => () => <p>ControlRange</p>);
 jest.mock('../Controls/DateRangeInput', () => () => <p>DateRangeInput</p>);
-jest.mock('../Controls/NoValues', () => () => <p>NoValues</p>);
 
 it('should build a form', () => {
   const tree = renderer.create((
@@ -149,7 +148,7 @@ it('should ensure translation works', () => {
   expect(wrapper.find('Control').props().translate).toEqual(translate);
 });
 
-it('should display no values message', () => {
+it('should render loading correctly', () => {
   const tree = renderer.create((
     <Filters
       filters={[{
@@ -158,7 +157,8 @@ it('should display no values message', () => {
         type: TYPE_SINGLE,
         values: [],
       }]}
+      loading
     />
-  )).toJSON();
-  expect(tree).toMatchSnapshot();
+  ));
+  expect(tree.toJSON()).toMatchSnapshot();
 });
