@@ -1,4 +1,12 @@
 
+1.18.0 / 2020-03-04
+===================
+
+  * Add no value message when filter values empty
+  * Use locale object from MapBox to define interface locales
+  * Update mapbox-gl package to 1.7.0
+  * Add logout translation
+
 1.17.4 / 2020-02-18
 ===================
 
