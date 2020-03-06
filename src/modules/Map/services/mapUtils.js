@@ -4,7 +4,7 @@ import moize from 'moize';
 import { PREFIXES } from './cluster';
 
 export const PREV_STATE = {};
-export const LAYER_TYPES_ORDER = ['background', 'raster', 'hillshade', 'heatmap', 'fill', 'fill-extrusion', 'line', 'circle', 'symbol'];
+export const LAYER_TYPES_ORDER = ['background', 'raster', 'hillshade', 'fill', 'line', 'heatmap', 'fill-extrusion', 'circle', 'symbol'];
 
 export const getRelatedLayers = moize({
   serializer: (map, layerId) => `${layerId}${map.getStyle().layers.map(id => id).join('')}`,
@@ -214,50 +214,6 @@ export function fitZoom ({ feature, map, padding = 0 }) {
   map.fitBounds(bbox({ type: 'FeatureCollection', features }), { padding });
 }
 
-const getTypeBefore = (type, types = LAYER_TYPES_ORDER) => {
-  const index = types.findIndex(t => t === type) - 1;
-  return index > -1 ? types[index] : undefined;
-};
-
-
-/**
- * Returns
- * - `layers` first layer id with the requested `type`
- * - or `layers` first layer id with the first type available before the requested `type`
- * - or `undefined`
- *
- * @param {object} type The type of a layer
- * @param {array} layers The list of layers to find the requested id
- * @return {string|undefined} The id of the requested layer or undefined if none found.
- */
-export const getLayerBeforeId = (type, layers) => {
-  const isDrawLayer = layer => layer.id.startsWith('gl-draw');
-
-  const sameTypes = layers.filter(layer => type === layer.type && !isDrawLayer(layer));
-
-  if (!sameTypes.length) {
-    const newType = getTypeBefore(type);
-    if (newType) {
-      return getLayerBeforeId(newType, layers);
-    }
-    return undefined;
-  }
-
-  const lastOfSameType = sameTypes[sameTypes.length - 1];
-
-  const pos = layers.findIndex(({ id }) => id === lastOfSameType.id) + 1;
-
-  return layers[pos] && layers[pos].id;
-};
-
-export const getOrderedLayers = (layers, layersTypes = LAYER_TYPES_ORDER) => {
-  const orderedLayers = [...layers];
-  return orderedLayers.sort(({ type: typeA }, { type: typeB }) => {
-    if (typeA === typeB) return 0;
-    return layersTypes.indexOf(typeA) - layersTypes.indexOf(typeB);
-  });
-};
-
 export default {
   LAYER_TYPES_ORDER,
   toggleLayerVisibility,
@@ -267,6 +223,4 @@ export default {
   setInteractions,
   checkContraints,
   fitZoom,
-  getLayerBeforeId,
-  getOrderedLayers,
 };

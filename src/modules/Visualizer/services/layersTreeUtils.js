@@ -207,7 +207,8 @@ export const sortCustomLayers = (customLayers, layersTree) => {
       newCustomLayers.push(...newCustomLayers.splice(pos, 1));
     }
   });
-  return newCustomLayers;
+  // Reverse order as we want first layer come over next layer
+  return newCustomLayers.reverse();
 };
 
 /**

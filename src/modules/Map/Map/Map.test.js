@@ -359,17 +359,15 @@ it('should create layers', () => {
     type: 'vector',
     url: 'somewhere',
   });
-  expect(map.addLayer).toHaveBeenCalledWith({ id: 'layer1', type: 'circle' }, undefined);
-  expect(map.addLayer).toHaveBeenCalledWith({ id: 'layer2', type: 'fill' }, undefined);
   expect(addedLayers).toEqual([{
-    id: 'layer3',
-    type: 'raster',
+    id: 'layer1',
+    type: 'circle',
   }, {
     id: 'layer2',
     type: 'fill',
   }, {
-    id: 'layer1',
-    type: 'circle',
+    id: 'layer3',
+    type: 'raster',
   }, {
     id: 'layer4',
     type: 'circle',

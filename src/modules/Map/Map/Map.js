@@ -4,7 +4,7 @@ import PropTypes from 'prop-types';
 import 'mapbox-gl/dist/mapbox-gl.css';
 import { detailedDiff } from 'deep-object-diff';
 
-import { getOrderedLayers, getLayerBeforeId, LAYER_TYPES_ORDER } from '../services/mapUtils';
+import { LAYER_TYPES_ORDER } from '../services/mapUtils';
 import { updateCluster } from '../services/cluster';
 
 import SearchControl from './components/SearchControl';
@@ -281,14 +281,12 @@ export class MapComponent extends React.Component {
 
   addLayers ({ sources = [], layers = [] }) {
     const { map } = this.props;
-    const { layers: allLayers } = map.getStyle();
+
     sources.forEach(({ id, ...sourceAttrs }) => map.addSource(id, sourceAttrs));
-    const orderedLayers = getOrderedLayers(layers);
-    orderedLayers.forEach(layer => {
+
+    layers.forEach(layer => {
       if (layer.cluster) return this.createClusterLayer(layer);
-      const { type } = layer;
-      const beforeId = getLayerBeforeId(type, allLayers);
-      return map.addLayer(layer, beforeId);
+      return map.addLayer(layer);
     });
   }
 
