@@ -443,17 +443,17 @@ it('should sort custom layers', () => {
     }],
   }];
   expect(sortCustomLayers(customLayers, lT)).toEqual([{
-    id: '6',
-  }, {
-    id: '4',
-  }, {
-    id: '3',
-  }, {
-    id: '5',
+    id: '2',
   }, {
     id: '1',
   }, {
-    id: '2',
+    id: '5',
+  }, {
+    id: '3',
+  }, {
+    id: '4',
+  }, {
+    id: '6',
   }]);
 });
 

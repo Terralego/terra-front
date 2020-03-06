@@ -8,8 +8,6 @@ import {
   checkContraints,
   fitZoom,
   PREV_STATE,
-  getLayerBeforeId,
-  getOrderedLayers,
 } from './mapUtils';
 
 const getStyle = jest.fn(() => ({
@@ -696,65 +694,4 @@ it('should call fitBounds', () => {
 
   fitZoom({ feature: [feature], map });
   expect(map.fitBounds).toHaveBeenCalled();
-});
-
-it('should get layer before', () => {
-  expect(getLayerBeforeId('line', [{
-    type: 'line',
-    id: 'a',
-  }, {
-    type: 'line',
-    id: 'b',
-  }, {
-    type: 'line',
-    id: 'c',
-  }, {
-    type: 'circle',
-    id: 'd',
-  }])).toBe('d');
-
-  expect(getLayerBeforeId('circle', [{
-    type: 'line',
-    id: 'a',
-  }, {
-    type: 'line',
-    id: 'b',
-  }, {
-    type: 'line',
-    id: 'c',
-  }, {
-    type: 'circle',
-    id: 'd',
-  }])).toBe(undefined);
-
-  expect(getLayerBeforeId('fill', [{
-    type: 'fill',
-    id: 'a',
-  }, {
-    type: 'line',
-    id: 'b',
-  }, {
-    type: 'line',
-    id: 'c',
-  }, {
-    type: 'circle',
-    id: 'd',
-  }])).toBe('b');
-
-  expect(getLayerBeforeId('fill', [])).toBe(undefined);
-});
-
-it('should get orderedLayers', () => {
-  const layers = [
-    { type: 'fill' },
-    { type: 'hillshade' },
-    { type: 'symbol' },
-    { type: 'circle' },
-  ];
-  expect(getOrderedLayers(layers)).toEqual([
-    { type: 'hillshade' },
-    { type: 'fill' },
-    { type: 'circle' },
-    { type: 'symbol' },
-  ]);
 });
