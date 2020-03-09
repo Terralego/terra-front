@@ -12,9 +12,9 @@ export const DEFAULT_LAYER_TYPES_WEIGHT = {
   fill: 400,
   line: 500,
   heatmap: 600,
-  'fill-extrusion': 700,
-  circle: 800,
-  symbol: 900,
+  circle: 700,
+  symbol: 800,
+  'fill-extrusion': 900,
 };
 
 /**
