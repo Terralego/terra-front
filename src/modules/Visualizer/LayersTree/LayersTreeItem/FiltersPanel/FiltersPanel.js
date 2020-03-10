@@ -39,7 +39,7 @@ export class FiltersPanel extends React.Component {
 
   handleChange = filters => {
     const { setLayerState, layer } = this.props;
-    setLayerState({ layer, state: { filters } });
+    setLayerState({ layer, state: { filters, total: null } });
   }
 
   render () {
