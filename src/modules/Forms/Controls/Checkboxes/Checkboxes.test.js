@@ -28,20 +28,21 @@ it('should render loading correctly', () => {
 });
 
 it('should mount & update correctly', () => {
-  const onChange = jest.fn();
+  const value = ['foo'];
+  const onChange = jest.fn(newValue => value.splice(0, value.length, ...newValue));
   const wrapper = shallow((
     <Checkboxes
       label="Pwout"
       onChange={onChange}
       values={['pwet', 'wxd']}
-      value={['foo']}
+      value={value}
     />
   ));
 
   wrapper.instance().onToggle('pwet');
   expect(onChange).toHaveBeenCalledWith(['foo', 'pwet']);
   wrapper.instance().onToggle('foo');
-  expect(onChange).toHaveBeenCalledWith([]);
+  expect(onChange).toHaveBeenCalledWith(['pwet']);
 });
 
 it('should update values', () => {

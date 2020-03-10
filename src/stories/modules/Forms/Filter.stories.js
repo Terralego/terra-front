@@ -50,7 +50,7 @@ const translateMockWithDefaultValue = translateMock({
 });
 
 // Component used to manage state
-const Parent = ({ children, initData, ...props }) => {
+const Parent = ({ children, initData }) => {
   const [state, setState] = React.useState(initData);
   return <div>{children(state, setState)}</div>;
 };

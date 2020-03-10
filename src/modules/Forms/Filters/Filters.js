@@ -41,6 +41,23 @@ export function getComponent (type, values, display, format) {
   }
 }
 
+/**
+ * Return new properties object with property value updated.
+ * If value is falsy or an empty array, the property is removed.
+ * @param {object} properties Previous properties value
+ * @param {string} property Property to update
+ * @param {object} value Value to update.
+ */
+const computeNewPropertiesValue = (properties, property, value) => {
+  const newProperties = { ...properties };
+  if (!value || value.length === 0) { // If null, undefined or empty, we remove value from filter
+    delete newProperties[property];
+  } else {
+    newProperties[property] = value;
+  }
+  return newProperties;
+};
+
 export const Filters = ({ properties, filters, translate, onChange }) => (
   <div>
     {filters.map(({ type, values, property, display, format, label, ...props }) => (
@@ -53,7 +70,7 @@ export const Filters = ({ properties, filters, translate, onChange }) => (
         type={type}
         values={values}
         property={property}
-        onChange={value => onChange({ ...properties, [property]: value })}
+        onChange={value => onChange(computeNewPropertiesValue(properties, property, value))}
         value={properties[property]}
       />
     ))}

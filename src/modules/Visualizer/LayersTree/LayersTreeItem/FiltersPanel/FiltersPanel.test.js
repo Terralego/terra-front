@@ -57,6 +57,7 @@ it('should handle change', () => {
     layer: 'foo',
     state: {
       filters,
+      total: null,
     },
   });
 });
