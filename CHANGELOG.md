@@ -1,4 +1,15 @@
 
+1.19.0 / 2020-03-10
+===================
+
+  * Fix filter content when multi-select is empty
+  * Update story with knobs everywhere when possible
+  * Add tests to multiselect
+  * Fix multi select with complex values
+  * Fix select with array of object as values
+  * Allow draw layer to be on top of everything
+  * Add ability to sort layer by weight
+
 1.18.0 / 2020-03-04
 ===================
 
