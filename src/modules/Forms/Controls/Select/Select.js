@@ -44,8 +44,6 @@ export class Select extends React.Component {
   };
 
   static getDerivedStateFromProps ({ values }) {
-    if (!values) return null;
-
     return {
       values: formatValues(values),
     };

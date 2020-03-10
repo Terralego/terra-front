@@ -61,8 +61,6 @@ export class MultiSelect extends React.Component {
   }
 
   static getDerivedStateFromProps ({ values, value }) {
-    if (!values) return null;
-
     const formatedValues = formatValues(values);
 
     const formatedValue = value.map(val => ({
@@ -113,7 +111,7 @@ export class MultiSelect extends React.Component {
       ...props
     } = this.props;
 
-    const { values = [], value = [] } = this.state;
+    const { values, value } = this.state;
     const displayClearButton = value.length > 0;
 
     return (

@@ -116,7 +116,7 @@ it('should prevent submit event in parent', () => {
 });
 
 it('should update values', () => {
-  expect(Select.getDerivedStateFromProps({ })).toBe(null);
+  expect(Select.getDerivedStateFromProps({ values: [] })).toEqual({ values: [] });
   expect(Select.getDerivedStateFromProps({ values: ['foo', 'bar'] })).toEqual({
     values: [{
       value: 'foo',
