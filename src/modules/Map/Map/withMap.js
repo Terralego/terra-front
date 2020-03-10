@@ -17,10 +17,14 @@ export const DEFAULT_LAYER_TYPES_WEIGHT = {
   'fill-extrusion': 900,
 };
 
-/**
- * A wrapper around mapbox Map object to add ability to handle weighted insertion layer
- */
+const isDrawLayer = layer => layer.id.startsWith('gl-draw');
+
 export class WeigthedMapProxy {
+  /**
+   * Constructor
+   * @param {object} map The mapbox gl object
+   * @param {object} layerTypesWeight Map of type => weight
+   */
   constructor ({ map, layerTypesWeight = DEFAULT_LAYER_TYPES_WEIGHT }) {
     this.map = map;
     this.typesWeigth = layerTypesWeight;
@@ -34,20 +38,21 @@ export class WeigthedMapProxy {
     let prevWeight = 0;
     const { layers } = this.map.getStyle();
 
-    // Compute weigth map for each layer
-    layers.reduce((acc, { type, id }, index) => {
-      if (index < layers.length - 1) {
+    const lastIndex = layers.length - 1;
+
+    // Compute weight map for each layer
+    layers.forEach(({ type, id }, index) => {
+      if (index < lastIndex) {
         const { type: nextType } = layers[index + 1];
         // if the layer is beetween two layers with same weight, the layer get the same weight
         if (this.typesWeigth[nextType] === prevWeight) {
-          acc[id] = prevWeight;
-          return acc;
+          this.weights[id] = prevWeight;
+          return;
         }
       }
       prevWeight = this.typesWeigth[type];
-      acc[id] = this.typesWeigth[type];
-      return acc;
-    }, this.weights);
+      this.weights[id] = this.typesWeigth[type];
+    });
   }
 
   /**
@@ -58,12 +63,9 @@ export class WeigthedMapProxy {
    * @returns The found layer id
    */
   getLayerIdWithBiggerWeight (layers, weight) {
-    const isDrawLayer = layer => layer.id.startsWith('gl-draw');
-    const validLayers = layers.filter(layer => !isDrawLayer(layer));
-
-    for (let i = 0; i < validLayers.length; i += 1) {
-      if (this.weights[validLayers[i].id] > weight) {
-        return validLayers[i].id;
+    for (let i = 0; i < layers.length; i += 1) {
+      if (this.weights[layers[i].id] > weight) {
+        return layers[i].id;
       }
     }
     return undefined;
@@ -82,6 +84,13 @@ export class WeigthedMapProxy {
   }
 
   /**
+   * Returns max weigth from current weight list
+   */
+  getMaxWeight () {
+    return Math.max(...Object.values(this.weights));
+  }
+
+  /**
    * Replace mapbox addlayer to sort layer by weight. For each layer type,
    * a weight is associated. This weight is used unless the layer has an height property.
    * In this case the weight became the property. Allow user to sort layer as he wants to.
@@ -90,7 +99,12 @@ export class WeigthedMapProxy {
    */
   addLayer (layer, beforeId) {
     const { type, id, weight: layerWeight } = layer;
-    const weight = layerWeight || this.typesWeigth[type];
+    let weight =
+      layerWeight !== undefined ? layerWeight : this.typesWeigth[type];
+
+    if (isDrawLayer(layer)) { // If it's a draw layer,
+      weight = layerWeight !== undefined ? layerWeight : this.getMaxWeight();
+    }
 
     if (!beforeId) {
       // eslint-disable-next-line no-param-reassign
@@ -107,7 +121,7 @@ export class WeigthedMapProxy {
   }
 
   removeLayer (layer) {
-    this.weights[layer.id] = undefined;
+    delete this.weights[layer.id];
     this.map.removeLayer(layer);
   }
 }

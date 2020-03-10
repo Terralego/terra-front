@@ -21,6 +21,9 @@ jest.mock('mapbox-gl', () => {
         addedLayers.push(layer);
       }
     }),
+    clearLayers: () => {
+      addedLayers.splice(0, addedLayers.length);
+    },
     removeLayer: jest.fn(layer => {
       const index = addedLayers.findIndex(l => l.id === layer.id);
       addedLayers.splice(index, 1);
@@ -205,6 +208,7 @@ it('should layer added be order in respect with weight', () => {
   mapboxgl.Map.mockClear();
   mapboxgl.map.fitBounds.mockClear();
   const instance = wrapper.instance();
+  instance.map.clearLayers();
   instance.initMap();
 
   instance.map.addLayer({
@@ -286,6 +290,65 @@ it('should layer added be order in respect with weight', () => {
     {
       id: 'layer4',
       type: 'circle',
+    },
+  ]);
+});
+
+it('should layer added be order in respect with weight and draw layer', () => {
+  const wrapper = shallow(
+    <ComponentWithMap
+      backgroundStyle=""
+      center={[1, 2]}
+      fitBounds={{ coordinates: [] }}
+      hash="map"
+    />,
+  );
+  mapboxgl.Map.mockClear();
+  mapboxgl.map.fitBounds.mockClear();
+  const instance = wrapper.instance();
+  instance.map.clearLayers();
+  instance.initMap();
+
+  instance.map.addLayer({
+    id: 'layer1',
+    type: 'circle',
+  });
+  instance.map.addLayer({
+    id: 'gl-draw-layer2',
+    type: 'fill',
+  });
+  // Test forced weight
+  instance.map.addLayer({
+    id: 'gl-draw-layer5',
+    type: 'fill',
+    weight: 1,
+  });
+  // Test beforeId param
+  instance.map.addLayer({
+    id: 'gl-draw-layer6',
+    type: 'fill',
+    weight: 12,
+  }, 'gl-draw-layer5');
+
+
+  expect(instance.map.getStyle().layers).toEqual([
+    {
+      id: 'gl-draw-layer6',
+      type: 'fill',
+      weight: 12,
+    },
+    {
+      id: 'gl-draw-layer5',
+      type: 'fill',
+      weight: 1,
+    },
+    {
+      id: 'layer1',
+      type: 'circle',
+    },
+    {
+      id: 'gl-draw-layer2',
+      type: 'fill',
     },
   ]);
 });
