@@ -91,20 +91,28 @@ export class WeigthedMapProxy {
   }
 
   /**
+   * Compute the layer weight.
+   * @param {object} layer
+   */
+  getWeigth (layer) {
+    if (layer.weight !== undefined) {
+      return layer.weight;
+    }
+    if (isDrawLayer(layer)) {
+      return this.getMaxWeight();
+    }
+    return this.typesWeigth[layer.type];
+  }
+
+  /**
    * Replace mapbox addlayer to sort layer by weight. For each layer type,
    * a weight is associated. This weight is used unless the layer has an height property.
    * In this case the weight became the property. Allow user to sort layer as he wants to.
-   * @param {*} layer the layer to be added
-   * @param {*} beforeId if beforeId is set, the weight is ignored.
+   * @param {object} layer the layer to be added
+   * @param {string} beforeId if beforeId is set, the weight is ignored.
    */
   addLayer (layer, beforeId) {
-    const { type, id, weight: layerWeight } = layer;
-    let weight =
-      layerWeight !== undefined ? layerWeight : this.typesWeigth[type];
-
-    if (isDrawLayer(layer)) { // If it's a draw layer,
-      weight = layerWeight !== undefined ? layerWeight : this.getMaxWeight();
-    }
+    const weight = this.getWeigth(layer);
 
     if (!beforeId) {
       // eslint-disable-next-line no-param-reassign
@@ -112,9 +120,9 @@ export class WeigthedMapProxy {
         this.map.getStyle().layers,
         weight,
       );
-      this.weights[id] = weight;
+      this.weights[layer.id] = weight;
     } else {
-      this.weights[id] = this.weights[beforeId];
+      this.weights[layer.id] = this.weights[beforeId];
     }
 
     this.map.addLayer(layer, beforeId);
