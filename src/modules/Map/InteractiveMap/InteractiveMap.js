@@ -640,6 +640,7 @@ export class InteractiveMap extends React.Component {
       onStyleChange,
       history,
       children,
+      translate,
       ...mapProps
     } = this.props;
 
@@ -662,6 +663,7 @@ export class InteractiveMap extends React.Component {
           onMapLoaded={onMapLoaded}
           onBackgroundChange={onStyleChange}
           controls={controls}
+          translate={translate}
         />
         {!!legends.length && (
           <div className="interactive-map__legends">
@@ -670,6 +672,7 @@ export class InteractiveMap extends React.Component {
                 <Legend
                   key={`${legend.title}${legend.items}`}
                   history={history}
+                  translate={translate}
                   {...legend}
                 />
               ))}
