@@ -15,7 +15,6 @@ const computeLabel = (translate, label, boundaries, index, itemCount, rounding =
   if (label && label !== '') {
     return label;
   }
-
   let { lower: { value: lower }, upper: { value: upper } = {} } = boundaries;
   if (typeof lower === 'number') {
     if (typeof upper === 'number') { // We have two value
@@ -44,8 +43,8 @@ export const Legend = ({
   stackedCircles,
   translate,
 }) => {
-  const biggestDiameter = items.reduce((int, item) =>
-    Math.max(int, item.diameter || DEFAULT_DIAMETER), 0);
+  const biggestDiameter = items.reduce((int, { diameter = DEFAULT_DIAMETER }) =>
+    Math.max(int, diameter), 0);
 
   return (
     <div className={`tf-legend tf-legend--level-${level}`}>
@@ -80,14 +79,6 @@ export const Legend = ({
           boundaries,
           diameter = radius || DEFAULT_DIAMETER,
         }, index) => {
-          const computedLabel = computeLabel(
-            translate,
-            label,
-            boundaries,
-            index,
-            items.length,
-            rounding,
-          );
           if (subItems) {
             return (
               <Legend
@@ -110,6 +101,15 @@ export const Legend = ({
               />
             );
           }
+
+          const computedLabel = computeLabel(
+            translate,
+            label,
+            boundaries,
+            index,
+            items.length,
+            rounding,
+          );
 
           return (
             <div
