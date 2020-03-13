@@ -42,6 +42,16 @@
     overflow-x: hidden;
     overflow-y: auto;
     height: 100%;
+    scrollbar-color: #30404d2b #ffffff;
+    &::-webkit-scrollbar {
+      width: .5rem;
+    }
+    &::-webkit-scrollbar-track {
+      background-color: #ffffff ;
+    }
+    &::-webkit-scrollbar-thumb {
+      background-color: #30404d2b;
+    }
   }
 
   &__content {
@@ -90,7 +100,8 @@
     &__list {
       padding: 0;
       margin: 0;
-      display: table;
+      display: flex;
+      flex-direction: column;
       
       &__amenity {
         display: flex;
@@ -119,18 +130,21 @@
     }
 
     &__column {
-      display: table-row;
+      display: flex;
+      flex-direction: row;
+      justify-content: flex-start;
 
+      
       &-label {
-        display: table-cell;
         padding-bottom: .5rem;
+        padding-right: .5rem;
         white-space: nowrap;
         opacity: .65;
       }
 
       &-value {
-        display: table-cell;
-        padding-bottom: 10px;
+        min-width: 40%;
+        padding-bottom: .65rem;
         overflow-wrap: anywhere; // Firefox
         word-break: break-word; // Chrome
         // If no support, it will fallback with a scrollbar
