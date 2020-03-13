@@ -3,12 +3,34 @@ import PropTypes from 'prop-types';
 import classnames from 'classnames';
 import './styles.scss';
 
+import translateMock from '../../../../../utils/translate';
 import Template from '../../../../Template/Template';
 import CustomComponents from './CustomComponents';
 import Circle from './components/Circle';
 import Rect from './components/Rect';
 
 const DEFAULT_DIAMETER = 16;
+
+const computeLabel = (translate, label, boundaries, index, itemCount, rounding = null) => {
+  if (label && label !== '') {
+    return label;
+  }
+
+  let { lower: { value: lower }, upper: { value: upper } = {} } = boundaries;
+  if (typeof lower === 'number') {
+    if (typeof upper === 'number') { // We have two value
+      if (rounding !== null) {
+        lower = parseFloat(lower.toFixed(rounding)).toLocaleString();
+        upper = parseFloat(upper.toFixed(rounding)).toLocaleString();
+      }
+      return translate('terralego.legend.label', { upper, lower });
+    }
+    // Only one value
+    return parseFloat(lower.toFixed(rounding)).toLocaleString();
+  }
+  // No value
+  return translate('terralego.legend.label');
+};
 
 export const Legend = ({
   title,
@@ -18,7 +40,9 @@ export const Legend = ({
   position,
   content,
   history,
+  rounding,
   stackedCircles,
+  translate,
 }) => {
   const biggestDiameter = items.reduce((int, item) =>
     Math.max(int, item.diameter || DEFAULT_DIAMETER), 0);
@@ -53,8 +77,17 @@ export const Legend = ({
           items: subItems,
           shape = 'square',
           radius,
+          boundaries,
           diameter = radius || DEFAULT_DIAMETER,
         }, index) => {
+          const computedLabel = computeLabel(
+            translate,
+            label,
+            boundaries,
+            index,
+            items.length,
+            rounding,
+          );
           if (subItems) {
             return (
               <Legend
@@ -80,7 +113,7 @@ export const Legend = ({
 
           return (
             <div
-              key={`${label}${color}`}
+              key={`${computedLabel}${color}`}
               className={`tf-legend__item tf-legend__item--${shape} tf-legend__item--${position}`}
             >
               <div
@@ -91,7 +124,7 @@ export const Legend = ({
                   ? <Circle color={color} size={diameter} />
                   : <Rect color={color} size={DEFAULT_DIAMETER} />}
               </div>
-              <div className="tf-legend__label">{label}</div>
+              <div className="tf-legend__label">{computedLabel}</div>
             </div>
           );
         })}
@@ -116,6 +149,7 @@ Legend.propTypes = {
   position: PropTypes.string,
   level: PropTypes.number,
   stackedCircles: PropTypes.bool,
+  translate: PropTypes.func,
 };
 Legend.defaultProps = {
   position: 'left',
@@ -123,6 +157,10 @@ Legend.defaultProps = {
   items: [],
   content: '',
   stackedCircles: false,
+  translate: translateMock({
+    'terralego.legend.novalue': 'No value',
+    'terralego.legend.label': 'From {{lower}} to {{upper}}',
+  }),
 };
 
 export default Legend;
