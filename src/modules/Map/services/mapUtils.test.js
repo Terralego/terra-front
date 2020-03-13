@@ -109,6 +109,7 @@ it('should get opacity property', () => {
   expect(getOpacityProperty('raster')).toBe('raster-opacity');
   expect(getOpacityProperty('circle')).toBe('circle-opacity');
   expect(getOpacityProperty('fill-extrusion')).toBe('fill-extrusion-opacity');
+  expect(getOpacityProperty('heatmap')).toBe('heatmap-opacity');
   expect(getOpacityProperty('foo')).toBe(null);
 });
 
