@@ -35,6 +35,8 @@ export function getOpacityProperty (type) {
       return 'circle-opacity';
     case 'fill-extrusion':
       return 'fill-extrusion-opacity';
+    case 'heatmap':
+      return 'heatmap-opacity';
     default:
       return null;
   }
