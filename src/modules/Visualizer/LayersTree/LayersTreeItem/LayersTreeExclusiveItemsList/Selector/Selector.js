@@ -60,7 +60,7 @@ export class Selector extends React.Component {
 
     const getSelectedValue = (values, name) => values.find(
       ({ value }) => (selectorKey ? selectorKey[name] === value : false),
-    );
+    ).value;
 
     return (
       <div className="selector">
