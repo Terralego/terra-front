@@ -118,17 +118,8 @@ export class Story extends React.Component {
           />
         </div>
         <div className={classnames('storytelling__buttons', { 'storytelling__buttons--justified': displayPrevButton })}>
-          {displayPrevButton
-            && (
-            <Button
-              icon="chevron-left"
-              onClick={prevStep}
-              large
-            >
-              Précédent
-            </Button>
-            )
-          }
+          {displayPrevButton &&
+            <Button icon="chevron-left" onClick={prevStep} large>Précédent</Button>}
 
           <Button
             rightIcon={step === slides.length - 1 ? undefined : 'chevron-right'}

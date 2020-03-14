@@ -50,8 +50,7 @@ const LayersTreeItemFilters = ({
                 filters: { ...filtersValues, [property]: undefined },
                 total: undefined,
               },
-            })
-          }
+            })}
         >
           {label}
           {getValueFromType(value, type)}

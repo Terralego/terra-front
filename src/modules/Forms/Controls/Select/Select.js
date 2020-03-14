@@ -125,8 +125,7 @@ export class Select extends React.Component {
             onQueryChange={this.handleQueryChange}
             initialContent={(values && values.length > 250)
               ? <MenuItem disabled text={translate('terralego.forms.controls.select.select_placeholder')} />
-              : undefined
-            }
+              : undefined}
             inputProps={{
               placeholder: translate('terralego.forms.controls.select.input_placeholder'),
             }}

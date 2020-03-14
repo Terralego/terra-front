@@ -1,3 +1,5 @@
+/* eslint-disable max-classes-per-file */
+
 import React from 'react';
 import renderer from 'react-test-renderer';
 import ReactDOM from 'react-dom';

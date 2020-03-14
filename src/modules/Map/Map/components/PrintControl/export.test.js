@@ -36,8 +36,8 @@ it('should export map as pdf', async () => {
   const parentElement = {};
   const canvas = {
     style: {
-      width: `${210 * 96 / 25.4}px`,
-      height: `${297 * 96 / 25.4}px`,
+      width: `${(210 * 96) / 25.4}px`,
+      height: `${(297 * 96) / 25.4}px`,
     },
     parentNode: {
       appendChild () {},

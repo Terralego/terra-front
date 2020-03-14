@@ -198,14 +198,8 @@ export class MultiSelect extends React.Component {
               return (
                 <Menu ulRef={listProps.itemsParentRef}>
                   {message !== null
-                    ? (
-                      <MenuItem
-                        disabled
-                        text={message}
-                      />
-                    )
-                    : items.map(listProps.renderItem)
-                  }
+                    ? <MenuItem disabled text={message} />
+                    : items.map(listProps.renderItem)}
                 </Menu>
               );
             }}

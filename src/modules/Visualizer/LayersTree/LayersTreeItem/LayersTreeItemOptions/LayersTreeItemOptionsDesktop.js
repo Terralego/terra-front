@@ -128,11 +128,10 @@ const LayersTreeItemOptionsDesktop = ({
         className="visualizer.layerstree-node-content__options__tooltip filters"
       >
         <Button
-          className={
-        classnames(
-          'layerstree-node-content__options__button',
-          { 'layerstree-node-content__options__button--active': isFilterVisible },
-        )}
+          className={classnames(
+            'layerstree-node-content__options__button',
+            { 'layerstree-node-content__options__button--active': isFilterVisible },
+          )}
           onClick={toggleFilters}
           minimal
           icon="filter"
@@ -152,12 +151,11 @@ const LayersTreeItemOptionsDesktop = ({
       className="layerNode__tooltip options"
     >
       <Button
-        className={
-          classnames(
-            'layerstree-node-content__options__button',
-            'layerstree-node-content__options__button--more',
-            { 'layerstree-node-content__options__button--active': isOptionsOpen },
-          )}
+        className={classnames(
+          'layerstree-node-content__options__button',
+          'layerstree-node-content__options__button--more',
+          { 'layerstree-node-content__options__button--active': isOptionsOpen },
+        )}
         icon="more"
         minimal
         onClick={handleOptionPanel}
