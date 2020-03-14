@@ -24,6 +24,7 @@ export class CaptureControl extends AbstractMapControl {
 
   captureScreen = async () => {
     const { map } = this.props;
+    // eslint-disable-next-line no-async-promise-executor
     const blob = await new Promise(async resolve => {
       map.once('render', () =>
         map.getCanvas().toBlob(resolve));

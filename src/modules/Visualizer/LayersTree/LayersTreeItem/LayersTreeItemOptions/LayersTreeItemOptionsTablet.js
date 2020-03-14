@@ -77,8 +77,7 @@ const LayersTreeItemOptionsTablet = ({
         );
       })
       // i18next-extract-mark-context-stop
-    )
-}
+    )}
     {displayTableButton && (
     <Button
       className={classnames(
@@ -107,8 +106,7 @@ const LayersTreeItemOptionsTablet = ({
           <LayerFetchValues layer={layer} isFilterVisible={isFilterVisible} />
         )}
         <Button
-          className={
-          classnames(
+          className={classnames(
             'btn-form',
             'layerstree-node-content__options__button',
             { 'layerstree-node-content__options__button--active': isFilterVisible },
@@ -118,7 +116,7 @@ const LayersTreeItemOptionsTablet = ({
           icon="filter"
           title="filter"
         >
-        filtres
+          filtres
         </Button>
       </FiltersPanel>
     )}

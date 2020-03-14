@@ -1,3 +1,5 @@
+/* eslint-disable max-classes-per-file */
+
 import React from 'react';
 import PropTypes from 'prop-types';
 import mapBoxGl from 'mapbox-gl';
@@ -265,9 +267,7 @@ export const withMap = WrappedComponent => {
           ref={this.containerEl}
           className={`tf-map ${className}`}
         >
-          {map &&
-            <WrappedComponent map={map} {...props} />
-          }
+          {map && <WrappedComponent map={map} {...props} />}
         </div>
       );
     }

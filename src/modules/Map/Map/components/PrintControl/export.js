@@ -19,6 +19,7 @@ export default async function exportPdf (map, orientation, format = 'a4') {
   const doc = new JsPdf({ format, orientation, units: 'mm' });
 
   // Rendering canvas to an image is needed for Chrome/Edge
+  // eslint-disable-next-line no-async-promise-executor
   const fixedMap = await new Promise(async resolve => {
     map.once('render', () => resolve(map.getCanvas().toDataURL()));
     // trigger render by resizing so that new devicePixelRatio is handled

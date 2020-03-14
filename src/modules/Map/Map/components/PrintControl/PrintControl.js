@@ -110,10 +110,9 @@ export class PrintControl extends AbstractMapControl {
           />
         </RadioGroup>
         <Button onClick={this.beginGeneration} disabled={isExporting}>
-          {isExporting ?
-            <Spinner size={16} /> :
-            translate('terralego.map.print_control.button_label')
-          }
+          {isExporting
+            ? <Spinner size={16} />
+            : translate('terralego.map.print_control.button_label')}
         </Button>
         <Button
           onClick={() => this.setState({ isOpen: false })}
