@@ -5,6 +5,8 @@ import { Spinner } from '@blueprintjs/core';
 import Checkbox from './Checkbox';
 import formatValues from '../formatValues';
 import NoValues from '../NoValues';
+import translateMock from '../../../../utils/translate';
+
 import '../index.scss';
 
 export class Checkboxes extends React.Component {
@@ -15,6 +17,16 @@ export class Checkboxes extends React.Component {
       values: formatValues(values),
     };
   }
+
+  static propTypes = {
+    translate: PropTypes.func,
+  };
+
+  static defaultProps = {
+    translate: translateMock({
+      'terralego.forms.controls.noValues': 'No choice available',
+    }),
+  };
 
   state = {}
 
@@ -33,7 +45,7 @@ export class Checkboxes extends React.Component {
   }
 
   render () {
-    const { value: mainValue, label: mainLabel, loading } = this.props;
+    const { value: mainValue, label: mainLabel, loading, translate } = this.props;
     const { values } = this.state;
     const { onToggle } = this;
 
@@ -41,7 +53,7 @@ export class Checkboxes extends React.Component {
       <div className="control-container">
         <p className="control-label">{mainLabel}</p>
         {loading && <Spinner size={20} />}
-        {!loading && !values.length && <NoValues />}
+        {!loading && !values.length && <NoValues placeholder={translate('terralego.forms.controls.noValues')} />}
         {!loading && values.map(({ label, value }) => (
           <Checkbox
             key={`${label}${value}`}

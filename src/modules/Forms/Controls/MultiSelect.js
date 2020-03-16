@@ -49,6 +49,7 @@ export class MultiSelect extends React.Component {
       'terralego.forms.controls.multiselect.select_placeholder_plural': 'Enter at least {{count}} characters',
       'terralego.forms.controls.multiselect.input_placeholder': 'Search...',
       'terralego.forms.controls.multiselect.too_many': 'Too many results, please refine your query...',
+      'terralego.forms.controls.noValues': 'No choice available',
     }),
     loading: false,
     minCharacters: 0,
@@ -122,7 +123,7 @@ export class MultiSelect extends React.Component {
       >
         <p className="control-label">{label}</p>
         {loading && <Spinner size={20} />}
-        {!loading && !values.length && <NoValues />}
+        {!loading && !values.length && <NoValues placeholder={translate('terralego.forms.controls.noValues')} />}
         {!loading && (
           <BPMultiSelect
             className={classnames('tf-multiselect', className)}
