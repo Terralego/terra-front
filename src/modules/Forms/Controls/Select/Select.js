@@ -39,6 +39,7 @@ export class Select extends React.Component {
       'terralego.forms.controls.select.no_results': 'No results.',
       'terralego.forms.controls.select.select_placeholder': 'Enter a query first',
       'terralego.forms.controls.select.input_placeholder': 'Filter...',
+      'terralego.forms.controls.noValues': 'No choice available',
     }),
     loading: false,
   };
@@ -100,7 +101,7 @@ export class Select extends React.Component {
           {label}
         </label>
         {loading && <Spinner size={20} />}
-        {!loading && !values.length && <NoValues />}
+        {!loading && !values.length && <NoValues placeholder={translate('terralego.forms.controls.noValues')} />}
         {!loading && (
           <BPSelect
             className={classnames('tf-select', className)}
