@@ -1,4 +1,14 @@
 
+1.19.1 / 2020-03-16
+===================
+
+  * Fix No values translation
+  * Add heatmap as enabled type
+  * Legend can now be translated
+  * Fix selectors selection
+  * Legend can have boundaries instead of label
+  * Improve details layout
+
 1.19.0 / 2020-03-10
 ===================
 
