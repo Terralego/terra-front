@@ -17,6 +17,9 @@ import translateMock from '../../../utils/translate';
 import NoValues from './NoValues';
 import formatValues from './formatValues';
 
+// With more than 250 items we don't display result but we propose a search
+const MAX_DISPLAY_ITEMS = 250;
+
 export class MultiSelect extends React.Component {
   static propTypes = {
     value: PropTypes.arrayOf(PropTypes.string),
@@ -173,12 +176,11 @@ export class MultiSelect extends React.Component {
             itemListRenderer={listProps => {
               const items = listProps.filteredItems;
               let message = null;
-
               // If we have no query or a query too short and too many results
               if ((!listProps.query || listProps.query.length < minCharacters)
-                && items.length > 250) {
+                && items.length > MAX_DISPLAY_ITEMS) {
                 message = translate('terralego.forms.controls.multiselect.select_placeholder', { count: minCharacters });
-              } else if (items.length > 250) {
+              } else if (items.length > MAX_DISPLAY_ITEMS) {
                 // If we have a query but too many results
                 message = translate('terralego.forms.controls.multiselect.too_many');
               } else if (items.length === 0) {
