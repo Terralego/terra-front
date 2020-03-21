@@ -149,7 +149,7 @@ export class MultiSelect extends React.Component {
               const regExp = new RegExp(query, 'i');
               return query.length < minCharacters
                 ? items
-                : items.filter(item => regExp.test(item));
+                : items.filter(item => regExp.test(item.label));
             }}
             itemRenderer={({ label: itemLabel, value: itemValue }, {
               query, handleClick, modifiers: { matchesPredicate, ...modifiers },

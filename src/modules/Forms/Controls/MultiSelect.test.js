@@ -1,6 +1,7 @@
 import React from 'react';
 import renderer from 'react-test-renderer';
 import { shallow } from 'enzyme';
+import formatValues from './formatValues';
 
 import MultiSelect from './MultiSelect';
 
@@ -151,25 +152,43 @@ it('should render item with highlighted support', () => {
 
 it('should render correctly default message', () => {
   const renderItem = jest.fn();
-  const wrapper = shallow(<MultiSelect values={['foo', 'bar']} />);
+  const wrapper = shallow(<MultiSelect values={formatValues(['foo', 'bar'])} />);
+
+  // Test no results
   expect(shallow(wrapper.find('BPMultiSelect').props().itemListRenderer({
     filteredItems: [],
     query: 'something',
   })).find('BPMenuItem').props().text).toBe('No results.');
+
+  // Test too many results
   expect(shallow(wrapper.find('BPMultiSelect').props().itemListRenderer({
-    filteredItems: Array(251).fill('foo'),
+    filteredItems: formatValues(Array(251).fill('foo')),
     query: 'fo',
   })).find('BPMenuItem').props().text).toBe('Too many results, please refine your query...');
+
+  // Test no query
   expect(shallow(wrapper.find('BPMultiSelect').props().itemListRenderer({
-    filteredItems: Array(251).fill('foo'),
+    filteredItems: formatValues(Array(251).fill('foo')),
     query: '',
   })).find('BPMenuItem').props().text).toBe('Enter a query first');
+
+  // Tests some results
   wrapper.find('BPMultiSelect').props().itemListRenderer({
-    filteredItems: ['foo', 'bar'],
+    filteredItems: formatValues(['foo', 'bar']),
     query: '',
     renderItem,
   });
   expect(renderItem).toHaveBeenCalledTimes(2);
+
+  // Test very much results but with search
+  const longList = formatValues(Array(251).fill('foo').concat(['baz', 'bar']));
+  expect(shallow(<MultiSelect values={longList} />).find('BPMultiSelect').props().itemListPredicate(
+    'ba',
+    longList,
+  )).toEqual([
+    { label: 'baz', value: 'baz' },
+    { label: 'bar', value: 'bar' },
+  ]);
 });
 
 it('should prevent submit event in parent', () => {
@@ -179,8 +198,22 @@ it('should prevent submit event in parent', () => {
 });
 
 it('should not filter if minCharacters not matched', () => {
-  const values = ['foo', 'bar'];
+  const values = formatValues(['foo', 'bar']);
   const wrapper = shallow(<MultiSelect values={values} minCharacters={2} />);
   expect(wrapper.find('BPMultiSelect').props().itemListPredicate('f', values)).toBe(values);
-  expect(wrapper.find('BPMultiSelect').props().itemListPredicate('fo', values)).toEqual(['foo']);
+  expect(wrapper.find('BPMultiSelect').props().itemListPredicate('fo', values)).toEqual([
+    { label: 'foo', value: 'foo' },
+  ]);
+});
+
+it('should filter if minCharacters matched and too many values but filtered', () => {
+  // Test very much results but with search
+  const longList = formatValues(Array(251).fill('foo').concat(['baz', 'bar']));
+  expect(shallow(<MultiSelect values={longList} />).find('BPMultiSelect').props().itemListPredicate(
+    'ba',
+    longList,
+  )).toEqual([
+    { label: 'baz', value: 'baz' },
+    { label: 'bar', value: 'bar' },
+  ]);
 });
