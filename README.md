@@ -66,3 +66,14 @@ A fully configurable visualizer displaying a layers tree, a map and able to make
 
 Every component should be configurable by passing replacement props from TerraFrontProvider.
 
+## How to develop using package
+
+```sh
+<terrafront/dir> $ npm ci
+<terrafront/dir> $ npm build-local
+<terrafront/dir> $ npm link # To link globally
+<terrafront/dir> $ npm run watch:babel # To start autobuilding
+
+# Switch to other project dir
+<otherproject/dir> $ npm link <terrafront/dir>/dist
+```
