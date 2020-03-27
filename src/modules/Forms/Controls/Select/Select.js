@@ -44,14 +44,29 @@ export class Select extends React.Component {
     loading: false,
   };
 
-  static getDerivedStateFromProps ({ values }) {
+  static getDerivedStateFromProps ({ values = [], value }) {
+    if (!values.length) {
+      return {
+        values,
+        value: null,
+      };
+    }
+
+    const formatedValues = formatValues(values);
+
+    const foundValue = value
+      ? formatedValues.find(({ value: availableVal }) => value === availableVal)
+      : formatedValues[0];
+
     return {
-      values: formatValues(values),
+      values: formatedValues,
+      value: foundValue,
     };
   }
 
   state = {
     values: [],
+    value: null,
   };
 
   uuid = `select-${uuid()}`;
@@ -66,7 +81,7 @@ export class Select extends React.Component {
       label,
       placeholder,
       isSubmissionPrevented,
-      value,
+      value: origValue,
       className,
       inline,
       fullWidth,
@@ -75,11 +90,10 @@ export class Select extends React.Component {
       ...props
     } = this.props;
 
-    const { values = [] } = this.state;
+    const { values = [], value } = this.state;
     const { handleChange } = this;
 
-    const result = values.find(({ value: itemValue }) => value === itemValue) || values[0];
-    const displayedValue = result ? result.label : '';
+    const displayedValue = value ? value.label : '';
 
     return (
       <div
@@ -133,7 +147,7 @@ export class Select extends React.Component {
               >
                 <MenuItem
                   {...modifiers}
-                  active={value === itemValue}
+                  active={value.value === itemValue}
                   onClick={handleClick}
                   text={itemLabel}
                 />
