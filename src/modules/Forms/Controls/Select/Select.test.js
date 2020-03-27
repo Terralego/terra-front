@@ -1,6 +1,7 @@
 import React from 'react';
 import renderer from 'react-test-renderer';
 import { mount, shallow } from 'enzyme';
+import formatValues from '../formatValues';
 
 import Select from './Select';
 
@@ -76,6 +77,16 @@ it('should handle change', () => {
   expect(onChange).toHaveBeenCalledWith('foo');
 });
 
+it('should handle change multiple times', () => {
+  const values = formatValues(['foo', 'bar']);
+  const wrapper = shallow(<Select values={values} value="bar" />);
+  expect(wrapper.instance().state.value).toEqual({ label: 'bar', value: 'bar' });
+  wrapper.setProps({ ...wrapper.props(), value: 'foo' });
+  expect(wrapper.instance().state.value).toEqual({ label: 'foo', value: 'foo' });
+  wrapper.setProps({ ...wrapper.props(), value: 'bar' });
+  expect(wrapper.instance().state.value).toEqual({ label: 'bar', value: 'bar' });
+});
+
 it('should render Item', () => {
   const wrapper = mount(
     <Select
@@ -116,7 +127,7 @@ it('should prevent submit event in parent', () => {
 });
 
 it('should update values', () => {
-  expect(Select.getDerivedStateFromProps({ values: [] })).toEqual({ values: [] });
+  expect(Select.getDerivedStateFromProps({ values: [] })).toEqual({ values: [], value: null });
   expect(Select.getDerivedStateFromProps({ values: ['foo', 'bar'] })).toEqual({
     values: [{
       value: 'foo',
@@ -125,5 +136,9 @@ it('should update values', () => {
       value: 'bar',
       label: 'bar',
     }],
+    value: {
+      value: 'foo',
+      label: 'foo',
+    },
   });
 });

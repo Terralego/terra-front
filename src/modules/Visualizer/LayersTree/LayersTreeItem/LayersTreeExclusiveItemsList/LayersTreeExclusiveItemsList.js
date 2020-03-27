@@ -23,7 +23,7 @@ export const LayersTreeExclusiveItemsList = ({
     value: index,
   }));
   const value = lotOfItems
-    ? values.find(({ value: itemValue }) => itemValue === selected)
+    ? values.find(({ value: itemValue }) => itemValue === selected).value
     : selected;
 
   return (
