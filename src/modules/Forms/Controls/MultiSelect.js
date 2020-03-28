@@ -65,6 +65,14 @@ export class MultiSelect extends React.Component {
   }
 
   static getDerivedStateFromProps ({ values, value }) {
+    // Avoid race condition
+    if (!values) {
+      return {
+        values: [],
+        value: [],
+      };
+    }
+
     const formatedValues = formatValues(values);
 
     const formatedValue = value.map(val => ({
