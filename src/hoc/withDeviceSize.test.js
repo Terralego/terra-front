@@ -3,6 +3,8 @@ import { shallow } from 'enzyme';
 
 import withDeviceSize from './withDeviceSize';
 
+jest.mock('lodash.debounce', () => fn => () => fn());
+
 const Component = ({ isMobileSized, isPhoneSized }) => {
   if (isPhoneSized) { return <p>phone</p>; }
   if (isMobileSized) { return <p>Mobile</p>; }
@@ -13,23 +15,26 @@ const ComponentWithDeviceSize = withDeviceSize()(Component);
 
 it('should check breakpoints device', () => {
   global.innerWidth = 2000;
-  let wrapper = shallow(
+  const wrapper = shallow(
     <ComponentWithDeviceSize />,
   );
+
+  global.dispatchEvent(new Event('resize'));
+
   expect(wrapper.props().isPhoneSized).toBe(false);
   expect(wrapper.props().isMobileSized).toBe(false);
 
   global.innerWidth = 1000;
-  wrapper = shallow(
-    <ComponentWithDeviceSize />,
-  );
+
+  global.dispatchEvent(new Event('resize'));
+
   expect(wrapper.props().isPhoneSized).toBe(false);
   expect(wrapper.props().isMobileSized).toBe(true);
 
   global.innerWidth = 300;
-  wrapper = shallow(
-    <ComponentWithDeviceSize />,
-  );
+
+  global.dispatchEvent(new Event('resize'));
+
   expect(wrapper.props().isPhoneSized).toBe(true);
   expect(wrapper.props().isMobileSized).toBe(true);
 });
