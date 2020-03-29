@@ -1,4 +1,5 @@
 import React from 'react';
+import debounce from 'lodash.debounce';
 
 
 const DESKTOP_BREAKPOINT = 1025;
@@ -9,28 +10,54 @@ export const withDeviceSize = ({
   phone = PHONE_BREAKPOINT,
 } = {}) => WrappedComponent => {
   class WithDeviceSize extends React.Component {
+    mounted = false;
+
+    updateWindowDimensions = debounce(() => {
+      if (!this.mounted) return;
+
+      const width = global.innerWidth;
+      const newIsMobileSized = width < desktop;
+      const newIsPhoneSized = width <= phone;
+
+      this.setState(({ isMobileSized, isPhoneSized }) => {
+        const newState = {};
+
+        if (newIsMobileSized !== isMobileSized) {
+          newState.isMobileSized = newIsMobileSized;
+        }
+
+        if (newIsPhoneSized !== isPhoneSized) {
+          newState.isPhoneSized = newIsPhoneSized;
+        }
+
+        return newState;
+      });
+    }, 300);
+
+    state = {
+      isMobileSized: false,
+      isPhoneSized: false,
+    }
+
     componentDidMount () {
+      this.mounted = true;
       this.updateWindowDimensions();
       global.addEventListener('resize', this.updateWindowDimensions);
     }
 
     componentWillUnmount () {
+      this.mounted = false;
       global.removeEventListener('resize', this.updateWindowDimensions);
     }
 
-    updateWindowDimensions = () => {
-      this.forceUpdate();
-    };
-
     render () {
-      const { ...props } = this.props;
-      const width = global.innerWidth;
+      const { isPhoneSized, isMobileSized } = this.state;
 
       return (
         <WrappedComponent
-          {...props}
-          isMobileSized={width < desktop}
-          isPhoneSized={width <= phone}
+          {...this.props}
+          isMobileSized={isMobileSized}
+          isPhoneSized={isPhoneSized}
         />
       );
     }
@@ -40,5 +67,6 @@ export const withDeviceSize = ({
   WithDeviceSize.displayName = `withDeviceSize(${name})`;
   return WithDeviceSize;
 };
+
 
 export default withDeviceSize;
