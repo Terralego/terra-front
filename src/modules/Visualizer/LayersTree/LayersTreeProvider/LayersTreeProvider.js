@@ -154,7 +154,7 @@ export class LayersTreeProvider extends React.Component {
    * @param {Function} callback
    */
   resetState (state, callback = () => { }) {
-    const { setCurrentState, onChange } = this.props;
+    const { setCurrentState, onChange, initialState = {} } = this.props;
 
     const setStateCallback = () => {
       callback();
@@ -174,7 +174,10 @@ export class LayersTreeProvider extends React.Component {
       };
 
       layersTreeState.forEach(populateActiveLayersAndTable);
-      setCurrentState({ layers: activeLayers, table });
+      // Deduplicate render
+      if (activeLayers !== initialState.layers || table !== initialState.table) {
+        setCurrentState({ layers: activeLayers, table });
+      }
       onChange(layersTreeState);
     };
 
