@@ -94,6 +94,9 @@ export class LayersTreeProvider extends React.Component {
     return layersTreeState.get(layer) || {};
   };
 
+  /**
+   * Fetch values for each properties. Allow filter to be populated.
+   */
   fetchPropertiesValues = async (layer, properties) => {
     const { fetchPropertyValues, fetchPropertyRange } = this.props;
     const { layersTreeState } = this.state;
@@ -107,7 +110,7 @@ export class LayersTreeProvider extends React.Component {
         property.values = [];
       }
     });
-    this.resetState(new Map(layersTreeState));
+    this.resetState({ layersTreeState: new Map(layersTreeState) });
 
     const responses = await Promise.all(properties.map(property =>
       (property.type === TYPE_RANGE
@@ -128,8 +131,9 @@ export class LayersTreeProvider extends React.Component {
       /* eslint-enable no-param-reassign */
     });
 
+    // Force render by creating a new new layersTreeState
     const { layersTreeState: newLayersTreeState } = this.state;
-    this.resetState(new Map(newLayersTreeState));
+    this.resetState({ layersTreeState: new Map(newLayersTreeState) });
   };
 
   initLayersState = initialLayersTreeState => {
