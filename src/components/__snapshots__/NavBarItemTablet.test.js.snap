@@ -1,0 +1,14 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`should render correctly the component 1`] = `
+<div
+  title="headerlink"
+>
+  <p
+    className="header-button-label"
+  >
+    
+  </p>
+  HeaderButton
+</div>
+`;

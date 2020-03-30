@@ -1,0 +1,17 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`should render correctly the component 1`] = `
+<span
+  className="bp3-popover-wrapper"
+>
+  <span
+    className="bp3-popover-target"
+    onBlur={[Function]}
+    onFocus={[Function]}
+    onMouseEnter={[Function]}
+    onMouseLeave={[Function]}
+  >
+    HeaderLink
+  </span>
+</span>
+`;

@@ -1,0 +1,30 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`should render correctly with http link 1`] = `
+<a
+  className="header-link"
+  href="https://foo.com"
+>
+  <span>
+    Foo
+  </span>
+</a>
+`;
+
+exports[`should render correctly with navigation 1`] = `
+<a
+  to="foo"
+>
+  <span>
+    Bar
+  </span>
+</a>
+`;
+
+exports[`should render correctly with no href 1`] = `
+<span>
+  <span>
+    Test
+  </span>
+</span>
+`;
