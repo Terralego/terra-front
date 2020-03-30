@@ -16,7 +16,8 @@
         "label": "Mot de passe",
         "placeholder": "Mot de passe"
       },
-      "submit": "Se connecter"
+      "submit": "Se connecter",
+      "title": "Connexion"
     },
     "logout": {
       "cancel": {
@@ -42,7 +43,8 @@
         "placeholder": "Mot de passe"
       },
       "submit": "Créer le compte",
-      "submitSuccess": "E-mail envoyé à {{email}}"
+      "submitSuccess": "E-mail envoyé à {{email}}",
+      "title": "Créer un compte"
     }
   },
   "terralego": {
