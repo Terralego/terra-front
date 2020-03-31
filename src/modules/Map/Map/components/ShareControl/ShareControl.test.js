@@ -3,6 +3,7 @@ import React from 'react';
 import renderer from 'react-test-renderer';
 import ShareControl, { icon } from './ShareControl';
 
+
 jest.mock('@blueprintjs/core', () => ({
   Button: ({ children = 'Button' }) => children,
   ControlGroup: ({ children }) => children,
@@ -71,7 +72,7 @@ it('should permit copy to clipboard', () => {
   instance.copyToCliboard();
   expect(document.execCommand).toHaveBeenCalledWith('copy');
   expect(instance.state).toEqual({ copySuccess: true });
-  jest.runAllTimers();
+  jest.runOnlyPendingTimers();
   expect(instance.state).toEqual({ copySuccess: false });
 });
 
