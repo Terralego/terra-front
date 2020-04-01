@@ -1,4 +1,13 @@
 
+1.19.4 / 2020-04-01
+===================
+
+  * Improve range behaviour
+  * Less render when resizing viewport
+  * Fix broken resetState
+  * Deduplicate render with hash state
+  * Fix multiselect race condition
+
 1.19.3 / 2020-03-27
 ===================
 
