@@ -11,11 +11,13 @@ import Rect from './components/Rect';
 
 const DEFAULT_DIAMETER = 16;
 
-const computeLabel = (translate, label, boundaries, index, itemCount, rounding = null) => {
+const computeLabel = (translate, label, boundaries = {}, rounding = null) => {
   if (label && label !== '') {
     return label;
   }
-  let { lower: { value: lower }, upper: { value: upper } = {} } = boundaries;
+
+  let { lower: { value: lower } = {}, upper: { value: upper } = {} } = boundaries;
+
   if (typeof lower === 'number') {
     if (typeof upper === 'number') { // We have two value
       if (rounding !== null) {
@@ -28,7 +30,7 @@ const computeLabel = (translate, label, boundaries, index, itemCount, rounding =
     return parseFloat(lower.toFixed(rounding)).toLocaleString();
   }
   // No value
-  return translate('terralego.legend.label');
+  return translate('terralego.legend.nolabel');
 };
 
 export const Legend = ({
@@ -106,14 +108,12 @@ export const Legend = ({
             translate,
             label,
             boundaries,
-            index,
-            items.length,
             rounding,
           );
 
           return (
             <div
-              key={`${computedLabel}${color}`}
+              key={`${computedLabel}${color}${diameter}`}
               className={`tf-legend__item tf-legend__item--${shape} tf-legend__item--${position}`}
             >
               <div
@@ -158,7 +158,7 @@ Legend.defaultProps = {
   content: '',
   stackedCircles: false,
   translate: translateMock({
-    'terralego.legend.novalue': 'No value',
+    'terralego.legend.nolabel': 'No label',
     'terralego.legend.label': 'From {{lower}} to {{upper}}',
   }),
 };

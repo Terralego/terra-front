@@ -75,6 +75,10 @@
         }
       }
     },
+    "legend": {
+      "label": "From {{lower}} to {{upper}}",
+      "nolabel": "-"
+    },
     "map": {
       "backgroundstyles_control": {
         "button_label": "Fonds de carte"
