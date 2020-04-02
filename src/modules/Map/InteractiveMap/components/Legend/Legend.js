@@ -8,6 +8,7 @@ import Template from '../../../../Template/Template';
 import CustomComponents from './CustomComponents';
 import Circle from './components/Circle';
 import Rect from './components/Rect';
+import Line from './components/Line';
 
 const DEFAULT_DIAMETER = 16;
 
@@ -79,6 +80,7 @@ export const Legend = ({
           shape = 'square',
           radius,
           boundaries,
+          strokeWidth = 2,
           diameter = radius || DEFAULT_DIAMETER,
         }, index) => {
           if (subItems) {
@@ -120,9 +122,9 @@ export const Legend = ({
                 className="tf-legend__symbol-container"
                 style={{ width: shape === 'circle' ? biggestDiameter : DEFAULT_DIAMETER * 2 }}
               >
-                {shape === 'circle'
-                  ? <Circle color={color} size={diameter} />
-                  : <Rect color={color} size={DEFAULT_DIAMETER} />}
+                {(shape === 'circle') && <Circle color={color} size={diameter} />}
+                {(shape === 'line') && <Line color={color} size={DEFAULT_DIAMETER} strokeWidth={strokeWidth} />}
+                {(shape === 'square') && <Rect color={color} size={DEFAULT_DIAMETER} />}
               </div>
               <div className="tf-legend__label">{computedLabel}</div>
             </div>

@@ -76,8 +76,10 @@
       }
     },
     "legend": {
-      "label": "From {{lower}} to {{upper}}",
-      "nolabel": "-"
+      "label": "",
+      "noValue": "",
+      "nolabel": "",
+      "novalue": ""
     },
     "map": {
       "backgroundstyles_control": {
