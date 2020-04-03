@@ -1,4 +1,12 @@
 
+1.20.0 / 2020-04-03
+===================
+
+  * Upgrade Mapbox-gl package to 1.9.1
+  * Fix dependencies issues with npm audit
+  * Upgrade eslint-config-makina
+  * Upgrade eslint dependencies
+
 1.19.4 / 2020-04-01
 ===================
 
