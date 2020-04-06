@@ -26,13 +26,15 @@ exports[`should render a manual legend 1`] = `
       >
         <svg
           height={10}
-          viewBox="0 0 100 100"
+          viewBox="0 0 10 10"
           width={10}
         >
           <rect
             fill="red"
-            height="100"
-            width="100"
+            height={10}
+            stroke="#444444"
+            strokeWidth={1}
+            width={10}
             x="0"
             y="0"
           />
@@ -45,13 +47,15 @@ exports[`should render a manual legend 1`] = `
       >
         <svg
           height={10}
-          viewBox="0 0 100 100"
+          viewBox="0 0 10 10"
           width={10}
         >
           <rect
             fill="green"
-            height="100"
-            width="100"
+            height={10}
+            stroke="#444444"
+            strokeWidth={1}
+            width={10}
             x="0"
             y="0"
           />
@@ -67,14 +71,16 @@ exports[`should render a manual legend 1`] = `
       >
         <svg
           height={10}
-          viewBox="0 0 100 100"
+          viewBox="0 0 12 12"
           width={10}
         >
           <circle
-            cx="50"
-            cy="50"
+            cx={6}
+            cy={6}
             fill="red"
-            r="50"
+            r={5}
+            stroke="#111111"
+            strokeWidth={1}
           />
         </svg>
       </div>
@@ -85,14 +91,16 @@ exports[`should render a manual legend 1`] = `
       >
         <svg
           height={10}
-          viewBox="0 0 100 100"
+          viewBox="0 0 12 12"
           width={10}
         >
           <circle
-            cx="50"
-            cy="50"
+            cx={6}
+            cy={6}
             fill="green"
-            r="50"
+            r={5}
+            stroke="#111111"
+            strokeWidth={1}
           />
         </svg>
       </div>
@@ -134,14 +142,16 @@ exports[`should render correctly circle 1`] = `
         >
           <svg
             height={16}
-            viewBox="0 0 100 100"
+            viewBox="0 0 18 18"
             width={16}
           >
             <circle
-              cx="50"
-              cy="50"
+              cx={9}
+              cy={9}
               fill="red"
-              r="50"
+              r={8}
+              stroke="#111111"
+              strokeWidth={1}
             />
           </svg>
         </div>
@@ -168,14 +178,16 @@ exports[`should render correctly circle 1`] = `
         >
           <svg
             height={16}
-            viewBox="0 0 100 100"
+            viewBox="0 0 18 18"
             width={16}
           >
             <circle
-              cx="50"
-              cy="50"
+              cx={9}
+              cy={9}
               fill="green"
-              r="50"
+              r={8}
+              stroke="#111111"
+              strokeWidth={1}
             />
           </svg>
         </div>
@@ -202,14 +214,16 @@ exports[`should render correctly circle 1`] = `
         >
           <svg
             height={16}
-            viewBox="0 0 100 100"
+            viewBox="0 0 18 18"
             width={16}
           >
             <circle
-              cx="50"
-              cy="50"
+              cx={9}
+              cy={9}
               fill="blue"
-              r="50"
+              r={8}
+              stroke="#111111"
+              strokeWidth={1}
             />
           </svg>
         </div>
@@ -254,13 +268,15 @@ exports[`should render correctly square 1`] = `
         >
           <svg
             height={16}
-            viewBox="0 0 100 100"
+            viewBox="0 0 16 16"
             width={16}
           >
             <rect
               fill="red"
-              height="100"
-              width="100"
+              height={16}
+              stroke="#444444"
+              strokeWidth={1}
+              width={16}
               x="0"
               y="0"
             />
@@ -289,13 +305,15 @@ exports[`should render correctly square 1`] = `
         >
           <svg
             height={16}
-            viewBox="0 0 100 100"
+            viewBox="0 0 16 16"
             width={16}
           >
             <rect
               fill="green"
-              height="100"
-              width="100"
+              height={16}
+              stroke="#444444"
+              strokeWidth={1}
+              width={16}
               x="0"
               y="0"
             />
@@ -324,13 +342,15 @@ exports[`should render correctly square 1`] = `
         >
           <svg
             height={16}
-            viewBox="0 0 100 100"
+            viewBox="0 0 16 16"
             width={16}
           >
             <rect
               fill="blue"
-              height="100"
-              width="100"
+              height={16}
+              stroke="#444444"
+              strokeWidth={1}
+              width={16}
               x="0"
               y="0"
             />
@@ -382,14 +402,16 @@ exports[`should render correctly stacked circles 1`] = `
         >
           <svg
             height={16}
-            viewBox="0 0 100 100"
+            viewBox="0 0 18 18"
             width={16}
           >
             <circle
-              cx="50"
-              cy="50"
+              cx={9}
+              cy={9}
               fill="red"
-              r="50"
+              r={8}
+              stroke="#111111"
+              strokeWidth={1}
             />
           </svg>
         </div>
@@ -416,14 +438,16 @@ exports[`should render correctly stacked circles 1`] = `
         >
           <svg
             height={16}
-            viewBox="0 0 100 100"
+            viewBox="0 0 18 18"
             width={16}
           >
             <circle
-              cx="50"
-              cy="50"
+              cx={9}
+              cy={9}
               fill="green"
-              r="50"
+              r={8}
+              stroke="#111111"
+              strokeWidth={1}
             />
           </svg>
         </div>
@@ -450,14 +474,16 @@ exports[`should render correctly stacked circles 1`] = `
         >
           <svg
             height={16}
-            viewBox="0 0 100 100"
+            viewBox="0 0 18 18"
             width={16}
           >
             <circle
-              cx="50"
-              cy="50"
+              cx={9}
+              cy={9}
               fill="blue"
-              r="50"
+              r={8}
+              stroke="#111111"
+              strokeWidth={1}
             />
           </svg>
         </div>
@@ -502,13 +528,15 @@ exports[`should render correctly with multi level 1`] = `
         >
           <svg
             height={16}
-            viewBox="0 0 100 100"
+            viewBox="0 0 16 16"
             width={16}
           >
             <rect
               fill="red"
-              height="100"
-              width="100"
+              height={16}
+              stroke="#444444"
+              strokeWidth={1}
+              width={16}
               x="0"
               y="0"
             />
@@ -537,13 +565,15 @@ exports[`should render correctly with multi level 1`] = `
         >
           <svg
             height={16}
-            viewBox="0 0 100 100"
+            viewBox="0 0 16 16"
             width={16}
           >
             <rect
               fill="blue"
-              height="100"
-              width="100"
+              height={16}
+              stroke="#444444"
+              strokeWidth={1}
+              width={16}
               x="0"
               y="0"
             />
@@ -594,13 +624,15 @@ exports[`should render correctly with multi level 1`] = `
             >
               <svg
                 height={16}
-                viewBox="0 0 100 100"
+                viewBox="0 0 16 16"
                 width={16}
               >
                 <rect
                   fill="red"
-                  height="100"
-                  width="100"
+                  height={16}
+                  stroke="#444444"
+                  strokeWidth={1}
+                  width={16}
                   x="0"
                   y="0"
                 />
@@ -629,13 +661,15 @@ exports[`should render correctly with multi level 1`] = `
             >
               <svg
                 height={16}
-                viewBox="0 0 100 100"
+                viewBox="0 0 16 16"
                 width={16}
               >
                 <rect
                   fill="blue"
-                  height="100"
-                  width="100"
+                  height={16}
+                  stroke="#444444"
+                  strokeWidth={1}
+                  width={16}
                   x="0"
                   y="0"
                 />
@@ -677,13 +711,15 @@ exports[`should render correctly with multi level 1`] = `
                 >
                   <svg
                     height={16}
-                    viewBox="0 0 100 100"
+                    viewBox="0 0 16 16"
                     width={16}
                   >
                     <rect
                       fill="red"
-                      height="100"
-                      width="100"
+                      height={16}
+                      stroke="#444444"
+                      strokeWidth={1}
+                      width={16}
                       x="0"
                       y="0"
                     />
@@ -712,13 +748,15 @@ exports[`should render correctly with multi level 1`] = `
                 >
                   <svg
                     height={16}
-                    viewBox="0 0 100 100"
+                    viewBox="0 0 16 16"
                     width={16}
                   >
                     <rect
                       fill="blue"
-                      height="100"
-                      width="100"
+                      height={16}
+                      stroke="#444444"
+                      strokeWidth={1}
+                      width={16}
                       x="0"
                       y="0"
                     />
@@ -760,13 +798,15 @@ exports[`should render correctly with multi level 1`] = `
                     >
                       <svg
                         height={16}
-                        viewBox="0 0 100 100"
+                        viewBox="0 0 16 16"
                         width={16}
                       >
                         <rect
                           fill="red"
-                          height="100"
-                          width="100"
+                          height={16}
+                          stroke="#444444"
+                          strokeWidth={1}
+                          width={16}
                           x="0"
                           y="0"
                         />
@@ -795,13 +835,15 @@ exports[`should render correctly with multi level 1`] = `
                     >
                       <svg
                         height={16}
-                        viewBox="0 0 100 100"
+                        viewBox="0 0 16 16"
                         width={16}
                       >
                         <rect
                           fill="blue"
-                          height="100"
-                          width="100"
+                          height={16}
+                          stroke="#444444"
+                          strokeWidth={1}
+                          width={16}
                           x="0"
                           y="0"
                         />
