@@ -1,4 +1,10 @@
 
+1.20.1 / 2020-04-06
+===================
+
+  * Add line legend
+  * Fix legend broken when missing label
+
 1.20.0 / 2020-04-03
 ===================
 
