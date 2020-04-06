@@ -77,3 +77,17 @@ Every component should be configurable by passing replacement props from TerraFr
 # Switch to other project dir
 <otherproject/dir> $ npm link <terrafront/dir>/dist
 ```
+
+## Common errors
+
+When developing in another environement with TF linked you can see this error.
+
+> Invalid hook call. Hooks can only be called inside of the body of a function component.
+
+In this case stop all running server or watcher and execute :
+
+```sh
+<terrafront/dir> $ cd dist
+<terrafront/dir> $ npm link ../../<otherproject/dir>/node_modules/react/
+```
+
