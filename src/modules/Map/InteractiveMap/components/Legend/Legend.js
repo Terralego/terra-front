@@ -80,8 +80,8 @@ export const Legend = ({
           shape = 'square',
           radius,
           boundaries,
-          strokeWidth = 2,
           diameter = radius || DEFAULT_DIAMETER,
+          ...rest
         }, index) => {
           if (subItems) {
             return (
@@ -113,6 +113,31 @@ export const Legend = ({
             rounding,
           );
 
+
+          let Shape = null;
+          const wrapperStyle = { width: DEFAULT_DIAMETER * 2 };
+          const shapeProps = {
+            size: DEFAULT_DIAMETER,
+            color,
+            ...rest,
+          };
+
+          switch (shape) {
+            case 'circle':
+              Shape = Circle;
+              shapeProps.size = diameter;
+              wrapperStyle.width = biggestDiameter;
+              break;
+            case 'line':
+              Shape = Line;
+              break;
+            case 'square':
+              Shape = Rect;
+              break;
+            default:
+              break;
+          }
+
           return (
             <div
               key={`${computedLabel}${color}${diameter}`}
@@ -120,11 +145,9 @@ export const Legend = ({
             >
               <div
                 className="tf-legend__symbol-container"
-                style={{ width: shape === 'circle' ? biggestDiameter : DEFAULT_DIAMETER * 2 }}
+                style={wrapperStyle}
               >
-                {(shape === 'circle') && <Circle color={color} size={diameter} />}
-                {(shape === 'line') && <Line color={color} size={DEFAULT_DIAMETER} strokeWidth={strokeWidth} />}
-                {(shape === 'square') && <Rect color={color} size={DEFAULT_DIAMETER} />}
+                {Shape && <Shape {...shapeProps} />}
               </div>
               <div className="tf-legend__label">{computedLabel}</div>
             </div>
