@@ -5,8 +5,10 @@ import Select from '../../../../Forms/Controls/Select';
 import Selector from './Selector';
 
 const MAX_ITEMS_AS_RADIO = 5;
+
 const getComponent = (selectors, itemsLength) => {
   if (selectors) return Selector;
+
   return itemsLength > MAX_ITEMS_AS_RADIO ? Select : Radios;
 };
 
@@ -16,15 +18,24 @@ export const LayersTreeExclusiveItemsList = ({
   selected = 0,
   onChange,
 }) => {
-  const lotOfItems = layers.length > 5;
   const Component = getComponent(selectors, layers.length);
-  const values = layers.filter(({ label }) => label).map(({ label }, index) => ({
-    label,
-    value: index,
-  }));
-  const value = lotOfItems
-    ? values.find(({ value: itemValue }) => itemValue === selected).value
-    : selected;
+
+  const values = React.useMemo(() =>
+    layers.filter(({ label }) => label).map(({ label }, index) => ({
+      label,
+      value: index,
+    })), [layers]);
+
+  const value = React.useMemo(() => {
+    if (layers.length > MAX_ITEMS_AS_RADIO) {
+      const found = values.find(({ value: itemValue }) => itemValue === selected);
+      if (!found) {
+        return values[0].value;
+      }
+      return found.value;
+    }
+    return selected;
+  }, [layers.length, selected, values]);
 
   return (
     <Component
