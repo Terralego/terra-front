@@ -75,10 +75,13 @@ export class MultiSelect extends React.Component {
 
     const formatedValues = formatValues(values);
 
-    const formatedValue = value.map(val => ({
-      label: formatedValues.find(({ value: availableVal }) => val === availableVal).label,
-      value: val,
-    }));
+    const formatedValue = value.map(val => {
+      const { label } = formatedValues.find(({ value: availableVal }) => val === availableVal) || { label: '' };
+      return {
+        label,
+        value: val,
+      };
+    });
 
     return {
       values: formatedValues,
