@@ -8,81 +8,125 @@ import translateMock from '../../../../../../utils/translate';
 
 import './styles.scss';
 
-export class Selector extends React.Component {
-  static propTypes = {
-    selectors: PropTypes.arrayOf(PropTypes.shape({
-      label: PropTypes.string,
-      name: PropTypes.string.isRequired,
-      values: PropTypes.arrayOf(PropTypes.shape({
-        label: PropTypes.string.isRequired,
-        value: PropTypes.string.isRequired,
-      })).isRequired,
-    })).isRequired,
-    layers: PropTypes.arrayOf(PropTypes.shape({
-      selectorKey: PropTypes.object,
-    })).isRequired,
-    activeLayer: PropTypes.shape({
-      selectorKey: PropTypes.object,
-    }).isRequired,
-    onChange: PropTypes.func,
-    translate: PropTypes.func,
-  }
+const SelectorSelect = ({
+  label,
+  name,
+  values,
+  currentValue,
+  onChange,
+  ...props
+}) => {
+  const handleChange = React.useCallback(
+    value => onChange(name, value),
+    [name, onChange],
+  );
 
-  static defaultProps = {
-    onChange () {},
-    translate: translateMock({
-      'terralego.visualizer.layerstree.group.selector': 'No layer found',
-    }),
-  }
+  /**
+   * Get selected value from all values.
+   */
+  const getSelectedValue = React.useMemo(() => {
+    if (values.length) {
+      const { value } = values.find(({ value: listValue }) =>
+        currentValue === listValue) || values[0];
+      return value;
+    }
+    return null;
+  }, [currentValue, values]);
 
-  state = {}
+  return (
+    <Select
+      fullWidth
+      label={label}
+      className="selector__select"
+      onChange={handleChange}
+      values={values}
+      value={getSelectedValue}
+      {...props}
+    />
+  );
+};
 
-  onChange = name => value => {
-    const { selectors, layers, activeLayer: { selectorKey }, onChange } = this.props;
-    const newKey = { ...selectorKey, [name]: value };
-    const newActiveLayerIndex = layers.findIndex(({ selectorKey: layerSelectorKey }) =>
+
+export const Selector = ({
+  selectors,
+  layers,
+  activeLayer: { selectorKey = {} } = {},
+  onChange,
+  translate,
+}) => {
+  const [noMatchingLayer, setNoMatchingLayer] = React.useState(false);
+
+  const getLayerForSelector = React.useCallback(currentSelectorKey =>
+    layers.findIndex(({ selectorKey: layerSelectorKey }) =>
       Object.keys(layerSelectorKey).length === selectors.length &&
-      selectors.reduce((prev, { name: selectorName }) =>
-        prev && layerSelectorKey[selectorName] === newKey[selectorName],
-      true));
+      selectors.every(({ name: selectorName }) =>
+        layerSelectorKey[selectorName] === currentSelectorKey[selectorName])),
+  [layers, selectors]);
+
+  const handleChange = React.useCallback((name, value) => {
+    const newKey = { ...selectorKey, [name]: value };
+
+    const newActiveLayerIndex = getLayerForSelector(newKey);
 
     if (newActiveLayerIndex === -1) {
-      return this.setState({ noMatchingLayer: true });
+      setNoMatchingLayer(true);
+      return;
     }
 
-    this.setState({ noMatchingLayer: false });
-    return onChange(newActiveLayerIndex);
-  }
+    setNoMatchingLayer(false);
+    onChange(newActiveLayerIndex);
+  }, [getLayerForSelector, onChange, selectorKey]);
 
-  render () {
-    const { selectors, activeLayer: { selectorKey } = {}, translate } = this.props;
-    const { noMatchingLayer } = this.state;
+  React.useEffect(() => {
+    const activeLayerIndex = getLayerForSelector(selectorKey);
+    setNoMatchingLayer(activeLayerIndex === -1);
+  }, [getLayerForSelector, selectorKey]);
 
-    const getSelectedValue = (values, name) => values.find(
-      ({ value }) => (selectorKey ? selectorKey[name] === value : false),
-    ).value;
+  return (
+    <div className="selector">
+      {selectors.map(({ label, name, values }) => (
+        <SelectorSelect
+          key={name}
+          name={name}
+          label={label}
+          onChange={handleChange}
+          values={values}
+          currentValue={selectorKey[name]}
+        />
+      ))}
+      {noMatchingLayer && (
+      <Callout intent={Intent.WARNING} className="selector__message">
+        {translate('terralego.visualizer.layerstree.group.selector')}
+      </Callout>
+      )}
+    </div>
+  );
+};
 
-    return (
-      <div className="selector">
-        {selectors.map(({ label, name, values }) => (
-          <Select
-            fullWidth
-            key={name}
-            label={label}
-            className="selector__select"
-            onChange={this.onChange(name)}
-            values={values}
-            value={getSelectedValue(values, name)}
-          />
-        ))}
-        {noMatchingLayer && (
-          <Callout intent={Intent.WARNING} className="selector__message">
-            {translate('terralego.visualizer.layerstree.group.selector')}
-          </Callout>
-        )}
-      </div>
-    );
-  }
-}
+Selector.propTypes = {
+  selectors: PropTypes.arrayOf(PropTypes.shape({
+    label: PropTypes.string,
+    name: PropTypes.string.isRequired,
+    values: PropTypes.arrayOf(PropTypes.shape({
+      label: PropTypes.string.isRequired,
+      value: PropTypes.string.isRequired,
+    })).isRequired,
+  })).isRequired,
+  layers: PropTypes.arrayOf(PropTypes.shape({
+    selectorKey: PropTypes.object,
+  })).isRequired,
+  activeLayer: PropTypes.shape({
+    selectorKey: PropTypes.object,
+  }).isRequired,
+  onChange: PropTypes.func,
+  translate: PropTypes.func,
+};
+
+Selector.defaultProps = {
+  onChange () {},
+  translate: translateMock({
+    'terralego.visualizer.layerstree.group.selector': 'No layer found',
+  }),
+};
 
 export default Selector;
