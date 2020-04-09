@@ -1,4 +1,15 @@
 
+1.20.2 / 2020-04-09
+===================
+
+  * New navbar component
+  * New login button component
+  * Fix multiselect when unmounting
+  * Fix selector when unmounting
+  * Add react-testing-library
+  * Fix legend bug when hiding and enhance perf
+  * Better circle and rect legend
+
 1.20.1 / 2020-04-06
 ===================
 
