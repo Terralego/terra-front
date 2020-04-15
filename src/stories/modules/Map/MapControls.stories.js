@@ -16,6 +16,7 @@ import {
   CONTROL_HOME,
   CONTROL_SHARE,
   CONTROL_CUSTOM,
+  CONTROL_REPORT,
 } from '../../../modules/Map/Map';
 import InteractiveMap, {
   CONTROL_BACKGROUND_STYLES,
@@ -129,6 +130,9 @@ storiesOf('Map components/InteractiveMap', module).add('Custom controls ', () =>
         control: CONTROL_CUSTOM,
         position: CONTROLS_TOP_LEFT,
         instance: HomeControl,
+      }, boolean('Display Report Control', true, CONTROL_REPORT) && {
+        control: CONTROL_REPORT,
+        position: CONTROLS_TOP_RIGHT,
       },
       ].filter(Boolean)}
     />

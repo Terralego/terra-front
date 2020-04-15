@@ -14,6 +14,7 @@ import DrawControl from './components/DrawControl';
 import PrintControl from './components/PrintControl';
 import HomeControl from './components/HomeControl';
 import ShareControl from './components/ShareControl';
+import ReportControl from './components/ReportControl';
 
 import translateMock from '../../../utils/translate';
 
@@ -34,6 +35,7 @@ export const CONTROL_PRINT = 'PrintControl';
 export const CONTROL_HOME = 'HomeControl';
 export const CONTROL_SHARE = 'ShareControl';
 export const CONTROL_CUSTOM = 'CustomControl';
+export const CONTROL_REPORT = 'ReportControl';
 
 export const DEFAULT_CONTROLS = [{
   control: CONTROL_ATTRIBUTION,
@@ -85,6 +87,7 @@ export class MapComponent extends React.Component {
           CONTROL_HOME,
           CONTROL_SHARE,
           CONTROL_CUSTOM,
+          CONTROL_REPORT,
         ]),
         PropTypes.shape({
           onAdd: PropTypes.func,
@@ -472,6 +475,16 @@ export class MapComponent extends React.Component {
           const controlInstance = new CustomInstance({
             ...props,
             ...otherParams,
+          });
+          this.controls.push(controlInstance);
+          map.addControl(controlInstance, position);
+          break;
+        }
+        case CONTROL_REPORT: {
+          const controlInstance = new ReportControl({
+            ...props,
+            map,
+            ...params,
           });
           this.controls.push(controlInstance);
           map.addControl(controlInstance, position);
