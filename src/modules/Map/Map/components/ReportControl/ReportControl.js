@@ -1,9 +1,12 @@
 import React from 'react';
 import { Button, Icon } from '@blueprintjs/core';
+import { Marker } from 'mapbox-gl';
 
 import AbstractControl from '../../../helpers/AbstractMapControl';
 import Tooltip from '../../../../../components/Tooltip';
 import ReportCard from './ReportCard';
+
+import './styles.scss';
 
 export default class ReportControl extends AbstractControl {
   static containerClassName = 'mapboxgl-ctrl mapboxgl-ctrl-group mapboxgl-ctrl-report';
@@ -17,9 +20,34 @@ export default class ReportControl extends AbstractControl {
     };
   }
 
+  componentDidMount () {
+    const {
+      fromReport,
+      map,
+      reportCoords: { lat, lng },
+    } = this.props;
+    if (fromReport) {
+      const coords = { lat: parseFloat(lat), lng: parseFloat(lng) };
+      map.on('load', () => {
+        this.reportMarker = new Marker()
+          .setLngLat(coords)
+          .addTo(map);
+        map.flyTo({ center: coords });
+      });
+    }
+  }
+
+  componentWillUnmount () {
+    if (this.reportMarker) {
+      this.reportMarker.remove();
+    }
+  }
+
   toggleReport = e => {
+    const coordinates = e.lngLat;
+    this.marker = new Marker().setLngLat(coordinates).addTo(this.props.map);
     this.setState({
-      coordinates: e.lngLat,
+      coordinates,
       isReporting: true,
       url: 'test/url/for/now',
     });
@@ -30,32 +58,37 @@ export default class ReportControl extends AbstractControl {
     map.on('click', this.toggleReport);
   }
 
-  stopReport = () => {
+  onStopReport = () => {
     const { map } = this.props;
     map.off('click', this.toggleReport);
+    this.marker.remove();
     this.setState({ isReporting: false, coordinates: null, url: null });
   }
 
   onNewReport = () => {
-    this.stopReport();
+    this.onStopReport();
     this.onToggleReport();
   }
 
   render () {
-    const { isReporting, coordinates } = this.state;
-    const { submitReport } = this.props;
+    const { isReporting, coordinates = {} } = this.state;
+    const { submitReport, translate: t, url } = this.props;
 
     return (
       <>
         <ReportCard
           isOpen={isReporting}
-          cancelReport={this.stopReport}
-          endReport={this.stopReport}
+          cancelReport={this.onStopReport}
+          endReport={this.onStopReport}
           newReport={this.onNewReport}
           onSubmit={submitReport}
           coordinates={coordinates}
+          translate={t}
+          reportUrl={coordinates && `${url}/${coordinates.lng}/${coordinates.lat}`}
         />
-        <Tooltip>
+        <Tooltip
+          content={t('map.report_control.content')}
+        >
           <Button
             onClick={this.onToggleReport}
           >

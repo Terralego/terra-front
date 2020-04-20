@@ -24,6 +24,7 @@ import InteractiveMap, {
 import leftInfoButtonStyles from '../../leftInfosButtonStyles';
 
 import doc from './MapControls.md';
+import translate from './reportTranslateMock';
 
 const onSearch = () => new Promise(resolve => {
   setTimeout(() => resolve([{
@@ -133,6 +134,8 @@ storiesOf('Map components/InteractiveMap', module).add('Custom controls ', () =>
       }, boolean('Display Report Control', true, CONTROL_REPORT) && {
         control: CONTROL_REPORT,
         position: CONTROLS_TOP_RIGHT,
+        reportCoords: { lat: '44,44', lng: '4,44' },
+        translate,
       },
       ].filter(Boolean)}
     />

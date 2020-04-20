@@ -12,6 +12,7 @@ export const ReportCard = ({
   reportUrl,
   newReport,
   endReport,
+  translate: t,
 }) => {
   const [submited, setSubmited] = useState(false);
 
@@ -35,14 +36,19 @@ export const ReportCard = ({
       isOpen={isOpen}
       onClose={cancelReport}
     >
-      <Card interactive elevation={Elevation.FOUR}>
-        {(submited && <ReportSuccess newReport={onNewReport} endReport={endReport} />)
+      <Card
+        interactive
+        elevation={Elevation.FOUR}
+        className="report-card"
+      >
+        {(submited && <ReportSuccess newReport={onNewReport} endReport={endReport} translate={t} />)
           || (
             <ReportForm
               onSubmit={submitReport}
               onCancel={cancelReport}
               coordinates={coordinates}
               url={reportUrl}
+              translate={t}
             />
           )}
       </Card>

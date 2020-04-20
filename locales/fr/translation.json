@@ -110,6 +110,43 @@
         "landscape_label": "Paysage",
         "portrait_label": "Portrait"
       },
+      "report_control": {
+        "content": "signaler une information manquante ou incorrecte",
+        "form": {
+          "cancel": "ANNULER",
+          "comment": {
+            "label": "Commentaire",
+            "optional": "optionnel"
+          },
+          "radio": {
+            "doesnotexist": {
+              "label": "L'élément n'existe pas"
+            },
+            "missing_info": {
+              "label": "Information manquante"
+            },
+            "wrong_info": {
+              "label": "Information érronée"
+            },
+            "wrong_location": {
+              "label": "Emplacement incorrect"
+            }
+          },
+          "radiogroup": {
+            "label": "Que voulez-vous signaler?"
+          },
+          "submit": "SIGNALER",
+          "url": {
+            "label": "URL de la localisation du signalement"
+          }
+        },
+        "success": {
+          "done": "Ok",
+          "message": "votre signalement a été soumis avec succès",
+          "other_report": "Faire un autre signalement",
+          "title": "Merci!"
+        }
+      },
       "search_control": {
         "button_label": "Rechercher"
       },
