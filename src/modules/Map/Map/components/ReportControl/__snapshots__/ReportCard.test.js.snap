@@ -1,0 +1,13 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`should render correctly 1`] = `
+<div
+  id="overlay"
+>
+  <div
+    id="card"
+  >
+    reportform
+  </div>
+</div>
+`;
