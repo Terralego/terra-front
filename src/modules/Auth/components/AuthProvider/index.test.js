@@ -90,7 +90,8 @@ it('should auto refresh', async done => {
   ));
   const instance = wrapper.instance();
   instance.refreshToken = jest.fn();
-  instance.delayAutoRefresh({ exp: 1 });
+  // avoid negative value, to be sure callback is triggered
+  instance.delayAutoRefresh({ exp: (Date.now() / 1000) });
   expect(instance.delayTimeout).toBeDefined();
   await new Promise(resolve => setTimeout(resolve, 1));
   expect(instance.refreshToken).toHaveBeenCalled();
