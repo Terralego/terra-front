@@ -6,7 +6,6 @@ import AbstractControl from '../../../helpers/AbstractMapControl';
 import Tooltip from '../../../../../components/Tooltip';
 import ReportCard from './ReportCard';
 
-import './styles.scss';
 
 export default class ReportControl extends AbstractControl {
   static containerClassName = 'mapboxgl-ctrl mapboxgl-ctrl-group mapboxgl-ctrl-report';
@@ -44,12 +43,13 @@ export default class ReportControl extends AbstractControl {
   }
 
   toggleReport = e => {
+    const { url } = this.props;
     const coordinates = e.lngLat;
     this.marker = new Marker().setLngLat(coordinates).addTo(this.props.map);
     this.setState({
       coordinates,
       isReporting: true,
-      url: 'test/url/for/now',
+      url,
     });
   }
 
