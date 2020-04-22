@@ -87,7 +87,7 @@ export default class ReportControl extends AbstractControl {
           reportUrl={coordinates && `${url}/${coordinates.lng}/${coordinates.lat}`}
         />
         <Tooltip
-          content={t('map.report_control.content')}
+          content={t('terralego.map.report_control.content')}
         >
           <Button
             onClick={this.onToggleReport}

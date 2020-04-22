@@ -12,7 +12,7 @@ exports[`should render correctly 1`] = `
     <label
       className="bp3-label"
     >
-      map.report_control.form.radiogroup.label
+      terralego.map.report_control.form.radiogroup.label
     </label>
     <label
       className="bp3-control bp3-radio"
@@ -27,7 +27,7 @@ exports[`should render correctly 1`] = `
       <span
         className="bp3-control-indicator"
       />
-      map.report_control.form.radio.wrong_info.label
+      terralego.map.report_control.form.radio.wrong_info.label
     </label>
     <label
       className="bp3-control bp3-radio"
@@ -42,7 +42,7 @@ exports[`should render correctly 1`] = `
       <span
         className="bp3-control-indicator"
       />
-      map.report_control.form.radio.missing_info.label
+      terralego.map.report_control.form.radio.missing_info.label
     </label>
     <label
       className="bp3-control bp3-radio"
@@ -57,7 +57,7 @@ exports[`should render correctly 1`] = `
       <span
         className="bp3-control-indicator"
       />
-      map.report_control.form.radio.wrong_location.label
+      terralego.map.report_control.form.radio.wrong_location.label
     </label>
     <label
       className="bp3-control bp3-radio"
@@ -72,18 +72,18 @@ exports[`should render correctly 1`] = `
       <span
         className="bp3-control-indicator"
       />
-      map.report_control.form.radio.doesnotexist.label
+      terralego.map.report_control.form.radio.doesnotexist.label
     </label>
   </div>
   <label
     className="bp3-label"
   >
-    map.report_control.form.comment.label
+    terralego.map.report_control.form.comment.label
     <span
       className="bp3-text-muted"
     >
        (
-      map.report_control.form.comment.optional
+      terralego.map.report_control.form.comment.optional
       )
     </span>
     <textarea
@@ -96,7 +96,7 @@ exports[`should render correctly 1`] = `
   <label
     className="bp3-label"
   >
-    map.report_control.form.url.label
+    terralego.map.report_control.form.url.label
     :
     <br />
     <a />
@@ -110,7 +110,7 @@ exports[`should render correctly 1`] = `
     <span
       className="bp3-button-text"
     >
-      map.report_control.form.cancel
+      terralego.map.report_control.form.cancel
     </span>
   </button>
   <button
@@ -123,7 +123,7 @@ exports[`should render correctly 1`] = `
     <span
       className="bp3-button-text"
     >
-      map.report_control.form.submit
+      terralego.map.report_control.form.submit
     </span>
   </button>
 </form>
