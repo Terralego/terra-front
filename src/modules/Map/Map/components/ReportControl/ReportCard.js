@@ -23,6 +23,11 @@ export const ReportCard = ({
     newReport();
   }, [newReport]);
 
+  const onEndReport = useCallback(() => {
+    setSubmited(false);
+    endReport();
+  }, [endReport]);
+
   const submitReport = useCallback(value => {
     setSubmited(true);
     onSubmit(value);
@@ -43,16 +48,17 @@ export const ReportCard = ({
         elevation={Elevation.FOUR}
         className="report-card"
       >
-        {(submited && <ReportSuccess newReport={onNewReport} endReport={endReport} translate={t} />)
-          || (
-            <ReportForm
-              onSubmit={submitReport}
-              onCancel={cancelReport}
-              coordinates={coordinates}
-              url={reportUrl}
-              translate={t}
-            />
-          )}
+        {(submited
+          && <ReportSuccess newReport={onNewReport} endReport={onEndReport} translate={t} />)
+        || (
+        <ReportForm
+          onSubmit={submitReport}
+          onCancel={cancelReport}
+          coordinates={coordinates}
+          url={reportUrl}
+          translate={t}
+        />
+        )}
       </Card>
     </Overlay>
   );
