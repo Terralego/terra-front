@@ -4,6 +4,8 @@ import { Overlay, Card, Elevation } from '@blueprintjs/core';
 import ReportForm from './ReportForm';
 import ReportSuccess from './ReportSuccess';
 
+import './styles.scss';
+
 export const ReportCard = ({
   isOpen,
   onSubmit,
@@ -31,10 +33,10 @@ export const ReportCard = ({
     <Overlay
       autoFocus
       lazy
-      canOutsideClickClose
       canEscapeKeyClose
       isOpen={isOpen}
       onClose={cancelReport}
+      className="overlay-container"
     >
       <Card
         interactive
