@@ -40,6 +40,9 @@ export default class ReportControl extends AbstractControl {
     if (this.reportMarker) {
       this.reportMarker.remove();
     }
+    if (this.marker) {
+      this.marker.remove();
+    }
   }
 
   toggleReport = e => {
