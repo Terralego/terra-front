@@ -2,9 +2,6 @@
 
 exports[`should render correctly 1`] = `
 <div>
-  <h1>
-    terralego.map.report_control.success.title
-  </h1>
   <p>
     terralego.map.report_control.success.message
   </p>
