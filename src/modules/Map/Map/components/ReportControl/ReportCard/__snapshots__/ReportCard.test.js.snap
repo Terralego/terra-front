@@ -7,6 +7,7 @@ exports[`should render correctly 1`] = `
   <div
     id="card"
   >
+    <h1 />
     reportform
   </div>
 </div>

@@ -11,6 +11,7 @@ const translate = translateMock({
   'terralego.map.report_control.form.url.label': 'Report tracking url',
   'terralego.map.report_control.form.cancel': 'Cancel',
   'terralego.map.report_control.form.submit': 'report',
+  'terralego.map.report_control.form.title': 'Report an error or propose improvement',
   'terralego.map.report_control.success.title': 'Thank you!',
   'terralego.map.report_control.success.message': 'Your report has been submited successfully',
   'terralego.map.report_control.success.other_report': 'Do another report',

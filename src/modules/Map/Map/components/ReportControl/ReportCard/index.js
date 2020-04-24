@@ -1,8 +1,8 @@
-import React, { useState, useCallback } from 'react';
+import React, { useState } from 'react';
 import { Overlay, Card, Elevation } from '@blueprintjs/core';
 
-import ReportForm from './ReportForm';
-import ReportSuccess from './ReportSuccess';
+import ReportForm from '../ReportForm';
+import ReportSuccess from '../ReportSuccess';
 
 import './styles.scss';
 
@@ -18,20 +18,24 @@ export const ReportCard = ({
 }) => {
   const [submited, setSubmited] = useState(false);
 
-  const onNewReport = useCallback(() => {
+  const title = submited ?
+    'terralego.map.report_control.success.title' :
+    'terralego.map.report_control.form.title';
+
+  const onNewReport = () => {
     setSubmited(false);
     newReport();
-  }, [newReport]);
+  };
 
-  const onEndReport = useCallback(() => {
+  const onEndReport = () => {
     setSubmited(false);
     endReport();
-  }, [endReport]);
+  };
 
-  const submitReport = useCallback(value => {
+  const submitReport = data => {
     setSubmited(true);
-    onSubmit(value);
-  }, [onSubmit]);
+    onSubmit(data);
+  };
 
 
   return (
@@ -48,9 +52,12 @@ export const ReportCard = ({
         elevation={Elevation.FOUR}
         className="report-card"
       >
-        {(submited
-          && <ReportSuccess newReport={onNewReport} endReport={onEndReport} translate={t} />)
-        || (
+        <h1>{t(title)}</h1>
+        {submited
+          && <ReportSuccess newReport={onNewReport} endReport={onEndReport} translate={t} />}
+
+        {!submited
+        && (
         <ReportForm
           onSubmit={submitReport}
           onCancel={cancelReport}

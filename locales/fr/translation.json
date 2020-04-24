@@ -113,7 +113,7 @@
       "report_control": {
         "content": "signaler une information manquante ou incorrecte",
         "form": {
-          "cancel": "ANNULER",
+          "cancel": "Annuler",
           "comment": {
             "label": "Commentaire",
             "optional": "optionnel"
@@ -135,7 +135,8 @@
           "radiogroup": {
             "label": "Que voulez-vous signaler?"
           },
-          "submit": "SIGNALER",
+          "submit": "Signaler",
+          "title": "Signaler une erreur ou proposer une amélioration",
           "url": {
             "label": "URL de la localisation du signalement"
           }

@@ -1,0 +1,151 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`should render correctly 1`] = `
+<form
+  onSubmit={[Function]}
+>
+  <input
+    hidden={true}
+    name="lng"
+  />
+  <input
+    hidden={true}
+    name="lat"
+  />
+  <div
+    className="bp3-form-group"
+  >
+    <label
+      className="bp3-label"
+    >
+      terralego.map.report_control.form.radiogroup.label
+       
+      <span
+        className="bp3-text-muted"
+      />
+    </label>
+    <div
+      className="bp3-form-content"
+    >
+      <label
+        className="bp3-control bp3-radio"
+      >
+        <input
+          defaultChecked={true}
+          name="reportType"
+          type="radio"
+          value="wrong_info"
+        />
+        <span
+          className="bp3-control-indicator"
+        />
+        terralego.map.report_control.form.radio.wrong_info.label
+      </label>
+      <label
+        className="bp3-control bp3-radio"
+      >
+        <input
+          name="reportType"
+          type="radio"
+          value="missing_info"
+        />
+        <span
+          className="bp3-control-indicator"
+        />
+        terralego.map.report_control.form.radio.missing_info.label
+      </label>
+      <label
+        className="bp3-control bp3-radio"
+      >
+        <input
+          name="reportType"
+          type="radio"
+          value="wrong_location"
+        />
+        <span
+          className="bp3-control-indicator"
+        />
+        terralego.map.report_control.form.radio.wrong_location.label
+      </label>
+      <label
+        className="bp3-control bp3-radio"
+      >
+        <input
+          name="reportType"
+          type="radio"
+          value="does_not_exist"
+        />
+        <span
+          className="bp3-control-indicator"
+        />
+        terralego.map.report_control.form.radio.doesnotexist.label
+      </label>
+    </div>
+  </div>
+  <label
+    className="bp3-label"
+  >
+    terralego.map.report_control.form.comment.label
+    <span
+      className="bp3-text-muted"
+    >
+       (
+      terralego.map.report_control.form.comment.optional
+      )
+    </span>
+    <textarea
+      className="bp3-input bp3-fill bp3-large"
+      name="comment"
+      onChange={[Function]}
+      style={Object {}}
+    />
+  </label>
+  <div
+    className="bp3-form-group report-url"
+  >
+    <div
+      className="bp3-form-content"
+    >
+      terralego.map.report_control.form.url.label
+      :
+      <input
+        large={true}
+        name="url"
+      />
+    </div>
+  </div>
+  <div
+    className="bp3-form-group report-button-group"
+  >
+    <div
+      className="bp3-form-content"
+    >
+      <button
+        className="bp3-button report-button"
+        onKeyDown={[Function]}
+        onKeyUp={[Function]}
+        type="reset"
+      >
+        <span
+          className="bp3-button-text"
+        >
+          terralego.map.report_control.form.cancel
+        </span>
+      </button>
+      <button
+        className="bp3-button report-button"
+        id="submitReport"
+        onKeyDown={[Function]}
+        onKeyUp={[Function]}
+        type="submit"
+      >
+        <span
+          className="bp3-button-text"
+        >
+          terralego.map.report_control.form.submit
+        </span>
+      </button>
+    </div>
+  </div>
+</form>
+`;

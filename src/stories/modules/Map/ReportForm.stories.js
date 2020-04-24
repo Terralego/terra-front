@@ -12,6 +12,7 @@ stories
   .add('Card', () => (
     <ReportCard
       isOpen
+      coordinates={{}}
       cancelReport={action('cancel-report')}
       onSubmit={action('report-submit')}
       reportUrl="url/of/the/report/"

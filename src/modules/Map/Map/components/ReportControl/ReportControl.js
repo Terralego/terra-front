@@ -1,5 +1,5 @@
 import React from 'react';
-import { Button, Icon } from '@blueprintjs/core';
+import { Icon } from '@blueprintjs/core';
 import { Marker } from 'mapbox-gl';
 
 import AbstractControl from '../../../helpers/AbstractMapControl';
@@ -45,9 +45,9 @@ export default class ReportControl extends AbstractControl {
     }
   }
 
-  toggleReport = e => {
+  toggleReport = ({ lngLat }) => {
     const { url, map } = this.props;
-    const coordinates = e.lngLat;
+    const coordinates = lngLat;
     this.marker = new Marker().setLngLat(coordinates).addTo(this.props.map);
     this.setState({
       coordinates,
@@ -95,11 +95,12 @@ export default class ReportControl extends AbstractControl {
         <Tooltip
           content={t('terralego.map.report_control.content')}
         >
-          <Button
+          <button
+            type="button"
             onClick={this.onToggleReport}
           >
             <Icon icon="error" />
-          </Button>
+          </button>
         </Tooltip>
       </>
     );
