@@ -48,7 +48,7 @@ export const ReportForm = ({ url, coordinates, onSubmit, onCancel, translate: t 
       </Label>
       <FormGroup className="report-url">
         {t('terralego.map.report_control.form.url.label')}:
-        <input large name="url" value={url} />
+        <input large readOnly name="url" value={url} />
       </FormGroup>
 
       <FormGroup className="report-button-group">
