@@ -1,5 +1,5 @@
 import React from 'react';
-import { Button, FormGroup, Label, Radio, TextArea } from '@blueprintjs/core';
+import { Button, FormGroup, InputGroup, Radio, TextArea } from '@blueprintjs/core';
 
 import './styles.scss';
 
@@ -41,14 +41,14 @@ export const ReportForm = ({ url, coordinates, onSubmit, onCancel, translate: t 
           name="reportType"
         />
       </FormGroup>
-      <Label>
+      <FormGroup>
         {t('terralego.map.report_control.form.comment.label')}
         <span className="bp3-text-muted"> ({t('terralego.map.report_control.form.comment.optional')})</span>
         <TextArea large fill name="comment" />
-      </Label>
+      </FormGroup>
       <FormGroup className="report-url">
         {t('terralego.map.report_control.form.url.label')}:
-        <input large readOnly name="url" value={url} />
+        <InputGroup large readOnly name="url" defaultValue={url} />
       </FormGroup>
 
       <FormGroup className="report-button-group">
