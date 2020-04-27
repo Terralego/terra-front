@@ -41,13 +41,16 @@ export const ReportForm = ({ url, coordinates, onSubmit, onCancel, translate: t 
           name="reportType"
         />
       </FormGroup>
-      <FormGroup>
-        {t('terralego.map.report_control.form.comment.label')}
-        <span className="bp3-text-muted"> ({t('terralego.map.report_control.form.comment.optional')})</span>
+      <FormGroup
+        label={t('terralego.map.report_control.form.comment.label')}
+        labelInfo={t('terralego.map.report_control.form.comment.optional')}
+      >
         <TextArea large fill name="comment" />
       </FormGroup>
-      <FormGroup className="report-url">
-        {t('terralego.map.report_control.form.url.label')}:
+      <FormGroup
+        className="report-url"
+        label={t('terralego.map.report_control.form.url.label')}
+      >
         <InputGroup large readOnly name="url" defaultValue={url} />
       </FormGroup>
 

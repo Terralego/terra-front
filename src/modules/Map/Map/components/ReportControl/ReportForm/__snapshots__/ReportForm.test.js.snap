@@ -85,17 +85,20 @@ exports[`should render correctly 1`] = `
   <div
     className="bp3-form-group"
   >
-    <div
-      className="bp3-form-content"
+    <label
+      className="bp3-label"
     >
       terralego.map.report_control.form.comment.label
+       
       <span
         className="bp3-text-muted"
       >
-         (
         terralego.map.report_control.form.comment.optional
-        )
       </span>
+    </label>
+    <div
+      className="bp3-form-content"
+    >
       <textarea
         className="bp3-input bp3-fill bp3-large"
         name="comment"
@@ -107,11 +110,18 @@ exports[`should render correctly 1`] = `
   <div
     className="bp3-form-group report-url"
   >
+    <label
+      className="bp3-label"
+    >
+      terralego.map.report_control.form.url.label
+       
+      <span
+        className="bp3-text-muted"
+      />
+    </label>
     <div
       className="bp3-form-content"
     >
-      terralego.map.report_control.form.url.label
-      :
       <div
         className="bp3-input-group bp3-large"
       >
