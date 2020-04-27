@@ -48,7 +48,7 @@ export default class ReportControl extends AbstractControl {
   toggleReport = ({ lngLat }) => {
     const { url, map } = this.props;
     const coordinates = lngLat;
-    this.marker = new Marker().setLngLat(coordinates).addTo(this.props.map);
+    this.marker = new Marker().setLngLat(coordinates).addTo(map);
     this.setState({
       coordinates,
       isReporting: true,

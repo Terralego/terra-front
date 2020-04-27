@@ -82,24 +82,28 @@ exports[`should render correctly 1`] = `
       </label>
     </div>
   </div>
-  <label
-    className="bp3-label"
+  <div
+    className="bp3-form-group"
   >
-    terralego.map.report_control.form.comment.label
-    <span
-      className="bp3-text-muted"
+    <div
+      className="bp3-form-content"
     >
-       (
-      terralego.map.report_control.form.comment.optional
-      )
-    </span>
-    <textarea
-      className="bp3-input bp3-fill bp3-large"
-      name="comment"
-      onChange={[Function]}
-      style={Object {}}
-    />
-  </label>
+      terralego.map.report_control.form.comment.label
+      <span
+        className="bp3-text-muted"
+      >
+         (
+        terralego.map.report_control.form.comment.optional
+        )
+      </span>
+      <textarea
+        className="bp3-input bp3-fill bp3-large"
+        name="comment"
+        onChange={[Function]}
+        style={Object {}}
+      />
+    </div>
+  </div>
   <div
     className="bp3-form-group report-url"
   >
@@ -108,10 +112,21 @@ exports[`should render correctly 1`] = `
     >
       terralego.map.report_control.form.url.label
       :
-      <input
-        large={true}
-        name="url"
-      />
+      <div
+        className="bp3-input-group bp3-large"
+      >
+        <input
+          className="bp3-input"
+          name="url"
+          readOnly={true}
+          style={
+            Object {
+              "paddingRight": 10,
+            }
+          }
+          type="text"
+        />
+      </div>
     </div>
   </div>
   <div
