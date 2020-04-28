@@ -13,6 +13,30 @@ exports[`should render correctly 1`] = `
     name="lat"
   />
   <div
+    className="bp3-form-group report-timestamp-id"
+  >
+    <div
+      className="bp3-form-content"
+    >
+      <div
+        className="bp3-input-group"
+      >
+        <input
+          className="bp3-input"
+          left-icon="id-number"
+          name="id"
+          readOnly={true}
+          style={
+            Object {
+              "paddingRight": 10,
+            }
+          }
+          type="text"
+        />
+      </div>
+    </div>
+  </div>
+  <div
     className="bp3-form-group"
   >
     <label

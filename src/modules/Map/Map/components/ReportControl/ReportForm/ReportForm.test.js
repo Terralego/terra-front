@@ -4,6 +4,8 @@ import { mount } from 'enzyme';
 
 import ReportForm from '.';
 
+Date.now = jest.fn();
+
 it('should render correctly', () => {
   const tree = renderer.create(
     <ReportForm translate={m => m} coordinates={{}} />,
@@ -29,6 +31,7 @@ it('should return data on submit', () => {
   expect(submitMock).toHaveBeenCalledWith({
     lng: coordinates.lng.toString(),
     lat: coordinates.lat.toString(),
+    id: '',
     url: 'test/url',
     comment: '',
     reportType: 'wrong_info', // default value set in component
