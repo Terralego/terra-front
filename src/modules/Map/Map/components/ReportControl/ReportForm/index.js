@@ -17,6 +17,16 @@ export const ReportForm = ({ url, coordinates, onSubmit, onCancel, translate: t 
       <input hidden name="lng" value={coordinates.lng} />
       <input hidden name="lat" value={coordinates.lat} />
       <FormGroup
+        className="report-timestamp-id"
+      >
+        <InputGroup
+          readOnly
+          name="id"
+          left-icon="id-number"
+          defaultValue={Date.now()}
+        />
+      </FormGroup>
+      <FormGroup
         label={t('terralego.map.report_control.form.radiogroup.label')}
       >
         <Radio
