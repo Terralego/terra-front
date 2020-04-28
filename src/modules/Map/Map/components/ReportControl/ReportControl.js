@@ -1,5 +1,5 @@
 import React from 'react';
-import { Icon } from '@blueprintjs/core';
+import { Icon, Position, Toaster } from '@blueprintjs/core';
 import { Marker } from 'mapbox-gl';
 
 import AbstractControl from '../../../helpers/AbstractMapControl';
@@ -59,9 +59,18 @@ export default class ReportControl extends AbstractControl {
     map.off('click', this.toggleReport);
   }
 
+  displayToaster = message => {
+    const toaster = Toaster.create({
+      className: 'report-toast',
+      position: Position.TOP,
+    });
+    toaster.show({ message });
+  }
+
   onToggleReport = () => {
-    const { map } = this.props;
+    const { map, translate: t } = this.props;
     map.on('click', this.toggleReport);
+    this.displayToaster(t('terralego.map.report_control.toaster'));
   }
 
   onStopReport = () => {
@@ -79,6 +88,7 @@ export default class ReportControl extends AbstractControl {
   render () {
     const { isReporting, coordinates = {} } = this.state;
     const { submitReport, translate: t, url } = this.props;
+
 
     return (
       <>

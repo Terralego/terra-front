@@ -111,6 +111,7 @@
         "portrait_label": "Portrait"
       },
       "report_control": {
+        "toaster": "Cliquez sur la carte à l'endroit que vous souhaitez signaler",
         "content": "signaler une information manquante ou incorrecte",
         "form": {
           "cancel": "Annuler",

@@ -5,12 +5,12 @@ import ReportControl from './ReportControl';
 
 jest.mock('react-dom', () => ({
   createPortal: () => <div>Blueprint3.Overlay</div>, // fix usePortal error of Blueprint overlay
+  render: jest.fn(),
 }));
 
 jest.mock('mapbox-gl', () => ({
   Marker: () => ({}),
 }));
-
 
 it('should render correctly', () => {
   const tree = renderer.create(
@@ -44,7 +44,9 @@ it('should add eventlistener on map when toggling report', () => {
       reportCoords={{ lat: '44,4', lng: '4.55' }}
     />,
   );
-  component.getInstance().onToggleReport();
+  const instance = component.getInstance();
+  instance.displayToaster = jest.fn();
+  instance.onToggleReport();
   expect(mockedMap.on).toHaveBeenCalled();
 });
 

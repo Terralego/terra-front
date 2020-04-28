@@ -17,6 +17,7 @@ const translate = translateMock({
   'terralego.map.report_control.success.other_report': 'Do another report',
   'terralego.map.report_control.success.done': 'Ok',
   'terralego.map.report_control.content': 'report incorrect or missing informations',
+  'terralego.map.report_control.toaster': 'Click on the map to start reporting',
 });
 
 export default translate;
