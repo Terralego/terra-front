@@ -34,6 +34,6 @@ it('should return data on submit', () => {
     id: '',
     url: 'test/url',
     comment: '',
-    reportType: 'wrong_info', // default value set in component
+    reporttype: '', // translate is mocked
   });
 });

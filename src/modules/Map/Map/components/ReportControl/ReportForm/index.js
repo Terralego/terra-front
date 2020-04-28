@@ -12,6 +12,11 @@ export const ReportForm = ({ url, coordinates, onSubmit, onCancel, translate: t 
     onSubmit(data);
   };
 
+  const wrongInfo = t('terralego.map.report_control.form.radio.wrong_info.label');
+  const missingInfo = t('terralego.map.report_control.form.radio.missing_info.label');
+  const wrongLocation = t('terralego.map.report_control.form.radio.wrong_location.label');
+  const doesNotExists = t('terralego.map.report_control.form.radio.doesnotexist.label');
+
   return (
     <form onSubmit={submitReport} onReset={onCancel}>
       <input hidden name="lng" value={coordinates.lng} />
@@ -30,25 +35,25 @@ export const ReportForm = ({ url, coordinates, onSubmit, onCancel, translate: t 
         label={t('terralego.map.report_control.form.radiogroup.label')}
       >
         <Radio
-          label={t('terralego.map.report_control.form.radio.wrong_info.label')}
-          value="wrong_info"
-          name="reportType"
+          label={wrongInfo}
+          value={wrongInfo}
+          name="reporttype"
           defaultChecked
         />
         <Radio
-          label={t('terralego.map.report_control.form.radio.missing_info.label')}
-          value="missing_info"
-          name="reportType"
+          label={missingInfo}
+          value={missingInfo}
+          name="reporttype"
         />
         <Radio
-          label={t('terralego.map.report_control.form.radio.wrong_location.label')}
-          value="wrong_location"
-          name="reportType"
+          label={wrongLocation}
+          value={wrongLocation}
+          name="reporttype"
         />
         <Radio
-          label={t('terralego.map.report_control.form.radio.doesnotexist.label')}
-          value="does_not_exist"
-          name="reportType"
+          label={doesNotExists}
+          value={doesNotExists}
+          name="reporttype"
         />
       </FormGroup>
       <FormGroup

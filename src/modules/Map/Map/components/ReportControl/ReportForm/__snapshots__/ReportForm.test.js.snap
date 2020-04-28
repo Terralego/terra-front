@@ -56,9 +56,9 @@ exports[`should render correctly 1`] = `
       >
         <input
           defaultChecked={true}
-          name="reportType"
+          name="reporttype"
           type="radio"
-          value="wrong_info"
+          value="terralego.map.report_control.form.radio.wrong_info.label"
         />
         <span
           className="bp3-control-indicator"
@@ -69,9 +69,9 @@ exports[`should render correctly 1`] = `
         className="bp3-control bp3-radio"
       >
         <input
-          name="reportType"
+          name="reporttype"
           type="radio"
-          value="missing_info"
+          value="terralego.map.report_control.form.radio.missing_info.label"
         />
         <span
           className="bp3-control-indicator"
@@ -82,9 +82,9 @@ exports[`should render correctly 1`] = `
         className="bp3-control bp3-radio"
       >
         <input
-          name="reportType"
+          name="reporttype"
           type="radio"
-          value="wrong_location"
+          value="terralego.map.report_control.form.radio.wrong_location.label"
         />
         <span
           className="bp3-control-indicator"
@@ -95,9 +95,9 @@ exports[`should render correctly 1`] = `
         className="bp3-control bp3-radio"
       >
         <input
-          name="reportType"
+          name="reporttype"
           type="radio"
-          value="does_not_exist"
+          value="terralego.map.report_control.form.radio.doesnotexist.label"
         />
         <span
           className="bp3-control-indicator"
