@@ -5,6 +5,7 @@ const always = 'always';
 
 module.exports = {
   root: true,
+  parser: 'babel-eslint',
   extends: 'makina',
   overrides: [
     {
@@ -18,6 +19,7 @@ module.exports = {
 
   // Custom rules
   rules: {
+    'import/no-cycle':                   [off],
     'operator-linebreak':                [off],
     'react/destructuring-assignment':    [error],
     'react/no-this-in-sfc':              [error],
