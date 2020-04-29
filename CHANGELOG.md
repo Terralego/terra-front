@@ -1,4 +1,10 @@
 
+1.21.1 / 2020-04-29
+===================
+
+  * Add toast when reporting is starting
+  * Add timestamp id for report
+
 1.21.0 / 2020-04-27
 ===================
 
