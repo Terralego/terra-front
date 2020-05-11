@@ -26,14 +26,16 @@ export const NavBarItemTablet = ({
 );
 
 NavBarItemTablet.propTypes = {
-  id: PropTypes.string.isRequired,
-  href: PropTypes.string.isRequired,
+  id: PropTypes.string,
+  href: PropTypes.string,
   icon: PropTypes.string,
   label: PropTypes.string,
   onClick: PropTypes.func,
 };
 
 NavBarItemTablet.defaultProps = {
+  id: null,
+  href: '',
   icon: '',
   label: '',
   onClick () {},

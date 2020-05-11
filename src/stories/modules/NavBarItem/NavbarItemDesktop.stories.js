@@ -11,7 +11,7 @@ stories
   .addDecorator(story => <MemoryRouter>{story()}</MemoryRouter>)
   .add('NavBarItemDesktop', () => (
     <NavBarItemDesktop
-      id={42}
+      id="42"
       label="item label"
       href="#"
       onClick={() => {}}
