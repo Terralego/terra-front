@@ -39,15 +39,17 @@ export const NavBarItemDesktop = ({
 );
 
 NavBarItemDesktop.propTypes = {
-  id: PropTypes.string.isRequired,
-  href: PropTypes.string.isRequired,
-  icon: PropTypes.string,
+  id: PropTypes.string,
+  href: PropTypes.string,
+  icon: PropTypes.oneOfType([PropTypes.string, PropTypes.shape({})]),
   label: PropTypes.string,
   content: PropTypes.string,
   onClick: PropTypes.func,
 };
 
 NavBarItemDesktop.defaultProps = {
+  id: null,
+  href: '',
   icon: '',
   label: '',
   content: '',
