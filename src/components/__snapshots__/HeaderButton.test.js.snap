@@ -1,15 +1,75 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
-exports[`should render correctly 1`] = `
+exports[`should render correctly with Icon component 1`] = `
 <button
-  className="bp3-button bp3-minimal header-button theme"
+  className="bp3-button bp3-minimal header-button"
   id="theme"
   onKeyDown={[Function]}
   onKeyUp={[Function]}
   type="button"
 >
   <span
-    className="bp3-button-text"
+    className="bp3-icon bp3-icon-info-sign"
+    icon="info-sign"
+  >
+    <svg
+      data-icon="info-sign"
+      height={16}
+      viewBox="0 0 16 16"
+      width={16}
+    >
+      <desc>
+        info-sign
+      </desc>
+      <path
+        d="M8 0C3.58 0 0 3.58 0 8s3.58 8 8 8 8-3.58 8-8-3.58-8-8-8zM7 3h2v2H7V3zm3 10H6v-1h1V7H6V6h3v6h1v1z"
+        fillRule="evenodd"
+      />
+    </svg>
+  </span>
+</button>
+`;
+
+exports[`should render correctly with Icon keyword 1`] = `
+<button
+  className="bp3-button bp3-minimal header-button"
+  id="theme"
+  onKeyDown={[Function]}
+  onKeyUp={[Function]}
+  type="button"
+>
+  <span
+    className="bp3-icon bp3-icon-log-in"
+    icon="log-in"
+  >
+    <svg
+      data-icon="log-in"
+      height={16}
+      viewBox="0 0 16 16"
+      width={16}
+    >
+      <desc>
+        log-in
+      </desc>
+      <path
+        d="M11 8c0-.28-.11-.53-.29-.71l-3-3a1.003 1.003 0 00-1.42 1.42L7.59 7H1c-.55 0-1 .45-1 1s.45 1 1 1h6.59L6.3 10.29c-.19.18-.3.43-.3.71a1.003 1.003 0 001.71.71l3-3c.18-.18.29-.43.29-.71zm4-8H9c-.55 0-1 .45-1 1s.45 1 1 1h5v12H9c-.55 0-1 .45-1 1s.45 1 1 1h6c.55 0 1-.45 1-1V1c0-.55-.45-1-1-1z"
+        fillRule="evenodd"
+      />
+    </svg>
+  </span>
+</button>
+`;
+
+exports[`should render correctly with Icon path 1`] = `
+<button
+  className="bp3-button bp3-minimal header-button"
+  id="theme"
+  onKeyDown={[Function]}
+  onKeyUp={[Function]}
+  type="button"
+>
+  <span
+    className="bp3-icon"
   >
     <img
       alt="default logo"
@@ -21,7 +81,7 @@ exports[`should render correctly 1`] = `
 
 exports[`should render correctly without icon 1`] = `
 <button
-  className="bp3-button bp3-minimal header-button theme"
+  className="bp3-button bp3-minimal header-button"
   id="theme"
   onKeyDown={[Function]}
   onKeyUp={[Function]}
@@ -30,9 +90,7 @@ exports[`should render correctly without icon 1`] = `
   <span
     className="bp3-button-text"
   >
-    <span>
-      default logo
-    </span>
+    default logo
   </span>
 </button>
 `;
