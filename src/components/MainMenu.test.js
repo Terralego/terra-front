@@ -15,7 +15,7 @@ it('should render properly', () => {
       navItems={[[
         { label: 'log in', icon: login },
         { label: 'log out', icon: logout },
-        { label: 'info sign', icon: infosign, id: 'ingosign' },
+        { label: 'info sign', icon: infosign },
       ]]}
     />,
   ).toJSON();
