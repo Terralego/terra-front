@@ -1,4 +1,12 @@
 
+1.21.2 / 2020-05-12
+===================
+
+  * Set some propTypes as optionnals
+  * Improve HeaderButton to also accept Keyword and Component as Icon
+  * Improve MainMenu component
+  * Upgrade eslint-config-makina from 2.1.0 to 3.0.0
+
 1.21.1 / 2020-04-29
 ===================
 
