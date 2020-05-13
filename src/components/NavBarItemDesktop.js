@@ -26,6 +26,7 @@ export const NavBarItemDesktop = ({
       href={href}
       onClick={onClick}
       data-link-id={id}
+      exact
     >
       <HeaderButton
         id={id}
