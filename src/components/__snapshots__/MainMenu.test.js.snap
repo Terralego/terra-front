@@ -7,23 +7,17 @@ exports[`should render properly 1`] = `
   <div
     className="bp3-navbar-group bp3-align-left navBar__group"
   >
-    NavBarItemDesktop
-    NavBarItemDesktop
-    NavBarItemDesktop
-  </div>
-</div>
-`;
-
-exports[`should render properly on mobile size 1`] = `
-<div
-  className="bp3-navbar navBar bp3-dark"
->
-  <div
-    className="bp3-navbar-group bp3-align-left navBar__group"
-  >
-    NavBarItemTablet
-    NavBarItemTablet
-    NavBarItemTablet
+    <ul>
+      <li>
+        NavBarItemDesktop
+      </li>
+      <li>
+        NavBarItemDesktop
+      </li>
+      <li>
+        NavBarItemDesktop
+      </li>
+    </ul>
   </div>
 </div>
 `;
@@ -35,27 +29,37 @@ exports[`should render properly with custom component 1`] = `
   <div
     className="bp3-navbar-group bp3-align-left navBar__group"
   >
-    <button
-      type="button"
-    >
-      click me
-    </button>
-    <img
-      alt="login logo"
-      src="log-in.svg"
-    />
-    <div>
-      check me
-      <input
-        type="checkbox"
-      />
-    </div>
-    <div>
-      search me
-      <input
-        type="text"
-      />
-    </div>
+    <ul>
+      <li>
+        <button
+          type="button"
+        >
+          click me
+        </button>
+      </li>
+      <li>
+        <img
+          alt="login logo"
+          src="log-in.svg"
+        />
+      </li>
+      <li>
+        <div>
+          check me
+          <input
+            type="checkbox"
+          />
+        </div>
+      </li>
+      <li>
+        <div>
+          search me
+          <input
+            type="text"
+          />
+        </div>
+      </li>
+    </ul>
   </div>
 </div>
 `;
