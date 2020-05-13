@@ -43,6 +43,7 @@ export default class ReportControl extends AbstractControl {
     if (this.marker) {
       this.marker.remove();
     }
+    this.props.map.off('click', this.toggleReport);
   }
 
   toggleReport = ({ lngLat }) => {
