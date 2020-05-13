@@ -15,6 +15,7 @@ export const NavBarItemTablet = ({
     href={href}
     onClick={onClick}
     data-link-id={id}
+    exact
   >
     <p className="header-button-label">{label}</p>
     <HeaderButton
