@@ -63,3 +63,15 @@ exports[`should render properly with custom component 1`] = `
   </div>
 </div>
 `;
+
+exports[`should render properly with navHeader props 1`] = `
+<div
+  className="bp3-navbar navBar bp3-dark"
+>
+  <div
+    className="bp3-navbar-heading"
+  >
+    NavBarItemDesktop
+  </div>
+</div>
+`;

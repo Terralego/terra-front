@@ -2,6 +2,7 @@ import React from 'react';
 import {
   Classes,
   Navbar,
+  NavbarHeading,
   NavbarGroup,
 } from '@blueprintjs/core';
 import PropTypes from 'prop-types';
@@ -14,16 +15,22 @@ import MainMenuItem from './MainMenuItem';
 
 export const MainMenu = ({
   className,
+  navHeader,
   navItems,
   ...props
 }) => {
-  if (!navItems.length) {
+  if (!navItems.length && !navHeader) {
     return null;
   }
 
   return (
     <Navbar className={classnames(['navBar', Classes.DARK, className])} {...props}>
-      {navItems.map((group, index) => (
+      {navHeader && (
+        <NavbarHeading>
+          <MainMenuItem {...navHeader} />
+        </NavbarHeading>
+      )}
+      {navItems.length > 0 && navItems.map((group, index) => (
         // eslint-disable-next-line react/no-array-index-key
         <NavbarGroup key={index} className="navBar__group">
           <ul>
@@ -41,6 +48,13 @@ export const MainMenu = ({
 
 MainMenu.propTypes = {
   className: PropTypes.string,
+  navHeader: PropTypes.shape({
+    component: PropTypes.func,
+    href: PropTypes.string,
+    icon: PropTypes.oneOfType([PropTypes.string, PropTypes.shape({})]),
+    id: PropTypes.string,
+    label: PropTypes.string,
+  }),
   navItems: PropTypes.arrayOf(
     PropTypes.arrayOf(
       PropTypes.shape({
@@ -56,6 +70,7 @@ MainMenu.propTypes = {
 
 MainMenu.defaultProps = {
   className: '',
+  navHeader: undefined,
   navItems: [],
 };
 
