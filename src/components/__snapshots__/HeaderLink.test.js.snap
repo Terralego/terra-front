@@ -13,6 +13,8 @@ exports[`should render correctly with http link 1`] = `
 
 exports[`should render correctly with navigation 1`] = `
 <a
+  className="header-link"
+  exact={false}
   to="foo"
 >
   <span>
@@ -22,7 +24,9 @@ exports[`should render correctly with navigation 1`] = `
 `;
 
 exports[`should render correctly with no href 1`] = `
-<span>
+<span
+  className="header-link"
+>
   <span>
     Test
   </span>
