@@ -1,4 +1,13 @@
 
+1.22.0 / 2020-05-14
+===================
+
+  * Use `exact` props for NavBarItem*
+  * Refacto HeaderLinks and add exact props
+  * Add NavHeaders props to MainMenu
+  * Refacto MainMenu and use some semantic tags
+  * Remove marker adding after component is unmounted
+
 1.21.2 / 2020-05-12
 ===================
 
