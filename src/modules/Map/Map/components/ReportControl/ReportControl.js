@@ -25,8 +25,6 @@ export default class ReportControl extends AbstractControl {
   componentDidMount () {
     const { map } = this.props;
     map.on('load', this.setReportMarker);
-    // accessing the url with new params, when map is loaded, trigger a move
-    map.on('move', this.setReportMarker);
   }
 
   componentWillUnmount () {
@@ -40,20 +38,19 @@ export default class ReportControl extends AbstractControl {
   }
 
   setReportMarker = () => {
-    const currentHash = window.location.href.split('#')[1];
-    const fromReport = parse(currentHash).report;
-    if (!fromReport) {
+    const { report, map: mapHash } = parse(window.location.hash);
+    if (!report) {
       return;
     }
-
     const { map } = this.props;
-    const mapHash = parse(currentHash).map;
+
+
     const [lat, lng] = mapHash.split('/').splice(1, 2); // do not need the zoom at index 0
     if (!this.marker) {
       this.marker = new Marker();
     }
     this.marker
-      .setLngLat({ lat: parseFloat(lat), lng: parseFloat(lng) })
+      .setLngLat({ lat: Number(lat), lng: Number(lng) })
       .addTo(map);
   }
 
