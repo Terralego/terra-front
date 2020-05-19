@@ -44,7 +44,6 @@ export default class ReportControl extends AbstractControl {
     }
     const { map } = this.props;
 
-
     const [lat, lng] = mapHash.split('/').splice(1, 2); // do not need the zoom at index 0
     if (!this.marker) {
       this.marker = new Marker();
@@ -89,16 +88,22 @@ export default class ReportControl extends AbstractControl {
   }
 
   onToggleReport = () => {
-    const { map, translate: t } = this.props;
+    const {
+      map,
+      setInteractionsEnable,
+      translate: t,
+    } = this.props;
+    setInteractionsEnable(false);
     map.on('click', this.toggleReport);
     this.displayToaster(t('terralego.map.report_control.toaster'));
   }
 
   onStopReport = () => {
-    const { map } = this.props;
+    const { map, setInteractionsEnable } = this.props;
     map.off('click', this.toggleReport);
     this.marker.remove();
     this.setState({ isReporting: false, coordinates: null, url: null });
+    setInteractionsEnable(true);
   }
 
   onNewReport = () => {
