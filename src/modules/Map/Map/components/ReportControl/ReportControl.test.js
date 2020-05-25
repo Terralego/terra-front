@@ -40,10 +40,11 @@ it('should render correctly when reporting', () => {
 });
 
 it('should add eventlistener on map when toggling report', () => {
-  const mockedMap = { on: jest.fn() };
+  const mockedMap = { once: jest.fn(), on: jest.fn() };
   const component = renderer.create(
     <ReportControl
       translate={jest.fn()}
+      setInteractionsEnable={jest.fn()}
       map={mockedMap}
       reportCoords={{ lat: '44,4', lng: '4.55' }}
     />,
@@ -60,6 +61,7 @@ it('should remove eventlistener and marker on map when stopping report', () => {
   const component = renderer.create(
     <ReportControl
       translate={jest.fn()}
+      setInteractionsEnable={jest.fn()}
       map={mockedMap}
       reportCoords={{ lat: '44,4', lng: '4.55' }}
     />,
