@@ -1,14 +1,17 @@
 import React from 'react';
 import { Icon, Position, Toaster } from '@blueprintjs/core';
 import { Marker } from 'mapbox-gl';
-
+import { parse, stringify } from 'query-string';
 import AbstractControl from '../../../helpers/AbstractMapControl';
 import Tooltip from '../../../../../components/Tooltip';
 import ReportCard from './ReportCard';
+import { DEFAULT_OPTIONS } from '../../../../State/Hash/withHashState';
 
 
 export default class ReportControl extends AbstractControl {
   static containerClassName = 'mapboxgl-ctrl mapboxgl-ctrl-group mapboxgl-ctrl-report';
+
+  options = DEFAULT_OPTIONS
 
   constructor (props) {
     super(props);
@@ -20,44 +23,61 @@ export default class ReportControl extends AbstractControl {
   }
 
   componentDidMount () {
-    const {
-      fromReport,
-      map,
-      reportCoords: { lat, lng },
-    } = this.props;
-    if (fromReport) {
-      const coords = { lat: parseFloat(lat), lng: parseFloat(lng) };
-      map.on('load', () => {
-        this.reportMarker = new Marker()
-          .setLngLat(coords)
-          .addTo(map);
-        map.flyTo({ center: coords });
-      });
-    }
+    const { map } = this.props;
+    map.on('load', this.setReportMarker);
   }
 
   componentWillUnmount () {
-    if (this.reportMarker) {
-      this.reportMarker.remove();
-    }
+    const { map } = this.props;
     if (this.marker) {
       this.marker.remove();
     }
-    this.props.map.off('click', this.toggleReport);
+    map.off('click', this.toggleReport);
+    map.off('load', this.setReportMarker);
+    map.off('mousemove', this.forceGrabCursor);
+  }
+
+  forceGrabCursor = e => {
+    e.target.getCanvas().style.cursor = 'grab';
+  }
+
+  setReportMarker = () => {
+    const { report, map: mapHash } = parse(window.location.hash);
+    if (!report) {
+      return;
+    }
+    const { map } = this.props;
+
+    const [_zoom, lat, lng] = mapHash.split('/'); // eslint-disable-line no-unused-vars
+    if (!this.marker) {
+      this.marker = new Marker();
+    }
+    this.marker
+      .setLngLat({ lat: Number(lat), lng: Number(lng) })
+      .addTo(map);
+  }
+
+  generateHashString = ({ lng, lat, zoom }) => {
+    const { initialState, url: baseUrl } = this.props;
+    initialState.map = `${zoom}/${lat}/${lng}`;
+    initialState.report = true;
+    const url = `${baseUrl}#${stringify(initialState, this.options)}`;
+    return url;
   }
 
   toggleReport = ({ lngLat }) => {
-    const { url, map } = this.props;
+    const { map } = this.props;
     const coordinates = lngLat;
-    this.marker = new Marker().setLngLat(coordinates).addTo(map);
+    if (!this.marker) {
+      this.marker = new Marker();
+    }
+    this.marker.setLngLat(coordinates).addTo(map);
+    const url = this.generateHashString({ ...coordinates, zoom: map.getZoom() });
     this.setState({
       coordinates,
       isReporting: true,
       url,
     });
-
-    // allowing just one click, prevent some conflict
-    map.off('click', this.toggleReport);
   }
 
   displayToaster = message => {
@@ -69,16 +89,29 @@ export default class ReportControl extends AbstractControl {
   }
 
   onToggleReport = () => {
-    const { map, translate: t } = this.props;
-    map.on('click', this.toggleReport);
+    const {
+      map,
+      setInteractionsEnable,
+      translate: t,
+    } = this.props;
+
+    // allowing just one click, prevent some conflict
+    map.once('click', this.toggleReport);
+    map.on('mousemove', this.forceGrabCursor);
+    setInteractionsEnable(false);
     this.displayToaster(t('terralego.map.report_control.toaster'));
   }
 
   onStopReport = () => {
-    const { map } = this.props;
+    const {
+      map,
+      setInteractionsEnable,
+    } = this.props;
     map.off('click', this.toggleReport);
+    map.off('mousemove', this.forceGrabCursor);
     this.marker.remove();
     this.setState({ isReporting: false, coordinates: null, url: null });
+    setInteractionsEnable(true);
   }
 
   onNewReport = () => {
@@ -87,8 +120,8 @@ export default class ReportControl extends AbstractControl {
   }
 
   render () {
-    const { isReporting, coordinates = {} } = this.state;
-    const { submitReport, translate: t, url } = this.props;
+    const { url, isReporting, coordinates = {} } = this.state;
+    const { submitReport, translate: t } = this.props;
 
 
     return (
@@ -101,7 +134,7 @@ export default class ReportControl extends AbstractControl {
           onSubmit={submitReport}
           coordinates={coordinates}
           translate={t}
-          reportUrl={coordinates && `${url}/${coordinates.lng}/${coordinates.lat}`}
+          reportUrl={url}
         />
         <Tooltip
           content={t('terralego.map.report_control.content')}

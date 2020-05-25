@@ -13,8 +13,10 @@ jest.mock('mapbox-gl', () => ({
 }));
 
 it('should render correctly', () => {
+  const mockedMap = { on: jest.fn() };
   const tree = renderer.create(
     <ReportControl
+      map={mockedMap}
       translate={jest.fn()}
       reportCoords={{ lat: '44,4', lng: '4.55' }}
     />,
@@ -24,8 +26,10 @@ it('should render correctly', () => {
 });
 
 it('should render correctly when reporting', () => {
+  const mockedMap = { on: jest.fn() };
   const component = renderer.create(
     <ReportControl
+      map={mockedMap}
       translate={jest.fn()}
       reportCoords={{ lat: '44,4', lng: '4.55' }}
     />,
@@ -36,10 +40,11 @@ it('should render correctly when reporting', () => {
 });
 
 it('should add eventlistener on map when toggling report', () => {
-  const mockedMap = { on: jest.fn() };
+  const mockedMap = { once: jest.fn(), on: jest.fn() };
   const component = renderer.create(
     <ReportControl
       translate={jest.fn()}
+      setInteractionsEnable={jest.fn()}
       map={mockedMap}
       reportCoords={{ lat: '44,4', lng: '4.55' }}
     />,
@@ -51,11 +56,12 @@ it('should add eventlistener on map when toggling report', () => {
 });
 
 it('should remove eventlistener and marker on map when stopping report', () => {
-  const mockedMap = { off: jest.fn() };
+  const mockedMap = { off: jest.fn(), on: jest.fn() };
   const mockedMarker = { remove: jest.fn() };
   const component = renderer.create(
     <ReportControl
       translate={jest.fn()}
+      setInteractionsEnable={jest.fn()}
       map={mockedMap}
       reportCoords={{ lat: '44,4', lng: '4.55' }}
     />,
