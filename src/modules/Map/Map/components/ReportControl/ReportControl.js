@@ -34,11 +34,11 @@ export default class ReportControl extends AbstractControl {
     }
     map.off('click', this.toggleReport);
     map.off('load', this.setReportMarker);
-    map.off('mousemove', this.forceGrabCursor);
+    map.off('mousemove', this.forceCrosshairCursor);
   }
 
-  forceGrabCursor = e => {
-    e.target.getCanvas().style.cursor = 'grab';
+  forceCrosshairCursor = e => {
+    e.target.getCanvas().style.cursor = 'crosshair';
   }
 
   setReportMarker = () => {
@@ -97,7 +97,7 @@ export default class ReportControl extends AbstractControl {
 
     // allowing just one click, prevent some conflict
     map.once('click', this.toggleReport);
-    map.on('mousemove', this.forceGrabCursor);
+    map.on('mousemove', this.forceCrosshairCursor);
     setInteractionsEnable(false);
     this.displayToaster(t('terralego.map.report_control.toaster'));
   }
@@ -108,7 +108,7 @@ export default class ReportControl extends AbstractControl {
       setInteractionsEnable,
     } = this.props;
     map.off('click', this.toggleReport);
-    map.off('mousemove', this.forceGrabCursor);
+    map.off('mousemove', this.forceCrosshairCursor);
     this.marker.remove();
     this.setState({ isReporting: false, coordinates: null, url: null });
     setInteractionsEnable(true);
