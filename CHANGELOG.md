@@ -1,4 +1,11 @@
 
+1.22.1 / 2020-05-25
+===================
+
+  * Disable map interactions on report
+  * Add enabling/disabling parent interactions
+  * Report url is now handle with querystring params
+
 1.22.0 / 2020-05-14
 ===================
 
