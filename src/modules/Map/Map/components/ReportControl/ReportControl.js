@@ -34,7 +34,11 @@ export default class ReportControl extends AbstractControl {
     }
     map.off('click', this.toggleReport);
     map.off('load', this.setReportMarker);
-    map.off('move', this.setReportMarker);
+    map.off('mousemove', this.forceGrabCursor);
+  }
+
+  forceGrabCursor = e => {
+    e.target.getCanvas().style.cursor = 'grab';
   }
 
   setReportMarker = () => {
@@ -44,7 +48,7 @@ export default class ReportControl extends AbstractControl {
     }
     const { map } = this.props;
 
-    const [lat, lng] = mapHash.split('/').splice(1, 2); // do not need the zoom at index 0
+    const [_zoom, lat, lng] = mapHash.split('/'); // eslint-disable-line no-unused-vars
     if (!this.marker) {
       this.marker = new Marker();
     }
@@ -74,9 +78,6 @@ export default class ReportControl extends AbstractControl {
       isReporting: true,
       url,
     });
-
-    // allowing just one click, prevent some conflict
-    map.off('click', this.toggleReport);
   }
 
   displayToaster = message => {
@@ -93,14 +94,21 @@ export default class ReportControl extends AbstractControl {
       setInteractionsEnable,
       translate: t,
     } = this.props;
+
+    // allowing just one click, prevent some conflict
+    map.once('click', this.toggleReport);
+    map.on('mousemove', this.forceGrabCursor);
     setInteractionsEnable(false);
-    map.on('click', this.toggleReport);
     this.displayToaster(t('terralego.map.report_control.toaster'));
   }
 
   onStopReport = () => {
-    const { map, setInteractionsEnable } = this.props;
+    const {
+      map,
+      setInteractionsEnable,
+    } = this.props;
     map.off('click', this.toggleReport);
+    map.off('mousemove', this.forceGrabCursor);
     this.marker.remove();
     this.setState({ isReporting: false, coordinates: null, url: null });
     setInteractionsEnable(true);

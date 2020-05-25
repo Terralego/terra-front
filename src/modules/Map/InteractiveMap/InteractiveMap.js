@@ -142,6 +142,8 @@ export class InteractiveMap extends React.Component {
     onStyleChange () {},
   };
 
+  interactionsEnable = true
+
   popups = new Map();
 
   hideTooltip = debounce(({ layerId }) => {
@@ -268,6 +270,10 @@ export class InteractiveMap extends React.Component {
     setInteractions({ map, interactions, callback: config => this.triggerInteraction(config) });
   }
 
+  setInteractionsEnable = isEnable => {
+    this.interactionsEnable = isEnable;
+  }
+
   filterLegendsByZoom = () => {
     const { legends } = this.props;
     const { map } = this;
@@ -350,7 +356,6 @@ export class InteractiveMap extends React.Component {
     this.highlightedLayers.set(layerId, { layersState, source, propertyId });
     this.highlight();
   };
-
 
   /**
    * Display tooltip for the given feature
@@ -523,6 +528,10 @@ export class InteractiveMap extends React.Component {
   }
 
   async triggerInteraction ({ map, event, feature = {}, layerId, interaction, eventType }) {
+    if (!this.interactionsEnable) {
+      return;
+    }
+
     const {
       id, interaction: interactionType, fn,
       trigger = 'click', fixed, constraints,
@@ -663,6 +672,7 @@ export class InteractiveMap extends React.Component {
           onMapLoaded={onMapLoaded}
           onBackgroundChange={onStyleChange}
           controls={controls}
+          setInteractionsEnable={this.setInteractionsEnable}
           translate={translate}
         />
         {!!legends.length && (
