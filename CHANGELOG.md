@@ -1,4 +1,10 @@
 
+1.22.2 / 2020-05-28
+===================
+
+  * Report marker can be set on hash update too
+  * Force crosshair style when reporting is on
+
 1.22.1 / 2020-05-25
 ===================
 
