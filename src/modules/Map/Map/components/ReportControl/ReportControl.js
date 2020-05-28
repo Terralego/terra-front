@@ -25,6 +25,7 @@ export default class ReportControl extends AbstractControl {
   componentDidMount () {
     const { map } = this.props;
     map.on('load', this.setReportMarker);
+    window.addEventListener('hashchange', this.setReportMarker);
   }
 
   componentWillUnmount () {
@@ -35,6 +36,7 @@ export default class ReportControl extends AbstractControl {
     map.off('click', this.toggleReport);
     map.off('load', this.setReportMarker);
     map.off('mousemove', this.forceCrosshairCursor);
+    window.removeEventListener('hashchange', this.setReportMarker);
   }
 
   forceCrosshairCursor = e => {
@@ -46,7 +48,11 @@ export default class ReportControl extends AbstractControl {
     if (!report) {
       return;
     }
-    const { map } = this.props;
+    const { initialState, map } = this.props;
+    // clean url from report param, only used to set marker
+    // avoiding later confusion
+    delete initialState.report;
+    window.location.hash = `#${stringify(initialState, this.options)}`;
 
     const [_zoom, lat, lng] = mapHash.split('/'); // eslint-disable-line no-unused-vars
     if (!this.marker) {
