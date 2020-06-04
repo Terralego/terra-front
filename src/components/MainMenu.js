@@ -25,7 +25,7 @@ export const MainMenu = ({
   return (
     <Navbar className={classnames(['navBar', Classes.DARK, className])} {...props}>
       {navHeader && (
-        <NavbarHeading>
+        <NavbarHeading className="navBar__header">
           <MainMenuItem {...navHeader} />
         </NavbarHeading>
       )}

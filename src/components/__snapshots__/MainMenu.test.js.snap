@@ -69,7 +69,7 @@ exports[`should render properly with navHeader props 1`] = `
   className="bp3-navbar navBar bp3-dark"
 >
   <div
-    className="bp3-navbar-heading"
+    className="bp3-navbar-heading navBar__header"
   >
     NavBarItemDesktop
   </div>
