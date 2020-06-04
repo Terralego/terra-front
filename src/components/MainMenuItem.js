@@ -19,7 +19,7 @@ const MainMenuItem = ({ component, isMobileSized, id, ...props }) => {
 };
 
 MainMenuItem.propTypes = {
-  component: PropTypes.node,
+  component: PropTypes.func,
   isMobileSized: PropTypes.bool,
   id: PropTypes.string,
 };
