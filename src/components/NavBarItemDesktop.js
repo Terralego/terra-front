@@ -16,6 +16,8 @@ export const NavBarItemDesktop = ({
   href,
   onClick,
   icon,
+  isPhoneSized,
+  ...props
 }) => (
   <Tooltip
     content={label}
@@ -27,6 +29,7 @@ export const NavBarItemDesktop = ({
       onClick={onClick}
       data-link-id={id}
       exact
+      {...props}
     >
       <HeaderButton
         id={id}
@@ -42,6 +45,7 @@ export const NavBarItemDesktop = ({
 NavBarItemDesktop.propTypes = {
   id: PropTypes.string,
   href: PropTypes.string,
+  isPhoneSized: PropTypes.bool,
   icon: PropTypes.oneOfType([PropTypes.string, PropTypes.shape({})]),
   label: PropTypes.string,
   content: PropTypes.string,
@@ -50,6 +54,7 @@ NavBarItemDesktop.propTypes = {
 
 NavBarItemDesktop.defaultProps = {
   id: null,
+  isPhoneSized: false,
   href: '',
   icon: '',
   label: '',
