@@ -5,6 +5,7 @@ import { Icon } from '@blueprintjs/core';
 import MainMenu from '../../../components/MainMenu';
 
 import login from '../../../images/log-in.svg';
+import './styles.scss';
 
 // eslint-disable-next-line no-alert
 const handleClick = () => alert('it works');
