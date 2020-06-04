@@ -8,7 +8,6 @@ import {
 import PropTypes from 'prop-types';
 import classnames from 'classnames';
 
-import withDeviceSize from '../hoc/withDeviceSize';
 import { connectAuthProvider } from '../modules/Auth';
 
 import MainMenuItem from './MainMenuItem';
@@ -74,4 +73,4 @@ MainMenu.defaultProps = {
   navItems: [],
 };
 
-export default withDeviceSize()(connectAuthProvider('authenticated', 'logoutAction')(MainMenu));
+export default connectAuthProvider('authenticated', 'logoutAction')(MainMenu);
