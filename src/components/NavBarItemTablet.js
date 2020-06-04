@@ -10,12 +10,14 @@ export const NavBarItemTablet = ({
   href,
   onClick,
   icon,
+  ...props
 }) => (
   <HeaderLink
     href={href}
     onClick={onClick}
     data-link-id={id}
     exact
+    {...props}
   >
     <p className="header-button-label">{label}</p>
     <HeaderButton
@@ -29,7 +31,7 @@ export const NavBarItemTablet = ({
 NavBarItemTablet.propTypes = {
   id: PropTypes.string,
   href: PropTypes.string,
-  icon: PropTypes.string,
+  icon: PropTypes.oneOfType([PropTypes.string, PropTypes.shape({})]),
   label: PropTypes.string,
   onClick: PropTypes.func,
 };
