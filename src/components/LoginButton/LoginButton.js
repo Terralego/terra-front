@@ -39,15 +39,11 @@ export const LoginButton = ({
     logoutAction();
   }, [logoutAction]);
 
-  const setOpen = useCallback(() => setIsOpen(true), []);
-  const setClose = useCallback(() => setIsOpen(false), []);
-  const onBeforeSubmitting = useCallback(() => setIsNewlyAuthenticated(true), []);
-  const onAfterSubmitting = useCallback(() => setIsNewlyAuthenticated(false), []);
-  const onCreate = useCallback(() => setHasCreated(true), []);
+  const toggleOverlay = () => setIsOpen(boolean => !boolean);
 
   return (
     <>
-      <NavBarItem {...props} onClick={setOpen} />
+      <NavBarItem {...props} onClick={toggleOverlay} />
       <Overlay
         className={classNames(
           Classes.OVERLAY_SCROLL_CONTAINER,
@@ -55,7 +51,7 @@ export const LoginButton = ({
           'modal-signin',
         )}
         isOpen={isOpen}
-        onClose={setClose}
+        onClose={toggleOverlay}
       >
         <div
           className={classNames(
@@ -72,8 +68,8 @@ export const LoginButton = ({
               title={t('auth.loginform.title')}
               panel={(
                 <LoginForm
-                  onBeforeSubmitting={onBeforeSubmitting}
-                  onAfterSubmitting={onAfterSubmitting}
+                  onBeforeSubmitting={() => setIsNewlyAuthenticated(true)}
+                  onAfterSubmitting={() => setIsNewlyAuthenticated(false)}
                   translate={t}
                 />
               )}
@@ -87,7 +83,7 @@ export const LoginButton = ({
                   <SignupForm
                     translate={t}
                     showPassword={false}
-                    onCreate={onCreate}
+                    onCreate={() => setHasCreated(true)}
                   />
                 )}
             />
@@ -101,7 +97,7 @@ export const LoginButton = ({
             <div className="modal-signin__form-buttons">
               <Button
                 text={t('auth.logout.cancel.button_label')}
-                onClick={setClose}
+                onClick={toggleOverlay}
                 minimal
               />
               <Button
