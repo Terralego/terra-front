@@ -8,8 +8,6 @@ import {
 import PropTypes from 'prop-types';
 import classnames from 'classnames';
 
-import { connectAuthProvider } from '../modules/Auth';
-
 import MainMenuItem from './MainMenuItem';
 
 export const MainMenu = ({
@@ -73,4 +71,4 @@ MainMenu.defaultProps = {
   navItems: [],
 };
 
-export default connectAuthProvider('authenticated', 'logoutAction')(MainMenu);
+export default MainMenu;
