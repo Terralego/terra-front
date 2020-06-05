@@ -13,12 +13,18 @@ import withDeviceSize from '../../hoc/withDeviceSize';
 import NavBarItemDesktop from '../NavBarItemDesktop';
 import NavBarItemTablet from '../NavBarItemTablet';
 
-export const LoginButton = props => {
+export const LoginButton = ({
+  authenticated,
+  isMobileSized,
+  isPhoneSized,
+  logoutAction,
+  t,
+  ...props
+}) => {
   const [isOpen, setIsOpen] = useState(false);
   const [hasCreated, setHasCreated] = useState(false);
   const [isNewlyAuthenticated, setIsNewlyAuthenticated] = useState(false);
 
-  const { authenticated, isMobileSized, t, logoutAction } = props;
   const wantLogout = isOpen && authenticated && !isNewlyAuthenticated;
   const NavBarItem = isMobileSized ? NavBarItemTablet : NavBarItemDesktop;
 
