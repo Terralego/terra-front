@@ -1,4 +1,12 @@
 
+1.22.3 / 2020-06-05
+===================
+
+  * Add some styles for MainMenu stories for readability
+  * Set default classe for navHeader
+  * Fix proptypes for MainMenuItem component
+  * Forwards props to children for  NavBarItem* components
+
 1.22.2 / 2020-05-28
 ===================
 
