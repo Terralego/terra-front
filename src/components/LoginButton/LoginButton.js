@@ -8,7 +8,6 @@ import {
   Button,
 } from '@blueprintjs/core';
 import { LoginForm, SignupForm } from '../../modules/Auth';
-import withDeviceSize from '../../hoc/withDeviceSize';
 
 import NavBarItemDesktop from '../NavBarItemDesktop';
 import NavBarItemTablet from '../NavBarItemTablet';
@@ -114,4 +113,4 @@ export const LoginButton = ({
   );
 };
 
-export default withDeviceSize()(LoginButton);
+export default LoginButton;
