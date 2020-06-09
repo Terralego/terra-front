@@ -1,4 +1,5 @@
 import React, { useState, useEffect, useCallback } from 'react';
+import PropTypes from 'prop-types';
 import classNames from 'classnames';
 import {
   Tab,
@@ -8,6 +9,7 @@ import {
   Button,
 } from '@blueprintjs/core';
 import { LoginForm, SignupForm } from '../../modules/Auth';
+import translateMock from '../../utils/translate';
 
 import NavBarItemDesktop from '../NavBarItemDesktop';
 import NavBarItemTablet from '../NavBarItemTablet';
@@ -17,7 +19,7 @@ export const LoginButton = ({
   isMobileSized,
   isPhoneSized,
   logoutAction,
-  t,
+  translate,
   ...props
 }) => {
   const [isOpen, setIsOpen] = useState(false);
@@ -64,23 +66,23 @@ export const LoginButton = ({
           <Tabs id="login">
             <Tab
               id="signin"
-              title={t('auth.loginform.title')}
+              title={translate('auth.loginform.title')}
               panel={(
                 <LoginForm
                   onBeforeSubmitting={() => setIsNewlyAuthenticated(true)}
                   onAfterSubmitting={() => setIsNewlyAuthenticated(false)}
-                  translate={t}
+                  translate={translate}
                 />
               )}
             />
             <Tab
               id="signup"
-              title={t('auth.signupform.title')}
+              title={translate('auth.signupform.title')}
               panel={hasCreated
-                ? <p>{t('auth.signupform.done')}</p>
+                ? <p>{translate('auth.signupform.done')}</p>
                 : (
                   <SignupForm
-                    translate={t}
+                    translate={translate}
                     showPassword={false}
                     onCreate={() => setHasCreated(true)}
                   />
@@ -92,15 +94,15 @@ export const LoginButton = ({
           <div
             id="logout"
           >
-            <p>{t('auth.logout.confirm.label')}</p>
+            <p>{translate('auth.logout.confirm.label')}</p>
             <div className="modal-signin__form-buttons">
               <Button
-                text={t('auth.logout.cancel.button_label')}
+                text={translate('auth.logout.cancel.button_label')}
                 onClick={toggleOverlay}
                 minimal
               />
               <Button
-                text={t('auth.logout.confirm.button_label')}
+                text={translate('auth.logout.confirm.button_label')}
                 onClick={confirmLogout}
                 intent="primary"
               />
@@ -111,6 +113,46 @@ export const LoginButton = ({
       </Overlay>
     </>
   );
+};
+
+LoginButton.propTypes = {
+  authenticated: PropTypes.bool,
+  isMobileSized: PropTypes.bool,
+  isPhoneSized: PropTypes.bool,
+  logoutAction: PropTypes.func,
+  translate: PropTypes.func,
+};
+
+LoginButton.defaultProps = {
+  authenticated: false,
+  isMobileSized: false,
+  isPhoneSized: false,
+  logoutAction () {},
+  translate: translateMock({
+    'auth.loginform.title': 'Sign in',
+    'auth.signupform.title': 'Create an account',
+    'auth.signupform.done': 'Successfully created',
+    'auth.logout.cancel.button_label': 'Cancel',
+    'auth.logout.confirm.button_label': 'Confirm',
+    'auth.logout.confirm.label': 'Confirm logout',
+    'auth.loginform.email.helper': 'Type your email',
+    'auth.loginform.email.helper_invalid': 'Invalid email',
+    'auth.loginform.email.label': 'Email',
+    'auth.loginform.email.info': 'required',
+    'auth.loginform.email.placeholder': 'Email',
+    'auth.loginform.password.helper': 'Type your password',
+    'auth.loginform.password.helper_invalid': 'Invalid password',
+    'auth.loginform.password.label': 'Password',
+    'auth.loginform.password.info': 'required',
+    'auth.loginform.password.placeholder': 'Password',
+    'auth.loginform.submit': 'Signin',
+    'auth.loginform.error_generic': 'Invalid credentials',
+    'auth.signupform.email.label': 'Email',
+    'auth.signupform.email.info': 'required',
+    'auth.signupform.email.placeholder': 'Email',
+    'auth.signupform.email.help': 'Type your email',
+    'auth.signupform.submit': 'signup',
+  }),
 };
 
 export default LoginButton;
