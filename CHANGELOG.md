@@ -1,4 +1,12 @@
 
+1.22.4 / 2020-06-09
+===================
+
+  * Remove uncessary connectAuthProvider HOC to MainMenu
+  * Remove some uncessary useCallback
+  * Forward useful props to NavBarItem in LoginButton
+  * Clean isPhoneSized prop in MainMenuItem
+
 1.22.3 / 2020-06-05
 ===================
 
