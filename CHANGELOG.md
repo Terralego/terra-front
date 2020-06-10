@@ -1,4 +1,10 @@
 
+1.22.5 / 2020-06-10
+===================
+
+  * Add propTypes and defaultProps to LoginButton
+  * Remove uncessary HOC (already called in index.js)
+
 1.22.4 / 2020-06-09
 ===================
 
