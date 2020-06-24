@@ -25,21 +25,13 @@
   }
 
   &__list:not(.tf-legend__stacked-circles) {
-    display: table;
     margin: 0.5rem;
+
     position: relative;
-    min-height: 160px;
 
-    .tf-legend__item--circle {
-      display: table-row;
-    }
-
-    .tf-legend__item--square {
+    .tf-legend__item {
       padding-top: 0.5rem;
-
-      .tf-legend__label {
-        padding-bottom: 4px;
-      }
+      padding-bottom: 0.25rem;
     }
   }
 
