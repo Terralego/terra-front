@@ -51,11 +51,13 @@ export const Legend = ({
 
   return (
     <div className={`tf-legend tf-legend--level-${level}`}>
-      <h4
-        className="tf-legend__title"
-      >
-        {title}
-      </h4>
+      {title && (
+        <h4
+          className="tf-legend__title"
+        >
+          {title}
+        </h4>
+      )}
       <div
         className={classnames(
           'tf-legend__list',
