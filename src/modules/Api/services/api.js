@@ -61,6 +61,7 @@ export class Api {
 
   async handleError (response) {
     const error = new Error(response.statusText);
+    error.status = response.status;
     try {
       error.data = await response.json();
     } catch (e) {
