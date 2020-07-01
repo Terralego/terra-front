@@ -20,36 +20,43 @@ const resetLayers = map => ({ layers = [] }) => {
   });
 };
 
-const Story = props => {
+const Story = ({ map, story: { beforeEach = [], slides }, setLegends }) => {
   const [step, setStep] = useState(0);
 
-  const { map, story: { beforeEach = [], slides }, setLegends } = props;
+  const slideCount = slides.length - 1;
 
-  const displayStep = useCallback(() => {
+  useEffect(() => {
     if (!map) return;
     const { layouts = [], legends } = slides[step];
     beforeEach.forEach(resetLayers(map));
     layouts.forEach(toggleLayers(map));
     setLegends(legends);
-  }, [beforeEach, map, setLegends, slides, step]);
-
-  useEffect(() => {
-    if (!map) return;
-    displayStep();
-  }, [displayStep, map]);
+  }, [map, beforeEach, setLegends, slides, step]);
 
   const previousStep = () => {
     setStep(prevStep => prevStep - 1);
   };
 
   const nextStep = useCallback(() => {
-    setStep(prevStep => (prevStep + 1 === slides.length
+    setStep(prevStep => (prevStep === slideCount
       ? 0
       : prevStep + 1));
-  }, [slides]);
+  }, [slideCount]);
 
   const { title, content } = slides[step];
-  const displayPrevButton = step > 0 && slides.length > 2;
+
+  const displayPrevButton = step > 0;
+  const displayButtons = slideCount > 0;
+
+  const getNextLabel = () => {
+    if (step === 0) {
+      return 'Démarrer';
+    }
+    if (step === slideCount) {
+      return 'Recommencer';
+    }
+    return 'Suivant';
+  };
 
   return (
     <div className="storytelling">
@@ -60,23 +67,23 @@ const Story = props => {
           dangerouslySetInnerHTML={{ __html: content }}
         />
       </div>
-      <div className={classnames('storytelling__buttons', { 'storytelling__buttons--justified': displayPrevButton })}>
-        {displayPrevButton &&
-          <Button icon="chevron-left" onClick={previousStep} large>Précédent</Button>}
+      {displayButtons && (
+        <div className={classnames('storytelling__buttons', { 'storytelling__buttons--justified': displayPrevButton })}>
+          {displayPrevButton && (
+            <Button icon="chevron-left" onClick={previousStep} large>Précédent</Button>
+          )}
 
-        <Button
-          rightIcon={step === slides.length - 1 ? undefined : 'chevron-right'}
-          icon={step === slides.length - 1 ? 'step-backward' : undefined}
-          large
-          intent={Intent.PRIMARY}
-          onClick={nextStep}
-        >
-          {step === 0 && 'Démarrer'}
-          {step > 0 && step < slides.length - 1 && 'Suivant'}
-          {step === slides.length - 1 && 'Recommencer'}
-        </Button>
-      </div>
-      &nbsp;
+          <Button
+            rightIcon={step !== slideCount && 'chevron-right'}
+            icon={step === slideCount && 'step-backward'}
+            large
+            intent={Intent.PRIMARY}
+            onClick={nextStep}
+          >
+            {getNextLabel()}
+          </Button>
+        </div>
+      )}
     </div>
   );
 };
