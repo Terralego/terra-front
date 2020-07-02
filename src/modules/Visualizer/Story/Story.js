@@ -3,6 +3,7 @@ import PropTypes from 'prop-types';
 import classnames from 'classnames';
 import { Button, Intent } from '@blueprintjs/core';
 import { toggleLayerVisibility } from '../../Map/services/mapUtils';
+import translateMock from '../../../utils/translate';
 
 import './styles.scss';
 
@@ -20,7 +21,7 @@ const resetLayers = map => ({ layers = [] }) => {
   });
 };
 
-const Story = ({ map, story: { beforeEach = [], slides }, setLegends }) => {
+export const Story = ({ map, story: { beforeEach = [], slides }, setLegends, translate }) => {
   const [step, setStep] = useState(0);
 
   const slideCount = slides.length - 1;
@@ -50,12 +51,12 @@ const Story = ({ map, story: { beforeEach = [], slides }, setLegends }) => {
 
   const getNextLabel = () => {
     if (step === 0) {
-      return 'Démarrer';
+      return translate('visualizer.story.start');
     }
     if (step === slideCount) {
-      return 'Recommencer';
+      return translate('visualizer.story.restart');
     }
-    return 'Suivant';
+    return translate('visualizer.story.next');
   };
 
   return (
@@ -70,7 +71,7 @@ const Story = ({ map, story: { beforeEach = [], slides }, setLegends }) => {
       {displayButtons && (
         <div className={classnames('storytelling__buttons', { 'storytelling__buttons--justified': displayPrevButton })}>
           {displayPrevButton && (
-            <Button icon="chevron-left" onClick={previousStep} large>Précédent</Button>
+            <Button icon="chevron-left" onClick={previousStep} large>{ translate('visualizer.story.previous') }</Button>
           )}
 
           <Button
@@ -111,10 +112,17 @@ Story.propTypes = {
       })),
     })),
   }).isRequired,
+  translate: PropTypes.func,
 };
 
 Story.defaultProps = {
   map: undefined,
+  translate: translateMock({
+    'visualizer.story.start': 'Start',
+    'visualizer.story.next': 'Next',
+    'visualizer.story.previous': 'Previous',
+    'visualizer.story.restart': 'Restart',
+  }),
 };
 
 export default Story;
