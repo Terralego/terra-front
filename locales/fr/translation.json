@@ -172,6 +172,12 @@
     },
     "visualizer": {
       "fold": "Replier",
+      "story": {
+        "start": "Démarrer",
+        "next": "Suivant",
+        "previous": "Précédent",
+        "restart": "Recommencer"
+      },
       "layerstree": {
         "group": {
           "selector": "Aucune couche disponible"
