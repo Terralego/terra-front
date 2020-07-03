@@ -1,251 +1,61 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
 exports[`should render 1`] = `
-<div
-  className="storytelling"
->
+<DocumentFragment>
   <div
-    className="storytelling__content"
+    class="storytelling"
   >
-    <h2>
-      Slide 1
-    </h2>
     <div
-      dangerouslySetInnerHTML={
-        Object {
-          "__html": "
-  <p>
+      class="storytelling__content"
+    >
+      <h2>
+        Slide 1
+      </h2>
+      <div>
+        
+  
+        <p>
+          
     Content 1
-  </p>
-",
-        }
-      }
-    />
-  </div>
-  <div
-    className="storytelling__buttons"
-  >
-    <button
-      className="bp3-button bp3-large bp3-intent-primary"
-      onClick={[Function]}
-      onKeyDown={[Function]}
-      onKeyUp={[Function]}
-      type="button"
-    >
-      <span
-        className="bp3-button-text"
-      >
-        Démarrer
-      </span>
-      <span
-        className="bp3-icon bp3-icon-chevron-right"
-        icon="chevron-right"
-      >
-        <svg
-          data-icon="chevron-right"
-          height={16}
-          viewBox="0 0 16 16"
-          width={16}
-        >
-          <desc>
-            chevron-right
-          </desc>
-          <path
-            d="M10.71 7.29l-4-4a1.003 1.003 0 00-1.42 1.42L8.59 8 5.3 11.29c-.19.18-.3.43-.3.71a1.003 1.003 0 001.71.71l4-4c.18-.18.29-.43.29-.71 0-.28-.11-.53-.29-.71z"
-            fillRule="evenodd"
-          />
-        </svg>
-      </span>
-    </button>
-  </div>
-   
-</div>
-`;
+  
+        </p>
+        
 
-exports[`should render a step 1`] = `
-<div
-  className="storytelling"
->
-  <div
-    className="storytelling__content"
-  >
-    <h2>
-      Slide 2
-    </h2>
+      </div>
+    </div>
     <div
-      dangerouslySetInnerHTML={
-        Object {
-          "__html": "
-<p>
-  Content 2
-</p>
-",
-        }
-      }
-    />
-  </div>
-  <div
-    className="storytelling__buttons storytelling__buttons--justified"
-  >
-    <button
-      className="bp3-button bp3-large"
-      onClick={[Function]}
-      onKeyDown={[Function]}
-      onKeyUp={[Function]}
-      type="button"
+      class="storytelling__buttons"
     >
-      <span
-        className="bp3-icon bp3-icon-chevron-left"
-        icon="chevron-left"
+      <button
+        class="bp3-button bp3-large bp3-intent-primary"
+        type="button"
       >
-        <svg
-          data-icon="chevron-left"
-          height={16}
-          viewBox="0 0 16 16"
-          width={16}
+        <span
+          class="bp3-button-text"
         >
-          <desc>
-            chevron-left
-          </desc>
-          <path
-            d="M7.41 8l3.29-3.29c.19-.18.3-.43.3-.71a1.003 1.003 0 00-1.71-.71l-4 4C5.11 7.47 5 7.72 5 8c0 .28.11.53.29.71l4 4a1.003 1.003 0 001.42-1.42L7.41 8z"
-            fillRule="evenodd"
-          />
-        </svg>
-      </span>
-      <span
-        className="bp3-button-text"
-      >
-        Précédent
-      </span>
-    </button>
-    <button
-      className="bp3-button bp3-large bp3-intent-primary"
-      onClick={[Function]}
-      onKeyDown={[Function]}
-      onKeyUp={[Function]}
-      type="button"
-    >
-      <span
-        className="bp3-button-text"
-      >
-        Suivant
-      </span>
-      <span
-        className="bp3-icon bp3-icon-chevron-right"
-        icon="chevron-right"
-      >
-        <svg
-          data-icon="chevron-right"
-          height={16}
-          viewBox="0 0 16 16"
-          width={16}
+          Start
+        </span>
+        <span
+          class="bp3-icon bp3-icon-chevron-right"
+          icon="chevron-right"
         >
-          <desc>
-            chevron-right
-          </desc>
-          <path
-            d="M10.71 7.29l-4-4a1.003 1.003 0 00-1.42 1.42L8.59 8 5.3 11.29c-.19.18-.3.43-.3.71a1.003 1.003 0 001.71.71l4-4c.18-.18.29-.43.29-.71 0-.28-.11-.53-.29-.71z"
-            fillRule="evenodd"
-          />
-        </svg>
-      </span>
-    </button>
+          <svg
+            data-icon="chevron-right"
+            height="16"
+            viewBox="0 0 16 16"
+            width="16"
+          >
+            <desc>
+              chevron-right
+            </desc>
+            <path
+              d="M10.71 7.29l-4-4a1.003 1.003 0 00-1.42 1.42L8.59 8 5.3 11.29c-.19.18-.3.43-.3.71a1.003 1.003 0 001.71.71l4-4c.18-.18.29-.43.29-.71 0-.28-.11-.53-.29-.71z"
+              fill-rule="evenodd"
+            />
+          </svg>
+        </span>
+      </button>
+    </div>
   </div>
-   
-</div>
-`;
-
-exports[`should render last step 1`] = `
-<div
-  className="storytelling"
->
-  <div
-    className="storytelling__content"
-  >
-    <h2>
-      Slide 6
-    </h2>
-    <div
-      dangerouslySetInnerHTML={
-        Object {
-          "__html": "
-<p>
-  Content 6
-</p>
-",
-        }
-      }
-    />
-  </div>
-  <div
-    className="storytelling__buttons storytelling__buttons--justified"
-  >
-    <button
-      className="bp3-button bp3-large"
-      onClick={[Function]}
-      onKeyDown={[Function]}
-      onKeyUp={[Function]}
-      type="button"
-    >
-      <span
-        className="bp3-icon bp3-icon-chevron-left"
-        icon="chevron-left"
-      >
-        <svg
-          data-icon="chevron-left"
-          height={16}
-          viewBox="0 0 16 16"
-          width={16}
-        >
-          <desc>
-            chevron-left
-          </desc>
-          <path
-            d="M7.41 8l3.29-3.29c.19-.18.3-.43.3-.71a1.003 1.003 0 00-1.71-.71l-4 4C5.11 7.47 5 7.72 5 8c0 .28.11.53.29.71l4 4a1.003 1.003 0 001.42-1.42L7.41 8z"
-            fillRule="evenodd"
-          />
-        </svg>
-      </span>
-      <span
-        className="bp3-button-text"
-      >
-        Précédent
-      </span>
-    </button>
-    <button
-      className="bp3-button bp3-large bp3-intent-primary"
-      onClick={[Function]}
-      onKeyDown={[Function]}
-      onKeyUp={[Function]}
-      type="button"
-    >
-      <span
-        className="bp3-icon bp3-icon-step-backward"
-        icon="step-backward"
-      >
-        <svg
-          data-icon="step-backward"
-          height={16}
-          viewBox="0 0 16 16"
-          width={16}
-        >
-          <desc>
-            step-backward
-          </desc>
-          <path
-            d="M12 3c-.24 0-.44.09-.62.23l-.01-.01L7 6.72V4c0-.55-.45-1-1-1H5c-.55 0-1 .45-1 1v8c0 .55.45 1 1 1h1c.55 0 1-.45 1-1V9.28l4.38 3.5.01-.01c.17.14.37.23.61.23.55 0 1-.45 1-1V4c0-.55-.45-1-1-1z"
-            fillRule="evenodd"
-          />
-        </svg>
-      </span>
-      <span
-        className="bp3-button-text"
-      >
-        Recommencer
-      </span>
-    </button>
-  </div>
-   
-</div>
+</DocumentFragment>
 `;
