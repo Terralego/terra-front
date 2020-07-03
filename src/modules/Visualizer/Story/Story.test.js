@@ -1,8 +1,8 @@
 import React from 'react';
-import renderer from 'react-test-renderer';
+import { render, fireEvent } from '@testing-library/react';
+import { toggleLayerVisibility } from '../../Map/services/mapUtils';
 
 import Story from './Story';
-import { toggleLayerVisibility } from '../../Map/services/mapUtils';
 
 jest.mock('../../Map/services/mapUtils', () => ({
   toggleLayerVisibility: jest.fn(),
@@ -23,6 +23,10 @@ const story = {
     Content 1
   </p>
 `,
+    layouts: [{
+      layers: ['foo-1a', 'foo-1b'],
+      active: true,
+    }],
   }, {
     title: 'Slide 2',
     content: `
@@ -120,154 +124,79 @@ const story = {
 };
 
 it('should render', () => {
-  const tree = renderer.create(
-    <Story
-      story={story}
-    />,
+  const { asFragment } = render(
+    <Story story={story} />,
   );
-  expect(tree.toJSON()).toMatchSnapshot();
+  expect(asFragment()).toMatchSnapshot();
 });
 
-it('should render a step', () => {
-  const tree = renderer.create(
-    <Story
-      story={story}
-    />,
-  );
-  tree.getInstance().setState({ step: 1 });
-  expect(tree.toJSON()).toMatchSnapshot();
-});
-
-it('should render last step', () => {
-  const tree = renderer.create(
-    <Story
-      story={story}
-    />,
-  );
-  tree.getInstance().setState({ step: 5 });
-  expect(tree.toJSON()).toMatchSnapshot();
-});
-
-it('should init map on mount and update', () => {
-  const instance = new Story({});
-  instance.initMap = jest.fn();
-  instance.displayStep = () => null;
-
-  instance.componentDidUpdate({ map: {} }, {});
-  expect(instance.initMap).toHaveBeenCalled();
-  instance.initMap.mockClear();
-
-  instance.componentDidUpdate({}, {});
-  expect(instance.initMap).not.toHaveBeenCalled();
-});
-
-it('should update step', () => {
-  const instance = new Story({});
-  instance.displayStep = jest.fn();
-
-  instance.componentDidUpdate({ map: {} }, {});
-  expect(instance.displayStep).toHaveBeenCalled();
-  instance.displayStep.mockClear();
-
-  instance.props.map = {};
-  instance.componentDidUpdate({ map: instance.props.map }, { step: 1 });
-  expect(instance.displayStep).toHaveBeenCalled();
-  instance.displayStep.mockClear();
-
-  instance.state.step = 1;
-  instance.componentDidUpdate({ map: instance.props.map }, { step: 1 });
-  expect(instance.displayStep).not.toHaveBeenCalled();
-});
-
-it('should set prev step', () => {
-  const instance = new Story({
-    story,
-  });
-  let callback;
-  instance.setState = jest.fn(fn => { callback = fn; });
-  instance.prevStep();
-  expect(instance.setState).toHaveBeenCalledWith(expect.any(Function));
-
-  expect(callback({ step: 5 })).toEqual({ step: 4 });
-  expect(callback({ step: 4 })).toEqual({ step: 3 });
-  expect(callback({ step: 3 })).toEqual({ step: 2 });
-  expect(callback({ step: 2 })).toEqual({ step: 1 });
-  expect(callback({ step: 1 })).toEqual({ step: 0 });
-  expect(callback({ step: 0 })).toEqual({ step: 5 });
-});
-
-it('should set next step', () => {
-  const instance = new Story({
-    story,
-  });
-  let callback;
-  instance.setState = jest.fn(fn => { callback = fn; });
-  instance.nextStep();
-  expect(instance.setState).toHaveBeenCalledWith(expect.any(Function));
-
-  expect(callback({ step: 5 })).toEqual({ step: 0 });
-  expect(callback({ step: 4 })).toEqual({ step: 5 });
-  expect(callback({ step: 3 })).toEqual({ step: 4 });
-  expect(callback({ step: 2 })).toEqual({ step: 3 });
-  expect(callback({ step: 1 })).toEqual({ step: 2 });
-  expect(callback({ step: 0 })).toEqual({ step: 1 });
-});
-
-it('should update map', () => {
-  const instance = new Story({});
-  instance.displayStep = jest.fn();
-  instance.initMap();
-  expect(instance.displayStep).not.toHaveBeenCalled();
-
-  instance.props.map = {};
-
-  instance.initMap();
-  expect(instance.displayStep).toHaveBeenCalled();
-});
-
-it('should display step', () => {
+it('should call callback on mount', () => {
   const setLegends = jest.fn();
-  const map = {
-    getStyle: () => ({
-      layers: [{
-        id: 'foo-1a',
-      }, {
-        id: 'foo-1b',
-      }, {
-        id: 'foo-2',
-      }, {
-        id: 'foo-3',
-      }, {
-        id: 'foo-4',
-      }, {
-        id: 'bar',
-      }, {
-        id: 'bapapa',
-      }],
-    }),
-  };
-  const instance = new Story({ story, setLegends });
-  instance.displayStep();
-  expect(toggleLayerVisibility).not.toHaveBeenCalled();
-
-  instance.props.map = map;
-  instance.displayStep();
-  expect(toggleLayerVisibility).toHaveBeenCalledTimes(1);
+  render(
+    <Story
+      setLegends={setLegends}
+      story={story}
+      map={{
+        getStyle: jest.fn(() => ({ layers: [{ id: 'foo-1a' }] })),
+        setLayoutProperty: jest.fn(),
+      }}
+    />,
+  );
+  expect(toggleLayerVisibility).toHaveBeenCalled();
   expect(setLegends).toHaveBeenCalled();
-  toggleLayerVisibility.mockClear();
+});
 
-  instance.state.step = 1;
-  instance.displayStep();
-  expect(toggleLayerVisibility).toHaveBeenCalledTimes(3);
-  toggleLayerVisibility.mockClear();
+it('should set nextStep', () => {
+  const { container, getByText } = render(
+    <Story story={story} />,
+  );
+  const nextButton = container.querySelector('.bp3-intent-primary');
+  fireEvent.click(nextButton);
+  const title = getByText('Slide 2');
+  expect(title).toBeTruthy();
+});
 
-  instance.props.story.beforeEach = [{}];
-  instance.displayStep();
-  expect(toggleLayerVisibility).toHaveBeenCalledTimes(2);
-  toggleLayerVisibility.mockClear();
+it('should set nextStep at the last slide and loop to the first step', () => {
+  const { container, getByText } = render(
+    <Story story={story} />,
+  );
+  const nextButton = container.querySelector('.bp3-intent-primary');
+  story.slides.forEach(() => {
+    fireEvent.click(nextButton);
+  });
+  const title = getByText('Slide 1');
+  expect(title).toBeTruthy();
+});
 
-  instance.props.story.beforeEach = undefined;
-  instance.displayStep();
-  expect(toggleLayerVisibility).toHaveBeenCalledTimes(2);
-  toggleLayerVisibility.mockClear();
+it('should not have prevStep button in the first step', () => {
+  const { container } = render(
+    <Story story={story} />,
+  );
+  const nextButton = container.querySelector('.bp3-intent-primary');
+  story.slides.forEach((_, index) => {
+    const buttons = container.querySelectorAll('.bp3-button');
+    expect(buttons.length).toBe((index === 0) ? 1 : 2);
+    fireEvent.click(nextButton);
+  });
+});
+
+it('should set prevStep', () => {
+  const { container } = render(
+    <Story story={story} />,
+  );
+  const nextButton = container.querySelector('.bp3-intent-primary');
+  const title = container.querySelector('h2');
+  fireEvent.click(nextButton);
+  expect(title.textContent).toBe('Slide 2');
+  const prevButton = container.querySelector('.bp3-button');
+  fireEvent.click(prevButton);
+  expect(title.textContent).toBe('Slide 1');
+});
+
+it('should not display buttons if there is only one step', () => {
+  const { container } = render(
+    <Story story={{ ...story, slides: [story.slides[0]] }} />,
+  );
+  const buttonContainer = container.querySelector('.storytelling__buttons');
+  expect(buttonContainer).toBe(null);
 });
