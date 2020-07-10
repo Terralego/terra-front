@@ -31,6 +31,11 @@ export function getValueFromType (value, type, translate) {
   if (value instanceof Date) {
     return translate('terralego.visualizer.layerstree.itemFilters.date', { value: getLiteralValue(value) });
   }
+
+  if (type === 'many') {
+    return value.join(', ');
+  }
+
   return value;
 }
 
