@@ -1,4 +1,5 @@
 import React, { useMemo } from 'react';
+import PropTypes from 'prop-types';
 import { Tag } from '@blueprintjs/core';
 
 import './styles.scss';
@@ -24,8 +25,8 @@ const LayersTreeItemFilters = ({
   filtersValues,
   setLayerState,
   layer,
-  layer: { filters: { form: layerForm } = {} } = {},
-  activeLayer: { filters: { form = layerForm } = {} } = {},
+  layer: { filters: { form: layerForm } = {} },
+  activeLayer: { filters: { form = layerForm } = {} },
 }) => {
   const properties = useMemo(() =>
     (form || []).map(({ property, ...rest }) => ({
@@ -62,6 +63,49 @@ const LayersTreeItemFilters = ({
       ))}
     </div>
   );
+};
+
+LayersTreeItemFilters.propTypes = {
+  filtersValues: PropTypes.shape({}),
+  setLayerState: PropTypes.func,
+  layer: PropTypes.shape({
+    filters: PropTypes.shape({
+      form: PropTypes.arrayOf(
+        PropTypes.shape({
+          label: PropTypes.string,
+          property: PropTypes.string,
+          type: PropTypes.string,
+        }),
+      ),
+    }),
+  }),
+  activeLayer: PropTypes.shape({
+    filters: PropTypes.shape({
+      form: PropTypes.arrayOf(
+        PropTypes.shape({
+          label: PropTypes.string,
+          property: PropTypes.string,
+          type: PropTypes.string,
+        }),
+      ),
+    }),
+  }),
+  translate: PropTypes.func,
+};
+
+LayersTreeItemFilters.defaultProps = {
+  filtersValues: {},
+  setLayerState: () => {},
+  layer: {
+    filters: {
+      form: undefined,
+    },
+  },
+  activeLayer: {
+    filters: {
+      form: undefined,
+    },
+  },
 };
 
 export default LayersTreeItemFilters;
