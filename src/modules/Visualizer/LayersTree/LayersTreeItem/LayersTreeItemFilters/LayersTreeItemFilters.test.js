@@ -38,13 +38,16 @@ it('should render', () => {
             }, {
               type: 'range',
               property: 'range',
+              label: 'Range of foo',
             }, {
               type: 'range',
               property: 'date',
               format: 'date',
+              label: 'Range of date',
             }, {
               type: 'boolean',
               property: 'bool',
+              label: 'True or false',
             }],
           },
         }}
