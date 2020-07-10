@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useMemo } from 'react';
 import { Tag } from '@blueprintjs/core';
 
 import './styles.scss';
@@ -27,15 +27,18 @@ const LayersTreeItemFilters = ({
   layer: { filters: { form: layerForm } = {} } = {},
   activeLayer: { filters: { form = layerForm } = {} } = {},
 }) => {
-  const properties = (form || []).map(({ property, ...rest }) => ({
-    ...rest,
-    property,
-    value: filtersValues[property],
-  }));
+  const properties = useMemo(() =>
+    (form || []).map(({ property, ...rest }) => ({
+      ...rest,
+      property,
+      value: filtersValues[property],
+    })),
+  [filtersValues, form]);
 
   if (!properties.some(({ value }) => value)) {
     return null;
   }
+
   return (
     <div className="layersTreeItemFilter">
       {properties.map(({ property, value, type, label }) => (
