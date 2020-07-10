@@ -44,8 +44,7 @@ exports[`should render 1`] = `
     <span
       className="bp3-text-overflow-ellipsis bp3-fill"
     >
-      foo
-      bar
+      foo, bar
     </span>
     <button
       className="bp3-tag-remove"
