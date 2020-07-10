@@ -1,24 +1,37 @@
 import React, { useMemo } from 'react';
 import PropTypes from 'prop-types';
 import { Tag } from '@blueprintjs/core';
+import translateMock from '../../../../../utils/translate';
 
 import './styles.scss';
 
 function getLiteralValue (value) {
   if (value instanceof Date) {
-    return `le ${value.toLocaleDateString()}`;
+    return value.toLocaleDateString();
   }
   return value;
 }
 
-export function getValueFromType (value, type) {
+export function getValueFromType (value, type, translate) {
   if (type === 'boolean') {
     return null;
   }
+
   if (type === 'range') {
-    return `: Entre ${getLiteralValue(value[0])} et ${getLiteralValue(value[1])}`;
+    const [from, to] = value;
+    if (from instanceof Date || to instanceof Date) {
+      if (!from || !to) {
+        return translate('terralego.visualizer.layerstree.itemFilters.date', { value: getLiteralValue(from) });
+      }
+      return translate('terralego.visualizer.layerstree.itemFilters.range.date', { from: getLiteralValue(from), to: getLiteralValue(to) });
+    }
+    return translate('terralego.visualizer.layerstree.itemFilters.range.numeric', { from, to });
   }
-  return `: ${getLiteralValue(value)}`;
+
+  if (value instanceof Date) {
+    return translate('terralego.visualizer.layerstree.itemFilters.date', { value: getLiteralValue(value) });
+  }
+  return value;
 }
 
 const LayersTreeItemFilters = ({
@@ -27,6 +40,7 @@ const LayersTreeItemFilters = ({
   layer,
   layer: { filters: { form: layerForm } = {} },
   activeLayer: { filters: { form = layerForm } = {} },
+  translate,
 }) => {
   const properties = useMemo(() =>
     (form || []).map(({ property, ...rest }) => ({
@@ -44,21 +58,21 @@ const LayersTreeItemFilters = ({
     <div className="layersTreeItemFilter">
       {properties.map(({ property, value, type, label }) => (
         (value && value.length > 0) && (
-        <Tag
-          key={property}
-          className="layersTreeItemFilter__tag"
-          onRemove={() =>
-            setLayerState({
-              layer,
-              state: {
-                filters: { ...filtersValues, [property]: undefined },
-                total: undefined,
-              },
-            })}
-        >
-          {label}
-          {getValueFromType(value, type)}
-        </Tag>
+          <Tag
+            key={property}
+            className="layersTreeItemFilter__tag"
+            onRemove={() =>
+              setLayerState({
+                layer,
+                state: {
+                  filters: { ...filtersValues, [property]: undefined },
+                  total: undefined,
+                },
+              })}
+          >
+            {label && translate('terralego.visualizer.layerstree.itemFilters.label', { label })}
+            {getValueFromType(value, type, translate)}
+          </Tag>
         )
       ))}
     </div>
@@ -106,6 +120,12 @@ LayersTreeItemFilters.defaultProps = {
       form: undefined,
     },
   },
+  translate: translateMock({
+    'terralego.visualizer.layerstree.itemFilters.date': '{{value}}',
+    'terralego.visualizer.layerstree.itemFilters.label': '{{label}}: ',
+    'terralego.visualizer.layerstree.itemFilters.range.date': 'Starting from {{from}} to {{to}}',
+    'terralego.visualizer.layerstree.itemFilters.range.numeric': 'Between {{from}} and {{to}}',
+  }),
 };
 
 export default LayersTreeItemFilters;

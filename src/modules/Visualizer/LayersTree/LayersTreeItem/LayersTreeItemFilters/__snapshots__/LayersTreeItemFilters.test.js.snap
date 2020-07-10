@@ -10,7 +10,7 @@ exports[`should render 1`] = `
     <span
       className="bp3-text-overflow-ellipsis bp3-fill"
     >
-      : foo
+      foo
     </span>
     <button
       className="bp3-tag-remove"
@@ -44,7 +44,8 @@ exports[`should render 1`] = `
     <span
       className="bp3-text-overflow-ellipsis bp3-fill"
     >
-      : foo,bar
+      foo
+      bar
     </span>
     <button
       className="bp3-tag-remove"
@@ -78,7 +79,8 @@ exports[`should render 1`] = `
     <span
       className="bp3-text-overflow-ellipsis bp3-fill"
     >
-      : Entre 2 et 42
+      Range of foo: 
+      Between 2 and 42
     </span>
     <button
       className="bp3-tag-remove"
@@ -112,7 +114,8 @@ exports[`should render 1`] = `
     <span
       className="bp3-text-overflow-ellipsis bp3-fill"
     >
-      : Entre le mocked date et le mocked date
+      Range of date: 
+      Starting from mocked date to mocked date
     </span>
     <button
       className="bp3-tag-remove"

@@ -182,6 +182,14 @@
         "group": {
           "selector": "Aucune couche disponible"
         },
+        "itemFilters": {
+          "date": "le {{value}}",
+          "label": "{{label}} : ",
+          "range" : {
+            "date": "Entre le {{from}} et le {{to}}",
+            "numeric": "Entre {{from}} et {{to}}"
+          }
+        },
         "itemOptions": {
           "filter": {
             "alt": "Ouvrir les filtres",
