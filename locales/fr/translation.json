@@ -29,7 +29,6 @@
       }
     },
     "signupform": {
-      "done": "",
       "email": {
         "help": "Saisissez votre e-mail",
         "info": "requis",
@@ -112,6 +111,7 @@
         "portrait_label": "Portrait"
       },
       "report_control": {
+        "toaster": "Cliquer sur la carte pour indiquer la localisation du signalement",
         "content": "signaler une information manquante ou incorrecte",
         "form": {
           "cancel": "Annuler",
@@ -147,8 +147,7 @@
           "message": "votre signalement a été soumis avec succès",
           "other_report": "Faire un autre signalement",
           "title": "Merci !"
-        },
-        "toaster": "Cliquer sur la carte pour indiquer la localisation du signalement"
+        }
       },
       "search_control": {
         "button_label": "Rechercher"
