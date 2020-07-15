@@ -1,4 +1,15 @@
 
+1.22.6 / 2020-07-15
+===================
+
+  * Remove tooltip interaction for cluster
+  * Remove range limit in numeric range input
+  * Do numeric range validation after setState to avoid async side effect
+  * Return status code when fetch API throw an error
+  * Improve readability of legend title
+  * Clean style for legends
+  * Display legend title if it's provided
+
 1.22.5 / 2020-06-10
 ===================
 
