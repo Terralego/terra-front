@@ -542,10 +542,9 @@ export class InteractiveMap extends React.Component {
         (trigger !== 'mouseover' && trigger !== eventType)) return;
 
     const {
-      properties: { _id: featureId } = {},
+      properties: { _id: featureId, cluster } = {},
       layer: { source } = {},
     } = feature;
-
     const clusteredFeatures = await getClusteredFeatures(map, feature);
 
     switch (interactionType) {
@@ -558,7 +557,8 @@ export class InteractiveMap extends React.Component {
           }
           return;
         }
-        this.displayTooltip({
+
+        !cluster && this.displayTooltip({
           layerId,
           feature,
           event,
