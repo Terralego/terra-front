@@ -23,41 +23,47 @@ class RangeNumeric extends RangeComponent {
   onChangeDebounced = debounce(range => this.props.onChange(range), 300);
 
   onNumericInputChange = pos => bound => {
-    const { min, max } = this.props;
-
     if (Number.isNaN(+bound)) return; // Sanity check that allows typing '-'
 
     this.setState(({ range: prevRange }) => {
       const nextRange = [...prevRange];
       nextRange[pos] = bound;
-      return { range: nextRange };
-    });
 
+      // this need to be done here, setState is async
+      const { intentLow, intentUp } = this.rangeValidator(nextRange);
+      return { range: nextRange, intentLow, intentUp };
+    });
+  }
+
+  rangeValidator = range => {
     // Check that the values are within min/max, it will be eventually be
     // clamped, but we need to prevent firing onChange
-    const { range: [lowerB, upperB] = [] } = this.state;
-
+    const { min, max } = this.props;
+    const [lowerB, upperB] = range;
+    const intent = {};
     if (lowerB < min) {
-      this.setState({ intentLow: Intent.DANGER });
+      intent.intentLow = Intent.DANGER;
     }
-
     if (upperB > max) {
-      this.setState({ intentUp: Intent.DANGER });
+      intent.intentUp = Intent.DANGER;
     }
-
     if (lowerB > upperB) {
-      this.setState({ intentUp: Intent.DANGER, intentLow: Intent.DANGER });
+      intent.intentLow = Intent.DANGER;
+      intent.intentUp = Intent.DANGER;
     }
 
     if (lowerB <= upperB && lowerB >= min && upperB <= max) {
-      this.setState({ intentLow: undefined, intentUp: undefined });
+      intent.intentLow = undefined;
+      intent.intentUp = undefined;
       if (lowerB === min && upperB === max) {
         this.onChangeDebounced(undefined);
       } else {
         this.onChangeDebounced([lowerB, upperB]);
       }
     }
+    return intent;
   };
+
 
   render () {
     const { translate, ...props } = this.props;
