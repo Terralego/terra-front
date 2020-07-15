@@ -75,8 +75,8 @@ it('should handle danger intent', () => {
   wrapper.find('NumericInput').first().prop('onValueChange')(8);
   wrapper.update();
 
-  expect(wrapper.find('NumericInput').first().props().intent).toEqual('danger');
-  expect(onChange).not.toHaveBeenCalled();
+  expect(wrapper.find('NumericInput').first().props().intent).toEqual(undefined);
+  expect(onChange).toHaveBeenCalled();
   onChange.mockClear();
 
   wrapper.find('NumericInput').first().prop('onValueChange')(10);
@@ -89,8 +89,8 @@ it('should handle danger intent', () => {
   wrapper.find('NumericInput').last().prop('onValueChange')(1001);
   wrapper.update();
 
-  expect(wrapper.find('NumericInput').last().props().intent).toEqual('danger');
-  expect(onChange).not.toHaveBeenCalled();
+  expect(wrapper.find('NumericInput').last().props().intent).toEqual(undefined);
+  expect(onChange).toHaveBeenCalled();
   onChange.mockClear();
 });
 

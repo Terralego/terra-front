@@ -41,18 +41,12 @@ class RangeNumeric extends RangeComponent {
     const { min, max } = this.props;
     const [lowerB, upperB] = range;
     const intent = {};
-    if (lowerB < min) {
-      intent.intentLow = Intent.DANGER;
-    }
-    if (upperB > max) {
-      intent.intentUp = Intent.DANGER;
-    }
     if (lowerB > upperB) {
       intent.intentLow = Intent.DANGER;
       intent.intentUp = Intent.DANGER;
     }
 
-    if (lowerB <= upperB && lowerB >= min && upperB <= max) {
+    if (lowerB <= upperB) {
       intent.intentLow = undefined;
       intent.intentUp = undefined;
       if (lowerB === min && upperB === max) {
