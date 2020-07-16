@@ -17,10 +17,14 @@ const computeLabel = (translate, label, boundaries = {}, rounding = null) => {
     return label;
   }
 
-  let { lower: { value: lower } = {}, upper: { value: upper } = {} } = boundaries;
+  let {
+    lower: { value: lower } = {},
+    upper: { value: upper } = {},
+  } = boundaries;
 
   if (typeof lower === 'number') {
-    if (typeof upper === 'number') { // We have two value
+    if (typeof upper === 'number') {
+      // We have two value
       if (rounding !== null) {
         lower = parseFloat(lower.toFixed(rounding)).toLocaleString();
         upper = parseFloat(upper.toFixed(rounding)).toLocaleString();
@@ -46,23 +50,24 @@ export const Legend = ({
   stackedCircles,
   translate,
 }) => {
-  const biggestDiameter = items.reduce((int, { diameter = DEFAULT_DIAMETER }) =>
-    Math.max(int, diameter), 0);
+  const biggestDiameter = items.reduce(
+    (int, { diameter = DEFAULT_DIAMETER }) => Math.max(int, diameter),
+    0,
+  );
 
   return (
     <div className={`tf-legend tf-legend--level-${level}`}>
-      {title && (
-        <h4 className="tf-legend__title">
-          {title}
-        </h4>
-      )}
+      {title && <h4 className="tf-legend__title">{title}</h4>}
       <div
-        className={classnames(
-          'tf-legend__list',
-          { 'tf-legend__stacked-circles': stackedCircles },
-        )}
+        className={classnames('tf-legend__list', {
+          'tf-legend__stacked-circles': stackedCircles,
+        })}
         // The width is multiplied by a factor 1.7 in order to provide space for the legend labels
-        style={stackedCircles ? { height: biggestDiameter, width: biggestDiameter * 1.7 } : null}
+        style={
+          stackedCircles
+            ? { height: biggestDiameter, width: biggestDiameter * 1.7 }
+            : null
+        }
       >
         {content && (
           <Template
@@ -71,88 +76,92 @@ export const Legend = ({
             history={history}
           />
         )}
-        {items.map(({
-          label,
-          template,
-          source: subSource,
-          color,
-          items: subItems,
-          shape = 'square',
-          radius,
-          boundaries,
-          diameter = radius || DEFAULT_DIAMETER,
-          ...rest
-        }, index) => {
-          if (subItems) {
-            return (
-              <Legend
-                key={`${label}${items.length}`}
-                title={label}
-                items={subItems}
-                source={subSource}
-                level={level + 1}
-              />
+        {items.map(
+          (
+            {
+              label,
+              template,
+              source: subSource,
+              color,
+              items: subItems,
+              shape = 'square',
+              radius,
+              boundaries,
+              diameter = radius || DEFAULT_DIAMETER,
+              ...rest
+            },
+            index,
+          ) => {
+            if (subItems) {
+              return (
+                <Legend
+                  key={`${label}${items.length}`}
+                  title={label}
+                  items={subItems}
+                  source={subSource}
+                  level={level + 1}
+                />
+              );
+            }
+
+            if (template) {
+              return (
+                <Template
+                  key={index} // eslint-disable-line react/no-array-index-key
+                  template={template}
+                  customComponents={CustomComponents}
+                  history={history}
+                />
+              );
+            }
+
+            const computedLabel = computeLabel(
+              translate,
+              label,
+              boundaries,
+              rounding,
             );
-          }
 
-          if (template) {
+            let Shape = null;
+            const wrapperStyle = { width: DEFAULT_DIAMETER * 2 };
+            const shapeProps = {
+              size: DEFAULT_DIAMETER,
+              color,
+              ...rest,
+            };
+
+            switch (shape) {
+              case 'circle':
+                Shape = Circle;
+                shapeProps.size = diameter;
+                wrapperStyle.width = biggestDiameter;
+                break;
+              case 'line':
+                Shape = Line;
+                break;
+              case 'square':
+                Shape = Rect;
+                break;
+              default:
+                break;
+            }
+
             return (
-              <Template
-                key={index} // eslint-disable-line react/no-array-index-key
-                template={template}
-                customComponents={CustomComponents}
-                history={history}
-              />
-            );
-          }
-
-          const computedLabel = computeLabel(
-            translate,
-            label,
-            boundaries,
-            rounding,
-          );
-
-
-          let Shape = null;
-          const wrapperStyle = { width: DEFAULT_DIAMETER * 2 };
-          const shapeProps = {
-            size: DEFAULT_DIAMETER,
-            color,
-            ...rest,
-          };
-
-          switch (shape) {
-            case 'circle':
-              Shape = Circle;
-              shapeProps.size = diameter;
-              wrapperStyle.width = biggestDiameter;
-              break;
-            case 'line':
-              Shape = Line;
-              break;
-            case 'square':
-              Shape = Rect;
-              break;
-            default:
-              break;
-          }
-
-          return (
-            <div
-              key={`${computedLabel}${color}${diameter}`}
-              className={`tf-legend__item tf-legend__item--${shape} tf-legend__item--${position}`}
-            >
               <div
-                className="tf-legend__symbol-container"
-                style={wrapperStyle}
+                key={`${computedLabel}${color}${diameter}`}
+                className={`tf-legend__item tf-legend__item--${shape} tf-legend__item--${position}`}
               >
-                {Shape && <Shape {...shapeProps} />}
+                <div
+                  className="tf-legend__symbol-container"
+                  style={wrapperStyle}
+                >
+                  {Shape && <Shape {...shapeProps} />}
+                </div>
+                <div className="tf-legend__label">{computedLabel}</div>
               </div>
-              <div className="tf-legend__label">{computedLabel}</div>
-            </div>
-          );
-        })}
+            );
+          },
+        )}
       </div>
       {source && <div className="tf-legend__source">{source}</div>}
     </div>
@@ -161,15 +170,17 @@ export const Legend = ({
 
 Legend.propTypes = {
   title: PropTypes.string.isRequired,
-  items: PropTypes.arrayOf(PropTypes.shape({
-    label: PropTypes.string,
-    source: PropTypes.string,
-    color: PropTypes.string,
-    items: PropTypes.array,
-    shape: PropTypes.string,
-    diameter: PropTypes.number,
-    template: PropTypes.string,
-  })),
+  items: PropTypes.arrayOf(
+    PropTypes.shape({
+      label: PropTypes.string,
+      source: PropTypes.string,
+      color: PropTypes.string,
+      items: PropTypes.array,
+      shape: PropTypes.string,
+      diameter: PropTypes.number,
+      template: PropTypes.string,
+    }),
+  ),
   content: PropTypes.string,
   position: PropTypes.string,
   level: PropTypes.number,
