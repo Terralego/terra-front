@@ -83,40 +83,45 @@ const knobsOptions = {
   },
 };
 
-stories.add('JSON items', () => (
-  <div className="interactive-map">
-    <div className="interactive-map__legends">
-      <Legend
-        title="foo"
-        items={json}
-        source="Source of foo"
-      />
+stories.add(
+  'JSON items',
+  () => (
+    <div className="interactive-map">
+      <div className="interactive-map__legends">
+        <Legend title="foo" items={json} source="Source of foo" />
+      </div>
     </div>
-  </div>
-), knobsOptions);
+  ),
+  knobsOptions,
+);
 
-stories.add('Nunjucks template', () => (
-  <div className="interactive-map">
-    <div className="interactive-map__legends">
-      <Legend
-        title="bar"
-        content={text('Nunjucks template', template)}
-      />
+stories.add(
+  'Nunjucks template',
+  () => (
+    <div className="interactive-map">
+      <div className="interactive-map__legends">
+        <Legend title="bar" content={text('Nunjucks template', template)} />
+      </div>
     </div>
-  </div>
-), knobsOptions);
+  ),
+  knobsOptions,
+);
 
-stories.add('Both', () => (
-  <div className="interactive-map">
-    <div className="interactive-map__legends">
-      <Legend
-        title="baz"
-        items={json}
-        content={text('Nunjucks template', template)}
-      />
+stories.add(
+  'Both',
+  () => (
+    <div className="interactive-map">
+      <div className="interactive-map__legends">
+        <Legend
+          title="baz"
+          items={json}
+          content={text('Nunjucks template', template)}
+        />
+      </div>
     </div>
-  </div>
-), knobsOptions);
+  ),
+  knobsOptions,
+);
 
 stories.add('Circles', () => (
   <div className="interactive-map">
@@ -131,12 +136,14 @@ stories.add('Circles', () => (
             color: 'white',
             shape: 'circle',
             diameter: 30,
-          }, {
+          },
+          {
             label: 'laboris nisi ut aliquip',
             color: 'white',
             shape: 'circle',
             diameter: 15,
-          }, {
+          },
+          {
             label: 'ex ea commodo consequat',
             color: 'white',
             shape: 'circle',
@@ -153,37 +160,32 @@ stories.add('Stacked', () => (
     <div className="interactive-map__legends">
       <Legend
         title="foo"
-        items={[{
-          label: 'et dolore magna',
-          items: [{
-            label: 'aliqua',
-            color: 'red',
-          }, {
-            label: 'Ut enim ad',
-            color: 'green',
-          }, {
-            label: 'minim veniam',
-            color: 'yellow',
-          }],
-        }, {
-          label: 'quis nostrud',
-          items: [{
-            label: 'exercitation ullamco',
-            color: 'white',
-            shape: 'circle',
-            diameter: 20,
-          }, {
-            label: 'laboris nisi ut aliquip',
-            color: 'white',
-            shape: 'circle',
-            diameter: 15,
-          }, {
-            label: 'ex ea commodo consequat',
-            color: 'white',
-            shape: 'circle',
-            diameter: 10,
-          }],
-        }]}
+        items={[
+          {
+            label: 'quis nostrud',
+            stackedCircles: true,
+            items: [
+              {
+                label: 'exercitation ullamco',
+                color: 'white',
+                shape: 'circle',
+                diameter: 20,
+              },
+              {
+                label: 'laboris nisi ut aliquip',
+                color: 'white',
+                shape: 'circle',
+                diameter: 15,
+              },
+              {
+                label: 'ex ea commodo consequat',
+                color: 'white',
+                shape: 'circle',
+                diameter: 10,
+              },
+            ],
+          },
+        ]}
       />
       <Legend
         title="with template"
