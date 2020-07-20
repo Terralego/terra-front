@@ -12,7 +12,14 @@ import Line from './components/Line';
 
 const DEFAULT_DIAMETER = 16;
 
-const computeLabel = (translate, label, boundaries = {}, rounding = null) => {
+const computeLabel = (
+  translate,
+  label,
+  boundaries = {},
+  rounding = null,
+  isFirst,
+  isLast,
+) => {
   if (label && label !== '') {
     return label;
   }
@@ -28,6 +35,12 @@ const computeLabel = (translate, label, boundaries = {}, rounding = null) => {
       if (rounding !== null) {
         lower = parseFloat(lower.toFixed(rounding)).toLocaleString();
         upper = parseFloat(upper.toFixed(rounding)).toLocaleString();
+      }
+      if (isFirst) {
+        return translate('terralego.legend.labelFirst', { upper, lower });
+      }
+      if (isLast) {
+        return translate('terralego.legend.labelLast', { upper, lower });
       }
       return translate('terralego.legend.label', { upper, lower });
     }
@@ -120,6 +133,12 @@ export const Legend = ({
               label,
               boundaries,
               rounding,
+              index === 0,
+              index === items.length - 1 ||
+                (index === items.length - 2 && // Last value excluding null value legend
+                  items[items.length - 1].boundaries &&
+                  items[items.length - 1].boundaries.lower.value === null &&
+                  items[items.length - 1].boundaries.upper.value === null),
             );
 
             let Shape = null;
@@ -196,6 +215,8 @@ Legend.defaultProps = {
   translate: translateMock({
     'terralego.legend.nolabel': 'No label',
     'terralego.legend.label': 'From {{lower}} to {{upper}}',
+    'terralego.legend.labelFirst': 'More than {{lower}}',
+    'terralego.legend.labelLast': 'Less than {{upper}}',
   }),
 };
 
