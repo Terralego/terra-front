@@ -1,7 +1,6 @@
 import React from 'react';
 import { storiesOf } from '@storybook/react';
 import { text, boolean } from '@storybook/addon-knobs';
-import { action } from '@storybook/addon-actions';
 
 import Legend from '../../../modules/Map/InteractiveMap/components/Legend';
 
@@ -65,6 +64,128 @@ const json = [
   },
 ];
 
+const jsonAuto = {
+  items: [
+    {
+      color: '#D03568',
+      shape: 'square',
+      boundaries: {
+        lower: {
+          value: 38.0,
+          included: true,
+        },
+        upper: {
+          value: 826.285714285714,
+          included: true,
+        },
+      },
+    },
+    {
+      color: '#F79465',
+      shape: 'square',
+      boundaries: {
+        lower: {
+          value: 15.7142857142857,
+          included: true,
+        },
+        upper: {
+          value: 38.0,
+          included: false,
+        },
+      },
+    },
+    {
+      color: '#F7C99E',
+      shape: 'square',
+      boundaries: {
+        lower: {
+          value: 6.28571428571429,
+          included: true,
+        },
+        upper: {
+          value: 15.7142857142857,
+          included: false,
+        },
+      },
+    },
+    {
+      color: '#EFE3CF',
+      shape: 'square',
+      boundaries: {
+        lower: {
+          value: 0.714285714285714,
+          included: true,
+        },
+        upper: {
+          value: 6.28571428571429,
+          included: false,
+        },
+      },
+    },
+    {
+      color: '#8CCBDA',
+      shape: 'square',
+      boundaries: {
+        lower: {
+          value: -2.85714285714286,
+          included: true,
+        },
+        upper: {
+          value: 0.714285714285714,
+          included: false,
+        },
+      },
+    },
+    {
+      color: '#2FB0C5',
+      shape: 'square',
+      boundaries: {
+        lower: {
+          value: -7.28571428571429,
+          included: true,
+        },
+        upper: {
+          value: -2.85714285714286,
+          included: false,
+        },
+      },
+    },
+    {
+      color: '#217B8B',
+      shape: 'square',
+      boundaries: {
+        lower: {
+          value: -4450.14285714286,
+          included: true,
+        },
+        upper: {
+          value: -7.28571428571429,
+          included: false,
+        },
+      },
+    },
+  ],
+  title: 'People migration rate',
+  source: 'Source of data',
+  rounding: 1,
+};
+
+const jsonAutoWithNullValue = JSON.parse(JSON.stringify(jsonAuto));
+jsonAutoWithNullValue.items.push({
+  color: '#222222',
+  shape: 'square',
+  boundaries: {
+    lower: {
+      value: null,
+      included: false,
+    },
+    upper: {
+      value: null,
+      included: false,
+    },
+  },
+});
+
 const template = `# Hello World
 
 <square color="red" /> foo<br />
@@ -123,6 +244,23 @@ stories.add(
   knobsOptions,
 );
 
+stories.add(
+  'Auto generated json',
+  () => (
+    <div className="interactive-map">
+      <div className="interactive-map__legends">
+        <Legend
+          {...(boolean('Null value ?', false)
+            ? jsonAutoWithNullValue
+            : jsonAuto)}
+          rounding={boolean('Rounding', true) ? jsonAuto.rounding : undefined}
+        />
+      </div>
+    </div>
+  ),
+  knobsOptions,
+);
+
 stories.add('Circles', () => (
   <div className="interactive-map">
     <div className="interactive-map__legends">
@@ -160,53 +298,27 @@ stories.add('Stacked', () => (
     <div className="interactive-map__legends">
       <Legend
         title="foo"
+        stackedCircles
         items={[
           {
-            label: 'quis nostrud',
-            stackedCircles: true,
-            items: [
-              {
-                label: 'exercitation ullamco',
-                color: 'white',
-                shape: 'circle',
-                diameter: 20,
-              },
-              {
-                label: 'laboris nisi ut aliquip',
-                color: 'white',
-                shape: 'circle',
-                diameter: 15,
-              },
-              {
-                label: 'ex ea commodo consequat',
-                color: 'white',
-                shape: 'circle',
-                diameter: 10,
-              },
-            ],
+            label: 'exercitation ullamco',
+            color: 'white',
+            shape: 'circle',
+            diameter: 60,
+          },
+          {
+            label: 'laboris nisi ut aliquip',
+            color: 'white',
+            shape: 'circle',
+            diameter: 20,
+          },
+          {
+            label: 'ex ea commodo consequat',
+            color: 'white',
+            shape: 'circle',
+            diameter: 10,
           },
         ]}
-      />
-      <Legend
-        title="with template"
-        content={`
-### Some squares
-
-<square color="red" /> lorem ipsum<br />
-<square color="green" size="16" /> dolor sit amet<br />
-<square color="yellow" size="20" /> consectetur adipiscing elit<br />
-
-### Some circles
-
-<circle color="red" /> lorem ipsum<br />
-<circle color="green" size="16" /> dolor sit amet<br />
-<circle color="yellow" size="20" /> consectetur adipiscing elit<br />
-
-<a href="the/link">lienB</a>
-`}
-        history={{
-          push: action('push to'),
-        }}
       />
     </div>
   </div>
