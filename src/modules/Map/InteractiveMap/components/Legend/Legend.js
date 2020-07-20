@@ -47,6 +47,9 @@ const computeLabel = (
     // Only one value
     return parseFloat(lower.toFixed(rounding)).toLocaleString();
   }
+  if (lower === null && upper === null) {
+    return translate('terralego.legend.labelNoValue');
+  }
   // No value
   return translate('terralego.legend.nolabel');
 };
@@ -214,6 +217,7 @@ Legend.defaultProps = {
   stackedCircles: false,
   translate: translateMock({
     'terralego.legend.nolabel': 'No label',
+    'terralego.legend.labelNoValue': 'Value not available',
     'terralego.legend.label': 'From {{lower}} to {{upper}}',
     'terralego.legend.labelFirst': 'More than {{lower}}',
     'terralego.legend.labelLast': 'Less than {{upper}}',
