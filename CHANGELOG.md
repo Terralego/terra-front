@@ -1,4 +1,13 @@
 
+1.23.0 / 2020-07-20
+===================
+
+  * Add generic label for no value legend
+  * Change boundaries label
+  * Refacto component story class to functional
+  * Bump websocket-extensions from 0.1.3 to 0.1.4
+  * Bump lodash from 4.17.15 to 4.17.19
+
 1.22.6 / 2020-07-15
 ===================
 
