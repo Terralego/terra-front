@@ -514,13 +514,16 @@ export class InteractiveMap extends React.Component {
       Object.keys(targetType()).forEach(highlightType => {
         const highlightTypeId = getHighlightLayerId(layerId, highlightType);
         if (!map.getLayer(highlightTypeId)) {
-          map.addLayer({
+          const highlightLayer = {
             id: highlightTypeId,
             source,
             type: highlightType,
-            'source-layer': sourceLayer,
             paint: targetType()[highlightType],
-          });
+          };
+          if (sourceLayer) {
+            highlightLayer['source-layer'] = sourceLayer;
+          }
+          map.addLayer(highlightLayer);
         }
         map.setFilter(highlightTypeId, ['in', propertyId, ...ids]);
       });
