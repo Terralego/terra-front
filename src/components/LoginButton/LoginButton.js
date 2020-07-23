@@ -20,6 +20,7 @@ export const LoginButton = ({
   isPhoneSized,
   logoutAction,
   translate,
+  allowUserRegistration,
   ...props
 }) => {
   const [isOpen, setIsOpen] = useState(false);
@@ -75,19 +76,22 @@ export const LoginButton = ({
                 />
               )}
             />
-            <Tab
-              id="signup"
-              title={translate('auth.signupform.title')}
-              panel={hasCreated
-                ? <p>{translate('auth.signupform.done')}</p>
-                : (
-                  <SignupForm
-                    translate={translate}
-                    showPassword={false}
-                    onCreate={() => setHasCreated(true)}
-                  />
-                )}
-            />
+            {allowUserRegistration &&
+              (
+                <Tab
+                  id="signup"
+                  title={translate('auth.signupform.title')}
+                  panel={hasCreated
+                    ? <p>{translate('auth.signupform.done')}</p>
+                    : (
+                      <SignupForm
+                        translate={translate}
+                        showPassword={false}
+                        onCreate={() => setHasCreated(true)}
+                      />
+                    )}
+                />
+              )}
           </Tabs>
           )}
           {wantLogout && (
