@@ -521,7 +521,7 @@ export class InteractiveMap extends React.Component {
             paint: targetType()[highlightType],
           };
           if (sourceLayer) {
-            highlightLayer['soure-layer'] = sourceLayer;
+            highlightLayer['source-layer'] = sourceLayer;
           }
           map.addLayer(highlightLayer);
         }
