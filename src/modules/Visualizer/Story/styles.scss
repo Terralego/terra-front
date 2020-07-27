@@ -3,14 +3,17 @@
 .storytelling {
   display: flex;
   flex-direction: column;
-  min-height: calc(100vh - 140px);
-  padding: 0 .75rem;
-  padding-bottom: 1rem;
+  height: 100%;
+
   &__content {
-    flex: 1;
+    height: 100%;
+    flex: 1 1 auto;
+    padding: 0 .75rem;
+    overflow: auto;
   }
   &__buttons {
     display: flex;
+    margin: 1rem .75rem;
     font-size: 2rem;
     height: 1.3em;
     justify-content: center;
