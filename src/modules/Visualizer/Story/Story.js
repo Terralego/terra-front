@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useCallback } from 'react';
+import React, { useState, useEffect, useCallback, useMemo } from 'react';
 import PropTypes from 'prop-types';
 import classnames from 'classnames';
 import { Button, Intent } from '@blueprintjs/core';
@@ -26,22 +26,28 @@ export const Story = ({ map, story: { beforeEach = [], slides }, setLegends, tra
 
   const slideCount = slides.length - 1;
 
+  const { layouts = [], legends } = useMemo(() => slides[step], [slides, step]);
+
   useEffect(() => {
     if (!map) return;
-    const { layouts = [], legends } = slides[step];
     beforeEach.forEach(resetLayers(map));
     layouts.forEach(toggleLayers(map));
+  }, [map, beforeEach, layouts]);
+
+  useEffect(() => {
     setLegends(legends);
-  }, [map, beforeEach, setLegends, slides, step]);
+  }, [legends, setLegends]);
 
   const previousStep = () => {
     setStep(prevStep => prevStep - 1);
   };
 
   const nextStep = useCallback(() => {
-    setStep(prevStep => (prevStep === slideCount
-      ? 0
-      : prevStep + 1));
+    setStep(prevStep => (
+      prevStep === slideCount
+        ? 0
+        : prevStep + 1
+    ));
   }, [slideCount]);
 
   const { title, content } = slides[step];
@@ -112,11 +118,13 @@ Story.propTypes = {
       })),
     })),
   }).isRequired,
+  setLegends: PropTypes.func,
   translate: PropTypes.func,
 };
 
 Story.defaultProps = {
   map: undefined,
+  setLegends: () => {},
   translate: translateMock({
     'visualizer.story.start': 'Start',
     'visualizer.story.next': 'Next',
