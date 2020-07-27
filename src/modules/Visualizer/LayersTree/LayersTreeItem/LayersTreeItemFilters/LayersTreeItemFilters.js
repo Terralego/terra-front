@@ -5,6 +5,16 @@ import translateMock from '../../../../../utils/translate';
 
 import './styles.scss';
 
+function getLabelFromType (label, type, translate) {
+  if (!label) {
+    return null;
+  }
+  if (type !== 'boolean') {
+    return translate('terralego.visualizer.layerstree.itemFilters.label', { label });
+  }
+  return label;
+}
+
 export function getValueFromType (value, type, translate) {
   const isDate = val => val instanceof Date;
   const nameSpace = 'terralego.visualizer.layerstree.itemFilters';
@@ -89,7 +99,7 @@ const LayersTreeItemFilters = ({
                 },
               })}
           >
-            {label && translate('terralego.visualizer.layerstree.itemFilters.label', { label })}
+            {getLabelFromType(label, type, translate)}
             {getValueFromType(value, type, translate)}
           </Tag>
         )
