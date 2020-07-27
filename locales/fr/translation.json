@@ -185,8 +185,10 @@
         "itemFilters": {
           "date": "le {{value}}",
           "label": "{{label}} : ",
-          "range" : {
+          "range": {
             "date": "Entre le {{from}} et le {{to}}",
+            "dateEnding": "Terminant le {{from}}",
+            "dateStarting": "Commençant le {{from}}",
             "numeric": "Entre {{from}} et {{to}}"
           }
         },

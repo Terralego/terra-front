@@ -5,38 +5,45 @@ import translateMock from '../../../../../utils/translate';
 
 import './styles.scss';
 
-function getLiteralValue (value) {
-  if (value instanceof Date) {
-    return value.toLocaleDateString();
-  }
-  return value;
-}
-
 export function getValueFromType (value, type, translate) {
+  const isDate = val => val instanceof Date;
+  const nameSpace = 'terralego.visualizer.layerstree.itemFilters';
+
   if (type === 'boolean') {
     return null;
-  }
-
-  if (type === 'range') {
-    const [from, to] = value;
-    if (from instanceof Date || to instanceof Date) {
-      if (!from || !to) {
-        return translate('terralego.visualizer.layerstree.itemFilters.date', { value: getLiteralValue(from) });
-      }
-      return translate('terralego.visualizer.layerstree.itemFilters.range.date', { from: getLiteralValue(from), to: getLiteralValue(to) });
-    }
-    return translate('terralego.visualizer.layerstree.itemFilters.range.numeric', { from, to });
-  }
-
-  if (value instanceof Date) {
-    return translate('terralego.visualizer.layerstree.itemFilters.date', { value: getLiteralValue(value) });
   }
 
   if (type === 'many') {
     return value.join(', ');
   }
 
-  return value;
+  if (isDate(value)) {
+    return translate(`${nameSpace}.date`, { value: value.toLocaleDateString() });
+  }
+
+  if (type !== 'range') {
+    return value;
+  }
+
+  const [from, to] = value;
+
+  if (from === null && to === null) {
+    return null;
+  }
+
+  if (!isDate(from) && !isDate(to)) {
+    return translate(`${nameSpace}.range.numeric`, { from, to });
+  }
+
+  if (from && to) {
+    return translate(`${nameSpace}.range.date`, { from: from.toLocaleDateString(), to: to.toLocaleDateString() });
+  }
+
+  if (!from) {
+    return translate(`${nameSpace}.range.dateEnding`, { to: to.toLocaleDateString() });
+  }
+
+  return translate(`${nameSpace}.range.dateStarting`, { from: from.toLocaleDateString() });
 }
 
 const LayersTreeItemFilters = ({
@@ -55,14 +62,21 @@ const LayersTreeItemFilters = ({
     })),
   [filtersValues, form]);
 
-  if (!properties.some(({ value }) => value)) {
+  const propertiesHasValue = useMemo(() => (
+    properties.some(({ value }) => (
+      Array.isArray(value) ? value.some(rangeItem => rangeItem) : value
+    ))
+  ),
+  [properties]);
+
+  if (!propertiesHasValue) {
     return null;
   }
 
   return (
     <div className="layersTreeItemFilter">
       {properties.map(({ property, value, type, label }) => (
-        (value && value.length > 0) && (
+        value && (
           <Tag
             key={property}
             className="layersTreeItemFilter__tag"
@@ -129,6 +143,8 @@ LayersTreeItemFilters.defaultProps = {
     'terralego.visualizer.layerstree.itemFilters.date': '{{value}}',
     'terralego.visualizer.layerstree.itemFilters.label': '{{label}}: ',
     'terralego.visualizer.layerstree.itemFilters.range.date': 'Starting from {{from}} to {{to}}',
+    'terralego.visualizer.layerstree.itemFilters.range.dateStarting': 'Starting from {{from}}',
+    'terralego.visualizer.layerstree.itemFilters.range.dateEnding': 'Ending by {{to}}',
     'terralego.visualizer.layerstree.itemFilters.range.numeric': 'Between {{from}} and {{to}}',
   }),
 };
