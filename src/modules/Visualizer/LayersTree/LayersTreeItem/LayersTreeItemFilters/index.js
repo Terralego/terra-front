@@ -2,7 +2,7 @@ import LayersTreeItemFilters from './LayersTreeItemFilters';
 import { connectLayersTree } from '../../LayersTreeProvider/context';
 
 export default connectLayersTree(({
-  getLayerState, setLayerState,
+  getLayerState, setLayerState, translate,
 }, {
   layer, layer: { exclusive, layers },
 }) => {
@@ -14,5 +14,6 @@ export default connectLayersTree(({
     filtersValues: getLayerState({ layer: activeLayer }).filters || {},
     setLayerState,
     activeLayer,
+    translate,
   };
 })(LayersTreeItemFilters);
