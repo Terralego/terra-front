@@ -1,4 +1,9 @@
 
+1.23.2 / 2020-07-28
+===================
+
+  * Provide `translate` prop to LayersTreeItemFilters by connectLayersTree
+
 1.23.1 / 2020-07-28
 ===================
 
