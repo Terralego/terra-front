@@ -1,4 +1,15 @@
 
+1.23.1 / 2020-07-28
+===================
+
+  * Display correctly label for boolean type
+  * Improve Date Range filter display
+  * Manage i18n for LayersTreeItemFilters component
+  * Memoize some properties to LayersTreeItemFilters
+  * Improve style for Story component
+  * Make user registration activated by settings
+  * SourceLayer is not mandatory for highlight
+
 1.23.0 / 2020-07-20
 ===================
 
