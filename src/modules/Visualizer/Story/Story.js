@@ -57,12 +57,12 @@ export const Story = ({ map, story: { beforeEach = [], slides }, setLegends, tra
 
   const getNextLabel = () => {
     if (step === 0) {
-      return translate('visualizer.story.start');
+      return translate('terralego.visualizer.story.start');
     }
     if (step === slideCount) {
-      return translate('visualizer.story.restart');
+      return translate('terralego.visualizer.story.restart');
     }
-    return translate('visualizer.story.next');
+    return translate('terralego.visualizer.story.next');
   };
 
   return (
@@ -77,7 +77,7 @@ export const Story = ({ map, story: { beforeEach = [], slides }, setLegends, tra
       {displayButtons && (
         <div className={classnames('storytelling__buttons', { 'storytelling__buttons--justified': displayPrevButton })}>
           {displayPrevButton && (
-            <Button icon="chevron-left" onClick={previousStep} large>{ translate('visualizer.story.previous') }</Button>
+            <Button icon="chevron-left" onClick={previousStep} large>{ translate('terralego.visualizer.story.previous') }</Button>
           )}
 
           <Button
@@ -126,10 +126,10 @@ Story.defaultProps = {
   map: undefined,
   setLegends: () => {},
   translate: translateMock({
-    'visualizer.story.start': 'Start',
-    'visualizer.story.next': 'Next',
-    'visualizer.story.previous': 'Previous',
-    'visualizer.story.restart': 'Restart',
+    'terralego.visualizer.story.start': 'Start',
+    'terralego.visualizer.story.next': 'Next',
+    'terralego.visualizer.story.previous': 'Previous',
+    'terralego.visualizer.story.restart': 'Restart',
   }),
 };
 
