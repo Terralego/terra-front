@@ -12,15 +12,14 @@ exports[`should render correctly with http link 1`] = `
 `;
 
 exports[`should render correctly with navigation 1`] = `
-<a
+<button
   className="header-link"
-  exact={false}
   to="foo"
 >
   <span>
     Bar
   </span>
-</a>
+</button>
 `;
 
 exports[`should render correctly with no href 1`] = `

@@ -7,16 +7,11 @@ import HeaderButton from './HeaderButton';
 export const NavBarItemTablet = ({
   id,
   label,
-  href,
-  onClick,
   icon,
   ...props
 }) => (
   <HeaderLink
-    href={href}
-    onClick={onClick}
     data-link-id={id}
-    exact
     {...props}
   >
     <p className="header-button-label">{label}</p>

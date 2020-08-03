@@ -1,34 +1,46 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import { NavLink } from 'react-router-dom';
 import classnames from 'classnames';
 
-export const HeaderLink = ({ children, className, exact, href, ...props }) => {
-  const classes = classnames(['header-link', className]);
+export const HeaderLink = ({ className, href, link, ...props }) => {
+  const {
+    component: Component,
+    linkProps: { hrefAttribute, ...linkProps },
+  } = link || {
+    component: href ? 'a' : 'span',
+    linkProps: { hrefAttribute: 'href' },
+  };
 
-  if (!href) {
-    return <span className={classes} {...props}>{children}</span>;
-  }
-
-  if (href.startsWith('http')) {
-    return <a className={classes} href={href} {...props}>{children}</a>;
-  }
+  const hrefProp = href && {
+    [hrefAttribute]: href,
+  };
 
   return (
-    <NavLink className={classes} to={href} exact={exact} {...props}>{children}</NavLink>
+    <Component
+      className={classnames(['header-link', className])}
+      {...hrefProp}
+      {...linkProps}
+      {...props}
+    />
   );
 };
 
 HeaderLink.propTypes = {
-  children: PropTypes.node.isRequired,
+  children: PropTypes.element.isRequired,
   className: PropTypes.string,
-  exact: PropTypes.bool,
   href: PropTypes.string,
+  link: PropTypes.shape({
+    component: PropTypes.oneOfType([PropTypes.func, PropTypes.string]),
+    linkProps: PropTypes.shape({
+      hrefAttribute: PropTypes.string,
+    }),
+  }),
 };
 
 HeaderLink.defaultProps = {
   className: '',
-  exact: false,
   href: '',
+  link: undefined,
 };
+
 export default HeaderLink;

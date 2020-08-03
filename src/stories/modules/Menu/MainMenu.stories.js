@@ -9,15 +9,30 @@ import './styles.scss';
 
 // eslint-disable-next-line no-alert
 const handleClick = () => alert('it works');
+const Link = props => <div title="MOCK CUSTOM LINK" {...props} />;
 
 const stories = storiesOf('Components/Menu', module);
 stories
   .add('MainMenu | default', () => (
     <MainMenu
       navItems={[[
-        { label: 'log in', icon: login, id: 'login' },
+        {
+          label: 'log in',
+          icon: login,
+          id: 'login',
+          href: 'path/to/login',
+        },
         { label: 'log out', icon: 'log-out', id: 'logout' },
-        { label: 'info sign', icon: <Icon icon="info-sign" />, id: 'infosign' },
+        {
+          label: 'info sign',
+          icon: <Icon icon="info-sign" />,
+          id: 'infosign',
+          href: 'path/test',
+          link: {
+            component: Link,
+            linkProps: { hrefAttribute: 'to' },
+          },
+        },
         { label: 'Close', id: 'close' },
       ]]}
     />

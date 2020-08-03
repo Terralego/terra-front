@@ -13,8 +13,6 @@ export const NavBarItemDesktop = ({
   id,
   content,
   label,
-  href,
-  onClick,
   icon,
   ...props
 }) => (
@@ -24,10 +22,7 @@ export const NavBarItemDesktop = ({
     usePortal={false}
   >
     <HeaderLink
-      href={href}
-      onClick={onClick}
       data-link-id={id}
-      exact
       {...props}
     >
       <HeaderButton
