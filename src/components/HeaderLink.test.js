@@ -2,9 +2,6 @@ import React from 'react';
 import renderer from 'react-test-renderer';
 import { HeaderLink } from './HeaderLink';
 
-jest.mock('react-router-dom', () => ({
-  NavLink: ({ children, ...props }) => <a {...props}>{children}</a>,
-}));
 
 it('should render correctly with no href', () => {
   const tree = renderer.create(
@@ -27,7 +24,7 @@ it('should render correctly with http link', () => {
 
 it('should render correctly with navigation', () => {
   const tree = renderer.create(
-    <HeaderLink href="foo">
+    <HeaderLink href="foo" link={{ component: 'button', linkProps: { hrefAttribute: 'to' } }}>
       <span>Bar</span>
     </HeaderLink>,
   ).toJSON();
