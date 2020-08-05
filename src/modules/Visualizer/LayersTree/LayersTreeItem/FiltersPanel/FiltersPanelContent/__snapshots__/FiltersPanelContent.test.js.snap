@@ -231,7 +231,8 @@ Array [
                 onChange={[Function]}
                 style={
                   Object {
-                    "paddingRight": 10,
+                    "paddingLeft": undefined,
+                    "paddingRight": undefined,
                   }
                 }
                 type="text"

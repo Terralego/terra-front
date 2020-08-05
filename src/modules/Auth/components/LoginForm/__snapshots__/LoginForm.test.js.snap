@@ -36,7 +36,8 @@ exports[`should render correctly 1`] = `
             placeholder="Email"
             style={
               Object {
-                "paddingRight": 10,
+                "paddingLeft": undefined,
+                "paddingRight": undefined,
               }
             }
             type="email"
@@ -78,7 +79,8 @@ exports[`should render correctly 1`] = `
             placeholder="Password"
             style={
               Object {
-                "paddingRight": 10,
+                "paddingLeft": undefined,
+                "paddingRight": undefined,
               }
             }
             type="password"
@@ -143,7 +145,8 @@ exports[`should render with errors 1`] = `
             placeholder="Email"
             style={
               Object {
-                "paddingRight": 10,
+                "paddingLeft": undefined,
+                "paddingRight": undefined,
               }
             }
             type="email"
@@ -185,7 +188,8 @@ exports[`should render with errors 1`] = `
             placeholder="Password"
             style={
               Object {
-                "paddingRight": 10,
+                "paddingLeft": undefined,
+                "paddingRight": undefined,
               }
             }
             type="password"

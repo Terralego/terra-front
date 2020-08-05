@@ -34,7 +34,8 @@ Array [
               placeholder="Email"
               style={
                 Object {
-                  "paddingRight": 10,
+                  "paddingLeft": undefined,
+                  "paddingRight": undefined,
                 }
               }
               type="email"
@@ -75,7 +76,8 @@ Array [
               placeholder="Password"
               style={
                 Object {
-                  "paddingRight": 10,
+                  "paddingLeft": undefined,
+                  "paddingRight": undefined,
                 }
               }
               type="password"
@@ -158,7 +160,8 @@ Array [
               placeholder="Email"
               style={
                 Object {
-                  "paddingRight": 10,
+                  "paddingLeft": undefined,
+                  "paddingRight": undefined,
                 }
               }
               type="email"
@@ -199,7 +202,8 @@ Array [
               placeholder="Password"
               style={
                 Object {
-                  "paddingRight": 10,
+                  "paddingLeft": undefined,
+                  "paddingRight": undefined,
                 }
               }
               type="password"

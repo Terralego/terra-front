@@ -11,7 +11,8 @@ exports[`should render 1`] = `
       className="bp3-input"
       style={
         Object {
-          "paddingRight": 10,
+          "paddingLeft": undefined,
+          "paddingRight": undefined,
         }
       }
       type="text"
@@ -20,7 +21,7 @@ exports[`should render 1`] = `
       className="bp3-input-action"
     >
       <button
-        className="bp3-button"
+        className="bp3-button bp3-minimal"
         onKeyDown={[Function]}
         onKeyUp={[Function]}
         type="button"
