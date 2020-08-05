@@ -10,6 +10,13 @@
   }
 }
 
+// Avoid .mapboxgl-ctrl-group to override .bp3-button
+.mapboxgl-ctrl-group .bp3-button {
+  display: inline-flex;
+  width: auto;
+  height: auto;
+}
+
 // Taken from .mapboxgl-ctrl-group > button
 .mapboxgl-ctrl-icon {
   width: 30px;
