@@ -17,7 +17,8 @@ exports[`should render correctly 1`] = `
       onChange={[Function]}
       style={
         Object {
-          "paddingRight": 10,
+          "paddingLeft": undefined,
+          "paddingRight": undefined,
         }
       }
       type="text"

@@ -57,7 +57,8 @@ Array [
           onKeyDown={[Function]}
           style={
             Object {
-              "paddingRight": 10,
+              "paddingLeft": undefined,
+              "paddingRight": undefined,
             }
           }
           type="text"
@@ -67,7 +68,7 @@ Array [
           className="bp3-input-action"
         >
           <button
-            className="bp3-button"
+            className="bp3-button bp3-minimal"
             onClick={[Function]}
             onKeyDown={[Function]}
             onKeyUp={[Function]}

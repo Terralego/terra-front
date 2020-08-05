@@ -28,7 +28,8 @@ exports[`should render correctly 1`] = `
           readOnly={true}
           style={
             Object {
-              "paddingRight": 10,
+              "paddingLeft": undefined,
+              "paddingRight": undefined,
             }
           }
           type="text"
@@ -155,7 +156,8 @@ exports[`should render correctly 1`] = `
           readOnly={true}
           style={
             Object {
-              "paddingRight": 10,
+              "paddingLeft": undefined,
+              "paddingRight": undefined,
             }
           }
           type="text"
