@@ -17,8 +17,8 @@ export const SearchInput = ({
       value={query}
       rightElement={(
         <Button
-          type="button"
           icon="small-cross"
+          minimal
           loading={loading}
           onClick={onClose}
         />
