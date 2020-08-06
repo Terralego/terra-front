@@ -14,7 +14,6 @@
   background: #fff;
   margin: 0;
   opacity: 0;
-  padding: 0 2em;
 
   &--hidden {
     display: none;
@@ -26,9 +25,6 @@
     box-shadow: 0 0 10px rgba(0,0,0,.2);
   }
 
-  &--withCarousel {
-    padding: 0;
-  }
 
   &__close-button {
     position: absolute;
@@ -55,9 +51,14 @@
   }
 
   &__content {
-    padding: .5rem 0;
+    padding: .5rem 2rem;
     flex: auto;
     min-width: 0;
+  }
+
+  &--withCarousel &__content {
+    padding-right: 0;
+    padding-left: 0;
   }
 
   &__button {
