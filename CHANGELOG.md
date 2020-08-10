@@ -1,4 +1,11 @@
 
+1.23.4 / 2020-08-10
+===================
+
+  * Fix scrollbar appearing in middle of Details
+  * Improve CSS for SearchControl
+  * Upgrade @blueprint/core package to 3.30.1
+
 1.23.3 / 2020-07-29
 ===================
 
