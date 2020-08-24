@@ -32,7 +32,7 @@ exports[`should render a manual legend 1`] = `
           <rect
             fill="red"
             height={10}
-            stroke="#444444"
+            stroke="red"
             strokeWidth={1}
             width={10}
             x="0"
@@ -53,7 +53,7 @@ exports[`should render a manual legend 1`] = `
           <rect
             fill="green"
             height={10}
-            stroke="#444444"
+            stroke="green"
             strokeWidth={1}
             width={10}
             x="0"
@@ -222,7 +222,7 @@ exports[`should render correctly circle 1`] = `
               cy={9}
               fill="blue"
               r={8}
-              stroke="#111111"
+              stroke="lightblue"
               strokeWidth={1}
             />
           </svg>
@@ -274,7 +274,7 @@ exports[`should render correctly square 1`] = `
             <rect
               fill="red"
               height={16}
-              stroke="#444444"
+              stroke="red"
               strokeWidth={1}
               width={16}
               x="0"
@@ -311,7 +311,7 @@ exports[`should render correctly square 1`] = `
             <rect
               fill="green"
               height={16}
-              stroke="#444444"
+              stroke="green"
               strokeWidth={1}
               width={16}
               x="0"
@@ -348,7 +348,7 @@ exports[`should render correctly square 1`] = `
             <rect
               fill="blue"
               height={16}
-              stroke="#444444"
+              stroke="lightblue"
               strokeWidth={1}
               width={16}
               x="0"
@@ -482,7 +482,7 @@ exports[`should render correctly stacked circles 1`] = `
               cy={9}
               fill="blue"
               r={8}
-              stroke="#111111"
+              stroke="lightblue"
               strokeWidth={1}
             />
           </svg>
@@ -534,7 +534,7 @@ exports[`should render correctly with multi level 1`] = `
             <rect
               fill="red"
               height={16}
-              stroke="#444444"
+              stroke="red"
               strokeWidth={1}
               width={16}
               x="0"
@@ -571,7 +571,7 @@ exports[`should render correctly with multi level 1`] = `
             <rect
               fill="blue"
               height={16}
-              stroke="#444444"
+              stroke="blue"
               strokeWidth={1}
               width={16}
               x="0"
@@ -630,7 +630,7 @@ exports[`should render correctly with multi level 1`] = `
                 <rect
                   fill="red"
                   height={16}
-                  stroke="#444444"
+                  stroke="red"
                   strokeWidth={1}
                   width={16}
                   x="0"
@@ -667,7 +667,7 @@ exports[`should render correctly with multi level 1`] = `
                 <rect
                   fill="blue"
                   height={16}
-                  stroke="#444444"
+                  stroke="blue"
                   strokeWidth={1}
                   width={16}
                   x="0"
@@ -717,7 +717,7 @@ exports[`should render correctly with multi level 1`] = `
                     <rect
                       fill="red"
                       height={16}
-                      stroke="#444444"
+                      stroke="red"
                       strokeWidth={1}
                       width={16}
                       x="0"
@@ -754,7 +754,7 @@ exports[`should render correctly with multi level 1`] = `
                     <rect
                       fill="blue"
                       height={16}
-                      stroke="#444444"
+                      stroke="blue"
                       strokeWidth={1}
                       width={16}
                       x="0"
@@ -804,7 +804,7 @@ exports[`should render correctly with multi level 1`] = `
                         <rect
                           fill="red"
                           height={16}
-                          stroke="#444444"
+                          stroke="red"
                           strokeWidth={1}
                           width={16}
                           x="0"
@@ -841,7 +841,7 @@ exports[`should render correctly with multi level 1`] = `
                         <rect
                           fill="blue"
                           height={16}
-                          stroke="#444444"
+                          stroke="blue"
                           strokeWidth={1}
                           width={16}
                           x="0"

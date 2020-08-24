@@ -15,6 +15,7 @@ describe('should render correctly', () => {
   }, {
     label: 'Bleu',
     color: 'blue',
+    strokeColor: 'lightblue',
     shape,
   }]);
   it('square', () => {

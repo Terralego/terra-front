@@ -1,6 +1,7 @@
 import React from 'react';
+import PropTypes from 'prop-types';
 
-export const Rect = ({ color, size = 16, strokeColor = '#444444', strokeWidth = 1 }) => (
+export const Rect = ({ color, size, strokeColor = color, strokeWidth }) => !!color && (
   <div className="tf-legend__symbol">
     <svg
       viewBox={`0 0 ${size} ${size}`}
@@ -19,5 +20,19 @@ export const Rect = ({ color, size = 16, strokeColor = '#444444', strokeWidth = 
     </svg>
   </div>
 );
+
+Rect.propTypes = {
+  color: PropTypes.string,
+  size: PropTypes.number,
+  strokeColor: PropTypes.string,
+  strokeWidth: PropTypes.number,
+};
+
+Rect.defaultProps = {
+  color: null,
+  size: 16,
+  strokeColor: undefined,
+  strokeWidth: 1,
+};
 
 export default Rect;
