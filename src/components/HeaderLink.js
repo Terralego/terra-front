@@ -30,7 +30,7 @@ HeaderLink.propTypes = {
   className: PropTypes.string,
   href: PropTypes.string,
   link: PropTypes.shape({
-    component: PropTypes.oneOfType([PropTypes.func, PropTypes.string]),
+    component: PropTypes.oneOfType([PropTypes.func, PropTypes.elementType, PropTypes.string]),
     linkProps: PropTypes.shape({
       hrefAttribute: PropTypes.string,
     }),
