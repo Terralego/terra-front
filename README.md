@@ -70,12 +70,17 @@ Every component should be configurable by passing replacement props from TerraFr
 
 ```sh
 <terrafront/dir> $ npm ci
-<terrafront/dir> $ npm build-local
+<terrafront/dir> $ npm run build-local
 <terrafront/dir> $ npm link # To link globally
 <terrafront/dir> $ npm run watch:babel # To start autobuilding
 
 # Switch to other project dir
 <otherproject/dir> $ npm link <terrafront/dir>/dist
+
+# Come back to terrafront/dir inside dist
+<terrafront/dir>/dist $ npm run link <otherproject/dir>/node_modules/react
+<terrafront/dir>/dist $ npm run link <otherproject/dir>/node_modules/react-router
+
 ```
 
 ## Common errors
