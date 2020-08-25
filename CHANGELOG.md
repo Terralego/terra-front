@@ -1,4 +1,10 @@
 
+1.23.5 / 2020-08-25
+===================
+
+  * Square legend get color as colorStroke defaultvalue
+  * Keep details close button above all elements
+
 1.23.4 / 2020-08-10
 ===================
 
