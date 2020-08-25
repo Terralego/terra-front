@@ -1,3 +1,8 @@
+1.24.0 / 2020-08-25
+===================
+
+  * Remove `react-router-dom` dependencies from the project
+  * Add `link` prop to MainMenu to manage routing pages
 
 1.23.5 / 2020-08-25
 ===================
