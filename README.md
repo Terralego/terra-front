@@ -78,8 +78,8 @@ Every component should be configurable by passing replacement props from TerraFr
 <otherproject/dir> $ npm link <terrafront/dir>/dist
 
 # Come back to terrafront/dir inside dist
-<terrafront/dir>/dist $ npm run link <otherproject/dir>/node_modules/react
-<terrafront/dir>/dist $ npm run link <otherproject/dir>/node_modules/react-router
+<terrafront/dir>/dist $ npm link <otherproject/dir>/node_modules/react
+<terrafront/dir>/dist $ npm link <otherproject/dir>/node_modules/react-router
 
 ```
 
@@ -95,4 +95,3 @@ In this case stop all running server or watcher and execute :
 <terrafront/dir> $ cd dist
 <terrafront/dir> $ npm link ../../<otherproject/dir>/node_modules/react/
 ```
-
