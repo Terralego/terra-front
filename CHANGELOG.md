@@ -1,3 +1,9 @@
+
+1.24.1 / 2020-08-26
+===================
+
+  * Define better propTypes for HeaderLink's component.link prop
+
 1.24.0 / 2020-08-25
 ===================
 
