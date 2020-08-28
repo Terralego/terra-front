@@ -494,7 +494,7 @@ export class InteractiveMap extends React.Component {
 
         const circle = {
           'circle-color': layerColor,
-          'circle-radius': type === 'circle' && map.getPaintProperty(layerId, 'circle-radius'),
+          'circle-radius': (type === 'circle' && map.getPaintProperty(layerId, 'circle-radius')) || 5,
           'circle-stroke-width': 2,
           'circle-opacity': 0.4,
           'circle-stroke-color': layerColor,
