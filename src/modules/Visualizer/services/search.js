@@ -134,10 +134,10 @@ export const buildQuery = ({
       bodyBuild[sourceAttr] = false;
     } else {
       if (include) {
-        bodyBuild[sourceAttr].include = include;
+        bodyBuild[sourceAttr].includes = include;
       }
       if (exclude) {
-        bodyBuild[sourceAttr].exclude = exclude;
+        bodyBuild[sourceAttr].excludes = exclude;
       }
     }
   }
