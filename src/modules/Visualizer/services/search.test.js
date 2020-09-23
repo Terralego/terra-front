@@ -95,7 +95,7 @@ it('should build query', () => {
     include: ['foo', 'bar'],
   })).toEqual({
     _source: {
-      include: ['foo', 'bar'],
+      includes: ['foo', 'bar'],
     },
     query: {
       bool: {
@@ -231,7 +231,7 @@ it('should build query with include', () => {
   })).toEqual({
     size: 42,
     _source: {
-      include: ['foo'],
+      includes: ['foo'],
     },
   });
 
@@ -251,7 +251,7 @@ it('should build query with exclude', () => {
   })).toEqual({
     size: 42,
     _source: {
-      exclude: ['foo'],
+      excludes: ['foo'],
     },
   });
 });
@@ -264,8 +264,8 @@ it('should build query with include and exclude', () => {
   })).toEqual({
     size: 42,
     _source: {
-      include: ['foo'],
-      exclude: ['bar'],
+      includes: ['foo'],
+      excludes: ['bar'],
     },
   });
 });
