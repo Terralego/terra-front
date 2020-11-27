@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useCallback, useMemo } from 'react';
 import PropTypes from 'prop-types';
 import { Button, Checkbox, Popover, Position, Intent } from '@blueprintjs/core';
 
@@ -12,17 +12,17 @@ const getToggleState = columns =>
     return +display;
   }, undefined);
 
-const toggleAll = ({ onChange, columns }) => ({ target: { checked } }) => {
-  columns.forEach(({ display }, index) => {
-    if (display === checked) return;
-    onChange({ event: { target: { checked } }, index });
-  });
-};
-
-export const ColumnsSelector = ({
+export const ColumnsSelector = React.memo(({
   columns, onChange, icon, position, intent, locales: { displayAllColumns, hideAllColumns } = {},
 }) => {
-  const toggleState = getToggleState(columns);
+  const toggleState = useMemo(() => getToggleState(columns), [columns]);
+
+  const toggleAll = useCallback(({ target: { checked } }) => {
+    columns.forEach(({ display }, index) => {
+      if (display === checked) return;
+      onChange({ event: { target: { checked } }, index });
+    });
+  }, [columns, onChange]);
 
   return (
     <Popover
@@ -37,7 +37,7 @@ export const ColumnsSelector = ({
       <div className="table-columns-selector__options">
         <Checkbox
           className="table-columns-selector__toggle-all"
-          onChange={toggleAll({ onChange, columns })}
+          onChange={toggleAll}
           key="toggle-all"
           label={toggleState ? hideAllColumns : displayAllColumns}
           checked={toggleState > 0}
@@ -55,7 +55,7 @@ export const ColumnsSelector = ({
       </div>
     </Popover>
   );
-};
+});
 
 ColumnsSelector.propTypes = {
   columns: PropTypes.arrayOf(PropTypes.object).isRequired,
