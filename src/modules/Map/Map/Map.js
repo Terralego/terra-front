@@ -15,6 +15,7 @@ import PrintControl from './components/PrintControl';
 import HomeControl from './components/HomeControl';
 import ShareControl from './components/ShareControl';
 import ReportControl from './components/ReportControl';
+import PathControl from './components/PathControl';
 
 import translateMock from '../../../utils/translate';
 
@@ -31,6 +32,7 @@ export const CONTROL_SCALE = 'ScaleControl';
 export const CONTROL_SEARCH = 'SearchControl';
 export const CONTROL_CAPTURE = 'CaptureControl';
 export const CONTROL_DRAW = 'DrawControl';
+export const CONTROL_PATH = 'PathControl';
 export const CONTROL_PRINT = 'PrintControl';
 export const CONTROL_HOME = 'HomeControl';
 export const CONTROL_SHARE = 'ShareControl';
@@ -83,6 +85,7 @@ export class MapComponent extends React.Component {
           CONTROL_SEARCH,
           CONTROL_CAPTURE,
           CONTROL_DRAW,
+          CONTROL_PATH,
           CONTROL_PRINT,
           CONTROL_HOME,
           CONTROL_SHARE,
@@ -460,6 +463,15 @@ export class MapComponent extends React.Component {
         case CONTROL_SHARE: {
           const controlInstance = new ShareControl({
             ...props,
+            map,
+            ...params,
+          });
+          this.controls.push(controlInstance);
+          map.addControl(controlInstance, position);
+          break;
+        }
+        case CONTROL_PATH: {
+          const controlInstance = new PathControl({
             map,
             ...params,
           });
