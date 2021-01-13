@@ -4,6 +4,10 @@ import { DrawControl } from './DrawControl';
 jest.mock('@mapbox/mapbox-gl-draw/dist/mapbox-gl-draw');
 MapboxDraw.modes = {};
 
+MapboxDraw.mockImplementation(() => ({
+  onRemove: jest.fn(),
+}));
+
 describe('Init draw', () => {
   const map = {
     on: jest.fn(),
@@ -23,6 +27,7 @@ describe('Init draw', () => {
   });
 
   it('should init with all actions', () => {
+    // eslint-disable-next-line no-unused-vars
     const controlInstance = new DrawControl({
       map,
       onDrawActionable,
@@ -39,7 +44,6 @@ describe('Init draw', () => {
 
 
     expect(MapboxDraw).toHaveBeenCalledWith({ modes: { foo: 'bar' } });
-    expect(controlInstance).toBeInstanceOf(MapboxDraw);
     expect(map.on).toHaveBeenCalledWith('draw.actionable', onDrawActionable);
     expect(map.on).toHaveBeenCalledWith('draw.combine', onDrawCombine);
     expect(map.on).toHaveBeenCalledWith('draw.create', onDrawCreate);
@@ -52,12 +56,12 @@ describe('Init draw', () => {
   });
 
   it('should init with only `draw.create` action', () => {
+    // eslint-disable-next-line no-unused-vars
     const controlInstance = new DrawControl({
       map,
       onDrawCreate,
     });
 
-    expect(controlInstance).toBeInstanceOf(MapboxDraw);
     expect(map.on).toHaveBeenCalledTimes(1);
     expect(map.on).toHaveBeenCalledWith('draw.create', onDrawCreate);
   });
@@ -84,9 +88,6 @@ describe('Remove event listeners', () => {
   });
 
   it('Should remove one listener', () => {
-    MapboxDraw.mockImplementation(() => ({
-      onRemove: jest.fn(),
-    }));
     const controlInstance = new DrawControl({
       map,
       onDrawCreate,

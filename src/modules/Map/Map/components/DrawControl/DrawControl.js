@@ -55,7 +55,7 @@ export class DrawControl {
     // eslint-disable-next-line no-param-reassign
     map.draw = this.draw;
 
-    const prevOnRemove = this.draw.onRemove;
+    const prevOnRemove = this.draw.onRemove.bind(this.draw);
 
     this.draw.onRemove = () => {
       if (onDrawActionable) {
@@ -86,6 +86,8 @@ export class DrawControl {
         map.off('draw.update', onDrawUpdate);
       }
       prevOnRemove(map);
+      // eslint-disable-next-line no-param-reassign
+      map.draw = undefined;
     };
 
     return this.draw;
