@@ -138,6 +138,9 @@
         "lines": 75,
         "statements": 75
       }
-    }
+    },
+    "transformIgnorePatterns": [
+      "/node_modules/(?!@makina-corpus\/mapbox-gl-path) --env=jsdom"
+    ]
   }
 }
