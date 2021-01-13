@@ -4,11 +4,13 @@ import { storiesOf } from '@storybook/react';
 import { boolean, object } from '@storybook/addon-knobs';
 import { action } from '@storybook/addon-actions';
 import HomeControl from '../../../modules/Map/Map/components/HomeControl';
+import '@makina-corpus/mapbox-gl-path/dist/mapbox-gl-path.css';
 
 import {
   CONTROLS_TOP_RIGHT,
   CONTROLS_TOP_LEFT,
   CONTROL_DRAW,
+  CONTROL_PATH,
   CONTROL_CAPTURE,
   CONTROL_NAVIGATION,
   CONTROL_SEARCH,
@@ -62,10 +64,12 @@ const onChange = event => {
   action(title)(event.type);
 };
 
+const accessToken = 'pk.eyJ1IjoibWFraW5hY29ycHVzIiwiYSI6ImNqY3E4ZTNwcTFta3ozMm80d2xzY29wM2MifQ.Nwl_FHrWAIQ46s_lY0KNiQ';
+
 storiesOf('Map components/InteractiveMap', module).add('Custom controls ', () => (
   <div style={{ width: '100vw', height: '100vh' }}>
     <InteractiveMap
-      accessToken="pk.eyJ1IjoibWFraW5hY29ycHVzIiwiYSI6ImNqY3E4ZTNwcTFta3ozMm80d2xzY29wM2MifQ.Nwl_FHrWAIQ46s_lY0KNiQ"
+      accessToken={accessToken}
       backgroundStyle={[{ label: 'light', url: 'mapbox://styles/mapbox/light-v9' }, { label: 'light aussi', url: 'mapbox://styles/mapbox/light-v9' }]}
       maxZoom={20}
       minZoom={0}
@@ -118,7 +122,7 @@ storiesOf('Map components/InteractiveMap', module).add('Custom controls ', () =>
         onDrawUncombine: onChange,
         onDrawSelectionChange: onChange,
         onDrawUpdate: onChange,
-        disabled: boolean('Disable Draw tools control', false, CONTROL_DRAW),
+        // disabled: boolean('Disable Draw tools control', false, CONTROL_DRAW),
         controls: {
           line_string: boolean('Display control "line_string"', true, CONTROL_DRAW),
           polygon: boolean('Display control "polygon"', true, CONTROL_DRAW),
@@ -127,6 +131,52 @@ storiesOf('Map components/InteractiveMap', module).add('Custom controls ', () =>
           combine_features: boolean('Display control "combine_features"', true, CONTROL_DRAW),
           uncombine_features: boolean('Display control "uncombine_features"', true, CONTROL_DRAW),
         },
+      }, boolean('Display Path tools control', false, CONTROL_PATH) && {
+        control: CONTROL_PATH,
+        position: CONTROLS_TOP_RIGHT,
+        layersCustomisation: {
+          pointCircleLayerCustomisation: {
+            paint: {
+              'circle-radius': 10,
+              'circle-color': '#FFFFFF',
+              'circle-stroke-width': 1,
+              'circle-stroke-color': '#0D47A1',
+            },
+          },
+          pointTextLayerCustomisation: { paint: { 'text-color': '#B71C1C' } },
+          lineLayerCustomisation: {
+            paint: { 'line-width': 4, 'line-color': '#0D47A1' },
+          },
+          dashedLineLayerCustomisation: {
+            paint: {
+              'line-width': 4,
+              'line-color': '#0D47A1',
+              'line-dasharray': [1, 1],
+            },
+          },
+        },
+        onPathUpdate: onChange,
+        directionsThemes: ['cycling', 'walking'].map((transit, index) => ({
+          id: index,
+          name: `mapbox ${transit}`,
+          getPathByCoordinates: async ([from, to]) => {
+            const data = await fetch(
+              `https://api.mapbox.com/directions/v5/mapbox/${transit}/${from};${to}?geometries=geojson&overview=full&access_token=${accessToken}`,
+              { method: 'GET', headers: { 'Content-Type': 'application/json' } },
+            ).then(response => response.json());
+            if (data && data.code !== 'Ok') {
+              return undefined;
+            }
+            return {
+              coordinates: data.routes[0].geometry.coordinates,
+              waypoints: {
+                departure: data.waypoints[0].location,
+                arrival: data.waypoints[1].location,
+              },
+            };
+          },
+        })),
+        // disabled: boolean('Disable Draw tools control', false, CONTROL_PATH),
       }, boolean('Display Custom control', true, CONTROL_CUSTOM) && {
         control: CONTROL_CUSTOM,
         position: CONTROLS_TOP_LEFT,
