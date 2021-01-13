@@ -19,7 +19,7 @@ export const DEFAULT_LAYER_TYPES_WEIGHT = {
   'fill-extrusion': 900,
 };
 
-const isDrawLayer = layer => layer.id.startsWith('gl-draw');
+const isDrawLayer = layer => layer.id.startsWith('gl-draw') || layer.id.startsWith('gl-pathControl');
 
 export class WeigthedMapProxy {
   /**
