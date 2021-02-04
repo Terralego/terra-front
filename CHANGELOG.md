@@ -1,4 +1,15 @@
 
+1.25.0 / 2021-02-04
+==================
+
+  * Simplify legend config
+  * Add color2k to manipulate colors
+  * Upgrade "@testing-library/react" package to 11.2.3
+  * Upgrade react-scripts package to 3.4.4 and update command to test
+  * Optimize ColumnsSelector component
+  * Fix es change (include->includes)
+  * Set 5 to default value of highligh circle-radius
+
 1.24.1 / 2020-08-26
 ===================
 
