@@ -1,16 +1,15 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import classnames from 'classnames';
+import { readableColor, readableColorIsBlack } from 'color2k';
 import './styles.scss';
 
 import translateMock from '../../../../../utils/translate';
-import Template from '../../../../Template/Template';
-import CustomComponents from './CustomComponents';
 import Circle from './components/Circle';
 import Rect from './components/Rect';
 import Line from './components/Line';
 
-const DEFAULT_DIAMETER = 16;
+const DEFAULT_SIZE = 16;
 
 const computeLabel = (
   translate,
@@ -56,81 +55,43 @@ const computeLabel = (
 
 export const Legend = ({
   title,
-  source,
+  comment,
+  shape,
   items,
-  level,
   position,
-  content,
-  history,
   rounding,
-  stackedCircles,
   translate,
 }) => {
-  const biggestDiameter = items.reduce(
-    (int, { diameter = DEFAULT_DIAMETER }) => Math.max(int, diameter),
-    0,
-  );
+  const biggestSize = Math.max(...items.map(({ size = DEFAULT_SIZE }) => size));
+
+  const isStackedCircles = shape === 'stackedCircle';
 
   return (
-    <div className={`tf-legend tf-legend--level-${level}`}>
+    <div className="tf-legend tf-legend--level-1">
       {title && <h4 className="tf-legend__title">{title}</h4>}
       <div
         className={classnames('tf-legend__list', {
-          'tf-legend__stacked-circles': stackedCircles,
+          'tf-legend__stacked-circles': isStackedCircles,
         })}
-        // The width is multiplied by a factor 1.7 in order to provide space for the legend labels
+        // HACK: The width is multiplied by a factor 1.9 in order to provide
+        // space for the legend labels
         style={
-          stackedCircles
-            ? { height: biggestDiameter, width: biggestDiameter * 1.7 }
-            : null
+          isStackedCircles
+            ? { height: biggestSize, width: biggestSize * 1.9 }
+            : undefined
         }
       >
-        {content && (
-          <Template
-            template={content}
-            customComponents={CustomComponents}
-            history={history}
-          />
-        )}
         {items.map(
           (
             {
               label,
-              template,
-              source: subSource,
               color,
-              items: subItems,
-              shape = 'square',
-              radius,
               boundaries,
-              diameter = radius || DEFAULT_DIAMETER,
+              size = DEFAULT_SIZE,
               ...rest
             },
             index,
           ) => {
-            if (subItems) {
-              return (
-                <Legend
-                  key={`${label}${items.length}`}
-                  title={label}
-                  items={subItems}
-                  source={subSource}
-                  level={level + 1}
-                />
-              );
-            }
-
-            if (template) {
-              return (
-                <Template
-                  key={index} // eslint-disable-line react/no-array-index-key
-                  template={template}
-                  customComponents={CustomComponents}
-                  history={history}
-                />
-              );
-            }
-
             const computedLabel = computeLabel(
               translate,
               label,
@@ -145,18 +106,24 @@ export const Legend = ({
             );
 
             let Shape = null;
-            const wrapperStyle = { width: DEFAULT_DIAMETER * 2 };
+            const wrapperStyle = { width: DEFAULT_SIZE * 2 };
             const shapeProps = {
-              size: DEFAULT_DIAMETER,
+              size,
               color,
               ...rest,
             };
 
             switch (shape) {
+              case 'stackedCircle':
+                if (!shapeProps.strokeColor) {
+                  // Stroke color must be contrasted
+                  shapeProps.strokeColor = readableColor(color);
+                }
+              // eslint-disable-next-line no-fallthrough
               case 'circle':
                 Shape = Circle;
-                shapeProps.size = diameter;
-                wrapperStyle.width = biggestDiameter;
+                shapeProps.size = size;
+                wrapperStyle.width = biggestSize;
                 break;
               case 'line':
                 Shape = Line;
@@ -170,11 +137,13 @@ export const Legend = ({
 
             return (
               <div
-                key={`${computedLabel}${color}${diameter}`}
+                key={`${computedLabel}${color}${size}`}
                 className={`tf-legend__item tf-legend__item--${shape} tf-legend__item--${position}`}
               >
                 <div
-                  className="tf-legend__symbol-container"
+                  className={classnames('tf-legend__symbol-container', {
+                    'color--black': readableColorIsBlack(color),
+                  })}
                   style={wrapperStyle}
                 >
                   {Shape && <Shape {...shapeProps} />}
@@ -185,36 +154,32 @@ export const Legend = ({
           },
         )}
       </div>
-      {source && <div className="tf-legend__source">{source}</div>}
+      {comment && <div className="tf-legend__source">{comment}</div>}
     </div>
   );
 };
 
 Legend.propTypes = {
   title: PropTypes.string.isRequired,
+  shape: PropTypes.oneOf(['circle', 'line', 'square', 'stackedCircle']),
+  comment: PropTypes.string,
   items: PropTypes.arrayOf(
     PropTypes.shape({
       label: PropTypes.string,
       source: PropTypes.string,
       color: PropTypes.string,
-      items: PropTypes.array,
       shape: PropTypes.string,
-      diameter: PropTypes.number,
-      template: PropTypes.string,
+      size: PropTypes.number,
     }),
   ),
-  content: PropTypes.string,
   position: PropTypes.string,
-  level: PropTypes.number,
-  stackedCircles: PropTypes.bool,
   translate: PropTypes.func,
 };
 Legend.defaultProps = {
   position: 'left',
-  level: 1,
+  comment: '',
   items: [],
-  content: '',
-  stackedCircles: false,
+  shape: 'square',
   translate: translateMock({
     'terralego.legend.nolabel': 'No label',
     'terralego.legend.labelNoValue': 'Value not available',
@@ -224,4 +189,61 @@ Legend.defaultProps = {
   }),
 };
 
-export default Legend;
+
+/** translate old legend config to new standard. To be removed when
+ * all legends are migrated
+ */
+const LegendCompat = ({ stackedCircles, content, source, items = [], ...props }) => {
+  const compatible = { ...props };
+
+  compatible.shape = props.shape;
+
+  if (!props.shape) {
+    if (items.length) {
+      compatible.shape = items[0].shape || 'square';
+    }
+  }
+
+  if (stackedCircles) {
+    compatible.shape = 'stackedCircle';
+  }
+
+  if (source && !compatible.comment) {
+    compatible.comment = source;
+  }
+
+  compatible.items = items.filter(({ items: subItems }) => !subItems)
+    .map(({ radius, diameter, size, shape, ...itemRest }) => {
+      let newSize;
+      if (radius) {
+        newSize = radius; // I know, should be *2 but missused...
+      }
+      if (diameter) {
+        newSize = diameter;
+      }
+      if (size) {
+        newSize = size;
+      }
+      if (newSize) {
+        return { size: newSize, ...itemRest };
+      }
+      return itemRest;
+    });
+
+  return Legend({ ...compatible });
+};
+
+
+LegendCompat.defaultProps = {
+  position: 'left',
+  items: [],
+  translate: translateMock({
+    'terralego.legend.nolabel': 'No label',
+    'terralego.legend.labelNoValue': 'Value not available',
+    'terralego.legend.label': 'From {{lower}} to {{upper}}',
+    'terralego.legend.labelFirst': 'More than {{lower}}',
+    'terralego.legend.labelLast': 'Less than {{upper}}',
+  }),
+};
+
+export default LegendCompat;

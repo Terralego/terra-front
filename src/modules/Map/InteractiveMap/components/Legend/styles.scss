@@ -40,7 +40,7 @@
     margin: 1rem .5rem .5rem;
     position: relative;
 
-    .tf-legend__item--circle {
+    .tf-legend__item--stackedCircle {
       position: absolute;
       bottom: 0;
 
@@ -50,12 +50,16 @@
         &:after {
           content: "";
           width: 70%;
-          border-bottom: 1px solid #000000;
+          border-bottom: 1px solid #ffffff;
           height: 1px;
           display: block;
           position: absolute;
           top: 0;
           left: 50%;
+        }
+
+        &.color--black:after{
+          border-bottom: 1px solid #000000;
         }
 
         :last-child {

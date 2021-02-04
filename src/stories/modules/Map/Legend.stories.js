@@ -1,68 +1,133 @@
 import React from 'react';
 import { storiesOf } from '@storybook/react';
-import { text, boolean } from '@storybook/addon-knobs';
+import { boolean } from '@storybook/addon-knobs';
 
 import Legend from '../../../modules/Map/InteractiveMap/components/Legend';
 
-const json = [
-  {
-    label: 'level1.1',
-    color: 'red',
-  },
-  {
-    label: 'level1.2',
-    color: 'blue',
-  },
-  {
-    label: 'level2',
-    source: 'Source of level 2',
-    items: [
-      {
-        label: 'level2.1',
-        color: 'red',
-      },
-      {
-        label: 'level2.2',
-        color: 'blue',
-      },
-      {
-        label: 'level3',
-        items: [
-          {
-            label: 'level3.1',
-            color: 'red',
-          },
-          {
-            label: 'level3.2',
-            color: 'blue',
-          },
-          {
-            template: '<strong>custom text</strong> at end of level 3',
-          },
-          {
-            label: 'level4',
-            items: [
-              {
-                label: 'level4.1',
-                color: 'red',
-              },
-              {
-                label: 'level4.2',
-                color: 'blue',
-              },
-            ],
-          },
-        ],
-      },
-    ],
-  },
-  {
-    template: `
-### Custom Nunjucks template
-<em>after last legend item</em>
-    `,
-  },
-];
+const legend1 = {
+  title: 'Foo',
+  comment: 'Source of foo',
+  shape: 'square',
+  items: [
+    {
+      label: 'label 1',
+      color: 'red',
+    },
+    {
+      label: 'long label 2',
+      color: 'blue',
+      size: 20,
+      strokeColor: '#CCCCCC',
+    },
+    {
+      label: 'short',
+      color: 'green',
+      size: 25,
+      strokeColor: '#ff00CC',
+    },
+  ],
+};
+
+const legend2 = {
+  title: 'Bar',
+  comment: 'Source of foo',
+  shape: 'circle',
+  items: [
+    {
+      label: 'label 1',
+      color: 'red',
+    },
+    {
+      label: 'long label 2',
+      color: 'blue',
+      size: 20,
+      strokeColor: '#CCCCCC',
+    },
+    {
+      label: 'short',
+      color: 'green',
+      size: 25,
+      strokeColor: '#ffCCCC',
+    },
+  ],
+};
+
+const legend3 = {
+  title: 'Baz',
+  comment: 'Source of foo',
+  shape: 'line',
+  items: [
+    {
+      label: 'label 1',
+      color: 'red',
+    },
+    {
+      label: 'long label 2',
+      color: 'blue',
+      size: 20,
+      strokeWidth: 4,
+    },
+    {
+      label: 'short',
+      color: 'green',
+      size: 25,
+      strokeWidth: 8,
+    },
+  ],
+};
+
+
+const legend4 = {
+  title: 'Toto',
+  comment: 'Source of toto',
+  shape: 'stackedCircle',
+  items: [
+    {
+      label: 'exercitation ullamco',
+      color: 'black',
+      shape: 'circle',
+      diameter: 60,
+    },
+    {
+      label: 'laboris nisi ut aliquip',
+      color: 'black',
+      shape: 'circle',
+      diameter: 20,
+    },
+    {
+      label: 'ex ea commodo consequat',
+      color: 'black',
+      shape: 'circle',
+      diameter: 10,
+    },
+  ],
+};
+
+const legend5 = {
+  title: 'Toto',
+  comment: 'Source of toto',
+  shape: 'stackedCircle',
+  items: [
+    {
+      label: 'exercitation ullamco',
+      color: 'white',
+      shape: 'circle',
+      diameter: 60,
+    },
+    {
+      label: 'laboris nisi ut aliquip',
+      color: 'white',
+      shape: 'circle',
+      diameter: 20,
+    },
+    {
+      label: 'ex ea commodo consequat',
+      color: 'white',
+      shape: 'circle',
+      diameter: 10,
+    },
+  ],
+};
 
 const jsonAuto = {
   items: [
@@ -166,6 +231,7 @@ const jsonAuto = {
     },
   ],
   title: 'People migration rate',
+  shape: 'square',
   source: 'Source of data',
   rounding: 1,
 };
@@ -186,15 +252,6 @@ jsonAutoWithNullValue.items.push({
   },
 });
 
-const template = `# Hello World
-
-<square color="red" /> foo<br />
-<square color="green" /> bar<br />
-
-<circle color="red" /> foo<br />
-<circle color="green" /> bar<br />
-`;
-
 const stories = storiesOf('Components/Legend', module);
 
 const knobsOptions = {
@@ -205,11 +262,11 @@ const knobsOptions = {
 };
 
 stories.add(
-  'JSON items',
+  'Square items',
   () => (
     <div className="interactive-map">
       <div className="interactive-map__legends">
-        <Legend title="foo" items={json} source="Source of foo" />
+        <Legend {...legend1} />
       </div>
     </div>
   ),
@@ -217,11 +274,11 @@ stories.add(
 );
 
 stories.add(
-  'Nunjucks template',
+  'Circle items',
   () => (
     <div className="interactive-map">
       <div className="interactive-map__legends">
-        <Legend title="bar" content={text('Nunjucks template', template)} />
+        <Legend {...legend2} />
       </div>
     </div>
   ),
@@ -229,20 +286,44 @@ stories.add(
 );
 
 stories.add(
-  'Both',
+  'Line items',
   () => (
     <div className="interactive-map">
       <div className="interactive-map__legends">
-        <Legend
-          title="baz"
-          items={json}
-          content={text('Nunjucks template', template)}
-        />
+        <Legend {...legend3} />
       </div>
     </div>
   ),
   knobsOptions,
 );
+
+stories.add(
+  'Stacked circles',
+  () => (
+    <div className="interactive-map">
+      <div className="interactive-map__legends">
+        <Legend {...legend4} />
+        <Legend {...legend5} />
+      </div>
+    </div>
+  ),
+  knobsOptions,
+);
+
+stories.add(
+  'Multiple legends',
+  () => (
+    <div className="interactive-map">
+      <div className="interactive-map__legends">
+        <Legend {...legend1} title="Foo" />
+        <Legend {...legend2} title="Foo" />
+        <Legend {...legend3} title="Foo" />
+      </div>
+    </div>
+  ),
+  knobsOptions,
+);
+
 
 stories.add(
   'Auto generated json',
@@ -260,66 +341,3 @@ stories.add(
   ),
   knobsOptions,
 );
-
-stories.add('Circles', () => (
-  <div className="interactive-map">
-    <div className="interactive-map__legends">
-      <Legend
-        title="foo"
-        source="Source of wrapper"
-        stackedCircles={boolean('Stack circles', false)}
-        items={[
-          {
-            label: 'exercitation ullamco',
-            color: 'white',
-            shape: 'circle',
-            diameter: 30,
-          },
-          {
-            label: 'laboris nisi ut aliquip',
-            color: 'white',
-            shape: 'circle',
-            diameter: 15,
-          },
-          {
-            label: 'ex ea commodo consequat',
-            color: 'white',
-            shape: 'circle',
-            diameter: 5,
-          },
-        ]}
-      />
-    </div>
-  </div>
-));
-
-stories.add('Stacked', () => (
-  <div className="interactive-map">
-    <div className="interactive-map__legends">
-      <Legend
-        title="foo"
-        stackedCircles
-        items={[
-          {
-            label: 'exercitation ullamco',
-            color: 'white',
-            shape: 'circle',
-            diameter: 60,
-          },
-          {
-            label: 'laboris nisi ut aliquip',
-            color: 'white',
-            shape: 'circle',
-            diameter: 20,
-          },
-          {
-            label: 'ex ea commodo consequat',
-            color: 'white',
-            shape: 'circle',
-            diameter: 10,
-          },
-        ]}
-      />
-    </div>
-  </div>
-));

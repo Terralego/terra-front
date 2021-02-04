@@ -18,63 +18,106 @@ describe('should render correctly', () => {
     strokeColor: 'lightblue',
     shape,
   }]);
+
   it('square', () => {
     const tree = renderer.create(<Legend title="Hello World" items={items()} />).toJSON();
     expect(tree).toMatchSnapshot();
   });
 
   it('circle', () => {
-    const tree = renderer.create(<Legend title="Hello World" items={items('circle')} />).toJSON();
+    const tree = renderer.create(<Legend title="Hello World" items={items()} shape="circle" position="left" />).toJSON();
+    expect(tree).toMatchSnapshot();
+  });
+
+  it('line', () => {
+    const tree = renderer.create(<Legend title="Hello World" items={items()} shape="line" />).toJSON();
     expect(tree).toMatchSnapshot();
   });
 
   it('stacked circles', () => {
-    const tree = renderer.create(<Legend title="Hello World" stackedCircles items={items('circle')} />).toJSON();
+    const tree = renderer.create(<Legend title="Hello World" items={items()} shape="stackedCircle" />).toJSON();
     expect(tree).toMatchSnapshot();
   });
 
-  it('with multi level', () => {
-    const tree = renderer.create((
-      <Legend
-        title="level1"
-        items={[{
-          label: 'level1.1',
-          color: 'red',
-        }, {
-          label: 'level1.2',
-          color: 'blue',
-        }, {
-          template: 'custom <strong>nunjucks</strong> template',
-        }, {
-          label: 'level2',
-          items: [{
-            label: 'level2.1',
-            color: 'red',
-          }, {
-            label: 'level2.2',
-            color: 'blue',
-          }, {
-            label: 'level3',
-            items: [{
-              label: 'level3.1',
-              color: 'red',
-            }, {
-              label: 'level3.2',
-              color: 'blue',
-            }, {
-              label: 'level4',
-              items: [{
-                label: 'level4.1',
-                color: 'red',
-              }, {
-                label: 'level4.2',
-                color: 'blue',
-              }],
-            }],
-          }],
-        }]}
-      />
-    )).toJSON();
+  it('with comment', () => {
+    const tree = renderer.create(<Legend comment="Evian" title="les bains" />).toJSON();
+    expect(tree).toMatchSnapshot();
+  });
+});
+
+describe('should render correctly with different config', () => {
+  const items = [{
+    label: 'Rouge',
+    color: 'red',
+    size: 20,
+  }, {
+    label: 'Vert',
+    color: 'green',
+    strokeColor: 'black',
+    size: 30,
+  }, {
+    label: 'Bleu',
+    color: 'blue',
+    size: 40,
+    strokeColor: 'lightblue',
+  }];
+
+  it('square', () => {
+    const tree = renderer.create(<Legend title="Hello World" items={items} position="right" />).toJSON();
+    expect(tree).toMatchSnapshot();
+  });
+
+  it('circle', () => {
+    const tree = renderer.create(<Legend title="Hello World" items={items} shape="circle" />).toJSON();
+    expect(tree).toMatchSnapshot();
+  });
+
+  it('line', () => {
+    const tree = renderer.create(<Legend title="Hello World" items={items} shape="line" />).toJSON();
+    expect(tree).toMatchSnapshot();
+  });
+
+  it('stacked circles', () => {
+    const tree = renderer.create(<Legend title="Hello World" items={items} shape="stackedCircle" />).toJSON();
+    expect(tree).toMatchSnapshot();
+  });
+});
+
+describe('should render correctly with old config', () => {
+  const items = shape => ([{
+    label: 'Rouge',
+    color: 'red',
+    shape,
+  }, {
+    label: 'Vert',
+    color: 'green',
+    radius: 20,
+    shape,
+  }, {
+    label: 'Bleu',
+    color: 'blue',
+    diameter: 40,
+    strokeColor: 'lightblue',
+    shape,
+  }]);
+
+  it('square', () => {
+    const tree = renderer.create(<Legend title="Hello World" items={items()} />).toJSON();
+    expect(tree).toMatchSnapshot();
+  });
+
+  it('circle', () => {
+    const tree = renderer.create(<Legend title="Hello World" items={items('circle')} position="left" />).toJSON();
+    expect(tree).toMatchSnapshot();
+  });
+
+  it('line', () => {
+    const tree = renderer.create(<Legend title="Hello World" items={items('line')} />).toJSON();
+    expect(tree).toMatchSnapshot();
+  });
+
+  it('stacked circles', () => {
+    const tree = renderer.create(<Legend title="Hello World" items={items('circle')} stackedCircle />).toJSON();
     expect(tree).toMatchSnapshot();
   });
 
@@ -82,23 +125,4 @@ describe('should render correctly', () => {
     const tree = renderer.create(<Legend source="Evian" title="les bains" />).toJSON();
     expect(tree).toMatchSnapshot();
   });
-});
-
-it('should render a manual legend', () => {
-  const template =
-`# Hello World
-
-<square color="red" /> foo  
-<square color="green" /> bar  
-
-<circle color="red" /> foo  
-<circle color="green" /> bar  
-`;
-  const tree = renderer.create(
-    <Legend
-      title="foo"
-      content={template}
-    />,
-  );
-  expect(tree.toJSON()).toMatchSnapshot();
 });
