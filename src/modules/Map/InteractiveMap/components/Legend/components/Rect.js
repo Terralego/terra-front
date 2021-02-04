@@ -1,7 +1,8 @@
 import React from 'react';
 import PropTypes from 'prop-types';
+import { darken } from 'color2k';
 
-export const Rect = ({ color, size, strokeColor = color, strokeWidth }) => !!color && (
+export const Rect = ({ color, size, strokeColor = darken(color, 0.1), strokeWidth }) => !!color && (
   <div className="tf-legend__symbol">
     <svg
       viewBox={`0 0 ${size} ${size}`}
