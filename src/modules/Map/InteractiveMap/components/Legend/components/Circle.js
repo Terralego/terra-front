@@ -1,7 +1,7 @@
 import React from 'react';
 import { darken } from 'color2k';
 
-export const Circle = ({ color, size = 16, strokeColor = darken(color, 0.3), strokeWidth = 1 }) => (
+export const Circle = ({ color = '#00000000', size = 16, strokeColor = darken(color, 0.2), strokeWidth = 1 }) => (
   <div className="tf-legend__symbol">
     <svg
       viewBox={`0 0 ${size + strokeWidth * 2} ${size + strokeWidth * 2}`}

@@ -142,7 +142,7 @@ export const Legend = ({
               >
                 <div
                   className={classnames('tf-legend__symbol-container', {
-                    'color--black': readableColorIsBlack(color),
+                    'color--black': readableColorIsBlack(color || '#FFFFFF'),
                   })}
                   style={wrapperStyle}
                 >
