@@ -50,7 +50,7 @@
         &:after {
           content: "";
           width: 70%;
-          border-bottom: 1px solid #ffffff;
+          border-bottom: 1px solid #aaaaaa;
           height: 1px;
           display: block;
           position: absolute;
@@ -59,7 +59,7 @@
         }
 
         &.color--black:after{
-          border-bottom: 1px solid #000000;
+          border-bottom: 1px solid #222222;
         }
 
         :last-child {
