@@ -4,7 +4,7 @@ import PropTypes from 'prop-types';
 import 'mapbox-gl/dist/mapbox-gl.css';
 import { detailedDiff } from 'deep-object-diff';
 
-import { LAYER_TYPES_ORDER } from '../services/mapUtils';
+import { LAYER_TYPES_ORDER, getControlName } from '../services/mapUtils';
 import { updateCluster } from '../services/cluster';
 
 import SearchControl from './components/SearchControl';
@@ -517,6 +517,7 @@ export class MapComponent extends React.Component {
           }
         }
       }
+      map.fire(`control_${getControlName(control)}_added`);
       map.fire('control_added', { control });
     });
   }
