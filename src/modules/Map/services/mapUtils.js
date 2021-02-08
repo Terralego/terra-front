@@ -216,6 +216,13 @@ export function fitZoom ({ feature, map, padding = 0 }) {
   map.fitBounds(bbox({ type: 'FeatureCollection', features }), { padding });
 }
 
+export function getControlName (control) {
+  if (typeof control === 'string') {
+    return control;
+  }
+  return control.props?.control || 'custom';
+}
+
 export default {
   LAYER_TYPES_ORDER,
   toggleLayerVisibility,
@@ -225,4 +232,5 @@ export default {
   setInteractions,
   checkContraints,
   fitZoom,
+  getControlName,
 };
