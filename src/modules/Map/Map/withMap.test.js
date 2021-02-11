@@ -343,12 +343,12 @@ it('should layer added be order in respect with weight and draw layer', () => {
       weight: 1,
     },
     {
-      id: 'layer1',
-      type: 'circle',
-    },
-    {
       id: 'gl-draw-layer2',
       type: 'fill',
+    },
+    {
+      id: 'layer1',
+      type: 'circle',
     },
   ]);
 });

@@ -53,6 +53,11 @@ export class DrawControl {
     }
 
     // eslint-disable-next-line no-param-reassign
+    map.weightAttributionHooks = map.weightAttributionHooks || {};
+    // eslint-disable-next-line no-param-reassign
+    map.weightAttributionHooks.drawControl = layer => layer.id.startsWith('gl-draw') && map.getMaxWeight();
+
+    // eslint-disable-next-line no-param-reassign
     map.draw = this.draw;
 
     const prevOnRemove = this.draw.onRemove.bind(this.draw);
@@ -86,6 +91,8 @@ export class DrawControl {
         map.off('draw.update', onDrawUpdate);
       }
       prevOnRemove(map);
+      // eslint-disable-next-line no-param-reassign
+      delete map.weightAttributionHooks.drawControl;
       // eslint-disable-next-line no-param-reassign
       map.draw = undefined;
     };

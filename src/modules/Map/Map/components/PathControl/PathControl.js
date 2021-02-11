@@ -13,6 +13,10 @@ export class PathControl {
     if (onPathUpdate) {
       map.on('MapboxPathControl.update', onPathUpdate);
     }
+    // eslint-disable-next-line no-param-reassign
+    map.weightAttributionHooks = map.weightAttributionHooks || {};
+    // eslint-disable-next-line no-param-reassign
+    map.weightAttributionHooks.pathControl = layer => layer.id.startsWith('gl-pathControl') && map.getMaxWeight();
 
     // eslint-disable-next-line no-param-reassign
     map.pathControl = this.PathControl;
@@ -30,6 +34,8 @@ export class PathControl {
         map.off('MapboxPathControl.update', onPathUpdate);
       }
       prevOnRemove(this.PathControl);
+      // eslint-disable-next-line no-param-reassign
+      delete map.weightAttributionHooks.pathControl;
       // eslint-disable-next-line no-param-reassign
       map.pathControl = undefined;
     };
