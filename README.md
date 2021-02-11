@@ -8,7 +8,7 @@ $ npm ci
 
 ## Configuration
 
-For development purpose, you can create the following file:
+For development purpose, you should create the following file:
 
     $ touch .env
 
