@@ -20,7 +20,18 @@ const legend1 = {
       strokeColor: '#CCCCCC',
     },
     {
-      label: 'short',
+      label: 'Size 25 color and stroke',
+      color: 'green',
+      size: 25,
+      strokeColor: '#ff00CC',
+    },
+    {
+      label: 'Stroke only',
+      size: 25,
+      strokeColor: '#ffCCCC',
+    },
+    {
+      label: null,
       color: 'green',
       size: 25,
       strokeColor: '#ff00CC',
@@ -49,6 +60,17 @@ const legend2 = {
       size: 25,
       strokeColor: '#ffCCCC',
     },
+    {
+      label: 'Stroke only',
+      size: 25,
+      strokeColor: '#ffCCCC',
+    },
+    {
+      label: null,
+      color: 'green',
+      size: 25,
+      strokeColor: '#ff00CC',
+    },
   ],
 };
 
@@ -73,9 +95,19 @@ const legend3 = {
       size: 25,
       strokeWidth: 8,
     },
+    {
+      label: 'Color only',
+      size: 25,
+      color: '#ffCCCC',
+    },
+    {
+      label: null,
+      color: 'green',
+      size: 25,
+      strokeColor: '#ff00CC',
+    },
   ],
 };
-
 
 const legend4 = {
   title: 'Toto',
@@ -252,6 +284,46 @@ jsonAutoWithNullValue.items.push({
   },
 });
 
+const jsonAutoCat = {
+  auto: true,
+  items: [
+    {
+      color: 'hsl(339, 93%, 22%)',
+      label: 'Air base',
+      shape: 'square',
+    },
+    {
+      color: 'hsl(232, 94%, 34%)',
+      label: 'Office-parc',
+      shape: 'square',
+    },
+    {
+      color: 'hsl(167, 100%, 3%)',
+      label: 'Wasteland',
+      shape: 'square',
+    },
+    {
+      color: '#ade7ea',
+      label: 'Technological parc',
+      shape: 'square',
+    },
+    {
+      color: 'hsl(356, 98%, 50%)',
+      label: 'Commercial zone',
+      shape: 'square',
+    },
+  ],
+  title: 'House type',
+};
+
+const jsonAutoCatWithNullValue = JSON.parse(JSON.stringify(jsonAutoCat));
+
+jsonAutoCatWithNullValue.items.push({
+  color: 'hsl(62, 90%, 51%)',
+  label: null,
+  shape: 'square',
+});
+
 const stories = storiesOf('Components/Legend', module);
 
 const knobsOptions = {
@@ -324,9 +396,8 @@ stories.add(
   knobsOptions,
 );
 
-
 stories.add(
-  'Auto generated json',
+  'Auto generated discretisation json',
   () => (
     <div className="interactive-map">
       <div className="interactive-map__legends">
@@ -334,6 +405,23 @@ stories.add(
           {...(boolean('Null value ?', false)
             ? jsonAutoWithNullValue
             : jsonAuto)}
+          rounding={boolean('Rounding', true) ? jsonAuto.rounding : undefined}
+        />
+      </div>
+    </div>
+  ),
+  knobsOptions,
+);
+
+stories.add(
+  'Auto generated categorisation json',
+  () => (
+    <div className="interactive-map">
+      <div className="interactive-map__legends">
+        <Legend
+          {...(boolean('Null value ?', true)
+            ? jsonAutoCatWithNullValue
+            : jsonAutoCat)}
           rounding={boolean('Rounding', true) ? jsonAuto.rounding : undefined}
         />
       </div>
