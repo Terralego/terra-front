@@ -1,6 +1,6 @@
 {
   "name": "@terralego/core",
-  "version": "1.25.2",
+  "version": "1.26.0",
   "private": false,
   "license": "ISC",
   "dependencies": {
@@ -140,7 +140,7 @@
       }
     },
     "transformIgnorePatterns": [
-      "/node_modules/(?!@makina-corpus\/mapbox-gl-path) --env=jsdom"
+      "/node_modules/(?!@makina-corpus/mapbox-gl-path) --env=jsdom"
     ]
   }
 }

@@ -1,4 +1,16 @@
 
+1.26.0 / 2021-02-11
+===================
+
+  * Fix stroke only square legend
+  * Use Mapbox accessToken by using REACT_APP_MAPBOX_TOKEN env variable
+  * Can force the weight of layer by using weightAttributionHooks
+  * Fire event for adding control individually
+  * Add PathControl at the list of available controls for Map
+  * Create PathControl class to wrap PathControl plugin
+  * Optimise DrawControl removing
+  * Track total hits from elasticsearch request
+
 1.25.2 / 2021-02-08
 ===================
 
