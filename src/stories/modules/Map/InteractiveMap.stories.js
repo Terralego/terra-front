@@ -8,6 +8,8 @@ import Map from '../../../modules/Map/Map';
 import leftInfoButtonStyles from '../../leftInfosButtonStyles';
 import doc from './InteractiveMap.md';
 
+const accessToken = process.env.REACT_APP_MAPBOX_TOKEN;
+
 InteractiveMap.displayName = 'InteractiveMap';
 PureInteractiveMap.displayName = 'InteractiveMap';
 Legend.displayName = 'Legend';
@@ -17,7 +19,7 @@ storiesOf('Map components/InteractiveMap', module).add('InteractiveMap', () => (
   <div style={{ height: '100vh' }}>
     <InteractiveMap
       type="map"
-      accessToken="pk.eyJ1IjoibWFraW5hY29ycHVzIiwiYSI6ImNqY3E4ZTNwcTFta3ozMm80d2xzY29wM2MifQ.Nwl_FHrWAIQ46s_lY0KNiQ"
+      accessToken={accessToken}
       backgroundStyle={[
         { label: 'Thème blanc', url: 'mapbox://styles/mapbox/light-v9' },
         { label: 'Thème noir', url: 'mapbox://styles/mapbox/dark-v9' },

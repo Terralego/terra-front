@@ -6,6 +6,14 @@
 $ npm ci
 ```
 
+## Configuration
+
+For development purpose, you can create the following file:
+
+    $ touch .env
+
+and edit it to set the `REACT_APP_MAPBOX_TOKEN` variable.
+
 ## Usage
 
 ```shell
