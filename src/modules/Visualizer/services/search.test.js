@@ -97,6 +97,7 @@ it('should build query', () => {
     _source: {
       includes: ['foo', 'bar'],
     },
+    track_total_hits: true,
     query: {
       bool: {
         filter: {
@@ -158,6 +159,7 @@ it('should build elastic search query with a literal query', () => {
       },
     },
     size: MAX_SIZE,
+    track_total_hits: true,
   });
 });
 
@@ -198,6 +200,7 @@ it('should build query with properties', () => {
       },
     },
     size: 42,
+    track_total_hits: true,
   });
 });
 
@@ -221,6 +224,7 @@ it('should build query with aggregations', () => {
       },
     },
     size: 42,
+    track_total_hits: true,
   });
 });
 
@@ -230,6 +234,7 @@ it('should build query with include', () => {
     include: ['foo'],
   })).toEqual({
     size: 42,
+    track_total_hits: true,
     _source: {
       includes: ['foo'],
     },
@@ -240,6 +245,7 @@ it('should build query with include', () => {
     include: [],
   })).toEqual({
     size: 42,
+    track_total_hits: true,
     _source: false,
   });
 });
@@ -250,6 +256,7 @@ it('should build query with exclude', () => {
     exclude: ['foo'],
   })).toEqual({
     size: 42,
+    track_total_hits: true,
     _source: {
       excludes: ['foo'],
     },
@@ -263,6 +270,7 @@ it('should build query with include and exclude', () => {
     exclude: ['bar'],
   })).toEqual({
     size: 42,
+    track_total_hits: true,
     _source: {
       includes: ['foo'],
       excludes: ['bar'],
@@ -279,6 +287,7 @@ it('should build query with range properties', () => {
     }],
   })).toEqual({
     size: 42,
+    track_total_hits: true,
     query: {
       bool: {
         filter: {
@@ -303,6 +312,7 @@ it('should build query with multiselect properties', () => {
       }],
   })).toEqual({
     size: 42,
+    track_total_hits: true,
     query: {
       bool: {
         filter: {
@@ -327,6 +337,7 @@ it('should build query with invalid properties', () => {
     }],
   })).toEqual({
     size: 42,
+    track_total_hits: true,
   });
 });
 
@@ -358,7 +369,7 @@ it('should search handling indexes', async () => {
   expect(searchService.client.msearch).toHaveBeenCalledWith({
     body: [
       { },
-      body,
+      { ...body, track_total_hits: true },
     ],
   });
 
@@ -369,7 +380,7 @@ it('should search handling indexes', async () => {
   expect(searchService.client.msearch).toHaveBeenCalledWith({
     body: [
       { index: 'bar' },
-      body,
+      { ...body, track_total_hits: true },
     ],
   });
 });
@@ -453,6 +464,7 @@ it('should search many queries', () => {
           },
         },
         size: MAX_SIZE / 2,
+        track_total_hits: true,
       },
       { index: 'foobar' },
       {
@@ -462,6 +474,7 @@ it('should search many queries', () => {
           },
         },
         size: MAX_SIZE / 2,
+        track_total_hits: true,
       },
     ],
   });
