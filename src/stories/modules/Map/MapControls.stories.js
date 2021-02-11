@@ -28,6 +28,8 @@ import leftInfoButtonStyles from '../../leftInfosButtonStyles';
 import doc from './MapControls.md';
 import translate from './reportTranslateMock';
 
+const accessToken = process.env.REACT_APP_MAPBOX_TOKEN;
+
 const onSearch = () => new Promise(resolve => {
   setTimeout(() => resolve([{
     group: 'Points d\'échanges intermodaux',
@@ -63,8 +65,6 @@ const onChange = event => {
   console.log(event);
   action(title)(event.type);
 };
-
-const accessToken = 'pk.eyJ1IjoibWFraW5hY29ycHVzIiwiYSI6ImNqY3E4ZTNwcTFta3ozMm80d2xzY29wM2MifQ.Nwl_FHrWAIQ46s_lY0KNiQ';
 
 storiesOf('Map components/InteractiveMap', module).add('Custom controls ', () => (
   <div style={{ width: '100vw', height: '100vh' }}>

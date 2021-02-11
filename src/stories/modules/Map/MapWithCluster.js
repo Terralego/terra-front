@@ -2,11 +2,13 @@ import React from 'react';
 
 import InteractiveMap from '../../../modules/Map/InteractiveMap';
 
+const accessToken = process.env.REACT_APP_MAPBOX_TOKEN;
+
 export default () => (
   <div style={{ height: '100vh' }}>
     <InteractiveMap
       type="map"
-      accessToken="pk.eyJ1IjoibWFraW5hY29ycHVzIiwiYSI6ImNqY3E4ZTNwcTFta3ozMm80d2xzY29wM2MifQ.Nwl_FHrWAIQ46s_lY0KNiQ"
+      accessToken={accessToken}
       backgroundStyle="mapbox://styles/mapbox/light-v9"
       center={[5.386195159396806, 43.30072210972415]}
       zoom={15}

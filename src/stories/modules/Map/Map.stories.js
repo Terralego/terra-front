@@ -12,12 +12,14 @@ import doc from './Map.md';
 
 Map.displayName = 'Map';
 
+const accessToken = process.env.REACT_APP_MAPBOX_TOKEN;
+
 storiesOf('Map components/Map', module).add('Map component', () => (
   <div
     style={{ width: '100vw', height: '100vh' }}
   >
     <Map
-      accessToken="pk.eyJ1IjoibWFraW5hY29ycHVzIiwiYSI6ImNqY3E4ZTNwcTFta3ozMm80d2xzY29wM2MifQ.Nwl_FHrWAIQ46s_lY0KNiQ"
+      accessToken={accessToken}
       backgroundStyle={select(
         'mapStyle',
         [
