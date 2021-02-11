@@ -18,9 +18,6 @@ export const DEFAULT_LAYER_TYPES_WEIGHT = {
   symbol: 800,
   'fill-extrusion': 900,
 };
-
-const isDrawLayer = layer => layer.id.startsWith('gl-draw') || layer.id.startsWith('gl-pathControl');
-
 export class WeigthedMapProxy {
   /**
    * Constructor
@@ -86,7 +83,7 @@ export class WeigthedMapProxy {
   }
 
   /**
-   * Returns max weigth from current weight list
+   * Returns max weight from current weight list
    */
   getMaxWeight () {
     return Math.max(...Object.values(this.weights));
@@ -100,8 +97,14 @@ export class WeigthedMapProxy {
     if (layer.weight !== undefined) {
       return layer.weight;
     }
-    if (isDrawLayer(layer)) {
-      return this.getMaxWeight();
+    const weightAttributionHooks = Object.values(this.map.weightAttributionHooks || {});
+
+    // eslint-disable-next-line no-restricted-syntax
+    for (const hook of weightAttributionHooks) {
+      const layerWeightByHook = hook(layer);
+      if (typeof layerWeightByHook === 'number') {
+        return layerWeightByHook;
+      }
     }
     return this.typesWeigth[layer.type];
   }
