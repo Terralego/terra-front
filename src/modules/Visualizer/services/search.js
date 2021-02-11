@@ -78,6 +78,7 @@ export const buildQuery = ({
 }) => {
   const body = bodybuilder();
   body.size(size);
+  body.rawOption('track_total_hits', true); // Will not be supported in version 8 of ES.
   if (query) {
     body.query('query_string', 'query', query.split(/\s+/).map(subquery => `*${subquery}*`).join(' AND '));
   }
