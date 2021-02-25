@@ -37,7 +37,10 @@ export class Api {
 
   listeners = [];
 
-  async request (endpoint, { method = GET, querystring, body, headers = DEFAULT_HEADERS, responseType = 'json' } = {}) {
+  async request (
+    endpoint,
+    { method = GET, querystring, body, headers = DEFAULT_HEADERS, responseType = 'json', rawResponse = false } = {},
+  ) {
     const url = this.buildUrl({ endpoint, querystring });
 
     log('request start: ', url);
@@ -50,22 +53,24 @@ export class Api {
 
     log('request end: ', url);
     if (response.status < 200 || response.status > 299) {
-      throw await this.handleError(response);
+      throw await this.handleError(response, responseType);
     }
-    return this.handleSuccess(response, responseType);
+    const result = await this.handleSuccess(response, responseType);
+    return rawResponse ? { result, response } : result;
   }
 
   buildUrl ({ endpoint, querystring }) {
     return `${this.host}/${endpoint.replace(/\/+/g, '/')}${querystring ? `?${qs.stringify(querystring)}` : ''}`;
   }
 
-  async handleError (response) {
+  async handleError (response, responseType) {
     const error = new Error(response.statusText);
     error.status = response.status;
     try {
-      error.data = await response.json();
+      error.data = await response[responseType]();
     } catch (e) {
-      //
+      // eslint-disable-next-line no-console
+      console.log(e);
     }
     this.fire(EVENT_FAILURE, response);
     return error;
@@ -76,7 +81,8 @@ export class Api {
     try {
       data = await response[responseType]();
     } catch (e) {
-      //
+      // eslint-disable-next-line no-console
+      console.log(e);
     }
     this.fire(EVENT_SUCCESS, response);
     return data;
