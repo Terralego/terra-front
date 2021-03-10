@@ -1,4 +1,10 @@
 
+1.26.3 / 2021-03-10
+===================
+
+  * Upgrade @makina-corpus/mapbox-gl-path package to 1.3.1
+  * Get a way to provide all the response when requesting the api
+
 1.26.2 / 2021-02-16
 ===================
 
