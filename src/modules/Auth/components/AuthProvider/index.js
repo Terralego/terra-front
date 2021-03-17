@@ -1,5 +1,6 @@
 import React from 'react';
 
+import { diff } from 'deep-object-diff';
 import {
   getToken,
   obtainToken,
@@ -75,7 +76,20 @@ export class AuthProvider extends React.Component {
       const { user } = this.extractTokenData(token);
 
       if (user) {
-        this.setState({ authenticated: true, user });
+        this.setState(({ user: prevUser }) => {
+          if (!Object.keys(
+            diff(prevUser, user),
+          ).length) {
+            return null;
+          }
+          // Sometimes the api doest not return the same order
+          if (!Object.keys(
+            diff(prevUser.modules?.sort(), user.modules?.sort()),
+          ).length) {
+            return null;
+          }
+          return { authenticated: true, user };
+        });
       }
     } catch (e) {
       if (this.isUnmount) return;
