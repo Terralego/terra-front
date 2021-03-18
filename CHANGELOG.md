@@ -1,4 +1,9 @@
 
+1.26.5 / 2021-03-18
+===================
+
+  * Optimize the update of auth state after refreshing token
+
 1.26.4 / 2021-03-15
 ===================
 
