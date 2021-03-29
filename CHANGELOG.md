@@ -1,4 +1,9 @@
 
+1.26.6 / 2021-03-29
+===================
+
+  * Merge layer filter instead of overriding it and apply it to geojson also
+
 1.26.5 / 2021-03-18
 ===================
 
