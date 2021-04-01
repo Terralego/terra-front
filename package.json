@@ -1,6 +1,6 @@
 {
   "name": "@terralego/core",
-  "version": "1.26.6",
+  "version": "1.26.7",
   "private": false,
   "license": "ISC",
   "dependencies": {
