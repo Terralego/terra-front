@@ -39,7 +39,6 @@ export const createClusterLayers = ({
   } = layer;
   const clusterSourceName = `${layer.id}-${PREFIX_SOURCE}-${index}`;
   const { filter } = layerProps;
-  const filters = filter ? ['all', ['!', ['has', 'point_count']], filter] : ['!', ['has', 'point_count']];
 
   /**
    * The new source filled with features from tiles converted to geojson
@@ -54,6 +53,7 @@ export const createClusterLayers = ({
     clusterMaxZoom,
     clusterRadius: radius,
     maxzoom: clusterMaxZoom,
+    filter, // filter on the source enable cluster filtering
   });
 
   const paint = {
@@ -87,7 +87,7 @@ export const createClusterLayers = ({
     ...layerProps,
     id: `${id}-${PREFIX_UNCLUSTERED}-${index}`,
     source: clusterSourceName,
-    filter: filters,
+    filter: ['!', ['has', 'point_count']],
     paint: { ...layerPaint },
     layout: { ...layerLayout },
     minzoom,
@@ -127,7 +127,6 @@ export const updateCluster = (map, layer, onClusterUpdate = ({ features }) => fe
     cluster: {
       radius: clusterRadius,
     },
-    filter,
   } = layer;
   const ghostLayerId = `${id}-cluster-data`;
   if (!map.getLayer(ghostLayerId)) {
@@ -187,7 +186,6 @@ export const updateCluster = (map, layer, onClusterUpdate = ({ features }) => fe
     map.getSource(clusterSourceName).setData({
       type: 'FeatureCollection',
       features,
-      filter, // filter need to be set here, features is empty at creation
     });
   });
 };
