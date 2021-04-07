@@ -1,4 +1,10 @@
 
+1.27.0 / 2021-04-07
+===================
+
+  * Apply style filter on source allowing cluster filtering
+  * Upgrade mapbox-gl from 1.9.1 to 1.13.0
+
 1.26.7 / 2021-04-01
 ===================
 
