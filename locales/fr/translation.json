@@ -29,6 +29,7 @@
       }
     },
     "signupform": {
+      "done": "",
       "email": {
         "help": "Saisissez votre e-mail",
         "info": "requis",
@@ -79,6 +80,9 @@
     },
     "legend": {
       "label": "",
+      "labelFirst": "",
+      "labelLast": "",
+      "labelNoValue": "",
       "noValue": "",
       "nolabel": "",
       "novalue": ""
@@ -111,7 +115,6 @@
         "portrait_label": "Portrait"
       },
       "report_control": {
-        "toaster": "Cliquer sur la carte pour indiquer la localisation du signalement",
         "content": "signaler une information manquante ou incorrecte",
         "form": {
           "cancel": "Annuler",
@@ -147,7 +150,8 @@
           "message": "votre signalement a été soumis avec succès",
           "other_report": "Faire un autre signalement",
           "title": "Merci !"
-        }
+        },
+        "toaster": "Cliquer sur la carte pour indiquer la localisation du signalement"
       },
       "search_control": {
         "button_label": "Rechercher"
@@ -172,12 +176,6 @@
     },
     "visualizer": {
       "fold": "Replier",
-      "story": {
-        "start": "Démarrer",
-        "next": "Suivant",
-        "previous": "Précédent",
-        "restart": "Recommencer"
-      },
       "layerstree": {
         "group": {
           "selector": "Aucune couche disponible"
@@ -229,8 +227,19 @@
           "message": "Visible depuis le zoom {{minzoom}}"
         }
       },
+      "story": {
+        "next": "Suivant",
+        "previous": "Précédent",
+        "restart": "Recommencer",
+        "start": "Démarrer"
+      },
       "too_many_results": "Votre recherche contient trop de résultats ({{number}}), veuillez affiner votre requête ou zoomer sur une zone plus restreinte.",
       "unfold": "Déplier"
+    },
+    "pictures": {
+      "compare": {
+        "placeholder": "Sélectionnez une photo à comparer"
+      }
     }
   }
 }
