@@ -1,4 +1,13 @@
 
+1.27.3 / 2021-04-26
+===================
+
+  * Add side by side compare pictures components
+  * Upgrade  @makina-corpus/mapbox-gl-path package to 1.7.0
+  * Bump y18n from 3.2.1 to 3.2.2
+  * Bump elliptic from 6.5.3 to 6.5.4
+  * Bump nested-object-assign from 1.0.3 to 1.0.4
+
 1.27.2 / 2021-04-16
 ===================
 
