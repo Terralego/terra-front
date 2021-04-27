@@ -9,12 +9,13 @@ export const ImageItem = ({
   scale,
   transformOrigin,
   transform,
+  t, // language translation function
   ...props
 }) => {
   if (!picture?.file) {
     return (
       <div className="image_placeholder">
-        <em>t('pictures.compare.placeholder')</em>
+        <em>{t('pictures.compare.placeholder')}</em>
       </div>
     );
   }
