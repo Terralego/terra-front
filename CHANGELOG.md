@@ -1,4 +1,9 @@
 
+1.27.4 / 2021-04-27
+===================
+
+  * Place picture placeholder at center and translate it (Side by side comparison)
+
 1.27.3 / 2021-04-26
 ===================
 
