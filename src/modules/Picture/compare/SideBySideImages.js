@@ -8,7 +8,7 @@ import './SideBySide.scss';
 const STEP_SCALE = 0.2;
 
 
-const SideBySideImages = ({ pictures }) => {
+const SideBySideImages = ({ pictures, translate: t }) => {
   // might use "useReducer" instead of many "useState"
   const [scale, setScale] = useState(1);
   const [mousePosition, setMousePosition] = useState({});
@@ -81,6 +81,7 @@ const SideBySideImages = ({ pictures }) => {
           transform={`scale(${scale}) translate(${translate.x}px, ${translate.y}px)`}
           transformOrigin={`${transformOrigin.x}px ${transformOrigin.y}px`}
           scale={scale}
+          t={t}
         />
       ))}
     </div>
