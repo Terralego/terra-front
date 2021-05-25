@@ -111,9 +111,9 @@ export class Table extends React.Component {
       case 'date':
         return new Date(cell).toLocaleDateString();
       case 'number':
-        return Number(cell);
+        return Number(cell) || ''; // NaN value rendered as empty
       case 'integer':
-        return Number.parseInt(cell, 10);
+        return Number.parseInt(cell, 10) || ''; // NaN value rendered as empty
       default:
         return cell;
     }
