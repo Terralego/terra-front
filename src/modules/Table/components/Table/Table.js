@@ -61,12 +61,9 @@ export class Table extends React.Component {
 
   componentDidUpdate ({ data: prevData, columns: prevColumns }) {
     const { data, columns } = this.props;
-    const { lastSort, sortedIndexMap } = this.state;
+    const { lastSort } = this.state;
     if (data !== prevData && columns === prevColumns) {
       this.sortColumn(...lastSort);
-    }
-    if (sortedIndexMap && data !== prevData && columns !== prevColumns) {
-      this.resetSortedIndexMap();
     }
   }
 
