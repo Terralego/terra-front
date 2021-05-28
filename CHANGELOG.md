@@ -1,4 +1,10 @@
 
+1.27.5 / 2021-05-28
+===================
+
+  * Render NaN value as empty in DataTable (#267)
+  * Do not reset table sort order after clicking on a cell
+
 1.27.4 / 2021-04-27
 ===================
 
