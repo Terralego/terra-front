@@ -113,7 +113,8 @@ export class Table extends React.Component {
       case 'number':
         return Number(cell);
       case 'integer':
-        return Number.isNaN(Number.parseInt(cell, 10)) ? '' : Number.parseInt(cell, 10);
+        const cellAsInt = Number.parseInt(cell, 10);
+        return Number.isNaN(cellAsInt) ? '' : cellAsInt;
       default:
         return cell;
     }
