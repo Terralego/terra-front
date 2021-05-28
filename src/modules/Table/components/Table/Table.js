@@ -109,8 +109,10 @@ export class Table extends React.Component {
         return new Date(cell).toLocaleDateString();
       case 'number':
         return Number(cell);
-      case 'integer':
-        return Number.parseInt(cell, 10);
+      case 'integer': {
+        const cellAsInt = Number.parseInt(cell, 10);
+        return Number.isNaN(cellAsInt) ? '' : cellAsInt;
+      }
       default:
         return cell;
     }
