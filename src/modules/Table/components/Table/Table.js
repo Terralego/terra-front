@@ -61,12 +61,9 @@ export class Table extends React.Component {
 
   componentDidUpdate ({ data: prevData, columns: prevColumns }) {
     const { data, columns } = this.props;
-    const { lastSort, sortedIndexMap } = this.state;
+    const { lastSort } = this.state;
     if (data !== prevData && columns === prevColumns) {
       this.sortColumn(...lastSort);
-    }
-    if (sortedIndexMap && data !== prevData && columns !== prevColumns) {
-      this.resetSortedIndexMap();
     }
   }
 
@@ -112,9 +109,10 @@ export class Table extends React.Component {
         return new Date(cell).toLocaleDateString();
       case 'number':
         return Number(cell);
-      case 'integer':
+      case 'integer': {
         const cellAsInt = Number.parseInt(cell, 10);
         return Number.isNaN(cellAsInt) ? '' : cellAsInt;
+      }
       default:
         return cell;
     }
