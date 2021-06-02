@@ -1,4 +1,9 @@
 
+1.27.6 / 2021-06-02
+===================
+
+  * Do not render template if data are still loading
+
 1.27.5 / 2021-05-28
 ===================
 
