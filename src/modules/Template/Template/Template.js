@@ -21,7 +21,7 @@ export const Template = ({
   ...props
 }) => {
   // Missing data could raise template render error
-  if (loading) {
+  if (loading || loading === undefined) {
     return null;
   }
 
