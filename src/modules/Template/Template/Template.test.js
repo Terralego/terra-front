@@ -15,6 +15,7 @@ beforeEach(() => HistoryLink.mockClear());
 it('should display content', () => {
   const tree = renderer.create(
     <Template
+      loading={false}
       content="Hello World"
     />,
   );
@@ -24,6 +25,7 @@ it('should display content', () => {
 it('should compile from a template', () => {
   const tree = renderer.create(
     <Template
+      loading={false}
       template="This {{foo}} is a {{bar}}"
       foo="FOO"
       bar="BAR"
@@ -35,6 +37,7 @@ it('should compile from a template', () => {
 it('should compile custom link', () => {
   const tree = renderer.create(
     <Template
+      loading={false}
       template={'<a href="foo">foo</a>'}
       history={{
         push () {},
@@ -48,6 +51,7 @@ it('should compile custom link', () => {
 it('should not compile custom link', () => {
   const tree = renderer.create(
     <Template
+      loading={false}
       template={'<a href="foo">foo</a>'}
     />,
   );
@@ -59,6 +63,7 @@ it('should not compile custom link', () => {
 it('should slugify a string', () => {
   renderer.create(
     <Template
+      loading={false}
       template={'<p>{{foo | slug}}</p>'}
       foo="Foo bar 42"
     />,
@@ -68,6 +73,7 @@ it('should slugify a string', () => {
 
 it('should slugify an empty string', () => {
   renderer.create(<Template
+    loading={false}
     template="<p>{{foo | slug}}</p>"
   />);
   expect(slugify).toHaveBeenCalledWith('');
@@ -79,6 +85,7 @@ it('should process custom tags with simple spec', () => {
   );
   const tree = renderer.create(
     <Template
+      loading={false}
       template={'<custom-tag>Hello world</custom-tag>'}
       customComponents={[{
         tagName: 'custom-tag',
@@ -95,6 +102,7 @@ it('should process custom tags with full spec', () => {
   );
   const tree = renderer.create(
     <Template
+      loading={false}
       template={'<custom-tag>Hello world</custom-tag>'}
       customComponents={[{
         shouldProcessNode: node => node.name === 'custom-tag',
@@ -110,6 +118,7 @@ it('should process custom tags with full spec', () => {
 it('should format number', () => {
   const tree = renderer.create(
     <Template
+      loading={false}
       template={'foo {{42000.123 | formatNumber(\'en\')}}'}
     />,
   );
