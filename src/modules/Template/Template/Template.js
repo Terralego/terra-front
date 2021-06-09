@@ -17,14 +17,8 @@ export const Template = ({
   content = '',
   history,
   customComponents = [],
-  loading,
   ...props
 }) => {
-  // Missing data could raise template render error
-  if (loading || loading === undefined) {
-    return null;
-  }
-
   const source = marked(template
     ? env.renderString(template, props)
     : content);
