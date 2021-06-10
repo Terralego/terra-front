@@ -1,5 +1,6 @@
 import bbox from '@turf/bbox';
 import moize from 'moize';
+import debounce from 'lodash.debounce';
 
 import { PREFIXES } from './cluster';
 
@@ -131,9 +132,9 @@ export function getInteractionsOnEvent ({
   return interactions;
 }
 
-const listenerWaiter = {};
 export function setInteractions ({ map, interactions, callback }) {
-  const eventsTypes = new Set(interactions.reduce((triggers, { trigger = 'click' }) => [...triggers, trigger], []));
+  const eventsTypes = new Set(interactions.map(({ trigger = 'click' }) => trigger));
+  const interactionList = [];
 
   /**
    * mouseover is a terralego specific event which equals to a mousemove mapbox
@@ -153,17 +154,20 @@ export function setInteractions ({ map, interactions, callback }) {
     if (trigger !== 'mouseover') return;
     const eventType = 'mouseleave';
 
+    const listenerRelatedLayers = event => {
+      const { features = [] } = PREV_STATE;
+      const feature = features.find(({ layer: { id: layerId } }) => id === layerId);
+      callback({ event, map, layerId: id, interaction, feature, eventType });
+    };
+
     getRelatedLayers(map, id).forEach(({ id: realLayer }) => {
-      map.on(eventType, realLayer, event => {
-        const { features = [] } = PREV_STATE;
-        const feature = features.find(({ layer: { id: layerId } }) => id === layerId);
-        callback({ event, map, layerId: id, interaction, feature, eventType });
-      });
+      map.on(eventType, realLayer, listenerRelatedLayers);
     });
   });
 
-  const listener = (e, eventType) => {
-    const { target, point } = e;
+  const listener = event => {
+    const { target, point, type: eventType } = event;
+
     let features;
     if (eventType === 'mousemove') {
       features = map.queryRenderedFeatures(point);
@@ -181,20 +185,23 @@ export function setInteractions ({ map, interactions, callback }) {
 
     const { interactions: filteredInteractionsSpec, feature, layerId } = interactionsSpec;
     filteredInteractionsSpec.forEach(interaction =>
-      callback({ event: e, map, layerId, feature, interaction, eventType }));
+      callback({ event, map, layerId, feature, interaction, eventType }));
   };
+
+  const debounceListener = debounce(
+    listener,
+    200,
+  );
+
   eventsTypes.forEach(eventType => {
-    map.on(eventType, e => {
-      clearTimeout(listenerWaiter[eventType]);
-      listenerWaiter[eventType] = setTimeout(() => listener(e, eventType), eventType === 'mousemove' ? 200 : 100);
-    });
+    map.on(eventType, debounceListener);
+    interactionList.push({ eventType, listener: debounceListener });
   });
 
   /**
    *  Display a pointer cursor over click zones
    */
-  map.on('mousemove', e => {
-    const { target, point } = e;
+  const handleMove = ({ target, point }) => {
     const interactionsSpec = getInteractionsOnEvent({
       eventType: 'click',
       map: target,
@@ -208,7 +215,12 @@ export function setInteractions ({ map, interactions, callback }) {
     } else {
       canvas.style.cursor = '';
     }
-  });
+  };
+
+  map.on('mousemove', handleMove);
+  interactionList.push({ eventType: 'mousemove', listener: handleMove });
+
+  return interactionList;
 }
 
 export function fitZoom ({ feature, map, padding = 0 }) {

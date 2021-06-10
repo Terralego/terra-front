@@ -365,7 +365,7 @@ describe('Interactions', () => {
   });
 
   it('should set interactions', async done => {
-    const interactions = [];
+    const interactions = [{ id: 'foo' }];
     const instance = new InteractiveMap({
       interactions,
     });
@@ -389,6 +389,27 @@ describe('Interactions', () => {
     configCallback(config);
     expect(instance.triggerInteraction).toHaveBeenCalledWith(config);
     done();
+  });
+
+  it('should unset interactions', async () => {
+    const interactions = [{ id: 'foo' }];
+    const instance = new InteractiveMap({
+      interactions,
+    });
+    instance.map = {
+      off: jest.fn(),
+    };
+    instance.triggerInteraction = () => null;
+    instance.setState = jest.fn();
+
+    instance.setInteractions();
+    await true;
+    expect(setInteractions).toHaveBeenCalled();
+
+    instance.state = { interactionList: [{ id: 'foo' }] };
+    instance.setInteractions([{ id: 'bar' }]);
+    expect(instance.map.off).toHaveBeenCalled();
+    expect(setInteractions).toHaveBeenCalled();
   });
 
   describe('fitZoom interaction', () => {
@@ -565,7 +586,7 @@ describe('Interactions', () => {
   describe('should highlight all geometries type', () => {
     const interactions = [];
     const instance = new InteractiveMap({ interactions });
-    global.console = { warn: jest.fn() };
+    global.console.warn = jest.fn();
     instance.map = {};
     instance.map.setFilter = jest.fn();
     instance.map.getPaintProperty = jest.fn(() => 'red');
