@@ -165,6 +165,7 @@ export class InteractiveMap extends React.Component {
         ? backgroundStyle[0].url
         : backgroundStyle,
       legends: [],
+      interactionList: [],
     };
   }
 
@@ -205,7 +206,7 @@ export class InteractiveMap extends React.Component {
     const { interactions, legends, controls, backgroundStyle } = this.props;
 
     if (interactions !== prevInteractions) {
-      this.setInteractions();
+      this.setInteractions(prevInteractions);
     }
 
     if (legends !== prevLegends) {
@@ -261,13 +262,32 @@ export class InteractiveMap extends React.Component {
   getOriginalTarget = ({ originalEvent }) =>
     originalEvent.relatedTarget || originalEvent.explicitOriginalTarget;
 
-  async setInteractions () {
+  async setInteractions (prevInteractions) {
     const { map } = this;
 
     if (!map) return;
 
+    const { interactionList } = this.state;
     const { interactions } = this.props;
-    setInteractions({ map, interactions, callback: config => this.triggerInteraction(config) });
+
+    if (prevInteractions?.length && interactionList.length) {
+      interactionList.forEach(interaction => {
+        map.off(interaction.eventType, interaction.listener);
+      });
+      this.setState({ interactionList: [] });
+      // Since the handleMove event listener has also been removed
+      // the cursor often gets stuck on the `pointer`
+      const canvas = map.getCanvas();
+      canvas.style.cursor = '';
+    }
+    if (interactions?.length) {
+      const nextInteractionList = setInteractions({
+        map,
+        interactions,
+        callback: config => this.triggerInteraction(config),
+      });
+      this.setState({ interactionList: nextInteractionList });
+    }
   }
 
   setInteractionsEnable = isEnable => {

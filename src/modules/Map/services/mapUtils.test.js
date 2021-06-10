@@ -10,6 +10,8 @@ import {
   PREV_STATE,
 } from './mapUtils';
 
+jest.mock('lodash.debounce', () => jest.fn(fn => (...args) => fn(...args)));
+
 const getStyle = jest.fn(() => ({
   layers: [{
     id: 'foo',
@@ -267,11 +269,17 @@ describe('should set interactions', () => {
       trigger: 'mousedown',
     }];
     const callback = () => {};
-    setInteractions({ map, interactions, callback });
+
+    const interactionList =  setInteractions({ map, interactions, callback });
     expect(listeners.length).toBe(3);
     expect(listeners[0].event).toBe('click');
     expect(listeners[1].event).toBe('mousedown');
     expect(listeners[2].event).toBe('mousemove');
+    expect(interactionList).toEqual([
+      { eventType: 'click', listener: listeners[0].listener },
+      { eventType: 'mousedown', listener: listeners[1].listener },
+      { eventType: 'mousemove', listener: listeners[2].listener },
+    ]);
   });
 
   it('with mouseover events', () => {
@@ -295,7 +303,7 @@ describe('should set interactions', () => {
       interaction: 'doSomething',
     }];
     const callback = jest.fn();
-    const event = { target: map, point: [1, 2] };
+    const event = { target: map, point: [1, 2], type: 'click' };
     map.queryRenderedFeatures = () => [{
       layer: {
         id: 'foo',
@@ -312,7 +320,6 @@ describe('should set interactions', () => {
 
     setInteractions({ map, interactions, callback });
     listeners[0].listener(event);
-    jest.runAllTimers();
 
     expect(callback).toHaveBeenCalledWith({
       event,
@@ -339,7 +346,6 @@ describe('should set interactions', () => {
 
     setInteractions({ map, interactions, callback });
     listeners[0].listener(event);
-    jest.runAllTimers();
 
     expect(callback).not.toHaveBeenCalled();
   });
@@ -351,7 +357,7 @@ describe('should set interactions', () => {
       trigger: 'mouseover',
     }];
     const callback = jest.fn();
-    const event = { target: map, point: [1, 2] };
+    const event = { target: map, point: [1, 2], type: 'mousemove' };
     PREV_STATE.features = [{
       layer: {
         id: 'foo',
@@ -361,7 +367,6 @@ describe('should set interactions', () => {
 
     setInteractions({ map, interactions, callback });
     listeners[0].listener(event);
-    jest.runAllTimers();
 
     expect(callback).toHaveBeenCalledWith({
       event,
@@ -378,7 +383,6 @@ describe('should set interactions', () => {
     callback.mockClear();
 
     listeners[1].listener(event);
-    jest.runAllTimers();
 
     expect(listeners[1].event).toBe('mousemove');
     expect(listeners[1].id).toBe(null);
@@ -398,7 +402,6 @@ describe('should set interactions', () => {
 
     delete PREV_STATE.features;
     listeners[0].listener(event);
-    jest.runAllTimers();
 
     expect(callback).toHaveBeenCalledWith({
       event,
@@ -426,7 +429,6 @@ describe('should set interactions', () => {
     setInteractions({ map, interactions, callback });
 
     listeners[1].listener({ target: map, point: [1, 2] });
-    jest.runAllTimers();
 
     expect(map.getCanvas).toHaveBeenCalled();
     expect(canvas.style.cursor).toBe('pointer');
@@ -434,7 +436,6 @@ describe('should set interactions', () => {
     map.queryRenderedFeatures = () => [];
 
     listeners[1].listener({ target: map, point: [1, 2] });
-    jest.runAllTimers();
 
     expect(map.getCanvas).toHaveBeenCalled();
     expect(canvas.style.cursor).toBe('');
