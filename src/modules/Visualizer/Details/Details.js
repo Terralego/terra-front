@@ -150,12 +150,16 @@ class Details extends React.Component {
                 {...fetchProperties}
                 properties={featureToDisplay}
               >
-                {({ properties: newProperties, ...staticProperties }) => (
-                  <Template
-                    template={template}
-                    {...staticProperties}
-                    {...newProperties}
-                  />
+                {({ properties: newProperties, loading, ...staticProperties }) => (
+                  (loading === false)
+                    ? (
+                      <Template
+                        template={template}
+                        {...staticProperties}
+                        {...newProperties}
+                      />
+                    )
+                    : null
                 )}
               </FeatureProperties>
             </div>

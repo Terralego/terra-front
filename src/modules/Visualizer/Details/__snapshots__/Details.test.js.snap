@@ -1,6 +1,6 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
-exports[`should display a feature 1`] = `<Template />`;
+exports[`should display a feature 1`] = `null`;
 
 exports[`should render correctly with content 1`] = `
 <div
