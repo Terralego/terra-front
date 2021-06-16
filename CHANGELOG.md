@@ -1,4 +1,10 @@
 
+1.27.7 / 2021-06-16
+===================
+
+  * Do not render template with no data (#272)
+  * Remove previous interaction listeners if `ìnteractions` prop did update
+
 1.27.6 / 2021-06-02
 ===================
 
