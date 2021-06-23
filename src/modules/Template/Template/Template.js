@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useMemo } from 'react';
 import PropTypes from 'prop-types';
 import marked from 'marked';
 import nunjucks from 'nunjucks';
@@ -23,36 +23,47 @@ export const Template = ({
     ? env.renderString(template, props)
     : content);
 
-  const processNodeDefinitions = new ProcessNodeDefinitions(React);
+  const processingInstructions = useMemo(() => {
+    const processNodeDefinitions = new ProcessNodeDefinitions(React);
+    const customInstructions = customComponents.map(spec => {
+      if (spec.processNode) {
+        return spec;
+      }
+
+      const { tagName, autoClose, component: Component } = spec;
+      return {
+        replaceChildren: false,
+        shouldProcessNode: node => node.name && node.name === tagName,
+        processNode: (node, children, index) => (
+          <React.Fragment key={index}>
+            <Component {...node.attribs}>{!autoClose && children}</Component>
+            {autoClose && children}
+          </React.Fragment>
+        ),
+        ...spec,
+      };
+    });
+
+    return [
+      {
+        replaceChildren: false,
+        shouldProcessNode: node => history && node.name && node.name === 'a',
+        processNode: (node, children) => (
+          <HistoryLink {...node.attribs} history={history}>{children}</HistoryLink>
+        ),
+      },
+      ...customInstructions,
+      {
+        shouldProcessNode: () => true,
+        processNode: processNodeDefinitions.processDefaultNode,
+      },
+    ];
+  }, [customComponents, history]);
 
   return new Parser().parseWithInstructions(
     source,
     () => true,
-    [{
-      replaceChildren: false,
-      shouldProcessNode: node => history && node.name && node.name === 'a',
-      processNode: (node, children) => (
-        <HistoryLink {...node.attribs} history={history}>{children}</HistoryLink>
-      ),
-    }, ...customComponents.map(spec => {
-      const { tagName, autoClose, component: Component } = spec;
-      return spec.processNode
-        ? spec
-        : {
-          replaceChildren: false,
-          shouldProcessNode: node => node.name && node.name === tagName,
-          processNode: (node, children, index) => (
-            <React.Fragment key={index}>
-              <Component {...node.attribs}>{!autoClose && children}</Component>
-              {autoClose && children}
-            </React.Fragment>
-          ),
-          ...spec,
-        };
-    }), {
-      shouldProcessNode: () => true,
-      processNode: processNodeDefinitions.processDefaultNode,
-    }],
+    processingInstructions,
   ) || null;
 };
 

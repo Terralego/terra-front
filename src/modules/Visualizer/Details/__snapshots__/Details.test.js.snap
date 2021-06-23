@@ -1,6 +1,12 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
-exports[`should display a feature 1`] = `null`;
+exports[`should display a feature 1`] = `
+<ErrorBoundary
+  errorMsg="terralego.map.template.render.error"
+>
+  <Template />
+</ErrorBoundary>
+`;
 
 exports[`should render correctly with content 1`] = `
 <div

@@ -5,6 +5,7 @@ import { Button } from '@blueprintjs/core';
 
 import FeatureProperties from '../../Map/FeatureProperties';
 import Template from '../../Template';
+import ErrorBoundary from '../../../components/ErrorBoundary';
 import './styles.scss';
 
 class Details extends React.Component {
@@ -97,6 +98,7 @@ class Details extends React.Component {
       onClose,
       isTableActive,
       enableCarousel,
+      translate = a => a,
     } = this.props;
     const {
       feature: { properties } = {},
@@ -150,16 +152,14 @@ class Details extends React.Component {
                 {...fetchProperties}
                 properties={featureToDisplay}
               >
-                {({ properties: newProperties, loading, ...staticProperties }) => (
-                  (loading === false)
-                    ? (
-                      <Template
-                        template={template}
-                        {...staticProperties}
-                        {...newProperties}
-                      />
-                    )
-                    : null
+                {({ properties: newProperties, ...staticProperties }) => (
+                  <ErrorBoundary errorMsg={translate('terralego.map.template.render.error')}>
+                    <Template
+                      template={template}
+                      {...staticProperties}
+                      {...newProperties}
+                    />
+                  </ErrorBoundary>
                 )}
               </FeatureProperties>
             </div>

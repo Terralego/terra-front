@@ -2,6 +2,7 @@ import React from 'react';
 
 import Template from '../../../../Template/Template';
 import FeatureProperties from '../../../FeatureProperties';
+import ErrorBoundary from '../../../../../components/ErrorBoundary';
 
 export const Tooltip = ({ fetch, properties, ...props }) => (
   <FeatureProperties
@@ -9,10 +10,12 @@ export const Tooltip = ({ fetch, properties, ...props }) => (
     properties={properties}
   >
     {allProperties => (
-      <Template
-        {...props}
-        {...allProperties}
-      />
+      <ErrorBoundary>
+        <Template
+          {...props}
+          {...allProperties}
+        />
+      </ErrorBoundary>
     )}
   </FeatureProperties>
 );
