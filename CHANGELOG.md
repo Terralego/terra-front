@@ -1,4 +1,9 @@
 
+1.27.8 / 2021-06-23
+===================
+
+  * Catch template rendering error early to avoid app crashing (#274)
+
 1.27.7 / 2021-06-16
 ===================
 
