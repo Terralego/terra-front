@@ -11,6 +11,16 @@ const DEFAULT_ENV = nunjucks.configure();
 DEFAULT_ENV.addFilter('slug', value => slugify(`${value || ''}`.toLowerCase()));
 DEFAULT_ENV.addFilter('formatNumber', (value, locale) => new Intl.NumberFormat(locale).format(value));
 
+// Quick fix to avoid template render error when using trim on null value
+const defaultTrimFilter = DEFAULT_ENV.getFilter('trim');
+DEFAULT_ENV.addFilter('trim', value => {
+  try {
+    return defaultTrimFilter(value);
+  } catch (e) {
+    return '';
+  }
+});
+
 export const Template = ({
   env = DEFAULT_ENV,
   template,
