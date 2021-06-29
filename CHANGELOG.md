@@ -1,4 +1,9 @@
 
+1.27.9 / 2021-06-29
+===================
+
+  * Override nunjuck trim filter to allow null value
+
 1.27.8 / 2021-06-23
 ===================
 
