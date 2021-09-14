@@ -1,4 +1,10 @@
 
+1.27.10 / 2021-09-14
+===================
+
+  * Upgrade react-ctx-connect package to 1.0.3
+  * Upgrade @makina-corpus/mapbox-gl-path package to 1.9.0
+
 1.27.9 / 2021-06-29
 ===================
 
