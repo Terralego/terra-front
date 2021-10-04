@@ -66,6 +66,8 @@ export const getSearchParamFromProperty = (properties, form, key) => {
  * @param {Object[]} [aggregations] Array of aggregations definition.
  *   Each aggregation will take a type, a field, a name and options.
  *    See https://bodybuilder.js.org/docs/#aggregation
+ * @param {{}} [baseQuery] base query to start over.
+ * @param {{}} [hookQuery] Allow to access bodybuild before the end.
  */
 export const buildQuery = ({
   query = '',
@@ -75,8 +77,18 @@ export const buildQuery = ({
   include,
   exclude,
   aggregations/* = [{ type, field, name, options }] */,
+  baseQuery = {},
+  hookQuery = () => {},
 }) => {
   const body = bodybuilder();
+
+  if (baseQuery?.query?.bool?.filter) {
+    // Add filter clauses from base query
+    Object.entries(baseQuery.query.bool.filter).forEach(([key, value]) => {
+      body.filter(key, value);
+    });
+  }
+
   body.size(size);
   body.rawOption('track_total_hits', true); // Will not be supported in version 8 of ES.
   if (query) {
@@ -125,6 +137,9 @@ export const buildQuery = ({
     aggregations.forEach(({ type = 'terms', field, options, name }) =>
       body.aggregation(type, field, options, name));
   }
+
+  // Apply query hooks if any
+  hookQuery(body);
 
   const bodyBuild = body.build();
 
