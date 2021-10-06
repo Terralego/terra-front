@@ -296,6 +296,7 @@ it('should filter features', () => {
     fire: jest.fn(),
   };
   const layer1 = {
+    id: 'foo',
     label: 'foo',
     layers: ['foo', 'unknownlayer'],
     filters: {
@@ -303,10 +304,12 @@ it('should filter features', () => {
     },
   };
   const layer2 = {
+    id: 'bar',
     label: 'bar',
     layers: ['bar'],
   };
   const layer3 = {
+    id: 'cluster',
     label: 'cluster',
     layers: ['cluster'],
     filters: {
@@ -318,15 +321,14 @@ it('should filter features', () => {
   ltState.set(layer2, { active: false });
   ltState.set(layer3, { active: true });
 
-  filterFeatures(map, [{ layer: 'bar', features: ['1', '2'] }], ltState);
-  expect(map.fire).toHaveBeenCalledWith('refreshCluster');
+  filterFeatures(map, { bar: { features: ['1', '2'], layers: ['bar'] } }, ltState);
   expect(map.setFilter).toHaveBeenCalledWith('foo', ['prev', 'filter']);
-  expect(map.setFilter).toHaveBeenCalledTimes(1);
+  expect(map.setFilter).toHaveBeenCalledTimes(2);
 
   map.setFilter.mockClear();
   map.fire.mockClear();
   ltState.set(layer3, { active: false });
-  filterFeatures(map, [{ layer: 'foo', features: ['1', '2'] }], ltState);
+  filterFeatures(map, { foo: { features: ['1', '2'], layers: ['foo'] } }, ltState);
   expect(map.fire).not.toHaveBeenCalled();
   expect(map.setFilter).toHaveBeenCalledWith('foo', ['match', ['get', '_id'], ['1', '2'], true, false]);
   expect(map.setFilter).toHaveBeenCalledTimes(1);
@@ -334,7 +336,7 @@ it('should filter features', () => {
   map.setFilter.mockClear();
   map.fire.mockClear();
   ltState.set(layer3, { active: false });
-  filterFeatures(map, [{ layer: 'foo', features: [] }], ltState);
+  filterFeatures(map, { foo: { features: [], layers: ['foo'] } }, ltState);
   expect(map.fire).not.toHaveBeenCalled();
   expect(map.setFilter).toHaveBeenCalledWith('foo', false);
   expect(map.setFilter).toHaveBeenCalledTimes(1);

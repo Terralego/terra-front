@@ -327,6 +327,7 @@ it('should update cluster first time with single radius', () => {
   });
   expect(onClusterUpdate).toHaveBeenCalledWith({
     features: [],
+    layer: 'layer',
     source: 'source',
     sourceLayer: 'source-layer',
   });
@@ -495,6 +496,7 @@ it('should dedpuplicate features on update', () => {
         _id: 5,
       },
     }],
+    layer: 'foo',
     source: 'bar',
     sourceLayer: 'foobar',
   });

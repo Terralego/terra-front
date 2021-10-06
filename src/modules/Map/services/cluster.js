@@ -119,7 +119,7 @@ export const createClusterLayers = ({
 
 export const updateCluster = (map, layer, onClusterUpdate = ({ features }) => features) => {
   const {
-    id,
+    id, /* mapbox layer id */
     source,
     'source-layer': sourceLayer,
     minzoom: layerMinzoom = 0,
@@ -127,6 +127,7 @@ export const updateCluster = (map, layer, onClusterUpdate = ({ features }) => fe
     cluster: {
       radius: clusterRadius,
     },
+    ...extraLayerData // Allow to give extra information
   } = layer;
   const ghostLayerId = `${id}-cluster-data`;
   if (!map.getLayer(ghostLayerId)) {
@@ -177,9 +178,11 @@ export const updateCluster = (map, layer, onClusterUpdate = ({ features }) => fe
   );
 
   const features = onClusterUpdate({
+    layer: id, /* mapobx layer id */
     features: allFeatures,
     source,
     sourceLayer,
+    ...extraLayerData,
   });
 
   sources.forEach(clusterSourceName => {
