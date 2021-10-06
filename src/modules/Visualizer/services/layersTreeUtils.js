@@ -137,39 +137,42 @@ const filterFromFeatureIds = ids => {
 
 export const filterFeatures = (
   map,
-  features/* = [ { layer: String, features: [id1, id2, …] } ] */,
+  features/* = { id: { features: [id1, id2, …], layers [id1, id2,...] }} */,
   layersTreeState,
 ) => {
   Array.from(layersTreeState).forEach(([{
     layers,
-    filters: { layer } = {},
+    id,
   }, {
     active,
   }]) => {
     if (!active || !layers) return;
-    const layerFeatures = features
-      .find(({ layer: fLayer }) => fLayer === layer);
-    const { features: ids } = layerFeatures || {};
 
-    const filter = filterFromFeatureIds(ids);
+    // Keep only features ids for current layer id
+    const { features: ids } = features[id] || {};
 
-    layers.forEach(layerId => {
-      const paintLayer = map.getLayer(layerId);
+    layers.forEach(mapLayerId => {
+      if (!INITIAL_FILTERS.has(mapLayerId)) {
+        INITIAL_FILTERS.set(mapLayerId, map.getFilter(mapLayerId));
+      }
+
+      const paintLayer = map.getLayer(mapLayerId);
       if (!paintLayer) return;
 
-      if (isCluster(paintLayer.source, layerId)) {
-        // Force to upgrade cluster data
-        map.fire('refreshCluster');
+      if (!ids) {
+        // no feature defined for this layer so we reset the filter
+        map.setFilter(mapLayerId, INITIAL_FILTERS.get(mapLayerId));
         return;
       }
 
-      if (!INITIAL_FILTERS.has(layerId)) {
-        INITIAL_FILTERS.set(layerId, map.getFilter(layerId));
-      }
-      map.setFilter(layerId, layerFeatures ? filter : INITIAL_FILTERS.get(layerId));
+      // Generate mapbox filter from id list
+      const filter = filterFromFeatureIds(ids);
+
+      map.setFilter(mapLayerId, filter);
     });
   });
 };
+
 
 export const resetFilters = (map, layersTreeState) => {
   Array.from(layersTreeState).forEach(([{
