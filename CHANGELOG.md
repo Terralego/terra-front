@@ -1,3 +1,12 @@
+
+1.28.0 / 2021-10-06
+===================
+
+  * Avoid to filter bad layers
+  * Add options to ES search utilities to allow query modifications
+  * Upgrade react-ctx-connect package to 1.0.3
+  * Upgrade @makina-corpus/mapbox-gl-path package to 1.9.0
+
 1.27.11 / 2021-09-14
 ===================
 
