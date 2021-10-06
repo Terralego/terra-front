@@ -152,12 +152,12 @@ export const filterFeatures = (
     const { features: ids } = features[id] || {};
 
     layers.forEach(mapLayerId => {
+      const paintLayer = map.getLayer(mapLayerId);
+      if (!paintLayer) return;
+
       if (!INITIAL_FILTERS.has(mapLayerId)) {
         INITIAL_FILTERS.set(mapLayerId, map.getFilter(mapLayerId));
       }
-
-      const paintLayer = map.getLayer(mapLayerId);
-      if (!paintLayer) return;
 
       if (!ids) {
         // no feature defined for this layer so we reset the filter
