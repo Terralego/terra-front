@@ -220,9 +220,10 @@ export const sortCustomLayers = (customLayers, layersTree) => {
  * @param {Object} property Property to fetch
  * @return Mixed[]
  */
-export const fetchPropertyValues = async (layer, { property }) => {
+export const fetchPropertyValues = async (layer, { property }, baseQuery) => {
   const results = await searchService.search({
     index: layer,
+    baseQuery,
     aggregations: [{
       type: 'terms',
       field: `${property}.keyword`,
@@ -243,9 +244,10 @@ export const fetchPropertyValues = async (layer, { property }) => {
  * @param {Object} property Property to fetch
  * @return { min: Number, max: Number }
  */
-export const fetchPropertyRange = async (layer, { property }) => {
+export const fetchPropertyRange = async (layer, { property }, baseQuery) => {
   const results = await searchService.search({
     index: layer,
+    baseQuery,
     aggregations: [{
       type: 'max',
       field: `${property}`,

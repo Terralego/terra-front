@@ -97,7 +97,7 @@ export class LayersTreeProvider extends React.Component {
   /**
    * Fetch values for each properties. Allow filter to be populated.
    */
-  fetchPropertiesValues = async (layer, properties) => {
+  fetchPropertiesValues = async (layer, properties, baseQuery) => {
     const { fetchPropertyValues, fetchPropertyRange } = this.props;
     const { layersTreeState } = this.state;
     properties.forEach(property => {
@@ -114,8 +114,8 @@ export class LayersTreeProvider extends React.Component {
 
     const responses = await Promise.all(properties.map(property =>
       (property.type === TYPE_RANGE
-        ? fetchPropertyRange(layer, property)
-        : fetchPropertyValues(layer, property))));
+        ? fetchPropertyRange(layer, property, baseQuery)
+        : fetchPropertyValues(layer, property, baseQuery))));
 
     properties.forEach((property, index) => {
       const { type } = property;

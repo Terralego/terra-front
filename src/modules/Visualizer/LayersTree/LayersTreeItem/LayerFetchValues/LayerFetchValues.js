@@ -15,12 +15,13 @@ export class LayerFetchValues extends React.Component {
 
   fetchValues () {
     const {
-      layer: { filters: { layer, form = [] } = {} },
+      layer: { filters: { layer, form = [] } = {}, baseEsQuery: baseQuery },
       fetchPropertiesValues,
     } = this.props;
+
     const properties = form.filter(property => property.fetchValues);
     if (properties.length) {
-      fetchPropertiesValues(layer, properties);
+      fetchPropertiesValues(layer, properties, baseQuery);
     }
   }
 
