@@ -36,7 +36,7 @@ it('should fetch values', () => {
 
   instance.props.layer.filters.form = [property];
   instance.fetchValues();
-  expect(fetchPropertiesValues).toHaveBeenCalledWith('foo', [property]);
+  expect(fetchPropertiesValues).toHaveBeenCalledWith('foo', [property], undefined);
 });
 
 it('should render nothing', () => {
