@@ -85,8 +85,8 @@ Every component should be configurable by passing replacement props from TerraFr
 <otherproject/dir> $ npm link <terrafront/dir>/dist
 
 # Come back to terrafront/dir inside dist
-<terrafront/dir>/dist $ npm link <otherproject/dir>/node_modules/react
-<terrafront/dir>/dist $ npm link <otherproject/dir>/node_modules/react-router
+<terrafront/dir> $ npm link <otherproject/dir>/node_modules/react
+<terrafront/dir> $ npm link <otherproject/dir>/node_modules/react-router
 <terrafront/dir> $ npm run build-local
 <terrafront/dir> $ npm run watch:babel # To start autobuilding
 
