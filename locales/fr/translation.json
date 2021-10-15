@@ -167,11 +167,21 @@
         "link": "Partager la carte",
         "share": "Partager la carte sur {{context}}"
       },
+      "template": {
+        "render": {
+          "error": ""
+        }
+      },
       "zoom_in_control": {
         "title": "Zoomer"
       },
       "zoom_out_control": {
         "title": "Dézoomer"
+      }
+    },
+    "pictures": {
+      "compare": {
+        "placeholder": "Sélectionnez une photo à comparer"
       }
     },
     "visualizer": {
@@ -235,11 +245,6 @@
       },
       "too_many_results": "Votre recherche contient trop de résultats ({{number}}), veuillez affiner votre requête ou zoomer sur une zone plus restreinte.",
       "unfold": "Déplier"
-    },
-    "pictures": {
-      "compare": {
-        "placeholder": "Sélectionnez une photo à comparer"
-      }
     }
   }
 }

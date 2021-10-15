@@ -110,14 +110,14 @@ it('should fetch property values', async () => {
   expect(property.loading).toEqual(true);
   expect(instance.resetState).toHaveBeenCalledWith({ layersTreeState: expect.any(Map) });
   instance.resetState.mockClear();
-  expect(fetchPropertyValues).toHaveBeenCalledWith(layer, property);
+  expect(fetchPropertyValues).toHaveBeenCalledWith(layer, property, undefined);
 
   await wait;
   expect(property.values).toEqual(values);
   expect(instance.resetState).toHaveBeenCalledWith({ layersTreeState: expect.any(Map) });
 
   instance.props.fetchPropertyValues = jest.fn();
-  await instance.fetchPropertiesValues(layer, [property]);
+  await instance.fetchPropertiesValues(layer, [property], undefined);
   expect(property.values).toEqual([]);
 });
 
@@ -135,7 +135,7 @@ it('should fetch property ranges', async () => {
   expect(property.loading).toEqual(true);
   expect(instance.resetState).toHaveBeenCalledWith({ layersTreeState: expect.any(Map) });
   instance.resetState.mockClear();
-  expect(fetchPropertyRange).toHaveBeenCalledWith(layer, property);
+  expect(fetchPropertyRange).toHaveBeenCalledWith(layer, property, undefined);
 
   await wait;
   expect(property.min).toBe(2);
@@ -143,7 +143,7 @@ it('should fetch property ranges', async () => {
   expect(instance.resetState).toHaveBeenCalledWith({ layersTreeState: expect.any(Map) });
 
   instance.props.fetchPropertyRange = jest.fn();
-  await instance.fetchPropertiesValues(layer, [property]);
+  await instance.fetchPropertiesValues(layer, [property], undefined);
   expect(property.min).toBe(0);
   expect(property.max).toBe(100);
 });
