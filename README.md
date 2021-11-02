@@ -50,7 +50,17 @@ npm run build
 
 ## Publish
 
-Publish package to npmjs.com *(current commit should be tagged)*
+The package publication is automatic for all tagged version. To proceed, execute
+the following commands on master:
+
+```sh
+npm version [patch|minor|major] # Select the type according to the evolution criticity
+# ... the previous command proposes you to edit the CHANGELOG
+git push && git push --tags
+# Then the gitlab pipeline starts and should publish the package.
+```
+
+To publish manually (not recomanded) the package to npmjs.com *(current commit should be tagged)*
 
 ```shell
 npm run publish
