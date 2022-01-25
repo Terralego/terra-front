@@ -2,8 +2,8 @@ import React from 'react';
 import { storiesOf } from '@storybook/react';
 import { action } from '@storybook/addon-actions';
 
-import ReportForm from '../../../modules/Map/Map/components/ReportControl/ReportForm';
-import ReportCard from '../../../modules/Map/Map/components/ReportControl/ReportCard';
+import ReportForm from '../Map/components/ReportControl/ReportForm';
+import ReportCard from '../Map/components/ReportControl/ReportCard';
 
 import translate from './reportTranslateMock';
 

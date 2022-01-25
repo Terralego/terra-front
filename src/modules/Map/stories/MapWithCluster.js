@@ -1,6 +1,6 @@
 import React from 'react';
 
-import InteractiveMap from '../../../modules/Map/InteractiveMap';
+import InteractiveMap from '../InteractiveMap';
 
 const accessToken = process.env.REACT_APP_MAPBOX_TOKEN;
 

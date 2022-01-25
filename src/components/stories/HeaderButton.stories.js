@@ -1,7 +1,7 @@
 import React from 'react';
 import { storiesOf } from '@storybook/react';
 
-import HeaderButton from '../../../components/HeaderButton';
+import HeaderButton from '../HeaderButton';
 
 import sign from '../../../images/info-sign.svg';
 

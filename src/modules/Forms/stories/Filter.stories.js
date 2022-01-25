@@ -13,7 +13,7 @@ import Filters, {
   TYPE_MANY,
   TYPE_RANGE,
   TYPE_BOOL,
-} from '../../../modules/Forms/Filters';
+} from '../Filters';
 import './styles.css';
 import translateMock from '../../../utils/translate';
 

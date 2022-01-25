@@ -3,7 +3,7 @@ import { storiesOf } from '@storybook/react';
 
 import { boolean, object } from '@storybook/addon-knobs';
 import { action } from '@storybook/addon-actions';
-import HomeControl from '../../../modules/Map/Map/components/HomeControl';
+import HomeControl from '../Map/components/HomeControl';
 import '@makina-corpus/mapbox-gl-path/dist/mapbox-gl-path.css';
 
 import {
@@ -19,11 +19,11 @@ import {
   CONTROL_SHARE,
   CONTROL_CUSTOM,
   CONTROL_REPORT,
-} from '../../../modules/Map/Map';
+} from '../Map';
 import InteractiveMap, {
   CONTROL_BACKGROUND_STYLES,
-} from '../../../modules/Map/InteractiveMap';
-import leftInfoButtonStyles from '../../leftInfosButtonStyles';
+} from '../InteractiveMap';
+import leftInfoButtonStyles from '../../../stories/leftInfosButtonStyles';
 
 import doc from './MapControls.md';
 import translate from './reportTranslateMock';

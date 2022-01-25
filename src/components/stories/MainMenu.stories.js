@@ -2,7 +2,7 @@ import React from 'react';
 import { storiesOf } from '@storybook/react';
 import { Icon } from '@blueprintjs/core';
 
-import MainMenu from '../../../components/MainMenu';
+import MainMenu from '../MainMenu';
 
 import login from '../../../images/log-in.svg';
 import './styles.scss';

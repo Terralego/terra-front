@@ -2,10 +2,10 @@ import React from 'react';
 import { storiesOf } from '@storybook/react';
 import { boolean, text } from '@storybook/addon-knobs';
 
-import { ApiProvider } from '../../../modules/Api';
-import AuthProvider, { LoginForm, SignupForm } from '../../../modules/Auth';
-import LoginFormPure from '../../../modules/Auth/components/LoginForm/LoginForm';
-import SignupFormPure from '../../../modules/Auth/components/SignupForm/SignupForm';
+import { ApiProvider } from '../../Api';
+import AuthProvider, { LoginForm, SignupForm } from '..';
+import LoginFormPure from '../components/LoginForm/LoginForm';
+import SignupFormPure from '../components/SignupForm/SignupForm';
 
 import loginDoc from './login.md';
 import signupDoc from './signup.md';

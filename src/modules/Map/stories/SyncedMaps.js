@@ -1,7 +1,7 @@
 import React from 'react';
 
-import SyncMaps, { SyncedMap } from '../../../modules/Map/SyncMaps';
-import Map from '../../../modules/Map/Map';
+import SyncMaps, { SyncedMap } from '../SyncMaps';
+import Map from '../Map';
 
 const accessToken = process.env.REACT_APP_MAPBOX_TOKEN;
 

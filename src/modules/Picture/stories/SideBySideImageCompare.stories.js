@@ -3,7 +3,7 @@ import  { storiesOf } from '@storybook/react';
 
 import translateMock from '../../../utils/translate';
 
-import SideBySideImages from '../../../modules/Picture/compare/SideBySideImages';
+import SideBySideImages from '../compare/SideBySideImages';
 import img1 from './picture1.png';
 
 const picture1 = { file: { full: img1 } };
