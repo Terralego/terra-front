@@ -4,7 +4,7 @@ import { Icon } from '@blueprintjs/core';
 
 import MainMenu from '../MainMenu';
 
-import login from '../../../images/log-in.svg';
+import login from '../../images/log-in.svg';
 import './styles.scss';
 
 // eslint-disable-next-line no-alert

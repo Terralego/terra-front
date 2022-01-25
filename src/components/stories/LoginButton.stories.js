@@ -5,7 +5,7 @@ import { boolean } from '@storybook/addon-knobs';
 import LoginButton from '../LoginButton/LoginButton';
 import translateMock from '../../utils/translate';
 
-import logIn from '../../../images/log-in.svg';
+import logIn from '../../images/log-in.svg';
 
 const translate = translateMock({
   'auth.logout.confirm.label': 'Confirm logout',

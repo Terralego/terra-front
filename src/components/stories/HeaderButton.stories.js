@@ -3,7 +3,7 @@ import { storiesOf } from '@storybook/react';
 
 import HeaderButton from '../HeaderButton';
 
-import sign from '../../../images/info-sign.svg';
+import sign from '../../images/info-sign.svg';
 
 const stories = storiesOf('Components/Header', module);
 stories.add('HeaderButton', () => (
