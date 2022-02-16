@@ -8,12 +8,14 @@ import {
 
 import HeaderLink from './HeaderLink';
 import HeaderButton from './HeaderButton';
+import { connectState } from '../modules/State/context';
 
 export const NavBarItemDesktop = ({
   id,
   content,
   label,
   icon,
+  setForceFitBounds,
   ...props
 }) => (
   <Tooltip
@@ -29,6 +31,7 @@ export const NavBarItemDesktop = ({
         id={id}
         icon={icon}
         alt={label}
+        onClick={() => setForceFitBounds(true)}
       >
         {content}
       </HeaderButton>
@@ -54,4 +57,4 @@ NavBarItemDesktop.defaultProps = {
   onClick () {},
 };
 
-export default NavBarItemDesktop;
+export default connectState('setForceFitBounds')(NavBarItemDesktop);

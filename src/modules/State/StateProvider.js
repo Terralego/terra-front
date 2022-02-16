@@ -22,11 +22,13 @@ export class StateProvider extends React.Component {
   };
 
   render () {
-    const { children } = this.props;
+    const { children, forceFitBounds, setForceFitBounds } = this.props;
     return (
       <Provider value={{
         initialState: this.state,
         setCurrentState: this.setCurrentState,
+        forceFitBounds,
+        setForceFitBounds,
       }}
       >
         {children}

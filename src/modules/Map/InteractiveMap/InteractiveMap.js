@@ -717,4 +717,4 @@ export class InteractiveMap extends React.Component {
   }
 }
 
-export default connectState('initialState')(InteractiveMap);
+export default connectState('initialState', 'forceFitBounds')(InteractiveMap);
