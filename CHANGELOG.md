@@ -1,4 +1,10 @@
 
+1.28.3 / 2022-02-16
+===================
+
+  * Force fitbounds on specific bbox for each view
+  * Add publish procedure
+
 1.28.2 / 2021-10-25
 ===================
 
