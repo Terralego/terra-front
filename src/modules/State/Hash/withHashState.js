@@ -44,14 +44,19 @@ export const withHashState = WrappedComponent => {
 
     componentDidMount () {
       const { listenHash } = this.props;
+      const { initialState } = this.state;
+
       if (listenHash) {
         window.addEventListener('hashchange', this.onHashChange, false);
       }
+
+      this.setState({ forceFitBounds: !Object.keys(initialState).length });
     }
 
     componentWillUnmount () {
       this.isUnmount = true;
       window.removeEventListener('hashchange', this.onHashChange, false);
+      document.addEventListener('DOMContentLoaded', this.forceFitBounds);
     }
 
     /**
@@ -76,12 +81,16 @@ export const withHashState = WrappedComponent => {
       }
     };
 
+    setForceFitBounds = forceFitBounds => this.setState({ forceFitBounds });
+
     render () {
       const { listenHash, updateHash, ...props } = this.props;
-      const { initialState } = this.state;
+      const { initialState, forceFitBounds } = this.state;
       return (
         <WrappedComponent
           initialState={initialState}
+          forceFitBounds={forceFitBounds}
+          setForceFitBounds={this.setForceFitBounds}
           {...props}
           getCurrentHashString={getCurrentHashString}
           onStateChange={this.updateHashString}

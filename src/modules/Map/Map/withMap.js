@@ -215,8 +215,8 @@ export const withMap = WrappedComponent => {
         hash,
         locale,
         layerTypesWeight,
+        forceFitBounds,
       } = this.props;
-
       mapBoxGl.accessToken = accessToken;
 
       const hasHash = hash && !!global.location.hash;
@@ -243,7 +243,7 @@ export const withMap = WrappedComponent => {
         this.containerEl.current.mapboxInstance = map;
       }
 
-      if (!hasHash && fitBounds) {
+      if (fitBounds && (forceFitBounds || !hasHash)) {
         const { coordinates, ...fitBoundsParams } = fitBounds;
         map.fitBounds(coordinates, fitBoundsParams);
       }
