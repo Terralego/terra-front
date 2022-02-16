@@ -50,6 +50,9 @@ npm run build
 
 ## Publish
 
+**Requirements: git-extras needed by npm version to run the command `git changelog`**   
+
+
 The package publication is automatic for all tagged version. To proceed, execute
 the following commands on master:
 
