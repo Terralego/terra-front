@@ -1,4 +1,4 @@
-import translateMock from '../../../utils/translate'
+import translateMock from '../../../utils/translate';
 
 const translate = translateMock({
   'terralego.map.report_control.form.radiogroup.label': 'What do you want to report?',

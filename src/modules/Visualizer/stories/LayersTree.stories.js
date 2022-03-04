@@ -3,12 +3,12 @@ import { storiesOf } from '@storybook/react';
 import { action } from '@storybook/addon-actions';
 import { object } from '@storybook/addon-knobs';
 
-import LayersTreeProvider from '../../../modules/Visualizer/LayersTree/LayersTreeProvider';
-import LayersTreeSingle, { LayersTree as ConnectedLayersTree, connectLayersTree } from '../../../modules/Visualizer/LayersTree';
-import LayersTree from '../../../modules/Visualizer/LayersTree/LayersTree';
+import LayersTreeProvider from '../LayersTree/LayersTreeProvider';
+import LayersTreeSingle, { LayersTree as ConnectedLayersTree, connectLayersTree } from '../LayersTree';
+import LayersTree from '../LayersTree/LayersTree';
 import layersTreeConfig, { storyLayersTreeConfig } from './layersTree';
-import Story from '../../../modules/Visualizer/Story/Story';
-import { layersTreeToStory } from '../../../modules/Visualizer/services/layersTreeUtils';
+import Story from '../Story/Story';
+import { layersTreeToStory } from '../services/layersTreeUtils';
 
 const stories = storiesOf('Components/LayersTree', module);
 
