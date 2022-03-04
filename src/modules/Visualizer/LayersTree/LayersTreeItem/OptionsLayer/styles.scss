@@ -1,3 +1,5 @@
+@use "sass:math";
+
 @import '../../../../../utils/variables.scss'; 
 
 .layerNode-Option-Container {
@@ -33,18 +35,18 @@
     .bp3-slider {
       width: calc(100% - .5rem / #{$scaleRatio});
       span {
-        width: 1rem / $scaleRatio;
+        width: math.div(1rem, $scaleRatio);
       }
     }
   }
   
   .layerNode-Option-slider-label {
-    font-size: .75rem / $scaleRatio;
-    line-height: .9rem / $scaleRatio;
-    margin-bottom: .25rem / $scaleRatio;
+    font-size: math.div(.75rem, $scaleRatio);
+    line-height: math.div(.9rem, $scaleRatio);
+    margin-bottom: math.div(.25rem, $scaleRatio);
   }
   
   .layerNode-Option-button:not(:last-of-type) {
-    margin-right: .75rem / $scaleRatio;
+    margin-right: math.div(.75rem, $scaleRatio);
   }
 }

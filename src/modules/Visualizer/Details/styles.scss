@@ -1,3 +1,5 @@
+@use "sass:math";
+
 @import '../../../utils/variables.scss';
 
 .view-details {
@@ -197,7 +199,7 @@
     }
   
     .details {
-      padding: .5rem / $scaleRatio;
+      padding: math.div(.5rem, $scaleRatio);
 
       &__picto {
         width: 4.25rem;
@@ -205,12 +207,12 @@
       }
   
       &__title {
-        font-size: 1.6rem/$scaleRatio;
+        font-size: math.div(1.6rem, $scaleRatio);
         margin: .75rem 0;
       }
   
       &__group {
-        margin-top: .5rem/$scaleRatio;
+        margin-top: math.div(.5rem, $scaleRatio);
       }
       &__group:first-child {
         margin-top: 0;
@@ -229,8 +231,8 @@
           padding: 0;
   
           &__img {
-            width: 2.25rem/$scaleRatio;
-            height: 2.25rem/$scaleRatio;
+            width: math.div(2.25rem, $scaleRatio);
+            height: math.div(2.25rem, $scaleRatio);
           }
         }
       }
@@ -248,7 +250,7 @@
   
         &-label {
           display: flex;
-          padding-bottom: .5rem/$scaleRatio;
+          padding-bottom: math.div(.5rem, $scaleRatio);
         }
   
         &-value {
@@ -312,7 +314,7 @@
     }
   
     .details {
-      padding: .5rem / $scaleRatio;
+      padding: math.div(.5rem, $scaleRatio);
 
       &__picto {
         width: 4.25rem;
@@ -320,12 +322,12 @@
       }
   
       &__title {
-        font-size: 1.6rem/$scaleRatio;
+        font-size: math.div(1.6rem, $scaleRatio);
         margin: .75rem 0;
       }
   
       &__group {
-        margin-top: .5rem/$scaleRatio;
+        margin-top: math.div(.5rem, $scaleRatio);
       }
       &__group:first-child {
         margin-top: 0;
@@ -344,8 +346,8 @@
           padding: 0;
   
           &__img {
-            width: 2.25rem/$scaleRatio;
-            height: 2.25rem/$scaleRatio;
+            width: math.div(2.25rem, $scaleRatio);
+            height: math.div(2.25rem, $scaleRatio);
           }
         }
       }
@@ -363,7 +365,7 @@
   
         &-label {
           display: flex;
-          padding-bottom: .5rem/$scaleRatio;
+          padding-bottom: math.div(.5rem, $scaleRatio);
         }
   
         &-value {

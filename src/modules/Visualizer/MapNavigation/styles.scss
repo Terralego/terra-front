@@ -1,3 +1,5 @@
+@use "sass:math";
+
 @import '../../../utils/variables.scss'; 
 
 .map-navigation {
@@ -122,16 +124,16 @@
     transition: margin $transitionSpeed ease-in;
   
     &__title {
-      margin-top: .5rem / $scaleRatio;
-      font-size: 1.2rem / $scaleRatio;
+      margin-top: math.div(.5rem, $scaleRatio);
+      font-size: math.div(1.2rem, $scaleRatio);
     }
   
     &__button {
-      width: 1.5rem / $scaleRatio;
-      height: 1.5rem / $scaleRatio;
+      width: math.div(1.5rem, $scaleRatio);
+      height: math.div(1.5rem, $scaleRatio);
       border-radius: 0;
-      margin: .5rem 0 / $scaleRatio;
-      transform: translate3d((.5rem / $scaleRatio), 0, 0);
+      margin: .5rem math.div(0, $scaleRatio);
+      transform: translate3d(math.div(.5rem, $scaleRatio), 0, 0);
     }
 
     &__content {
@@ -141,7 +143,7 @@
     }
 
     &__content::-webkit-scrollbar {
-      width: .5rem / $scaleRatio;
+      width: math.div(.5rem, $scaleRatio);
     }
   }
 }
@@ -152,7 +154,7 @@
       margin-left: -14rem;
       
       &__title {
-        font-size: 1.2rem / $scaleRatio;
+        font-size: math.div(1.2rem, $scaleRatio);
       }
   
       &__content {
@@ -162,7 +164,7 @@
       }
   
       &__content::-webkit-scrollbar {
-        width: .5rem / $scaleRatio;
+        width: math.div(.5rem, $scaleRatio);
       }
     }
     .visualizer-view {

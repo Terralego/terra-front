@@ -1,3 +1,5 @@
+@use "sass:math";
+
 @import '../../../utils/variables.scss';
 
 .layerstree-panel-list {
@@ -202,7 +204,7 @@
       display: flex;
       flex-direction: column;
       width: 100%;
-      font-size: .875rem / $scaleRatio;
+      font-size: math.div(.875rem, $scaleRatio);
 
       .layerstree-node-content{
         &__item {
@@ -285,14 +287,14 @@
 
     &--active {
       .bp3-collapse-body {
-        padding: .5rem / $scaleRatio;
+        padding: math.div(.5rem, $scaleRatio);
       }
     }
 
     &__label-button {
       H5 {
-        font-size: 0.9rem / $scaleRatio;
-        letter-spacing: .07rem / $scaleRatio;
+        font-size: math.div(0.9rem, $scaleRatio);
+        letter-spacing: math.div(.07rem, $scaleRatio);
         font-weight: 400;
       }
     }
@@ -301,8 +303,8 @@
   .layerstree-node-content {
     padding: .5rem 0 0 0;
     width: 100%;
-    font-size: .875rem / $scaleRatio;
-    letter-spacing: 0.06rem / $scaleRatio;
+    font-size: math.div(.875rem, $scaleRatio);
+    letter-spacing: math.div(0.06rem, $scaleRatio);
 
     .control-container {
       padding: .5rem 0 .5rem 0;

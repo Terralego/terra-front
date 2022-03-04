@@ -1,3 +1,5 @@
+@use "sass:math";
+
 @import '../../../../../utils/variables.scss';
 
 .layersTreeItemFilter {
@@ -20,7 +22,7 @@
       max-width: calc(100% - 1rem / #{$scaleRatio});
       .bp3-text-overflow-ellipsis {
         white-space: inherit;
-        font-size: .75rem /$scaleRatio;
+        font-size: math.div(.75rem, $scaleRatio);
       }
       .bp3-tag-remove {
         padding: .5rem;

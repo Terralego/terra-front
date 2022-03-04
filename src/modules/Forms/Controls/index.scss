@@ -1,3 +1,5 @@
+@use "sass:math";
+
 @import '../../../utils/variables.scss';
 
 
@@ -18,7 +20,7 @@
 @media(min-width: $breakpoints-phone) and (max-width: $breakpoints-desktop) {
   .control-label {
     .bp3-popover-wrapper .tf-multiselect {
-      font-size: .875rem / $scaleRatio;
+      font-size: math.div(.875rem, $scaleRatio);
     }
   }
   .bp3-checkbox {
@@ -31,10 +33,10 @@
     margin: 1rem 0 0 0;
   }
   .bp3-button-text, .bp3-input-ghost, .bp3-input {
-    font-size: .875rem / $scaleRatio;
+    font-size: math.div(.875rem, $scaleRatio);
   }
   .bp3-datepicker-month-select > select, .bp3-datepicker-year-select > select {
-    font-size: .875rem / $scaleRatio;
+    font-size: math.div(.875rem, $scaleRatio);
   }
 }
 

@@ -1,3 +1,5 @@
+@use "sass:math";
+
 @import '../../../utils/variables.scss'; 
 
 .storytelling {
@@ -25,16 +27,16 @@
 
 @media(min-width: $breakpoints-tablet) and (max-width: $breakpoints-desktop) and (orientation: landscape) {
   .storytelling {
-    font-size: 1rem/$scaleRatio;
+    font-size: math.div(1rem, $scaleRatio);
     line-height: 145%;
 
     h2 {
       line-height: 145%;
-      font-size: 1.3rem/$scaleRatio;
+      font-size: math.div(1.3rem, $scaleRatio);
     }
 
     &__buttons {
-      font-size: 2rem/$scaleRatio;
+      font-size: math.div(2rem, $scaleRatio);
     }
   }
 }

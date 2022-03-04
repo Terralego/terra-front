@@ -1,3 +1,5 @@
+@use "sass:math";
+
 @import '../../../../../utils/variables.scss';
 
 $transitionSpeed: 0.15s;
@@ -37,7 +39,7 @@ $transitionSpeed: 0.15s;
     display: block;
     position: absolute;
     margin-top: -0.125rem;
-    left: -$width/2;
+    left: -$width*0.5;
     width: $width;
     height: 2rem;
     z-index: 12;
@@ -162,52 +164,52 @@ $transitionSpeed: 0.15s;
 
 @media(min-width: $breakpoints-phone) and (max-width: $breakpoints-desktop){
   .filters-panel {
-    width: 18rem / $scaleRatio;
+    width: math.div(18rem, $scaleRatio);
     margin-left: 5.4rem;
     
     &__arrow {
-      $width: 2rem / $scaleRatio;
-      margin-top: -0.125rem / $scaleRatio;
-      left: -$width/2;
+      $width: math.div(2rem, $scaleRatio);
+      margin-top: math.div(-0.125rem, $scaleRatio);
+      left: -$width*0.5;
       width: $width;
-      height: 2rem / $scaleRatio;
+      height: math.div(2rem, $scaleRatio);
     }
 
     &__title {
-      font-size: 1.5rem / $scaleRatio;
+      font-size: math.div(1.5rem, $scaleRatio);
       margin-top: 0;
-      padding: 0 0.7rem / $scaleRatio;
+      padding: 0 math.div(0.7rem, $scaleRatio);
       font-weight: 300;
-      letter-spacing: .08rem / $scaleRatio;
+      letter-spacing: math.div(.08rem, $scaleRatio);
     }
 
     &__form {
-      padding: 0 0.7rem / $scaleRatio;
+      padding: 0 math.div(0.7rem, $scaleRatio);
     }
 
     &__form::-webkit-scrollbar, .bp3-select-popover .bp3-menu::-webkit-scrollbar  {
-      width: .5rem / $scaleRatio;
+      width: math.div(.5rem, $scaleRatio);
     }
 
     .control-container {
       padding: 0 0 1.5rem;
-      font-size: .875rem / $scaleRatio;
+      font-size: math.div(.875rem, $scaleRatio);
     }
 
     .control-label {
-      font-size: .875rem / $scaleRatio;
+      font-size: math.div(.875rem, $scaleRatio);
       border-top: .5px solid #293742;
       padding-top: .3rem;
       margin-bottom: 1rem;
       &-noValues {
-        font-size: .875rem / $scaleRatio;
+        font-size: math.div(.875rem, $scaleRatio);
       }
     }
 
     .bp3-select-popover .bp3-menu {
-      max-width: 40rem / $scaleRatio;
-      max-height: 30rem / $scaleRatio;
-      font-size: .875rem / $scaleRatio;
+      max-width: math.div(40rem, $scaleRatio);
+      max-height: math.div(30rem, $scaleRatio);
+      font-size: math.div(.875rem, $scaleRatio);
       
       .control-container__item li {
         padding: .5rem;
@@ -215,12 +217,12 @@ $transitionSpeed: 0.15s;
     }
 
     .bp3-control.bp3-checkbox {
-      padding: 0 1rem / $scaleRatio;
-      font-size: .875rem / $scaleRatio;
+      padding: 0 math.div(1rem, $scaleRatio);
+      font-size: math.div(.875rem, $scaleRatio);
     }
 
     .bp3-slider {
-      margin: 0 1rem / $scaleRatio;
+      margin: 0 math.div(1rem, $scaleRatio);
       width: calc(100% - 2rem / #{$scaleRatio});
     }
 
@@ -229,12 +231,12 @@ $transitionSpeed: 0.15s;
         width: calc(100% - .5rem / #{$scaleRatio});
       }
       .bp3-input-group:nth-child(1) .bp3-input {
-        margin-right: .5rem / $scaleRatio;
-        font-size: .875rem / $scaleRatio;
+        margin-right: math.div(.5rem, $scaleRatio);
+        font-size: math.div(.875rem, $scaleRatio);
       }
       .bp3-input-group:nth-child(2) .bp3-input {
-        margin-left: .5rem / $scaleRatio;
-        font-size: .875rem / $scaleRatio;
+        margin-left: math.div(.5rem, $scaleRatio);
+        font-size: math.div(.875rem, $scaleRatio);
       }
     }
   }
