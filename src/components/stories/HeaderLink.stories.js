@@ -1,7 +1,7 @@
 import React from 'react';
 import { storiesOf } from '@storybook/react';
 
-import HeaderLink from '../../../components/HeaderLink';
+import HeaderLink from '../HeaderLink';
 
 const stories = storiesOf('Components/Header', module);
 stories

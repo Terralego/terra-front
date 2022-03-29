@@ -2,7 +2,7 @@ import React from 'react';
 import { storiesOf } from '@storybook/react';
 import { boolean } from '@storybook/addon-knobs';
 
-import Legend from '../../../modules/Map/InteractiveMap/components/Legend';
+import Legend from '../InteractiveMap/components/Legend';
 
 const legend1 = {
   title: 'Foo',

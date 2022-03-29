@@ -1,9 +1,9 @@
 import React from 'react';
 import { storiesOf } from '@storybook/react';
 
-import NavBarItemTablet from '../../../components/NavBarItemTablet';
+import NavBarItemTablet from '../NavBarItemTablet';
 
-import logo from '../../../images/defaultLogo.svg';
+import logo from '../../images/defaultLogo.svg';
 
 const stories = storiesOf('Components/NavBarItem', module);
 stories

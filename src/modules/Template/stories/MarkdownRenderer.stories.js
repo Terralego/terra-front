@@ -3,7 +3,7 @@ import { storiesOf } from '@storybook/react';
 import { text, boolean } from '@storybook/addon-knobs';
 import { action } from '@storybook/addon-actions';
 
-import { Template }  from '../../../modules/Template';
+import { Template }  from '..';
 
 const DEFAULT_VALUE = `
 # Template component

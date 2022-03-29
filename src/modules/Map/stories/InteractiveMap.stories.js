@@ -2,10 +2,10 @@ import React from 'react';
 import { storiesOf } from '@storybook/react';
 import { boolean } from '@storybook/addon-knobs';
 
-import InteractiveMap, { InteractiveMap as PureInteractiveMap } from '../../../modules/Map/InteractiveMap';
-import Legend from '../../../modules/Map/InteractiveMap/components/Legend';
-import Map from '../../../modules/Map/Map';
-import leftInfoButtonStyles from '../../leftInfosButtonStyles';
+import InteractiveMap, { InteractiveMap as PureInteractiveMap } from '../InteractiveMap';
+import Legend from '../InteractiveMap/components/Legend';
+import Map from '../Map/Map';
+import leftInfoButtonStyles from '../../../stories/leftInfosButtonStyles';
 import doc from './InteractiveMap.md';
 
 const accessToken = process.env.REACT_APP_MAPBOX_TOKEN;

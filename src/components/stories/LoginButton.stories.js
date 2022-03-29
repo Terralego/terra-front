@@ -2,10 +2,10 @@ import React from 'react';
 import  { storiesOf } from '@storybook/react';
 import { boolean } from '@storybook/addon-knobs';
 
-import LoginButton from '../../../components/LoginButton/LoginButton';
-import translateMock from '../../../utils/translate';
+import LoginButton from '../LoginButton/LoginButton';
+import translateMock from '../../utils/translate';
 
-import logIn from '../../../images/log-in.svg';
+import logIn from '../../images/log-in.svg';
 
 const translate = translateMock({
   'auth.logout.confirm.label': 'Confirm logout',

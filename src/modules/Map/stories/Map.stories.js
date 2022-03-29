@@ -6,8 +6,8 @@ import { select, number, array, object, boolean } from '@storybook/addon-knobs';
 import Map, {
   CONTROLS_TOP_RIGHT, CONTROLS_BOTTOM_LEFT, CONTROLS_BOTTOM_RIGHT,
   CONTROL_NAVIGATION, CONTROL_SCALE, CONTROL_ATTRIBUTION,
-} from '../../../modules/Map/Map';
-import leftInfoButtonStyles from '../../leftInfosButtonStyles';
+} from '../Map';
+import leftInfoButtonStyles from '../../../stories/leftInfosButtonStyles';
 import doc from './Map.md';
 
 Map.displayName = 'Map';
