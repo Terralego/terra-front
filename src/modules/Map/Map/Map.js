@@ -16,6 +16,7 @@ import HomeControl from './components/HomeControl';
 import ShareControl from './components/ShareControl';
 import ReportControl from './components/ReportControl';
 import PathControl from './components/PathControl';
+import WidgetControl from './components/WidgetControl';
 
 import translateMock from '../../../utils/translate';
 
@@ -38,6 +39,7 @@ export const CONTROL_HOME = 'HomeControl';
 export const CONTROL_SHARE = 'ShareControl';
 export const CONTROL_CUSTOM = 'CustomControl';
 export const CONTROL_REPORT = 'ReportControl';
+export const CONTROL_WIDGET = 'WidgetControl';
 
 export const DEFAULT_CONTROLS = [{
   control: CONTROL_ATTRIBUTION,
@@ -498,6 +500,12 @@ export class MapComponent extends React.Component {
             map,
             ...params,
           });
+          this.controls.push(controlInstance);
+          map.addControl(controlInstance, position);
+          break;
+        }
+        case CONTROL_WIDGET: {
+          const controlInstance = new WidgetControl({ ...props, map, ...params });
           this.controls.push(controlInstance);
           map.addControl(controlInstance, position);
           break;
