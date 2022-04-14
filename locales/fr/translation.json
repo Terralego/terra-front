@@ -177,6 +177,9 @@
       },
       "zoom_out_control": {
         "title": "Dézoomer"
+      },
+      "widget_control": {
+        "content": "Ouvrir le widget"
       }
     },
     "pictures": {
