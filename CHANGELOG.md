@@ -1,4 +1,10 @@
 
+1.28.4 / 2022-04-25
+===================
+
+  * Add generic toggleWidget map control
+  * Add publish requirements info in the README.md
+
 1.28.3 / 2022-02-16
 ===================
 
