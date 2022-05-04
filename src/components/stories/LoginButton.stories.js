@@ -32,11 +32,34 @@ const translate = translateMock({
   'auth.signupform.title': 'Create an account',
 });
 
+
+const CustomRenderer =  () => (
+  <div
+    style={{
+      display: 'flex',
+      justifyContent: 'center',
+      alignItems: 'center',
+    }}
+  >
+    <h1 style={{ color: 'white' }}>Custom Renderer</h1>
+  </div>
+);
+
 const stories = storiesOf('Components/NavBarItem', module);
 stories
   .add('LoginButton', () => (
     <LoginButton
       authenticated={boolean('authenticated', false)}
+      isMobileSized={false}
+      icon={logIn}
+      t={translate}
+      env={{}}
+    />
+  ))
+  .add('LoginButton with form renderer', () => (
+    <LoginButton
+      authenticated={boolean('authenticated', false)}
+      render={CustomRenderer}
       isMobileSized={false}
       icon={logIn}
       t={translate}

@@ -1,0 +1,256 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`should render 1`] = `
+<body
+  class="bp3-overlay-open"
+>
+  <div>
+    <span
+      class="bp3-popover-wrapper"
+    >
+      <span
+        class="bp3-popover-target"
+      >
+        <span
+          class="header-link"
+          data-testid="login-button"
+          tabindex="0"
+        >
+          <button
+            class="bp3-button bp3-minimal header-button"
+            type="button"
+          />
+        </span>
+      </span>
+    </span>
+  </div>
+  <div
+    class="bp3-portal"
+  >
+    <div
+      class="bp3-overlay bp3-overlay-open bp3-overlay-scroll-container bp3-dark modal-signin"
+    >
+      <div
+        class="bp3-overlay-backdrop bp3-overlay-appear bp3-overlay-appear-active"
+        tabindex="0"
+      />
+      <div
+        class="bp3-card bp3-elevation-4 modal-signin__form bp3-overlay-content bp3-overlay-appear bp3-overlay-appear-active"
+        tabindex="0"
+      >
+        <div
+          class="bp3-tabs"
+        >
+          <div
+            class="bp3-tab-list"
+            role="tablist"
+          >
+            <div
+              class="bp3-tab-indicator-wrapper"
+              style="height: 0px; transform: translateX(0px) translateY(0px); width: 0px;"
+            >
+              <div
+                class="bp3-tab-indicator"
+              />
+            </div>
+            <div
+              aria-controls="bp3-tab-panel_login_signin"
+              aria-disabled="false"
+              aria-expanded="true"
+              aria-selected="true"
+              class="bp3-tab"
+              data-tab-id="signin"
+              id="bp3-tab-title_login_signin"
+              role="tab"
+              tabindex="0"
+            >
+              Sign in
+            </div>
+          </div>
+          <div
+            aria-hidden="false"
+            aria-labelledby="bp3-tab-title_login_signin"
+            class="bp3-tab-panel"
+            id="bp3-tab-panel_login_signin"
+            role="tabpanel"
+          >
+            <div
+              class="bp3-card bp3-elevation-0 login-form"
+            >
+              <form>
+                <div
+                  class="bp3-form-group"
+                >
+                  <label
+                    class="bp3-label"
+                    for="login"
+                  >
+                    Email
+                     
+                    <span
+                      class="bp3-text-muted"
+                    >
+                      required
+                    </span>
+                  </label>
+                  <div
+                    class="bp3-form-content"
+                  >
+                    <div
+                      class="bp3-input-group"
+                    >
+                      <input
+                        autocomplete="username"
+                        class="bp3-input"
+                        id="login"
+                        placeholder="Email"
+                        type="email"
+                      />
+                    </div>
+                    <div
+                      class="bp3-form-helper-text"
+                    >
+                      Type your email
+                    </div>
+                  </div>
+                </div>
+                <div
+                  class="bp3-form-group"
+                >
+                  <label
+                    class="bp3-label"
+                    for="password"
+                  >
+                    Password
+                     
+                    <span
+                      class="bp3-text-muted"
+                    >
+                      required
+                    </span>
+                  </label>
+                  <div
+                    class="bp3-form-content"
+                  >
+                    <div
+                      class="bp3-input-group"
+                    >
+                      <input
+                        autocomplete="current-password"
+                        class="bp3-input"
+                        id="password"
+                        placeholder="Password"
+                        type="password"
+                      />
+                    </div>
+                    <div
+                      class="bp3-form-helper-text"
+                    >
+                      Type your password
+                    </div>
+                  </div>
+                </div>
+                <button
+                  class="bp3-button"
+                  type="submit"
+                >
+                  <span
+                    class="bp3-button-text"
+                  >
+                    Signin
+                  </span>
+                </button>
+              </form>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</body>
+`;
+
+exports[`should render custom renderer when clicked 1`] = `
+<body
+  class="bp3-overlay-open"
+>
+  <div>
+    <span
+      class="bp3-popover-wrapper"
+    >
+      <span
+        class="bp3-popover-target"
+      >
+        <span
+          class="header-link"
+          data-testid="login-button"
+          tabindex="0"
+        >
+          <button
+            class="bp3-button bp3-minimal header-button"
+            type="button"
+          />
+        </span>
+      </span>
+    </span>
+  </div>
+  <div
+    class="bp3-portal"
+  >
+    <div
+      class="bp3-overlay bp3-overlay-open bp3-overlay-scroll-container bp3-dark modal-signin"
+    >
+      <div
+        class="bp3-overlay-backdrop bp3-overlay-appear bp3-overlay-appear-active"
+        tabindex="0"
+      />
+      <div
+        class="bp3-card bp3-elevation-4 modal-signin__form bp3-overlay-content bp3-overlay-appear bp3-overlay-appear-active"
+        tabindex="0"
+      >
+        <div
+          class="bp3-tabs"
+        >
+          <div
+            class="bp3-tab-list"
+            role="tablist"
+          >
+            <div
+              class="bp3-tab-indicator-wrapper"
+              style="height: 0px; transform: translateX(0px) translateY(0px); width: 0px;"
+            >
+              <div
+                class="bp3-tab-indicator"
+              />
+            </div>
+            <div
+              aria-controls="bp3-tab-panel_login_signin"
+              aria-disabled="false"
+              aria-expanded="true"
+              aria-selected="true"
+              class="bp3-tab"
+              data-tab-id="signin"
+              id="bp3-tab-title_login_signin"
+              role="tab"
+              tabindex="0"
+            >
+              Sign in
+            </div>
+          </div>
+          <div
+            aria-hidden="false"
+            aria-labelledby="bp3-tab-title_login_signin"
+            class="bp3-tab-panel"
+            id="bp3-tab-panel_login_signin"
+            role="tabpanel"
+          >
+            <h1>
+              Custom Renderer
+            </h1>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</body>
+`;

@@ -13,6 +13,7 @@ import translateMock from '../../utils/translate';
 
 import NavBarItemDesktop from '../NavBarItemDesktop';
 import NavBarItemTablet from '../NavBarItemTablet';
+import LoginFormRenderer from '../../modules/Auth/components/LoginForm/LoginFormRenderer';
 
 export const LoginButton = ({
   authenticated,
@@ -21,6 +22,7 @@ export const LoginButton = ({
   logoutAction,
   translate,
   allowUserRegistration,
+  render = LoginFormRenderer,
   ...props
 }) => {
   const [isOpen, setIsOpen] = useState(false);
@@ -73,6 +75,7 @@ export const LoginButton = ({
                   onBeforeSubmitting={() => setIsNewlyAuthenticated(true)}
                   onAfterSubmitting={() => setIsNewlyAuthenticated(false)}
                   translate={translate}
+                  render={render}
                 />
               )}
             />

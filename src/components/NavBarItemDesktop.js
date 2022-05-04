@@ -46,6 +46,7 @@ NavBarItemDesktop.propTypes = {
   label: PropTypes.string,
   content: PropTypes.string,
   onClick: PropTypes.func,
+  setForceFitBounds: PropTypes.func,
 };
 
 NavBarItemDesktop.defaultProps = {
@@ -55,6 +56,7 @@ NavBarItemDesktop.defaultProps = {
   label: '',
   content: '',
   onClick () {},
+  setForceFitBounds () {},
 };
 
 export default connectState('setForceFitBounds')(NavBarItemDesktop);
