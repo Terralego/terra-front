@@ -1,4 +1,9 @@
 
+1.28.6 / 2022-05-04
+===================
+
+  * Change LoginButton to accept a render props for LoginForm 
+
 1.28.5 / 2022-04-25
 ===================
 
