@@ -173,6 +173,11 @@
       }
     }
   }
+
+  & .tab-bar .bp3-tab-list {
+    padding: 2em;
+    flex-wrap: wrap;
+  }
 }
 
 @media(min-width: $breakpoints-tablet) and (max-width: $breakpoints-desktop) and (orientation: landscape) {
