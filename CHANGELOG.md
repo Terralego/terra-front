@@ -1,4 +1,9 @@
 
+1.28.7 / 2022-05-12
+===================
+
+  * Add support for tabs when multiple templates are provided to Details
+
 1.28.6 / 2022-05-04
 ===================
 
