@@ -1,7 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import classnames from 'classnames';
-import { Button } from '@blueprintjs/core';
+import { Button, Tab, Tabs } from '@blueprintjs/core';
 
 import FeatureProperties from '../../Map/FeatureProperties';
 import Template from '../../Template';
@@ -102,7 +102,7 @@ class Details extends React.Component {
     } = this.props;
     const {
       feature: { properties } = {},
-      interaction: { template, fetchProperties = {} } = {},
+      interaction: { template, fetchProperties = {}, templates = [] } = {},
       index, hidden, visible,
     } = this.state;
     const isCarousel = enableCarousel && features.length > 1;
@@ -147,22 +147,52 @@ class Details extends React.Component {
                 />
               </div>
             )}
-            <div className="view-details__content">
-              <FeatureProperties
-                {...fetchProperties}
-                properties={featureToDisplay}
-              >
-                {({ properties: newProperties, ...staticProperties }) => (
-                  <ErrorBoundary errorMsg={translate('terralego.map.template.render.error')}>
-                    <Template
-                      template={template}
-                      {...staticProperties}
-                      {...newProperties}
-                    />
-                  </ErrorBoundary>
-                )}
-              </FeatureProperties>
-            </div>
+            {templates.length > 0 ? (
+              <Tabs id="tabs" className="tab-bar">
+                {templates.map((templateTab, idx) => (
+                  <Tab
+                    id={`tab-${idx}`}
+                    title={templateTab.tabTitle}
+                    panel={(
+                      <div className="view-details__content">
+                        <FeatureProperties
+                          {...templateTab.fetchProperties}
+                          properties={featureToDisplay}
+                        >
+                          {({ properties: newProperties, ...staticProperties }) => (
+                            <ErrorBoundary errorMsg={translate('terralego.map.template.render.error')}>
+                              <Template
+                                template={templateTab.template}
+                                {...staticProperties}
+                                {...newProperties}
+                              />
+                            </ErrorBoundary>
+                          )}
+                        </FeatureProperties>
+                      </div>
+                    )}
+                  />
+                ))}
+              </Tabs>
+            )
+              : (
+                <div className="view-details__content">
+                  <FeatureProperties
+                    {...fetchProperties}
+                    properties={featureToDisplay}
+                  >
+                    {({ properties: newProperties, ...staticProperties }) => (
+                      <ErrorBoundary errorMsg={translate('terralego.map.template.render.error')}>
+                        <Template
+                          template={template}
+                          {...staticProperties}
+                          {...newProperties}
+                        />
+                      </ErrorBoundary>
+                    )}
+                  </FeatureProperties>
+                </div>
+              )}
             {isCarousel && (
               <div
                 className={classnames(
@@ -187,6 +217,7 @@ class Details extends React.Component {
 
 const propFeature = PropTypes.shape({
   properties: PropTypes.shape({
+    // eslint-disable-next-line react/forbid-prop-types
     _id: PropTypes.any,
   }),
 });
