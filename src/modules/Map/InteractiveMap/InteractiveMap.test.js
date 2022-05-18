@@ -722,7 +722,7 @@ describe('Interactions', () => {
     instance.map.addLayer = jest.fn();
     instance.map.setFilter = jest.fn();
     instance.map.getPaintProperty = jest.fn();
-    instance.map.getLayer = jest.fn(() => false);
+    instance.map.getLayer = jest.fn(() => true);
     instance.map.removeLayer = jest.fn();
     instance.highlightedLayers = new Map();
     instance.highlightedLayers.set('test1', {
