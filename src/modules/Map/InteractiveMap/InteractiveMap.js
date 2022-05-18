@@ -489,7 +489,10 @@ export class InteractiveMap extends React.Component {
       { layersState: { ids, highlightColor = '' }, source, propertyId },
       layerId,
     ) => {
-      const { sourceLayer, type } = map.getLayer(layerId);
+      const layer = map.getLayer(layerId);
+      if (!layer) return;
+
+      const { sourceLayer, type } = layer;
 
       const targetType = () => {
         if (!['line', 'fill', 'circle'].includes(type)) {

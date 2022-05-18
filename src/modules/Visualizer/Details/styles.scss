@@ -174,9 +174,34 @@
     }
   }
 
-  & .tab-bar .bp3-tab-list {
-    padding: 2em;
-    flex-wrap: wrap;
+  & .tab-bar {
+    & .bp3-tab-list {
+      padding: 0.5em 1.5em 0 0.5em;
+      flex-wrap: wrap;
+      border-bottom: 1px solid #00000033;
+      background-color: #f0f0f0;
+    }
+
+    & .bp3-tab {
+      padding: 0.3em 1em;
+      margin-right: 0;
+      border: 1px solid #0002;
+      border-bottom: none;
+      border-top-left-radius: 5px;
+      border-top-right-radius: 5px;
+    }
+
+    & .bp3-tab[aria-selected="true"] {
+      background-color: white !important;
+    }
+
+    & .bp3-tab-indicator-wrapper {
+      z-index: 2;
+      margin-left: 1px;
+    }
+  }
+  & .bp3-tab-panel {
+    margin-top: 0;
   }
 }
 
