@@ -65,6 +65,9 @@ jest.mock('./FiltersPanel', () => function FiltersPanel () {
   return <p>FiltersPanel</p>;
 });
 
+jest.mock('./LocateButton', () => () => <button type="button">Extent this layer</button>);
+
+
 jest.mock('../../services/warningZoom', () => ({
   processWarningAccordingToZoom (map) {
     return { minZoomLayer: 14, showWarning: !!map };

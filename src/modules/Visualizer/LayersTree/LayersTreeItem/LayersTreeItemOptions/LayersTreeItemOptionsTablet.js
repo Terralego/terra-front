@@ -6,6 +6,7 @@ import translateMock from '../../../../../utils/translate';
 
 import LayerFetchValues from '../LayerFetchValues';
 import FiltersPanel from '../FiltersPanel';
+import LocateButton from '../LocateButton';
 
 const LayersTreeItemOptionsTablet = ({
   hasSomeOptionActive,
@@ -22,6 +23,7 @@ const LayersTreeItemOptionsTablet = ({
   toggleWidgets,
   widgets,
   isWidgetActive,
+  map,
   translate = translateMock({
     'terralego.visualizer.layerstree.itemOptions.widget.title': 'widget',
     'terralego.visualizer.layerstree.itemOptions.widget.action-open': 'open widget',
@@ -47,6 +49,7 @@ const LayersTreeItemOptionsTablet = ({
       { 'layerstree-node-content__options--active': hasSomeOptionActive },
     )}
   >
+    <LocateButton map={map} layer={layer} translate={translate} isTablet />
     {(widgets && !!widgets.length) && (
       // i18next-extract-mark-context-start ["", "synthesis"]
       widgets.map(widget => {

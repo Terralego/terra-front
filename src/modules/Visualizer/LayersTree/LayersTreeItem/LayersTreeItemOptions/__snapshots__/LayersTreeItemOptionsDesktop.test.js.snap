@@ -4,6 +4,11 @@ exports[`should render default options 1`] = `
 <div
   className="layerstree-node-content__options layerstree-node-content__options--desktop"
 >
+  <button
+    type="button"
+  >
+    Extent this layer
+  </button>
   <span
     className="bp3-popover-wrapper layerNode__tooltip options"
   >
@@ -52,6 +57,11 @@ exports[`should render no tooltip if empty widget empty 1`] = `
 <div
   className="layerstree-node-content__options layerstree-node-content__options--desktop"
 >
+  <button
+    type="button"
+  >
+    Extent this layer
+  </button>
   <span
     className="bp3-popover-wrapper layerNode__tooltip options"
   >
@@ -100,6 +110,11 @@ exports[`should render with properties 1`] = `
 <div
   className="layerstree-node-content__options layerstree-node-content__options--desktop"
 >
+  <button
+    type="button"
+  >
+    Extent this layer
+  </button>
   <span
     className="bp3-popover-wrapper layerstree-node-content__options__tooltip widgets"
   >

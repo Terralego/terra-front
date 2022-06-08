@@ -12,6 +12,9 @@ jest.mock('../FiltersPanel', () => function FiltersPanel () {
   return <p>FiltersPanel</p>;
 });
 
+jest.mock('../LocateButton', () => () => <button type="button">Extent this layer</button>);
+
+
 it('should render default options', () => {
   const tree = renderer.create((
     <LayersTreeItemOptionsDesktop />));

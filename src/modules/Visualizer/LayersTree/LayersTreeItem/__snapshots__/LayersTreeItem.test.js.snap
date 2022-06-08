@@ -25,6 +25,11 @@ Array [
     <div
       className="layerstree-node-content__options layerstree-node-content__options--desktop"
     >
+      <button
+        type="button"
+      >
+        Extent this layer
+      </button>
       <p>
         Tooltip
       </p>
@@ -80,6 +85,11 @@ Array [
     <div
       className="layerstree-node-content__options layerstree-node-content__options--desktop"
     >
+      <button
+        type="button"
+      >
+        Extent this layer
+      </button>
       <p>
         Tooltip
       </p>
@@ -111,6 +121,11 @@ Array [
     <div
       className="layerstree-node-content__options layerstree-node-content__options--desktop"
     >
+      <button
+        type="button"
+      >
+        Extent this layer
+      </button>
       <p>
         Tooltip
       </p>
@@ -172,6 +187,11 @@ Array [
     <div
       className="layerstree-node-content__options layerstree-node-content__options--desktop layerstree-node-content__options--active"
     >
+      <button
+        type="button"
+      >
+        Extent this layer
+      </button>
       <p>
         Tooltip
       </p>
@@ -213,6 +233,11 @@ Array [
     <div
       className="layerstree-node-content__options layerstree-node-content__options--desktop layerstree-node-content__options--active"
     >
+      <button
+        type="button"
+      >
+        Extent this layer
+      </button>
       <p>
         Tooltip
       </p>
@@ -250,6 +275,11 @@ Array [
     <div
       className="layerstree-node-content__options layerstree-node-content__options--desktop"
     >
+      <button
+        type="button"
+      >
+        Extent this layer
+      </button>
       <p>
         Tooltip
       </p>
@@ -281,6 +311,11 @@ Array [
     <div
       className="layerstree-node-content__options layerstree-node-content__options--desktop"
     >
+      <button
+        type="button"
+      >
+        Extent this layer
+      </button>
       <p>
         Tooltip
       </p>
@@ -315,6 +350,11 @@ Array [
     <div
       className="layerstree-node-content__options layerstree-node-content__options--desktop"
     >
+      <button
+        type="button"
+      >
+        Extent this layer
+      </button>
       <p>
         FiltersPanel
       </p>
@@ -352,6 +392,11 @@ Array [
     <div
       className="layerstree-node-content__options layerstree-node-content__options--desktop"
     >
+      <button
+        type="button"
+      >
+        Extent this layer
+      </button>
       <p>
         Tooltip
       </p>
@@ -389,6 +434,11 @@ Array [
     <div
       className="layerstree-node-content__options layerstree-node-content__options--desktop"
     >
+      <button
+        type="button"
+      >
+        Extent this layer
+      </button>
       <p>
         FiltersPanel
       </p>
