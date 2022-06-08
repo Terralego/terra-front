@@ -172,14 +172,14 @@
           "error": ""
         }
       },
+      "widget_control": {
+        "content": "Ouvrir le widget"
+      },
       "zoom_in_control": {
         "title": "Zoomer"
       },
       "zoom_out_control": {
         "title": "Dézoomer"
-      },
-      "widget_control": {
-        "content": "Ouvrir le widget"
       }
     },
     "pictures": {
@@ -207,25 +207,37 @@
           "filter": {
             "alt": "Ouvrir les filtres",
             "alt_close": "Fermer les filtres",
+            "alt_synthesis": "",
             "label": "Filtres",
+            "label_synthesis": "",
             "tooltip": "Ouvrir les filtres",
-            "tooltip_close": "Fermer les filtres"
+            "tooltip_close": "Fermer les filtres",
+            "tooltip_synthesis": ""
+          },
+          "locate": {
+            "text": "Zoomer sur la couche"
           },
           "options": {
             "alt": "",
             "alt_close": "Fermer les options",
             "alt_open": "Afficher les options",
+            "alt_synthesis": "",
             "label": "Options",
+            "label_synthesis": "",
             "tooltip": "Afficher les options",
-            "tooltip_close": "Fermer les options"
+            "tooltip_close": "Fermer les options",
+            "tooltip_synthesis": ""
           },
           "table": {
             "alt": "Ouvrir la vue tabulaire",
             "alt_close": "Fermer la vue tabulaire",
+            "alt_synthesis": "",
             "label": "Vue tabulaire",
             "title": "Vue tabulaire",
+            "title_synthesis": "",
             "tooltip": "Ouvrir la vue tabulaire",
-            "tooltip_close": "Fermer la vue tabulaire"
+            "tooltip_close": "Fermer la vue tabulaire",
+            "tooltip_synthesis": ""
           },
           "widget": {
             "action-close": "Fermer le widget",

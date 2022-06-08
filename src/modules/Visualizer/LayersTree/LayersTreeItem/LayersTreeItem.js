@@ -238,6 +238,7 @@ export class LayersTreeItem extends React.Component {
             toggleWidgets={toggleWidgets}
             widgets={widgets}
             isWidgetActive={isWidgetActive}
+            map={map}
           />
           )}
         </div>

@@ -1,6 +1,7 @@
 import React from 'react';
 import classnames from 'classnames';
 import { Button } from '@blueprintjs/core';
+import LocateButton from '../LocateButton';
 
 import translateMock from '../../../../../utils/translate';
 
@@ -23,6 +24,7 @@ const LayersTreeItemOptionsDesktop = ({
   toggleWidgets,
   widgets,
   isWidgetActive,
+  map,
   translate = translateMock({
     'terralego.visualizer.layerstree.itemOptions.widget.title': 'widget',
     'terralego.visualizer.layerstree.itemOptions.widget.action-open': 'open widget',
@@ -54,6 +56,7 @@ const LayersTreeItemOptionsDesktop = ({
       { 'layerstree-node-content__options--active': hasSomeOptionActive },
     )}
   >
+    <LocateButton map={map} layer={layer} translate={translate} />
     {(widgets && !!widgets.length) && (
       // i18next-extract-mark-context-start ["", "synthesis"]
       widgets.map(widget => {

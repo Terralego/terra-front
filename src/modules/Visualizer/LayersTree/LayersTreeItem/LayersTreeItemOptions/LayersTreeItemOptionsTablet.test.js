@@ -12,6 +12,8 @@ jest.mock('../FiltersPanel', () => function FiltersPanel () {
   return <p>FiltersPanel</p>;
 });
 
+jest.mock('../LocateButton', () => () => <button type="button">Extent this layer</button>);
+
 it('should render correctly with widget', () => {
   const tree = renderer.create((
     <LayersTreeProvider>
