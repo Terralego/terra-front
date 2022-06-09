@@ -19,8 +19,8 @@ const LocateButton = ({
     if (!map) {
       return [];
     }
-    const { type, source, sourceLayer, id } = map.getLayer(layer.layers);
-    if (type === 'raster') {
+    const { type, source, sourceLayer, id } = map.getLayer(layer.layers) || {};
+    if (['raster', undefined].includes(type)) {
       return [];
     }
     return map.querySourceFeatures(source, {
@@ -49,13 +49,13 @@ const LocateButton = ({
     return null;
   }
 
-  const { type } = map.getLayer(layer.layers);
-  const disabled =  type === 'raster' || features.length === 0;
+  const { type } = map.getLayer(layer.layers) || {};
+
+  if (['raster', undefined].includes(type) || features.length === 0) {
+    return null;
+  }
 
   const onClick = () => {
-    if (disabled) {
-      return;
-    }
     map.fitBounds(bbox({ type: 'FeatureCollection', features }), { padding: 10 });
   };
 
@@ -66,9 +66,8 @@ const LocateButton = ({
     >
       <Button
         className="layerstree-node-content__options__button"
-        disabled={disabled}
         minimal
-        icon="locate"
+        icon="zoom-to-fit"
         onClick={onClick}
         text={isTablet && translate('terralego.visualizer.layerstree.itemOptions.locate.text')}
       />
