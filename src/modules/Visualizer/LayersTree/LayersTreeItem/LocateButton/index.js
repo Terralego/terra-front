@@ -19,7 +19,7 @@ const LocateButton = ({
     if (!map) {
       return [];
     }
-    const { type, source, sourceLayer, id } = map.getLayer(layer.layers) || {};
+    const { type, source, sourceLayer, id } = map.getLayer(layer.layers[0]) || {};
     if (['raster', undefined].includes(type)) {
       return [];
     }
@@ -49,7 +49,7 @@ const LocateButton = ({
     return null;
   }
 
-  const { type } = map.getLayer(layer.layers) || {};
+  const { type } = map.getLayer(layer.layers[0]) || {};
 
   if (['raster', undefined].includes(type) || features.length === 0) {
     return null;
