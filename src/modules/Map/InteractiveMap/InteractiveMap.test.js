@@ -3,7 +3,7 @@
 import React from 'react';
 import renderer from 'react-test-renderer';
 import ReactDOM from 'react-dom';
-import mapboxGl from 'mapbox-gl';
+import mapboxGl from 'maplibre-gl';
 import centroid from '@turf/centroid';
 
 import { setInteractions, fitZoom } from '../services/mapUtils';
@@ -20,7 +20,7 @@ import {
 import BackgroundStyles from './components/BackgroundStyles';
 
 jest.mock('@turf/bbox', () => jest.fn());
-jest.mock('mapbox-gl', () => {
+jest.mock('maplibre-gl', () => {
   const Popup = jest.fn(function Popup () {
     this.listeners = [];
     // eslint-disable-next-line no-underscore-dangle

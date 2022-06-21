@@ -3,7 +3,7 @@
 import React from 'react';
 import renderer from 'react-test-renderer';
 import { shallow } from 'enzyme';
-import mapboxgl from 'mapbox-gl';
+import mapboxgl from 'maplibre-gl';
 
 import { MapComponent as Map } from './Map';
 import { updateCluster } from '../services/cluster';
@@ -14,7 +14,7 @@ const props = {
   accessToken: 'pk.eyJ1IjoibWFraW5hY29ycHVzIiwiYSI6ImNqY3E4ZTNwcTFta3ozMm80d2xzY29wM2MifQ.Nwl_FHrWAIQ46s_lY0KNiQ',
 };
 
-jest.mock('mapbox-gl', () => {
+jest.mock('maplibre-gl', () => {
   const off = jest.fn();
   const map = {
     addControl: jest.fn(() => {}),

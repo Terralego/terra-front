@@ -2,7 +2,7 @@ import MapboxPathControl from '@makina-corpus/mapbox-gl-path';
 import { PathControl } from './PathControl';
 
 jest.mock('@makina-corpus/mapbox-gl-path');
-jest.mock('mapbox-gl', () => jest.fn());
+jest.mock('maplibre-gl', () => jest.fn());
 
 MapboxPathControl.mockImplementation(() => ({
   onRemove: jest.fn(),

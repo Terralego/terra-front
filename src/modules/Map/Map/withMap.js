@@ -2,10 +2,10 @@
 
 import React from 'react';
 import PropTypes from 'prop-types';
-import mapBoxGl from 'mapbox-gl';
+import mapBoxGl from 'maplibre-gl';
 import { addMapDebug } from '../helpers/mapDebug';
 
-import 'mapbox-gl/dist/mapbox-gl.css';
+import 'maplibre-gl/dist/maplibre-gl.css';
 
 export const DEFAULT_LAYER_TYPES_WEIGHT = {
   background: 100,

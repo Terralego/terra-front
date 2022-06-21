@@ -1,6 +1,6 @@
 import * as lib from '.';
 
-jest.mock('mapbox-gl', () => ({}));
+jest.mock('maplibre-gl', () => ({}));
 
 it('should export each modules', () => {
   expect(lib.Api).toBeDefined();
