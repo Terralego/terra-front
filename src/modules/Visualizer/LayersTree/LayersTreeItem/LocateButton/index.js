@@ -1,6 +1,6 @@
 import React, { useCallback, useEffect, useState } from 'react';
 import bbox from '@turf/bbox';
-import { Button } from '@blueprintjs/core';
+import { Button, Position } from '@blueprintjs/core';
 import debounce from 'lodash.debounce';
 import Tooltip from '../../../../../components/Tooltip';
 import translateMock from '../../../../../utils/translate';
@@ -63,6 +63,7 @@ const LocateButton = ({
     <Tooltip
       className="layerstree-node-content__options__tooltip locate"
       content={translate('terralego.visualizer.layerstree.itemOptions.locate.text')}
+      position={Position.TOP}
     >
       <Button
         className="layerstree-node-content__options__button"
