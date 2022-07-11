@@ -194,6 +194,7 @@ export class LayersTreeProvider extends React.Component {
       layersTree,
       map,
       translate,
+      layersExtent,
     } = this.props;
     const { layersTreeState } = this.state;
     const {
@@ -209,6 +210,7 @@ export class LayersTreeProvider extends React.Component {
       getLayerState,
       fetchPropertiesValues,
       translate,
+      layersExtent,
     };
     return (
       <Provider value={value}>

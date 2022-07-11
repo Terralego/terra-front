@@ -1,7 +1,5 @@
-import React, { useCallback, useEffect, useState } from 'react';
-import bbox from '@turf/bbox';
+import React from 'react';
 import { Button, Position } from '@blueprintjs/core';
-import debounce from 'lodash.debounce';
 import Tooltip from '../../../../../components/Tooltip';
 import translateMock from '../../../../../utils/translate';
 
@@ -9,54 +7,23 @@ const LocateButton = ({
   layer,
   map,
   isTablet,
+  extent,
   translate = translateMock({
     'terralego.visualizer.layerstree.itemOptions.locate.text': 'Extent this layer',
   }),
 }) => {
-  const [features, setFeatures] = useState([]);
-
-  const getFeatures = useCallback(() => {
-    if (!map) {
-      return [];
-    }
-    const { type, source, sourceLayer, id } = map.getLayer(layer.layers[0]) || {};
-    if (['raster', undefined].includes(type)) {
-      return [];
-    }
-    return map.querySourceFeatures(source, {
-      sourceLayer,
-      filter: map.getFilter([id]),
-    });
-  }, [layer.layers, map]);
-
-  const handleFeatures = useCallback(debounce(() => {
-    setFeatures(getFeatures());
-  }, 200), [getFeatures]);
-
-  useEffect(() => {
-    if (map) {
-      map.once('idle', handleFeatures);
-      map.on('zoomend', handleFeatures);
-      window.addEventListener('resize', handleFeatures);
-    }
-    return () => {
-      map && map.off('zoomend', handleFeatures);
-      window.removeEventListener('resize', handleFeatures);
-    };
-  }, [handleFeatures, map]);
-
-  if (!map) {
+  if (!map || !extent) {
     return null;
   }
 
   const { type } = map.getLayer(layer.layers[0]) || {};
 
-  if (['raster', undefined].includes(type) || features.length === 0) {
+  if (['raster', undefined].includes(type)) {
     return null;
   }
 
   const onClick = () => {
-    map.fitBounds(bbox({ type: 'FeatureCollection', features }), { padding: 10 });
+    map.fitBounds(extent, { padding: 10 });
   };
 
   return (
