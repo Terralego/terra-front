@@ -5,6 +5,11 @@ Array [
   <div
     className="layerstree-node-content__options layerstree-node-content__options--mobile"
   >
+    <button
+      type="button"
+    >
+      Extent this layer
+    </button>
     <p>
       FiltersPanel
     </p>
@@ -45,6 +50,11 @@ Array [
   <div
     className="layerstree-node-content__options layerstree-node-content__options--mobile"
   >
+    <button
+      type="button"
+    >
+      Extent this layer
+    </button>
     <button
       alt="close widget"
       className="bp3-button bp3-minimal btn-widget layerstree-node-content__options__button layerstree-node-content__options__button--active"
