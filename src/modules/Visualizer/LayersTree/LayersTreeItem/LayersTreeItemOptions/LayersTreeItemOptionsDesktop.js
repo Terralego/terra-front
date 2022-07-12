@@ -25,6 +25,7 @@ const LayersTreeItemOptionsDesktop = ({
   widgets,
   isWidgetActive,
   map,
+  extent,
   translate = translateMock({
     'terralego.visualizer.layerstree.itemOptions.widget.title': 'widget',
     'terralego.visualizer.layerstree.itemOptions.widget.action-open': 'open widget',
@@ -56,7 +57,7 @@ const LayersTreeItemOptionsDesktop = ({
       { 'layerstree-node-content__options--active': hasSomeOptionActive },
     )}
   >
-    <LocateButton map={map} layer={layer} translate={translate} />
+    <LocateButton map={map} layer={layer} translate={translate} extent={extent} />
     {(widgets && !!widgets.length) && (
       // i18next-extract-mark-context-start ["", "synthesis"]
       widgets.map(widget => {
