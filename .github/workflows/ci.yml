@@ -1,0 +1,71 @@
+name: CI
+
+on:
+  push:
+    branches:
+      - '*' # TODO: master
+    # Publish `v1.2.3` tags as releases.
+    tags:
+      - '*'
+  pull_request:
+
+jobs:
+  lint:
+    name: Lint
+    runs-on: ubuntu-latest
+    container: node:12.8
+    steps:
+      - name: Install dependencies
+        run: |
+          npm ci
+      - name: Run lint
+        run: |
+          npm run lint
+
+  tests:
+    name: Tests
+    runs-on: ubuntu-latest
+    container: node:12.8
+    steps:
+      - name: Install dependencies
+        run: |
+          npm ci
+      - name: Run Tests
+        run: |
+          npm run coverage
+
+  build-package:
+    name: Build Package
+    runs-on: ubuntu-latest
+    container: node:12.8
+    steps:
+      - name: Install dependencies
+        run: |
+          npm ci
+      - name: Launch build
+        run: |
+          npm run build
+      - name: Archive package artifact
+        uses: actions/upload-artifact@v2
+        with:
+          name: dist
+          path: |
+            /home/runner/work/terra-front/dist
+
+  build-storybook:
+    name: Build Package
+    runs-on: ubuntu-latest
+    container: node:12.8
+    steps:
+      - name: Install dependencies
+        run: |
+          npm ci
+      - name: Launch build
+        run: |
+          npm run build-storybook -- --quiet
+      - name: Archive storybook artifact
+        uses: actions/upload-artifact@v2
+        with:
+          name: dist
+          path: |
+            /home/runner/work/terra-front/storybook-static/
