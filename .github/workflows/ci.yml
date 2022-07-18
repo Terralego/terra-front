@@ -78,7 +78,7 @@ jobs:
         with:
           name: dist
           path: |
-            /home/runner/work/terra-front/dist
+            /home/runner/work/terra-front/terra-front/dist
 
   build-storybook:
     name: Build Storybook
@@ -105,7 +105,7 @@ jobs:
         with:
           name: storybook-static
           path: |
-            /home/runner/work/terra-front/storybook-static/
+            /home/runner/work/terra-front/terra-front/storybook-static/
 
   deploy-storybook:
     name: Deploy StoryBook
