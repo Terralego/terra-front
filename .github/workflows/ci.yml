@@ -17,16 +17,13 @@ jobs:
     name: Lint
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v2
+      - uses: actions/checkout@v3
 
-      - name: Read .nvmrc
-        run: echo NVMRC=`cat .nvmrc` >> $GITHUB_ENV
-
-      - name: Setup node
-        uses: actions/setup-node@v2
+      - uses: actions/setup-node@v3
         with:
-          node-version: ${{ env.NVMRC }}
+          node-version-file: '.nvmrc'
           cache: 'npm'
+          cache-dependency-path: '**/package-lock.json'
 
       - name: Install dependencies
         run: |
@@ -40,16 +37,13 @@ jobs:
     name: Tests
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v2
+      - uses: actions/checkout@v3
 
-      - name: Read .nvmrc
-        run: echo NVMRC=`cat .nvmrc` >> $GITHUB_ENV
-
-      - name: Setup node
-        uses: actions/setup-node@v2
+      - uses: actions/setup-node@v3
         with:
-          node-version: ${{ env.NVMRC }}
+          node-version-file: '.nvmrc'
           cache: 'npm'
+          cache-dependency-path: '**/package-lock.json'
 
       - name: Install dependencies
         run: |
@@ -63,16 +57,13 @@ jobs:
     name: Build Package
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v2
+      - uses: actions/checkout@v3
 
-      - name: Read .nvmrc
-        run: echo NVMRC=`cat .nvmrc` >> $GITHUB_ENV
-
-      - name: Setup node
-        uses: actions/setup-node@v2
+      - uses: actions/setup-node@v3
         with:
-          node-version: ${{ env.NVMRC }}
+          node-version-file: '.nvmrc'
           cache: 'npm'
+          cache-dependency-path: '**/package-lock.json'
 
       - name: Install dependencies
         run: |
@@ -93,16 +84,13 @@ jobs:
     name: Build Storybook
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v2
+      - uses: actions/checkout@v3
 
-      - name: Read .nvmrc
-        run: echo NVMRC=`cat .nvmrc` >> $GITHUB_ENV
-
-      - name: Setup node
-        uses: actions/setup-node@v2
+      - uses: actions/setup-node@v3
         with:
-          node-version: ${{ env.NVMRC }}
+          node-version-file: '.nvmrc'
           cache: 'npm'
+          cache-dependency-path: '**/package-lock.json'
 
       - name: Install dependencies
         run: |
@@ -125,21 +113,18 @@ jobs:
     needs: [lint, tests, build-storybook]
     if: ${{ github.event_name == 'push' && github.ref == 'refs/heads/master' }}
     steps:
-      - uses: actions/checkout@v2
+      - uses: actions/checkout@v3
 
       - name: Download storybook artifacts
         uses: actions/download-artifact@v2
         with:
           name: storybook-static
 
-      - name: Read .nvmrc
-        run: echo NVMRC=`cat .nvmrc` >> $GITHUB_ENV
-
-      - name: Setup node
-        uses: actions/setup-node@v2
+      - uses: actions/setup-node@v3
         with:
-          node-version: ${{ env.NVMRC }}
+          node-version-file: '.nvmrc'
           cache: 'npm'
+          cache-dependency-path: '**/package-lock.json'
 
       - name: Install netlify cli
         run: |
@@ -160,21 +145,16 @@ jobs:
     needs: [lint, tests, build-package]
     if: ${{ github.event_name == 'release' && github.event.action == 'created' }}
     steps:
-      - uses: actions/checkout@v2
+      - uses: actions/checkout@v3
 
       - name: Download build artifacts
         uses: actions/download-artifact@v2
         with:
           name: dist
 
-      - name: Read .nvmrc
-        run: echo NVMRC=`cat .nvmrc` >> $GITHUB_ENV
-
-      - name: Setup node
-        uses: actions/setup-node@v2
+      - uses: actions/setup-node@v3
         with:
-          node-version: ${{ env.NVMRC }}
-          cache: 'npm'
+          node-version-file: '.nvmrc'
 
       - name: Add token
         run: |
