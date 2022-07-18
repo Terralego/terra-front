@@ -115,3 +115,68 @@ jobs:
           name: storybook-static
           path: |
             /home/runner/work/terra-front/storybook-static/
+
+  deploy-storybook:
+    name: Deploy StoryBook
+    runs-on: ubuntu-latest
+    needs: [lint, test, build-storybook]
+    if: ${{ github.event_name == 'push' && github.ref == 'refs/heads/master' }}
+    steps:
+      - uses: actions/checkout@v2
+
+      - name: Download storybook artifacts
+        uses: actions/download-artifact@v2
+        with:
+          name: storybook-static
+
+      - name: Read .nvmrc
+        run: echo NVMRC=`cat .nvmrc` >> $GITHUB_ENV
+
+      - name: Setup node
+        uses: actions/setup-node@v2
+        with:
+          node-version: ${{ env.NVMRC }}
+          cache: 'npm'
+
+      - name: Install netlify cli
+        run: |
+          npm i -g netlify-cli
+
+      - name: Deploy storybook
+        run:
+          npx netlify deploy
+            --site=$NETLIFY_SITE_ID
+            --auth=$NETLIFY_ACCESS_TOKEN
+            --dir=./storybook-static
+            --message "${{ github.sha }} ${{ github.ref_name }}"
+            --prod
+
+  deploy-npm:
+    name: Deploy package to NPM registry
+    runs-on: ubuntu-latest
+    needs: [lint, test, build-package]
+    if: ${{ github.event_name == 'release' && github.event.action == 'created' }}
+    steps:
+      - uses: actions/checkout@v2
+
+      - name: Download build artifacts
+        uses: actions/download-artifact@v2
+        with:
+          name: dist
+
+      - name: Read .nvmrc
+        run: echo NVMRC=`cat .nvmrc` >> $GITHUB_ENV
+
+      - name: Setup node
+        uses: actions/setup-node@v2
+        with:
+          node-version: ${{ env.NVMRC }}
+          cache: 'npm'
+
+      - name: Add token
+        run: |
+          echo "//registry.npmjs.org/:_authToken=${NPM_TOKEN}">~/.npmrc
+
+      - name: Publish
+        run: |
+          npm run publish
