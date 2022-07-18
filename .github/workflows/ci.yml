@@ -9,6 +9,9 @@ on:
       - created
   pull_request:
 
+env:
+  SKIP_PREFLIGHT_CHECK: true
+
 jobs:
   lint:
     name: Lint
@@ -145,8 +148,8 @@ jobs:
       - name: Deploy storybook
         run:
           npx netlify deploy
-            --site=$NETLIFY_SITE_ID
-            --auth=$NETLIFY_ACCESS_TOKEN
+            --site=${{ secrets.NETLIFY_SITE_ID }}
+            --auth=${{ secrets.NETLIFY_ACCESS_TOKEN }}
             --dir=./storybook-static
             --message "${{ github.sha }} ${{ github.ref_name }}"
             --prod
@@ -175,7 +178,7 @@ jobs:
 
       - name: Add token
         run: |
-          echo "//registry.npmjs.org/:_authToken=${NPM_TOKEN}">~/.npmrc
+          echo "//registry.npmjs.org/:_authToken=${{ secrets.NPM_TOKEN }}">~/.npmrc
 
       - name: Publish
         run: |
