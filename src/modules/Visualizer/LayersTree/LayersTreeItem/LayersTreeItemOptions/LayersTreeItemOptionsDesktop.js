@@ -65,7 +65,7 @@ const LayersTreeItemOptionsDesktop = ({
       extent={extent}
       isTableActive={isTableActive}
       isDetailsVisible={isDetailsVisible}
-      hasActiveWidget={widgets.find(w => isWidgetActive(w))}
+      hasActiveWidget={widgets && !!widgets.length && widgets.find(w => isWidgetActive(w))}
     />
     {(widgets && !!widgets.length) && (
       // i18next-extract-mark-context-start ["", "synthesis"]

@@ -25,6 +25,7 @@ const LayersTreeItemOptionsTablet = ({
   isWidgetActive,
   map,
   extent,
+  isDetailsVisible,
   translate = translateMock({
     'terralego.visualizer.layerstree.itemOptions.widget.title': 'widget',
     'terralego.visualizer.layerstree.itemOptions.widget.action-open': 'open widget',
@@ -57,7 +58,7 @@ const LayersTreeItemOptionsTablet = ({
       extent={extent}
       isTableActive={isTableActive}
       isDetailsVisible={isDetailsVisible}
-      hasActiveWidget={widgets.find(w => isWidgetActive(w))}
+      hasActiveWidget={widgets && !!widgets.length && widgets.find(w => isWidgetActive(w))}
       isTablet
     />
     {(widgets && !!widgets.length) && (
