@@ -8,6 +8,9 @@ const LocateButton = ({
   map,
   isTablet,
   extent,
+  isTableActive,
+  isDetailsVisible,
+  hasActiveWidget,
   translate = translateMock({
     'terralego.visualizer.layerstree.itemOptions.locate.text': 'Extent this layer',
   }),
@@ -22,8 +25,50 @@ const LocateButton = ({
     return null;
   }
 
+  const padding = React.useMemo(() => {
+     // The purpose of the lines below is to add some padding to the map.fitBounds.
+    // When a panel is unfold (Widget, LayersTree, DataTable, etc..), the map is not resized
+    // but just covered by those elements.
+    // The idea is to add padding according to the size of the element covering the map
+    // so the fitBounds will let all the features visible by the user (and not have some covered by panels).
+
+    // Add 10px to each padding value to give some space
+    const offset = 10;
+
+
+
+    // LayersTree, Widget & Details panel have fixed sized
+    // so we just add "raw" padding
+    const layersTreePadding = 312;
+    const widgetPadding = 330;
+    const detailsPadding = 400;
+
+    // -33vh from DataTable
+    const dataTablePadding = window.innerHeight / 3;
+
+    const paddingEntries= ['top', 'bottom', 'left', 'right'].map(side => [side, offset]);
+    const padding = Object.fromEntries(paddingEntries);
+
+    // LayersTree panel has to be opened to click on the LocateButton
+    padding.left += layersTreePadding;
+
+    if (isTableActive) {
+      padding.bottom += dataTablePadding;
+    }
+
+    if (hasActiveWidget) {
+      padding.right += widgetPadding;
+    }
+
+    if (isDetailsVisible) {
+      padding.right += detailsPadding;
+    }
+
+    return padding;
+  }, [isDetailsVisible, isTableActive, hasActiveWidget]);
+
   const onClick = () => {
-    map.fitBounds(extent, { padding: 10 });
+    map.fitBounds(extent, { padding });
   };
 
   return (

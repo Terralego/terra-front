@@ -136,6 +136,7 @@ export class LayersTreeItem extends React.Component {
       isPhoneSized,
       map,
       extent,
+      isDetailsVisible,
     } = this.props;
 
     if (hidden) return null;
@@ -241,6 +242,7 @@ export class LayersTreeItem extends React.Component {
             isWidgetActive={isWidgetActive}
             map={map}
             extent={extent}
+            isDetailsVisible={isDetailsVisible}
           />
           )}
         </div>

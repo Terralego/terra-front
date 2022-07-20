@@ -50,7 +50,16 @@ const LayersTreeItemOptionsTablet = ({
       { 'layerstree-node-content__options--active': hasSomeOptionActive },
     )}
   >
-    <LocateButton map={map} layer={layer} translate={translate} extent={extent} isTablet />
+    <LocateButton
+      map={map}
+      layer={layer}
+      translate={translate}
+      extent={extent}
+      isTableActive={isTableActive}
+      isDetailsVisible={isDetailsVisible}
+      hasActiveWidget={widgets.find(w => isWidgetActive(w))}
+      isTablet
+    />
     {(widgets && !!widgets.length) && (
       // i18next-extract-mark-context-start ["", "synthesis"]
       widgets.map(widget => {

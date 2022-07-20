@@ -35,6 +35,7 @@ export class LayersTreeGroup extends React.Component {
       isHidden,
       level = 0,
       layersExtent = {},
+      isDetailsVisible,
     } = this.props;
 
     const { handleClick } = this;
@@ -77,6 +78,7 @@ export class LayersTreeGroup extends React.Component {
                   layer={layer}
                   exclusive={exclusive}
                   extent={layersExtent[layer.label]}
+                  isDetailsVisible={isDetailsVisible}
                 />
               )))}
           </Collapse>
