@@ -27,7 +27,7 @@ jobs:
 
       - name: Install dependencies
         run: |
-          npm ci --cache ~/.npm --prefer-offline --no-audit
+          npm ci --no-audit
 
       - name: Run lint
         run: |
@@ -47,7 +47,7 @@ jobs:
 
       - name: Install dependencies
         run: |
-          npm ci --cache ~/.npm --prefer-offline --no-audit
+          npm ci --no-audit
 
       - name: Run Tests
         run: |
@@ -67,7 +67,7 @@ jobs:
 
       - name: Install dependencies
         run: |
-          npm ci --cache ~/.npm --prefer-offline --no-audit
+          npm ci --no-audit
 
       - name: Launch build
         run: |
@@ -95,7 +95,7 @@ jobs:
 
       - name: Install dependencies
         run: |
-          npm ci --cache ~/.npm --prefer-offline --no-audit
+          npm ci --no-audit
 
       - name: Launch build
         run: |
@@ -124,7 +124,6 @@ jobs:
         with:
           node-version-file: '.nvmrc'
           cache: 'npm'
-          cache-dependency-path: '**/package-lock.json'
 
       - name: Install netlify cli
         run: |
