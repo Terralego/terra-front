@@ -1,4 +1,9 @@
 
+1.28.16 / 2022-07-21
+====================
+
+  * Add padding according to opened panel when fitBound on a layer (#309)
+
 1.28.15 / 2022-07-18
 ====================
 
