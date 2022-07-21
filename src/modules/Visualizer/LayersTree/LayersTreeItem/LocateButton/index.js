@@ -15,26 +15,16 @@ const LocateButton = ({
     'terralego.visualizer.layerstree.itemOptions.locate.text': 'Extent this layer',
   }),
 }) => {
-  if (!map || !extent) {
-    return null;
-  }
-
-  const { type } = map.getLayer(layer.layers[0]) || {};
-
-  if (['raster', undefined].includes(type)) {
-    return null;
-  }
-
   const padding = React.useMemo(() => {
-     // The purpose of the lines below is to add some padding to the map.fitBounds.
+    // The purpose of the lines below is to add some padding to the map.fitBounds.
     // When a panel is unfold (Widget, LayersTree, DataTable, etc..), the map is not resized
     // but just covered by those elements.
     // The idea is to add padding according to the size of the element covering the map
-    // so the fitBounds will let all the features visible by the user (and not have some covered by panels).
+    // so the fitBounds will let all the features visible by the user
+    // (and not have some covered by panels).
 
     // Add 10px to each padding value to give some space
     const offset = 10;
-
 
 
     // LayersTree, Widget & Details panel have fixed sized
@@ -46,26 +36,36 @@ const LocateButton = ({
     // -33vh from DataTable
     const dataTablePadding = window.innerHeight / 3;
 
-    const paddingEntries= ['top', 'bottom', 'left', 'right'].map(side => [side, offset]);
-    const padding = Object.fromEntries(paddingEntries);
+    const paddingEntries = ['top', 'bottom', 'left', 'right'].map(side => [side, offset]);
+    const paddingValues = Object.fromEntries(paddingEntries);
 
     // LayersTree panel has to be opened to click on the LocateButton
-    padding.left += layersTreePadding;
+    paddingValues.left += layersTreePadding;
 
     if (isTableActive) {
-      padding.bottom += dataTablePadding;
+      paddingValues.bottom += dataTablePadding;
     }
 
     if (hasActiveWidget) {
-      padding.right += widgetPadding;
+      paddingValues.right += widgetPadding;
     }
 
     if (isDetailsVisible) {
-      padding.right += detailsPadding;
+      paddingValues.right += detailsPadding;
     }
 
-    return padding;
+    return paddingValues;
   }, [isDetailsVisible, isTableActive, hasActiveWidget]);
+
+  if (!map || !extent) {
+    return null;
+  }
+
+  const { type } = map.getLayer(layer.layers[0]) || {};
+
+  if (['raster', undefined].includes(type)) {
+    return null;
+  }
 
   const onClick = () => {
     map.fitBounds(extent, { padding });
