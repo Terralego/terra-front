@@ -70,6 +70,7 @@ export class LayersTreeGroup extends React.Component {
                   layer={layer}
                   initialOpen={false}
                   level={level + 1}
+                  layersExtent={layersExtent}
                 />
               )
               : (
