@@ -1,4 +1,9 @@
 
+1.28.17 / 2022-08-17
+====================
+
+  * Ensure layersExtent is passed to layers subgroup
+
 1.28.16 / 2022-07-21
 ====================
 
