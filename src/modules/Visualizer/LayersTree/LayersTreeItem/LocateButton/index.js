@@ -69,6 +69,7 @@ const LocateButton = ({
 
   const onClick = () => {
     map.fitBounds(extent, { padding });
+    map.fire('updateMap');
   };
 
   return (
