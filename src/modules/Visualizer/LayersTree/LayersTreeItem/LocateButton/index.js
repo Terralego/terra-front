@@ -23,8 +23,8 @@ const LocateButton = ({
     // so the fitBounds will let all the features visible by the user
     // (and not have some covered by panels).
 
-    // Add 10px to each padding value to give some space
-    const offset = 10;
+    // Add 25px to each padding value to give some space
+    const offset = 25;
 
 
     // LayersTree, Widget & Details panel have fixed sized
