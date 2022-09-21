@@ -1,4 +1,4 @@
-image: node:12.8 # Should match .nvmrc content
+image: node:14.20 # Should match .nvmrc content
 
 stages:
   - tests
