@@ -11,7 +11,7 @@
     "@blueprintjs/select": "~3.10.0",
     "@blueprintjs/table": "~3.7.0",
     "@makina-corpus/mapbox-gl-path": "^1.9.0",
-    "@mapbox/mapbox-gl-draw": "^1.1.2",
+    "@mapbox/mapbox-gl-draw": "^1.4.1",
     "@mapbox/mapbox-gl-sync-move": "^0.2.0",
     "@turf/bbox": "^6.0.1",
     "@turf/centroid": "^6.0.2",
