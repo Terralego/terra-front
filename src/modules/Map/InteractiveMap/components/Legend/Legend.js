@@ -8,6 +8,7 @@ import translateMock from '../../../../../utils/translate';
 import Circle from './components/Circle';
 import Rect from './components/Rect';
 import Line from './components/Line';
+import Icon from './components/Icon';
 
 const DEFAULT_SIZE = 16;
 
@@ -130,6 +131,10 @@ export const Legend = ({
                 break;
               case 'square':
                 Shape = Rect;
+                break;
+              case 'icon':
+                Shape = Icon;
+                wrapperStyle.position = 'relative';
                 break;
               default:
                 break;
