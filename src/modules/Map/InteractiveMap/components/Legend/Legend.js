@@ -62,6 +62,7 @@ export const Legend = ({
   position,
   rounding,
   translate,
+  hideTitle = false,
 }) => {
   const biggestSize = Math.max(...items.map(({ size = DEFAULT_SIZE }) => size));
 
@@ -69,7 +70,7 @@ export const Legend = ({
 
   return (
     <div className="tf-legend tf-legend--level-1">
-      {title && <h4 className="tf-legend__title">{title}</h4>}
+      {title && !hideTitle && <h4 className="tf-legend__title">{title}</h4>}
       <div
         className={classnames('tf-legend__list', {
           'tf-legend__stacked-circles': isStackedCircles,
