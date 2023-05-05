@@ -434,6 +434,7 @@ stories.add(
         <Legend {...legend2} title="Foo" />
         <Legend {...legend3} title="Foo" />
         <Legend {...iconLegend} />
+        <Legend {...iconLegend} title="Hidden title" hideTitle />
       </div>
     </div>
   ),
