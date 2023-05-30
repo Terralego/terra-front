@@ -76,7 +76,9 @@ const isOverMap = (target, map) => {
 const getUniqueLegends = legends => {
   const uniques = [];
   legends.forEach(legend => uniques.find(({ title, items }) =>
-    title === legend.title && items.length === legend.items.length)
+    title === legend.title &&
+    items.length === legend.items.length &&
+    items.every((item, index) => item.label === legend.items[index].label))
       || uniques.push(legend));
   return uniques;
 };
