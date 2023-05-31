@@ -1,4 +1,9 @@
 
+1.30.1 / 2023-05-31
+===================
+
+  * Fix some legends wrongly treated as duplicates
+
 1.30.0 / 2023-05-05
 ===================
 
