@@ -31,6 +31,22 @@ stories.add('Signin', () => (
   },
 });
 
+stories.add('Signin with SSO link', () => (
+  <ApiProvider host={text('api host', '')}>
+    <AuthProvider>
+      <LoginForm
+        ssoLink="https://example.tld"
+        ssoLinkLabel="SSO"
+      />
+    </AuthProvider>
+  </ApiProvider>
+), {
+  info: {
+    text: loginDoc,
+    propTables: [LoginFormPure],
+  },
+});
+
 stories.add('Signup', () => (
   <ApiProvider host={text('api host', '')}>
     <AuthProvider>

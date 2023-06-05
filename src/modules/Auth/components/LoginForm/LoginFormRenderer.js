@@ -5,6 +5,7 @@ import translateMock from '../../../../utils/translate';
 
 export const LoginFormRenderer = ({
   submit, setLogin, setPassword, errorLogin, errorPassword, errorGeneric,
+  ssoLink, ssoLinkLabel,
   translate = translateMock({
     'auth.loginform.email.helper': 'Type your email',
     'auth.loginform.email.helper_invalid': 'Invalid email',
@@ -62,11 +63,24 @@ export const LoginFormRenderer = ({
           autoComplete="current-password"
         />
       </FormGroup>
-      <Button
-        type="submit"
-      >
-        {translate('auth.loginform.submit')}
-      </Button>
+
+      <div className="login-form__actions">
+        <Button
+          type="submit"
+        >
+          {translate('auth.loginform.submit')}
+        </Button>
+        {ssoLink && (
+          <Button
+            onClick={() => {
+              console.log(`Redirect to: ${ssoLink}, then back to: ???`);
+            }}
+            type="button"
+          >
+            {ssoLinkLabel || translate('auth.loginform.sso')}
+          </Button>
+        )}
+      </div>
     </form>
   </Card>
 );
