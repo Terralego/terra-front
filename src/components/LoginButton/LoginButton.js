@@ -23,6 +23,7 @@ export const LoginButton = ({
   translate,
   allowUserRegistration,
   render = LoginFormRenderer,
+  ssoLink,
   ...props
 }) => {
   const [isOpen, setIsOpen] = useState(false);
@@ -40,7 +41,7 @@ export const LoginButton = ({
 
   const confirmLogout = useCallback(() => {
     setIsOpen(false);
-    logoutAction();
+    logoutAction(ssoLink);
   }, [logoutAction]);
 
   const toggleOverlay = () => setIsOpen(boolean => !boolean);
@@ -76,6 +77,7 @@ export const LoginButton = ({
                   onAfterSubmitting={() => setIsNewlyAuthenticated(false)}
                   translate={translate}
                   render={render}
+                  ssoLink={ssoLink}
                 />
               )}
             />

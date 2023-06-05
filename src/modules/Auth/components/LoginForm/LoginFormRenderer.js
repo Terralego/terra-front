@@ -3,8 +3,9 @@ import { Card, FormGroup, InputGroup, Button, Intent, Callout } from '@blueprint
 
 import translateMock from '../../../../utils/translate';
 
+
 export const LoginFormRenderer = ({
-  submit, setLogin, setPassword, errorLogin, errorPassword, errorGeneric,
+  submit, setLogin, setPassword, errorLogin, errorPassword, errorGeneric, ssoLink, ssoLinkLabel,
   translate = translateMock({
     'auth.loginform.email.helper': 'Type your email',
     'auth.loginform.email.helper_invalid': 'Invalid email',
@@ -62,11 +63,18 @@ export const LoginFormRenderer = ({
           autoComplete="current-password"
         />
       </FormGroup>
-      <Button
-        type="submit"
-      >
-        {translate('auth.loginform.submit')}
-      </Button>
+      <div class="login-form__actions">
+        <Button
+          type="submit"
+        >
+          {translate('auth.loginform.submit')}
+        </Button>
+        {ssoLink && (
+          <Button type="button" onClick={() => { window.location.pathname = ssoLink; }}>
+            {ssoLinkLabel || translate('auth.loginform.sso')}            ssoLabel
+          </Button>
+        )}
+      </div>
     </form>
   </Card>
 );
