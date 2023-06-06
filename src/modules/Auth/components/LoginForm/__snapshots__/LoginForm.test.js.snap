@@ -93,18 +93,22 @@ exports[`should render correctly 1`] = `
         </div>
       </div>
     </div>
-    <button
-      className="bp3-button"
-      onKeyDown={[Function]}
-      onKeyUp={[Function]}
-      type="submit"
+    <div
+      className="login-form__actions"
     >
-      <span
-        className="bp3-button-text"
+      <button
+        className="bp3-button"
+        onKeyDown={[Function]}
+        onKeyUp={[Function]}
+        type="submit"
       >
-        Signin
-      </span>
-    </button>
+        <span
+          className="bp3-button-text"
+        >
+          Signin
+        </span>
+      </button>
+    </div>
   </form>
 </div>
 `;
@@ -202,18 +206,22 @@ exports[`should render with errors 1`] = `
         </div>
       </div>
     </div>
-    <button
-      className="bp3-button"
-      onKeyDown={[Function]}
-      onKeyUp={[Function]}
-      type="submit"
+    <div
+      className="login-form__actions"
     >
-      <span
-        className="bp3-button-text"
+      <button
+        className="bp3-button"
+        onKeyDown={[Function]}
+        onKeyUp={[Function]}
+        type="submit"
       >
-        Signin
-      </span>
-    </button>
+        <span
+          className="bp3-button-text"
+        >
+          Signin
+        </span>
+      </button>
+    </div>
   </form>
 </div>
 `;
