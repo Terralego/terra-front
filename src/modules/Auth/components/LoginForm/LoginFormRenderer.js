@@ -63,7 +63,7 @@ export const LoginFormRenderer = ({
           autoComplete="current-password"
         />
       </FormGroup>
-      <div class="login-form__actions">
+      <div className="login-form__actions">
         <Button
           type="submit"
         >
@@ -71,7 +71,7 @@ export const LoginFormRenderer = ({
         </Button>
         {ssoLink && (
           <Button type="button" onClick={() => { window.location.pathname = ssoLink; }}>
-            {ssoLinkLabel || translate('auth.loginform.sso')}            ssoLabel
+            {ssoLinkLabel || translate('auth.loginform.sso')}
           </Button>
         )}
       </div>
