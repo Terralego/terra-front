@@ -45,7 +45,16 @@ export class AuthProvider extends React.Component {
     await createToken(properties);
   }
 
-  logoutAction = () => {
+  logoutAction = async (ssoLink = null) => {
+    if (ssoLink) {
+      try {
+        const ssoUrl = new URL(ssoLink, window.location);
+        await fetch(ssoUrl);
+      } catch (e) {
+        // eslint-disable-next-line no-console
+        console.error(e);
+      }
+    }
     clearToken();
     this.setState({ authenticated: false, user: null });
   }

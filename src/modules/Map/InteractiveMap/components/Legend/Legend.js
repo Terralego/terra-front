@@ -8,6 +8,7 @@ import translateMock from '../../../../../utils/translate';
 import Circle from './components/Circle';
 import Rect from './components/Rect';
 import Line from './components/Line';
+import Icon from './components/Icon';
 
 const DEFAULT_SIZE = 16;
 
@@ -61,6 +62,7 @@ export const Legend = ({
   position,
   rounding,
   translate,
+  hideTitle = false,
 }) => {
   const biggestSize = Math.max(...items.map(({ size = DEFAULT_SIZE }) => size));
 
@@ -68,7 +70,7 @@ export const Legend = ({
 
   return (
     <div className="tf-legend tf-legend--level-1">
-      {title && <h4 className="tf-legend__title">{title}</h4>}
+      {title && !hideTitle && <h4 className="tf-legend__title">{title}</h4>}
       <div
         className={classnames('tf-legend__list', {
           'tf-legend__stacked-circles': isStackedCircles,
@@ -130,6 +132,10 @@ export const Legend = ({
                 break;
               case 'square':
                 Shape = Rect;
+                break;
+              case 'icon':
+                Shape = Icon;
+                wrapperStyle.position = 'relative';
                 break;
               default:
                 break;

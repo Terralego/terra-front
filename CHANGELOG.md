@@ -1,4 +1,29 @@
 
+1.31.2 / 2023-06-07
+===================
+
+  * Use URL constructor to create sso logout url
+
+1.31.1 / 2023-06-06
+===================
+
+  * Add sso login button if available
+
+1.30.1 / 2023-05-31
+===================
+
+  * Fix some legends wrongly treated as duplicates
+
+1.30.0 / 2023-05-05
+===================
+
+  * Allow to hide title of Legend component
+
+1.29.0 / 2023-03-30
+===================
+
+  * Allow Legend to manage icon items
+
 1.28.19 / 2022-08-26
 ====================
 

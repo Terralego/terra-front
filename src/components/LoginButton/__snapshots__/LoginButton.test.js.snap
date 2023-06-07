@@ -150,16 +150,20 @@ exports[`should render 1`] = `
                     </div>
                   </div>
                 </div>
-                <button
-                  class="bp3-button"
-                  type="submit"
+                <div
+                  class="login-form__actions"
                 >
-                  <span
-                    class="bp3-button-text"
+                  <button
+                    class="bp3-button"
+                    type="submit"
                   >
-                    Signin
-                  </span>
-                </button>
+                    <span
+                      class="bp3-button-text"
+                    >
+                      Signin
+                    </span>
+                  </button>
+                </div>
               </form>
             </div>
           </div>

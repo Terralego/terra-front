@@ -4,6 +4,10 @@ import { boolean } from '@storybook/addon-knobs';
 
 import Legend from '../InteractiveMap/components/Legend';
 
+import icon1 from '../../../images/pushpin.png';
+import icon2 from '../../../images/loudspeaker.png';
+
+// Square
 const legend1 = {
   title: 'Foo',
   comment: 'Source of foo',
@@ -39,6 +43,7 @@ const legend1 = {
   ],
 };
 
+// Circle
 const legend2 = {
   title: 'Bar',
   comment: 'Source of foo',
@@ -74,6 +79,7 @@ const legend2 = {
   ],
 };
 
+// Line
 const legend3 = {
   title: 'Baz',
   comment: 'Source of foo',
@@ -109,6 +115,30 @@ const legend3 = {
   ],
 };
 
+const iconLegend = {
+  title: 'Icons',
+  uid: '0166c682-980a-4d96-b204-cf63dc73285d',
+  shape: 'icon',
+  items: [
+    {
+      label: 'icon 1',
+      'style-image': 'target',
+      'style-image-file': `/${icon1}`,
+    },
+    {
+      label: 'icon 2',
+      'style-image': 'marker',
+      'style-image-file': `/${icon2}`,
+    },
+    {
+      label: 'icon 3',
+      'style-image': 'marker',
+      'style-image-file': `/${icon1}`,
+    },
+  ],
+};
+
+// Stacked circles
 const legend4 = {
   title: 'Toto',
   comment: 'Source of toto',
@@ -135,6 +165,7 @@ const legend4 = {
   ],
 };
 
+// Stacked circles
 const legend5 = {
   title: 'Toto',
   comment: 'Source of toto',
@@ -370,6 +401,18 @@ stories.add(
 );
 
 stories.add(
+  'Icon items',
+  () => (
+    <div className="interactive-map">
+      <div className="interactive-map__legends">
+        <Legend {...iconLegend} />
+      </div>
+    </div>
+  ),
+  knobsOptions,
+);
+
+stories.add(
   'Stacked circles',
   () => (
     <div className="interactive-map">
@@ -390,6 +433,8 @@ stories.add(
         <Legend {...legend1} title="Foo" />
         <Legend {...legend2} title="Foo" />
         <Legend {...legend3} title="Foo" />
+        <Legend {...iconLegend} />
+        <Legend {...iconLegend} title="Hidden title" hideTitle />
       </div>
     </div>
   ),
