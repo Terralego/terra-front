@@ -42,7 +42,7 @@ export const LoginButton = ({
   const confirmLogout = useCallback(() => {
     setIsOpen(false);
     logoutAction(ssoLink);
-  }, [logoutAction]);
+  }, [logoutAction, ssoLink]);
 
   const toggleOverlay = () => setIsOpen(boolean => !boolean);
 

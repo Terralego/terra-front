@@ -10,7 +10,6 @@ import {
 } from '../../services/auth';
 import context from '../../services/context';
 import { getTokenPayload } from '../../../../utils/jwt';
-import Api from '../../../Api/services/api';
 
 const { Provider } = context;
 
@@ -49,7 +48,8 @@ export class AuthProvider extends React.Component {
   logoutAction = async (ssoLink = null) => {
     if (ssoLink) {
       try {
-        await Api.request(ssoLink);
+        const ssoUrl = new URL(ssoLink, window.location);
+        await fetch(ssoUrl);
       } catch (e) {
         // eslint-disable-next-line no-console
         console.error(e);
