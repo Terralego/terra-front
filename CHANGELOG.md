@@ -1,4 +1,39 @@
 
+1.31.1 / 2023-06-06
+===================
+
+  * Add sso login button if available
+
+1.30.1 / 2023-05-31
+===================
+
+  * Fix some legends wrongly treated as duplicates
+
+1.30.0 / 2023-05-05
+===================
+
+  * Allow to hide title of Legend component
+
+1.29.0 / 2023-03-30
+===================
+
+  * Allow Legend to manage icon items
+
+1.28.19 / 2022-08-26
+====================
+
+  * Increase padding size after fitbounds
+
+1.28.18 / 2022-08-25
+====================
+
+  * Fire 'updateMap' event after fitBounds
+
+1.28.17 / 2022-08-17
+====================
+
+  * Ensure layersExtent is passed to layers subgroup
+
 1.28.16 / 2022-07-21
 ====================
 

@@ -661,6 +661,88 @@ exports[`should render correctly with different config circle 1`] = `
 </div>
 `;
 
+exports[`should render correctly with different config icon 1`] = `
+<div
+  className="tf-legend tf-legend--level-1"
+>
+  <h4
+    className="tf-legend__title"
+  >
+    Hello World
+  </h4>
+  <div
+    className="tf-legend__list"
+  >
+    <div
+      className="tf-legend__item tf-legend__item--icon tf-legend__item--left"
+    >
+      <div
+        className="tf-legend__symbol-container color--black"
+        style={
+          Object {
+            "position": "relative",
+            "width": 32,
+          }
+        }
+      >
+        <img
+          alt=""
+          className="tf-legend__symbol"
+          src="/pushpin.png"
+          style={
+            Object {
+              "left": "50%",
+              "maxWidth": 16,
+              "position": "absolute",
+              "top": "50%",
+              "transform": "translate(-50%, -50%)",
+            }
+          }
+        />
+      </div>
+      <div
+        className="tf-legend__label"
+      >
+        icon 1
+      </div>
+    </div>
+    <div
+      className="tf-legend__item tf-legend__item--icon tf-legend__item--left"
+    >
+      <div
+        className="tf-legend__symbol-container color--black"
+        style={
+          Object {
+            "position": "relative",
+            "width": 32,
+          }
+        }
+      >
+        <img
+          alt=""
+          className="tf-legend__symbol"
+          src="/loudspeaker.png"
+          style={
+            Object {
+              "left": "50%",
+              "maxWidth": 16,
+              "position": "absolute",
+              "top": "50%",
+              "transform": "translate(-50%, -50%)",
+            }
+          }
+        />
+      </div>
+      <div
+        className="tf-legend__label"
+      >
+        icon 2
+      </div>
+    </div>
+  </div>
+</div>
+`;
+
 exports[`should render correctly with different config line 1`] = `
 <div
   className="tf-legend tf-legend--level-1"

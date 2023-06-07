@@ -3,6 +3,9 @@ import renderer from 'react-test-renderer';
 
 import Legend from './Legend';
 
+import icon1 from '../../../../../images/pushpin.png';
+import icon2 from '../../../../../images/loudspeaker.png';
+
 describe('should render correctly', () => {
   const items = shape => ([{
     label: 'Rouge',
@@ -62,6 +65,19 @@ describe('should render correctly with different config', () => {
     strokeColor: 'lightblue',
   }];
 
+  const iconItems = [
+    {
+      label: 'icon 1',
+      'style-image': 'target',
+      'style-image-file': `/${icon1}`,
+    },
+    {
+      label: 'icon 2',
+      'style-image': 'marker',
+      'style-image-file': `/${icon2}`,
+    },
+  ];
+
   it('square', () => {
     const tree = renderer.create(<Legend title="Hello World" items={items} position="right" />).toJSON();
     expect(tree).toMatchSnapshot();
@@ -74,6 +90,11 @@ describe('should render correctly with different config', () => {
 
   it('line', () => {
     const tree = renderer.create(<Legend title="Hello World" items={items} shape="line" />).toJSON();
+    expect(tree).toMatchSnapshot();
+  });
+
+  it('icon', () => {
+    const tree = renderer.create(<Legend title="Hello World" items={iconItems} shape="icon" />).toJSON();
     expect(tree).toMatchSnapshot();
   });
 
