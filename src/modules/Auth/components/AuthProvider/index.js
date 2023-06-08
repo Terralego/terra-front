@@ -16,10 +16,9 @@ const { Provider } = context;
 export class AuthProvider extends React.Component {
   constructor (props) {
     super(props);
-    const token = getToken();
 
     this.state = { authenticated: false, user: null };
-
+    const token = getToken();
     if (!token) return;
 
     const { user } = this.extractTokenData(token);
@@ -33,6 +32,8 @@ export class AuthProvider extends React.Component {
   componentWillUnmount () {
     this.isUnmount = true;
   }
+
+  setAuthenticated = authenticated => this.setState({ authenticated });
 
   authAction = async ({ login, password }) => {
     const token = await obtainToken(login, password);
@@ -106,14 +107,15 @@ export class AuthProvider extends React.Component {
     }
   }
 
+
   render () {
     const { children } = this.props;
     const { authenticated, user } = this.state;
-    const { authAction, logoutAction, signupAction } = this;
+    const { authAction, logoutAction, signupAction, setAuthenticated } = this;
 
     return (
       <Provider
-        value={{ authenticated, user, authAction, logoutAction, signupAction }}
+        value={{ authenticated, user, authAction, logoutAction, signupAction, setAuthenticated }}
       >
         {children}
       </Provider>
