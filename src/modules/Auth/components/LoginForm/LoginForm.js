@@ -11,6 +11,8 @@ export class LoginForm extends React.Component {
     onAfterSubmitting: PropTypes.func,
     onBeforeSubmitting: PropTypes.func,
     ssoLink: PropTypes.string,
+    ssoButtonText: PropTypes.string,
+    defaultButtonText: PropTypes.string,
   };
 
   static defaultProps = {
@@ -18,6 +20,8 @@ export class LoginForm extends React.Component {
     onAfterSubmitting () {},
     onBeforeSubmitting () {},
     ssoLink: undefined,
+    ssoButtonText: undefined,
+    defaultButtonText: undefined,
   };
 
   state = {};

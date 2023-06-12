@@ -24,6 +24,8 @@ export const LoginButton = ({
   allowUserRegistration,
   render = LoginFormRenderer,
   ssoLink,
+  defaultButtonText,
+  ssoButtonText,
   ...props
 }) => {
   const [isOpen, setIsOpen] = useState(false);
@@ -78,6 +80,8 @@ export const LoginButton = ({
                   translate={translate}
                   render={render}
                   ssoLink={ssoLink}
+                  ssoButtonText={ssoButtonText}
+                  defaultButtonText={defaultButtonText}
                 />
               )}
             />
@@ -130,12 +134,18 @@ LoginButton.propTypes = {
   isPhoneSized: PropTypes.bool,
   logoutAction: PropTypes.func,
   translate: PropTypes.func,
+  ssoLink: PropTypes.string,
+  defaultButtonText: PropTypes.string,
+  ssoButtonText: PropTypes.string,
 };
 
 LoginButton.defaultProps = {
   authenticated: false,
   isMobileSized: false,
   isPhoneSized: false,
+  ssoLink: undefined,
+  defaultButtonText: undefined,
+  ssoButtonText: undefined,
   logoutAction () {},
   translate: translateMock({
     'auth.loginform.title': 'Sign in',
