@@ -1,6 +1,13 @@
 .login-form {
   max-width: 40rem;
   margin: auto;
+  display: flex;
+  flex-direction: column;
+    
+  &__separator {
+    margin: 6px;
+    text-align: center;
+  }
 
   &__callout {
     margin-bottom: 1rem;
