@@ -16,6 +16,12 @@
         "label": "Mot de passe",
         "placeholder": "Mot de passe"
       },
+      "renderer": {
+        "internal": "Connexion interne",
+        "separator": "ou",
+        "sso": "Connexion SSO"
+      },
+      "sso": "Connexion SSO",
       "submit": "Se connecter",
       "title": "Connexion"
     },

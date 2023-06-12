@@ -1,0 +1,211 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`should render correctly 1`] = `
+<div
+  className="login-form"
+>
+  <a
+    className="bp3-button bp3-large bp3-intent-success"
+    href="http://localhost/sso/url/test"
+    onKeyDown={[Function]}
+    onKeyUp={[Function]}
+    role="button"
+    tabIndex={0}
+  >
+    <span
+      className="bp3-button-text"
+    >
+      auth.loginform.renderer.sso
+    </span>
+  </a>
+  <span
+    className="login-form__separator bp3-text-large bp3-text-muted"
+  >
+    auth.loginform.renderer.separator
+  </span>
+  <button
+    className="bp3-button"
+    onClick={[Function]}
+    onKeyDown={[Function]}
+    onKeyUp={[Function]}
+    type="button"
+  >
+    <span
+      className="bp3-button-text"
+    >
+      auth.loginform.renderer.internal
+    </span>
+  </button>
+</div>
+`;
+
+exports[`should render correctly when internal authentication chose 1`] = `
+<div
+  className="login-form"
+>
+  <a
+    className="bp3-button bp3-large bp3-intent-success"
+    href="http://localhost/undefined"
+    onKeyDown={[Function]}
+    onKeyUp={[Function]}
+    role="button"
+    tabIndex={0}
+  >
+    <span
+      className="bp3-button-text"
+    >
+      auth.loginform.renderer.sso
+    </span>
+  </a>
+  <span
+    className="login-form__separator bp3-text-large bp3-text-muted"
+  >
+    auth.loginform.renderer.separator
+  </span>
+  <div
+    className="bp3-card bp3-elevation-0 login-form"
+  >
+    <form>
+      <div
+        className="bp3-form-group"
+      >
+        <label
+          className="bp3-label"
+          htmlFor="login"
+        >
+          auth.loginform.email.label
+           
+          <span
+            className="bp3-text-muted"
+          >
+            auth.loginform.email.info
+          </span>
+        </label>
+        <div
+          className="bp3-form-content"
+        >
+          <div
+            className="bp3-input-group"
+          >
+            <input
+              autoComplete="username"
+              className="bp3-input"
+              id="login"
+              placeholder="auth.loginform.email.placeholder"
+              style={
+                Object {
+                  "paddingLeft": undefined,
+                  "paddingRight": undefined,
+                }
+              }
+              type="email"
+            />
+          </div>
+          <div
+            className="bp3-form-helper-text"
+          >
+            auth.loginform.email.helper
+          </div>
+        </div>
+      </div>
+      <div
+        className="bp3-form-group"
+      >
+        <label
+          className="bp3-label"
+          htmlFor="password"
+        >
+          auth.loginform.password.label
+           
+          <span
+            className="bp3-text-muted"
+          >
+            auth.loginform.password.info
+          </span>
+        </label>
+        <div
+          className="bp3-form-content"
+        >
+          <div
+            className="bp3-input-group"
+          >
+            <input
+              autoComplete="current-password"
+              className="bp3-input"
+              id="password"
+              placeholder="auth.loginform.password.placeholder"
+              style={
+                Object {
+                  "paddingLeft": undefined,
+                  "paddingRight": undefined,
+                }
+              }
+              type="password"
+            />
+          </div>
+          <div
+            className="bp3-form-helper-text"
+          >
+            auth.loginform.password.helper
+          </div>
+        </div>
+      </div>
+      <div
+        className="login-form__actions"
+      >
+        <button
+          className="bp3-button"
+          onKeyDown={[Function]}
+          onKeyUp={[Function]}
+          type="submit"
+        >
+          <span
+            className="bp3-button-text"
+          >
+            auth.loginform.submit
+          </span>
+        </button>
+      </div>
+    </form>
+  </div>
+</div>
+`;
+
+exports[`should render correctly with authentication url and labels 1`] = `
+<div
+  className="login-form"
+>
+  <a
+    className="bp3-button bp3-large bp3-intent-success"
+    href="http://localhost/login/url/test"
+    onKeyDown={[Function]}
+    onKeyUp={[Function]}
+    role="button"
+    tabIndex={0}
+  >
+    <span
+      className="bp3-button-text"
+    >
+      sso button
+    </span>
+  </a>
+  <span
+    className="login-form__separator bp3-text-large bp3-text-muted"
+  >
+    auth.loginform.renderer.separator
+  </span>
+  <button
+    className="bp3-button"
+    onClick={[Function]}
+    onKeyDown={[Function]}
+    onKeyUp={[Function]}
+    type="button"
+  >
+    <span
+      className="bp3-button-text"
+    >
+      default button
+    </span>
+  </button>
+</div>
+`;
