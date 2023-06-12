@@ -66,7 +66,7 @@ git push && git push --tags
 To publish manually (not recomanded) the package to npmjs.com *(current commit should be tagged)*
 
 ```shell
-npm run publish
+npm run publish:manual
 ```
 
 ## Modules
