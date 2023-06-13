@@ -3,6 +3,7 @@ import  { storiesOf } from '@storybook/react';
 import { boolean } from '@storybook/addon-knobs';
 
 import LoginButton from '../LoginButton/LoginButton';
+import SSOLoginFormRenderer from '../../modules/Auth/components/LoginForm/SSOLoginFormRenderer';
 import translateMock from '../../utils/translate';
 
 import logIn from '../../images/log-in.svg';
@@ -30,6 +31,9 @@ const translate = translateMock({
   'auth.signupform.email.help': 'Type your email',
   'auth.signupform.submit': 'signup',
   'auth.signupform.title': 'Create an account',
+  'auth.loginform.renderer.sso': 'SSO Connection',
+  'auth.loginform.renderer.internal': 'Internal authentication',
+  'auth.loginform.renderer.separator': 'or',
 });
 
 
@@ -60,6 +64,15 @@ stories
     <LoginButton
       authenticated={boolean('authenticated', false)}
       render={CustomRenderer}
+      isMobileSized={false}
+      icon={logIn}
+      t={translate}
+      env={{}}
+    />
+  )).add('LoginButton with sso form renderer', () => (
+    <LoginButton
+      authenticated={boolean('authenticated', false)}
+      render={SSOLoginFormRenderer}
       isMobileSized={false}
       icon={logIn}
       t={translate}
