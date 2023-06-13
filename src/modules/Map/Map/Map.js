@@ -1,5 +1,5 @@
 import React from 'react';
-import mapBoxGl from 'mapbox-gl';
+import mapBoxGl, { Marker } from 'mapbox-gl';
 import PropTypes from 'prop-types';
 import 'mapbox-gl/dist/mapbox-gl.css';
 import { detailedDiff } from 'deep-object-diff';
@@ -40,6 +40,8 @@ export const CONTROL_SHARE = 'ShareControl';
 export const CONTROL_CUSTOM = 'CustomControl';
 export const CONTROL_REPORT = 'ReportControl';
 export const CONTROL_WIDGET = 'WidgetControl';
+
+export const ADVANCED_TYPES = ['pie-chart'];
 
 export const DEFAULT_CONTROLS = [{
   control: CONTROL_ATTRIBUTION,
@@ -146,6 +148,14 @@ export class MapComponent extends React.Component {
           }),
           border: PropTypes.number,
         }),
+        advanced_style: PropTypes.shape({
+          fields: PropTypes.arrayOf(PropTypes.shape({
+            name: PropTypes.string.isRequired,
+            color: PropTypes.string.isRequired,
+          })).isRequired,
+          'dynamic-radius': PropTypes.bool,
+          chart_radius: PropTypes.number,
+        }),
       })),
     }),
     onBackgroundChange: PropTypes.func,
@@ -233,7 +243,7 @@ export class MapComponent extends React.Component {
     if (customStyle !== prevProps.customStyle) {
       this.replaceLayers(prevProps.customStyle, customStyle);
     }
-  };
+  }
 
   focusOnSearchResult = ({ center, bounds }) => {
     const { map } = this.props;
@@ -293,8 +303,136 @@ export class MapComponent extends React.Component {
     sources.forEach(({ id, ...sourceAttrs }) => map.addSource(id, sourceAttrs));
 
     layers.forEach(layer => {
+      if (layer.type === 'piechart') return this.createPieChartLayer(layer);
       if (layer.cluster) return this.createClusterLayer(layer);
       return map.addLayer(layer);
+    });
+  }
+
+  createPieChartLayer (layer) {
+    if (!layer || Object.keys(layer).length === 0) return;
+    const markers = {};
+    let markersOnScreen = {};
+    const { map } = this.props;
+
+    const newLayer = {
+      type: 'circle',
+      id: layer.id,
+      paint: { 'circle-opacity': 0, 'circle-color': '#ffffff', 'circle-radius': 0 },
+      source: layer.source,
+      ...(layer['source-layer'] ? { 'source-layer': layer['source-layer'] } : {}),
+    };
+    map.addLayer(newLayer);
+
+    const donutSegment = (start, pEnd, r, color, r0 = 0) => {
+      let end = pEnd;
+      if (end - start === 1) end -= 0.00001;
+      const a0 = 2 * Math.PI * (start - 0.25);
+      const a1 = 2 * Math.PI * (end - 0.25);
+      const x0 = Math.cos(a0);
+      const y0 = Math.sin(a0);
+      const x1 = Math.cos(a1);
+      const y1 = Math.sin(a1);
+      const largeArc = end - start > 0.5 ? 1 : 0;
+
+      // draw an SVG path
+      return `<path d="M ${r + r0 * x0} ${r + r0 * y0} L ${r + r * x0} ${
+        r + r * y0
+      } A ${r} ${r} 0 ${largeArc} 1 ${r + r * x1} ${r + r * y1} L ${
+        r + r0 * x1
+      } ${r + r0 * y1} A ${r0} ${r0} 0 ${largeArc} 0 ${r + r0 * x0} ${
+        r + r0 * y0
+      }" fill="${color}" />`;
+    };
+
+    const createDonutChart = (props, fields, totals, chart_radius) => {
+      const offsets = [];
+      let total = 0;
+      fields.forEach(field => {
+        offsets.push(total);
+        total += props[field.name];
+      });
+
+      const max = Math.max(...totals);
+      const facteurMin =
+        (chart_radius.min_radius - chart_radius.max_radius) / (Math.min(...totals) - max);
+
+      const r = chart_radius.type === 'variable' ? facteurMin * total + (chart_radius.max_radius - facteurMin * max) : chart_radius.value;
+      const fontSize = 15;
+      const w = r * 2;
+
+      let html = `<div>
+        <svg opacity="0.8" width="${w}" height="${w}" viewbox="0 0 ${w} ${w}" text-anchor="middle" style="font: ${fontSize}px sans-serif; display: block">`;
+
+      for (let i = 0; i < fields.length; i += 1) {
+        html += donutSegment(
+          offsets[i] / total,
+          (offsets[i] + props[fields[i].name]) / total,
+          r,
+          fields[i].color,
+        );
+      }
+      html += `
+          <text dominant-baseline="central" transform="translate(${r}, ${r})">
+            ${total.toLocaleString()}
+          </text>
+        </svg>
+      </div>`;
+
+      const el = document.createElement('div');
+      el.innerHTML = html;
+      return el.firstChild;
+    };
+
+
+    const updateMarkers = (fields = [], chart_radius) => {
+      if (!map.getLayer(layer.id)) {
+        Object.values(markersOnScreen).forEach(marker => marker.remove());
+        markersOnScreen = {};
+        return;
+      }
+      const newMarkers = {};
+      const features = map.queryRenderedFeatures({ layers: [layer.id] });
+
+      const totals = features.map(feature => {
+        let total = 0;
+        fields.forEach(field => { total += feature.properties[field.name]; });
+        return total;
+      });
+
+      // for every cluster on the screen, create an HTML marker for it (if we didn't yet),
+      // and add it to the map if it's not there already
+      features.forEach(feature => {
+        // eslint-disable-next-line no-underscore-dangle
+        const coords = feature.geometry.coordinates;
+        const props = feature.properties;
+        const { _id: id } = props;
+
+        let marker = markers[id];
+        if (!marker) {
+          const el = createDonutChart(props, fields, totals, chart_radius);
+          marker = new Marker({
+            element: el,
+          }).setLngLat(coords);
+          markers[id] = marker;
+        }
+        newMarkers[id] = marker;
+
+        if (!markersOnScreen[id]) marker.addTo(map);
+      });
+      // for every marker we've added previously, remove those that are no longer visible
+      Object.keys(markersOnScreen).forEach(markerid => {
+        if (!newMarkers[markerid]) markersOnScreen[markerid].remove();
+      });
+      markersOnScreen = newMarkers;
+    };
+
+    map.on('render', () => {
+      if (!map.isSourceLoaded(layer.source)) return;
+      // eslint-disable-next-line camelcase
+      const { fields, chart_radius } = layer.advanced_style;
+      const usableFields = fields.filter(field => field.use);
+      updateMarkers(usableFields, chart_radius);
     });
   }
 
