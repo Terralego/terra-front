@@ -130,6 +130,6 @@ jobs:
         run: |
           npm ci --no-audit
 
-      - run: npm run publish
+      - run: npm run publish:manual
         env:
           NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
