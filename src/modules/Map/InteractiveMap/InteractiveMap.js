@@ -168,7 +168,6 @@ export class InteractiveMap extends React.Component {
         ? backgroundStyle[0].url
         : backgroundStyle,
       legends: [],
-      uuidLegends: [],
       interactionList: [],
     };
   }
@@ -245,12 +244,7 @@ export class InteractiveMap extends React.Component {
 
   onMapLoaded = map => {
     const { onMapLoaded = () => {} } = this.props;
-    const { uuidLegends } = this.state;
     this.map = map;
-    if (uuidLegends && uuidLegends.length) {
-      map.on('zoomend', this.filterLegendsByZoom);
-      this.filterLegendsByZoom();
-    }
     this.setInteractions();
     onMapLoaded(map);
   };
@@ -303,21 +297,9 @@ export class InteractiveMap extends React.Component {
     const { legends } = this.props;
     const uuidLegends = legends.map(legend => ({ ...legend, renderUuid: uuid() }));
     this.setState({
-      uuidLegends,
-    }, () => this.filterLegendsByZoom());
+      legends: uuidLegends,
+    });
   }
-
-  filterLegendsByZoom = () => {
-    const { uuidLegends: legends } = this.state;
-    const { map } = this;
-    if (!map) return;
-    const zoom = map.getZoom();
-    const filteredLegends = legends
-      .filter(({ minZoom = 0, maxZoom = Infinity }) =>
-        ((zoom === 0 && minZoom === 0) || zoom > minZoom) && zoom <= maxZoom);
-
-    this.setState({ legends: filteredLegends });
-  };
 
   removeHighlight = ({
     layerId,
