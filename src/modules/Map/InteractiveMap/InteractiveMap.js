@@ -4,6 +4,7 @@ import PropTypes from 'prop-types';
 import mapBoxGl from 'mapbox-gl';
 import debounce from 'lodash.debounce';
 import centroid from '@turf/centroid';
+import uuid from 'uuid/v4';
 import { connectState } from '../../State/context';
 
 import { setInteractions, fitZoom } from '../services/mapUtils';
@@ -167,6 +168,7 @@ export class InteractiveMap extends React.Component {
         ? backgroundStyle[0].url
         : backgroundStyle,
       legends: [],
+      uuidLegends: [],
       interactionList: [],
     };
   }
@@ -211,8 +213,8 @@ export class InteractiveMap extends React.Component {
       this.setInteractions(prevInteractions);
     }
 
-    if (legends !== prevLegends) {
-      this.filterLegendsByZoom();
+    if (JSON.stringify(legends) !== JSON.stringify(prevLegends)) {
+      this.addUuidToLegends();
     }
 
     if (controls !== prevControls ||
@@ -242,9 +244,10 @@ export class InteractiveMap extends React.Component {
   };
 
   onMapLoaded = map => {
-    const { onMapLoaded = () => {}, legends } = this.props;
+    const { onMapLoaded = () => {} } = this.props;
+    const { uuidLegends } = this.state;
     this.map = map;
-    if (legends && legends.length) {
+    if (uuidLegends && uuidLegends.length) {
       map.on('zoomend', this.filterLegendsByZoom);
       this.filterLegendsByZoom();
     }
@@ -296,8 +299,16 @@ export class InteractiveMap extends React.Component {
     this.interactionsEnable = isEnable;
   }
 
-  filterLegendsByZoom = () => {
+  addUuidToLegends = () => {
     const { legends } = this.props;
+    const uuidLegends = legends.map(legend => ({ ...legend, renderUuid: uuid() }));
+    this.setState({
+      uuidLegends,
+    }, () => this.filterLegendsByZoom());
+  }
+
+  filterLegendsByZoom = () => {
+    const { uuidLegends: legends } = this.state;
     const { map } = this;
     if (!map) return;
     const zoom = map.getZoom();
@@ -708,7 +719,7 @@ export class InteractiveMap extends React.Component {
             {getUniqueLegends(legends)
               .map(legend => (
                 <Legend
-                  key={`${legend.title}${legend.items}`}
+                  key={`${legend.renderUuid}`}
                   history={history}
                   translate={translate}
                   {...legend}
