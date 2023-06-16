@@ -27,30 +27,12 @@
   }
 
   &__label-button {
-    display: flex;
-    align-items: center;
-    margin-bottom: .25rem;
     outline: none;
     padding: 0;
-
-    &:active {
-      background: none;
-    }
-
-    &:hover {
-      background: none;
-    }
-
-    H5 {
-      font-family: $font-medium;
-      font-size: 0.9rem;
-      letter-spacing: .07rem;
-      font-weight: 500;
-      margin: 0;
-      .bp3-dark & {
-        color: $font-color;
-      }
-    }
+    font-family: $font-medium;
+    font-size: 0.9rem;
+    letter-spacing: .07rem;
+    font-weight: 500;
   }
 
   & + .layerstree-node {
