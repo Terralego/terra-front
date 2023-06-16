@@ -81,6 +81,8 @@ export class PrintControl extends AbstractMapControl {
   beginGeneration = () => this.setState({ isExporting: true }, async () => {
     const { orientation } = this.state;
     const { map } = this.props;
+    // dirty tricks to quickly fixt pdf printing
+    setTimeout(() => global.dispatchEvent(new Event('resize')), 2000);
     const { default: exportPdf } = await import('./export');
     await exportPdf(map, orientation);
     this.setState({
