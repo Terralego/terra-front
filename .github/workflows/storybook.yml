@@ -1,0 +1,83 @@
+name: StoryBook
+
+on:
+  push:
+    branches:
+      - 'master'
+
+  release:
+    types:
+      - created
+
+  pull_request:
+
+env:
+  SKIP_PREFLIGHT_CHECK: true
+
+jobs:
+  build-storybook:
+    name: Build Storybook
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v3
+
+      - uses: actions/setup-node@v3
+        with:
+          node-version-file: '.nvmrc'
+
+      - name: Cache node_modules
+        id: cache-node-modules
+        uses: actions/cache@v3
+        with:
+          path: ./node_modules
+          key: node-modules-${{ hashFiles('**/package-lock.json') }}
+
+      - uses: actions/setup-node@v3
+        with:
+          node-version-file: '.nvmrc'
+
+      - name: Install dependencies
+        if: steps.cache-node-modules.outputs.cache-hit != 'true'
+        run: |
+          npm ci --no-audit
+
+      - name: Launch build
+        run: |
+          npm run build-storybook -- --quiet
+
+      - name: Archive storybook artifact
+        uses: actions/upload-artifact@v3
+        with:
+          name: storybook-static
+          path: |
+            /home/runner/work/terra-front/terra-front/storybook-static/
+
+  deploy-storybook:
+    name: Deploy StoryBook
+    runs-on: ubuntu-latest
+    if: ${{ github.event_name == 'release' && github.event.action == 'created' }}
+    needs: [build-storybook]
+    steps:
+      - uses: actions/checkout@v3
+
+      - name: Download storybook artifacts
+        uses: actions/download-artifact@v3
+        with:
+          name: storybook-static
+
+      - uses: actions/setup-node@v3
+        with:
+          node-version-file: '.nvmrc'
+
+      - name: Install netlify cli
+        run: |
+          npm i -g netlify-cli
+
+      - name: Deploy storybook
+        run:
+          npx netlify deploy
+          --site=${{ secrets.NETLIFY_SITE_ID }}
+          --auth=${{ secrets.NETLIFY_ACCESS_TOKEN }}
+          --dir=./storybook-static
+          --message "${{ github.sha }} ${{ github.ref_name }}"
+          --prod
