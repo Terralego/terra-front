@@ -1,6 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import { H5, Button, Collapse } from '@blueprintjs/core';
+import { Button, Collapse } from '@blueprintjs/core';
 import classnames from 'classnames';
 
 import LayersTreeItem from '../LayersTreeItem';
@@ -57,7 +57,8 @@ export class LayersTreeGroup extends React.Component {
             icon={open ? 'chevron-down' : 'chevron-right'}
             minimal
           >
-            <H5>{title}</H5>
+            {title}
+
           </Button>
           <Collapse
             isOpen={open}
