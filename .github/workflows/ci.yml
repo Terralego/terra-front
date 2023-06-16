@@ -112,6 +112,8 @@ jobs:
         uses: actions/download-artifact@v3
         with:
           name: dist
+          path: |
+            /home/runner/work/terra-front/terra-front/dist
 
       - uses: actions/setup-node@v3
         with:
