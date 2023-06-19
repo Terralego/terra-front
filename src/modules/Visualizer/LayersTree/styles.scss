@@ -95,6 +95,10 @@
         display: flex;
         height: 1.2rem;
 
+        &__label > span {
+          display: inline-block;
+        }
+
         &__tooltip {  
           width: 100%;
           flex: auto;
