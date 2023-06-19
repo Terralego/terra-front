@@ -12,9 +12,6 @@ Array [
         className="layerstree-node-content__item-label"
       >
         <p>
-          Switch
-        </p>
-        <p>
           Tooltip
         </p>
         <div
@@ -48,9 +45,6 @@ Array [
         className="layerstree-node-content__item-label"
       >
         <p>
-          Switch
-        </p>
-        <p>
           Tooltip
         </p>
         <div
@@ -71,9 +65,6 @@ Array [
       <div
         className="layerstree-node-content__item-label"
       >
-        <p>
-          Switch
-        </p>
         <p>
           Tooltip
         </p>
@@ -107,9 +98,6 @@ Array [
       <div
         className="layerstree-node-content__item-label"
       >
-        <p>
-          Switch
-        </p>
         <p>
           Tooltip
         </p>
@@ -150,9 +138,6 @@ Array [
         className="layerstree-node-content__item-label"
       >
         <p>
-          Switch
-        </p>
-        <p>
           Tooltip
         </p>
         <div
@@ -173,9 +158,6 @@ Array [
       <div
         className="layerstree-node-content__item-label"
       >
-        <p>
-          Switch
-        </p>
         <p>
           Tooltip
         </p>
@@ -215,9 +197,6 @@ Array [
       <div
         className="layerstree-node-content__item-label"
       >
-        <p>
-          Switch
-        </p>
         <p>
           Tooltip
         </p>
@@ -264,9 +243,6 @@ Array [
         <p>
           Tooltip
         </p>
-        <p>
-          Tooltip
-        </p>
         <div
           className="layerstree-node-content__item-label__total"
         />
@@ -297,9 +273,6 @@ Array [
       <div
         className="layerstree-node-content__item-label"
       >
-        <p>
-          Switch
-        </p>
         <p>
           Tooltip
         </p>
@@ -336,9 +309,6 @@ Array [
       <div
         className="layerstree-node-content__item-label"
       >
-        <p>
-          Switch
-        </p>
         <p>
           Tooltip
         </p>
@@ -379,9 +349,6 @@ Array [
         className="layerstree-node-content__item-label"
       >
         <p>
-          Switch
-        </p>
-        <p>
           Tooltip
         </p>
         <div
@@ -417,9 +384,6 @@ Array [
       <div
         className="layerstree-node-content__item-label--mobile"
       >
-        <p>
-          Switch
-        </p>
         <p>
           Tooltip
         </p>

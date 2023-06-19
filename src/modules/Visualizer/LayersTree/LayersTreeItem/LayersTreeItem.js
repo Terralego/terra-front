@@ -189,24 +189,28 @@ export class LayersTreeItem extends React.Component {
             )
           }
             >
-              <WarningZoom
-                isActive={isActive}
-                map={map}
-                layer={layer}
-              >
-                <Switch
-                  checked={!!isActive}
-                  onChange={onActiveChange}
-                  id={this.uuid}
-                />
-              </WarningZoom>
               <Tooltip
                 content={label}
                 hoverOpenDelay={2000}
                 className="layerstree-node-content__item-label__tooltip"
               >
-                <label className="layerstree-node-content__item-label__label" htmlFor={this.uuid}>{label}</label>
+                <label className="layerstree-node-content__item-label__label" htmlFor={this.uuid}>
+                  <WarningZoom
+                    isActive={isActive}
+                    map={map}
+                    layer={layer}
+                  >
+                    <Switch
+                      checked={!!isActive}
+                      onChange={onActiveChange}
+                      id={this.uuid}
+                      tagName="span"
+                    />
+                  </WarningZoom>
+                  {label}
+                </label>
               </Tooltip>
+
               <div className="layerstree-node-content__item-label__total">
                 {isActive && totalResult && (
                 <Tag
