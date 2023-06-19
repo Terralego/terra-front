@@ -132,11 +132,11 @@ jobs:
         run: |
           npm ci --no-audit
 
-      - name: Check directories
+      - name: Copy JSON to publish
         run: |
-          ls -als
-          ls -als ./dist
+          npm run copyjson
 
-      - run: npm run publish
+      - name: Publish to NPMJS
+        run: npm run publish
         env:
           NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
