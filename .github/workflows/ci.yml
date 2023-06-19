@@ -132,6 +132,11 @@ jobs:
         run: |
           npm ci --no-audit
 
+      - name: Check directories
+        run: |
+          ls -als
+          ls -als ./dist
+
       - run: npm run publish
         env:
           NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
