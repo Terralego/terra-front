@@ -56,6 +56,7 @@ export class LayersTreeGroup extends React.Component {
             onClick={handleClick}
             icon={open ? 'chevron-down' : 'chevron-right'}
             minimal
+            aria-expanded={Boolean(open)}
           >
             {title}
 
