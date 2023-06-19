@@ -1,6 +1,6 @@
 {
   "name": "@terralego/core",
-  "version": "1.31.5",
+  "version": "1.31.6",
   "private": false,
   "license": "ISC",
   "dependencies": {
@@ -50,8 +50,8 @@
     "build": "run-s -l drop-dist babel sass fixcss copyscss",
     "build-local": "run-s build copyjson",
     "build:local": "run-s build copyjson",
-    "publish": "cd dist && npm publish --access public",
-    "publish:manual": "npm run build-local && cd dist && npm publish --access public",
+    "prepublish": "cd dist",
+    "publish:manual": "npm run build-local && npm publish --access public",
     "version": "git changelog -n -t $npm_package_version && git add CHANGELOG.md",
     "drop-dist": "rimraf dist",
     "copyscss": "cpx 'src/**/*.{scss,svg}' dist",
