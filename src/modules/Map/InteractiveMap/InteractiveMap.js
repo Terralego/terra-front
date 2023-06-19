@@ -4,6 +4,7 @@ import PropTypes from 'prop-types';
 import mapBoxGl from 'mapbox-gl';
 import debounce from 'lodash.debounce';
 import centroid from '@turf/centroid';
+import uuid from 'uuid/v4';
 import { connectState } from '../../State/context';
 
 import { setInteractions, fitZoom } from '../services/mapUtils';
@@ -211,8 +212,8 @@ export class InteractiveMap extends React.Component {
       this.setInteractions(prevInteractions);
     }
 
-    if (legends !== prevLegends) {
-      this.filterLegendsByZoom();
+    if (JSON.stringify(legends) !== JSON.stringify(prevLegends)) {
+      this.addUuidToLegends();
     }
 
     if (controls !== prevControls ||
@@ -242,12 +243,8 @@ export class InteractiveMap extends React.Component {
   };
 
   onMapLoaded = map => {
-    const { onMapLoaded = () => {}, legends } = this.props;
+    const { onMapLoaded = () => {} } = this.props;
     this.map = map;
-    if (legends && legends.length) {
-      map.on('zoomend', this.filterLegendsByZoom);
-      this.filterLegendsByZoom();
-    }
     this.setInteractions();
     onMapLoaded(map);
   };
@@ -296,17 +293,13 @@ export class InteractiveMap extends React.Component {
     this.interactionsEnable = isEnable;
   }
 
-  filterLegendsByZoom = () => {
+  addUuidToLegends = () => {
     const { legends } = this.props;
-    const { map } = this;
-    if (!map) return;
-    const zoom = map.getZoom();
-    const filteredLegends = legends
-      .filter(({ minZoom = 0, maxZoom = Infinity }) =>
-        ((zoom === 0 && minZoom === 0) || zoom > minZoom) && zoom <= maxZoom);
-
-    this.setState({ legends: filteredLegends });
-  };
+    const uuidLegends = legends.map(legend => ({ ...legend, renderUuid: uuid() }));
+    this.setState({
+      legends: uuidLegends,
+    });
+  }
 
   removeHighlight = ({
     layerId,
@@ -708,7 +701,7 @@ export class InteractiveMap extends React.Component {
             {getUniqueLegends(legends)
               .map(legend => (
                 <Legend
-                  key={`${legend.title}${legend.items}`}
+                  key={`${legend.renderUuid}`}
                   history={history}
                   translate={translate}
                   {...legend}

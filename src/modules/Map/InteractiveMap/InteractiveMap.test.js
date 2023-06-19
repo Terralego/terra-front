@@ -195,66 +195,33 @@ describe('map', () => {
   it('should load map', () => {
     const instance = new InteractiveMap({});
     const map = { on: jest.fn() };
-    instance.filterLegendsByZoom = jest.fn();
     instance.setInteractions = jest.fn();
     instance.onMapLoaded(map);
     expect(instance.map).toBe(map);
     expect(instance.setInteractions).toHaveBeenCalled();
-    expect(instance.filterLegendsByZoom).not.toHaveBeenCalled();
   });
 
-  it('should return filtered legends', () => {
+  it('should add uuids to legends', () => {
     const instance = new InteractiveMap({
       legends: [
-        { minZoom: 10, maxZoom: 15, title: 'pwet', items: [] },
-        { minZoom: 0, maxZoom: 10, title: 'pwout', items: [] },
-        { minZoom: 0, maxZoom: 0 },
-        { minZoom: 0, maxZoom: 1 },
-        { title: 'w' },
+        { title: 'pwet', items: [] },
+        { title: 'pwout', items: [] },
+        { items: [] },
       ],
     });
     instance.setState = jest.fn();
-    const map = {
-      getZoom: jest.fn(() => 10),
-      on: jest.fn(),
-    };
-    instance.setInteractions = jest.fn();
-    instance.onMapLoaded(map);
-    expect(instance.map).toBe(map);
-    expect(map.getZoom).toHaveBeenCalled();
-    expect(instance.setState).toHaveBeenCalledWith({
-      legends: [{ minZoom: 0, maxZoom: 10, title: 'pwout', items: [] }, { title: 'w' }],
-    });
-    map.getZoom = jest.fn(() => 0);
-    instance.onMapLoaded(map);
-    expect(instance.setState).toHaveBeenCalledWith({
-      legends: [{ minZoom: 0, maxZoom: 10, title: 'pwout', items: [] }, { title: 'w' }],
-    });
-    map.getZoom = jest.fn(() => 1);
-    instance.onMapLoaded(map);
-    expect(instance.setState).toHaveBeenCalledWith({
-      legends: [
-        { minZoom: 0, maxZoom: 10, title: 'pwout', items: [] },
-        { minZoom: 0, maxZoom: 1 },
-        { title: 'w' },
-      ],
-    });
+    instance.addUuidToLegends();
+    expect(instance.setState).toHaveBeenCalled();
+    expect(instance.setState.mock.calls[0][0].legends[0]).toHaveProperty('renderUuid');
   });
 
   it('should update legends correctly', () => {
     const instance = new InteractiveMap({});
-    instance.filterLegendsByZoom = jest.fn();
+    instance.addUuidToLegends = jest.fn();
     instance.componentDidUpdate({}, {});
-    expect(instance.filterLegendsByZoom).not.toHaveBeenCalled();
+    expect(instance.addUuidToLegends).not.toHaveBeenCalled();
     instance.componentDidUpdate({ legends: [] }, {});
-    expect(instance.filterLegendsByZoom).toHaveBeenCalled();
-  });
-
-  it('should not filterLegendsByZoom without map', () => {
-    const instance = new InteractiveMap({});
-    instance.filterLegendsByZoom();
-    instance.setState = jest.fn();
-    expect(instance.setState).not.toHaveBeenCalled();
+    expect(instance.addUuidToLegends).toHaveBeenCalled();
   });
 
   it('should select backgroundStyle', () => {
