@@ -50,7 +50,7 @@
     "build": "run-s -l drop-dist babel sass fixcss copyscss",
     "build-local": "run-s build copyjson",
     "build:local": "run-s build copyjson",
-    "prepublish": "cd dist",
+    "prepublishOnly": "cd dist",
     "publish:manual": "npm run build-local && npm publish --access public",
     "version": "git changelog -n -t $npm_package_version && git add CHANGELOG.md",
     "drop-dist": "rimraf dist",
