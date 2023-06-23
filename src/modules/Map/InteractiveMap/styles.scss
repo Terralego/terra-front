@@ -20,3 +20,7 @@ $transitionSpeed: .2s;
     overflow: auto;
   }
 }
+
+.interactive-map__legends {
+  z-index: 10;
+}

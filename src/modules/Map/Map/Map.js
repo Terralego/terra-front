@@ -336,16 +336,18 @@ export class MapComponent extends React.Component {
       const largeArc = end - start > 0.5 ? 1 : 0;
 
       // draw an SVG path
-      return `<path d="M ${r + r0 * x0} ${r + r0 * y0} L ${r + r * x0} ${
-        r + r * y0
-      } A ${r} ${r} 0 ${largeArc} 1 ${r + r * x1} ${r + r * y1} L ${
-        r + r0 * x1
-      } ${r + r0 * y1} A ${r0} ${r0} 0 ${largeArc} 0 ${r + r0 * x0} ${
-        r + r0 * y0
-      }" fill="${color}" />`;
+      const draw = [
+        `M ${r + r0 * x0} ${r + r0 * y0}`,
+        `L ${r + r * x0} ${r + r * y0}`,
+        `A ${r} ${r} 0 ${largeArc} 1 ${r + r * x1} ${r + r * y1}`,
+        `L ${r + r0 * x1} ${r + r0 * y1}`,
+        `A ${r0} ${r0} 0 ${largeArc} 0 ${r + r0 * x0} ${r + r0 * y0}`,
+      ].join(' ');
+      // draw an SVG path
+      return `<path d="${draw}" fill="${color}" />`;
     };
 
-    const createDonutChart = (props, fields, totals, chart_radius) => {
+    const createDonutChart = (props, fields, totals, chartRadius) => {
       const offsets = [];
       let total = 0;
       fields.forEach(field => {
@@ -355,14 +357,23 @@ export class MapComponent extends React.Component {
 
       const max = Math.max(...totals);
       const facteurMin =
-        (chart_radius.min_radius - chart_radius.max_radius) / (Math.min(...totals) - max);
+        (chartRadius.min_radius - chartRadius.max_radius) / (Math.min(...totals) - max);
 
-      const r = chart_radius.type === 'variable' ? facteurMin * total + (chart_radius.max_radius - facteurMin * max) : chart_radius.value;
+      const r = chartRadius.type === 'variable'
+        ? facteurMin * total + (chartRadius.max_radius - facteurMin * max)
+        : chartRadius.value;
       const fontSize = 15;
       const w = r * 2;
 
-      let html = `<div>
-        <svg opacity="0.8" width="${w}" height="${w}" viewbox="0 0 ${w} ${w}" text-anchor="middle" style="font: ${fontSize}px sans-serif; display: block">`;
+      let html = `<div style="z-index:${10 - Math.round(r / 10)}">
+        <svg
+          opacity="0.8"
+          width="${w}"
+          height="${w}"
+          viewbox="0 0 ${w} ${w}"
+          text-anchor="middle"
+          style="font: ${fontSize}px sans-serif; display: block"
+        >`;
 
       for (let i = 0; i < fields.length; i += 1) {
         html += donutSegment(
@@ -385,7 +396,7 @@ export class MapComponent extends React.Component {
     };
 
 
-    const updateMarkers = (fields = [], chart_radius) => {
+    const updateMarkers = (fields = [], chartRadius) => {
       if (!map.getLayer(layer.id)) {
         Object.values(markersOnScreen).forEach(marker => marker.remove());
         markersOnScreen = {};
@@ -403,22 +414,21 @@ export class MapComponent extends React.Component {
       // for every cluster on the screen, create an HTML marker for it (if we didn't yet),
       // and add it to the map if it's not there already
       features.forEach(feature => {
-        // eslint-disable-next-line no-underscore-dangle
         const coords = feature.geometry.coordinates;
+        const idCoords = feature.geometry.coordinates.join('');
         const props = feature.properties;
-        const { _id: id } = props;
 
-        let marker = markers[id];
+        let marker = markers[idCoords];
         if (!marker) {
-          const el = createDonutChart(props, fields, totals, chart_radius);
+          const el = createDonutChart(props, fields, totals, chartRadius);
           marker = new Marker({
             element: el,
           }).setLngLat(coords);
-          markers[id] = marker;
+          markers[idCoords] = marker;
         }
-        newMarkers[id] = marker;
+        newMarkers[idCoords] = marker;
 
-        if (!markersOnScreen[id]) marker.addTo(map);
+        if (!markersOnScreen[idCoords]) marker.addTo(map);
       });
       // for every marker we've added previously, remove those that are no longer visible
       Object.keys(markersOnScreen).forEach(markerid => {
@@ -429,10 +439,9 @@ export class MapComponent extends React.Component {
 
     map.on('render', () => {
       if (!map.isSourceLoaded(layer.source)) return;
-      // eslint-disable-next-line camelcase
-      const { fields, chart_radius } = layer.advanced_style;
+      const { fields, chart_radius: chartRadius } = layer.advanced_style;
       const usableFields = fields.filter(field => field.use);
-      updateMarkers(usableFields, chart_radius);
+      updateMarkers(usableFields, chartRadius);
     });
   }
 
