@@ -53,6 +53,15 @@ export function setLayerOpacity (map, layerId, opacity) {
     });
 }
 
+export function getLayerOpacity (map, layerId) {
+  const layer = map.getLayer(layerId);
+  const property = getOpacityProperty(layer.type);
+  if (property) {
+    return map.getPaintProperty(layerId, property);
+  }
+  return 1;
+}
+
 export const checkContraints = ({
   map,
   constraints = [],

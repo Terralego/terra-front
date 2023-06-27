@@ -4,7 +4,7 @@ import PropTypes from 'prop-types';
 import 'mapbox-gl/dist/mapbox-gl.css';
 import { detailedDiff } from 'deep-object-diff';
 
-import { LAYER_TYPES_ORDER, getControlName } from '../services/mapUtils';
+import { LAYER_TYPES_ORDER, getControlName, getLayerOpacity } from '../services/mapUtils';
 import { updateCluster } from '../services/cluster';
 
 import SearchControl from './components/SearchControl';
@@ -313,6 +313,7 @@ export class MapComponent extends React.Component {
     if (!layer || Object.keys(layer).length === 0) return;
     const markers = {};
     let markersOnScreen = {};
+    let opacity = 1;
     const { map } = this.props;
 
     const newLayer = {
@@ -347,7 +348,13 @@ export class MapComponent extends React.Component {
       return `<path d="${draw}" fill="${color}" />`;
     };
 
-    const createDonutChart = (props, fields, totals, chartRadius) => {
+    const createDonutChart = (
+      props,
+      fields = [],
+      { chart_radius: chartRadius, show_total: showTotal },
+      radiusValues,
+      layerOpacity = 1,
+    ) => {
       const offsets = [];
       let total = 0;
       fields.forEach(field => {
@@ -355,19 +362,22 @@ export class MapComponent extends React.Component {
         total += props[field.name];
       });
 
-      const max = Math.max(...totals);
-      const facteurMin =
-        (chartRadius.min_radius - chartRadius.max_radius) / (Math.min(...totals) - max);
+      let r = 30;
+      if (chartRadius && chartRadius.type === 'variable') {
+        const max = Math.max(...radiusValues);
+        const facteurMin = chartRadius ?
+          (chartRadius.min_radius - chartRadius.max_radius) / (Math.min(...radiusValues) - max) : 0;
 
-      const r = chartRadius.type === 'variable'
-        ? facteurMin * total + (chartRadius.max_radius - facteurMin * max)
-        : chartRadius.value;
+        r = facteurMin * props[chartRadius.field] + (chartRadius.max_radius - facteurMin * max);
+      } else if (chartRadius && chartRadius.type === 'fixed') {
+        r = chartRadius.value;
+      }
       const fontSize = 15;
       const w = r * 2;
 
       let html = `<div style="z-index:${10 - Math.round(r / 10)}">
         <svg
-          opacity="0.8"
+          opacity=${layerOpacity}
           width="${w}"
           height="${w}"
           viewbox="0 0 ${w} ${w}"
@@ -383,10 +393,13 @@ export class MapComponent extends React.Component {
           fields[i].color,
         );
       }
-      html += `
+      if (showTotal) {
+        html += `
           <text dominant-baseline="central" transform="translate(${r}, ${r})">
             ${total.toLocaleString()}
-          </text>
+          </text>`;
+      }
+      html += `
         </svg>
       </div>`;
 
@@ -396,8 +409,8 @@ export class MapComponent extends React.Component {
     };
 
 
-    const updateMarkers = (fields = [], chartRadius) => {
-      if (!map.getLayer(layer.id)) {
+    const updateMarkers = (fields = [], advancedStyle) => {
+      if (!map.getLayer(layer.id) || map.getLayer(layer.id).visibility === 'none') {
         Object.values(markersOnScreen).forEach(marker => marker.remove());
         markersOnScreen = {};
         return;
@@ -405,11 +418,11 @@ export class MapComponent extends React.Component {
       const newMarkers = {};
       const features = map.queryRenderedFeatures({ layers: [layer.id] });
 
-      const totals = features.map(feature => {
-        let total = 0;
-        fields.forEach(field => { total += feature.properties[field.name]; });
-        return total;
-      });
+      const layerOpacity = getLayerOpacity(map, layer.id);
+
+      const radiusValues = advancedStyle.chart_radius.type === 'variable' ?
+        features.map(feature => feature.properties[advancedStyle.chart_radius.field]) :
+        [];
 
       // for every cluster on the screen, create an HTML marker for it (if we didn't yet),
       // and add it to the map if it's not there already
@@ -420,7 +433,13 @@ export class MapComponent extends React.Component {
 
         let marker = markers[idCoords];
         if (!marker) {
-          const el = createDonutChart(props, fields, totals, chartRadius);
+          const el = createDonutChart(
+            props,
+            fields,
+            advancedStyle,
+            radiusValues,
+            layerOpacity,
+          );
           marker = new Marker({
             element: el,
           }).setLngLat(coords);
@@ -435,13 +454,19 @@ export class MapComponent extends React.Component {
         if (!newMarkers[markerid]) markersOnScreen[markerid].remove();
       });
       markersOnScreen = newMarkers;
+      if (layerOpacity !== opacity) {
+        Object.values(markers).forEach(e => {
+          e.getElement().children[0].setAttribute('opacity', layerOpacity);
+        });
+        opacity = layerOpacity;
+      }
     };
 
     map.on('render', () => {
       if (!map.isSourceLoaded(layer.source)) return;
-      const { fields, chart_radius: chartRadius } = layer.advanced_style;
+      const { fields, ...advancedStyle } = layer.advanced_style;
       const usableFields = fields.filter(field => field.use);
-      updateMarkers(usableFields, chartRadius);
+      updateMarkers(usableFields, advancedStyle);
     });
   }
 
