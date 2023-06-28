@@ -29,7 +29,7 @@ export const MainMenu = ({
       )}
       {navItems.length > 0 && navItems.map((group, index) => (
         // eslint-disable-next-line react/no-array-index-key
-        <NavbarGroup key={index} className="navBar__group">
+        <NavbarGroup key={index} className={`navBar__group ${group.length === 0 ? 'navBar__group__empty' : ''}`}>
           <ul>
             {group.map(item => (
               <li key={item.id}>

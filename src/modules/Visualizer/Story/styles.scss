@@ -4,6 +4,7 @@
   display: flex;
   flex-direction: column;
   height: 100%;
+  width: 100%;
 
   &__content {
     height: 100%;
@@ -13,17 +14,18 @@
   }
   &__buttons {
     display: flex;
-    margin: 1rem .75rem;
+    margin: 1rem 0;
     font-size: 2rem;
     height: 1.3em;
     justify-content: center;
+    width: 100%;
     &--justified {
-      justify-content: space-between;
+      justify-content: space-evenly;
     }
   }
 }
 
-@media(min-width: $breakpoints-tablet) and (max-width: $breakpoints-desktop) and (orientation: landscape) {
+@media(max-width: $breakpoints-tablet) {
   .storytelling {
     font-size: 1rem/$scaleRatio;
     line-height: 145%;
@@ -35,6 +37,10 @@
 
     &__buttons {
       font-size: 2rem/$scaleRatio;
+      
+      & .bp3-button {
+        padding: 0.2em;
+      }
     }
   }
 }
