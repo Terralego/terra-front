@@ -5,7 +5,7 @@ exports[`should render properly 1`] = `
   className="bp3-navbar navBar bp3-dark"
 >
   <div
-    className="bp3-navbar-group bp3-align-left navBar__group"
+    className="bp3-navbar-group bp3-align-left navBar__group "
   >
     <ul>
       <li>
@@ -27,7 +27,7 @@ exports[`should render properly with custom component 1`] = `
   className="bp3-navbar navBar bp3-dark"
 >
   <div
-    className="bp3-navbar-group bp3-align-left navBar__group"
+    className="bp3-navbar-group bp3-align-left navBar__group "
   >
     <ul>
       <li>
