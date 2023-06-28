@@ -77,13 +77,12 @@ export const Story = ({ map, story: { beforeEach = [], slides }, setLegends, tra
       {displayButtons && (
         <div className={classnames('storytelling__buttons', { 'storytelling__buttons--justified': displayPrevButton })}>
           {displayPrevButton && (
-            <Button icon="chevron-left" onClick={previousStep} large>{ translate('terralego.visualizer.story.previous') }</Button>
+            <Button icon="chevron-left" onClick={previousStep}>{ translate('terralego.visualizer.story.previous') }</Button>
           )}
 
           <Button
             rightIcon={step !== slideCount && 'chevron-right'}
             icon={step === slideCount && 'step-backward'}
-            large
             intent={Intent.PRIMARY}
             onClick={nextStep}
           >
