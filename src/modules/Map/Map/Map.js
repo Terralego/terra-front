@@ -129,7 +129,7 @@ export class MapComponent extends React.Component {
         id: PropTypes.string.isRequired,
         source: PropTypes.oneOfType([PropTypes.string, PropTypes.object]),
         'source-layer': PropTypes.string,
-        type: PropTypes.oneOf(LAYER_TYPES_ORDER).isRequired,
+        type: PropTypes.oneOf([...LAYER_TYPES_ORDER, 'piechart']).isRequired,
         paint: PropTypes.object,
         layout: PropTypes.shape({
           visibility: PropTypes.oneOf(['visible', 'none']),
@@ -150,14 +150,7 @@ export class MapComponent extends React.Component {
           }),
           border: PropTypes.number,
         }),
-        advanced_style: PropTypes.shape({
-          fields: PropTypes.arrayOf(PropTypes.shape({
-            name: PropTypes.string.isRequired,
-            color: PropTypes.string.isRequired,
-          })).isRequired,
-          'dynamic-radius': PropTypes.bool,
-          chart_radius: PropTypes.number,
-        }),
+        advanced_style: PropTypes.object,
       })),
     }),
     onBackgroundChange: PropTypes.func,
