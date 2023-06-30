@@ -1,11 +1,13 @@
 import React from 'react';
-import mapBoxGl, { Marker } from 'mapbox-gl';
+import mapBoxGl from 'mapbox-gl';
 import PropTypes from 'prop-types';
 import 'mapbox-gl/dist/mapbox-gl.css';
 import { detailedDiff } from 'deep-object-diff';
 
-import { LAYER_TYPES_ORDER, getControlName, getLayerOpacity } from '../services/mapUtils';
+import { LAYER_TYPES_ORDER, getControlName } from '../services/mapUtils';
 import { updateCluster } from '../services/cluster';
+
+import createCustomMarker from './CustomMarkers/customMarker';
 
 import SearchControl from './components/SearchControl';
 import SearchResults from './components/SearchResults';
@@ -127,7 +129,7 @@ export class MapComponent extends React.Component {
         id: PropTypes.string.isRequired,
         source: PropTypes.oneOfType([PropTypes.string, PropTypes.object]),
         'source-layer': PropTypes.string,
-        type: PropTypes.oneOf(LAYER_TYPES_ORDER).isRequired,
+        type: PropTypes.oneOf([...LAYER_TYPES_ORDER, 'piechart']).isRequired,
         paint: PropTypes.object,
         layout: PropTypes.shape({
           visibility: PropTypes.oneOf(['visible', 'none']),
@@ -148,14 +150,7 @@ export class MapComponent extends React.Component {
           }),
           border: PropTypes.number,
         }),
-        advanced_style: PropTypes.shape({
-          fields: PropTypes.arrayOf(PropTypes.shape({
-            name: PropTypes.string.isRequired,
-            color: PropTypes.string.isRequired,
-          })).isRequired,
-          'dynamic-radius': PropTypes.bool,
-          chart_radius: PropTypes.number,
-        }),
+        advanced_style: PropTypes.object,
       })),
     }),
     onBackgroundChange: PropTypes.func,
@@ -303,170 +298,9 @@ export class MapComponent extends React.Component {
     sources.forEach(({ id, ...sourceAttrs }) => map.addSource(id, sourceAttrs));
 
     layers.forEach(layer => {
-      if (layer.type === 'piechart') return this.createPieChartLayer(layer);
+      if (layer.type === 'piechart') return createCustomMarker('piechart', layer, map);
       if (layer.cluster) return this.createClusterLayer(layer);
       return map.addLayer(layer);
-    });
-  }
-
-  createPieChartLayer (layer) {
-    if (!layer || Object.keys(layer).length === 0) return;
-    const markers = {};
-    let markersOnScreen = {};
-    let opacity = 1;
-    const { map } = this.props;
-
-    const newLayer = {
-      type: 'circle',
-      id: layer.id,
-      paint: { 'circle-opacity': 0, 'circle-color': '#ffffff', 'circle-radius': 0 },
-      source: layer.source,
-      ...(layer['source-layer'] ? { 'source-layer': layer['source-layer'] } : {}),
-    };
-    map.addLayer(newLayer);
-
-    const donutSegment = (start, pEnd, r, color, r0 = 0) => {
-      let end = pEnd;
-      if (end - start === 1) end -= 0.00001;
-      const a0 = 2 * Math.PI * (start - 0.25);
-      const a1 = 2 * Math.PI * (end - 0.25);
-      const x0 = Math.cos(a0);
-      const y0 = Math.sin(a0);
-      const x1 = Math.cos(a1);
-      const y1 = Math.sin(a1);
-      const largeArc = end - start > 0.5 ? 1 : 0;
-
-      // draw an SVG path
-      const draw = [
-        `M ${r + r0 * x0} ${r + r0 * y0}`,
-        `L ${r + r * x0} ${r + r * y0}`,
-        `A ${r} ${r} 0 ${largeArc} 1 ${r + r * x1} ${r + r * y1}`,
-        `L ${r + r0 * x1} ${r + r0 * y1}`,
-        `A ${r0} ${r0} 0 ${largeArc} 0 ${r + r0 * x0} ${r + r0 * y0}`,
-      ].join(' ');
-      // draw an SVG path
-      return `<path d="${draw}" fill="${color}" />`;
-    };
-
-    const createDonutChart = (
-      props,
-      fields = [],
-      { chart_radius: chartRadius, show_total: showTotal },
-      radiusValues,
-      layerOpacity = 1,
-    ) => {
-      const offsets = [];
-      let total = 0;
-      fields.forEach(field => {
-        offsets.push(total);
-        total += props[field.name];
-      });
-
-      let r = 30;
-      if (chartRadius && chartRadius.type === 'variable') {
-        const max = Math.max(...radiusValues);
-        const facteurMin = chartRadius ?
-          (chartRadius.min_radius - chartRadius.max_radius) / (Math.min(...radiusValues) - max) : 0;
-
-        r = facteurMin * props[chartRadius.field] + (chartRadius.max_radius - facteurMin * max);
-      } else if (chartRadius && chartRadius.type === 'fixed') {
-        r = chartRadius.value;
-      }
-      const fontSize = 15;
-      const w = r * 2;
-
-      let html = `<div style="z-index:${10 - Math.round(r / 10)}">
-        <svg
-          opacity=${layerOpacity}
-          width="${w}"
-          height="${w}"
-          viewbox="0 0 ${w} ${w}"
-          text-anchor="middle"
-          style="font: ${fontSize}px sans-serif; display: block"
-        >`;
-
-      for (let i = 0; i < fields.length; i += 1) {
-        html += donutSegment(
-          offsets[i] / total,
-          (offsets[i] + props[fields[i].name]) / total,
-          r,
-          fields[i].color,
-        );
-      }
-      if (showTotal) {
-        html += `
-          <text dominant-baseline="central" transform="translate(${r}, ${r})">
-            ${total.toLocaleString()}
-          </text>`;
-      }
-      html += `
-        </svg>
-      </div>`;
-
-      const el = document.createElement('div');
-      el.innerHTML = html;
-      return el.firstChild;
-    };
-
-
-    const updateMarkers = (fields = [], advancedStyle) => {
-      if (!map.getLayer(layer.id) || map.getLayer(layer.id).visibility === 'none') {
-        Object.values(markersOnScreen).forEach(marker => marker.remove());
-        markersOnScreen = {};
-        return;
-      }
-      const newMarkers = {};
-      const features = map.queryRenderedFeatures({ layers: [layer.id] });
-
-      const layerOpacity = getLayerOpacity(map, layer.id);
-
-      const radiusValues = advancedStyle.chart_radius.type === 'variable' ?
-        features.map(feature => feature.properties[advancedStyle.chart_radius.field]) :
-        [];
-
-      // for every cluster on the screen, create an HTML marker for it (if we didn't yet),
-      // and add it to the map if it's not there already
-      features.forEach(feature => {
-        const coords = feature.geometry.coordinates;
-        const idCoords = feature.geometry.coordinates.join('');
-        const props = feature.properties;
-
-        let marker = markers[idCoords];
-        if (!marker) {
-          const el = createDonutChart(
-            props,
-            fields,
-            advancedStyle,
-            radiusValues,
-            layerOpacity,
-          );
-          marker = new Marker({
-            element: el,
-          }).setLngLat(coords);
-          markers[idCoords] = marker;
-        }
-        newMarkers[idCoords] = marker;
-
-        if (!markersOnScreen[idCoords]) marker.addTo(map);
-      });
-      // for every marker we've added previously, remove those that are no longer visible
-      Object.keys(markersOnScreen).forEach(markerid => {
-        if (!newMarkers[markerid]) markersOnScreen[markerid].remove();
-      });
-      markersOnScreen = newMarkers;
-      if (layerOpacity !== opacity) {
-        Object.values(markers).forEach(e => {
-          e.getElement().children[0].setAttribute('opacity', layerOpacity);
-        });
-        opacity = layerOpacity;
-      }
-    };
-
-    map.on('render', () => {
-      if (!map.isSourceLoaded(layer.source)) return;
-      const { fields, ...advancedStyle } = layer.advanced_style;
-      const usableFields = fields.filter(field => field.use);
-      updateMarkers(usableFields, advancedStyle);
     });
   }
 
