@@ -316,13 +316,26 @@ export class MapComponent extends React.Component {
     let opacity = 1;
     const { map } = this.props;
 
+    const newPaint = Object.fromEntries(
+      Object.entries(layer.paint || {}).map(([key, value]) => {
+        const transformedKey = key.replace('piechart-', 'circle-');
+        return [transformedKey, value];
+      }),
+    );
+
     const newLayer = {
       type: 'circle',
       id: layer.id,
-      paint: { 'circle-opacity': 0, 'circle-color': '#ffffff', 'circle-radius': 0 },
+      paint: {
+        'circle-opacity': 1,
+        'circle-color': '#ffffff',
+        'circle-radius': 0,
+        ...newPaint,
+      },
       source: layer.source,
       ...(layer['source-layer'] ? { 'source-layer': layer['source-layer'] } : {}),
     };
+
     map.addLayer(newLayer);
 
     const donutSegment = (start, pEnd, r, color, r0 = 0) => {
@@ -351,8 +364,8 @@ export class MapComponent extends React.Component {
     const createDonutChart = (
       props,
       fields = [],
-      { chart_radius: chartRadius, show_total: showTotal },
-      radiusValues,
+      { show_total: showTotal },
+      { 'circle-radius': circleRadius = 30 },
       layerOpacity = 1,
     ) => {
       const offsets = [];
@@ -362,16 +375,7 @@ export class MapComponent extends React.Component {
         total += props[field.name];
       });
 
-      let r = 30;
-      if (chartRadius && chartRadius.type === 'variable') {
-        const max = Math.max(...radiusValues);
-        const facteurMin = chartRadius ?
-          (chartRadius.min_radius - chartRadius.max_radius) / (Math.min(...radiusValues) - max) : 0;
-
-        r = facteurMin * props[chartRadius.field] + (chartRadius.max_radius - facteurMin * max);
-      } else if (chartRadius && chartRadius.type === 'fixed') {
-        r = chartRadius.value;
-      }
+      const r = circleRadius === 0 ? 30 : circleRadius;
       const fontSize = 15;
       const w = r * 2;
 
@@ -420,10 +424,6 @@ export class MapComponent extends React.Component {
 
       const layerOpacity = getLayerOpacity(map, layer.id);
 
-      const radiusValues = advancedStyle.chart_radius.type === 'variable' ?
-        features.map(feature => feature.properties[advancedStyle.chart_radius.field]) :
-        [];
-
       // for every cluster on the screen, create an HTML marker for it (if we didn't yet),
       // and add it to the map if it's not there already
       features.forEach(feature => {
@@ -431,13 +431,15 @@ export class MapComponent extends React.Component {
         const idCoords = feature.geometry.coordinates.join('');
         const props = feature.properties;
 
+        const { paint: layerPaint = {} } = feature.layer;
+
         let marker = markers[idCoords];
         if (!marker) {
           const el = createDonutChart(
             props,
             fields,
             advancedStyle,
-            radiusValues,
+            layerPaint,
             layerOpacity,
           );
           marker = new Marker({
@@ -462,10 +464,11 @@ export class MapComponent extends React.Component {
       }
     };
 
+    const { fields, ...advancedStyle } = layer.advanced_style;
+    const usableFields = fields.filter(field => field.use);
+
     map.on('render', () => {
       if (!map.isSourceLoaded(layer.source)) return;
-      const { fields, ...advancedStyle } = layer.advanced_style;
-      const usableFields = fields.filter(field => field.use);
       updateMarkers(usableFields, advancedStyle);
     });
   }
