@@ -1,4 +1,9 @@
 
+1.33.0 / 2023-06-30
+===================
+
+  * Remove all custom marker logic from Map and support circle props
+
 1.32.3 / 2023-06-29
 ===================
 
