@@ -47,3 +47,14 @@ it('should render correctly without icon', () => {
   ).toJSON();
   expect(tree).toMatchSnapshot();
 });
+
+it('should not render a button if an html component is provided', () => {
+  const tree = renderer.create(
+    <HeaderButton
+      id="theme"
+      alt="default logo"
+      component="span"
+    />,
+  ).toJSON();
+  expect(tree).toMatchSnapshot();
+});

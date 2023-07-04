@@ -1,5 +1,14 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
+exports[`should not render a button if an html component is provided 1`] = `
+<span
+  className="header-button bp3-button bp3-minimal"
+  id="theme"
+>
+  default logo
+</span>
+`;
+
 exports[`should render correctly with Icon component 1`] = `
 <button
   className="bp3-button bp3-minimal header-button"

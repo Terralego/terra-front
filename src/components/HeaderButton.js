@@ -19,11 +19,34 @@ const getIcon = (icon, alt) => {
 };
 
 
-export const HeaderButton = ({ alt, className, icon, ...props }) => {
+export const HeaderButton = ({
+  alt,
+  className,
+  component: Component = Button,
+  icon,
+  ...props
+}) => {
   const formattedIcon = getIcon(icon, alt);
 
+  if (typeof Component === 'string') {
+    return (
+      <Component
+        className={classnames([
+          'header-button',
+          'bp3-button',
+          'bp3-minimal',
+          className,
+        ])}
+        {...props}
+      >
+        {formattedIcon}
+        {!formattedIcon && alt}
+      </Component>
+    );
+  }
+
   return (
-    <Button
+    <Component
       className={classnames(['header-button', className])}
       icon={formattedIcon}
       minimal

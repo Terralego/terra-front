@@ -14,6 +14,7 @@ export const NavBarItemDesktop = ({
   id,
   content,
   label,
+  href,
   icon,
   setForceFitBounds,
   ...props
@@ -25,9 +26,11 @@ export const NavBarItemDesktop = ({
   >
     <HeaderLink
       data-link-id={id}
+      href={href}
       {...props}
     >
       <HeaderButton
+        component={href ? 'span' : undefined}
         id={id}
         icon={icon}
         alt={label}
