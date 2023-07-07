@@ -8,9 +8,11 @@ export const SearchInput = ({
   onKeyPress,
   onFocus,
   loading,
+  placeholder,
 }) => (
   <Card className="search-input">
     <InputGroup
+      placeholder={placeholder}
       onFocus={onFocus}
       onChange={onChange}
       onKeyDown={onKeyPress}
