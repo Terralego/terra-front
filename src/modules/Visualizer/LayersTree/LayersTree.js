@@ -29,19 +29,21 @@ const filterLayers = (layers, searchQuery) => layers.map(layer => {
   return layer.label.toLowerCase().includes(searchQuery.toLowerCase()) ? layer : null;
 }).filter(Boolean);
 
-export const LayersTree = ({ layersTree, translate }) => {
+export const LayersTree = ({ layersTree, translate, filterable }) => {
   const [layersTreeFilter, setLayerTreeFilter] = useState('');
 
-  const filteredLayersTree = filterLayers(layersTree, layersTreeFilter);
+  const filteredLayersTree = filterable ? filterLayers(layersTree, layersTreeFilter) : layersTree;
 
   return (
     <div className="layerstree-panel-list">
-      <SearchInput
-        placeholder={translate('terralego.visualizer.layerstree.list.filter')}
-        onChange={e => setLayerTreeFilter(e.target.value)}
-        query={layersTreeFilter}
-        onClose={() => setLayerTreeFilter('')}
-      />
+      {filterable && (
+        <SearchInput
+          placeholder={translate('terralego.visualizer.layerstree.list.filter')}
+          onChange={e => setLayerTreeFilter(e.target.value)}
+          query={layersTreeFilter}
+          onClose={() => setLayerTreeFilter('')}
+        />
+      )}
       {filteredLayersTree.map((layer, index) => {
         if (layer.group && !layer.exclusive) {
           return (
@@ -73,8 +75,10 @@ LayersTree.propTypes = {
     }),
   ])).isRequired,
   translate: PropTypes.func,
+  filterable: PropTypes.bool,
 };
 LayersTree.defaultProps = {
+  filterable: false,
   translate: translateMock({
     'terralego.visualizer.layerstree.list.filter': 'Filter layers',
   }),
