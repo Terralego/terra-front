@@ -1,7 +1,7 @@
 import React from 'react';
-import mapBoxGl from 'mapbox-gl';
+import mapBoxGl from 'maplibre-gl';
 import PropTypes from 'prop-types';
-import 'mapbox-gl/dist/mapbox-gl.css';
+import 'maplibre-gl/dist/maplibre-gl.css';
 import { detailedDiff } from 'deep-object-diff';
 
 import { LAYER_TYPES_ORDER, getControlName } from '../services/mapUtils';

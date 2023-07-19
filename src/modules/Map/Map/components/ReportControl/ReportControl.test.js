@@ -8,7 +8,7 @@ jest.mock('react-dom', () => ({
   render: jest.fn(),
 }));
 
-jest.mock('mapbox-gl', () => ({
+jest.mock('maplibre-gl', () => ({
   Marker: () => ({}),
 }));
 

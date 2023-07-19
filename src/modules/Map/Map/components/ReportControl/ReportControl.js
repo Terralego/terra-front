@@ -1,6 +1,6 @@
 import React from 'react';
 import { Icon, Position, Toaster } from '@blueprintjs/core';
-import { Marker } from 'mapbox-gl';
+import { Marker } from 'maplibre-gl';
 import { parse, stringify } from 'query-string';
 import AbstractControl from '../../../helpers/AbstractMapControl';
 import Tooltip from '../../../../../components/Tooltip';
