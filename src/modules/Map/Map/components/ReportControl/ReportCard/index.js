@@ -48,6 +48,8 @@ export const ReportCard = ({
       className="overlay-container"
     >
       <Card
+        role="dialog"
+        aria-modal="true"
         interactive
         elevation={Elevation.FOUR}
         className="report-card"

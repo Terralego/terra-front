@@ -61,6 +61,8 @@ export const LoginButton = ({
         onClose={toggleOverlay}
       >
         <div
+          role="dialog"
+          aria-modal="true"
           className={classNames(
             Classes.CARD,
             Classes.ELEVATION_4,

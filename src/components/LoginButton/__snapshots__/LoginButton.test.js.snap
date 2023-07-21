@@ -35,7 +35,9 @@ exports[`should render 1`] = `
         tabindex="0"
       />
       <div
+        aria-modal="true"
         class="bp3-card bp3-elevation-4 modal-signin__form bp3-overlay-content bp3-overlay-appear bp3-overlay-appear-active"
+        role="dialog"
         tabindex="0"
       >
         <div
@@ -209,7 +211,9 @@ exports[`should render custom renderer when clicked 1`] = `
         tabindex="0"
       />
       <div
+        aria-modal="true"
         class="bp3-card bp3-elevation-4 modal-signin__form bp3-overlay-content bp3-overlay-appear bp3-overlay-appear-active"
+        role="dialog"
         tabindex="0"
       >
         <div
