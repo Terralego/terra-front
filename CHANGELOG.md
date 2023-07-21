@@ -1,4 +1,14 @@
 
+1.34.0 / 2023-07-21
+===================
+
+  * Add dialog role to ReportCard & Login form modal
+  * Allow NavBarItem to forward custom props for button
+  * Avoid nesting link and button in header nav
+  * Add aria-expanded to layersTree groups
+  * Limit label element to only one for each layersTree item
+  * Drop apparently unused code & style in layers tree
+
 1.33.0 / 2023-06-30
 ===================
 
