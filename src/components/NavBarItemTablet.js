@@ -4,11 +4,14 @@ import PropTypes from 'prop-types';
 import HeaderLink from './HeaderLink';
 import HeaderButton from './HeaderButton';
 
+const nullObj = {};
+
 export const NavBarItemTablet = ({
   id,
   label,
   href,
   icon,
+  buttonProps = nullObj,
   ...props
 }) => (
   <HeaderLink
@@ -22,6 +25,7 @@ export const NavBarItemTablet = ({
       id={id}
       icon={icon}
       alt={label}
+      {...buttonProps}
     />
   </HeaderLink>
 );

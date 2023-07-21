@@ -34,6 +34,15 @@ stories
           },
         },
         { label: 'Close', id: 'close' },
+
+        {
+          label: 'Popup',
+          id: 'popup',
+          buttonProps: {
+            'aria-expanded': false,
+            'aria-controls': 'modalId',
+          },
+        },
       ]]}
     />
   ))
