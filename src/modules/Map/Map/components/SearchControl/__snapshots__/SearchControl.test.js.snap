@@ -55,12 +55,16 @@ Array [
           onChange={[Function]}
           onFocus={[Function]}
           onKeyDown={[Function]}
+          onResultClick={[Function]}
+          onSearch={[Function]}
+          renderSearchResults={[Function]}
           style={
             Object {
               "paddingLeft": undefined,
               "paddingRight": undefined,
             }
           }
+          translate={[Function]}
           type="text"
           value=""
         />

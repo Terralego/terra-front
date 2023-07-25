@@ -2,17 +2,14 @@ import React from 'react';
 import { Card, InputGroup, Button } from '@blueprintjs/core';
 
 export const SearchInput = ({
-  onChange,
   query,
   onClose,
   onKeyPress,
-  onFocus,
   loading,
+  ...props
 }) => (
   <Card className="search-input">
     <InputGroup
-      onFocus={onFocus}
-      onChange={onChange}
       onKeyDown={onKeyPress}
       value={query}
       rightElement={(
@@ -23,6 +20,7 @@ export const SearchInput = ({
           onClick={onClose}
         />
       )}
+      {...props}
     />
   </Card>
 );
