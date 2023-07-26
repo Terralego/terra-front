@@ -1,6 +1,5 @@
 import React from 'react';
 import { Card, Classes } from '@blueprintjs/core';
-import uuid from 'uuid/v4';
 
 import MapNavigationButton from './MapNavigationButton';
 
@@ -14,7 +13,8 @@ export const MapNavigation = ({
   renderHeader,
   translate,
 }) => {
-  const uid = uuid();
+  const uid = React.useId();
+
   return (
     <Card
       className={`map-navigation ${Classes.DARK}`}
