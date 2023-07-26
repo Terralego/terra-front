@@ -1,4 +1,9 @@
 
+1.35.1 / 2023-07-26
+===================
+
+  * Use React.useId instead of uuid() to generate unique id (render stable)
+
 1.35.0 / 2023-07-25
 ===================
 
