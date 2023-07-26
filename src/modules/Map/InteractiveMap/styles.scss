@@ -18,6 +18,7 @@ $transitionSpeed: .2s;
     right: 1rem;
     max-height: calc(100% - 1rem);
     max-width: 17%;
+    min-width: 200px;
     overflow: auto;
   }
 }
