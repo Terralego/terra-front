@@ -22,14 +22,22 @@ Array [
     <div
       className="layerstree-node-content__options layerstree-node-content__options--desktop"
     >
-      <button
-        type="button"
+      <span
+        className="layerstree-node-content__options__overflow--shown"
       >
-        Extent this layer
-      </button>
-      <p>
-        Tooltip
-      </p>
+        <button
+          type="button"
+        >
+          Extent this layer
+        </button>
+      </span>
+      <span
+        className="layerstree-node-content__options__overflow--shown"
+      >
+        <p>
+          Tooltip
+        </p>
+      </span>
     </div>
   </div>,
   <p>
@@ -76,14 +84,22 @@ Array [
     <div
       className="layerstree-node-content__options layerstree-node-content__options--desktop"
     >
-      <button
-        type="button"
+      <span
+        className="layerstree-node-content__options__overflow--shown"
       >
-        Extent this layer
-      </button>
-      <p>
-        Tooltip
-      </p>
+        <button
+          type="button"
+        >
+          Extent this layer
+        </button>
+      </span>
+      <span
+        className="layerstree-node-content__options__overflow--shown"
+      >
+        <p>
+          Tooltip
+        </p>
+      </span>
     </div>
   </div>,
   <p>
@@ -109,19 +125,24 @@ Array [
     <div
       className="layerstree-node-content__options layerstree-node-content__options--desktop"
     >
-      <button
-        type="button"
+      <span
+        className="layerstree-node-content__options__overflow--shown"
       >
-        Extent this layer
-      </button>
+        <button
+          type="button"
+        >
+          Extent this layer
+        </button>
+      </span>
+      <span
+        className="layerstree-node-content__options__overflow--shown"
+      >
+        <p>
+          Tooltip
+        </p>
+      </span>
       <p>
-        Tooltip
-      </p>
-      <p>
-        FiltersPanel
-      </p>
-      <p>
-        Tooltip
+        Popover
       </p>
     </div>
   </div>,
@@ -169,19 +190,24 @@ Array [
     <div
       className="layerstree-node-content__options layerstree-node-content__options--desktop layerstree-node-content__options--active"
     >
-      <button
-        type="button"
+      <span
+        className="layerstree-node-content__options__overflow--shown"
       >
-        Extent this layer
-      </button>
+        <button
+          type="button"
+        >
+          Extent this layer
+        </button>
+      </span>
+      <span
+        className="layerstree-node-content__options__overflow--shown"
+      >
+        <p>
+          Tooltip
+        </p>
+      </span>
       <p>
-        Tooltip
-      </p>
-      <p>
-        FiltersPanel
-      </p>
-      <p>
-        Tooltip
+        Popover
       </p>
     </div>
   </div>,
@@ -212,19 +238,24 @@ Array [
     <div
       className="layerstree-node-content__options layerstree-node-content__options--desktop layerstree-node-content__options--active"
     >
-      <button
-        type="button"
+      <span
+        className="layerstree-node-content__options__overflow--shown"
       >
-        Extent this layer
-      </button>
+        <button
+          type="button"
+        >
+          Extent this layer
+        </button>
+      </span>
+      <span
+        className="layerstree-node-content__options__overflow--shown"
+      >
+        <p>
+          Tooltip
+        </p>
+      </span>
       <p>
-        Tooltip
-      </p>
-      <p>
-        FiltersPanel
-      </p>
-      <p>
-        Tooltip
+        Popover
       </p>
     </div>
   </div>,
@@ -251,14 +282,22 @@ Array [
     <div
       className="layerstree-node-content__options layerstree-node-content__options--desktop"
     >
-      <button
-        type="button"
+      <span
+        className="layerstree-node-content__options__overflow--shown"
       >
-        Extent this layer
-      </button>
-      <p>
-        Tooltip
-      </p>
+        <button
+          type="button"
+        >
+          Extent this layer
+        </button>
+      </span>
+      <span
+        className="layerstree-node-content__options__overflow--shown"
+      >
+        <p>
+          Tooltip
+        </p>
+      </span>
     </div>
   </div>,
   <p>
@@ -284,13 +323,68 @@ Array [
     <div
       className="layerstree-node-content__options layerstree-node-content__options--desktop"
     >
-      <button
-        type="button"
+      <span
+        className="layerstree-node-content__options__overflow--shown"
       >
-        Extent this layer
-      </button>
+        <button
+          type="button"
+        >
+          Extent this layer
+        </button>
+      </span>
+      <span
+        className="layerstree-node-content__options__overflow--shown"
+      >
+        <p>
+          Tooltip
+        </p>
+      </span>
+    </div>
+  </div>,
+  <p>
+    LayersTreeItemFilters
+  </p>,
+  <p>
+    RadioGroup
+  </p>,
+  <div
+    className="layerstree-node-content"
+  >
+    <div
+      className="layerstree-node-content__item"
+    >
+      <div
+        className="layerstree-node-content__item-label"
+      >
+        <p>
+          Tooltip
+        </p>
+        <div
+          className="layerstree-node-content__item-label__total"
+        />
+      </div>
+    </div>
+    <div
+      className="layerstree-node-content__options layerstree-node-content__options--desktop"
+    >
+      <span
+        className="layerstree-node-content__options__overflow--shown"
+      >
+        <button
+          type="button"
+        >
+          Extent this layer
+        </button>
+      </span>
+      <span
+        className="layerstree-node-content__options__overflow--shown"
+      >
+        <p>
+          FiltersPanel
+        </p>
+      </span>
       <p>
-        Tooltip
+        Popover
       </p>
     </div>
   </div>,
@@ -320,53 +414,22 @@ Array [
     <div
       className="layerstree-node-content__options layerstree-node-content__options--desktop"
     >
-      <button
-        type="button"
+      <span
+        className="layerstree-node-content__options__overflow--shown"
       >
-        Extent this layer
-      </button>
-      <p>
-        FiltersPanel
-      </p>
-      <p>
-        Tooltip
-      </p>
-    </div>
-  </div>,
-  <p>
-    LayersTreeItemFilters
-  </p>,
-  <p>
-    RadioGroup
-  </p>,
-  <div
-    className="layerstree-node-content"
-  >
-    <div
-      className="layerstree-node-content__item"
-    >
-      <div
-        className="layerstree-node-content__item-label"
+        <button
+          type="button"
+        >
+          Extent this layer
+        </button>
+      </span>
+      <span
+        className="layerstree-node-content__options__overflow--shown"
       >
         <p>
           Tooltip
         </p>
-        <div
-          className="layerstree-node-content__item-label__total"
-        />
-      </div>
-    </div>
-    <div
-      className="layerstree-node-content__options layerstree-node-content__options--desktop"
-    >
-      <button
-        type="button"
-      >
-        Extent this layer
-      </button>
-      <p>
-        Tooltip
-      </p>
+      </span>
     </div>
   </div>,
   <p>
@@ -398,16 +461,24 @@ Array [
     <div
       className="layerstree-node-content__options layerstree-node-content__options--desktop"
     >
-      <button
-        type="button"
+      <span
+        className="layerstree-node-content__options__overflow--shown"
       >
-        Extent this layer
-      </button>
+        <button
+          type="button"
+        >
+          Extent this layer
+        </button>
+      </span>
+      <span
+        className="layerstree-node-content__options__overflow--shown"
+      >
+        <p>
+          FiltersPanel
+        </p>
+      </span>
       <p>
-        FiltersPanel
-      </p>
-      <p>
-        Tooltip
+        Popover
       </p>
     </div>
   </div>,

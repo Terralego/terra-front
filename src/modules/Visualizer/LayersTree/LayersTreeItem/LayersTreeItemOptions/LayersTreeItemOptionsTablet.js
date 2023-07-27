@@ -128,9 +128,9 @@ const LayersTreeItemOptionsTablet = ({
           onClick={toggleFilters}
           minimal
           icon="filter"
-          title="filter"
+          title={translate('terralego.visualizer.layerstree.itemOptions.filter.label')}
         >
-          filtres
+          {translate('terralego.visualizer.layerstree.itemOptions.filter.label')}
         </Button>
       </FiltersPanel>
     )}

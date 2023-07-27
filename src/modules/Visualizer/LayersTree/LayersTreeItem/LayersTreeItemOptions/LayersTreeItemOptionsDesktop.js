@@ -8,6 +8,7 @@ import translateMock from '../../../../../utils/translate';
 import LayerFetchValues from '../LayerFetchValues';
 import FiltersPanel from '../FiltersPanel';
 import Tooltip from '../../../../../components/Tooltip';
+import LayersTreeItemOptionOverflow from './LayersTreeItemOptionOverflow';
 
 const LayersTreeItemOptionsDesktop = ({
   hasSomeOptionActive,
@@ -51,12 +52,9 @@ const LayersTreeItemOptionsDesktop = ({
     'terralego.visualizer.layerstree.itemOptions.options.tooltip_close': 'close options',
   }),
 }) => (
-  <div
-    className={classnames(
-      'layerstree-node-content__options',
-      'layerstree-node-content__options--desktop',
-      { 'layerstree-node-content__options--active': hasSomeOptionActive },
-    )}
+  <LayersTreeItemOptionOverflow
+    translate={translate}
+    hasSomeOptionActive={hasSomeOptionActive}
   >
     <LocateButton
       map={map}
@@ -94,6 +92,9 @@ const LayersTreeItemOptionsDesktop = ({
               title={translate('terralego.visualizer.layerstree.itemOptions.widget.title', {
                 context,
               })}
+              text={translate('terralego.visualizer.layerstree.itemOptions.widget.title', {
+                context,
+              })}
               alt={actionText}
             />
           </Tooltip>
@@ -119,6 +120,7 @@ const LayersTreeItemOptionsDesktop = ({
           minimal
           icon="th"
           title={translate('terralego.visualizer.layerstree.itemOptions.table.title')}
+          text={translate('terralego.visualizer.layerstree.itemOptions.table.title')}
           alt={translate('terralego.visualizer.layerstree.itemOptions.table.alt', {
             context: isTableActive ? 'close' : 'open',
           })}
@@ -148,6 +150,7 @@ const LayersTreeItemOptionsDesktop = ({
           onClick={toggleFilters}
           minimal
           icon="filter"
+          text={translate('terralego.visualizer.layerstree.itemOptions.filter.label')}
           title={translate('terralego.visualizer.layerstree.itemOptions.filter.label')}
           alt={translate('terralego.visualizer.layerstree.itemOptions.filter.alt', {
             context: isFilterVisible ? 'close' : 'open',
@@ -173,12 +176,13 @@ const LayersTreeItemOptionsDesktop = ({
         minimal
         onClick={handleOptionPanel}
         title={translate('terralego.visualizer.layerstree.itemOptions.options.label')}
+        text={translate('terralego.visualizer.layerstree.itemOptions.options.label')}
         alt={translate('terralego.visualizer.layerstree.itemOptions.options.alt', {
           context: isOptionsOpen ? 'close' : 'open',
         })}
       />
     </Tooltip>
-  </div>
+  </LayersTreeItemOptionOverflow>
 );
 
 export default LayersTreeItemOptionsDesktop;

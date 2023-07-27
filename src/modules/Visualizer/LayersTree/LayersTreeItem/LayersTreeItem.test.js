@@ -27,6 +27,12 @@ jest.mock('@blueprintjs/core', () => ({
   Intent: {
     WARNING: 'warning',
   },
+  Menu () {
+    return <p>Menu</p>;
+  },
+  Popover () {
+    return <p>Popover</p>;
+  },
   Radio () {
     return <p>Radio</p>;
   },

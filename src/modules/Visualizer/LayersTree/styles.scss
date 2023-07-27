@@ -135,6 +135,15 @@
       align-items: baseline;
       height: 1.2rem;
 
+      &__overflow {
+        &--shown .bp3-button-text {
+          display: none;
+        }
+        &--shown .bp3-icon {
+          margin-right: 0;
+        }
+      }
+
       &--desktop {
         display: none;
       }
@@ -269,6 +278,17 @@
 
 .bp3-switch {
   margin: 0;
+}
+
+.layerstree-options-overflow-menu {
+  & .bp3-popover-target {
+    width: 100%;
+  }
+  
+  & .bp3-button {
+    width: 100%;
+    justify-content: flex-start;
+  }
 }
 
 @media(min-width: $breakpoints-phone) and (max-width: $breakpoints-desktop) {

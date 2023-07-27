@@ -6,7 +6,6 @@ import translateMock from '../../../../../utils/translate';
 const LocateButton = ({
   layer,
   map,
-  isTablet,
   extent,
   isTableActive,
   isDetailsVisible,
@@ -83,7 +82,7 @@ const LocateButton = ({
         minimal
         icon="zoom-to-fit"
         onClick={onClick}
-        text={isTablet && translate('terralego.visualizer.layerstree.itemOptions.locate.text')}
+        text={translate('terralego.visualizer.layerstree.itemOptions.locate.text')}
       />
     </Tooltip>
   );
