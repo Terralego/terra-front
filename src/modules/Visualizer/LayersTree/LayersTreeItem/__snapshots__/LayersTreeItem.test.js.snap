@@ -383,9 +383,13 @@ Array [
           FiltersPanel
         </p>
       </span>
-      <p>
-        Popover
-      </p>
+      <span
+        className="layerstree-node-content__options__overflow--shown"
+      >
+        <p>
+          Tooltip
+        </p>
+      </span>
     </div>
   </div>,
   <p>
@@ -477,9 +481,13 @@ Array [
           FiltersPanel
         </p>
       </span>
-      <p>
-        Popover
-      </p>
+      <span
+        className="layerstree-node-content__options__overflow--shown"
+      >
+        <p>
+          Tooltip
+        </p>
+      </span>
     </div>
   </div>,
   <p>
