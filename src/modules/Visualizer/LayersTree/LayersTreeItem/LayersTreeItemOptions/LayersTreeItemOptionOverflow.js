@@ -3,17 +3,21 @@ import classNames from 'classnames';
 import { Button, Menu, Popover, Tooltip } from '@blueprintjs/core';
 
 const LayersTreeItemOptionOverflow = ({ hasSomeOptionActive, children, translate }) => {
+  const [isPopoverOpen, setPopoverOpen] = React.useState(false);
+
   const buttons = children.filter(Boolean);
-  const overFlowedButtons = buttons.slice(2).map(button => <li>{button}</li>);
+  const overFlowedButtons =
+    buttons.length <= 3 ? [] : buttons.slice(2).map(button => <li>{button}</li>);
+  const shownButtons = buttons.slice(0, buttons.length <= 3 ? 3 : 2);
   return (
     <div
       className={classNames(
         'layerstree-node-content__options',
         'layerstree-node-content__options--desktop',
-        { 'layerstree-node-content__options--active': hasSomeOptionActive },
+        { 'layerstree-node-content__options--active': hasSomeOptionActive || isPopoverOpen },
       )}
     >
-      {buttons.slice(0, 2).map(e => (
+      {shownButtons.map(e => (
         <span className="layerstree-node-content__options__overflow--shown">{e}</span>
       ))}
 
@@ -21,9 +25,9 @@ const LayersTreeItemOptionOverflow = ({ hasSomeOptionActive, children, translate
         <Popover
           position="bottom"
           autoFocus={false}
-          content={
-            <Menu className="layerstree-options-overflow-menu">{overFlowedButtons}</Menu>
-          }
+          onOpening={() => setPopoverOpen(true)}
+          onClosed={() => setPopoverOpen(false)}
+          content={<Menu className="layerstree-options-overflow-menu">{overFlowedButtons}</Menu>}
         >
           <Tooltip
             openOnTargetFocus={false}
