@@ -145,6 +145,9 @@ Array [
         Popover
       </p>
     </div>
+    <p>
+      FiltersPanel
+    </p>
   </div>,
   <p>
     LayersTreeItemFilters
@@ -210,6 +213,9 @@ Array [
         Popover
       </p>
     </div>
+    <p>
+      FiltersPanel
+    </p>
   </div>,
   <p>
     LayersTreeItemFilters
@@ -258,6 +264,9 @@ Array [
         Popover
       </p>
     </div>
+    <p>
+      FiltersPanel
+    </p>
   </div>,
   <p>
     LayersTreeItemFilters
@@ -380,7 +389,7 @@ Array [
         className="layerstree-node-content__options__overflow--shown"
       >
         <p>
-          FiltersPanel
+          Tooltip
         </p>
       </span>
       <span
@@ -391,6 +400,9 @@ Array [
         </p>
       </span>
     </div>
+    <p>
+      FiltersPanel
+    </p>
   </div>,
   <p>
     LayersTreeItemFilters
@@ -478,7 +490,7 @@ Array [
         className="layerstree-node-content__options__overflow--shown"
       >
         <p>
-          FiltersPanel
+          Tooltip
         </p>
       </span>
       <span
@@ -489,6 +501,9 @@ Array [
         </p>
       </span>
     </div>
+    <p>
+      FiltersPanel
+    </p>
   </div>,
   <p>
     LayersTreeItemFilters

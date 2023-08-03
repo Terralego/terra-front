@@ -54,133 +54,137 @@ const LayersTreeItemOptionsDesktop = ({
     'terralego.visualizer.layerstree.itemOptions.opacity.tooltip': 'Changer l\'opacité de la couche',
   }),
 }) => (
-  <LayersTreeItemOptionOverflow
-    translate={translate}
-    hasSomeOptionActive={hasSomeOptionActive}
-  >
-    <LocateButton
-      map={map}
-      layer={layer}
+  <>
+    <LayersTreeItemOptionOverflow
       translate={translate}
-      extent={extent}
-      isTableActive={isTableActive}
-      isDetailsVisible={isDetailsVisible}
-      hasActiveWidget={widgets && !!widgets.length && widgets.find(w => isWidgetActive(w))}
-    />
-    {(widgets && !!widgets.length) && (
-      // i18next-extract-mark-context-start ["", "synthesis"]
-      widgets.map(widget => {
-        const { component: context } = widget;
-        const isActive = isWidgetActive(widget);
+      hasSomeOptionActive={hasSomeOptionActive}
+    >
+      <LocateButton
+        map={map}
+        layer={layer}
+        translate={translate}
+        extent={extent}
+        isTableActive={isTableActive}
+        isDetailsVisible={isDetailsVisible}
+        hasActiveWidget={widgets && !!widgets.length && widgets.find(w => isWidgetActive(w))}
+      />
+      {(widgets && !!widgets.length) && (
+        // i18next-extract-mark-context-start ["", "synthesis"]
+        widgets.map(widget => {
+          const { component: context } = widget;
+          const isActive = isWidgetActive(widget);
 
-        const actionText = isActive
-          ? translate('terralego.visualizer.layerstree.itemOptions.widget.action-close', { context })
-          : translate('terralego.visualizer.layerstree.itemOptions.widget.action-open', { context });
+          const actionText = isActive
+            ? translate('terralego.visualizer.layerstree.itemOptions.widget.action-close', { context })
+            : translate('terralego.visualizer.layerstree.itemOptions.widget.action-open', { context });
 
-        return (
-          <Tooltip
-            key={context}
-            className="layerstree-node-content__options__tooltip widgets"
-            content={actionText}
-          >
-            <Button
-              className={classnames({
-                'layerstree-node-content__options__button': true,
-                'layerstree-node-content__options__button--active': isActive,
-              })}
-              onClick={toggleWidgets(widget)}
-              minimal
-              icon="selection"
-              title={translate('terralego.visualizer.layerstree.itemOptions.widget.title', {
-                context,
-              })}
-              text={translate('terralego.visualizer.layerstree.itemOptions.widget.title', {
-                context,
-              })}
-              alt={actionText}
-            />
-          </Tooltip>
-        );
-      })
-      // i18next-extract-mark-context-stop
-    )}
-    {displayTableButton && (
-      <Tooltip
-        className="layerstree-node-content__options__tooltip table"
-        content={translate('terralego.visualizer.layerstree.itemOptions.table.tooltip', {
-          context: isTableActive ? 'close' : 'open',
-        })}
-      >
-        <Button
-          className={
-        classnames(
-          'layerstree-node-content__options__button',
-          { 'layerstree-node-content__options__button--active': isTableActive },
-        )
-      }
-          onClick={toggleTable}
-          minimal
-          icon="th"
-          title={translate('terralego.visualizer.layerstree.itemOptions.table.title')}
-          text={translate('terralego.visualizer.layerstree.itemOptions.table.title')}
-          alt={translate('terralego.visualizer.layerstree.itemOptions.table.alt', {
+          return (
+            <Tooltip
+              key={context}
+              className="layerstree-node-content__options__tooltip widgets"
+              content={actionText}
+            >
+              <Button
+                className={classnames({
+                  'layerstree-node-content__options__button': true,
+                  'layerstree-node-content__options__button--active': isActive,
+                })}
+                onClick={toggleWidgets(widget)}
+                minimal
+                icon="selection"
+                title={translate('terralego.visualizer.layerstree.itemOptions.widget.title', {
+                  context,
+                })}
+                text={translate('terralego.visualizer.layerstree.itemOptions.widget.title', {
+                  context,
+                })}
+                alt={actionText}
+              />
+            </Tooltip>
+          );
+        })
+        // i18next-extract-mark-context-stop
+      )}
+      {displayTableButton && (
+        <Tooltip
+          className="layerstree-node-content__options__tooltip table"
+          content={translate('terralego.visualizer.layerstree.itemOptions.table.tooltip', {
             context: isTableActive ? 'close' : 'open',
           })}
-        />
-      </Tooltip>
-    )}
-    {form && (
-    <FiltersPanel
-      visible={isFilterVisible}
-      onMount={getFilterPanelRef}
-      layer={layer}
-    >
-      {isFilterVisible && (
-      <LayerFetchValues layer={layer} isFilterVisible={isFilterVisible} />
+        >
+          <Button
+            className={
+          classnames(
+            'layerstree-node-content__options__button',
+            { 'layerstree-node-content__options__button--active': isTableActive },
+          )
+        }
+            onClick={toggleTable}
+            minimal
+            icon="th"
+            title={translate('terralego.visualizer.layerstree.itemOptions.table.title')}
+            text={translate('terralego.visualizer.layerstree.itemOptions.table.title')}
+            alt={translate('terralego.visualizer.layerstree.itemOptions.table.alt', {
+              context: isTableActive ? 'close' : 'open',
+            })}
+          />
+        </Tooltip>
+      )}
+      {form && (
+        <Tooltip
+          content={translate('terralego.visualizer.layerstree.itemOptions.filter.tooltip', {
+            context: isFilterVisible ? 'close' : 'open',
+          })}
+          className="visualizer.layerstree-node-content__options__tooltip filters"
+        >
+          <Button
+            className={classnames(
+              'layerstree-node-content__options__button',
+              { 'layerstree-node-content__options__button--active': isFilterVisible },
+            )}
+            onClick={toggleFilters}
+            minimal
+            icon="filter"
+            text={translate('terralego.visualizer.layerstree.itemOptions.filter.label')}
+            title={translate('terralego.visualizer.layerstree.itemOptions.filter.label')}
+            alt={translate('terralego.visualizer.layerstree.itemOptions.filter.alt', {
+              context: isFilterVisible ? 'close' : 'open',
+            })}
+          />
+        </Tooltip>
       )}
       <Tooltip
-        content={translate('terralego.visualizer.layerstree.itemOptions.filter.tooltip', {
-          context: isFilterVisible ? 'close' : 'open',
-        })}
-        className="visualizer.layerstree-node-content__options__tooltip filters"
+        content={translate('terralego.visualizer.layerstree.itemOptions.opacity.tooltip')}
+        className="layerNode__tooltip options"
       >
         <Button
           className={classnames(
             'layerstree-node-content__options__button',
-            { 'layerstree-node-content__options__button--active': isFilterVisible },
+            { 'layerstree-node-content__options__button--active': isOptionsOpen },
           )}
-          onClick={toggleFilters}
+          icon="eye-open"
           minimal
-          icon="filter"
-          text={translate('terralego.visualizer.layerstree.itemOptions.filter.label')}
-          title={translate('terralego.visualizer.layerstree.itemOptions.filter.label')}
-          alt={translate('terralego.visualizer.layerstree.itemOptions.filter.alt', {
-            context: isFilterVisible ? 'close' : 'open',
+          onClick={handleOptionPanel}
+          title={translate('terralego.visualizer.layerstree.itemOptions.opacity.label')}
+          text={translate('terralego.visualizer.layerstree.itemOptions.opacity.label')}
+          alt={translate('terralego.visualizer.layerstree.itemOptions.opacity.label', {
+            context: isOptionsOpen ? 'close' : 'open',
           })}
         />
       </Tooltip>
-    </FiltersPanel>
-    )}
-    <Tooltip
-      content={translate('terralego.visualizer.layerstree.itemOptions.opacity.tooltip')}
-      className="layerNode__tooltip options"
-    >
-      <Button
-        className={classnames(
-          'layerstree-node-content__options__button',
-          { 'layerstree-node-content__options__button--active': isOptionsOpen },
+    </LayersTreeItemOptionOverflow>
+    {form && (
+      <FiltersPanel
+        visible={isFilterVisible}
+        onMount={getFilterPanelRef}
+        layer={layer}
+      >
+        {isFilterVisible && (
+        <LayerFetchValues layer={layer} isFilterVisible={isFilterVisible} />
         )}
-        icon="eye-open"
-        minimal
-        onClick={handleOptionPanel}
-        title={translate('terralego.visualizer.layerstree.itemOptions.opacity.label')}
-        text={translate('terralego.visualizer.layerstree.itemOptions.opacity.label')}
-        alt={translate('terralego.visualizer.layerstree.itemOptions.opacity.label', {
-          context: isOptionsOpen ? 'close' : 'open',
-        })}
-      />
-    </Tooltip>
-  </LayersTreeItemOptionOverflow>
+      </FiltersPanel>
+    )}
+  </>
 );
 
 export default LayersTreeItemOptionsDesktop;

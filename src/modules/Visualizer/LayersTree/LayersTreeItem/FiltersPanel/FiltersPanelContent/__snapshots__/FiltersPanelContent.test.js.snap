@@ -6,7 +6,7 @@ Array [
     className="filters-panel bp3-dark"
     style={
       Object {
-        "left": undefined,
+        "left": false,
       }
     }
   >
@@ -41,7 +41,7 @@ Array [
     className="filters-panel bp3-dark"
     style={
       Object {
-        "left": undefined,
+        "left": false,
       }
     }
   >

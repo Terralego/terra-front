@@ -84,7 +84,7 @@ export class FiltersPanelContent extends React.Component {
           'bp3-dark': true,
         })}
         style={{
-          left: left && width && left + width,
+          left: typeof left === 'number' && typeof width === 'number' && left + width,
         }}
       >
         <div
