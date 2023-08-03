@@ -138,18 +138,15 @@ const LayersTreeItemOptionsTablet = ({
       className={classnames(
         'btn-option',
         'layerstree-node-content__options__button',
-        'layerstree-node-content__options__button--more',
         { 'layerstree-node-content__options__button--active': isOptionsOpen },
       )}
-      icon="more"
+      icon="eye-open"
       minimal
       onClick={handleOptionPanel}
-      title={translate('terralego.visualizer.layerstree.itemOptions.options.label')}
-      alt={translate('terralego.visualizer.layerstree.itemOptions.options.alt', {
-        context: isOptionsOpen ? 'close' : 'open',
-      })}
+      title={translate('terralego.visualizer.layerstree.itemOptions.opacity.label')}
+      alt={translate('terralego.visualizer.layerstree.itemOptions.opacity.alt')}
     >
-      {translate('terralego.visualizer.layerstree.itemOptions.options.label')}
+      {translate('terralego.visualizer.layerstree.itemOptions.opacity.label')}
     </Button>
   </div>
 );

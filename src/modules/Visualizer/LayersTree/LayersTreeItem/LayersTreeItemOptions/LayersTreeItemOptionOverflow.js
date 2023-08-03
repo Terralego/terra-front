@@ -1,6 +1,6 @@
 import React from 'react';
 import classNames from 'classnames';
-import { Button, Menu, Popover, Tooltip } from '@blueprintjs/core';
+import { Button, Classes, Menu, Popover, Tooltip } from '@blueprintjs/core';
 
 const LayersTreeItemOptionOverflow = ({ hasSomeOptionActive, children, translate }) => {
   const [isPopoverOpen, setPopoverOpen] = React.useState(false);
@@ -25,6 +25,7 @@ const LayersTreeItemOptionOverflow = ({ hasSomeOptionActive, children, translate
         <Popover
           position="bottom"
           autoFocus={false}
+          popoverClassName={Classes.POPOVER_DISMISS}
           onOpening={() => setPopoverOpen(true)}
           onClosed={() => setPopoverOpen(false)}
           content={<Menu className="layerstree-options-overflow-menu">{overFlowedButtons}</Menu>}
@@ -32,7 +33,7 @@ const LayersTreeItemOptionOverflow = ({ hasSomeOptionActive, children, translate
           <Tooltip
             openOnTargetFocus={false}
             content={translate('terralego.visualizer.layerstree.itemOptions.options.tooltip', {
-              context: 'close',
+              context: 'open',
             })}
             className="layerNode__tooltip options"
           >

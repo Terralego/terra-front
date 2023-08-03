@@ -83,6 +83,6 @@ it('should close options', () => {
       isOptionsOpen
     />
   ));
-  expect(wrapper.find('.options').props().content).toBe('close options');
-  expect(wrapper.find('.options').dive().find('.layerstree-node-content__options__button').props().alt).toBe('close options');
+  expect(wrapper.find('.options').props().content).toBe('Changer l\'opacité de la couche');
+  expect(wrapper.find('.options').dive().find('.layerstree-node-content__options__button').props().alt).toBe('Opacité');
 });

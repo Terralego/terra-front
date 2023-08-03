@@ -165,9 +165,10 @@
         }
       
         &--more {
-          transform: rotate(90deg);
           svg {
-            transform: scale(0.75);
+            transform:
+              scale(0.75)
+              rotate(90deg);
           }
         }
         &--active {
@@ -254,9 +255,6 @@
           .bp3-icon {
             padding-bottom: .25rem;
             margin: 0;
-          }
-          &--more {
-            transform: rotate(0deg);
           }
           &--active {
             .bp3-dark & {

@@ -50,6 +50,8 @@ const LayersTreeItemOptionsDesktop = ({
     'terralego.visualizer.layerstree.itemOptions.options.alt_close': 'close options',
     'terralego.visualizer.layerstree.itemOptions.options.tooltip': 'open options',
     'terralego.visualizer.layerstree.itemOptions.options.tooltip_close': 'close options',
+    'terralego.visualizer.layerstree.itemOptions.opacity.label': 'Opacité',
+    'terralego.visualizer.layerstree.itemOptions.opacity.tooltip': 'Changer l\'opacité de la couche',
   }),
 }) => (
   <LayersTreeItemOptionOverflow
@@ -160,24 +162,20 @@ const LayersTreeItemOptionsDesktop = ({
     </FiltersPanel>
     )}
     <Tooltip
-      content={translate('terralego.visualizer.layerstree.itemOptions.options.tooltip', {
-        context: isOptionsOpen ? 'close' : 'open',
-      })}
-
+      content={translate('terralego.visualizer.layerstree.itemOptions.opacity.tooltip')}
       className="layerNode__tooltip options"
     >
       <Button
         className={classnames(
           'layerstree-node-content__options__button',
-          'layerstree-node-content__options__button--more',
           { 'layerstree-node-content__options__button--active': isOptionsOpen },
         )}
-        icon="more"
+        icon="eye-open"
         minimal
         onClick={handleOptionPanel}
-        title={translate('terralego.visualizer.layerstree.itemOptions.options.label')}
-        text={translate('terralego.visualizer.layerstree.itemOptions.options.label')}
-        alt={translate('terralego.visualizer.layerstree.itemOptions.options.alt', {
+        title={translate('terralego.visualizer.layerstree.itemOptions.opacity.label')}
+        text={translate('terralego.visualizer.layerstree.itemOptions.opacity.label')}
+        alt={translate('terralego.visualizer.layerstree.itemOptions.opacity.label', {
           context: isOptionsOpen ? 'close' : 'open',
         })}
       />
