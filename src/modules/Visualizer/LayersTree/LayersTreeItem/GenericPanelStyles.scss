@@ -1,0 +1,247 @@
+@import '../../../../utils/variables.scss';
+
+$transitionSpeed: 0.15s;
+
+.generic-panel {
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  display: none;
+  opacity: 0;
+  transition:
+    opacity $transitionSpeed ease-in,
+    transform $transitionSpeed ease-in;
+  width: 18rem;
+  z-index: 11;
+  margin-left: 2.25rem;
+  background: #394B59;
+  box-shadow:
+    0 0 0 1px rgba(16,22,26,0.20),
+    0 2px 4px 0 rgba(16,22,26,0.40),
+    0 8px 24px 0 rgba(16,22,26,0.40);
+  transform: scale3d(.9, .9, .9);
+  max-height: 100vh;
+  
+  &--visible {
+    opacity: 1;
+    transform: scale3d(1, 1, 1);
+  }
+
+  &--animate {
+    display: block;
+  }
+
+  &__arrow {
+    $width: 2rem;
+    background: rgba($color: #10161A, $alpha: 0.4);
+    display: block;
+    position: absolute;
+    margin-top: -0.125rem;
+    left: -$width/2;
+    width: $width;
+    height: 2rem;
+    z-index: 12;
+    transform: rotate(45deg);
+    border-radius: 0.19rem;
+
+    &::after {
+      content: '';
+      background-color: #394B59;
+      width: 100%;
+      height: 100%;
+      transform: translate(1px, -1px);
+      display: block;
+    }
+  }
+
+  &__content {
+    z-index: 13;
+    position: relative;
+    padding-top: .5rem;
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+  }
+
+  &__header {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+  }
+
+  &__title {
+    margin-top: 0;
+    padding: 0 0.7rem;
+    font-weight: 300;
+    letter-spacing: .08rem;
+  }
+
+  &__form {
+    flex: auto;
+    padding: 0 0.7rem;
+    overflow: auto;
+  }
+
+  &__form::-webkit-scrollbar, .bp3-select-popover .bp3-menu::-webkit-scrollbar {
+    width: .5rem;
+  }
+
+  .control-container {
+    padding: 0 0 .6rem;
+  }
+
+  .control-label { 
+    border-top: .5px solid #293742;
+    padding-top: .3rem;
+    margin: 1rem 0;
+    &-noValues {
+      opacity: .7;
+      font-size: .875rem;
+      font-style: italic;
+    }
+  }
+
+  .bp3-select-popover, .bp3-multi-select-popover {
+    .bp3-menu {
+      max-width: 25rem;
+      max-height: 18rem;
+      overflow: auto;
+      padding: 0;
+
+      strong {
+        text-decoration: underline;
+        font-weight: normal;
+      }
+      .bp3-disabled {
+        font-style: italic;
+        color: #f5f8fa !important;
+      }
+    }
+  }
+
+  .bp3-control.bp3-checkbox {
+    padding: 0 1rem;
+  }
+
+  .bp3-slider {
+    margin: 0 1rem;
+    width: calc(100% - 2rem);
+    min-width: auto;
+  }
+
+  .control-container__item--empty {
+    opacity: .2;
+  }
+
+  .tf-control-date-range {
+    .bp3-control-group {
+      width: calc(100% - .5rem);
+    }
+    .bp3-control-group > * {
+      flex: inherit;
+    }
+    .bp3-input-group:nth-child(1) .bp3-input {
+      margin-right: .5rem;
+    }
+    .bp3-input-group:nth-child(2) .bp3-input {
+      margin-left: .5rem;
+    }
+  }
+}
+
+// Styles relative to DarkTheme
+.bp3-dark {
+  .generic-panel {
+    &__form, .bp3-select-popover .bp3-menu {
+      scrollbar-color: #202B33 #30404D;
+    }
+
+    &__form::-webkit-scrollbar-track , .bp3-select-popover .bp3-menu::-webkit-scrollbar-track {
+      background-color: #30404D;
+    }
+    
+    &__form::-webkit-scrollbar-thumb, .bp3-select-popover .bp3-menu::-webkit-scrollbar-thumb {
+      background-color: #202B33;
+    }
+  }
+}
+
+@media(min-width: $breakpoints-phone) and (max-width: $breakpoints-desktop){
+  .generic-panel {
+    width: 18rem / $scaleRatio;
+    margin-left: 5.4rem;
+    
+    &__arrow {
+      $width: 2rem / $scaleRatio;
+      margin-top: -0.125rem / $scaleRatio;
+      left: -$width/2;
+      width: $width;
+      height: 2rem / $scaleRatio;
+    }
+
+    &__title {
+      font-size: 1.5rem / $scaleRatio;
+      margin-top: 0;
+      padding: 0 0.7rem / $scaleRatio;
+      font-weight: 300;
+      letter-spacing: .08rem / $scaleRatio;
+    }
+
+    &__form {
+      padding: 0 0.7rem / $scaleRatio;
+    }
+
+    &__form::-webkit-scrollbar, .bp3-select-popover .bp3-menu::-webkit-scrollbar  {
+      width: .5rem / $scaleRatio;
+    }
+
+    .control-container {
+      padding: 0 0 1.5rem;
+      font-size: .875rem / $scaleRatio;
+    }
+
+    .control-label {
+      font-size: .875rem / $scaleRatio;
+      border-top: .5px solid #293742;
+      padding-top: .3rem;
+      margin-bottom: 1rem;
+      &-noValues {
+        font-size: .875rem / $scaleRatio;
+      }
+    }
+
+    .bp3-select-popover .bp3-menu {
+      max-width: 40rem / $scaleRatio;
+      max-height: 30rem / $scaleRatio;
+      font-size: .875rem / $scaleRatio;
+      
+      .control-container__item li {
+        padding: .5rem;
+      }
+    }
+
+    .bp3-control.bp3-checkbox {
+      padding: 0 1rem / $scaleRatio;
+      font-size: .875rem / $scaleRatio;
+    }
+
+    .bp3-slider {
+      margin: 0 1rem / $scaleRatio;
+      width: calc(100% - 2rem / #{$scaleRatio});
+    }
+
+    .tf-control-date-range {
+      .bp3-control-group {
+        width: calc(100% - .5rem / #{$scaleRatio});
+      }
+      .bp3-input-group:nth-child(1) .bp3-input {
+        margin-right: .5rem / $scaleRatio;
+        font-size: .875rem / $scaleRatio;
+      }
+      .bp3-input-group:nth-child(2) .bp3-input {
+        margin-left: .5rem / $scaleRatio;
+        font-size: .875rem / $scaleRatio;
+      }
+    }
+  }
+}
