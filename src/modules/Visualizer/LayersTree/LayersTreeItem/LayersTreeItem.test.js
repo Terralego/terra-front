@@ -33,6 +33,7 @@ jest.mock('@blueprintjs/core', () => ({
   RadioGroup () {
     return <p>RadioGroup</p>;
   },
+  PopoverPosition: {},
 }));
 
 jest.mock('@blueprintjs/select', () => ({

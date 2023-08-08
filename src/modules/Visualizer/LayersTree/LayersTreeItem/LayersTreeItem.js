@@ -6,6 +6,7 @@ import {
   Switch,
   Elevation,
   Tag,
+  PopoverPosition,
 } from '@blueprintjs/core';
 import uuid from 'uuid/v4';
 
@@ -192,6 +193,7 @@ export class LayersTreeItem extends React.Component {
               <Tooltip
                 content={label}
                 hoverOpenDelay={2000}
+                position={PopoverPosition.BOTTOM_RIGHT}
                 className="layerstree-node-content__item-label__tooltip"
               >
                 <label className="layerstree-node-content__item-label__label" htmlFor={this.uuid}>
