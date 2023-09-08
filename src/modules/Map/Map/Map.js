@@ -2,6 +2,7 @@ import React from 'react';
 import mapBoxGl from 'mapbox-gl';
 import PropTypes from 'prop-types';
 import 'mapbox-gl/dist/mapbox-gl.css';
+import MapboxDraw from '@mapbox/mapbox-gl-draw';
 import { detailedDiff } from 'deep-object-diff';
 
 import { LAYER_TYPES_ORDER, getControlName } from '../services/mapUtils';
@@ -19,6 +20,8 @@ import ShareControl from './components/ShareControl';
 import ReportControl from './components/ReportControl';
 import PathControl from './components/PathControl';
 import WidgetControl from './components/WidgetControl';
+import MeasureControl from './components/MeasureControl';
+import { drawStyles } from './components/MeasureControl/controlStyles';
 
 import translateMock from '../../../utils/translate';
 
@@ -42,6 +45,7 @@ export const CONTROL_SHARE = 'ShareControl';
 export const CONTROL_CUSTOM = 'CustomControl';
 export const CONTROL_REPORT = 'ReportControl';
 export const CONTROL_WIDGET = 'WidgetControl';
+export const CONTROL_MEASURE = 'MeasureControl';
 
 export const ADVANCED_TYPES = ['pie-chart'];
 
@@ -97,6 +101,7 @@ export class MapComponent extends React.Component {
           CONTROL_SHARE,
           CONTROL_CUSTOM,
           CONTROL_REPORT,
+          CONTROL_MEASURE,
         ]),
         PropTypes.shape({
           onAdd: PropTypes.func,
@@ -514,6 +519,27 @@ export class MapComponent extends React.Component {
           const controlInstance = new WidgetControl({ ...props, map, ...params });
           this.controls.push(controlInstance);
           map.addControl(controlInstance, position);
+          break;
+        }
+        case CONTROL_MEASURE: {
+          const controlInstance = new MeasureControl();
+          this.controls.push(controlInstance);
+
+          // Make sure only one instance of MapboxDraw, to avoid conflict
+          if (!this.draw) {
+            this.draw = new MapboxDraw({
+              keybindings: false,
+              boxSelect: false,
+              displayControlsDefault: false,
+              styles: drawStyles,
+            });
+            // Enable mapbox draw without adding control
+            this.draw.onAdd(map);
+          }
+
+          map.addControl(controlInstance, 'top-left');
+          map.on('draw.modechange', () => controlInstance.renderContainer(this.draw));
+          map.on('draw.render', () => controlInstance.renderContainer(this.draw));
           break;
         }
         default: {
