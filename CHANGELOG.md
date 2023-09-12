@@ -1,4 +1,17 @@
 
+1.36.0 / 2023-09-12
+===================
+
+  * Add a distance measure map control
+  * Add layers content to generic panel
+  * Add generic panel component
+  * Move filter panel out of its button
+  * Change options buttons to opacity
+  * Fix popover not staying open
+  * Fix popover not staying open
+  * Add basic overflow menu for layers tree options
+  * Add position to menu tooltip
+
 1.35.1 / 2023-07-26
 ===================
 
