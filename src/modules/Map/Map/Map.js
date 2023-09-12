@@ -21,7 +21,6 @@ import ReportControl from './components/ReportControl';
 import PathControl from './components/PathControl';
 import WidgetControl from './components/WidgetControl';
 import MeasureControl from './components/MeasureControl';
-import { drawStyles } from './components/MeasureControl/controlStyles';
 
 import translateMock from '../../../utils/translate';
 
@@ -527,19 +526,24 @@ export class MapComponent extends React.Component {
 
           // Make sure only one instance of MapboxDraw, to avoid conflict
           if (!this.draw) {
-            this.draw = new MapboxDraw({
+            const drawSettings = {
               keybindings: false,
               boxSelect: false,
               displayControlsDefault: false,
-              styles: drawStyles,
-            });
+            };
+
+            const { drawStyles = [] } = params;
+            if (drawStyles.length > 1) {
+              drawSettings.styles = drawStyles;
+            }
+            this.draw = new MapboxDraw(drawSettings);
             // Enable mapbox draw without adding control
             this.draw.onAdd(map);
           }
 
-          map.addControl(controlInstance, 'top-left');
-          map.on('draw.modechange', () => controlInstance.renderContainer(this.draw));
-          map.on('draw.render', () => controlInstance.renderContainer(this.draw));
+          map.addControl(controlInstance, position);
+          map.on('draw.modechange', () => controlInstance.renderContainer(this.draw, translate));
+          map.on('draw.render', () => controlInstance.renderContainer(this.draw, translate));
           break;
         }
         default: {

@@ -23,7 +23,7 @@ const formatNumber = num => num.toLocaleString(
   { maximumFractionDigits: 3, minimumFractionDigits: 3 },
 );
 
-function CustomDrawControlComponent ({ draw }) {
+function CustomDrawControlComponent ({ draw, translate }) {
   const [feature] = draw.getAll().features;
   const mode = draw.getMode();
   const drawing = mode === 'draw_line_string';
@@ -32,14 +32,16 @@ function CustomDrawControlComponent ({ draw }) {
   try {
     length = FeatureLength(feature);
   } catch (err) {
-    // console.error(err);
+    // eslint-disable-next-line no-console
+    console.error(err);
   }
 
   let area = 0;
   try {
     area = FeatureArea(LineToPolygon(feature));
   } catch (err) {
-    // console.error(err);
+    // eslint-disable-next-line no-console
+    console.error(err);
   }
 
   const close = () => {
@@ -62,7 +64,7 @@ function CustomDrawControlComponent ({ draw }) {
 
       {display && (
         <div style={measureStyle}>
-          {!(length || area) && 'Commencez à tracer'}
+          {!(length || area) && translate('terralego.map.measure_control.text')}
 
           {Boolean(length || area) && (
             <dl style={measureListStyle}>
@@ -120,7 +122,10 @@ export default class MeasureControl {
     this.map = undefined;
   }
 
-  renderContainer (drawInstance) {
-    ReactDOM.render(<CustomDrawControlComponent draw={drawInstance} />, this.container);
+  renderContainer (drawInstance, translate) {
+    ReactDOM.render(
+      <CustomDrawControlComponent draw={drawInstance} translate={translate} />,
+      this.container,
+    );
   }
 }

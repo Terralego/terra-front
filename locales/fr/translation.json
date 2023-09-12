@@ -114,6 +114,9 @@
       "home_control": {
         "button_label": "Réinitialiser la position de la carte"
       },
+      "measure_control": {
+        "text": "Commencez à tracer"
+      },
       "print_control": {
         "button_label": "Impression vers PDF",
         "cancel_label": "Annuler",
