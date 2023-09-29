@@ -1,6 +1,6 @@
 import React from 'react';
 import classnames from 'classnames';
-import { Button } from '@blueprintjs/core';
+import { Button, Classes, Intent, Overlay } from '@blueprintjs/core';
 import LocateButton from '../LocateButton';
 
 import translateMock from '../../../../../utils/translate';
@@ -56,8 +56,56 @@ const LayersTreeItemOptionsDesktop = ({
   }),
 }) => {
   const [isPanelOpen, setPanelOpen] = React.useState(false);
+  const [isOverlayOpen, setOverlayOpen] = React.useState(false);
+  const [activeEmbed, setActiveEmbed] = React.useState(null);
+
+  const handleOverlayClose = React.useCallback(() => {
+    setOverlayOpen(false);
+    setActiveEmbed(null);
+  }, []);
+
   return (
     <>
+      {layer?.embed?.length && (
+        <Overlay
+          lazy
+          isOpen={isOverlayOpen}
+          onClose={handleOverlayClose}
+        >
+          <div
+            className={classnames(
+              Classes.CARD,
+              Classes.ELEVATION_4,
+            )}
+            style={{ inset: 20 }}
+          >
+            {activeEmbed && (
+              <iframe
+                title={activeEmbed.title}
+                src={activeEmbed.url}
+                style={{
+                  width: '100%',
+                  height: '100%',
+                  border: 'none',
+                }}
+              />
+            )}
+            <Button
+              intent={Intent.DANGER}
+              onClick={handleOverlayClose}
+              style={{
+                margin: '',
+                position: 'absolute',
+                bottom: 25,
+                right: 25,
+              }}
+            >
+              Close
+            </Button>
+          </div>
+        </Overlay>
+      )}
+
       <LayersTreeItemOptionOverflow translate={translate} hasSomeOptionActive={hasSomeOptionActive}>
         <LocateButton
           map={map}
@@ -191,6 +239,25 @@ const LayersTreeItemOptionsDesktop = ({
             />
           </Tooltip>
         )}
+        {layer?.embed?.map(item => (
+          <Tooltip
+            key={JSON.stringify(item)}
+            content={item.title}
+            className="layerNode__tooltip options"
+          >
+            <Button
+              className={classnames('layerstree-node-content__options__button')}
+              icon="grouped-bar-chart"
+              minimal
+              onClick={() => {
+                setActiveEmbed(item);
+                setOverlayOpen(true);
+              }}
+              text={item.title}
+              alt={item.title}
+            />
+          </Tooltip>
+        ))}
       </LayersTreeItemOptionOverflow>
       {form && (
         <FiltersPanel visible={isFilterVisible} onMount={getFilterPanelRef} layer={layer}>

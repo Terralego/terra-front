@@ -607,6 +607,10 @@ export default [{
     }],
     layer: 'layer1',
   },
+  embed: [
+    { url: 'https://perdu.com', icon: 'chart', title: 'Exemple d\'insertion' },
+    { url: 'https://example.com', icon: 'chart', title: 'Deuxième exemple' },
+  ],
   widgets: [{
     component: 'synthesis',
   }],
