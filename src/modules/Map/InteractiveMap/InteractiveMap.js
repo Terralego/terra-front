@@ -6,13 +6,13 @@ import debounce from 'lodash.debounce';
 import centroid from '@turf/centroid';
 import uuid from 'uuid/v4';
 import { connectState } from '../../State/context';
-
 import { setInteractions, fitZoom } from '../services/mapUtils';
 import { getClusteredFeatures } from '../services/cluster';
 import MapComponent, {
   CONTROLS_TOP_RIGHT,
   DEFAULT_CONTROLS,
 } from '../Map';
+
 import BackgroundStyles from './components/BackgroundStyles';
 import Legend from './components/Legend';
 import Tooltip from './components/Tooltip';
@@ -162,11 +162,24 @@ export class InteractiveMap extends React.Component {
 
   constructor (props) {
     super(props);
-    const { backgroundStyle } = props;
+    const { backgroundStyle = [] } = props;
+    const backgroundArray = Array.isArray(backgroundStyle) ? backgroundStyle : [backgroundStyle];
+    const urlBasemap = backgroundArray.find(
+      ({ id }) => id === Number(new URLSearchParams(window.location.hash).get('basemap')),
+    );
+
+    let selectedBackgroundStyle = backgroundArray[0];
+
+    if (urlBasemap) {
+      selectedBackgroundStyle = urlBasemap.url;
+    }
+
+    if (backgroundArray[0]?.url) {
+      selectedBackgroundStyle = backgroundArray[0].url;
+    }
+
     this.state = {
-      selectedBackgroundStyle: Array.isArray(backgroundStyle)
-        ? backgroundStyle[0].url
-        : backgroundStyle,
+      selectedBackgroundStyle,
       legends: [],
       interactionList: [],
     };
@@ -250,6 +263,20 @@ export class InteractiveMap extends React.Component {
   };
 
   onBackgroundChange = selectedBackgroundStyle => {
+    const { backgroundStyle = [] } = this.props;
+    const backgroundArray = Array.isArray(backgroundStyle) ? backgroundStyle : [backgroundStyle];
+    const selectedBasemap = backgroundArray.find(
+      ({ url }) => url === selectedBackgroundStyle,
+    );
+
+    if (selectedBasemap) {
+      const url = new URL(window.location);
+      const searchParams = new URLSearchParams(url.hash.substring(1));
+      searchParams.set('basemap', selectedBasemap.id);
+      url.hash = searchParams;
+      window.history.pushState({}, null, url);
+    }
+
     this.setState({ selectedBackgroundStyle });
     if (this.backgroundStyleControl) {
       this.backgroundStyleControl.setProps({

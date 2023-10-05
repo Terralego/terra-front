@@ -49,12 +49,12 @@ export class BackgroundStyles extends AbstractMapControl {
                 onChange={onChange}
                 selectedValue={selected}
               >
-                {styles.map(({ label, url }) => (
+                {styles.map(({ label, url, id }) => (
                   <Radio
                     className="bgLayer-radio"
                     key={`${label}${url}`}
-                    label={label}
                     value={url}
+                    data-background-id={id}
                   />
                 ))}
               </RadioGroup>
