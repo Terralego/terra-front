@@ -53,6 +53,7 @@ export class BackgroundStyles extends AbstractMapControl {
                   <Radio
                     className="bgLayer-radio"
                     key={`${label}${url}`}
+                    label={label}
                     value={url}
                     data-background-id={id}
                   />
