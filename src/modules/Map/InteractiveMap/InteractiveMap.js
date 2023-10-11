@@ -172,9 +172,7 @@ export class InteractiveMap extends React.Component {
 
     if (urlBasemap) {
       selectedBackgroundStyle = urlBasemap.url;
-    }
-
-    if (backgroundArray[0]?.url) {
+    } else if (backgroundArray[0]?.url) {
       selectedBackgroundStyle = backgroundArray[0].url;
     }
 
