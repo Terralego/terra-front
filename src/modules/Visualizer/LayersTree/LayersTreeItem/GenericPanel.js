@@ -7,7 +7,7 @@ const GenericPanel = ({ isOpen, handleClose, visible, left, width, top, title, c
   if (!isOpen) return null;
   return (
     <div
-      className={classNames('generic-panel', {
+      className={classNames('generic-panel filters-panel', {
         'generic-panel--visible': visible,
         'generic-panel--animate': true,
         'bp3-dark': true,
@@ -17,7 +17,7 @@ const GenericPanel = ({ isOpen, handleClose, visible, left, width, top, title, c
       }}
     >
       <div
-        className="generic-panel__arrow"
+        className="generic-panel__arrow filters-panel__arrow"
         style={{
           top,
         }}

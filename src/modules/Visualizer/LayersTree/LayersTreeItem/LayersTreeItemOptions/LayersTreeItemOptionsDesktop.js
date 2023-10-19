@@ -173,7 +173,7 @@ const LayersTreeItemOptionsDesktop = ({
             })}
           />
         </Tooltip>
-        {layer?.content && (
+        {layer?.content && layer.description?.show_in_tree && (
           <Tooltip
             position="bottom"
             content="Ouvrir les informations de la couche"
@@ -183,7 +183,7 @@ const LayersTreeItemOptionsDesktop = ({
               className={classnames('layerstree-node-content__options__button', {
                 'layerstree-node-content__options__button--active': isPanelOpen,
               })}
-              icon="info-sign"
+              icon="comment"
               minimal
               title="Informations"
               text="Informations"
@@ -197,12 +197,12 @@ const LayersTreeItemOptionsDesktop = ({
           {isFilterVisible && <LayerFetchValues layer={layer} isFilterVisible={isFilterVisible} />}
         </FiltersPanel>
       )}
-      {layer?.content && (
+      {layer?.content && layer.description?.show_in_tree && (
         <GenericPanel
           isOpen={isPanelOpen}
           handleClose={() => setPanelOpen(false)}
           left={0}
-          top={300}
+          top={50}
           width={300}
           visible
           title="Informations"
