@@ -543,7 +543,8 @@ export class MapComponent extends React.Component {
 
           map.addControl(controlInstance, position);
           map.on('draw.modechange', () => controlInstance.renderContainer(this.draw, translate));
-          map.on('draw.render', () => controlInstance.renderContainer(this.draw, translate));
+          map.once('draw.render', () => controlInstance.renderContainer(this.draw, translate));
+          map.on('draw.update', () => controlInstance.renderContainer(this.draw, translate));
           break;
         }
         default: {
