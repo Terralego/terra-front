@@ -1,4 +1,10 @@
 
+1.38.0 / 2023-10-25
+===================
+
+  * Quick fix generic panel and add it to tablet mode
+  * Remove map on draw.render event
+
 1.37.2 / 2023-10-13
 ===================
 
