@@ -301,11 +301,50 @@ export class MapComponent extends React.Component {
 
     sources.forEach(({ id, ...sourceAttrs }) => map.addSource(id, sourceAttrs));
 
+    const labelLayerTypes = [
+      'fill',
+      'circle',
+    ];
+
     layers.forEach(layer => {
       if (layer.type === 'piechart') return createCustomMarker('piechart', layer, map);
       if (layer.cluster) return this.createClusterLayer(layer);
+      if (layer.advanced_style?.show_value_on_map?.type === 'fixed' && labelLayerTypes.includes(layer.type)) {
+        return this.createLabelLayer(layer);
+      }
       return map.addLayer(layer);
     });
+  }
+
+  createLabelLayer (layer) {
+    const { map } = this.props;
+    const { id, source, 'source-layer': sourceLayer } = layer;
+    const label = layer.advanced_style.show_value_on_map.value;
+    const labelSize = layer.advanced_style.show_value_on_map.font_size ?? 12;
+    const labelAnchor = layer.advanced_style.show_value_on_map.anchor ?? 'center';
+    const labelColor = layer.advanced_style.show_value_on_map.color ?? '#000';
+    const labelHaloColor = layer.advanced_style.show_value_on_map.halo_color ?? '#fff';
+    const offsetX = layer.advanced_style.show_value_on_map.offset_x ?? 0;
+    const offsetY = layer.advanced_style.show_value_on_map.offset_y ?? 0;
+    const labelLayer = {
+      id: `${id}-label`,
+      type: 'symbol',
+      source,
+      'source-layer': sourceLayer,
+      layout: {
+        'text-field': label,
+        'text-size': labelSize,
+        'text-anchor': labelAnchor,
+        'text-offset': [offsetX, offsetY],
+      },
+      paint: {
+        'text-color': labelColor,
+        'text-halo-color': labelHaloColor,
+        'text-halo-width': 1,
+      },
+    };
+    map.addLayer(layer);
+    map.addLayer(labelLayer);
   }
 
   createClusterLayer (layer) {
@@ -332,6 +371,7 @@ export class MapComponent extends React.Component {
     layers.forEach(({ id }) => {
       if (!map.getLayer(id)) return;
       map.removeLayer(id);
+      if (map.getLayer(`${id}-label`)) map.removeLayer(`${id}-label`);
     });
     sources.forEach(({ id, ...sourceAttrs }) => {
       if (!map.getSource(id)) return;
