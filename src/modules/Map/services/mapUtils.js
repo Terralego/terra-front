@@ -12,7 +12,7 @@ export const getRelatedLayers = moize({
 })((map, layerId) => {
   const regexp = new RegExp(`^${layerId}(-(${PREFIXES.join('|')}))?(-[0-9]+)?$`);
   return map.getStyle().layers
-    .filter(({ id }) => id.match(regexp));
+    .filter(({ id }) => id.match(regexp) || id === `${layerId}-label`);
 });
 
 export function toggleLayerVisibility (map, layerId, visibility) {
