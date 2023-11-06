@@ -207,7 +207,10 @@ const LayersTreeItemOptionsDesktop = ({
           visible
           title="Informations"
         >
-          <p>{layer.content}</p>
+          <div
+            // eslint-disable-next-line react/no-danger
+            dangerouslySetInnerHTML={{ __html: layer.content }}
+          />
         </GenericPanel>
       )}
     </>
