@@ -293,9 +293,11 @@ describe('on properties changes', () => {
     expect(map.getSource).toHaveBeenCalledTimes(2);
     expect(map.getSource).toHaveBeenCalledWith('source1');
     expect(map.getSource).toHaveBeenCalledWith('source2');
-    expect(map.getLayer).toHaveBeenCalledTimes(2);
+    expect(map.getLayer).toHaveBeenCalledTimes(4);
     expect(map.getLayer).toHaveBeenCalledWith('layer1');
     expect(map.getLayer).toHaveBeenCalledWith('layer2');
+    expect(map.getLayer).toHaveBeenCalledWith('layer1-label');
+    expect(map.getLayer).toHaveBeenCalledWith('layer2-label');
     expect(map.removeSource).toHaveBeenCalledWith('source1', { foo: 'foo' });
     expect(map.removeSource).toHaveBeenCalledWith('source2', { bar: 'bar' });
     expect(map.removeLayer).toHaveBeenCalledWith('layer1');
