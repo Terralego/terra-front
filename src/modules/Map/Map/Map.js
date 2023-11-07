@@ -316,16 +316,16 @@ export class MapComponent extends React.Component {
   createLabelLayer (layer) {
     const { map } = this.props;
     const { id, source, 'source-layer': sourceLayer } = layer;
-    const config = layer.advanced_style.show_value_on_map;
-
-    const label = config.value;
-    const labelSize = config.font_size ?? 12;
-    const labelAnchor = config.anchor ?? 'center';
-    const labelColor = config.color ?? '#000';
-    const labelHaloColor = config.halo_color ?? '#fff';
-    const offsetX = config.offset_x ?? 0;
-    const offsetY = config.offset_y ?? 0;
-    const symbolPlacement = config.placement ?? 'point';
+    const {
+      value: label,
+      font_size: labelSize = 12,
+      anchor: labelAnchor = 'center',
+      color: labelColor = '#000',
+      halo_color: labelHaloColor = '#fff',
+      offset_x: offsetX = 0,
+      offset_y: offsetY = 0,
+      placement: symbolPlacement = 'point',
+    } = layer.advanced_style.show_value_on_map;
 
     const labelLayer = {
       id: `${id}-label`,
