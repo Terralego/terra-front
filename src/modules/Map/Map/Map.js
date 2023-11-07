@@ -301,10 +301,7 @@ export class MapComponent extends React.Component {
 
     sources.forEach(({ id, ...sourceAttrs }) => map.addSource(id, sourceAttrs));
 
-    const labelLayerTypes = [
-      'fill',
-      'circle',
-    ];
+    const labelLayerTypes = ['fill', 'circle', 'line'];
 
     layers.forEach(layer => {
       if (layer.type === 'piechart') return createCustomMarker('piechart', layer, map);
@@ -319,19 +316,24 @@ export class MapComponent extends React.Component {
   createLabelLayer (layer) {
     const { map } = this.props;
     const { id, source, 'source-layer': sourceLayer } = layer;
-    const label = layer.advanced_style.show_value_on_map.value;
-    const labelSize = layer.advanced_style.show_value_on_map.font_size ?? 12;
-    const labelAnchor = layer.advanced_style.show_value_on_map.anchor ?? 'center';
-    const labelColor = layer.advanced_style.show_value_on_map.color ?? '#000';
-    const labelHaloColor = layer.advanced_style.show_value_on_map.halo_color ?? '#fff';
-    const offsetX = layer.advanced_style.show_value_on_map.offset_x ?? 0;
-    const offsetY = layer.advanced_style.show_value_on_map.offset_y ?? 0;
+    const config = layer.advanced_style.show_value_on_map;
+
+    const label = config.value;
+    const labelSize = config.font_size ?? 12;
+    const labelAnchor = config.anchor ?? 'center';
+    const labelColor = config.color ?? '#000';
+    const labelHaloColor = config.halo_color ?? '#fff';
+    const offsetX = config.offset_x ?? 0;
+    const offsetY = config.offset_y ?? 0;
+    const symbolPlacement = config.placement ?? 'point';
+
     const labelLayer = {
       id: `${id}-label`,
       type: 'symbol',
       source,
       'source-layer': sourceLayer,
       layout: {
+        'symbol-placement': symbolPlacement,
         'text-field': label,
         'text-size': labelSize,
         'text-anchor': labelAnchor,
