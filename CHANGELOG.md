@@ -1,4 +1,10 @@
 
+1.39.1 / 2023-11-07
+===================
+
+  * Display layer's informations as rendered HTML
+  * Support for labels on Line layers (#373)
+
 1.39.0 / 2023-11-06
 ===================
 
