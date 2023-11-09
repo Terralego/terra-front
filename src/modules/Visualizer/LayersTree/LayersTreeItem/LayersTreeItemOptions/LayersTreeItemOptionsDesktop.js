@@ -1,6 +1,6 @@
 import React from 'react';
 import classnames from 'classnames';
-import { Button, Classes, Intent, Overlay } from '@blueprintjs/core';
+import { Button, Dialog } from '@blueprintjs/core';
 import LocateButton from '../LocateButton';
 
 import translateMock from '../../../../../utils/translate';
@@ -67,43 +67,37 @@ const LayersTreeItemOptionsDesktop = ({
   return (
     <>
       {layer?.embed?.length && (
-        <Overlay
+        <Dialog
           lazy
           isOpen={isOverlayOpen}
           onClose={handleOverlayClose}
+          title={activeEmbed?.title}
+          icon={activeEmbed?.icon}
+          style={
+            activeEmbed?.size && !activeEmbed?.fullScreen
+              ? {
+                width: activeEmbed.size.width,
+                height: activeEmbed.size.height + 60,
+              }
+              : {
+                width: 'calc(100vw - 40px)',
+                height: 'calc(100vh - 40px)',
+              }
+          }
+          portalClassName="layerstree-node-content__options__embed"
         >
-          <div
-            className={classnames(
-              Classes.CARD,
-              Classes.ELEVATION_4,
-            )}
-            style={{ inset: 20 }}
-          >
-            {activeEmbed && (
-              <iframe
-                title={activeEmbed.title}
-                src={activeEmbed.url}
-                style={{
-                  width: '100%',
-                  height: '100%',
-                  border: 'none',
-                }}
-              />
-            )}
-            <Button
-              intent={Intent.DANGER}
-              onClick={handleOverlayClose}
+          {activeEmbed && (
+            <iframe
+              title={activeEmbed.title}
+              src={activeEmbed.src}
               style={{
-                margin: '',
-                position: 'absolute',
-                bottom: 25,
-                right: 25,
+                width: '100%',
+                height: '100%',
+                border: 'none',
               }}
-            >
-              Close
-            </Button>
-          </div>
-        </Overlay>
+            />
+          )}
+        </Dialog>
       )}
 
       <LayersTreeItemOptionOverflow translate={translate} hasSomeOptionActive={hasSomeOptionActive}>
@@ -247,7 +241,7 @@ const LayersTreeItemOptionsDesktop = ({
           >
             <Button
               className={classnames('layerstree-node-content__options__button')}
-              icon="grouped-bar-chart"
+              icon={item.icon}
               minimal
               onClick={() => {
                 setActiveEmbed(item);

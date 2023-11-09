@@ -46,6 +46,23 @@
   }
 }
 
+.layerstree-node-content__options__embed {
+  z-index: 999999999;
+
+  & .bp3-icon {
+    color: inherit;
+  }
+
+  & .bp3-dialog {
+    background-color: white;
+    margin: 0;
+  }
+
+  & .bp3-button {
+    background-color: unset;
+  }
+}
+
 .layerstree-node {
   padding: .35rem .25rem;
   border-radius: 0;
@@ -180,7 +197,7 @@
           }
         }
       }
-    }     
+    }
     &:hover {
       .layerstree-node-content {
         &__item {
