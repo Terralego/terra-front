@@ -1,4 +1,9 @@
 
+1.40.0 / 2023-11-13
+===================
+
+  * Add ability to display "embed" content as iframes
+
 1.39.1 / 2023-11-07
 ===================
 
