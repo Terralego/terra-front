@@ -29,6 +29,7 @@ export class LayersTreeItem extends React.Component {
     setLayerState: PropTypes.func,
     isMobileSized: PropTypes.bool,
     isPhoneSized: PropTypes.bool,
+    customLabel: PropTypes.string,
   };
 
   static defaultProps = {
@@ -138,6 +139,7 @@ export class LayersTreeItem extends React.Component {
       map,
       extent,
       isDetailsVisible,
+      customLabel,
     } = this.props;
 
     if (hidden) return null;
@@ -191,7 +193,7 @@ export class LayersTreeItem extends React.Component {
           }
             >
               <Tooltip
-                content={label}
+                content={customLabel ?? label}
                 hoverOpenDelay={2000}
                 position={PopoverPosition.BOTTOM_RIGHT}
                 className="layerstree-node-content__item-label__tooltip"
@@ -209,7 +211,7 @@ export class LayersTreeItem extends React.Component {
                       tagName="span"
                     />
                   </WarningZoom>
-                  {label}
+                  {customLabel ?? label}
                 </label>
               </Tooltip>
 

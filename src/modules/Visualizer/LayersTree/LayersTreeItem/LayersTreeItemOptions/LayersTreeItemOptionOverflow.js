@@ -7,7 +7,9 @@ const LayersTreeItemOptionOverflow = ({ hasSomeOptionActive, children, translate
 
   const buttons = children.filter(Boolean);
   const overFlowedButtons =
-    buttons.length <= 3 ? [] : buttons.slice(2).map(button => <li>{button}</li>);
+    buttons.length <= 3
+      ? []
+      : buttons.slice(2).map((button, index) => <li key={button.id ?? index}>{button}</li>);
   const shownButtons = buttons.slice(0, buttons.length <= 3 ? 3 : 2);
   return (
     <div
@@ -17,8 +19,8 @@ const LayersTreeItemOptionOverflow = ({ hasSomeOptionActive, children, translate
         { 'layerstree-node-content__options--active': hasSomeOptionActive || isPopoverOpen },
       )}
     >
-      {shownButtons.map(e => (
-        <span className="layerstree-node-content__options__overflow--shown">{e}</span>
+      {shownButtons.map((e, index) => (
+        <span key={e.id ?? index} className="layerstree-node-content__options__overflow--shown">{e}</span>
       ))}
 
       {overFlowedButtons.length > 0 && (
