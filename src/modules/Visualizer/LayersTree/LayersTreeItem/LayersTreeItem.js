@@ -40,6 +40,7 @@ export class LayersTreeItem extends React.Component {
     setLayerState () {},
     isMobileSized: false,
     isPhoneSized: false,
+    customLabel: null,
   }
 
   state = {

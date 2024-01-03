@@ -114,8 +114,7 @@ const getSelectedLayer = (selectedVariables, layers) =>
   layers.find(layer =>
     Object.entries(selectedVariables).every(
       ([variable, value]) => getLayerVariables(layer)?.[variable] === value,
-    ),
-  );
+    ));
 
 const getValuesByVariable = (variables, layers) => {
   const values = {};
@@ -131,8 +130,7 @@ const getPossibleValues = (variables, layers, selectedVariables) => {
   const possibleLayers = layers.filter(layer =>
     Object.entries(selectedVariables).every(
       ([variable, value]) => getLayerVariables(layer)?.[variable] === value,
-    ),
-  );
+    ));
   return getValuesByVariable(variables, possibleLayers);
 };
 
