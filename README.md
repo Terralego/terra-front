@@ -1,3 +1,6 @@
+# ⚠️ Deprecated : The contents of this project have been moved to [Terralego/visu-front](https://github.com/Terralego/visu-front)
+
+
 # Terra-front [![npm version](https://badge.fury.io/js/@terralego%2Fcore.svg)](https://www.npmjs.com/package/@terralego/core)
 
 ## Install
